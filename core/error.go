@@ -14,8 +14,25 @@ type RequestError struct {
 	Response *http.Response
 }
 
+func (e RequestError) StatusCode() int {
+	if res := e.Response; res != nil {
+		return res.StatusCode
+	}
+	return -1
+}
+
+func (e RequestError) URL() string {
+	if req := e.Request; req == nil {
+		return "<nil>"
+	} else if url := req.URL; url == nil {
+		return "<nil>"
+	} else {
+		return url.String()
+	}
+}
+
 func (e RequestError) Error() string {
-	return fmt.Errorf("%s: %d: %w", e.Request.URL.String(), e.Response.StatusCode, e.Cause).Error()
+	return fmt.Errorf("%s: %d: %w", e.URL(), e.StatusCode(), e.Cause).Error()
 }
 
 type APIError interface {
@@ -27,12 +44,13 @@ type APIError interface {
 }
 
 type GenericAPIError struct {
-	request   *CoreRequest
-	response  *http.Response
-	status    int
-	errorBody interface{}
-	message   string
-	headers   http.Header
+	request       *CoreRequest
+	response      *http.Response
+	status        int
+	errorBody     interface{}
+	errorBodyJSON *string
+	message       string
+	headers       http.Header
 }
 
 func (e GenericAPIError) Status() int {
@@ -51,8 +69,48 @@ func (e GenericAPIError) Headers() http.Header {
 	return e.headers
 }
 
+func (e GenericAPIError) errorjSON() string {
+	if json := e.errorBodyJSON; json != nil {
+		return *json
+	}
+	if body := e.errorBody; body == nil {
+		e.errorBodyJSON = &e.message
+		return e.message
+	} else if bytes, err := json.MarshalIndent(body, "", "  "); err != nil {
+		json := fmt.Sprintf("{\"error\":\"go runtime error while dumping error body: %s\"}", err.Error())
+		e.errorBodyJSON = &json
+		return json
+	} else {
+		json := string(bytes)
+		e.errorBodyJSON = &json
+		return json
+	}
+}
+
+func (e GenericAPIError) Method() string {
+	if coreRequest := e.request; coreRequest == nil {
+		return "<nil>"
+	} else if request := coreRequest.Request; request == nil {
+		return "<nil>"
+	} else {
+		return request.Method
+	}
+}
+
+func (e GenericAPIError) URL() string {
+	if coreReq := e.request; coreReq == nil {
+		return "<nil>"
+	} else if req := coreReq.Request; req == nil {
+		return "<nil>"
+	} else if url := req.URL; url == nil {
+		return "<nil>"
+	} else {
+		return url.String()
+	}
+}
+
 func (e GenericAPIError) Error() string {
-	return fmt.Sprintf("%s %s: %d", e.request.Request.Method, e.request.Request.URL.String(), e.status)
+	return fmt.Sprintf("%s %s: %d -- %s", e.Method(), e.URL(), e.status, e.errorjSON())
 }
 
 type BadRequestError struct{ GenericAPIError }
@@ -65,7 +123,7 @@ type RateLimitError struct{ GenericAPIError }
 type InternalServerError struct{ GenericAPIError }
 
 func NewAPIError(req *CoreRequest, res *http.Response, status int, error interface{}, message string, headers http.Header) APIError {
-	err := GenericAPIError{req, res, status, error, message, headers}
+	err := GenericAPIError{req, res, status, error, nil, message, headers}
 
 	if status == 400 {
 		return BadRequestError{err}

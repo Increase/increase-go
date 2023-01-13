@@ -1,20 +1,21 @@
 package simulations
 
+import "context"
 import "increase/core"
 import "increase/transactions"
 
-type Cards struct {
+type CardService struct {
 	Requester core.Requester
-	get       func(string, *core.CoreRequest, interface{}) error
-	post      func(string, *core.CoreRequest, interface{}) error
-	patch     func(string, *core.CoreRequest, interface{}) error
-	put       func(string, *core.CoreRequest, interface{}) error
-	delete    func(string, *core.CoreRequest, interface{}) error
+	get       func(context.Context, string, *core.CoreRequest, interface{}) error
+	post      func(context.Context, string, *core.CoreRequest, interface{}) error
+	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
+	put       func(context.Context, string, *core.CoreRequest, interface{}) error
+	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewCards(requster core.Requester) (r *Cards) {
-	r = &Cards{}
-	r.Requester = requster
+func NewCardService(requester core.Requester) (r *CardService) {
+	r = &CardService{}
+	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
 	r.patch = r.Requester.Patch
@@ -23,10 +24,40 @@ func NewCards(requster core.Requester) (r *Cards) {
 	return
 }
 
+type PreloadedCardService struct {
+	Cards *CardService
+}
+
+func (r *PreloadedCardService) Init(service *CardService) {
+	r.Cards = service
+}
+
+func NewPreloadedCardService(service *CardService) (r *PreloadedCardService) {
+	r = &PreloadedCardService{}
+	r.Init(service)
+	return
+}
+
 // Simulates activity on a Card. You can pass either a Card id or a Digital Wallet
 // Token id to simulate the two different ways purchases can be made.
-func (r *Cards) Authorize(body CardsAuthorizeParams, opts ...*core.RequestOpts) (res CardAuthorizationSimulation, err error) {
+func (r *CardService) Authorize(ctx context.Context, body *SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *CardAuthorizationSimulation, err error) {
 	err = r.post(
+		ctx,
+		"/simulations/card_authorizations",
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+			Body:   body,
+		},
+		&res,
+	)
+	return
+}
+
+// Simulates activity on a Card. You can pass either a Card id or a Digital Wallet
+// Token id to simulate the two different ways purchases can be made.
+func (r *PreloadedCardService) Authorize(ctx context.Context, body *SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *CardAuthorizationSimulation, err error) {
+	err = r.Cards.post(
+		ctx,
 		"/simulations/card_authorizations",
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
@@ -38,8 +69,23 @@ func (r *Cards) Authorize(body CardsAuthorizeParams, opts ...*core.RequestOpts) 
 }
 
 // Simulates the settlement of an authorization by a card acquirer.
-func (r *Cards) Settlement(body CardsSettlementParams, opts ...*core.RequestOpts) (res transactions.Transaction, err error) {
+func (r *CardService) Settlement(ctx context.Context, body *SimulateSettlingACardAuthorizationParameters, opts ...*core.RequestOpts) (res *transactions.Transaction, err error) {
 	err = r.post(
+		ctx,
+		"/simulations/card_settlements",
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+			Body:   body,
+		},
+		&res,
+	)
+	return
+}
+
+// Simulates the settlement of an authorization by a card acquirer.
+func (r *PreloadedCardService) Settlement(ctx context.Context, body *SimulateSettlingACardAuthorizationParameters, opts ...*core.RequestOpts) (res *transactions.Transaction, err error) {
+	err = r.Cards.post(
+		ctx,
 		"/simulations/card_settlements",
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),

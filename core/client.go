@@ -1,8 +1,11 @@
 package core
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
-	"log"
+	"increase/core/query"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -14,8 +17,12 @@ type CoreClient struct {
 	BaseURL    string
 	MaxRetries int
 
+	QuerySettings query.QuerySettings
+
 	AuthHeaders func() map[string]string
 }
+
+var _ Requester = (*CoreClient)(nil)
 
 func (c *CoreClient) UserAgent() string {
 	return "increase/Go 0.0.0"
@@ -61,11 +68,11 @@ func (c *CoreClient) FillDefaultHeaders(req *http.Request) {
 	}
 }
 
-func (c *CoreClient) Request(path string, cr *CoreRequest, body interface{}) error {
-	cr.Path = path
+func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, body interface{}) error {
+	cr.Params.Path = CoalesceStrings(cr.Params.Path, path)
 	cr.LoadDefaults(c)
 
-	req := cr.InitializeHTTPRequest()
+	req := cr.InitializeHTTPRequest(ctx)
 
 	c.FillDefaultHeaders(req)
 
@@ -89,10 +96,21 @@ func (c *CoreClient) Request(path string, cr *CoreRequest, body interface{}) err
 		return NewAPIErrorFromResponse(cr, res)
 	}
 
-	log.Printf("%s", res.Header.Get("content-type"))
+	if cr.Params.ResponseInto != nil {
+		*cr.Params.ResponseInto = res
+	}
+
 	if strings.Contains(res.Header.Get("content-type"), "application/json") {
-		if err := json.NewDecoder(res.Body).Decode(&body); err != nil {
-			return err
+		contents, _ := io.ReadAll(res.Body)
+		if deserialize := cr.Params.DeserializeReturnValue; deserialize == nil || *deserialize {
+			if err := json.NewDecoder(io.NopCloser(bytes.NewReader(contents))).Decode(&body); err != nil {
+				return err
+			}
+		}
+		if cr.Params.ResponseBodyInto != nil {
+			if err := json.NewDecoder(io.NopCloser(bytes.NewReader(contents))).Decode(&cr.Params.ResponseBodyInto); err != nil {
+				return err
+			}
 		}
 	} else {
 		if text, err := extractResponseText(res); err != nil {
@@ -104,23 +122,23 @@ func (c *CoreClient) Request(path string, cr *CoreRequest, body interface{}) err
 	return nil
 }
 
-func (c *CoreClient) Get(path string, req *CoreRequest, res interface{}) error {
-	req.Method = "Get"
-	return c.Request(path, req, &res)
+func (c *CoreClient) Get(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
+	req.Params.Method = "Get"
+	return c.Request(ctx, path, req, &res)
 }
-func (c *CoreClient) Post(path string, req *CoreRequest, res interface{}) error {
-	req.Method = "Post"
-	return c.Request(path, req, &res)
+func (c *CoreClient) Post(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
+	req.Params.Method = "Post"
+	return c.Request(ctx, path, req, &res)
 }
-func (c *CoreClient) Patch(path string, req *CoreRequest, res interface{}) error {
-	req.Method = "Patch"
-	return c.Request(path, req, &res)
+func (c *CoreClient) Patch(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
+	req.Params.Method = "Patch"
+	return c.Request(ctx, path, req, &res)
 }
-func (c *CoreClient) Put(path string, req *CoreRequest, res interface{}) error {
-	req.Method = "Put"
-	return c.Request(path, req, &res)
+func (c *CoreClient) Put(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
+	req.Params.Method = "Put"
+	return c.Request(ctx, path, req, &res)
 }
-func (c *CoreClient) Delete(path string, req *CoreRequest, res interface{}) error {
-	req.Method = "Delete"
-	return c.Request(path, req, &res)
+func (c *CoreClient) Delete(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
+	req.Params.Method = "Delete"
+	return c.Request(ctx, path, req, &res)
 }

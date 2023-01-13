@@ -1,20 +1,21 @@
 package simulations
 
+import "context"
 import "increase/core"
 import "increase/account_statements"
 
-type AccountStatements struct {
+type AccountStatementService struct {
 	Requester core.Requester
-	get       func(string, *core.CoreRequest, interface{}) error
-	post      func(string, *core.CoreRequest, interface{}) error
-	patch     func(string, *core.CoreRequest, interface{}) error
-	put       func(string, *core.CoreRequest, interface{}) error
-	delete    func(string, *core.CoreRequest, interface{}) error
+	get       func(context.Context, string, *core.CoreRequest, interface{}) error
+	post      func(context.Context, string, *core.CoreRequest, interface{}) error
+	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
+	put       func(context.Context, string, *core.CoreRequest, interface{}) error
+	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewAccountStatements(requster core.Requester) (r *AccountStatements) {
-	r = &AccountStatements{}
-	r.Requester = requster
+func NewAccountStatementService(requester core.Requester) (r *AccountStatementService) {
+	r = &AccountStatementService{}
+	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
 	r.patch = r.Requester.Patch
@@ -23,9 +24,38 @@ func NewAccountStatements(requster core.Requester) (r *AccountStatements) {
 	return
 }
 
+type PreloadedAccountStatementService struct {
+	AccountStatements *AccountStatementService
+}
+
+func (r *PreloadedAccountStatementService) Init(service *AccountStatementService) {
+	r.AccountStatements = service
+}
+
+func NewPreloadedAccountStatementService(service *AccountStatementService) (r *PreloadedAccountStatementService) {
+	r = &PreloadedAccountStatementService{}
+	r.Init(service)
+	return
+}
+
 // Simulates an Account Statement being created for an account.
-func (r *AccountStatements) Create(body AccountStatementsCreateParams, opts ...*core.RequestOpts) (res account_statements.AccountStatement, err error) {
+func (r *AccountStatementService) Create(ctx context.Context, body *SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *account_statements.AccountStatement, err error) {
 	err = r.post(
+		ctx,
+		"/simulations/account_statements",
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+			Body:   body,
+		},
+		&res,
+	)
+	return
+}
+
+// Simulates an Account Statement being created for an account.
+func (r *PreloadedAccountStatementService) Create(ctx context.Context, body *SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *account_statements.AccountStatement, err error) {
+	err = r.AccountStatements.post(
+		ctx,
 		"/simulations/account_statements",
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),

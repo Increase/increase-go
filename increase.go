@@ -1,5 +1,6 @@
 package increase
 
+import "context"
 import "increase/core"
 import "increase/accounts"
 import "increase/account_numbers"
@@ -31,108 +32,130 @@ import "increase/account_statements"
 import "increase/simulations"
 import "fmt"
 
+type RequestOpts = core.RequestOpts
+
+func P[T ~bool | ~float32 | ~float64 | ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~string | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~complex64 | ~complex128](v T) *T {
+	return &v
+}
+
 type Increase struct {
-	Requester            *core.CoreClient
-	get                  func(string, *core.CoreRequest, interface{}) error
-	post                 func(string, *core.CoreRequest, interface{}) error
-	patch                func(string, *core.CoreRequest, interface{}) error
-	put                  func(string, *core.CoreRequest, interface{}) error
-	delete               func(string, *core.CoreRequest, interface{}) error
-	APIKey               string
-	Accounts             *accounts.Accounts
-	AccountNumbers       *account_numbers.AccountNumbers
-	RealTimeDecisions    *real_time_decisions.RealTimeDecisions
-	Cards                *cards.Cards
-	CardDisputes         *card_disputes.CardDisputes
-	CardProfiles         *card_profiles.CardProfiles
-	ExternalAccounts     *external_accounts.ExternalAccounts
-	DigitalWalletTokens  *digital_wallet_tokens.DigitalWalletTokens
-	Transactions         *transactions.Transactions
-	PendingTransactions  *pending_transactions.PendingTransactions
-	DeclinedTransactions *declined_transactions.DeclinedTransactions
-	Limits               *limits.Limits
-	AccountTransfers     *account_transfers.AccountTransfers
-	ACHTransfers         *ach_transfers.ACHTransfers
-	ACHPrenotifications  *ach_prenotifications.ACHPrenotifications
-	WireTransfers        *wire_transfers.WireTransfers
-	CheckTransfers       *check_transfers.CheckTransfers
-	Entities             *entities.Entities
-	WireDrawdownRequests *wire_drawdown_requests.WireDrawdownRequests
-	Events               *events.Events
-	EventSubscriptions   *event_subscriptions.EventSubscriptions
-	Files                *files.Files
-	Groups               *groups.Groups
-	OauthConnections     *oauth_connections.OauthConnections
-	CheckDeposits        *check_deposits.CheckDeposits
-	RoutingNumbers       *routing_numbers.RoutingNumbers
-	AccountStatements    *account_statements.AccountStatements
-	Simulations          *simulations.Simulations
+	*ClientOptions
+	get                  func(context.Context, string, *core.CoreRequest, interface{}) error
+	post                 func(context.Context, string, *core.CoreRequest, interface{}) error
+	patch                func(context.Context, string, *core.CoreRequest, interface{}) error
+	put                  func(context.Context, string, *core.CoreRequest, interface{}) error
+	delete               func(context.Context, string, *core.CoreRequest, interface{}) error
+	Accounts             *accounts.AccountService
+	AccountNumbers       *account_numbers.AccountNumberService
+	RealTimeDecisions    *real_time_decisions.RealTimeDecisionService
+	Cards                *cards.CardService
+	CardDisputes         *card_disputes.CardDisputeService
+	CardProfiles         *card_profiles.CardProfileService
+	ExternalAccounts     *external_accounts.ExternalAccountService
+	DigitalWalletTokens  *digital_wallet_tokens.DigitalWalletTokenService
+	Transactions         *transactions.TransactionService
+	PendingTransactions  *pending_transactions.PendingTransactionService
+	DeclinedTransactions *declined_transactions.DeclinedTransactionService
+	Limits               *limits.LimitService
+	AccountTransfers     *account_transfers.AccountTransferService
+	ACHTransfers         *ach_transfers.ACHTransferService
+	ACHPrenotifications  *ach_prenotifications.ACHPrenotificationService
+	WireTransfers        *wire_transfers.WireTransferService
+	CheckTransfers       *check_transfers.CheckTransferService
+	Entities             *entities.EntityService
+	WireDrawdownRequests *wire_drawdown_requests.WireDrawdownRequestService
+	Events               *events.EventService
+	EventSubscriptions   *event_subscriptions.EventSubscriptionService
+	Files                *files.FileService
+	Groups               *groups.GroupService
+	OauthConnections     *oauth_connections.OauthConnectionService
+	CheckDeposits        *check_deposits.CheckDepositService
+	RoutingNumbers       *routing_numbers.RoutingNumberService
+	AccountStatements    *account_statements.AccountStatementService
+	Simulations          *simulations.SimulationService
 }
 
-func NewIncrease(requster *core.CoreClient) (r *Increase) {
-	r.Requester = requster
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
-	r = NewIncreaseWithParams(IncreaseParams{})
-	return
-}
-
-func NewIncreaseWithParams(p IncreaseParams) (r *Increase) {
+func NewIncreaseWithOptions(p ClientOptions) (r *Increase) {
 	r = &Increase{}
+	p.LoadDefaults()
+	r.ClientOptions = &p
 
-	if p.Client == nil {
-		p.Client = &core.CoreClient{}
+	if p.Requester == nil {
+		p.Requester = &core.CoreClient{}
 	}
-	r.Requester = p.Client
+	r.Requester = p.Requester
+
 	if len(r.Requester.BaseURL) == 0 {
-		if len(p.BaseURL) != 0 {
-			r.Requester.BaseURL = p.BaseURL
+		if len(r.BaseURL) != 0 {
+			r.Requester.BaseURL = r.BaseURL
 		} else {
 			r.Requester.BaseURL = "https://api.increase.com"
 		}
 	}
-	r.APIKey = p.APIKey
+
 	r.Requester.AuthHeaders = func() map[string]string {
 		return map[string]string{"Authorization": fmt.Sprintf("Bearer %s", r.APIKey)}
 	}
-	r.Accounts = accounts.NewAccounts(r.Requester)
-	r.AccountNumbers = account_numbers.NewAccountNumbers(r.Requester)
-	r.RealTimeDecisions = real_time_decisions.NewRealTimeDecisions(r.Requester)
-	r.Cards = cards.NewCards(r.Requester)
-	r.CardDisputes = card_disputes.NewCardDisputes(r.Requester)
-	r.CardProfiles = card_profiles.NewCardProfiles(r.Requester)
-	r.ExternalAccounts = external_accounts.NewExternalAccounts(r.Requester)
-	r.DigitalWalletTokens = digital_wallet_tokens.NewDigitalWalletTokens(r.Requester)
-	r.Transactions = transactions.NewTransactions(r.Requester)
-	r.PendingTransactions = pending_transactions.NewPendingTransactions(r.Requester)
-	r.DeclinedTransactions = declined_transactions.NewDeclinedTransactions(r.Requester)
-	r.Limits = limits.NewLimits(r.Requester)
-	r.AccountTransfers = account_transfers.NewAccountTransfers(r.Requester)
-	r.ACHTransfers = ach_transfers.NewACHTransfers(r.Requester)
-	r.ACHPrenotifications = ach_prenotifications.NewACHPrenotifications(r.Requester)
-	r.WireTransfers = wire_transfers.NewWireTransfers(r.Requester)
-	r.CheckTransfers = check_transfers.NewCheckTransfers(r.Requester)
-	r.Entities = entities.NewEntities(r.Requester)
-	r.WireDrawdownRequests = wire_drawdown_requests.NewWireDrawdownRequests(r.Requester)
-	r.Events = events.NewEvents(r.Requester)
-	r.EventSubscriptions = event_subscriptions.NewEventSubscriptions(r.Requester)
-	r.Files = files.NewFiles(r.Requester)
-	r.Groups = groups.NewGroups(r.Requester)
-	r.OauthConnections = oauth_connections.NewOauthConnections(r.Requester)
-	r.CheckDeposits = check_deposits.NewCheckDeposits(r.Requester)
-	r.RoutingNumbers = routing_numbers.NewRoutingNumbers(r.Requester)
-	r.AccountStatements = account_statements.NewAccountStatements(r.Requester)
-	r.Simulations = simulations.NewSimulations(r.Requester)
+
+	r.Accounts = accounts.NewAccountService(r.Requester)
+
+	r.AccountNumbers = account_numbers.NewAccountNumberService(r.Requester)
+
+	r.RealTimeDecisions = real_time_decisions.NewRealTimeDecisionService(r.Requester)
+
+	r.Cards = cards.NewCardService(r.Requester)
+
+	r.CardDisputes = card_disputes.NewCardDisputeService(r.Requester)
+
+	r.CardProfiles = card_profiles.NewCardProfileService(r.Requester)
+
+	r.ExternalAccounts = external_accounts.NewExternalAccountService(r.Requester)
+
+	r.DigitalWalletTokens = digital_wallet_tokens.NewDigitalWalletTokenService(r.Requester)
+
+	r.Transactions = transactions.NewTransactionService(r.Requester)
+
+	r.PendingTransactions = pending_transactions.NewPendingTransactionService(r.Requester)
+
+	r.DeclinedTransactions = declined_transactions.NewDeclinedTransactionService(r.Requester)
+
+	r.Limits = limits.NewLimitService(r.Requester)
+
+	r.AccountTransfers = account_transfers.NewAccountTransferService(r.Requester)
+
+	r.ACHTransfers = ach_transfers.NewACHTransferService(r.Requester)
+
+	r.ACHPrenotifications = ach_prenotifications.NewACHPrenotificationService(r.Requester)
+
+	r.WireTransfers = wire_transfers.NewWireTransferService(r.Requester)
+
+	r.CheckTransfers = check_transfers.NewCheckTransferService(r.Requester)
+
+	r.Entities = entities.NewEntityService(r.Requester)
+
+	r.WireDrawdownRequests = wire_drawdown_requests.NewWireDrawdownRequestService(r.Requester)
+
+	r.Events = events.NewEventService(r.Requester)
+
+	r.EventSubscriptions = event_subscriptions.NewEventSubscriptionService(r.Requester)
+
+	r.Files = files.NewFileService(r.Requester)
+
+	r.Groups = groups.NewGroupService(r.Requester)
+
+	r.OauthConnections = oauth_connections.NewOauthConnectionService(r.Requester)
+
+	r.CheckDeposits = check_deposits.NewCheckDepositService(r.Requester)
+
+	r.RoutingNumbers = routing_numbers.NewRoutingNumberService(r.Requester)
+
+	r.AccountStatements = account_statements.NewAccountStatementService(r.Requester)
+
+	r.Simulations = simulations.NewSimulationService(r.Requester)
+
 	return
 }
 
-type IncreaseParams struct {
-	Client  *core.CoreClient
-	BaseURL string
-	APIKey  string
+func NewIncrease() *Increase {
+	return NewIncreaseWithOptions(ClientOptions{})
 }
-
-type RequestOpts = core.RequestOpts

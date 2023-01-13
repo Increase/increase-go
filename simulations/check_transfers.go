@@ -1,21 +1,22 @@
 package simulations
 
+import "context"
 import "increase/core"
 import "increase/check_transfers"
 import "fmt"
 
-type CheckTransfers struct {
+type CheckTransferService struct {
 	Requester core.Requester
-	get       func(string, *core.CoreRequest, interface{}) error
-	post      func(string, *core.CoreRequest, interface{}) error
-	patch     func(string, *core.CoreRequest, interface{}) error
-	put       func(string, *core.CoreRequest, interface{}) error
-	delete    func(string, *core.CoreRequest, interface{}) error
+	get       func(context.Context, string, *core.CoreRequest, interface{}) error
+	post      func(context.Context, string, *core.CoreRequest, interface{}) error
+	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
+	put       func(context.Context, string, *core.CoreRequest, interface{}) error
+	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewCheckTransfers(requster core.Requester) (r *CheckTransfers) {
-	r = &CheckTransfers{}
-	r.Requester = requster
+func NewCheckTransferService(requester core.Requester) (r *CheckTransferService) {
+	r = &CheckTransferService{}
+	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
 	r.patch = r.Requester.Patch
@@ -24,10 +25,39 @@ func NewCheckTransfers(requster core.Requester) (r *CheckTransfers) {
 	return
 }
 
+type PreloadedCheckTransferService struct {
+	CheckTransfers *CheckTransferService
+}
+
+func (r *PreloadedCheckTransferService) Init(service *CheckTransferService) {
+	r.CheckTransfers = service
+}
+
+func NewPreloadedCheckTransferService(service *CheckTransferService) (r *PreloadedCheckTransferService) {
+	r = &PreloadedCheckTransferService{}
+	r.Init(service)
+	return
+}
+
 // Simulates the mailing of a Check Transfer. This transfer must first have a
 // `status` of `pending_approval` or `pending_submission`.
-func (r *CheckTransfers) Mail(check_transfer_id string, opts ...*core.RequestOpts) (res check_transfers.CheckTransfer, err error) {
+func (r *CheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *check_transfers.CheckTransfer, err error) {
 	err = r.post(
+		ctx,
+		fmt.Sprintf("/simulations/check_transfers/%s/mail", check_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+	return
+}
+
+// Simulates the mailing of a Check Transfer. This transfer must first have a
+// `status` of `pending_approval` or `pending_submission`.
+func (r *PreloadedCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *check_transfers.CheckTransfer, err error) {
+	err = r.CheckTransfers.post(
+		ctx,
 		fmt.Sprintf("/simulations/check_transfers/%s/mail", check_transfer_id),
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
