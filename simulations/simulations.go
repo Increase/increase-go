@@ -4227,6 +4227,61 @@ const (
 	SimulatesAdvancingTheStateOfACardDisputeParametersStatusRejected SimulatesAdvancingTheStateOfACardDisputeParametersStatus = "rejected"
 )
 
+//
+type DigitalWalletTokenRequestCreateResponse struct {
+	// If the simulated tokenization attempt was declined, this field contains details
+	// as to why.
+	DeclineReason *DigitalWalletTokenRequestCreateResponseDeclineReason `json:"decline_reason"`
+	// If the simulated tokenization attempt was accepted, this field contains the id
+	// of the Digital Wallet Token that was created.
+	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_digital_wallet_token_request_simulation_result`.
+	Type *DigitalWalletTokenRequestCreateResponseType `json:"type"`
+}
+
+// If the simulated tokenization attempt was declined, this field contains details
+// as to why.
+func (r *DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineReason DigitalWalletTokenRequestCreateResponseDeclineReason) {
+	if r != nil && r.DeclineReason != nil {
+		DeclineReason = *r.DeclineReason
+	}
+	return
+}
+
+// If the simulated tokenization attempt was accepted, this field contains the id
+// of the Digital Wallet Token that was created.
+func (r *DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
+	if r != nil && r.DigitalWalletTokenId != nil {
+		DigitalWalletTokenId = *r.DigitalWalletTokenId
+	}
+	return
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_digital_wallet_token_request_simulation_result`.
+func (r *DigitalWalletTokenRequestCreateResponse) GetType() (Type DigitalWalletTokenRequestCreateResponseType) {
+	if r != nil && r.Type != nil {
+		Type = *r.Type
+	}
+	return
+}
+
+type DigitalWalletTokenRequestCreateResponseDeclineReason string
+
+const (
+	DigitalWalletTokenRequestCreateResponseDeclineReasonCardNotActive        DigitalWalletTokenRequestCreateResponseDeclineReason = "card_not_active"
+	DigitalWalletTokenRequestCreateResponseDeclineReasonNoVerificationMethod DigitalWalletTokenRequestCreateResponseDeclineReason = "no_verification_method"
+	DigitalWalletTokenRequestCreateResponseDeclineReasonWebhookTimedOut      DigitalWalletTokenRequestCreateResponseDeclineReason = "webhook_timed_out"
+	DigitalWalletTokenRequestCreateResponseDeclineReasonWebhookDeclined      DigitalWalletTokenRequestCreateResponseDeclineReason = "webhook_declined"
+)
+
+type DigitalWalletTokenRequestCreateResponseType string
+
+const (
+	DigitalWalletTokenRequestCreateResponseTypeInboundDigitalWalletTokenRequestSimulationResult DigitalWalletTokenRequestCreateResponseType = "inbound_digital_wallet_token_request_simulation_result"
+)
+
 type SimulateDigitalWalletActivityOnACardParameters struct {
 	// The identifier of the Card to be authorized.
 	CardId *string `json:"card_id"`
@@ -4239,419 +4294,6 @@ func (r *SimulateDigitalWalletActivityOnACardParameters) GetCardId() (CardId str
 	}
 	return
 }
-
-//
-type CheckDeposit struct {
-	// The deposit's identifier.
-	Id *string `json:"id"`
-	// The deposited amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-	Currency *CheckDepositCurrency `json:"currency"`
-	// The status of the Check Deposit.
-	Status *CheckDepositStatus `json:"status"`
-	// The Account the check was deposited into.
-	AccountId *string `json:"account_id"`
-	// The ID for the File containing the image of the front of the check.
-	FrontImageFileId *string `json:"front_image_file_id"`
-	// The ID for the File containing the image of the back of the check.
-	BackImageFileId *string `json:"back_image_file_id"`
-	// The ID for the Transaction created by the deposit.
-	TransactionId *string `json:"transaction_id"`
-	// If your deposit is successfully parsed and accepted by Increase, this will
-	// contain details of the parsed check.
-	DepositAcceptance *CheckDepositDepositAcceptance `json:"deposit_acceptance"`
-	// If your deposit is rejected by Increase, this will contain details as to why it
-	// was rejected.
-	DepositRejection *CheckDepositDepositRejection `json:"deposit_rejection"`
-	// If your deposit is returned, this will contain details as to why it was
-	// returned.
-	DepositReturn *CheckDepositDepositReturn `json:"deposit_return"`
-	// A constant representing the object's type. For this resource it will always be
-	// `check_deposit`.
-	Type *CheckDepositType `json:"type"`
-}
-
-// The deposit's identifier.
-func (r *CheckDeposit) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
-	}
-	return
-}
-
-// The deposited amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
-func (r *CheckDeposit) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the transfer was created.
-func (r *CheckDeposit) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-func (r *CheckDeposit) GetCurrency() (Currency CheckDepositCurrency) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
-}
-
-// The status of the Check Deposit.
-func (r *CheckDeposit) GetStatus() (Status CheckDepositStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// The Account the check was deposited into.
-func (r *CheckDeposit) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
-	}
-	return
-}
-
-// The ID for the File containing the image of the front of the check.
-func (r *CheckDeposit) GetFrontImageFileId() (FrontImageFileId string) {
-	if r != nil && r.FrontImageFileId != nil {
-		FrontImageFileId = *r.FrontImageFileId
-	}
-	return
-}
-
-// The ID for the File containing the image of the back of the check.
-func (r *CheckDeposit) GetBackImageFileId() (BackImageFileId string) {
-	if r != nil && r.BackImageFileId != nil {
-		BackImageFileId = *r.BackImageFileId
-	}
-	return
-}
-
-// The ID for the Transaction created by the deposit.
-func (r *CheckDeposit) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
-	}
-	return
-}
-
-// If your deposit is successfully parsed and accepted by Increase, this will
-// contain details of the parsed check.
-func (r *CheckDeposit) GetDepositAcceptance() (DepositAcceptance CheckDepositDepositAcceptance) {
-	if r != nil && r.DepositAcceptance != nil {
-		DepositAcceptance = *r.DepositAcceptance
-	}
-	return
-}
-
-// If your deposit is rejected by Increase, this will contain details as to why it
-// was rejected.
-func (r *CheckDeposit) GetDepositRejection() (DepositRejection CheckDepositDepositRejection) {
-	if r != nil && r.DepositRejection != nil {
-		DepositRejection = *r.DepositRejection
-	}
-	return
-}
-
-// If your deposit is returned, this will contain details as to why it was
-// returned.
-func (r *CheckDeposit) GetDepositReturn() (DepositReturn CheckDepositDepositReturn) {
-	if r != nil && r.DepositReturn != nil {
-		DepositReturn = *r.DepositReturn
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `check_deposit`.
-func (r *CheckDeposit) GetType() (Type CheckDepositType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
-}
-
-type CheckDepositCurrency string
-
-const (
-	CheckDepositCurrencyCad CheckDepositCurrency = "CAD"
-	CheckDepositCurrencyChf CheckDepositCurrency = "CHF"
-	CheckDepositCurrencyEur CheckDepositCurrency = "EUR"
-	CheckDepositCurrencyGbp CheckDepositCurrency = "GBP"
-	CheckDepositCurrencyJpy CheckDepositCurrency = "JPY"
-	CheckDepositCurrencyUsd CheckDepositCurrency = "USD"
-)
-
-type CheckDepositStatus string
-
-const (
-	CheckDepositStatusPending   CheckDepositStatus = "pending"
-	CheckDepositStatusSubmitted CheckDepositStatus = "submitted"
-	CheckDepositStatusRejected  CheckDepositStatus = "rejected"
-	CheckDepositStatusReturned  CheckDepositStatus = "returned"
-)
-
-//
-type CheckDepositDepositAcceptance struct {
-	// The amount to be deposited in the minor unit of the transaction's currency. For
-	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency *CheckDepositDepositAcceptanceCurrency `json:"currency"`
-	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
-	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
-	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
-}
-
-// The amount to be deposited in the minor unit of the transaction's currency. For
-// dollars, for example, this is cents.
-func (r *CheckDepositDepositAcceptance) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-func (r *CheckDepositDepositAcceptance) GetCurrency() (Currency CheckDepositDepositAcceptanceCurrency) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
-}
-
-// The account number printed on the check.
-func (r *CheckDepositDepositAcceptance) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
-		AccountNumber = *r.AccountNumber
-	}
-	return
-}
-
-// The routing number printed on the check.
-func (r *CheckDepositDepositAcceptance) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
-		RoutingNumber = *r.RoutingNumber
-	}
-	return
-}
-
-// An additional line of metadata printed on the check. This typically includes the
-// check number.
-func (r *CheckDepositDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
-	if r != nil && r.AuxiliaryOnUs != nil {
-		AuxiliaryOnUs = *r.AuxiliaryOnUs
-	}
-	return
-}
-
-type CheckDepositDepositAcceptanceCurrency string
-
-const (
-	CheckDepositDepositAcceptanceCurrencyCad CheckDepositDepositAcceptanceCurrency = "CAD"
-	CheckDepositDepositAcceptanceCurrencyChf CheckDepositDepositAcceptanceCurrency = "CHF"
-	CheckDepositDepositAcceptanceCurrencyEur CheckDepositDepositAcceptanceCurrency = "EUR"
-	CheckDepositDepositAcceptanceCurrencyGbp CheckDepositDepositAcceptanceCurrency = "GBP"
-	CheckDepositDepositAcceptanceCurrencyJpy CheckDepositDepositAcceptanceCurrency = "JPY"
-	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
-)
-
-//
-type CheckDepositDepositRejection struct {
-	// The rejected amount in the minor unit of check's currency. For dollars, for
-	// example, this is cents.
-	Amount *int `json:"amount"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-	// currency.
-	Currency *CheckDepositDepositRejectionCurrency `json:"currency"`
-	// Why the check deposit was rejected.
-	Reason *CheckDepositDepositRejectionReason `json:"reason"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check deposit was rejected.
-	RejectedAt *string `json:"rejected_at"`
-}
-
-// The rejected amount in the minor unit of check's currency. For dollars, for
-// example, this is cents.
-func (r *CheckDepositDepositRejection) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-// currency.
-func (r *CheckDepositDepositRejection) GetCurrency() (Currency CheckDepositDepositRejectionCurrency) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
-}
-
-// Why the check deposit was rejected.
-func (r *CheckDepositDepositRejection) GetReason() (Reason CheckDepositDepositRejectionReason) {
-	if r != nil && r.Reason != nil {
-		Reason = *r.Reason
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the check deposit was rejected.
-func (r *CheckDepositDepositRejection) GetRejectedAt() (RejectedAt string) {
-	if r != nil && r.RejectedAt != nil {
-		RejectedAt = *r.RejectedAt
-	}
-	return
-}
-
-type CheckDepositDepositRejectionCurrency string
-
-const (
-	CheckDepositDepositRejectionCurrencyCad CheckDepositDepositRejectionCurrency = "CAD"
-	CheckDepositDepositRejectionCurrencyChf CheckDepositDepositRejectionCurrency = "CHF"
-	CheckDepositDepositRejectionCurrencyEur CheckDepositDepositRejectionCurrency = "EUR"
-	CheckDepositDepositRejectionCurrencyGbp CheckDepositDepositRejectionCurrency = "GBP"
-	CheckDepositDepositRejectionCurrencyJpy CheckDepositDepositRejectionCurrency = "JPY"
-	CheckDepositDepositRejectionCurrencyUsd CheckDepositDepositRejectionCurrency = "USD"
-)
-
-type CheckDepositDepositRejectionReason string
-
-const (
-	CheckDepositDepositRejectionReasonIncompleteImage             CheckDepositDepositRejectionReason = "incomplete_image"
-	CheckDepositDepositRejectionReasonDuplicate                   CheckDepositDepositRejectionReason = "duplicate"
-	CheckDepositDepositRejectionReasonPoorImageQuality            CheckDepositDepositRejectionReason = "poor_image_quality"
-	CheckDepositDepositRejectionReasonIncorrectAmount             CheckDepositDepositRejectionReason = "incorrect_amount"
-	CheckDepositDepositRejectionReasonIncorrectRecipient          CheckDepositDepositRejectionReason = "incorrect_recipient"
-	CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit CheckDepositDepositRejectionReason = "not_eligible_for_mobile_deposit"
-	CheckDepositDepositRejectionReasonUnknown                     CheckDepositDepositRejectionReason = "unknown"
-)
-
-//
-type CheckDepositDepositReturn struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount *int `json:"amount"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency *CheckDepositDepositReturnCurrency `json:"currency"`
-	// The identifier of the Check Deposit that was returned.
-	CheckDepositId *string `json:"check_deposit_id"`
-	// The identifier of the transaction that reversed the original check deposit
-	// transaction.
-	TransactionId *string `json:"transaction_id"`
-	//
-	ReturnReason *CheckDepositDepositReturnReturnReason `json:"return_reason"`
-}
-
-// The amount in the minor unit of the transaction's currency. For dollars, for
-// example, this is cents.
-func (r *CheckDepositDepositReturn) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the check deposit was returned.
-func (r *CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt string) {
-	if r != nil && r.ReturnedAt != nil {
-		ReturnedAt = *r.ReturnedAt
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-func (r *CheckDepositDepositReturn) GetCurrency() (Currency CheckDepositDepositReturnCurrency) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
-}
-
-// The identifier of the Check Deposit that was returned.
-func (r *CheckDepositDepositReturn) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
-	}
-	return
-}
-
-// The identifier of the transaction that reversed the original check deposit
-// transaction.
-func (r *CheckDepositDepositReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
-	}
-	return
-}
-
-func (r *CheckDepositDepositReturn) GetReturnReason() (ReturnReason CheckDepositDepositReturnReturnReason) {
-	if r != nil && r.ReturnReason != nil {
-		ReturnReason = *r.ReturnReason
-	}
-	return
-}
-
-type CheckDepositDepositReturnCurrency string
-
-const (
-	CheckDepositDepositReturnCurrencyCad CheckDepositDepositReturnCurrency = "CAD"
-	CheckDepositDepositReturnCurrencyChf CheckDepositDepositReturnCurrency = "CHF"
-	CheckDepositDepositReturnCurrencyEur CheckDepositDepositReturnCurrency = "EUR"
-	CheckDepositDepositReturnCurrencyGbp CheckDepositDepositReturnCurrency = "GBP"
-	CheckDepositDepositReturnCurrencyJpy CheckDepositDepositReturnCurrency = "JPY"
-	CheckDepositDepositReturnCurrencyUsd CheckDepositDepositReturnCurrency = "USD"
-)
-
-type CheckDepositDepositReturnReturnReason string
-
-const (
-	CheckDepositDepositReturnReturnReasonACHConversionNotSupported CheckDepositDepositReturnReturnReason = "ach_conversion_not_supported"
-	CheckDepositDepositReturnReturnReasonDuplicateSubmission       CheckDepositDepositReturnReturnReason = "duplicate_submission"
-	CheckDepositDepositReturnReturnReasonInsufficientFunds         CheckDepositDepositReturnReturnReason = "insufficient_funds"
-	CheckDepositDepositReturnReturnReasonNoAccount                 CheckDepositDepositReturnReturnReason = "no_account"
-	CheckDepositDepositReturnReturnReasonNotAuthorized             CheckDepositDepositReturnReturnReason = "not_authorized"
-	CheckDepositDepositReturnReturnReasonStaleDated                CheckDepositDepositReturnReturnReason = "stale_dated"
-	CheckDepositDepositReturnReturnReasonStopPayment               CheckDepositDepositReturnReturnReason = "stop_payment"
-	CheckDepositDepositReturnReturnReasonUnknownReason             CheckDepositDepositReturnReturnReason = "unknown_reason"
-	CheckDepositDepositReturnReturnReasonUnmatchedDetails          CheckDepositDepositReturnReturnReason = "unmatched_details"
-	CheckDepositDepositReturnReturnReasonUnreadableImage           CheckDepositDepositReturnReturnReason = "unreadable_image"
-)
-
-type CheckDepositType string
-
-const (
-	CheckDepositTypeCheckDeposit CheckDepositType = "check_deposit"
-)
 
 //
 type WireTransferSimulation struct {

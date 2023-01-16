@@ -2,7 +2,6 @@ package entities
 
 import "context"
 import "increase/core"
-import "increase/shared"
 import "fmt"
 
 type SupplementalDocumentService struct {
@@ -39,7 +38,7 @@ func NewPreloadedSupplementalDocumentService(service *SupplementalDocumentServic
 	return
 }
 
-func (r *SupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *shared.Entity, err error) {
+func (r *SupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *Entity, err error) {
 	err = r.post(
 		ctx,
 		fmt.Sprintf("/entities/%s/supplemental_documents", entity_id),
@@ -52,7 +51,7 @@ func (r *SupplementalDocumentService) Create(ctx context.Context, entity_id stri
 	return
 }
 
-func (r *PreloadedSupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *shared.Entity, err error) {
+func (r *PreloadedSupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *Entity, err error) {
 	err = r.SupplementalDocuments.post(
 		ctx,
 		fmt.Sprintf("/entities/%s/supplemental_documents", entity_id),

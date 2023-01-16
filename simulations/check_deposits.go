@@ -2,6 +2,7 @@ package simulations
 
 import "context"
 import "increase/core"
+import "increase/check_deposits"
 import "fmt"
 
 type CheckDepositService struct {
@@ -40,7 +41,7 @@ func NewPreloadedCheckDepositService(service *CheckDepositService) (r *Preloaded
 
 // Simulates the rejection of a Check Deposit by Increase due to factors like poor
 // image quality. This Check Deposit must first have a `status` of `pending`.
-func (r *CheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *CheckDeposit, err error) {
+func (r *CheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
 	err = r.post(
 		ctx,
 		fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id),
@@ -54,7 +55,7 @@ func (r *CheckDepositService) Reject(ctx context.Context, check_deposit_id strin
 
 // Simulates the rejection of a Check Deposit by Increase due to factors like poor
 // image quality. This Check Deposit must first have a `status` of `pending`.
-func (r *PreloadedCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *CheckDeposit, err error) {
+func (r *PreloadedCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
 	err = r.CheckDeposits.post(
 		ctx,
 		fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id),
@@ -68,7 +69,7 @@ func (r *PreloadedCheckDepositService) Reject(ctx context.Context, check_deposit
 
 // Simulates the submission of a Check Deposit to the Federal Reserve. This Check
 // Deposit must first have a `status` of `pending`.
-func (r *CheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *CheckDeposit, err error) {
+func (r *CheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
 	err = r.post(
 		ctx,
 		fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id),
@@ -82,7 +83,7 @@ func (r *CheckDepositService) Submit(ctx context.Context, check_deposit_id strin
 
 // Simulates the submission of a Check Deposit to the Federal Reserve. This Check
 // Deposit must first have a `status` of `pending`.
-func (r *PreloadedCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *CheckDeposit, err error) {
+func (r *PreloadedCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
 	err = r.CheckDeposits.post(
 		ctx,
 		fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id),

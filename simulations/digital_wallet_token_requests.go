@@ -2,7 +2,6 @@ package simulations
 
 import "context"
 import "increase/core"
-import "increase/shared"
 
 type DigitalWalletTokenRequestService struct {
 	Requester core.Requester
@@ -39,7 +38,7 @@ func NewPreloadedDigitalWalletTokenRequestService(service *DigitalWalletTokenReq
 }
 
 // Simulates a user attempting add a Card to a digital wallet such as Apple Pay.
-func (r *DigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *shared.InboundDigitalWalletTokenRequestSimulationResult, err error) {
+func (r *DigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *DigitalWalletTokenRequestCreateResponse, err error) {
 	err = r.post(
 		ctx,
 		"/simulations/digital_wallet_token_requests",
@@ -53,7 +52,7 @@ func (r *DigitalWalletTokenRequestService) Create(ctx context.Context, body *Sim
 }
 
 // Simulates a user attempting add a Card to a digital wallet such as Apple Pay.
-func (r *PreloadedDigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *shared.InboundDigitalWalletTokenRequestSimulationResult, err error) {
+func (r *PreloadedDigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *DigitalWalletTokenRequestCreateResponse, err error) {
 	err = r.DigitalWalletTokenRequests.post(
 		ctx,
 		"/simulations/digital_wallet_token_requests",
