@@ -44,7 +44,7 @@ type File struct {
 	// The time the File was created.
 	CreatedAt *string `json:"created_at"`
 	// The File's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// What the File will be used for. We may add additional possible values for this
 	// enum over time; your application should be able to handle such additions
 	// gracefully.
@@ -72,9 +72,9 @@ func (r *File) GetCreatedAt() (CreatedAt string) {
 }
 
 // The File's identifier.
-func (r *File) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *File) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }

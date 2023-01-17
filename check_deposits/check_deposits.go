@@ -42,7 +42,7 @@ func NewPreloadedCheckDepositService(service *CheckDepositService) (r *Preloaded
 //
 type CheckDeposit struct {
 	// The deposit's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The deposited amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int `json:"amount"`
@@ -54,13 +54,13 @@ type CheckDeposit struct {
 	// The status of the Check Deposit.
 	Status *CheckDepositStatus `json:"status"`
 	// The Account the check was deposited into.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileId *string `json:"front_image_file_id"`
+	FrontImageFileID *string `json:"front_image_file_id"`
 	// The ID for the File containing the image of the back of the check.
-	BackImageFileId *string `json:"back_image_file_id"`
+	BackImageFileID *string `json:"back_image_file_id"`
 	// The ID for the Transaction created by the deposit.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// If your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
 	DepositAcceptance *CheckDepositDepositAcceptance `json:"deposit_acceptance"`
@@ -76,9 +76,9 @@ type CheckDeposit struct {
 }
 
 // The deposit's identifier.
-func (r *CheckDeposit) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CheckDeposit) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -118,33 +118,33 @@ func (r *CheckDeposit) GetStatus() (Status CheckDepositStatus) {
 }
 
 // The Account the check was deposited into.
-func (r *CheckDeposit) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CheckDeposit) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The ID for the File containing the image of the front of the check.
-func (r *CheckDeposit) GetFrontImageFileId() (FrontImageFileId string) {
-	if r != nil && r.FrontImageFileId != nil {
-		FrontImageFileId = *r.FrontImageFileId
+func (r *CheckDeposit) GetFrontImageFileID() (FrontImageFileID string) {
+	if r != nil && r.FrontImageFileID != nil {
+		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The ID for the File containing the image of the back of the check.
-func (r *CheckDeposit) GetBackImageFileId() (BackImageFileId string) {
-	if r != nil && r.BackImageFileId != nil {
-		BackImageFileId = *r.BackImageFileId
+func (r *CheckDeposit) GetBackImageFileID() (BackImageFileID string) {
+	if r != nil && r.BackImageFileID != nil {
+		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
 
 // The ID for the Transaction created by the deposit.
-func (r *CheckDeposit) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *CheckDeposit) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -361,10 +361,10 @@ type CheckDepositDepositReturn struct {
 	// transaction's currency.
 	Currency *CheckDepositDepositReturnCurrency `json:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	//
 	ReturnReason *CheckDepositDepositReturnReturnReason `json:"return_reason"`
 }
@@ -397,18 +397,18 @@ func (r *CheckDepositDepositReturn) GetCurrency() (Currency CheckDepositDepositR
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *CheckDepositDepositReturn) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *CheckDepositDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *CheckDepositDepositReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *CheckDepositDepositReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -454,22 +454,22 @@ const (
 
 type CreateACheckDepositParameters struct {
 	// The identifier for the Account to deposit the check in.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The deposit amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	// The currency to use for the deposit.
 	Currency *string `json:"currency"`
 	// The File containing the check's front image.
-	FrontImageFileId *string `json:"front_image_file_id"`
+	FrontImageFileID *string `json:"front_image_file_id"`
 	// The File containing the check's back image.
-	BackImageFileId *string `json:"back_image_file_id"`
+	BackImageFileID *string `json:"back_image_file_id"`
 }
 
 // The identifier for the Account to deposit the check in.
-func (r *CreateACheckDepositParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateACheckDepositParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -492,17 +492,17 @@ func (r *CreateACheckDepositParameters) GetCurrency() (Currency string) {
 }
 
 // The File containing the check's front image.
-func (r *CreateACheckDepositParameters) GetFrontImageFileId() (FrontImageFileId string) {
-	if r != nil && r.FrontImageFileId != nil {
-		FrontImageFileId = *r.FrontImageFileId
+func (r *CreateACheckDepositParameters) GetFrontImageFileID() (FrontImageFileID string) {
+	if r != nil && r.FrontImageFileID != nil {
+		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The File containing the check's back image.
-func (r *CreateACheckDepositParameters) GetBackImageFileId() (BackImageFileId string) {
-	if r != nil && r.BackImageFileId != nil {
-		BackImageFileId = *r.BackImageFileId
+func (r *CreateACheckDepositParameters) GetBackImageFileID() (BackImageFileID string) {
+	if r != nil && r.BackImageFileID != nil {
+		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
@@ -514,7 +514,7 @@ type ListCheckDepositsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Check Deposits to those belonging to the specified Account.
-	AccountId *string                          `query:"account_id"`
+	AccountID *string                          `query:"account_id"`
 	CreatedAt *ListCheckDepositsQueryCreatedAt `query:"created_at"`
 }
 
@@ -536,9 +536,9 @@ func (r *ListCheckDepositsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Check Deposits to those belonging to the specified Account.
-func (r *ListCheckDepositsQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListCheckDepositsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }

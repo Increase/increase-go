@@ -47,7 +47,7 @@ type Group struct {
 	// was created.
 	CreatedAt *string `json:"created_at"`
 	// The Group identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
 	Type *GroupType `json:"type"`
@@ -79,9 +79,9 @@ func (r *Group) GetCreatedAt() (CreatedAt string) {
 }
 
 // The Group identifier.
-func (r *Group) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Group) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }

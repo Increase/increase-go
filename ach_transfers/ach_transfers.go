@@ -42,7 +42,7 @@ func NewPreloadedACHTransferService(service *ACHTransferService) (r *PreloadedAC
 //
 type ACHTransfer struct {
 	// The Account to which the transfer belongs.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The destination account number.
 	AccountNumber *string `json:"account_number"`
 	// Additional information that will be sent to the recipient.
@@ -64,9 +64,9 @@ type ACHTransfer struct {
 	// the transfer was created.
 	CreatedAt *string `json:"created_at"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountId *string `json:"external_account_id"`
+	ExternalAccountID *string `json:"external_account_id"`
 	// The ACH transfer's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The transfer's network.
 	Network *ACHTransferNetwork `json:"network"`
 	// If the receiving bank accepts the transfer but notifies that future transfers
@@ -84,18 +84,18 @@ type ACHTransfer struct {
 	// details.
 	Submission *ACHTransferSubmission `json:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateId *string `json:"template_id"`
+	TemplateID *string `json:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type *ACHTransferType `json:"type"`
 }
 
 // The Account to which the transfer belongs.
-func (r *ACHTransfer) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ACHTransfer) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -163,17 +163,17 @@ func (r *ACHTransfer) GetCreatedAt() (CreatedAt string) {
 }
 
 // The identifier of the External Account the transfer was made to, if any.
-func (r *ACHTransfer) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *ACHTransfer) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
 // The ACH transfer's identifier.
-func (r *ACHTransfer) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *ACHTransfer) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -237,17 +237,17 @@ func (r *ACHTransfer) GetSubmission() (Submission ACHTransferSubmission) {
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *ACHTransfer) GetTemplateId() (TemplateId string) {
-	if r != nil && r.TemplateId != nil {
-		TemplateId = *r.TemplateId
+func (r *ACHTransfer) GetTemplateID() (TemplateID string) {
+	if r != nil && r.TemplateID != nil {
+		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *ACHTransfer) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransfer) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -354,9 +354,9 @@ type ACHTransferReturn struct {
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *ACHTransferReturnReturnReasonCode `json:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -377,17 +377,17 @@ func (r *ACHTransferReturn) GetReturnReasonCode() (ReturnReasonCode ACHTransferR
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *ACHTransferReturn) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferReturn) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *ACHTransferReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -453,7 +453,7 @@ const (
 
 type CreateAnACHTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The account number for the destination account.
 	AccountNumber *string `json:"account_number,omitempty"`
 	// Additional information that will be sent to the recipient.
@@ -475,11 +475,11 @@ type CreateAnACHTransferParameters struct {
 	EffectiveDate *string `json:"effective_date,omitempty"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
-	ExternalAccountId *string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `json:"external_account_id,omitempty"`
 	// The type of the account to which the transfer will be sent.
 	Funding *CreateAnACHTransferParametersFunding `json:"funding,omitempty"`
 	// Your identifer for the transfer recipient.
-	IndividualId *string `json:"individual_id,omitempty"`
+	IndividualID *string `json:"individual_id,omitempty"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
 	IndividualName *string `json:"individual_name,omitempty"`
@@ -494,9 +494,9 @@ type CreateAnACHTransferParameters struct {
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateAnACHTransferParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateAnACHTransferParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -570,9 +570,9 @@ func (r *CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string
 
 // The ID of an External Account to initiate a transfer to. If this parameter is
 // provided, `account_number`, `routing_number`, and `funding` must be absent.
-func (r *CreateAnACHTransferParameters) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *CreateAnACHTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
@@ -586,9 +586,9 @@ func (r *CreateAnACHTransferParameters) GetFunding() (Funding CreateAnACHTransfe
 }
 
 // Your identifer for the transfer recipient.
-func (r *CreateAnACHTransferParameters) GetIndividualId() (IndividualId string) {
-	if r != nil && r.IndividualId != nil {
-		IndividualId = *r.IndividualId
+func (r *CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) {
+	if r != nil && r.IndividualID != nil {
+		IndividualID = *r.IndividualID
 	}
 	return
 }
@@ -650,9 +650,9 @@ type ListACHTransfersQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter ACH Transfers to those that originated from the specified Account.
-	AccountId *string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter ACH Transfers to those made to the specified External Account.
-	ExternalAccountId *string                         `query:"external_account_id"`
+	ExternalAccountID *string                         `query:"external_account_id"`
 	CreatedAt         *ListACHTransfersQueryCreatedAt `query:"created_at"`
 }
 
@@ -674,17 +674,17 @@ func (r *ListACHTransfersQuery) GetLimit() (Limit int) {
 }
 
 // Filter ACH Transfers to those that originated from the specified Account.
-func (r *ListACHTransfersQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListACHTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter ACH Transfers to those made to the specified External Account.
-func (r *ListACHTransfersQuery) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *ListACHTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }

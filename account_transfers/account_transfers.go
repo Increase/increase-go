@@ -42,19 +42,19 @@ func NewPreloadedAccountTransferService(service *AccountTransferService) (r *Pre
 //
 type AccountTransfer struct {
 	// The account transfer's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The transfer amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int `json:"amount"`
 	// The Account to which the transfer belongs.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency *AccountTransferCurrency `json:"currency"`
 	// The destination account's identifier.
-	DestinationAccountId *string `json:"destination_account_id"`
+	DestinationAccountID *string `json:"destination_account_id"`
 	// The ID for the transaction receiving the transfer.
-	DestinationTransactionId *string `json:"destination_transaction_id"`
+	DestinationTransactionID *string `json:"destination_transaction_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt *string `json:"created_at"`
@@ -65,9 +65,9 @@ type AccountTransfer struct {
 	// The lifecycle status of the transfer.
 	Status *AccountTransferStatus `json:"status"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateId *string `json:"template_id"`
+	TemplateID *string `json:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
 	Approval *AccountTransferApproval `json:"approval"`
@@ -80,9 +80,9 @@ type AccountTransfer struct {
 }
 
 // The account transfer's identifier.
-func (r *AccountTransfer) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *AccountTransfer) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -97,9 +97,9 @@ func (r *AccountTransfer) GetAmount() (Amount int) {
 }
 
 // The Account to which the transfer belongs.
-func (r *AccountTransfer) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *AccountTransfer) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -114,17 +114,17 @@ func (r *AccountTransfer) GetCurrency() (Currency AccountTransferCurrency) {
 }
 
 // The destination account's identifier.
-func (r *AccountTransfer) GetDestinationAccountId() (DestinationAccountId string) {
-	if r != nil && r.DestinationAccountId != nil {
-		DestinationAccountId = *r.DestinationAccountId
+func (r *AccountTransfer) GetDestinationAccountID() (DestinationAccountID string) {
+	if r != nil && r.DestinationAccountID != nil {
+		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The ID for the transaction receiving the transfer.
-func (r *AccountTransfer) GetDestinationTransactionId() (DestinationTransactionId string) {
-	if r != nil && r.DestinationTransactionId != nil {
-		DestinationTransactionId = *r.DestinationTransactionId
+func (r *AccountTransfer) GetDestinationTransactionID() (DestinationTransactionID string) {
+	if r != nil && r.DestinationTransactionID != nil {
+		DestinationTransactionID = *r.DestinationTransactionID
 	}
 	return
 }
@@ -163,17 +163,17 @@ func (r *AccountTransfer) GetStatus() (Status AccountTransferStatus) {
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *AccountTransfer) GetTemplateId() (TemplateId string) {
-	if r != nil && r.TemplateId != nil {
-		TemplateId = *r.TemplateId
+func (r *AccountTransfer) GetTemplateID() (TemplateID string) {
+	if r != nil && r.TemplateID != nil {
+		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *AccountTransfer) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *AccountTransfer) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -273,20 +273,20 @@ const (
 
 type CreateAnAccountTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The transfer amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	// The description you choose to give the transfer.
 	Description *string `json:"description"`
 	// The identifier for the account that will receive the transfer.
-	DestinationAccountId *string `json:"destination_account_id"`
+	DestinationAccountID *string `json:"destination_account_id"`
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateAnAccountTransferParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateAnAccountTransferParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -309,9 +309,9 @@ func (r *CreateAnAccountTransferParameters) GetDescription() (Description string
 }
 
 // The identifier for the account that will receive the transfer.
-func (r *CreateAnAccountTransferParameters) GetDestinationAccountId() (DestinationAccountId string) {
-	if r != nil && r.DestinationAccountId != nil {
-		DestinationAccountId = *r.DestinationAccountId
+func (r *CreateAnAccountTransferParameters) GetDestinationAccountID() (DestinationAccountID string) {
+	if r != nil && r.DestinationAccountID != nil {
+		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
@@ -323,7 +323,7 @@ type ListAccountTransfersQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Account Transfers to those that originated from the specified Account.
-	AccountId *string                             `query:"account_id"`
+	AccountID *string                             `query:"account_id"`
 	CreatedAt *ListAccountTransfersQueryCreatedAt `query:"created_at"`
 }
 
@@ -345,9 +345,9 @@ func (r *ListAccountTransfersQuery) GetLimit() (Limit int) {
 }
 
 // Filter Account Transfers to those that originated from the specified Account.
-func (r *ListAccountTransfersQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListAccountTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }

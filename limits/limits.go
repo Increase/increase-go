@@ -42,14 +42,14 @@ func NewPreloadedLimitService(service *LimitService) (r *PreloadedLimitService) 
 //
 type Limit struct {
 	// The Limit identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The interval for the metric. This is required if `metric` is `count` or
 	// `volume`.
 	Interval *LimitInterval `json:"interval"`
 	// The metric for the Limit.
 	Metric *LimitMetric `json:"metric"`
 	// The identifier of the Account Number, Account, or Card the Limit applies to.
-	ModelId *string `json:"model_id"`
+	ModelID *string `json:"model_id"`
 	// The type of the model you wish to associate the Limit with.
 	ModelType *LimitModelType `json:"model_type"`
 	// The current status of the Limit.
@@ -62,9 +62,9 @@ type Limit struct {
 }
 
 // The Limit identifier.
-func (r *Limit) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Limit) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -87,9 +87,9 @@ func (r *Limit) GetMetric() (Metric LimitMetric) {
 }
 
 // The identifier of the Account Number, Account, or Card the Limit applies to.
-func (r *Limit) GetModelId() (ModelId string) {
-	if r != nil && r.ModelId != nil {
-		ModelId = *r.ModelId
+func (r *Limit) GetModelID() (ModelID string) {
+	if r != nil && r.ModelID != nil {
+		ModelID = *r.ModelID
 	}
 	return
 }
@@ -173,7 +173,7 @@ type CreateALimitParameters struct {
 	Interval *CreateALimitParametersInterval `json:"interval,omitempty"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
-	ModelId *string `json:"model_id"`
+	ModelID *string `json:"model_id"`
 	// The value to test the limit against.
 	Value *int `json:"value"`
 }
@@ -196,9 +196,9 @@ func (r *CreateALimitParameters) GetInterval() (Interval CreateALimitParametersI
 
 // The identifier of the Account or Account Number you wish to associate the limit
 // with.
-func (r *CreateALimitParameters) GetModelId() (ModelId string) {
-	if r != nil && r.ModelId != nil {
-		ModelId = *r.ModelId
+func (r *CreateALimitParameters) GetModelID() (ModelID string) {
+	if r != nil && r.ModelID != nil {
+		ModelID = *r.ModelID
 	}
 	return
 }
@@ -256,7 +256,7 @@ type ListLimitsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// The model to retrieve limits for.
-	ModelId *string `query:"model_id"`
+	ModelID *string `query:"model_id"`
 	// The status to retrieve limits for.
 	Status *string `query:"status"`
 }
@@ -279,9 +279,9 @@ func (r *ListLimitsQuery) GetLimit() (Limit int) {
 }
 
 // The model to retrieve limits for.
-func (r *ListLimitsQuery) GetModelId() (ModelId string) {
-	if r != nil && r.ModelId != nil {
-		ModelId = *r.ModelId
+func (r *ListLimitsQuery) GetModelID() (ModelID string) {
+	if r != nil && r.ModelID != nil {
+		ModelID = *r.ModelID
 	}
 	return
 }

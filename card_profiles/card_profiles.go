@@ -42,7 +42,7 @@ func NewPreloadedCardProfileService(service *CardProfileService) (r *PreloadedCa
 //
 type CardProfile struct {
 	// The Card Profile identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
 	CreatedAt *string `json:"created_at"`
@@ -59,9 +59,9 @@ type CardProfile struct {
 }
 
 // The Card Profile identifier.
-func (r *CardProfile) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CardProfile) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -133,9 +133,9 @@ type CardProfileDigitalWallets struct {
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone *string `json:"contact_phone"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileId *string `json:"background_image_file_id"`
+	BackgroundImageFileID *string `json:"background_image_file_id"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileId *string `json:"app_icon_file_id"`
+	AppIconFileID *string `json:"app_icon_file_id"`
 }
 
 // The Card's text color, specified as an RGB triple.
@@ -187,17 +187,17 @@ func (r *CardProfileDigitalWallets) GetContactPhone() (ContactPhone string) {
 }
 
 // The identifier of the File containing the card's front image.
-func (r *CardProfileDigitalWallets) GetBackgroundImageFileId() (BackgroundImageFileId string) {
-	if r != nil && r.BackgroundImageFileId != nil {
-		BackgroundImageFileId = *r.BackgroundImageFileId
+func (r *CardProfileDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
+	if r != nil && r.BackgroundImageFileID != nil {
+		BackgroundImageFileID = *r.BackgroundImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the card's icon image.
-func (r *CardProfileDigitalWallets) GetAppIconFileId() (AppIconFileId string) {
-	if r != nil && r.AppIconFileId != nil {
-		AppIconFileId = *r.AppIconFileId
+func (r *CardProfileDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
+	if r != nil && r.AppIconFileID != nil {
+		AppIconFileID = *r.AppIconFileID
 	}
 	return
 }
@@ -282,9 +282,9 @@ type CreateACardProfileParametersDigitalWallets struct {
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone *string `json:"contact_phone,omitempty"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileId *string `json:"background_image_file_id"`
+	BackgroundImageFileID *string `json:"background_image_file_id"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileId *string `json:"app_icon_file_id"`
+	AppIconFileID *string `json:"app_icon_file_id"`
 }
 
 // The Card's text color, specified as an RGB triple. The default is white.
@@ -336,17 +336,17 @@ func (r *CreateACardProfileParametersDigitalWallets) GetContactPhone() (ContactP
 }
 
 // The identifier of the File containing the card's front image.
-func (r *CreateACardProfileParametersDigitalWallets) GetBackgroundImageFileId() (BackgroundImageFileId string) {
-	if r != nil && r.BackgroundImageFileId != nil {
-		BackgroundImageFileId = *r.BackgroundImageFileId
+func (r *CreateACardProfileParametersDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
+	if r != nil && r.BackgroundImageFileID != nil {
+		BackgroundImageFileID = *r.BackgroundImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the card's icon image.
-func (r *CreateACardProfileParametersDigitalWallets) GetAppIconFileId() (AppIconFileId string) {
-	if r != nil && r.AppIconFileId != nil {
-		AppIconFileId = *r.AppIconFileId
+func (r *CreateACardProfileParametersDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
+	if r != nil && r.AppIconFileID != nil {
+		AppIconFileID = *r.AppIconFileID
 	}
 	return
 }

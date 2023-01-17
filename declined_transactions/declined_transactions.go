@@ -42,7 +42,7 @@ func NewPreloadedDeclinedTransactionService(service *DeclinedTransactionService)
 //
 type DeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -56,10 +56,10 @@ type DeclinedTransaction struct {
 	// This is the description the vendor provides.
 	Description *string `json:"description"`
 	// The Declined Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Declined Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -74,9 +74,9 @@ type DeclinedTransaction struct {
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
-func (r *DeclinedTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *DeclinedTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -118,18 +118,18 @@ func (r *DeclinedTransaction) GetDescription() (Description string) {
 }
 
 // The Declined Transaction identifier.
-func (r *DeclinedTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *DeclinedTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Declined Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *DeclinedTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *DeclinedTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -290,11 +290,11 @@ type DeclinedTransactionSourceACHDecline struct {
 	//
 	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	// Why the ACH transfer was declined.
 	Reason *DeclinedTransactionSourceACHDeclineReason `json:"reason"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -331,9 +331,9 @@ func (r *DeclinedTransactionSourceACHDecline) GetOriginatorCompanyDiscretionaryD
 	return
 }
 
-func (r *DeclinedTransactionSourceACHDecline) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *DeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
@@ -346,9 +346,9 @@ func (r *DeclinedTransactionSourceACHDecline) GetReason() (Reason DeclinedTransa
 	return
 }
 
-func (r *DeclinedTransactionSourceACHDecline) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *DeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -390,7 +390,7 @@ type DeclinedTransactionSourceCardDecline struct {
 	// account currency.
 	Currency *DeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -405,10 +405,10 @@ type DeclinedTransactionSourceCardDecline struct {
 	Reason *DeclinedTransactionSourceCardDeclineReason `json:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -429,9 +429,9 @@ func (r *DeclinedTransactionSourceCardDecline) GetCurrency() (Currency DeclinedT
 	return
 }
 
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -481,18 +481,18 @@ func (r *DeclinedTransactionSourceCardDecline) GetReason() (Reason DeclinedTrans
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *DeclinedTransactionSourceCardDecline) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *DeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was attempted using a Digital Wallet Token (such as an
 // Apple Pay purchase), the identifier of the token that was used.
-func (r *DeclinedTransactionSourceCardDecline) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *DeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -717,9 +717,9 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -759,9 +759,9 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -847,16 +847,16 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) GetOriginatingDeposit
 	return
 }
 
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -994,16 +994,16 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositor
 	return
 }
 
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -1031,7 +1031,7 @@ type DeclinedTransactionSourceCardRouteDecline struct {
 	// account currency.
 	Currency *DeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -1062,9 +1062,9 @@ func (r *DeclinedTransactionSourceCardRouteDecline) GetCurrency() (Currency Decl
 	return
 }
 
-func (r *DeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *DeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -1128,9 +1128,9 @@ type ListDeclinedTransactionsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Declined Transactions to ones belonging to the specified Account.
-	AccountId *string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteId   *string                                 `query:"route_id"`
+	RouteID   *string                                 `query:"route_id"`
 	CreatedAt *ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
 }
 
@@ -1152,17 +1152,17 @@ func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Declined Transactions to ones belonging to the specified Account.
-func (r *ListDeclinedTransactionsQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListDeclinedTransactionsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter Declined Transactions to those belonging to the specified route.
-func (r *ListDeclinedTransactionsQuery) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *ListDeclinedTransactionsQuery) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }

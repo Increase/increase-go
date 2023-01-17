@@ -42,7 +42,7 @@ func NewPreloadedWireTransferService(service *WireTransferService) (r *Preloaded
 //
 type WireTransfer struct {
 	// The wire transfer's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient *string `json:"message_to_recipient"`
 	// The transfer amount in USD cents.
@@ -53,9 +53,9 @@ type WireTransfer struct {
 	// The destination account number.
 	AccountNumber *string `json:"account_number"`
 	// The Account to which the transfer belongs.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountId *string `json:"external_account_id"`
+	ExternalAccountID *string `json:"external_account_id"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `json:"routing_number"`
 	// If your account requires approvals for transfers and the transfer was approved,
@@ -77,18 +77,18 @@ type WireTransfer struct {
 	// details.
 	Submission *WireTransferSubmission `json:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateId *string `json:"template_id"`
+	TemplateID *string `json:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
 	Type *WireTransferType `json:"type"`
 }
 
 // The wire transfer's identifier.
-func (r *WireTransfer) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *WireTransfer) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -127,17 +127,17 @@ func (r *WireTransfer) GetAccountNumber() (AccountNumber string) {
 }
 
 // The Account to which the transfer belongs.
-func (r *WireTransfer) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *WireTransfer) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The identifier of the External Account the transfer was made to, if any.
-func (r *WireTransfer) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *WireTransfer) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
@@ -211,17 +211,17 @@ func (r *WireTransfer) GetSubmission() (Submission WireTransferSubmission) {
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *WireTransfer) GetTemplateId() (TemplateId string) {
-	if r != nil && r.TemplateId != nil {
-		TemplateId = *r.TemplateId
+func (r *WireTransfer) GetTemplateID() (TemplateID string) {
+	if r != nil && r.TemplateID != nil {
+		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *WireTransfer) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *WireTransfer) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -444,7 +444,7 @@ const (
 
 type CreateAWireTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The account number for the destination account.
 	AccountNumber *string `json:"account_number,omitempty"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -452,7 +452,7 @@ type CreateAWireTransferParameters struct {
 	RoutingNumber *string `json:"routing_number,omitempty"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
-	ExternalAccountId *string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `json:"external_account_id,omitempty"`
 	// The transfer amount in cents.
 	Amount *int `json:"amount"`
 	// The message that will show on the recipient's bank statement.
@@ -468,9 +468,9 @@ type CreateAWireTransferParameters struct {
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateAWireTransferParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateAWireTransferParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -494,9 +494,9 @@ func (r *CreateAWireTransferParameters) GetRoutingNumber() (RoutingNumber string
 
 // The ID of an External Account to initiate a transfer to. If this parameter is
 // provided, `account_number` and `routing_number` must be absent.
-func (r *CreateAWireTransferParameters) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *CreateAWireTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
@@ -556,9 +556,9 @@ type ListWireTransfersQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Wire Transfers to those belonging to the specified Account.
-	AccountId *string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter Wire Transfers to those made to the specified External Account.
-	ExternalAccountId *string                          `query:"external_account_id"`
+	ExternalAccountID *string                          `query:"external_account_id"`
 	CreatedAt         *ListWireTransfersQueryCreatedAt `query:"created_at"`
 }
 
@@ -580,17 +580,17 @@ func (r *ListWireTransfersQuery) GetLimit() (Limit int) {
 }
 
 // Filter Wire Transfers to those belonging to the specified Account.
-func (r *ListWireTransfersQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListWireTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter Wire Transfers to those made to the specified External Account.
-func (r *ListWireTransfersQuery) GetExternalAccountId() (ExternalAccountId string) {
-	if r != nil && r.ExternalAccountId != nil {
-		ExternalAccountId = *r.ExternalAccountId
+func (r *ListWireTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }

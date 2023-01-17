@@ -42,7 +42,7 @@ func NewPreloadedCheckTransferService(service *CheckTransferService) (r *Preload
 //
 type CheckTransfer struct {
 	// The identifier of the Account from which funds will be transferred.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The street address of the check's destination.
 	AddressLine1 *string `json:"address_line1"`
 	// The second line of the address of the check's destination.
@@ -62,7 +62,7 @@ type CheckTransfer struct {
 	// currency.
 	Currency *CheckTransferCurrency `json:"currency"`
 	// The Check transfer's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
 	MailedAt *string `json:"mailed_at"`
@@ -78,9 +78,9 @@ type CheckTransfer struct {
 	// After the transfer is submitted, this will contain supplemental details.
 	Submission *CheckTransferSubmission `json:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateId *string `json:"template_id"`
+	TemplateID *string `json:"template_id"`
 	// The ID for the transaction caused by the transfer.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// After a stop-payment is requested on the check, this will contain supplemental
 	// details.
 	StopPaymentRequest *CheckTransferStopPaymentRequest `json:"stop_payment_request"`
@@ -90,9 +90,9 @@ type CheckTransfer struct {
 }
 
 // The identifier of the Account from which funds will be transferred.
-func (r *CheckTransfer) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CheckTransfer) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -164,9 +164,9 @@ func (r *CheckTransfer) GetCurrency() (Currency CheckTransferCurrency) {
 }
 
 // The Check transfer's identifier.
-func (r *CheckTransfer) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CheckTransfer) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -222,17 +222,17 @@ func (r *CheckTransfer) GetSubmission() (Submission CheckTransferSubmission) {
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *CheckTransfer) GetTemplateId() (TemplateId string) {
-	if r != nil && r.TemplateId != nil {
-		TemplateId = *r.TemplateId
+func (r *CheckTransfer) GetTemplateID() (TemplateID string) {
+	if r != nil && r.TemplateID != nil {
+		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction caused by the transfer.
-func (r *CheckTransfer) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *CheckTransfer) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -299,9 +299,9 @@ func (r *CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
 //
 type CheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// The time the stop-payment was requested.
 	RequestedAt *string `json:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
@@ -310,17 +310,17 @@ type CheckTransferStopPaymentRequest struct {
 }
 
 // The ID of the check transfer that was stopped.
-func (r *CheckTransferStopPaymentRequest) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *CheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *CheckTransferStopPaymentRequest) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *CheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -356,7 +356,7 @@ const (
 
 type CreateACheckTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The street address of the check's destination.
 	AddressLine1 *string `json:"address_line1"`
 	// The second line of the address of the check's destination.
@@ -376,9 +376,9 @@ type CreateACheckTransferParameters struct {
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateACheckTransferParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateACheckTransferParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -454,7 +454,7 @@ type ListCheckTransfersQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountId *string                           `query:"account_id"`
+	AccountID *string                           `query:"account_id"`
 	CreatedAt *ListCheckTransfersQueryCreatedAt `query:"created_at"`
 }
 
@@ -476,9 +476,9 @@ func (r *ListCheckTransfersQuery) GetLimit() (Limit int) {
 }
 
 // Filter Check Transfers to those that originated from the specified Account.
-func (r *ListCheckTransfersQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListCheckTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }

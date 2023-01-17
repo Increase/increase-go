@@ -42,7 +42,7 @@ func NewPreloadedEventSubscriptionService(service *EventSubscriptionService) (r 
 //
 type EventSubscription struct {
 	// The event subscription identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The time the event subscription was created.
 	CreatedAt *string `json:"created_at"`
 	// This indicates if we'll send notifications to this subscription.
@@ -60,9 +60,9 @@ type EventSubscription struct {
 }
 
 // The event subscription identifier.
-func (r *EventSubscription) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *EventSubscription) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }

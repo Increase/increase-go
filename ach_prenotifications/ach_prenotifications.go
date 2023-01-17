@@ -42,7 +42,7 @@ func NewPreloadedACHPrenotificationService(service *ACHPrenotificationService) (
 //
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The destination account number.
 	AccountNumber *string `json:"account_number"`
 	// Additional information for the recipient.
@@ -74,9 +74,9 @@ type ACHPrenotification struct {
 }
 
 // The ACH Prenotification's identifier.
-func (r *ACHPrenotification) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *ACHPrenotification) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -254,7 +254,7 @@ type CreateAnACHPrenotificationParameters struct {
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate *string `json:"effective_date,omitempty"`
 	// Your identifer for the transfer recipient.
-	IndividualId *string `json:"individual_id,omitempty"`
+	IndividualID *string `json:"individual_id,omitempty"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
 	IndividualName *string `json:"individual_name,omitempty"`
@@ -331,9 +331,9 @@ func (r *CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate
 }
 
 // Your identifer for the transfer recipient.
-func (r *CreateAnACHPrenotificationParameters) GetIndividualId() (IndividualId string) {
-	if r != nil && r.IndividualId != nil {
-		IndividualId = *r.IndividualId
+func (r *CreateAnACHPrenotificationParameters) GetIndividualID() (IndividualID string) {
+	if r != nil && r.IndividualID != nil {
+		IndividualID = *r.IndividualID
 	}
 	return
 }

@@ -42,7 +42,7 @@ func NewPreloadedExternalAccountService(service *ExternalAccountService) (r *Pre
 //
 type ExternalAccount struct {
 	// The External Account's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the External Account was created.
 	CreatedAt *string `json:"created_at"`
@@ -60,9 +60,9 @@ type ExternalAccount struct {
 }
 
 // The External Account's identifier.
-func (r *ExternalAccount) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *ExternalAccount) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }

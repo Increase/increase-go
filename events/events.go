@@ -42,7 +42,7 @@ func NewPreloadedEventService(service *EventService) (r *PreloadedEventService) 
 //
 type Event struct {
 	// The identifier of the object that generated this Event.
-	AssociatedObjectId *string `json:"associated_object_id"`
+	AssociatedObjectID *string `json:"associated_object_id"`
 	// The type of the object that generated this Event.
 	AssociatedObjectType *string `json:"associated_object_type"`
 	// The category of the Event. We may add additional possible values for this enum
@@ -51,16 +51,16 @@ type Event struct {
 	// The time the Event was created.
 	CreatedAt *string `json:"created_at"`
 	// The Event identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
 	Type *EventType `json:"type"`
 }
 
 // The identifier of the object that generated this Event.
-func (r *Event) GetAssociatedObjectId() (AssociatedObjectId string) {
-	if r != nil && r.AssociatedObjectId != nil {
-		AssociatedObjectId = *r.AssociatedObjectId
+func (r *Event) GetAssociatedObjectID() (AssociatedObjectID string) {
+	if r != nil && r.AssociatedObjectID != nil {
+		AssociatedObjectID = *r.AssociatedObjectID
 	}
 	return
 }
@@ -91,9 +91,9 @@ func (r *Event) GetCreatedAt() (CreatedAt string) {
 }
 
 // The Event identifier.
-func (r *Event) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Event) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -168,7 +168,7 @@ type ListEventsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectId *string                   `query:"associated_object_id"`
+	AssociatedObjectID *string                   `query:"associated_object_id"`
 	CreatedAt          *ListEventsQueryCreatedAt `query:"created_at"`
 	Category           *ListEventsQueryCategory  `query:"category"`
 }
@@ -191,9 +191,9 @@ func (r *ListEventsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Events to those belonging to the object with the provided identifier.
-func (r *ListEventsQuery) GetAssociatedObjectId() (AssociatedObjectId string) {
-	if r != nil && r.AssociatedObjectId != nil {
-		AssociatedObjectId = *r.AssociatedObjectId
+func (r *ListEventsQuery) GetAssociatedObjectID() (AssociatedObjectID string) {
+	if r != nil && r.AssociatedObjectID != nil {
+		AssociatedObjectID = *r.AssociatedObjectID
 	}
 	return
 }

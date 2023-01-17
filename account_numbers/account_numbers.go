@@ -42,11 +42,11 @@ func NewPreloadedAccountNumberService(service *AccountNumberService) (r *Preload
 //
 type AccountNumber struct {
 	// The identifier for the account this Account Number belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The account number.
 	AccountNumber *string `json:"account_number"`
 	// The Account Number identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
 	CreatedAt *string `json:"created_at"`
@@ -62,9 +62,9 @@ type AccountNumber struct {
 }
 
 // The identifier for the account this Account Number belongs to.
-func (r *AccountNumber) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *AccountNumber) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -78,9 +78,9 @@ func (r *AccountNumber) GetAccountNumber() (AccountNumber string) {
 }
 
 // The Account Number identifier.
-func (r *AccountNumber) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *AccountNumber) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -143,15 +143,15 @@ const (
 
 type CreateAnAccountNumberParameters struct {
 	// The Account the Account Number should belong to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The name you choose for the Account Number.
 	Name *string `json:"name"`
 }
 
 // The Account the Account Number should belong to.
-func (r *CreateAnAccountNumberParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateAnAccountNumberParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -204,7 +204,7 @@ type ListAccountNumbersQuery struct {
 	// The status to retrieve Account Numbers for.
 	Status *ListAccountNumbersQueryStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountId *string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 }
 
 // Return the page of entries after this one.
@@ -233,9 +233,9 @@ func (r *ListAccountNumbersQuery) GetStatus() (Status ListAccountNumbersQuerySta
 }
 
 // Filter Account Numbers to those belonging to the specified Account.
-func (r *ListAccountNumbersQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListAccountNumbersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }

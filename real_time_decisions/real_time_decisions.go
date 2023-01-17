@@ -41,7 +41,7 @@ func NewPreloadedRealTimeDecisionService(service *RealTimeDecisionService) (r *P
 //
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Real-Time Decision was created.
 	CreatedAt *string `json:"created_at"`
@@ -64,9 +64,9 @@ type RealTimeDecision struct {
 }
 
 // The Real-Time Decision identifier.
-func (r *RealTimeDecision) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *RealTimeDecision) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -159,9 +159,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// Whether or not the authorization was approved.
 	Decision *RealTimeDecisionCardAuthorizationDecision `json:"decision"`
 	// The identifier of the Card that is being authorized.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The identifier of the Account the authorization will debit.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The amount of the attempted authorization in the currency the card user sees at
 	// the time of purchase, in the minor unit of that currency. For dollars, for
 	// example, this is cents.
@@ -182,7 +182,7 @@ type RealTimeDecisionCardAuthorization struct {
 	MerchantDescriptor *string `json:"merchant_descriptor"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	// The city the merchant resides in.
 	MerchantCity *string `json:"merchant_city"`
 	// The country the merchant resides in.
@@ -198,17 +198,17 @@ func (r *RealTimeDecisionCardAuthorization) GetDecision() (Decision RealTimeDeci
 }
 
 // The identifier of the Card that is being authorized.
-func (r *RealTimeDecisionCardAuthorization) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *RealTimeDecisionCardAuthorization) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
 
 // The identifier of the Account the authorization will debit.
-func (r *RealTimeDecisionCardAuthorization) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *RealTimeDecisionCardAuthorization) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -269,9 +269,9 @@ func (r *RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDes
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
 // is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *RealTimeDecisionCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -304,7 +304,7 @@ type RealTimeDecisionDigitalWalletToken struct {
 	// Whether or not the provisioning request was approved.
 	Decision *RealTimeDecisionDigitalWalletTokenDecision `json:"decision"`
 	// The identifier of the Card that is being tokenized.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The digital wallet app being used.
 	DigitalWallet *RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet"`
 }
@@ -318,9 +318,9 @@ func (r *RealTimeDecisionDigitalWalletToken) GetDecision() (Decision RealTimeDec
 }
 
 // The identifier of the Card that is being tokenized.
-func (r *RealTimeDecisionDigitalWalletToken) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *RealTimeDecisionDigitalWalletToken) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
@@ -352,7 +352,7 @@ type RealTimeDecisionDigitalWalletAuthentication struct {
 	// Whether your application successfully delivered the one-time passcode.
 	Result *RealTimeDecisionDigitalWalletAuthenticationResult `json:"result"`
 	// The identifier of the Card that is being tokenized.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The digital wallet app being used.
 	DigitalWallet *RealTimeDecisionDigitalWalletAuthenticationDigitalWallet `json:"digital_wallet"`
 	// The channel to send the card user their one-time passcode.
@@ -375,9 +375,9 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) GetResult() (Result RealTi
 }
 
 // The identifier of the Card that is being tokenized.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *RealTimeDecisionDigitalWalletAuthentication) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
@@ -541,7 +541,7 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decl
 //
 type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
-	CardProfileId *string `json:"card_profile_id"`
+	CardProfileID *string `json:"card_profile_id"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
 	Phone *string `json:"phone,omitempty"`
@@ -551,9 +551,9 @@ type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 }
 
 // The identifier of the Card Profile to assign to the Digital Wallet token.
-func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetCardProfileId() (CardProfileId string) {
-	if r != nil && r.CardProfileId != nil {
-		CardProfileId = *r.CardProfileId
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
 	}
 	return
 }

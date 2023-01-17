@@ -45,10 +45,10 @@ type WireDrawdownRequest struct {
 	// `wire_drawdown_request`.
 	Type *WireDrawdownRequestType `json:"type"`
 	// The Wire drawdown request identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The Account Number to which the recipient of this request is being requested to
 	// send funds.
-	AccountNumberId *string `json:"account_number_id"`
+	AccountNumberID *string `json:"account_number_id"`
 	// The drawdown request's recipient's account number.
 	RecipientAccountNumber *string `json:"recipient_account_number"`
 	// The drawdown request's recipient's routing number.
@@ -73,7 +73,7 @@ type WireDrawdownRequest struct {
 	Submission *WireDrawdownRequestSubmission `json:"submission"`
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
-	FulfillmentTransactionId *string `json:"fulfillment_transaction_id"`
+	FulfillmentTransactionID *string `json:"fulfillment_transaction_id"`
 	// The lifecycle status of the drawdown request.
 	Status *WireDrawdownRequestStatus `json:"status"`
 }
@@ -88,18 +88,18 @@ func (r *WireDrawdownRequest) GetType() (Type WireDrawdownRequestType) {
 }
 
 // The Wire drawdown request identifier.
-func (r *WireDrawdownRequest) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *WireDrawdownRequest) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The Account Number to which the recipient of this request is being requested to
 // send funds.
-func (r *WireDrawdownRequest) GetAccountNumberId() (AccountNumberId string) {
-	if r != nil && r.AccountNumberId != nil {
-		AccountNumberId = *r.AccountNumberId
+func (r *WireDrawdownRequest) GetAccountNumberID() (AccountNumberID string) {
+	if r != nil && r.AccountNumberID != nil {
+		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }
@@ -188,9 +188,9 @@ func (r *WireDrawdownRequest) GetSubmission() (Submission WireDrawdownRequestSub
 
 // If the recipient fulfills the drawdown request by sending funds, then this will
 // be the identifier of the corresponding Transaction.
-func (r *WireDrawdownRequest) GetFulfillmentTransactionId() (FulfillmentTransactionId string) {
-	if r != nil && r.FulfillmentTransactionId != nil {
-		FulfillmentTransactionId = *r.FulfillmentTransactionId
+func (r *WireDrawdownRequest) GetFulfillmentTransactionID() (FulfillmentTransactionID string) {
+	if r != nil && r.FulfillmentTransactionID != nil {
+		FulfillmentTransactionID = *r.FulfillmentTransactionID
 	}
 	return
 }
@@ -236,7 +236,7 @@ const (
 
 type CreateAWireDrawdownRequestParameters struct {
 	// The Account Number to which the recipient should send funds.
-	AccountNumberId *string `json:"account_number_id"`
+	AccountNumberID *string `json:"account_number_id"`
 	// The amount requested from the recipient, in cents.
 	Amount *int `json:"amount"`
 	// A message the recipient will see as part of the request.
@@ -256,9 +256,9 @@ type CreateAWireDrawdownRequestParameters struct {
 }
 
 // The Account Number to which the recipient should send funds.
-func (r *CreateAWireDrawdownRequestParameters) GetAccountNumberId() (AccountNumberId string) {
-	if r != nil && r.AccountNumberId != nil {
-		AccountNumberId = *r.AccountNumberId
+func (r *CreateAWireDrawdownRequestParameters) GetAccountNumberID() (AccountNumberID string) {
+	if r != nil && r.AccountNumberID != nil {
+		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }

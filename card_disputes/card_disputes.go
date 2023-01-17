@@ -42,7 +42,7 @@ func NewPreloadedCardDisputeService(service *CardDisputeService) (r *PreloadedCa
 //
 type CardDispute struct {
 	// The Card Dispute identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// Why you disputed the Transaction in question.
 	Explanation *string `json:"explanation"`
 	// The results of the Dispute investigation.
@@ -51,7 +51,7 @@ type CardDispute struct {
 	// the Card Dispute was created.
 	CreatedAt *string `json:"created_at"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionId *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `json:"disputed_transaction_id"`
 	// If the Card Dispute's status is `accepted`, this will contain details of the
 	// successful dispute.
 	Acceptance *CardDisputeAcceptance `json:"acceptance"`
@@ -64,9 +64,9 @@ type CardDispute struct {
 }
 
 // The Card Dispute identifier.
-func (r *CardDispute) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CardDispute) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -97,9 +97,9 @@ func (r *CardDispute) GetCreatedAt() (CreatedAt string) {
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *CardDispute) GetDisputedTransactionId() (DisputedTransactionId string) {
-	if r != nil && r.DisputedTransactionId != nil {
-		DisputedTransactionId = *r.DisputedTransactionId
+func (r *CardDispute) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r != nil && r.DisputedTransactionID != nil {
+		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }
@@ -145,10 +145,10 @@ type CardDisputeAcceptance struct {
 	// the Card Dispute was accepted.
 	AcceptedAt *string `json:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeId *string `json:"card_dispute_id"`
+	CardDisputeID *string `json:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -161,18 +161,18 @@ func (r *CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *CardDisputeAcceptance) GetCardDisputeId() (CardDisputeId string) {
-	if r != nil && r.CardDisputeId != nil {
-		CardDisputeId = *r.CardDisputeId
+func (r *CardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r != nil && r.CardDisputeID != nil {
+		CardDisputeID = *r.CardDisputeID
 	}
 	return
 }
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *CardDisputeAcceptance) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -185,7 +185,7 @@ type CardDisputeRejection struct {
 	// the Card Dispute was rejected.
 	RejectedAt *string `json:"rejected_at"`
 	// The identifier of the Card Dispute that was rejected.
-	CardDisputeId *string `json:"card_dispute_id"`
+	CardDisputeID *string `json:"card_dispute_id"`
 }
 
 // Why the Card Dispute was rejected.
@@ -206,9 +206,9 @@ func (r *CardDisputeRejection) GetRejectedAt() (RejectedAt string) {
 }
 
 // The identifier of the Card Dispute that was rejected.
-func (r *CardDisputeRejection) GetCardDisputeId() (CardDisputeId string) {
-	if r != nil && r.CardDisputeId != nil {
-		CardDisputeId = *r.CardDisputeId
+func (r *CardDisputeRejection) GetCardDisputeID() (CardDisputeID string) {
+	if r != nil && r.CardDisputeID != nil {
+		CardDisputeID = *r.CardDisputeID
 	}
 	return
 }
@@ -222,16 +222,16 @@ const (
 type CreateACardDisputeParameters struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
-	DisputedTransactionId *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `json:"disputed_transaction_id"`
 	// Why you are disputing this Transaction.
 	Explanation *string `json:"explanation"`
 }
 
 // The Transaction you wish to dispute. This Transaction must have a `source_type`
 // of `card_settlement`.
-func (r *CreateACardDisputeParameters) GetDisputedTransactionId() (DisputedTransactionId string) {
-	if r != nil && r.DisputedTransactionId != nil {
-		DisputedTransactionId = *r.DisputedTransactionId
+func (r *CreateACardDisputeParameters) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r != nil && r.DisputedTransactionID != nil {
+		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }

@@ -42,7 +42,7 @@ func NewPreloadedPendingTransactionService(service *PendingTransactionService) (
 //
 type PendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -58,10 +58,10 @@ type PendingTransaction struct {
 	// the vendor provides.
 	Description *string `json:"description"`
 	// The Pending Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Pending Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -77,9 +77,9 @@ type PendingTransaction struct {
 }
 
 // The identifier for the account this Pending Transaction belongs to.
-func (r *PendingTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *PendingTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -123,18 +123,18 @@ func (r *PendingTransaction) GetDescription() (Description string) {
 }
 
 // The Pending Transaction identifier.
-func (r *PendingTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *PendingTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Pending Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *PendingTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *PendingTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -326,7 +326,7 @@ type PendingTransactionSourceAccountTransferInstruction struct {
 	// account currency.
 	Currency *PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -348,9 +348,9 @@ func (r *PendingTransactionSourceAccountTransferInstruction) GetCurrency() (Curr
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceAccountTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *PendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -372,7 +372,7 @@ type PendingTransactionSourceACHTransferInstruction struct {
 	// for example, this is cents.
 	Amount *int `json:"amount"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -385,9 +385,9 @@ func (r *PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int
 }
 
 // The identifier of the ACH Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceACHTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *PendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -401,7 +401,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	// transaction's currency.
 	Currency *PendingTransactionSourceCardAuthorizationCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -412,10 +412,10 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantCategoryCode *string `json:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -436,9 +436,9 @@ func (r *PendingTransactionSourceCardAuthorization) GetCurrency() (Currency Pend
 	return
 }
 
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -473,18 +473,18 @@ func (r *PendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (M
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *PendingTransactionSourceCardAuthorization) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *PendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 // purchase), the identifier of the token that was used.
-func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -510,10 +510,10 @@ type PendingTransactionSourceCheckDepositInstruction struct {
 	Currency *PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileId *string `json:"front_image_file_id"`
+	FrontImageFileID *string `json:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileId *string `json:"back_image_file_id"`
+	BackImageFileID *string `json:"back_image_file_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -536,18 +536,18 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currenc
 
 // The identifier of the File containing the image of the front of the check that
 // was deposited.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetFrontImageFileId() (FrontImageFileId string) {
-	if r != nil && r.FrontImageFileId != nil {
-		FrontImageFileId = *r.FrontImageFileId
+func (r *PendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
+	if r != nil && r.FrontImageFileID != nil {
+		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the image of the back of the check that
 // was deposited.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetBackImageFileId() (BackImageFileId string) {
-	if r != nil && r.BackImageFileId != nil {
-		BackImageFileId = *r.BackImageFileId
+func (r *PendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
+	if r != nil && r.BackImageFileID != nil {
+		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
@@ -572,7 +572,7 @@ type PendingTransactionSourceCheckTransferInstruction struct {
 	// currency.
 	Currency *PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -594,9 +594,9 @@ func (r *PendingTransactionSourceCheckTransferInstruction) GetCurrency() (Curren
 }
 
 // The identifier of the Check Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceCheckTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *PendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -621,7 +621,7 @@ type PendingTransactionSourceCardRouteAuthorization struct {
 	// transaction's currency.
 	Currency *PendingTransactionSourceCardRouteAuthorizationCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -652,9 +652,9 @@ func (r *PendingTransactionSourceCardRouteAuthorization) GetCurrency() (Currency
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -760,7 +760,7 @@ type PendingTransactionSourceWireTransferInstruction struct {
 	//
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -793,9 +793,9 @@ func (r *PendingTransactionSourceWireTransferInstruction) GetMessageToRecipient(
 	return
 }
 
-func (r *PendingTransactionSourceWireTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *PendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -820,11 +820,11 @@ type ListPendingTransactionsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter pending transactions to those belonging to the specified Account.
-	AccountId *string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter pending transactions to those belonging to the specified Route.
-	RouteId *string `query:"route_id"`
+	RouteID *string `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceId *string                             `query:"source_id"`
+	SourceID *string                             `query:"source_id"`
 	Status   *ListPendingTransactionsQueryStatus `query:"status"`
 }
 
@@ -846,25 +846,25 @@ func (r *ListPendingTransactionsQuery) GetLimit() (Limit int) {
 }
 
 // Filter pending transactions to those belonging to the specified Account.
-func (r *ListPendingTransactionsQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListPendingTransactionsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter pending transactions to those belonging to the specified Route.
-func (r *ListPendingTransactionsQuery) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *ListPendingTransactionsQuery) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
 
 // Filter pending transactions to those caused by the specified source.
-func (r *ListPendingTransactionsQuery) GetSourceId() (SourceId string) {
-	if r != nil && r.SourceId != nil {
-		SourceId = *r.SourceId
+func (r *ListPendingTransactionsQuery) GetSourceID() (SourceID string) {
+	if r != nil && r.SourceID != nil {
+		SourceID = *r.SourceID
 	}
 	return
 }

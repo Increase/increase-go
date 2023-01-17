@@ -51,12 +51,12 @@ type Account struct {
 	// currency.
 	Currency *AccountCurrency `json:"currency"`
 	// The identifier for the Entity the Account belongs to.
-	EntityId *string `json:"entity_id"`
+	EntityID *string `json:"entity_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
-	InformationalEntityId *string `json:"informational_entity_id"`
+	InformationalEntityID *string `json:"informational_entity_id"`
 	// The Account identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The interest accrued but not yet paid, expressed as a string containing a
 	// floating-point value.
 	InterestAccrued *string `json:"interest_accrued"`
@@ -100,26 +100,26 @@ func (r *Account) GetCurrency() (Currency AccountCurrency) {
 }
 
 // The identifier for the Entity the Account belongs to.
-func (r *Account) GetEntityId() (EntityId string) {
-	if r != nil && r.EntityId != nil {
-		EntityId = *r.EntityId
+func (r *Account) GetEntityID() (EntityID string) {
+	if r != nil && r.EntityID != nil {
+		EntityID = *r.EntityID
 	}
 	return
 }
 
 // The identifier of an Entity that, while not owning the Account, is associated
 // with its activity.
-func (r *Account) GetInformationalEntityId() (InformationalEntityId string) {
-	if r != nil && r.InformationalEntityId != nil {
-		InformationalEntityId = *r.InformationalEntityId
+func (r *Account) GetInformationalEntityID() (InformationalEntityID string) {
+	if r != nil && r.InformationalEntityID != nil {
+		InformationalEntityID = *r.InformationalEntityID
 	}
 	return
 }
 
 // The Account identifier.
-func (r *Account) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Account) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -193,27 +193,27 @@ const (
 
 type CreateAnAccountParameters struct {
 	// The identifier for the Entity that will own the Account.
-	EntityId *string `json:"entity_id,omitempty"`
+	EntityID *string `json:"entity_id,omitempty"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
-	InformationalEntityId *string `json:"informational_entity_id,omitempty"`
+	InformationalEntityID *string `json:"informational_entity_id,omitempty"`
 	// The name you choose for the Account.
 	Name *string `json:"name"`
 }
 
 // The identifier for the Entity that will own the Account.
-func (r *CreateAnAccountParameters) GetEntityId() (EntityId string) {
-	if r != nil && r.EntityId != nil {
-		EntityId = *r.EntityId
+func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
+	if r != nil && r.EntityID != nil {
+		EntityID = *r.EntityID
 	}
 	return
 }
 
 // The identifier of an Entity that, while not owning the Account, is associated
 // with its activity. Its relationship to your group must be `informational`.
-func (r *CreateAnAccountParameters) GetInformationalEntityId() (InformationalEntityId string) {
-	if r != nil && r.InformationalEntityId != nil {
-		InformationalEntityId = *r.InformationalEntityId
+func (r *CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
+	if r != nil && r.InformationalEntityID != nil {
+		InformationalEntityID = *r.InformationalEntityID
 	}
 	return
 }
@@ -246,7 +246,7 @@ type ListAccountsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Accounts for those belonging to the specified Entity.
-	EntityId *string `query:"entity_id"`
+	EntityID *string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
 	Status *ListAccountsQueryStatus `query:"status"`
 }
@@ -269,9 +269,9 @@ func (r *ListAccountsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Accounts for those belonging to the specified Entity.
-func (r *ListAccountsQuery) GetEntityId() (EntityId string) {
-	if r != nil && r.EntityId != nil {
-		EntityId = *r.EntityId
+func (r *ListAccountsQuery) GetEntityID() (EntityID string) {
+	if r != nil && r.EntityID != nil {
+		EntityID = *r.EntityID
 	}
 	return
 }

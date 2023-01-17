@@ -42,12 +42,12 @@ func NewPreloadedOauthConnectionService(service *OauthConnectionService) (r *Pre
 //
 type OauthConnection struct {
 	// The OAuth Connection's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was created.
 	CreatedAt *string `json:"created_at"`
 	// The identifier of the Group that has authorized your OAuth application.
-	GroupId *string `json:"group_id"`
+	GroupID *string `json:"group_id"`
 	// Whether the connection is active.
 	Status *OauthConnectionStatus `json:"status"`
 	// A constant representing the object's type. For this resource it will always be
@@ -56,9 +56,9 @@ type OauthConnection struct {
 }
 
 // The OAuth Connection's identifier.
-func (r *OauthConnection) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *OauthConnection) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -73,9 +73,9 @@ func (r *OauthConnection) GetCreatedAt() (CreatedAt string) {
 }
 
 // The identifier of the Group that has authorized your OAuth application.
-func (r *OauthConnection) GetGroupId() (GroupId string) {
-	if r != nil && r.GroupId != nil {
-		GroupId = *r.GroupId
+func (r *OauthConnection) GetGroupID() (GroupID string) {
+	if r != nil && r.GroupID != nil {
+		GroupID = *r.GroupID
 	}
 	return
 }

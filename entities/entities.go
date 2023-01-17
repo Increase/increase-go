@@ -46,13 +46,13 @@ func NewPreloadedEntityService(service *EntityService) (r *PreloadedEntityServic
 
 type CreateASupplementalDocumentForAnEntityParameters struct {
 	// The identifier of the File containing the document.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The identifier of the File containing the document.
-func (r *CreateASupplementalDocumentForAnEntityParameters) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateASupplementalDocumentForAnEntityParameters) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -60,7 +60,7 @@ func (r *CreateASupplementalDocumentForAnEntityParameters) GetFileId() (FileId s
 //
 type Entity struct {
 	// The entity's identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The entity's legal structure.
 	Structure *EntityStructure `json:"structure"`
 	// Details of the corporation entity. Will be present if `structure` is equal to
@@ -85,9 +85,9 @@ type Entity struct {
 }
 
 // The entity's identifier.
-func (r *Entity) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Entity) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
@@ -783,7 +783,7 @@ type EntityTrust struct {
 	// The grantor of the trust. Will be present if the `category` is `revocable`.
 	Grantor *EntityTrustGrantor `json:"grantor"`
 	// The ID for the File containing the formation document of the trust.
-	FormationDocumentFileId *string `json:"formation_document_file_id"`
+	FormationDocumentFileID *string `json:"formation_document_file_id"`
 }
 
 // The trust's name
@@ -844,9 +844,9 @@ func (r *EntityTrust) GetGrantor() (Grantor EntityTrustGrantor) {
 }
 
 // The ID for the File containing the formation document of the trust.
-func (r *EntityTrust) GetFormationDocumentFileId() (FormationDocumentFileId string) {
-	if r != nil && r.FormationDocumentFileId != nil {
-		FormationDocumentFileId = *r.FormationDocumentFileId
+func (r *EntityTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
+	if r != nil && r.FormationDocumentFileID != nil {
+		FormationDocumentFileID = *r.FormationDocumentFileID
 	}
 	return
 }
@@ -1229,13 +1229,13 @@ const (
 
 type EntitySupplementalDocuments struct {
 	// The File containing the document.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The File containing the document.
-func (r *EntitySupplementalDocuments) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *EntitySupplementalDocuments) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -1646,7 +1646,7 @@ const (
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate *string `json:"expiration_date"`
 	// The country that issued the passport.
@@ -1654,9 +1654,9 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -1833,7 +1833,7 @@ const (
 //
 type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate *string `json:"expiration_date"`
 	// The country that issued the passport.
@@ -1841,9 +1841,9 @@ type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -2036,7 +2036,7 @@ const (
 //
 type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate *string `json:"expiration_date"`
 	// The country that issued the passport.
@@ -2044,9 +2044,9 @@ type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -2084,7 +2084,7 @@ type CreateAnEntityParametersTrust struct {
 	// The trust's address.
 	Address *CreateAnEntityParametersTrustAddress `json:"address"`
 	// The identifier of the File containing the formation document of the trust.
-	FormationDocumentFileId *string `json:"formation_document_file_id,omitempty"`
+	FormationDocumentFileID *string `json:"formation_document_file_id,omitempty"`
 	// The trustees of the trust.
 	Trustees *[]CreateAnEntityParametersTrustTrustees `json:"trustees"`
 	// The grantor of the trust. Required if `category` is equal to `revocable`.
@@ -2136,9 +2136,9 @@ func (r *CreateAnEntityParametersTrust) GetAddress() (Address CreateAnEntityPara
 }
 
 // The identifier of the File containing the formation document of the trust.
-func (r *CreateAnEntityParametersTrust) GetFormationDocumentFileId() (FormationDocumentFileId string) {
-	if r != nil && r.FormationDocumentFileId != nil {
-		FormationDocumentFileId = *r.FormationDocumentFileId
+func (r *CreateAnEntityParametersTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
+	if r != nil && r.FormationDocumentFileID != nil {
+		FormationDocumentFileID = *r.FormationDocumentFileID
 	}
 	return
 }
@@ -2402,7 +2402,7 @@ const (
 //
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate *string `json:"expiration_date"`
 	// The country that issued the passport.
@@ -2410,9 +2410,9 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struc
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -2582,7 +2582,7 @@ const (
 //
 type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate *string `json:"expiration_date"`
 	// The country that issued the passport.
@@ -2590,9 +2590,9 @@ type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -2623,13 +2623,13 @@ const (
 
 type CreateAnEntityParametersSupplementalDocuments struct {
 	// The identifier of the File containing the document.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersSupplementalDocuments) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *CreateAnEntityParametersSupplementalDocuments) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }

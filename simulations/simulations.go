@@ -89,13 +89,13 @@ func NewPreloadedSimulationService(service *SimulationService) (r *PreloadedSimu
 
 type SimulateAnAccountStatementBeingCreatedParameters struct {
 	// The identifier of the Account the statement is for.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 }
 
 // The identifier of the Account the statement is for.
-func (r *SimulateAnAccountStatementBeingCreatedParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *SimulateAnAccountStatementBeingCreatedParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -147,7 +147,7 @@ func (r *ACHTransferSimulation) GetType() (Type ACHTransferSimulationType) {
 //
 type ACHTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount *int `json:"amount"`
@@ -163,10 +163,10 @@ type ACHTransferSimulationTransaction struct {
 	// provides.
 	Description *string `json:"description"`
 	// The Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -180,9 +180,9 @@ type ACHTransferSimulationTransaction struct {
 }
 
 // The identifier for the Account the Transaction belongs to.
-func (r *ACHTransferSimulationTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ACHTransferSimulationTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -226,18 +226,18 @@ func (r *ACHTransferSimulationTransaction) GetDescription() (Description string)
 }
 
 // The Transaction identifier.
-func (r *ACHTransferSimulationTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *ACHTransferSimulationTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Transaction came through. Routes are things
 // like cards and ACH details.
-func (r *ACHTransferSimulationTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *ACHTransferSimulationTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -745,11 +745,11 @@ type ACHTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The description you chose to give the transfer.
 	Description *string `json:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountId *string `json:"destination_account_id"`
+	DestinationAccountID *string `json:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountId *string `json:"source_account_id"`
+	SourceAccountID *string `json:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -779,25 +779,25 @@ func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetDesc
 }
 
 // The identifier of the Account to where the Account Transfer was sent.
-func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetDestinationAccountId() (DestinationAccountId string) {
-	if r != nil && r.DestinationAccountId != nil {
-		DestinationAccountId = *r.DestinationAccountId
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetDestinationAccountID() (DestinationAccountID string) {
+	if r != nil && r.DestinationAccountID != nil {
+		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The identifier of the Account from where the Account Transfer was sent.
-func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetSourceAccountId() (SourceAccountId string) {
-	if r != nil && r.SourceAccountId != nil {
-		SourceAccountId = *r.SourceAccountId
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetSourceAccountID() (SourceAccountID string) {
+	if r != nil && r.SourceAccountID != nil {
+		SourceAccountID = *r.SourceAccountID
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -845,7 +845,7 @@ type ACHTransferSimulationTransactionSourceACHCheckConversion struct {
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -858,9 +858,9 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (
 }
 
 // The identifier of the File containing an image of the returned check.
-func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -877,7 +877,7 @@ type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
 	//
 	StatementDescriptor *string `json:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -911,9 +911,9 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetStatemen
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -921,13 +921,13 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetTransfer
 //
 type ACHTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -940,9 +940,9 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -963,17 +963,17 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetReturnReaso
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -1011,10 +1011,10 @@ type ACHTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// the Card Dispute was accepted.
 	AcceptedAt *string `json:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeId *string `json:"card_dispute_id"`
+	CardDisputeID *string `json:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -1027,18 +1027,18 @@ func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetAccepte
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetCardDisputeId() (CardDisputeId string) {
-	if r != nil && r.CardDisputeId != nil {
-		CardDisputeId = *r.CardDisputeId
+func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r != nil && r.CardDisputeID != nil {
+		CardDisputeID = *r.CardDisputeID
 	}
 	return
 }
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -1052,7 +1052,7 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// transaction's currency.
 	Currency *ACHTransferSimulationTransactionSourceCardRefundCurrency `json:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionId *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type *ACHTransferSimulationTransactionSourceCardRefundType `json:"type"`
@@ -1077,9 +1077,9 @@ func (r *ACHTransferSimulationTransactionSourceCardRefund) GetCurrency() (Curren
 }
 
 // The identifier for the Transaction this refunds, if any.
-func (r *ACHTransferSimulationTransactionSourceCardRefund) GetCardSettlementTransactionId() (CardSettlementTransactionId string) {
-	if r != nil && r.CardSettlementTransactionId != nil {
-		CardSettlementTransactionId = *r.CardSettlementTransactionId
+func (r *ACHTransferSimulationTransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSettlementTransactionID string) {
+	if r != nil && r.CardSettlementTransactionID != nil {
+		CardSettlementTransactionID = *r.CardSettlementTransactionID
 	}
 	return
 }
@@ -1129,7 +1129,7 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	//
 	MerchantState *string `json:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionId *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `json:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type *ACHTransferSimulationTransactionSourceCardSettlementType `json:"type"`
@@ -1189,9 +1189,9 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetMerchantState(
 }
 
 // The identifier of the Pending Transaction associated with this Transaction.
-func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetPendingTransactionId() (PendingTransactionId string) {
-	if r != nil && r.PendingTransactionId != nil {
-		PendingTransactionId = *r.PendingTransactionId
+func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetPendingTransactionID() (PendingTransactionID string) {
+	if r != nil && r.PendingTransactionID != nil {
+		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
 }
@@ -1231,7 +1231,7 @@ type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// transaction's currency.
 	Currency *ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
 	// The ID of the Check Deposit that led to the Transaction.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -1253,9 +1253,9 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetCurren
 }
 
 // The ID of the Check Deposit that led to the Transaction.
-func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
@@ -1283,10 +1283,10 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// transaction's currency.
 	Currency *ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	//
 	ReturnReason *ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
 }
@@ -1319,18 +1319,18 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetCurrency()
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -1388,7 +1388,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The name that will be printed on the check.
 	RecipientName *string `json:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The street address of the check's destination.
@@ -1457,9 +1457,9 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetRecipi
 }
 
 // The identifier of the Check Transfer with which this is associated.
-func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -1478,13 +1478,13 @@ const (
 //
 type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
-func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -1492,9 +1492,9 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransf
 //
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// The time the stop-payment was requested.
 	RequestedAt *string `json:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1503,17 +1503,17 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struc
 }
 
 // The ID of the check transfer that was stopped.
-func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -1550,7 +1550,7 @@ type ACHTransferSimulationTransactionSourceDisputeResolution struct {
 	// transaction's currency.
 	Currency *ACHTransferSimulationTransactionSourceDisputeResolutionCurrency `json:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionId *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `json:"disputed_transaction_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -1572,9 +1572,9 @@ func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetCurrency() 
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetDisputedTransactionId() (DisputedTransactionId string) {
-	if r != nil && r.DisputedTransactionId != nil {
-		DisputedTransactionId = *r.DisputedTransactionId
+func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r != nil && r.DisputedTransactionID != nil {
+		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }
@@ -1596,7 +1596,7 @@ type ACHTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	//
-	BagId *string `json:"bag_id"`
+	BagID *string `json:"bag_id"`
 	//
 	DepositDate *string `json:"deposit_date"`
 }
@@ -1610,9 +1610,9 @@ func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount() 
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetBagId() (BagId string) {
-	if r != nil && r.BagId != nil {
-		BagId = *r.BagId
+func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
+	if r != nil && r.BagID != nil {
+		BagID = *r.BagID
 	}
 	return
 }
@@ -1638,9 +1638,9 @@ type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	//
 	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -1684,16 +1684,16 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetOriginator
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -1723,9 +1723,9 @@ type ACHTransferSimulationTransactionSourceInboundCheck struct {
 	//
 	CheckNumber *string `json:"check_number"`
 	//
-	CheckFrontImageFileId *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
 	//
-	CheckRearImageFileId *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -1753,16 +1753,16 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckNumber() (C
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckFrontImageFileId() (CheckFrontImageFileId string) {
-	if r != nil && r.CheckFrontImageFileId != nil {
-		CheckFrontImageFileId = *r.CheckFrontImageFileId
+func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckFrontImageFileID() (CheckFrontImageFileID string) {
+	if r != nil && r.CheckFrontImageFileID != nil {
+		CheckFrontImageFileID = *r.CheckFrontImageFileID
 	}
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageFileId() (CheckRearImageFileId string) {
-	if r != nil && r.CheckRearImageFileId != nil {
-		CheckRearImageFileId = *r.CheckRearImageFileId
+func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImageFileID string) {
+	if r != nil && r.CheckRearImageFileID != nil {
+		CheckRearImageFileID = *r.CheckRearImageFileID
 	}
 	return
 }
@@ -1804,9 +1804,9 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struc
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -1846,9 +1846,9 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struc
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -1934,16 +1934,16 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -2081,16 +2081,16 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -2756,7 +2756,7 @@ type ACHTransferSimulationTransactionSourceCardRouteRefund struct {
 	// currency.
 	Currency *ACHTransferSimulationTransactionSourceCardRouteRefundCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -2787,9 +2787,9 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetCurrency() (C
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -2849,7 +2849,7 @@ type ACHTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// currency.
 	Currency *ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -2880,9 +2880,9 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetCurrency(
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -2958,7 +2958,7 @@ type ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	//
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -2990,9 +2990,9 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Get
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -3000,12 +3000,12 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Get
 //
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -3021,7 +3021,7 @@ type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -3056,9 +3056,9 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetMessage
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -3066,12 +3066,12 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetTransfe
 //
 type ACHTransferSimulationTransactionSourceWireTransferRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -3085,7 +3085,7 @@ const (
 //
 type ACHTransferSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -3099,10 +3099,10 @@ type ACHTransferSimulationDeclinedTransaction struct {
 	// This is the description the vendor provides.
 	Description *string `json:"description"`
 	// The Declined Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Declined Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -3117,9 +3117,9 @@ type ACHTransferSimulationDeclinedTransaction struct {
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
-func (r *ACHTransferSimulationDeclinedTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ACHTransferSimulationDeclinedTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -3161,18 +3161,18 @@ func (r *ACHTransferSimulationDeclinedTransaction) GetDescription() (Description
 }
 
 // The Declined Transaction identifier.
-func (r *ACHTransferSimulationDeclinedTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *ACHTransferSimulationDeclinedTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Declined Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *ACHTransferSimulationDeclinedTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *ACHTransferSimulationDeclinedTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -3333,11 +3333,11 @@ type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
 	//
 	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	// Why the ACH transfer was declined.
 	Reason *ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -3374,9 +3374,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetOriginator
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
@@ -3389,9 +3389,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetReason() (
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -3433,7 +3433,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	// account currency.
 	Currency *ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -3448,10 +3448,10 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	Reason *ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -3472,9 +3472,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetCurrency(
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -3524,18 +3524,18 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetReason() 
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was attempted using a Digital Wallet Token (such as an
 // Apple Pay purchase), the identifier of the token that was used.
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -3760,9 +3760,9 @@ type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struc
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -3802,9 +3802,9 @@ type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struc
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -3890,16 +3890,16 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -4037,16 +4037,16 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -4074,7 +4074,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline struct {
 	// account currency.
 	Currency *ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -4105,9 +4105,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetCurr
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -4172,7 +4172,7 @@ const (
 
 type SimulateAnACHTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
-	AccountNumberId *string `json:"account_number_id"`
+	AccountNumberID *string `json:"account_number_id"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
@@ -4180,9 +4180,9 @@ type SimulateAnACHTransferToYourAccountParameters struct {
 }
 
 // The identifier of the Account Number the inbound ACH Transfer is for.
-func (r *SimulateAnACHTransferToYourAccountParameters) GetAccountNumberId() (AccountNumberId string) {
-	if r != nil && r.AccountNumberId != nil {
-		AccountNumberId = *r.AccountNumberId
+func (r *SimulateAnACHTransferToYourAccountParameters) GetAccountNumberID() (AccountNumberID string) {
+	if r != nil && r.AccountNumberID != nil {
+		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }
@@ -4234,7 +4234,7 @@ type DigitalWalletTokenRequestCreateResponse struct {
 	DeclineReason *DigitalWalletTokenRequestCreateResponseDeclineReason `json:"decline_reason"`
 	// If the simulated tokenization attempt was accepted, this field contains the id
 	// of the Digital Wallet Token that was created.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
 	Type *DigitalWalletTokenRequestCreateResponseType `json:"type"`
@@ -4251,9 +4251,9 @@ func (r *DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineRea
 
 // If the simulated tokenization attempt was accepted, this field contains the id
 // of the Digital Wallet Token that was created.
-func (r *DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -4284,13 +4284,13 @@ const (
 
 type SimulateDigitalWalletActivityOnACardParameters struct {
 	// The identifier of the Card to be authorized.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 }
 
 // The identifier of the Card to be authorized.
-func (r *SimulateDigitalWalletActivityOnACardParameters) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *SimulateDigitalWalletActivityOnACardParameters) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
@@ -4328,7 +4328,7 @@ func (r *WireTransferSimulation) GetType() (Type WireTransferSimulationType) {
 //
 type WireTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount *int `json:"amount"`
@@ -4344,10 +4344,10 @@ type WireTransferSimulationTransaction struct {
 	// provides.
 	Description *string `json:"description"`
 	// The Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -4361,9 +4361,9 @@ type WireTransferSimulationTransaction struct {
 }
 
 // The identifier for the Account the Transaction belongs to.
-func (r *WireTransferSimulationTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *WireTransferSimulationTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -4407,18 +4407,18 @@ func (r *WireTransferSimulationTransaction) GetDescription() (Description string
 }
 
 // The Transaction identifier.
-func (r *WireTransferSimulationTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *WireTransferSimulationTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Transaction came through. Routes are things
 // like cards and ACH details.
-func (r *WireTransferSimulationTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *WireTransferSimulationTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -4926,11 +4926,11 @@ type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The description you chose to give the transfer.
 	Description *string `json:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountId *string `json:"destination_account_id"`
+	DestinationAccountID *string `json:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountId *string `json:"source_account_id"`
+	SourceAccountID *string `json:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -4960,25 +4960,25 @@ func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetDes
 }
 
 // The identifier of the Account to where the Account Transfer was sent.
-func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetDestinationAccountId() (DestinationAccountId string) {
-	if r != nil && r.DestinationAccountId != nil {
-		DestinationAccountId = *r.DestinationAccountId
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetDestinationAccountID() (DestinationAccountID string) {
+	if r != nil && r.DestinationAccountID != nil {
+		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The identifier of the Account from where the Account Transfer was sent.
-func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetSourceAccountId() (SourceAccountId string) {
-	if r != nil && r.SourceAccountId != nil {
-		SourceAccountId = *r.SourceAccountId
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetSourceAccountID() (SourceAccountID string) {
+	if r != nil && r.SourceAccountID != nil {
+		SourceAccountID = *r.SourceAccountID
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -5026,7 +5026,7 @@ type WireTransferSimulationTransactionSourceACHCheckConversion struct {
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5039,9 +5039,9 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetAmount() 
 }
 
 // The identifier of the File containing an image of the returned check.
-func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -5058,7 +5058,7 @@ type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	//
 	StatementDescriptor *string `json:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5092,9 +5092,9 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetStateme
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -5102,13 +5102,13 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetTransfe
 //
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *WireTransferSimulationTransactionSourceACHTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -5121,9 +5121,9 @@ type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -5144,17 +5144,17 @@ func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetReturnReas
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -5192,10 +5192,10 @@ type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// the Card Dispute was accepted.
 	AcceptedAt *string `json:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeId *string `json:"card_dispute_id"`
+	CardDisputeID *string `json:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -5208,18 +5208,18 @@ func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetAccept
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetCardDisputeId() (CardDisputeId string) {
-	if r != nil && r.CardDisputeId != nil {
-		CardDisputeId = *r.CardDisputeId
+func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r != nil && r.CardDisputeID != nil {
+		CardDisputeID = *r.CardDisputeID
 	}
 	return
 }
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -5233,7 +5233,7 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 	// transaction's currency.
 	Currency *WireTransferSimulationTransactionSourceCardRefundCurrency `json:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionId *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type *WireTransferSimulationTransactionSourceCardRefundType `json:"type"`
@@ -5258,9 +5258,9 @@ func (r *WireTransferSimulationTransactionSourceCardRefund) GetCurrency() (Curre
 }
 
 // The identifier for the Transaction this refunds, if any.
-func (r *WireTransferSimulationTransactionSourceCardRefund) GetCardSettlementTransactionId() (CardSettlementTransactionId string) {
-	if r != nil && r.CardSettlementTransactionId != nil {
-		CardSettlementTransactionId = *r.CardSettlementTransactionId
+func (r *WireTransferSimulationTransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSettlementTransactionID string) {
+	if r != nil && r.CardSettlementTransactionID != nil {
+		CardSettlementTransactionID = *r.CardSettlementTransactionID
 	}
 	return
 }
@@ -5310,7 +5310,7 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	//
 	MerchantState *string `json:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionId *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `json:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type *WireTransferSimulationTransactionSourceCardSettlementType `json:"type"`
@@ -5370,9 +5370,9 @@ func (r *WireTransferSimulationTransactionSourceCardSettlement) GetMerchantState
 }
 
 // The identifier of the Pending Transaction associated with this Transaction.
-func (r *WireTransferSimulationTransactionSourceCardSettlement) GetPendingTransactionId() (PendingTransactionId string) {
-	if r != nil && r.PendingTransactionId != nil {
-		PendingTransactionId = *r.PendingTransactionId
+func (r *WireTransferSimulationTransactionSourceCardSettlement) GetPendingTransactionID() (PendingTransactionID string) {
+	if r != nil && r.PendingTransactionID != nil {
+		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
 }
@@ -5412,7 +5412,7 @@ type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// transaction's currency.
 	Currency *WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
 	// The ID of the Check Deposit that led to the Transaction.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5434,9 +5434,9 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetCurre
 }
 
 // The ID of the Check Deposit that led to the Transaction.
-func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
@@ -5464,10 +5464,10 @@ type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// transaction's currency.
 	Currency *WireTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	//
 	ReturnReason *WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
 }
@@ -5500,18 +5500,18 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetCurrency(
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -5569,7 +5569,7 @@ type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The name that will be printed on the check.
 	RecipientName *string `json:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The street address of the check's destination.
@@ -5638,9 +5638,9 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetRecip
 }
 
 // The identifier of the Check Transfer with which this is associated.
-func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -5659,13 +5659,13 @@ const (
 //
 type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
-func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -5673,9 +5673,9 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTrans
 //
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// The time the stop-payment was requested.
 	RequestedAt *string `json:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
@@ -5684,17 +5684,17 @@ type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest stru
 }
 
 // The ID of the check transfer that was stopped.
-func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -5731,7 +5731,7 @@ type WireTransferSimulationTransactionSourceDisputeResolution struct {
 	// transaction's currency.
 	Currency *WireTransferSimulationTransactionSourceDisputeResolutionCurrency `json:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionId *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `json:"disputed_transaction_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5753,9 +5753,9 @@ func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetCurrency()
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetDisputedTransactionId() (DisputedTransactionId string) {
-	if r != nil && r.DisputedTransactionId != nil {
-		DisputedTransactionId = *r.DisputedTransactionId
+func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r != nil && r.DisputedTransactionID != nil {
+		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }
@@ -5777,7 +5777,7 @@ type WireTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	//
-	BagId *string `json:"bag_id"`
+	BagID *string `json:"bag_id"`
 	//
 	DepositDate *string `json:"deposit_date"`
 }
@@ -5791,9 +5791,9 @@ func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount()
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetBagId() (BagId string) {
-	if r != nil && r.BagId != nil {
-		BagId = *r.BagId
+func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
+	if r != nil && r.BagID != nil {
+		BagID = *r.BagID
 	}
 	return
 }
@@ -5819,9 +5819,9 @@ type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	//
 	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -5865,16 +5865,16 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetOriginato
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -5904,9 +5904,9 @@ type WireTransferSimulationTransactionSourceInboundCheck struct {
 	//
 	CheckNumber *string `json:"check_number"`
 	//
-	CheckFrontImageFileId *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
 	//
-	CheckRearImageFileId *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -5934,16 +5934,16 @@ func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckNumber() (
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckFrontImageFileId() (CheckFrontImageFileId string) {
-	if r != nil && r.CheckFrontImageFileId != nil {
-		CheckFrontImageFileId = *r.CheckFrontImageFileId
+func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckFrontImageFileID() (CheckFrontImageFileID string) {
+	if r != nil && r.CheckFrontImageFileID != nil {
+		CheckFrontImageFileID = *r.CheckFrontImageFileID
 	}
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageFileId() (CheckRearImageFileId string) {
-	if r != nil && r.CheckRearImageFileId != nil {
-		CheckRearImageFileId = *r.CheckRearImageFileId
+func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImageFileID string) {
+	if r != nil && r.CheckRearImageFileID != nil {
+		CheckRearImageFileID = *r.CheckRearImageFileID
 	}
 	return
 }
@@ -5985,9 +5985,9 @@ type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer stru
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -6027,9 +6027,9 @@ type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer stru
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -6115,16 +6115,16 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -6262,16 +6262,16 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -6937,7 +6937,7 @@ type WireTransferSimulationTransactionSourceCardRouteRefund struct {
 	// currency.
 	Currency *WireTransferSimulationTransactionSourceCardRouteRefundCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -6968,9 +6968,9 @@ func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetCurrency() (
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -7030,7 +7030,7 @@ type WireTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// currency.
 	Currency *WireTransferSimulationTransactionSourceCardRouteSettlementCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -7061,9 +7061,9 @@ func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetCurrency
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -7139,7 +7139,7 @@ type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct 
 	//
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -7171,9 +7171,9 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Ge
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7181,12 +7181,12 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Ge
 //
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7202,7 +7202,7 @@ type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -7237,9 +7237,9 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetMessag
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7247,12 +7247,12 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetTransf
 //
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *WireTransferSimulationTransactionSourceWireTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *WireTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7271,15 +7271,15 @@ const (
 
 type SimulateAWireTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound Wire Transfer is for.
-	AccountNumberId *string `json:"account_number_id"`
+	AccountNumberID *string `json:"account_number_id"`
 	// The transfer amount in cents. Must be positive.
 	Amount *int `json:"amount"`
 }
 
 // The identifier of the Account Number the inbound Wire Transfer is for.
-func (r *SimulateAWireTransferToYourAccountParameters) GetAccountNumberId() (AccountNumberId string) {
-	if r != nil && r.AccountNumberId != nil {
-		AccountNumberId = *r.AccountNumberId
+func (r *SimulateAWireTransferToYourAccountParameters) GetAccountNumberID() (AccountNumberID string) {
+	if r != nil && r.AccountNumberID != nil {
+		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }
@@ -7339,7 +7339,7 @@ func (r *CardAuthorizationSimulation) GetType() (Type CardAuthorizationSimulatio
 //
 type CardAuthorizationSimulationPendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -7355,10 +7355,10 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	// the vendor provides.
 	Description *string `json:"description"`
 	// The Pending Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Pending Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -7374,9 +7374,9 @@ type CardAuthorizationSimulationPendingTransaction struct {
 }
 
 // The identifier for the account this Pending Transaction belongs to.
-func (r *CardAuthorizationSimulationPendingTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CardAuthorizationSimulationPendingTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -7420,18 +7420,18 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetDescription() (Descri
 }
 
 // The Pending Transaction identifier.
-func (r *CardAuthorizationSimulationPendingTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CardAuthorizationSimulationPendingTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Pending Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *CardAuthorizationSimulationPendingTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *CardAuthorizationSimulationPendingTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -7623,7 +7623,7 @@ type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 	// account currency.
 	Currency *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency `json:"currency"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -7645,9 +7645,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7669,7 +7669,7 @@ type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction s
 	// for example, this is cents.
 	Amount *int `json:"amount"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -7682,9 +7682,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 }
 
 // The identifier of the ACH Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7698,7 +7698,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	// transaction's currency.
 	Currency *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -7709,10 +7709,10 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	MerchantCategoryCode *string `json:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -7733,9 +7733,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -7770,18 +7770,18 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 // purchase), the identifier of the token that was used.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -7807,10 +7807,10 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction 
 	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency `json:"currency"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileId *string `json:"front_image_file_id"`
+	FrontImageFileID *string `json:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileId *string `json:"back_image_file_id"`
+	BackImageFileID *string `json:"back_image_file_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -7833,18 +7833,18 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 
 // The identifier of the File containing the image of the front of the check that
 // was deposited.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetFrontImageFileId() (FrontImageFileId string) {
-	if r != nil && r.FrontImageFileId != nil {
-		FrontImageFileId = *r.FrontImageFileId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
+	if r != nil && r.FrontImageFileID != nil {
+		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the image of the back of the check that
 // was deposited.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetBackImageFileId() (BackImageFileId string) {
-	if r != nil && r.BackImageFileId != nil {
-		BackImageFileId = *r.BackImageFileId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
+	if r != nil && r.BackImageFileID != nil {
+		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
@@ -7869,7 +7869,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 	// currency.
 	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency `json:"currency"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -7891,9 +7891,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 }
 
 // The identifier of the Check Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -7918,7 +7918,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization s
 	// transaction's currency.
 	Currency *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -7949,9 +7949,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -8057,7 +8057,7 @@ type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction 
 	//
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -8090,9 +8090,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -8113,7 +8113,7 @@ const (
 //
 type CardAuthorizationSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -8127,10 +8127,10 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 	// This is the description the vendor provides.
 	Description *string `json:"description"`
 	// The Declined Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Declined Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -8145,9 +8145,9 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CardAuthorizationSimulationDeclinedTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -8189,18 +8189,18 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetDescription() (Descr
 }
 
 // The Declined Transaction identifier.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *CardAuthorizationSimulationDeclinedTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Declined Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *CardAuthorizationSimulationDeclinedTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -8361,11 +8361,11 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	//
 	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	// Why the ACH transfer was declined.
 	Reason *CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -8402,9 +8402,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOrig
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
@@ -8417,9 +8417,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReas
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -8461,7 +8461,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	// account currency.
 	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -8476,10 +8476,10 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	Reason *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -8500,9 +8500,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetCur
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -8552,18 +8552,18 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRea
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was attempted using a Digital Wallet Token (such as an
 // Apple Pay purchase), the identifier of the token that was used.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -8788,9 +8788,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -8830,9 +8830,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -8918,16 +8918,16 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -9065,16 +9065,16 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -9102,7 +9102,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline struct
 	// account currency.
 	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -9133,9 +9133,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) G
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -9202,9 +9202,9 @@ type SimulateAnAuthorizationOnACardParameters struct {
 	// The authorization amount in cents.
 	Amount *int `json:"amount"`
 	// The identifier of the Card to be authorized.
-	CardId *string `json:"card_id,omitempty"`
+	CardID *string `json:"card_id,omitempty"`
 	// The identifier of the Digital Wallet Token to be authorized.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id,omitempty"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id,omitempty"`
 }
 
 // The authorization amount in cents.
@@ -9216,45 +9216,45 @@ func (r *SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int) {
 }
 
 // The identifier of the Card to be authorized.
-func (r *SimulateAnAuthorizationOnACardParameters) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *SimulateAnAuthorizationOnACardParameters) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
 
 // The identifier of the Digital Wallet Token to be authorized.
-func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
 
 type SimulateSettlingACardAuthorizationParameters struct {
 	// The identifier of the Card to create a settlement on.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The identifier of the Pending Transaction for the Card Authorization you wish to
 	// settle.
-	PendingTransactionId *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `json:"pending_transaction_id"`
 	// The amount to be settled. This defaults to the amount of the Pending Transaction
 	// being settled.
 	Amount *int `json:"amount,omitempty"`
 }
 
 // The identifier of the Card to create a settlement on.
-func (r *SimulateSettlingACardAuthorizationParameters) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *SimulateSettlingACardAuthorizationParameters) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
 
 // The identifier of the Pending Transaction for the Card Authorization you wish to
 // settle.
-func (r *SimulateSettlingACardAuthorizationParameters) GetPendingTransactionId() (PendingTransactionId string) {
-	if r != nil && r.PendingTransactionId != nil {
-		PendingTransactionId = *r.PendingTransactionId
+func (r *SimulateSettlingACardAuthorizationParameters) GetPendingTransactionID() (PendingTransactionID string) {
+	if r != nil && r.PendingTransactionID != nil {
+		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
 }
@@ -9317,7 +9317,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) GetType() (Type Inboun
 //
 type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount *int `json:"amount"`
@@ -9333,10 +9333,10 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// provides.
 	Description *string `json:"description"`
 	// The Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -9350,9 +9350,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 }
 
 // The identifier for the Account the Transaction belongs to.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -9396,18 +9396,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetDescript
 }
 
 // The Transaction identifier.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Transaction came through. Routes are things
 // like cards and ACH details.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -9915,11 +9915,11 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTran
 	// The description you chose to give the transfer.
 	Description *string `json:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountId *string `json:"destination_account_id"`
+	DestinationAccountID *string `json:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountId *string `json:"source_account_id"`
+	SourceAccountID *string `json:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9949,25 +9949,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccount
 }
 
 // The identifier of the Account to where the Account Transfer was sent.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetDestinationAccountId() (DestinationAccountId string) {
-	if r != nil && r.DestinationAccountId != nil {
-		DestinationAccountId = *r.DestinationAccountId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetDestinationAccountID() (DestinationAccountID string) {
+	if r != nil && r.DestinationAccountID != nil {
+		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The identifier of the Account from where the Account Transfer was sent.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetSourceAccountId() (SourceAccountId string) {
-	if r != nil && r.SourceAccountId != nil {
-		SourceAccountId = *r.SourceAccountId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetSourceAccountID() (SourceAccountID string) {
+	if r != nil && r.SourceAccountID != nil {
+		SourceAccountID = *r.SourceAccountID
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -10015,7 +10015,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckCon
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -10028,9 +10028,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 }
 
 // The identifier of the File containing an image of the returned check.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -10047,7 +10047,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	//
 	StatementDescriptor *string `json:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -10081,9 +10081,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -10091,13 +10091,13 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -10110,9 +10110,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -10133,17 +10133,17 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -10181,10 +10181,10 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDispute
 	// the Card Dispute was accepted.
 	AcceptedAt *string `json:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeId *string `json:"card_dispute_id"`
+	CardDisputeID *string `json:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -10197,18 +10197,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetCardDisputeId() (CardDisputeId string) {
-	if r != nil && r.CardDisputeId != nil {
-		CardDisputeId = *r.CardDisputeId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r != nil && r.CardDisputeID != nil {
+		CardDisputeID = *r.CardDisputeID
 	}
 	return
 }
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -10222,7 +10222,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	// transaction's currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency `json:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionId *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType `json:"type"`
@@ -10247,9 +10247,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 }
 
 // The identifier for the Transaction this refunds, if any.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) GetCardSettlementTransactionId() (CardSettlementTransactionId string) {
-	if r != nil && r.CardSettlementTransactionId != nil {
-		CardSettlementTransactionId = *r.CardSettlementTransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSettlementTransactionID string) {
+	if r != nil && r.CardSettlementTransactionID != nil {
+		CardSettlementTransactionID = *r.CardSettlementTransactionID
 	}
 	return
 }
@@ -10299,7 +10299,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	//
 	MerchantState *string `json:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionId *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `json:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType `json:"type"`
@@ -10359,9 +10359,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 }
 
 // The identifier of the Pending Transaction associated with this Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetPendingTransactionId() (PendingTransactionId string) {
-	if r != nil && r.PendingTransactionId != nil {
-		PendingTransactionId = *r.PendingTransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetPendingTransactionID() (PendingTransactionID string) {
+	if r != nil && r.PendingTransactionID != nil {
+		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
 }
@@ -10401,7 +10401,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	// transaction's currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
 	// The ID of the Check Deposit that led to the Transaction.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -10423,9 +10423,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 }
 
 // The ID of the Check Deposit that led to the Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
@@ -10453,10 +10453,10 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	// transaction's currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnCurrency `json:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositId *string `json:"check_deposit_id"`
+	CheckDepositID *string `json:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	//
 	ReturnReason *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
 }
@@ -10489,18 +10489,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetCheckDepositId() (CheckDepositId string) {
-	if r != nil && r.CheckDepositId != nil {
-		CheckDepositId = *r.CheckDepositId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
 	}
 	return
 }
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -10558,7 +10558,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The name that will be printed on the check.
 	RecipientName *string `json:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The street address of the check's destination.
@@ -10627,9 +10627,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 }
 
 // The identifier of the Check Transfer with which this is associated.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -10648,13 +10648,13 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -10662,9 +10662,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionId *string `json:"transaction_id"`
+	TransactionID *string `json:"transaction_id"`
 	// The time the stop-payment was requested.
 	RequestedAt *string `json:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
@@ -10673,17 +10673,17 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 }
 
 // The ID of the check transfer that was stopped.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetTransactionId() (TransactionId string) {
-	if r != nil && r.TransactionId != nil {
-		TransactionId = *r.TransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r != nil && r.TransactionID != nil {
+		TransactionID = *r.TransactionID
 	}
 	return
 }
@@ -10720,7 +10720,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeReso
 	// transaction's currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency `json:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionId *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `json:"disputed_transaction_id"`
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -10742,9 +10742,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDispute
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) GetDisputedTransactionId() (DisputedTransactionId string) {
-	if r != nil && r.DisputedTransactionId != nil {
-		DisputedTransactionId = *r.DisputedTransactionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r != nil && r.DisputedTransactionID != nil {
+		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }
@@ -10766,7 +10766,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCas
 	// example, this is cents.
 	Amount *int `json:"amount"`
 	//
-	BagId *string `json:"bag_id"`
+	BagID *string `json:"bag_id"`
 	//
 	DepositDate *string `json:"deposit_date"`
 }
@@ -10780,9 +10780,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrea
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetBagId() (BagId string) {
-	if r != nil && r.BagId != nil {
-		BagId = *r.BagId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
+	if r != nil && r.BagID != nil {
+		BagID = *r.BagID
 	}
 	return
 }
@@ -10808,9 +10808,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	//
 	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -10854,16 +10854,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -10893,9 +10893,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundChec
 	//
 	CheckNumber *string `json:"check_number"`
 	//
-	CheckFrontImageFileId *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
 	//
-	CheckRearImageFileId *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10923,16 +10923,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetCheckFrontImageFileId() (CheckFrontImageFileId string) {
-	if r != nil && r.CheckFrontImageFileId != nil {
-		CheckFrontImageFileId = *r.CheckFrontImageFileId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetCheckFrontImageFileID() (CheckFrontImageFileID string) {
+	if r != nil && r.CheckFrontImageFileID != nil {
+		CheckFrontImageFileID = *r.CheckFrontImageFileID
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetCheckRearImageFileId() (CheckRearImageFileId string) {
-	if r != nil && r.CheckRearImageFileId != nil {
-		CheckRearImageFileId = *r.CheckRearImageFileId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImageFileID string) {
+	if r != nil && r.CheckRearImageFileID != nil {
+		CheckRearImageFileID = *r.CheckRearImageFileID
 	}
 	return
 }
@@ -10974,9 +10974,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -11016,9 +11016,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -11104,16 +11104,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -11251,16 +11251,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -11926,7 +11926,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRe
 	// currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -11957,9 +11957,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -12019,7 +12019,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSe
 	// currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -12050,9 +12050,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -12128,7 +12128,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdow
 	//
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -12160,9 +12160,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -12170,12 +12170,12 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -12191,7 +12191,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient *string `json:"message_to_recipient"`
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
 // The transfer amount in USD cents.
@@ -12226,9 +12226,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -12236,12 +12236,12 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
 	//
-	TransferId *string `json:"transfer_id"`
+	TransferID *string `json:"transfer_id"`
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) GetTransferId() (TransferId string) {
-	if r != nil && r.TransferId != nil {
-		TransferId = *r.TransferId
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
+	if r != nil && r.TransferID != nil {
+		TransferID = *r.TransferID
 	}
 	return
 }
@@ -12255,7 +12255,7 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount *int `json:"amount"`
@@ -12269,10 +12269,10 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// This is the description the vendor provides.
 	Description *string `json:"description"`
 	// The Declined Transaction identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteId *string `json:"route_id"`
+	RouteID *string `json:"route_id"`
 	// The type of the route this Declined Transaction came through.
 	RouteType *string `json:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
@@ -12287,9 +12287,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -12331,18 +12331,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) Get
 }
 
 // The Declined Transaction identifier.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the route this Declined Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetRouteId() (RouteId string) {
-	if r != nil && r.RouteId != nil {
-		RouteId = *r.RouteId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
 	}
 	return
 }
@@ -12503,11 +12503,11 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	//
 	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyId *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `json:"originator_company_id"`
 	// Why the ACH transfer was declined.
 	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `json:"reason"`
 	//
-	ReceiverIdNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `json:"receiver_id_number"`
 	//
 	ReceiverName *string `json:"receiver_name"`
 	//
@@ -12544,9 +12544,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetOriginatorCompanyId() (OriginatorCompanyId string) {
-	if r != nil && r.OriginatorCompanyId != nil {
-		OriginatorCompanyId = *r.OriginatorCompanyId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r != nil && r.OriginatorCompanyID != nil {
+		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
@@ -12559,9 +12559,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetReceiverIdNumber() (ReceiverIdNumber string) {
-	if r != nil && r.ReceiverIdNumber != nil {
-		ReceiverIdNumber = *r.ReceiverIdNumber
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r != nil && r.ReceiverIDNumber != nil {
+		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
@@ -12603,7 +12603,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// account currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -12618,10 +12618,10 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `json:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionId *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `json:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenId *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -12642,9 +12642,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -12694,18 +12694,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetRealTimeDecisionId() (RealTimeDecisionId string) {
-	if r != nil && r.RealTimeDecisionId != nil {
-		RealTimeDecisionId = *r.RealTimeDecisionId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r != nil && r.RealTimeDecisionID != nil {
+		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
 }
 
 // If the authorization was attempted using a Digital Wallet Token (such as an
 // Apple Pay purchase), the identifier of the token that was used.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenId() (DigitalWalletTokenId string) {
-	if r != nil && r.DigitalWalletTokenId != nil {
-		DigitalWalletTokenId = *r.DigitalWalletTokenId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
 }
@@ -12930,9 +12930,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	//
 	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIdQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionId *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
 	//
 	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
 	//
@@ -12972,9 +12972,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	//
 	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIdQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionId *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
 	//
 	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
 	//
@@ -13060,16 +13060,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIdQualifier() (OriginatingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIdQualifier != nil {
-		OriginatingDepositoryFinancialInstitutionIdQualifier = *r.OriginatingDepositoryFinancialInstitutionIdQualifier
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionId() (OriginatingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionId != nil {
-		OriginatingDepositoryFinancialInstitutionId = *r.OriginatingDepositoryFinancialInstitutionId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -13207,16 +13207,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIdQualifier() (ReceivingDepositoryFinancialInstitutionIdQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIdQualifier != nil {
-		ReceivingDepositoryFinancialInstitutionIdQualifier = *r.ReceivingDepositoryFinancialInstitutionIdQualifier
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionId() (ReceivingDepositoryFinancialInstitutionId string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionId != nil {
-		ReceivingDepositoryFinancialInstitutionId = *r.ReceivingDepositoryFinancialInstitutionId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
@@ -13244,7 +13244,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// account currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
 	//
-	MerchantAcceptorId *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
 	//
 	MerchantCity *string `json:"merchant_city"`
 	//
@@ -13275,9 +13275,9 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorId() (MerchantAcceptorId string) {
-	if r != nil && r.MerchantAcceptorId != nil {
-		MerchantAcceptorId = *r.MerchantAcceptorId
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
@@ -13343,16 +13343,16 @@ const (
 type SimulateARealTimePaymentsTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound Real Time Payments Transfer is
 	// for.
-	AccountNumberId *string `json:"account_number_id"`
+	AccountNumberID *string `json:"account_number_id"`
 	// The transfer amount in USD cents. Must be positive.
 	Amount *int `json:"amount"`
 }
 
 // The identifier of the Account Number the inbound Real Time Payments Transfer is
 // for.
-func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAccountNumberId() (AccountNumberId string) {
-	if r != nil && r.AccountNumberId != nil {
-		AccountNumberId = *r.AccountNumberId
+func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAccountNumberID() (AccountNumberID string) {
+	if r != nil && r.AccountNumberID != nil {
+		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }

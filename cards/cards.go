@@ -42,9 +42,9 @@ func NewPreloadedCardService(service *CardService) (r *PreloadedCardService) {
 //
 type Card struct {
 	// The card identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the account this card belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
 	CreatedAt *string `json:"created_at"`
@@ -70,17 +70,17 @@ type Card struct {
 }
 
 // The card identifier.
-func (r *Card) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *Card) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the account this card belongs to.
-func (r *Card) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *Card) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -233,7 +233,7 @@ type CardDigitalWallet struct {
 	Phone *string `json:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileId *string `json:"card_profile_id"`
+	CardProfileID *string `json:"card_profile_id"`
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -256,9 +256,9 @@ func (r *CardDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *CardDigitalWallet) GetCardProfileId() (CardProfileId string) {
-	if r != nil && r.CardProfileId != nil {
-		CardProfileId = *r.CardProfileId
+func (r *CardDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
 	}
 	return
 }
@@ -272,7 +272,7 @@ const (
 //
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The card number.
 	PrimaryAccountNumber *string `json:"primary_account_number"`
 	// The month the card expires in MM format (e.g., August is 08).
@@ -289,9 +289,9 @@ type CardDetails struct {
 }
 
 // The identifier for the Card for which sensitive details have been returned.
-func (r *CardDetails) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *CardDetails) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
@@ -347,7 +347,7 @@ const (
 
 type CreateACardParameters struct {
 	// The Account the card should belong to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The description you choose to give the card.
 	Description *string `json:"description,omitempty"`
 	// The card's billing address.
@@ -359,9 +359,9 @@ type CreateACardParameters struct {
 }
 
 // The Account the card should belong to.
-func (r *CreateACardParameters) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *CreateACardParameters) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -456,7 +456,7 @@ type CreateACardParametersDigitalWallet struct {
 	Phone *string `json:"phone,omitempty"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileId *string `json:"card_profile_id,omitempty"`
+	CardProfileID *string `json:"card_profile_id,omitempty"`
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -479,9 +479,9 @@ func (r *CreateACardParametersDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *CreateACardParametersDigitalWallet) GetCardProfileId() (CardProfileId string) {
-	if r != nil && r.CardProfileId != nil {
-		CardProfileId = *r.CardProfileId
+func (r *CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
 	}
 	return
 }
@@ -605,7 +605,7 @@ type UpdateACardParametersDigitalWallet struct {
 	Phone *string `json:"phone,omitempty"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileId *string `json:"card_profile_id,omitempty"`
+	CardProfileID *string `json:"card_profile_id,omitempty"`
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -628,9 +628,9 @@ func (r *UpdateACardParametersDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *UpdateACardParametersDigitalWallet) GetCardProfileId() (CardProfileId string) {
-	if r != nil && r.CardProfileId != nil {
-		CardProfileId = *r.CardProfileId
+func (r *UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
 	}
 	return
 }
@@ -642,7 +642,7 @@ type ListCardsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountId *string                  `query:"account_id"`
+	AccountID *string                  `query:"account_id"`
 	CreatedAt *ListCardsQueryCreatedAt `query:"created_at"`
 }
 
@@ -664,9 +664,9 @@ func (r *ListCardsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Cards to ones belonging to the specified Account.
-func (r *ListCardsQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListCardsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }

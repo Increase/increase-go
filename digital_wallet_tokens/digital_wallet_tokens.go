@@ -42,9 +42,9 @@ func NewPreloadedDigitalWalletTokenService(service *DigitalWalletTokenService) (
 //
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
-	CardId *string `json:"card_id"`
+	CardID *string `json:"card_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
 	CreatedAt *string `json:"created_at"`
@@ -58,17 +58,17 @@ type DigitalWalletToken struct {
 }
 
 // The Digital Wallet Token identifier.
-func (r *DigitalWalletToken) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *DigitalWalletToken) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the Card this Digital Wallet Token belongs to.
-func (r *DigitalWalletToken) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *DigitalWalletToken) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }
@@ -136,7 +136,7 @@ type ListDigitalWalletTokensQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardId    *string                                `query:"card_id"`
+	CardID    *string                                `query:"card_id"`
 	CreatedAt *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
 }
 
@@ -158,9 +158,9 @@ func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int) {
 }
 
 // Filter Digital Wallet Tokens to ones belonging to the specified Card.
-func (r *ListDigitalWalletTokensQuery) GetCardId() (CardId string) {
-	if r != nil && r.CardId != nil {
-		CardId = *r.CardId
+func (r *ListDigitalWalletTokensQuery) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
 	}
 	return
 }

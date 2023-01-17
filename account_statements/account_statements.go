@@ -42,14 +42,14 @@ func NewPreloadedAccountStatementService(service *AccountStatementService) (r *P
 //
 type AccountStatement struct {
 	// The Account Statement identifier.
-	Id *string `json:"id"`
+	ID *string `json:"id"`
 	// The identifier for the Account this Account Statement belongs to.
-	AccountId *string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
 	CreatedAt *string `json:"created_at"`
 	// The identifier of the File containing a PDF of the statement.
-	FileId *string `json:"file_id"`
+	FileID *string `json:"file_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 	// start of the period the Account Statement covers.
 	StatementPeriodStart *string `json:"statement_period_start"`
@@ -66,17 +66,17 @@ type AccountStatement struct {
 }
 
 // The Account Statement identifier.
-func (r *AccountStatement) GetId() (Id string) {
-	if r != nil && r.Id != nil {
-		Id = *r.Id
+func (r *AccountStatement) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the Account this Account Statement belongs to.
-func (r *AccountStatement) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *AccountStatement) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
@@ -91,9 +91,9 @@ func (r *AccountStatement) GetCreatedAt() (CreatedAt string) {
 }
 
 // The identifier of the File containing a PDF of the statement.
-func (r *AccountStatement) GetFileId() (FileId string) {
-	if r != nil && r.FileId != nil {
-		FileId = *r.FileId
+func (r *AccountStatement) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
 	}
 	return
 }
@@ -154,7 +154,7 @@ type ListAccountStatementsQuery struct {
 	// objects.
 	Limit *int `query:"limit"`
 	// Filter Account Statements to those belonging to the specified Account.
-	AccountId            *string                                         `query:"account_id"`
+	AccountID            *string                                         `query:"account_id"`
 	StatementPeriodStart *ListAccountStatementsQueryStatementPeriodStart `query:"statement_period_start"`
 }
 
@@ -176,9 +176,9 @@ func (r *ListAccountStatementsQuery) GetLimit() (Limit int) {
 }
 
 // Filter Account Statements to those belonging to the specified Account.
-func (r *ListAccountStatementsQuery) GetAccountId() (AccountId string) {
-	if r != nil && r.AccountId != nil {
-		AccountId = *r.AccountId
+func (r *ListAccountStatementsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
 	}
 	return
 }
