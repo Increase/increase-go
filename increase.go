@@ -95,7 +95,7 @@ func NewIncreaseWithOptions(p ClientOptions) (r *Increase) {
 
 	r.Requester.AuthHeaders = func() map[string]string {
 		return map[string]string{"Authorization": fmt.Sprintf("Bearer %s", r.APIKey)}
-	}
+	}()
 
 	r.Accounts = accounts.NewAccountService(r.Requester)
 

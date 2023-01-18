@@ -23,20 +23,6 @@ func NewRealTimePaymentsTransferService(requester core.Requester) (r *RealTimePa
 	return
 }
 
-type PreloadedRealTimePaymentsTransferService struct {
-	RealTimePaymentsTransfers *RealTimePaymentsTransferService
-}
-
-func (r *PreloadedRealTimePaymentsTransferService) Init(service *RealTimePaymentsTransferService) {
-	r.RealTimePaymentsTransfers = service
-}
-
-func NewPreloadedRealTimePaymentsTransferService(service *RealTimePaymentsTransferService) (r *PreloadedRealTimePaymentsTransferService) {
-	r = &PreloadedRealTimePaymentsTransferService{}
-	r.Init(service)
-	return
-}
-
 // Simulates an inbound Real Time Payments transfer to your account.
 func (r *RealTimePaymentsTransferService) CreateInbound(ctx context.Context, body *SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *InboundRealTimePaymentsTransferSimulationResult, err error) {
 	err = r.post(
@@ -48,19 +34,6 @@ func (r *RealTimePaymentsTransferService) CreateInbound(ctx context.Context, bod
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates an inbound Real Time Payments transfer to your account.
-func (r *PreloadedRealTimePaymentsTransferService) CreateInbound(ctx context.Context, body *SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *InboundRealTimePaymentsTransferSimulationResult, err error) {
-	err = r.RealTimePaymentsTransfers.post(
-		ctx,
-		"/simulations/inbound_real_time_payments_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

@@ -25,106 +25,26 @@ func NewAccountNumberService(requester core.Requester) (r *AccountNumberService)
 	return
 }
 
-type PreloadedAccountNumberService struct {
-	AccountNumbers *AccountNumberService
-}
-
-func (r *PreloadedAccountNumberService) Init(service *AccountNumberService) {
-	r.AccountNumbers = service
-}
-
-func NewPreloadedAccountNumberService(service *AccountNumberService) (r *PreloadedAccountNumberService) {
-	r = &PreloadedAccountNumberService{}
-	r.Init(service)
-	return
-}
-
 //
 type AccountNumber struct {
 	// The identifier for the account this Account Number belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID string `json:"account_id"`
 	// The account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber string `json:"account_number"`
 	// The Account Number identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// The name you choose for the Account Number.
-	Name *string `json:"name"`
+	Name string `json:"name"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber string `json:"routing_number"`
 	// This indicates if payments can be made to the Account Number.
-	Status *AccountNumberStatus `json:"status"`
+	Status AccountNumberStatus `json:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
-	Type *AccountNumberType `json:"type"`
-}
-
-// The identifier for the account this Account Number belongs to.
-func (r *AccountNumber) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
-		AccountID = *r.AccountID
-	}
-	return
-}
-
-// The account number.
-func (r *AccountNumber) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
-		AccountNumber = *r.AccountNumber
-	}
-	return
-}
-
-// The Account Number identifier.
-func (r *AccountNumber) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
-// Number was created.
-func (r *AccountNumber) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The name you choose for the Account Number.
-func (r *AccountNumber) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
-}
-
-// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *AccountNumber) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
-		RoutingNumber = *r.RoutingNumber
-	}
-	return
-}
-
-// This indicates if payments can be made to the Account Number.
-func (r *AccountNumber) GetStatus() (Status AccountNumberStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `account_number`.
-func (r *AccountNumber) GetType() (Type AccountNumberType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
+	Type AccountNumberType `json:"type"`
 }
 
 type AccountNumberStatus string
@@ -143,48 +63,16 @@ const (
 
 type CreateAnAccountNumberParameters struct {
 	// The Account the Account Number should belong to.
-	AccountID *string `json:"account_id"`
+	AccountID string `json:"account_id"`
 	// The name you choose for the Account Number.
-	Name *string `json:"name"`
-}
-
-// The Account the Account Number should belong to.
-func (r *CreateAnAccountNumberParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
-		AccountID = *r.AccountID
-	}
-	return
-}
-
-// The name you choose for the Account Number.
-func (r *CreateAnAccountNumberParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
+	Name string `json:"name"`
 }
 
 type UpdateAnAccountNumberParameters struct {
 	// The name you choose for the Account Number.
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
 	// This indicates if transfers can be made to the Account Number.
-	Status *UpdateAnAccountNumberParametersStatus `json:"status,omitempty"`
-}
-
-// The name you choose for the Account Number.
-func (r *UpdateAnAccountNumberParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
-}
-
-// This indicates if transfers can be made to the Account Number.
-func (r *UpdateAnAccountNumberParameters) GetStatus() (Status UpdateAnAccountNumberParametersStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Status UpdateAnAccountNumberParametersStatus `json:"status,omitempty"`
 }
 
 type UpdateAnAccountNumberParametersStatus string
@@ -197,47 +85,14 @@ const (
 
 type ListAccountNumbersQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status *ListAccountNumbersQueryStatus `query:"status"`
+	Status ListAccountNumbersQueryStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID *string `query:"account_id"`
-}
-
-// Return the page of entries after this one.
-func (r *ListAccountNumbersQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListAccountNumbersQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// The status to retrieve Account Numbers for.
-func (r *ListAccountNumbersQuery) GetStatus() (Status ListAccountNumbersQueryStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// Filter Account Numbers to those belonging to the specified Account.
-func (r *ListAccountNumbersQuery) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
-		AccountID = *r.AccountID
-	}
-	return
+	AccountID string `query:"account_id"`
 }
 
 type ListAccountNumbersQueryStatus string
@@ -251,17 +106,9 @@ const (
 //
 type AccountNumberList struct {
 	// The contents of the list.
-	Data *[]AccountNumber `json:"data"`
+	Data []AccountNumber `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *AccountNumberList) GetData() (Data []AccountNumber) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -282,19 +129,7 @@ func (r *AccountNumberService) Create(ctx context.Context, body *CreateAnAccount
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountNumberService) Create(ctx context.Context, body *CreateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *AccountNumber, err error) {
-	err = r.AccountNumbers.post(
-		ctx,
-		"/account_numbers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -307,18 +142,7 @@ func (r *AccountNumberService) Retrieve(ctx context.Context, account_number_id s
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountNumberService) Retrieve(ctx context.Context, account_number_id string, opts ...*core.RequestOpts) (res *AccountNumber, err error) {
-	err = r.AccountNumbers.get(
-		ctx,
-		fmt.Sprintf("/account_numbers/%s", account_number_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -332,19 +156,7 @@ func (r *AccountNumberService) Update(ctx context.Context, account_number_id str
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountNumberService) Update(ctx context.Context, account_number_id string, body *UpdateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *AccountNumber, err error) {
-	err = r.AccountNumbers.patch(
-		ctx,
-		fmt.Sprintf("/account_numbers/%s", account_number_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -372,21 +184,6 @@ func (r *AccountNumberService) List(ctx context.Context, query *ListAccountNumbe
 				Path:          "/account_numbers",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedAccountNumberService) List(ctx context.Context, query *ListAccountNumbersQuery, opts ...*core.RequestOpts) (res *AccountNumbersPage, err error) {
-	page := &AccountNumbersPage{
-		Page: &pagination.Page[AccountNumber]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/account_numbers",
-			},
-			Requester: r.AccountNumbers.Requester,
 			Context:   ctx,
 		},
 	}

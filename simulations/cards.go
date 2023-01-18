@@ -24,20 +24,6 @@ func NewCardService(requester core.Requester) (r *CardService) {
 	return
 }
 
-type PreloadedCardService struct {
-	Cards *CardService
-}
-
-func (r *PreloadedCardService) Init(service *CardService) {
-	r.Cards = service
-}
-
-func NewPreloadedCardService(service *CardService) (r *PreloadedCardService) {
-	r = &PreloadedCardService{}
-	r.Init(service)
-	return
-}
-
 // Simulates activity on a Card. You can pass either a Card id or a Digital Wallet
 // Token id to simulate the two different ways purchases can be made.
 func (r *CardService) Authorize(ctx context.Context, body *SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *CardAuthorizationSimulation, err error) {
@@ -50,21 +36,7 @@ func (r *CardService) Authorize(ctx context.Context, body *SimulateAnAuthorizati
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates activity on a Card. You can pass either a Card id or a Digital Wallet
-// Token id to simulate the two different ways purchases can be made.
-func (r *PreloadedCardService) Authorize(ctx context.Context, body *SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *CardAuthorizationSimulation, err error) {
-	err = r.Cards.post(
-		ctx,
-		"/simulations/card_authorizations",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -79,19 +51,6 @@ func (r *CardService) Settlement(ctx context.Context, body *SimulateSettlingACar
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the settlement of an authorization by a card acquirer.
-func (r *PreloadedCardService) Settlement(ctx context.Context, body *SimulateSettlingACardAuthorizationParameters, opts ...*core.RequestOpts) (res *transactions.Transaction, err error) {
-	err = r.Cards.post(
-		ctx,
-		"/simulations/card_settlements",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

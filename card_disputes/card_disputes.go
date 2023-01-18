@@ -25,33 +25,19 @@ func NewCardDisputeService(requester core.Requester) (r *CardDisputeService) {
 	return
 }
 
-type PreloadedCardDisputeService struct {
-	CardDisputes *CardDisputeService
-}
-
-func (r *PreloadedCardDisputeService) Init(service *CardDisputeService) {
-	r.CardDisputes = service
-}
-
-func NewPreloadedCardDisputeService(service *CardDisputeService) (r *PreloadedCardDisputeService) {
-	r = &PreloadedCardDisputeService{}
-	r.Init(service)
-	return
-}
-
 //
 type CardDispute struct {
 	// The Card Dispute identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// Why you disputed the Transaction in question.
-	Explanation *string `json:"explanation"`
+	Explanation string `json:"explanation"`
 	// The results of the Dispute investigation.
-	Status *CardDisputeStatus `json:"status"`
+	Status CardDisputeStatus `json:"status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID string `json:"disputed_transaction_id"`
 	// If the Card Dispute's status is `accepted`, this will contain details of the
 	// successful dispute.
 	Acceptance *CardDisputeAcceptance `json:"acceptance"`
@@ -60,48 +46,7 @@ type CardDispute struct {
 	Rejection *CardDisputeRejection `json:"rejection"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
-	Type *CardDisputeType `json:"type"`
-}
-
-// The Card Dispute identifier.
-func (r *CardDispute) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// Why you disputed the Transaction in question.
-func (r *CardDispute) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
-		Explanation = *r.Explanation
-	}
-	return
-}
-
-// The results of the Dispute investigation.
-func (r *CardDispute) GetStatus() (Status CardDisputeStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the Card Dispute was created.
-func (r *CardDispute) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The identifier of the Transaction that was disputed.
-func (r *CardDispute) GetDisputedTransactionID() (DisputedTransactionID string) {
-	if r != nil && r.DisputedTransactionID != nil {
-		DisputedTransactionID = *r.DisputedTransactionID
-	}
-	return
+	Type CardDisputeType `json:"type"`
 }
 
 // If the Card Dispute's status is `accepted`, this will contain details of the
@@ -122,15 +67,6 @@ func (r *CardDispute) GetRejection() (Rejection CardDisputeRejection) {
 	return
 }
 
-// A constant representing the object's type. For this resource it will always be
-// `card_dispute`.
-func (r *CardDispute) GetType() (Type CardDisputeType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
-}
-
 type CardDisputeStatus string
 
 const (
@@ -143,74 +79,23 @@ const (
 type CardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt string `json:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID string `json:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the Card Dispute was accepted.
-func (r *CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
-	if r != nil && r.AcceptedAt != nil {
-		AcceptedAt = *r.AcceptedAt
-	}
-	return
-}
-
-// The identifier of the Card Dispute that was accepted.
-func (r *CardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
-	if r != nil && r.CardDisputeID != nil {
-		CardDisputeID = *r.CardDisputeID
-	}
-	return
-}
-
-// The identifier of the Transaction that was created to return the disputed funds
-// to your account.
-func (r *CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
-		TransactionID = *r.TransactionID
-	}
-	return
+	TransactionID string `json:"transaction_id"`
 }
 
 //
 type CardDisputeRejection struct {
 	// Why the Card Dispute was rejected.
-	Explanation *string `json:"explanation"`
+	Explanation string `json:"explanation"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was rejected.
-	RejectedAt *string `json:"rejected_at"`
+	RejectedAt string `json:"rejected_at"`
 	// The identifier of the Card Dispute that was rejected.
-	CardDisputeID *string `json:"card_dispute_id"`
-}
-
-// Why the Card Dispute was rejected.
-func (r *CardDisputeRejection) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
-		Explanation = *r.Explanation
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the Card Dispute was rejected.
-func (r *CardDisputeRejection) GetRejectedAt() (RejectedAt string) {
-	if r != nil && r.RejectedAt != nil {
-		RejectedAt = *r.RejectedAt
-	}
-	return
-}
-
-// The identifier of the Card Dispute that was rejected.
-func (r *CardDisputeRejection) GetCardDisputeID() (CardDisputeID string) {
-	if r != nil && r.CardDisputeID != nil {
-		CardDisputeID = *r.CardDisputeID
-	}
-	return
+	CardDisputeID string `json:"card_dispute_id"`
 }
 
 type CardDisputeType string
@@ -222,133 +107,40 @@ const (
 type CreateACardDisputeParameters struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID string `json:"disputed_transaction_id"`
 	// Why you are disputing this Transaction.
-	Explanation *string `json:"explanation"`
-}
-
-// The Transaction you wish to dispute. This Transaction must have a `source_type`
-// of `card_settlement`.
-func (r *CreateACardDisputeParameters) GetDisputedTransactionID() (DisputedTransactionID string) {
-	if r != nil && r.DisputedTransactionID != nil {
-		DisputedTransactionID = *r.DisputedTransactionID
-	}
-	return
-}
-
-// Why you are disputing this Transaction.
-func (r *CreateACardDisputeParameters) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
-		Explanation = *r.Explanation
-	}
-	return
+	Explanation string `json:"explanation"`
 }
 
 type ListCardDisputesQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     *int                            `query:"limit"`
-	CreatedAt *ListCardDisputesQueryCreatedAt `query:"created_at"`
-	Status    *ListCardDisputesQueryStatus    `query:"status"`
-}
-
-// Return the page of entries after this one.
-func (r *ListCardDisputesQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListCardDisputesQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-func (r *ListCardDisputesQuery) GetCreatedAt() (CreatedAt ListCardDisputesQueryCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-func (r *ListCardDisputesQuery) GetStatus() (Status ListCardDisputesQueryStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Limit     int                            `query:"limit"`
+	CreatedAt ListCardDisputesQueryCreatedAt `query:"created_at"`
+	Status    ListCardDisputesQueryStatus    `query:"status"`
 }
 
 type ListCardDisputesQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
-}
-
-// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
-		After = *r.After
-	}
-	return
-}
-
-// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
-		Before = *r.Before
-	}
-	return
-}
-
-// Return results on or after this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
-		OnOrAfter = *r.OnOrAfter
-	}
-	return
-}
-
-// Return results on or before this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
-		OnOrBefore = *r.OnOrBefore
-	}
-	return
+	OnOrBefore string `json:"on_or_before,omitempty"`
 }
 
 type ListCardDisputesQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListCardDisputesQueryStatusIn `json:"in,omitempty"`
-}
-
-// Return results whose value is in the provided list. For GET requests, this
-// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListCardDisputesQueryStatus) GetIn() (In []ListCardDisputesQueryStatusIn) {
-	if r != nil && r.In != nil {
-		In = *r.In
-	}
-	return
+	In []ListCardDisputesQueryStatusIn `json:"in,omitempty"`
 }
 
 type ListCardDisputesQueryStatusIn string
@@ -362,17 +154,9 @@ const (
 //
 type CardDisputeList struct {
 	// The contents of the list.
-	Data *[]CardDispute `json:"data"`
+	Data []CardDispute `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *CardDisputeList) GetData() (Data []CardDispute) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -393,19 +177,7 @@ func (r *CardDisputeService) Create(ctx context.Context, body *CreateACardDisput
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedCardDisputeService) Create(ctx context.Context, body *CreateACardDisputeParameters, opts ...*core.RequestOpts) (res *CardDispute, err error) {
-	err = r.CardDisputes.post(
-		ctx,
-		"/card_disputes",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -418,18 +190,7 @@ func (r *CardDisputeService) Retrieve(ctx context.Context, card_dispute_id strin
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedCardDisputeService) Retrieve(ctx context.Context, card_dispute_id string, opts ...*core.RequestOpts) (res *CardDispute, err error) {
-	err = r.CardDisputes.get(
-		ctx,
-		fmt.Sprintf("/card_disputes/%s", card_dispute_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -457,21 +218,6 @@ func (r *CardDisputeService) List(ctx context.Context, query *ListCardDisputesQu
 				Path:          "/card_disputes",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedCardDisputeService) List(ctx context.Context, query *ListCardDisputesQuery, opts ...*core.RequestOpts) (res *CardDisputesPage, err error) {
-	page := &CardDisputesPage{
-		Page: &pagination.Page[CardDispute]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/card_disputes",
-			},
-			Requester: r.CardDisputes.Requester,
 			Context:   ctx,
 		},
 	}

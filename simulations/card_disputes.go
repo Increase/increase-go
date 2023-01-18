@@ -25,20 +25,6 @@ func NewCardDisputeService(requester core.Requester) (r *CardDisputeService) {
 	return
 }
 
-type PreloadedCardDisputeService struct {
-	CardDisputes *CardDisputeService
-}
-
-func (r *PreloadedCardDisputeService) Init(service *CardDisputeService) {
-	r.CardDisputes = service
-}
-
-func NewPreloadedCardDisputeService(service *CardDisputeService) (r *PreloadedCardDisputeService) {
-	r = &PreloadedCardDisputeService{}
-	r.Init(service)
-	return
-}
-
 // Simulates moving a card dispute into a rejected or accepted state. A dispute can
 // only be actioned once and must have a status of `pending_reviewing`.
 func (r *CardDisputeService) Action(ctx context.Context, card_dispute_id string, body *SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...*core.RequestOpts) (res *card_disputes.CardDispute, err error) {
@@ -51,20 +37,6 @@ func (r *CardDisputeService) Action(ctx context.Context, card_dispute_id string,
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates moving a card dispute into a rejected or accepted state. A dispute can
-// only be actioned once and must have a status of `pending_reviewing`.
-func (r *PreloadedCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...*core.RequestOpts) (res *card_disputes.CardDispute, err error) {
-	err = r.CardDisputes.post(
-		ctx,
-		fmt.Sprintf("/simulations/card_disputes/%s/action", card_dispute_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

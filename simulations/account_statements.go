@@ -24,20 +24,6 @@ func NewAccountStatementService(requester core.Requester) (r *AccountStatementSe
 	return
 }
 
-type PreloadedAccountStatementService struct {
-	AccountStatements *AccountStatementService
-}
-
-func (r *PreloadedAccountStatementService) Init(service *AccountStatementService) {
-	r.AccountStatements = service
-}
-
-func NewPreloadedAccountStatementService(service *AccountStatementService) (r *PreloadedAccountStatementService) {
-	r = &PreloadedAccountStatementService{}
-	r.Init(service)
-	return
-}
-
 // Simulates an Account Statement being created for an account.
 func (r *AccountStatementService) Create(ctx context.Context, body *SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *account_statements.AccountStatement, err error) {
 	err = r.post(
@@ -49,19 +35,6 @@ func (r *AccountStatementService) Create(ctx context.Context, body *SimulateAnAc
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates an Account Statement being created for an account.
-func (r *PreloadedAccountStatementService) Create(ctx context.Context, body *SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *account_statements.AccountStatement, err error) {
-	err = r.AccountStatements.post(
-		ctx,
-		"/simulations/account_statements",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

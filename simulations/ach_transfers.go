@@ -25,20 +25,6 @@ func NewACHTransferService(requester core.Requester) (r *ACHTransferService) {
 	return
 }
 
-type PreloadedACHTransferService struct {
-	ACHTransfers *ACHTransferService
-}
-
-func (r *PreloadedACHTransferService) Init(service *ACHTransferService) {
-	r.ACHTransfers = service
-}
-
-func NewPreloadedACHTransferService(service *ACHTransferService) (r *PreloadedACHTransferService) {
-	r = &PreloadedACHTransferService{}
-	r.Init(service)
-	return
-}
-
 // Simulates an inbound ACH transfer to your account. The transfer may be either a
 // credit or a debit depending on if the `amount` is positive or negative. This
 // will result in either a Transaction or a Declined Transaction depending on if
@@ -53,23 +39,7 @@ func (r *ACHTransferService) CreateInbound(ctx context.Context, body *SimulateAn
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates an inbound ACH transfer to your account. The transfer may be either a
-// credit or a debit depending on if the `amount` is positive or negative. This
-// will result in either a Transaction or a Declined Transaction depending on if
-// the transfer is allowed.
-func (r *PreloadedACHTransferService) CreateInbound(ctx context.Context, body *SimulateAnACHTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *ACHTransferSimulation, err error) {
-	err = r.ACHTransfers.post(
-		ctx,
-		"/simulations/inbound_ach_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -85,21 +55,7 @@ func (r *ACHTransferService) Return(ctx context.Context, ach_transfer_id string,
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the return of an ACH Transfer by the Federal Reserve due to error
-// conditions. This will also create a Transaction to account for the returned
-// funds. This transfer must first have a `status` of `submitted`.
-func (r *PreloadedACHTransferService) Return(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *ach_transfers.ACHTransfer, err error) {
-	err = r.ACHTransfers.post(
-		ctx,
-		fmt.Sprintf("/simulations/ach_transfers/%s/return", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -115,20 +71,6 @@ func (r *ACHTransferService) Submit(ctx context.Context, ach_transfer_id string,
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the submission of an ACH Transfer to the Federal Reserve. This
-// transfer must first have a `status` of `pending_approval` or
-// `pending_submission`.
-func (r *PreloadedACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *ach_transfers.ACHTransfer, err error) {
-	err = r.ACHTransfers.post(
-		ctx,
-		fmt.Sprintf("/simulations/ach_transfers/%s/submit", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

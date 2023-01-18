@@ -23,20 +23,6 @@ func NewWireTransferService(requester core.Requester) (r *WireTransferService) {
 	return
 }
 
-type PreloadedWireTransferService struct {
-	WireTransfers *WireTransferService
-}
-
-func (r *PreloadedWireTransferService) Init(service *WireTransferService) {
-	r.WireTransfers = service
-}
-
-func NewPreloadedWireTransferService(service *WireTransferService) (r *PreloadedWireTransferService) {
-	r = &PreloadedWireTransferService{}
-	r.Init(service)
-	return
-}
-
 // Simulates an inbound Wire transfer to your account.
 func (r *WireTransferService) CreateInbound(ctx context.Context, body *SimulateAWireTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *WireTransferSimulation, err error) {
 	err = r.post(
@@ -48,19 +34,6 @@ func (r *WireTransferService) CreateInbound(ctx context.Context, body *SimulateA
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates an inbound Wire transfer to your account.
-func (r *PreloadedWireTransferService) CreateInbound(ctx context.Context, body *SimulateAWireTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *WireTransferSimulation, err error) {
-	err = r.WireTransfers.post(
-		ctx,
-		"/simulations/inbound_wire_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

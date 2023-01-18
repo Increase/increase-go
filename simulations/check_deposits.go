@@ -25,20 +25,6 @@ func NewCheckDepositService(requester core.Requester) (r *CheckDepositService) {
 	return
 }
 
-type PreloadedCheckDepositService struct {
-	CheckDeposits *CheckDepositService
-}
-
-func (r *PreloadedCheckDepositService) Init(service *CheckDepositService) {
-	r.CheckDeposits = service
-}
-
-func NewPreloadedCheckDepositService(service *CheckDepositService) (r *PreloadedCheckDepositService) {
-	r = &PreloadedCheckDepositService{}
-	r.Init(service)
-	return
-}
-
 // Simulates the rejection of a Check Deposit by Increase due to factors like poor
 // image quality. This Check Deposit must first have a `status` of `pending`.
 func (r *CheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
@@ -50,20 +36,7 @@ func (r *CheckDepositService) Reject(ctx context.Context, check_deposit_id strin
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the rejection of a Check Deposit by Increase due to factors like poor
-// image quality. This Check Deposit must first have a `status` of `pending`.
-func (r *PreloadedCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
-	err = r.CheckDeposits.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -78,19 +51,6 @@ func (r *CheckDepositService) Submit(ctx context.Context, check_deposit_id strin
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the submission of a Check Deposit to the Federal Reserve. This Check
-// Deposit must first have a `status` of `pending`.
-func (r *PreloadedCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *check_deposits.CheckDeposit, err error) {
-	err = r.CheckDeposits.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

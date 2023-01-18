@@ -25,48 +25,26 @@ func NewLimitService(requester core.Requester) (r *LimitService) {
 	return
 }
 
-type PreloadedLimitService struct {
-	Limits *LimitService
-}
-
-func (r *PreloadedLimitService) Init(service *LimitService) {
-	r.Limits = service
-}
-
-func NewPreloadedLimitService(service *LimitService) (r *PreloadedLimitService) {
-	r = &PreloadedLimitService{}
-	r.Init(service)
-	return
-}
-
 //
 type Limit struct {
 	// The Limit identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The interval for the metric. This is required if `metric` is `count` or
 	// `volume`.
 	Interval *LimitInterval `json:"interval"`
 	// The metric for the Limit.
-	Metric *LimitMetric `json:"metric"`
+	Metric LimitMetric `json:"metric"`
 	// The identifier of the Account Number, Account, or Card the Limit applies to.
-	ModelID *string `json:"model_id"`
+	ModelID string `json:"model_id"`
 	// The type of the model you wish to associate the Limit with.
-	ModelType *LimitModelType `json:"model_type"`
+	ModelType LimitModelType `json:"model_type"`
 	// The current status of the Limit.
-	Status *LimitStatus `json:"status"`
+	Status LimitStatus `json:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `limit`.
-	Type *LimitType `json:"type"`
+	Type LimitType `json:"type"`
 	// The value to evaluate the Limit against.
-	Value *int `json:"value"`
-}
-
-// The Limit identifier.
-func (r *Limit) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
+	Value int `json:"value"`
 }
 
 // The interval for the metric. This is required if `metric` is `count` or
@@ -74,55 +52,6 @@ func (r *Limit) GetID() (ID string) {
 func (r *Limit) GetInterval() (Interval LimitInterval) {
 	if r != nil && r.Interval != nil {
 		Interval = *r.Interval
-	}
-	return
-}
-
-// The metric for the Limit.
-func (r *Limit) GetMetric() (Metric LimitMetric) {
-	if r != nil && r.Metric != nil {
-		Metric = *r.Metric
-	}
-	return
-}
-
-// The identifier of the Account Number, Account, or Card the Limit applies to.
-func (r *Limit) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
-		ModelID = *r.ModelID
-	}
-	return
-}
-
-// The type of the model you wish to associate the Limit with.
-func (r *Limit) GetModelType() (ModelType LimitModelType) {
-	if r != nil && r.ModelType != nil {
-		ModelType = *r.ModelType
-	}
-	return
-}
-
-// The current status of the Limit.
-func (r *Limit) GetStatus() (Status LimitStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `limit`.
-func (r *Limit) GetType() (Type LimitType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
-}
-
-// The value to evaluate the Limit against.
-func (r *Limit) GetValue() (Value int) {
-	if r != nil && r.Value != nil {
-		Value = *r.Value
 	}
 	return
 }
@@ -168,47 +97,14 @@ const (
 
 type CreateALimitParameters struct {
 	// The metric for the limit.
-	Metric *CreateALimitParametersMetric `json:"metric"`
+	Metric CreateALimitParametersMetric `json:"metric"`
 	// The interval for the metric. Required if `metric` is `count` or `volume`.
-	Interval *CreateALimitParametersInterval `json:"interval,omitempty"`
+	Interval CreateALimitParametersInterval `json:"interval,omitempty"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
-	ModelID *string `json:"model_id"`
+	ModelID string `json:"model_id"`
 	// The value to test the limit against.
-	Value *int `json:"value"`
-}
-
-// The metric for the limit.
-func (r *CreateALimitParameters) GetMetric() (Metric CreateALimitParametersMetric) {
-	if r != nil && r.Metric != nil {
-		Metric = *r.Metric
-	}
-	return
-}
-
-// The interval for the metric. Required if `metric` is `count` or `volume`.
-func (r *CreateALimitParameters) GetInterval() (Interval CreateALimitParametersInterval) {
-	if r != nil && r.Interval != nil {
-		Interval = *r.Interval
-	}
-	return
-}
-
-// The identifier of the Account or Account Number you wish to associate the limit
-// with.
-func (r *CreateALimitParameters) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
-		ModelID = *r.ModelID
-	}
-	return
-}
-
-// The value to test the limit against.
-func (r *CreateALimitParameters) GetValue() (Value int) {
-	if r != nil && r.Value != nil {
-		Value = *r.Value
-	}
-	return
+	Value int `json:"value"`
 }
 
 type CreateALimitParametersMetric string
@@ -231,15 +127,7 @@ const (
 
 type UpdateALimitParameters struct {
 	// The status to update the limit with.
-	Status *UpdateALimitParametersStatus `json:"status"`
-}
-
-// The status to update the limit with.
-func (r *UpdateALimitParameters) GetStatus() (Status UpdateALimitParametersStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Status UpdateALimitParametersStatus `json:"status"`
 }
 
 type UpdateALimitParametersStatus string
@@ -251,63 +139,22 @@ const (
 
 type ListLimitsQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// The model to retrieve limits for.
-	ModelID *string `query:"model_id"`
+	ModelID string `query:"model_id"`
 	// The status to retrieve limits for.
-	Status *string `query:"status"`
-}
-
-// Return the page of entries after this one.
-func (r *ListLimitsQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListLimitsQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// The model to retrieve limits for.
-func (r *ListLimitsQuery) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
-		ModelID = *r.ModelID
-	}
-	return
-}
-
-// The status to retrieve limits for.
-func (r *ListLimitsQuery) GetStatus() (Status string) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Status string `query:"status"`
 }
 
 //
 type LimitList struct {
 	// The contents of the list.
-	Data *[]Limit `json:"data"`
+	Data []Limit `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *LimitList) GetData() (Data []Limit) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -328,19 +175,7 @@ func (r *LimitService) Create(ctx context.Context, body *CreateALimitParameters,
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedLimitService) Create(ctx context.Context, body *CreateALimitParameters, opts ...*core.RequestOpts) (res *Limit, err error) {
-	err = r.Limits.post(
-		ctx,
-		"/limits",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -353,18 +188,7 @@ func (r *LimitService) Retrieve(ctx context.Context, limit_id string, opts ...*c
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedLimitService) Retrieve(ctx context.Context, limit_id string, opts ...*core.RequestOpts) (res *Limit, err error) {
-	err = r.Limits.get(
-		ctx,
-		fmt.Sprintf("/limits/%s", limit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -378,19 +202,7 @@ func (r *LimitService) Update(ctx context.Context, limit_id string, body *Update
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedLimitService) Update(ctx context.Context, limit_id string, body *UpdateALimitParameters, opts ...*core.RequestOpts) (res *Limit, err error) {
-	err = r.Limits.patch(
-		ctx,
-		fmt.Sprintf("/limits/%s", limit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -418,21 +230,6 @@ func (r *LimitService) List(ctx context.Context, query *ListLimitsQuery, opts ..
 				Path:          "/limits",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedLimitService) List(ctx context.Context, query *ListLimitsQuery, opts ...*core.RequestOpts) (res *LimitsPage, err error) {
-	page := &LimitsPage{
-		Page: &pagination.Page[Limit]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/limits",
-			},
-			Requester: r.Limits.Requester,
 			Context:   ctx,
 		},
 	}

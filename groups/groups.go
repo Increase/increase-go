@@ -23,76 +23,20 @@ func NewGroupService(requester core.Requester) (r *GroupService) {
 	return
 }
 
-type PreloadedGroupService struct {
-	Groups *GroupService
-}
-
-func (r *PreloadedGroupService) Init(service *GroupService) {
-	r.Groups = service
-}
-
-func NewPreloadedGroupService(service *GroupService) (r *PreloadedGroupService) {
-	r = &PreloadedGroupService{}
-	r.Init(service)
-	return
-}
-
 //
 type Group struct {
 	// If the Group is activated or not.
-	ActivationStatus *GroupActivationStatus `json:"activation_status"`
+	ActivationStatus GroupActivationStatus `json:"activation_status"`
 	// If the Group is allowed to create ACH debits.
-	ACHDebitStatus *GroupACHDebitStatus `json:"ach_debit_status"`
+	ACHDebitStatus GroupACHDebitStatus `json:"ach_debit_status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// The Group identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
-	Type *GroupType `json:"type"`
-}
-
-// If the Group is activated or not.
-func (r *Group) GetActivationStatus() (ActivationStatus GroupActivationStatus) {
-	if r != nil && r.ActivationStatus != nil {
-		ActivationStatus = *r.ActivationStatus
-	}
-	return
-}
-
-// If the Group is allowed to create ACH debits.
-func (r *Group) GetACHDebitStatus() (ACHDebitStatus GroupACHDebitStatus) {
-	if r != nil && r.ACHDebitStatus != nil {
-		ACHDebitStatus = *r.ACHDebitStatus
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
-// was created.
-func (r *Group) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The Group identifier.
-func (r *Group) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `group`.
-func (r *Group) GetType() (Type GroupType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
+	Type GroupType `json:"type"`
 }
 
 type GroupActivationStatus string
@@ -125,18 +69,6 @@ func (r *GroupService) RetrieveDetails(ctx context.Context, opts ...*core.Reques
 		},
 		&res,
 	)
-	return
-}
 
-// Returns details for the currently authenticated Group.
-func (r *PreloadedGroupService) RetrieveDetails(ctx context.Context, opts ...*core.RequestOpts) (res *Group, err error) {
-	err = r.Groups.get(
-		ctx,
-		"/groups/current",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

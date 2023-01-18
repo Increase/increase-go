@@ -25,20 +25,6 @@ func NewCheckTransferService(requester core.Requester) (r *CheckTransferService)
 	return
 }
 
-type PreloadedCheckTransferService struct {
-	CheckTransfers *CheckTransferService
-}
-
-func (r *PreloadedCheckTransferService) Init(service *CheckTransferService) {
-	r.CheckTransfers = service
-}
-
-func NewPreloadedCheckTransferService(service *CheckTransferService) (r *PreloadedCheckTransferService) {
-	r = &PreloadedCheckTransferService{}
-	r.Init(service)
-	return
-}
-
 // Simulates the mailing of a Check Transfer. This transfer must first have a
 // `status` of `pending_approval` or `pending_submission`.
 func (r *CheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *check_transfers.CheckTransfer, err error) {
@@ -50,19 +36,6 @@ func (r *CheckTransferService) Mail(ctx context.Context, check_transfer_id strin
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the mailing of a Check Transfer. This transfer must first have a
-// `status` of `pending_approval` or `pending_submission`.
-func (r *PreloadedCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *check_transfers.CheckTransfer, err error) {
-	err = r.CheckTransfers.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_transfers/%s/mail", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

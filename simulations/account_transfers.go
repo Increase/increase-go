@@ -25,20 +25,6 @@ func NewAccountTransferService(requester core.Requester) (r *AccountTransferServ
 	return
 }
 
-type PreloadedAccountTransferService struct {
-	AccountTransfers *AccountTransferService
-}
-
-func (r *PreloadedAccountTransferService) Init(service *AccountTransferService) {
-	r.AccountTransfers = service
-}
-
-func NewPreloadedAccountTransferService(service *AccountTransferService) (r *PreloadedAccountTransferService) {
-	r = &PreloadedAccountTransferService{}
-	r.Init(service)
-	return
-}
-
 // Simulates the completion of an Account Transfer. This transfer must first have a
 // `status` of `pending_approval`.
 func (r *AccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *account_transfers.AccountTransfer, err error) {
@@ -50,19 +36,6 @@ func (r *AccountTransferService) Complete(ctx context.Context, account_transfer_
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates the completion of an Account Transfer. This transfer must first have a
-// `status` of `pending_approval`.
-func (r *PreloadedAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *account_transfers.AccountTransfer, err error) {
-	err = r.AccountTransfers.post(
-		ctx,
-		fmt.Sprintf("/simulations/account_transfers/%s/complete", account_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

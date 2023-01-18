@@ -9,7 +9,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 )
 
@@ -25,9 +24,9 @@ func mergeMaps[P any](into, from map[string]P) {
 		newValueMap, okNew := any(newValue).(map[string]P)
 		if okEx && okNew {
 			mergeMaps(existingValueMap, newValueMap)
-		} else {
-			into[key] = newValue
+			continue
 		}
+		into[key] = newValue
 	}
 }
 
@@ -191,7 +190,7 @@ func (cr *CoreRequest) InitializeHTTPRequest(ctx context.Context) *http.Request 
 		if ctx == nil {
 			ctx = context.TODO()
 		}
-		req, err = http.NewRequestWithContext(ctx, strings.ToUpper(cr.Params.Method), cr.Params.URL, nil)
+		req, err = http.NewRequestWithContext(ctx, cr.Params.Method, cr.Params.URL, nil)
 		cr.Request = req
 	}
 	if err != nil {
@@ -204,9 +203,8 @@ func (cr *CoreRequest) InitializeHTTPRequest(ctx context.Context) *http.Request 
 func (cr *CoreRequest) getBodyBytes() ([]byte, error) {
 	if len(cr.BodyBytes) != 0 {
 		return cr.BodyBytes, nil
-	} else {
-		return cr.MarshalBody()
 	}
+	return cr.MarshalBody()
 }
 
 func MergeURLValues(values ...url.Values) (merged url.Values) {
@@ -228,11 +226,11 @@ func MergeURLValues(values ...url.Values) (merged url.Values) {
 }
 
 func joinPath(base string, elem ...string) (string, error) {
-	if joined, err := url.JoinPath(base, elem...); err != nil {
+	joined, err := url.JoinPath(base, elem...)
+	if err != nil {
 		return "", err
-	} else {
-		return fmt.Sprintf("/%s", joined), nil
 	}
+	return fmt.Sprintf("/%s", joined), nil
 }
 
 func (cr *CoreRequest) FillRequestURL(req *http.Request, baseURL string) error {
@@ -244,34 +242,41 @@ func (cr *CoreRequest) FillRequestURL(req *http.Request, baseURL string) error {
 		return MergeURLValues(existingValues, merged, cr.Params.ExtraQuery).Encode()
 	}
 	if len(cr.Params.URL) != 0 {
-		if parsed, err := url.Parse(cr.Params.URL); err == nil {
-			parsed.RawQuery = compileQuery(parsed.Query())
-			if len(parsed.Host) == 0 {
-				if parsedBase, err := url.Parse(baseURL); err == nil {
-					parsed.Scheme = parsedBase.Scheme
-					parsed.Host = parsedBase.Host
-					parsed.Path, _ = joinPath(parsedBase.Path, parsed.Path)
-				}
-			}
-			req.URL = parsed
-			return nil
-		} else {
+		parsed, err := url.Parse(cr.Params.URL)
+		if err != nil {
 			return err
 		}
+		parsed.RawQuery = compileQuery(parsed.Query())
+		if len(parsed.Host) == 0 {
+			if parsedBase, err := url.Parse(baseURL); err == nil {
+				parsed.Scheme = parsedBase.Scheme
+				parsed.Host = parsedBase.Host
+				parsed.Path, _ = joinPath(parsedBase.Path, parsed.Path)
+			}
+		}
+		req.URL = parsed
+		return nil
 	}
-	if parsed, err := url.Parse(cr.Params.Path); err == nil && len(parsed.Scheme) != 0 && len(parsed.Host) != 0 {
+	parsed, err := url.Parse(cr.Params.Path)
+	if err != nil {
+		// We've failed to parse the path. Attempt to recover by prepending the baseURL
+		// TODO: validate that the failure was due to a partial URL
+		joined, err := url.JoinPath(baseURL, cr.Params.Path)
+		if err != nil {
+			return err
+		}
+		parsed, err = url.Parse(joined)
+		if err != nil {
+			return err
+		}
+		parsed.RawQuery = compileQuery(parsed.Query())
+		req.URL = parsed
+		return nil
+	}
+	if len(parsed.Scheme) != 0 && len(parsed.Host) != 0 {
 		// provided path is an explicit url
 		parsed.RawQuery = compileQuery(parsed.Query())
 		req.URL = parsed
-	} else if joined, err := url.JoinPath(baseURL, cr.Params.Path); err == nil {
-		if parsed, err = url.Parse(joined); err == nil {
-			parsed.RawQuery = compileQuery(parsed.Query())
-			req.URL = parsed
-		} else {
-			return err
-		}
-	} else {
-		return err
 	}
 	return nil
 }

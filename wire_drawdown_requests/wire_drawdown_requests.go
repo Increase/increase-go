@@ -25,41 +25,27 @@ func NewWireDrawdownRequestService(requester core.Requester) (r *WireDrawdownReq
 	return
 }
 
-type PreloadedWireDrawdownRequestService struct {
-	WireDrawdownRequests *WireDrawdownRequestService
-}
-
-func (r *PreloadedWireDrawdownRequestService) Init(service *WireDrawdownRequestService) {
-	r.WireDrawdownRequests = service
-}
-
-func NewPreloadedWireDrawdownRequestService(service *WireDrawdownRequestService) (r *PreloadedWireDrawdownRequestService) {
-	r = &PreloadedWireDrawdownRequestService{}
-	r.Init(service)
-	return
-}
-
 //
 type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
-	Type *WireDrawdownRequestType `json:"type"`
+	Type WireDrawdownRequestType `json:"type"`
 	// The Wire drawdown request identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The Account Number to which the recipient of this request is being requested to
 	// send funds.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID string `json:"account_number_id"`
 	// The drawdown request's recipient's account number.
-	RecipientAccountNumber *string `json:"recipient_account_number"`
+	RecipientAccountNumber string `json:"recipient_account_number"`
 	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber *string `json:"recipient_routing_number"`
+	RecipientRoutingNumber string `json:"recipient_routing_number"`
 	// The amount being requested in cents.
-	Amount *int `json:"amount"`
+	Amount int `json:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
-	Currency *string `json:"currency"`
+	Currency string `json:"currency"`
 	// The message the recipient will see as part of the drawdown request.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient string `json:"message_to_recipient"`
 	// The drawdown request's recipient's name.
 	RecipientName *string `json:"recipient_name"`
 	// Line 1 of the drawdown request's recipient's address.
@@ -75,74 +61,7 @@ type WireDrawdownRequest struct {
 	// be the identifier of the corresponding Transaction.
 	FulfillmentTransactionID *string `json:"fulfillment_transaction_id"`
 	// The lifecycle status of the drawdown request.
-	Status *WireDrawdownRequestStatus `json:"status"`
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `wire_drawdown_request`.
-func (r *WireDrawdownRequest) GetType() (Type WireDrawdownRequestType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
-}
-
-// The Wire drawdown request identifier.
-func (r *WireDrawdownRequest) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// The Account Number to which the recipient of this request is being requested to
-// send funds.
-func (r *WireDrawdownRequest) GetAccountNumberID() (AccountNumberID string) {
-	if r != nil && r.AccountNumberID != nil {
-		AccountNumberID = *r.AccountNumberID
-	}
-	return
-}
-
-// The drawdown request's recipient's account number.
-func (r *WireDrawdownRequest) GetRecipientAccountNumber() (RecipientAccountNumber string) {
-	if r != nil && r.RecipientAccountNumber != nil {
-		RecipientAccountNumber = *r.RecipientAccountNumber
-	}
-	return
-}
-
-// The drawdown request's recipient's routing number.
-func (r *WireDrawdownRequest) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
-	if r != nil && r.RecipientRoutingNumber != nil {
-		RecipientRoutingNumber = *r.RecipientRoutingNumber
-	}
-	return
-}
-
-// The amount being requested in cents.
-func (r *WireDrawdownRequest) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
-// requested. Will always be "USD".
-func (r *WireDrawdownRequest) GetCurrency() (Currency string) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
-}
-
-// The message the recipient will see as part of the drawdown request.
-func (r *WireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
-		MessageToRecipient = *r.MessageToRecipient
-	}
-	return
+	Status WireDrawdownRequestStatus `json:"status"`
 }
 
 // The drawdown request's recipient's name.
@@ -195,14 +114,6 @@ func (r *WireDrawdownRequest) GetFulfillmentTransactionID() (FulfillmentTransact
 	return
 }
 
-// The lifecycle status of the drawdown request.
-func (r *WireDrawdownRequest) GetStatus() (Status WireDrawdownRequestStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
 type WireDrawdownRequestType string
 
 const (
@@ -213,16 +124,7 @@ const (
 type WireDrawdownRequestSubmission struct {
 	// The input message accountability data (IMAD) uniquely identifying the submission
 	// with Fedwire.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
-}
-
-// The input message accountability data (IMAD) uniquely identifying the submission
-// with Fedwire.
-func (r *WireDrawdownRequestSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
-		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
-	}
-	return
+	InputMessageAccountabilityData string `json:"input_message_accountability_data"`
 }
 
 type WireDrawdownRequestStatus string
@@ -236,136 +138,39 @@ const (
 
 type CreateAWireDrawdownRequestParameters struct {
 	// The Account Number to which the recipient should send funds.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID string `json:"account_number_id"`
 	// The amount requested from the recipient, in cents.
-	Amount *int `json:"amount"`
+	Amount int `json:"amount"`
 	// A message the recipient will see as part of the request.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient string `json:"message_to_recipient"`
 	// The drawdown request's recipient's account number.
-	RecipientAccountNumber *string `json:"recipient_account_number"`
+	RecipientAccountNumber string `json:"recipient_account_number"`
 	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber *string `json:"recipient_routing_number"`
+	RecipientRoutingNumber string `json:"recipient_routing_number"`
 	// The drawdown request's recipient's name.
-	RecipientName *string `json:"recipient_name,omitempty"`
+	RecipientName string `json:"recipient_name,omitempty"`
 	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 *string `json:"recipient_address_line1,omitempty"`
+	RecipientAddressLine1 string `json:"recipient_address_line1,omitempty"`
 	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 *string `json:"recipient_address_line2,omitempty"`
+	RecipientAddressLine2 string `json:"recipient_address_line2,omitempty"`
 	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 *string `json:"recipient_address_line3,omitempty"`
-}
-
-// The Account Number to which the recipient should send funds.
-func (r *CreateAWireDrawdownRequestParameters) GetAccountNumberID() (AccountNumberID string) {
-	if r != nil && r.AccountNumberID != nil {
-		AccountNumberID = *r.AccountNumberID
-	}
-	return
-}
-
-// The amount requested from the recipient, in cents.
-func (r *CreateAWireDrawdownRequestParameters) GetAmount() (Amount int) {
-	if r != nil && r.Amount != nil {
-		Amount = *r.Amount
-	}
-	return
-}
-
-// A message the recipient will see as part of the request.
-func (r *CreateAWireDrawdownRequestParameters) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
-		MessageToRecipient = *r.MessageToRecipient
-	}
-	return
-}
-
-// The drawdown request's recipient's account number.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAccountNumber() (RecipientAccountNumber string) {
-	if r != nil && r.RecipientAccountNumber != nil {
-		RecipientAccountNumber = *r.RecipientAccountNumber
-	}
-	return
-}
-
-// The drawdown request's recipient's routing number.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
-	if r != nil && r.RecipientRoutingNumber != nil {
-		RecipientRoutingNumber = *r.RecipientRoutingNumber
-	}
-	return
-}
-
-// The drawdown request's recipient's name.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
-		RecipientName = *r.RecipientName
-	}
-	return
-}
-
-// Line 1 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
-	if r != nil && r.RecipientAddressLine1 != nil {
-		RecipientAddressLine1 = *r.RecipientAddressLine1
-	}
-	return
-}
-
-// Line 2 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
-	if r != nil && r.RecipientAddressLine2 != nil {
-		RecipientAddressLine2 = *r.RecipientAddressLine2
-	}
-	return
-}
-
-// Line 3 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
-	if r != nil && r.RecipientAddressLine3 != nil {
-		RecipientAddressLine3 = *r.RecipientAddressLine3
-	}
-	return
+	RecipientAddressLine3 string `json:"recipient_address_line3,omitempty"`
 }
 
 type ListWireDrawdownRequestsQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
-}
-
-// Return the page of entries after this one.
-func (r *ListWireDrawdownRequestsQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
+	Limit int `query:"limit"`
 }
 
 //
 type WireDrawdownRequestList struct {
 	// The contents of the list.
-	Data *[]WireDrawdownRequest `json:"data"`
+	Data []WireDrawdownRequest `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *WireDrawdownRequestList) GetData() (Data []WireDrawdownRequest) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -386,19 +191,7 @@ func (r *WireDrawdownRequestService) Create(ctx context.Context, body *CreateAWi
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedWireDrawdownRequestService) Create(ctx context.Context, body *CreateAWireDrawdownRequestParameters, opts ...*core.RequestOpts) (res *WireDrawdownRequest, err error) {
-	err = r.WireDrawdownRequests.post(
-		ctx,
-		"/wire_drawdown_requests",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -411,18 +204,7 @@ func (r *WireDrawdownRequestService) Retrieve(ctx context.Context, wire_drawdown
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedWireDrawdownRequestService) Retrieve(ctx context.Context, wire_drawdown_request_id string, opts ...*core.RequestOpts) (res *WireDrawdownRequest, err error) {
-	err = r.WireDrawdownRequests.get(
-		ctx,
-		fmt.Sprintf("/wire_drawdown_requests/%s", wire_drawdown_request_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -450,21 +232,6 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *ListWireDr
 				Path:          "/wire_drawdown_requests",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedWireDrawdownRequestService) List(ctx context.Context, query *ListWireDrawdownRequestsQuery, opts ...*core.RequestOpts) (res *WireDrawdownRequestsPage, err error) {
-	page := &WireDrawdownRequestsPage{
-		Page: &pagination.Page[WireDrawdownRequest]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/wire_drawdown_requests",
-			},
-			Requester: r.WireDrawdownRequests.Requester,
 			Context:   ctx,
 		},
 	}

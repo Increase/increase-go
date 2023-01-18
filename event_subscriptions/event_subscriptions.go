@@ -25,62 +25,24 @@ func NewEventSubscriptionService(requester core.Requester) (r *EventSubscription
 	return
 }
 
-type PreloadedEventSubscriptionService struct {
-	EventSubscriptions *EventSubscriptionService
-}
-
-func (r *PreloadedEventSubscriptionService) Init(service *EventSubscriptionService) {
-	r.EventSubscriptions = service
-}
-
-func NewPreloadedEventSubscriptionService(service *EventSubscriptionService) (r *PreloadedEventSubscriptionService) {
-	r = &PreloadedEventSubscriptionService{}
-	r.Init(service)
-	return
-}
-
 //
 type EventSubscription struct {
 	// The event subscription identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The time the event subscription was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// This indicates if we'll send notifications to this subscription.
-	Status *EventSubscriptionStatus `json:"status"`
+	Status EventSubscriptionStatus `json:"status"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategory *EventSubscriptionSelectedEventCategory `json:"selected_event_category"`
 	// The webhook url where we'll send notifications.
-	URL *string `json:"url"`
+	URL string `json:"url"`
 	// The key that will be used to sign webhooks.
-	SharedSecret *string `json:"shared_secret"`
+	SharedSecret string `json:"shared_secret"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
-	Type *EventSubscriptionType `json:"type"`
-}
-
-// The event subscription identifier.
-func (r *EventSubscription) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// The time the event subscription was created.
-func (r *EventSubscription) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// This indicates if we'll send notifications to this subscription.
-func (r *EventSubscription) GetStatus() (Status EventSubscriptionStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Type EventSubscriptionType `json:"type"`
 }
 
 // If specified, this subscription will only receive webhooks for Events with the
@@ -88,31 +50,6 @@ func (r *EventSubscription) GetStatus() (Status EventSubscriptionStatus) {
 func (r *EventSubscription) GetSelectedEventCategory() (SelectedEventCategory EventSubscriptionSelectedEventCategory) {
 	if r != nil && r.SelectedEventCategory != nil {
 		SelectedEventCategory = *r.SelectedEventCategory
-	}
-	return
-}
-
-// The webhook url where we'll send notifications.
-func (r *EventSubscription) GetURL() (URL string) {
-	if r != nil && r.URL != nil {
-		URL = *r.URL
-	}
-	return
-}
-
-// The key that will be used to sign webhooks.
-func (r *EventSubscription) GetSharedSecret() (SharedSecret string) {
-	if r != nil && r.SharedSecret != nil {
-		SharedSecret = *r.SharedSecret
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `event_subscription`.
-func (r *EventSubscription) GetType() (Type EventSubscriptionType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
 	}
 	return
 }
@@ -182,39 +119,13 @@ const (
 
 type CreateAnEventSubscriptionParameters struct {
 	// The URL you'd like us to send webhooks to.
-	URL *string `json:"url"`
+	URL string `json:"url"`
 	// The key that will be used to sign webhooks. If no value is passed, a random
 	// string will be used as default.
-	SharedSecret *string `json:"shared_secret,omitempty"`
+	SharedSecret string `json:"shared_secret,omitempty"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory *CreateAnEventSubscriptionParametersSelectedEventCategory `json:"selected_event_category,omitempty"`
-}
-
-// The URL you'd like us to send webhooks to.
-func (r *CreateAnEventSubscriptionParameters) GetURL() (URL string) {
-	if r != nil && r.URL != nil {
-		URL = *r.URL
-	}
-	return
-}
-
-// The key that will be used to sign webhooks. If no value is passed, a random
-// string will be used as default.
-func (r *CreateAnEventSubscriptionParameters) GetSharedSecret() (SharedSecret string) {
-	if r != nil && r.SharedSecret != nil {
-		SharedSecret = *r.SharedSecret
-	}
-	return
-}
-
-// If specified, this subscription will only receive webhooks for Events with the
-// specified `category`.
-func (r *CreateAnEventSubscriptionParameters) GetSelectedEventCategory() (SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory) {
-	if r != nil && r.SelectedEventCategory != nil {
-		SelectedEventCategory = *r.SelectedEventCategory
-	}
-	return
+	SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory `json:"selected_event_category,omitempty"`
 }
 
 type CreateAnEventSubscriptionParametersSelectedEventCategory string
@@ -267,15 +178,7 @@ const (
 
 type UpdateAnEventSubscriptionParameters struct {
 	// The status to update the Event Subscription with.
-	Status *UpdateAnEventSubscriptionParametersStatus `json:"status,omitempty"`
-}
-
-// The status to update the Event Subscription with.
-func (r *UpdateAnEventSubscriptionParameters) GetStatus() (Status UpdateAnEventSubscriptionParametersStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Status UpdateAnEventSubscriptionParametersStatus `json:"status,omitempty"`
 }
 
 type UpdateAnEventSubscriptionParametersStatus string
@@ -288,43 +191,18 @@ const (
 
 type ListEventSubscriptionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
-}
-
-// Return the page of entries after this one.
-func (r *ListEventSubscriptionsQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
+	Limit int `query:"limit"`
 }
 
 //
 type EventSubscriptionList struct {
 	// The contents of the list.
-	Data *[]EventSubscription `json:"data"`
+	Data []EventSubscription `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *EventSubscriptionList) GetData() (Data []EventSubscription) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -345,19 +223,7 @@ func (r *EventSubscriptionService) Create(ctx context.Context, body *CreateAnEve
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedEventSubscriptionService) Create(ctx context.Context, body *CreateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *EventSubscription, err error) {
-	err = r.EventSubscriptions.post(
-		ctx,
-		"/event_subscriptions",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -370,18 +236,7 @@ func (r *EventSubscriptionService) Retrieve(ctx context.Context, event_subscript
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedEventSubscriptionService) Retrieve(ctx context.Context, event_subscription_id string, opts ...*core.RequestOpts) (res *EventSubscription, err error) {
-	err = r.EventSubscriptions.get(
-		ctx,
-		fmt.Sprintf("/event_subscriptions/%s", event_subscription_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -395,19 +250,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, event_subscriptio
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedEventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *UpdateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *EventSubscription, err error) {
-	err = r.EventSubscriptions.patch(
-		ctx,
-		fmt.Sprintf("/event_subscriptions/%s", event_subscription_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -435,21 +278,6 @@ func (r *EventSubscriptionService) List(ctx context.Context, query *ListEventSub
 				Path:          "/event_subscriptions",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedEventSubscriptionService) List(ctx context.Context, query *ListEventSubscriptionsQuery, opts ...*core.RequestOpts) (res *EventSubscriptionsPage, err error) {
-	page := &EventSubscriptionsPage{
-		Page: &pagination.Page[EventSubscription]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/event_subscriptions",
-			},
-			Requester: r.EventSubscriptions.Requester,
 			Context:   ctx,
 		},
 	}

@@ -25,78 +25,37 @@ func NewAccountService(requester core.Requester) (r *AccountService) {
 	return
 }
 
-type PreloadedAccountService struct {
-	Accounts *AccountService
-}
-
-func (r *PreloadedAccountService) Init(service *AccountService) {
-	r.Accounts = service
-}
-
-func NewPreloadedAccountService(service *AccountService) (r *PreloadedAccountService) {
-	r = &PreloadedAccountService{}
-	r.Init(service)
-	return
-}
-
 //
 type Account struct {
 	// The current balance of the Account in the minor unit of the currency. For
 	// dollars, for example, this is cents.
-	Balance *int `json:"balance"`
+	Balance int `json:"balance"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 	// currency.
-	Currency *AccountCurrency `json:"currency"`
+	Currency AccountCurrency `json:"currency"`
 	// The identifier for the Entity the Account belongs to.
 	EntityID *string `json:"entity_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
 	InformationalEntityID *string `json:"informational_entity_id"`
 	// The Account identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The interest accrued but not yet paid, expressed as a string containing a
 	// floating-point value.
-	InterestAccrued *string `json:"interest_accrued"`
+	InterestAccrued string `json:"interest_accrued"`
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
 	InterestAccruedAt *string `json:"interest_accrued_at"`
 	// The name you choose for the Account.
-	Name *string `json:"name"`
+	Name string `json:"name"`
 	// The status of the Account.
-	Status *AccountStatus `json:"status"`
+	Status AccountStatus `json:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account`.
-	Type *AccountType `json:"type"`
-}
-
-// The current balance of the Account in the minor unit of the currency. For
-// dollars, for example, this is cents.
-func (r *Account) GetBalance() (Balance int) {
-	if r != nil && r.Balance != nil {
-		Balance = *r.Balance
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
-// was created.
-func (r *Account) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
-// currency.
-func (r *Account) GetCurrency() (Currency AccountCurrency) {
-	if r != nil && r.Currency != nil {
-		Currency = *r.Currency
-	}
-	return
+	Type AccountType `json:"type"`
 }
 
 // The identifier for the Entity the Account belongs to.
@@ -116,53 +75,11 @@ func (r *Account) GetInformationalEntityID() (InformationalEntityID string) {
 	return
 }
 
-// The Account identifier.
-func (r *Account) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// The interest accrued but not yet paid, expressed as a string containing a
-// floating-point value.
-func (r *Account) GetInterestAccrued() (InterestAccrued string) {
-	if r != nil && r.InterestAccrued != nil {
-		InterestAccrued = *r.InterestAccrued
-	}
-	return
-}
-
 // The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 // interest was accrued.
 func (r *Account) GetInterestAccruedAt() (InterestAccruedAt string) {
 	if r != nil && r.InterestAccruedAt != nil {
 		InterestAccruedAt = *r.InterestAccruedAt
-	}
-	return
-}
-
-// The name you choose for the Account.
-func (r *Account) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
-}
-
-// The status of the Account.
-func (r *Account) GetStatus() (Status AccountStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `account`.
-func (r *Account) GetType() (Type AccountType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
 	}
 	return
 }
@@ -193,95 +110,29 @@ const (
 
 type CreateAnAccountParameters struct {
 	// The identifier for the Entity that will own the Account.
-	EntityID *string `json:"entity_id,omitempty"`
+	EntityID string `json:"entity_id,omitempty"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
-	InformationalEntityID *string `json:"informational_entity_id,omitempty"`
+	InformationalEntityID string `json:"informational_entity_id,omitempty"`
 	// The name you choose for the Account.
-	Name *string `json:"name"`
-}
-
-// The identifier for the Entity that will own the Account.
-func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
-		EntityID = *r.EntityID
-	}
-	return
-}
-
-// The identifier of an Entity that, while not owning the Account, is associated
-// with its activity. Its relationship to your group must be `informational`.
-func (r *CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
-	if r != nil && r.InformationalEntityID != nil {
-		InformationalEntityID = *r.InformationalEntityID
-	}
-	return
-}
-
-// The name you choose for the Account.
-func (r *CreateAnAccountParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
+	Name string `json:"name"`
 }
 
 type UpdateAnAccountParameters struct {
 	// The new name of the Account.
-	Name *string `json:"name,omitempty"`
-}
-
-// The new name of the Account.
-func (r *UpdateAnAccountParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
+	Name string `json:"name,omitempty"`
 }
 
 type ListAccountsQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// Filter Accounts for those belonging to the specified Entity.
-	EntityID *string `query:"entity_id"`
+	EntityID string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status *ListAccountsQueryStatus `query:"status"`
-}
-
-// Return the page of entries after this one.
-func (r *ListAccountsQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListAccountsQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// Filter Accounts for those belonging to the specified Entity.
-func (r *ListAccountsQuery) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
-		EntityID = *r.EntityID
-	}
-	return
-}
-
-// Filter Accounts for those with the specified status.
-func (r *ListAccountsQuery) GetStatus() (Status ListAccountsQueryStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
+	Status ListAccountsQueryStatus `query:"status"`
 }
 
 type ListAccountsQueryStatus string
@@ -294,17 +145,9 @@ const (
 //
 type AccountList struct {
 	// The contents of the list.
-	Data *[]Account `json:"data"`
+	Data []Account `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *AccountList) GetData() (Data []Account) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -325,19 +168,7 @@ func (r *AccountService) Create(ctx context.Context, body *CreateAnAccountParame
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountService) Create(ctx context.Context, body *CreateAnAccountParameters, opts ...*core.RequestOpts) (res *Account, err error) {
-	err = r.Accounts.post(
-		ctx,
-		"/accounts",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -350,18 +181,7 @@ func (r *AccountService) Retrieve(ctx context.Context, account_id string, opts .
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountService) Retrieve(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *Account, err error) {
-	err = r.Accounts.get(
-		ctx,
-		fmt.Sprintf("/accounts/%s", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -375,19 +195,7 @@ func (r *AccountService) Update(ctx context.Context, account_id string, body *Up
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountService) Update(ctx context.Context, account_id string, body *UpdateAnAccountParameters, opts ...*core.RequestOpts) (res *Account, err error) {
-	err = r.Accounts.patch(
-		ctx,
-		fmt.Sprintf("/accounts/%s", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
 
@@ -422,21 +230,6 @@ func (r *AccountService) List(ctx context.Context, query *ListAccountsQuery, opt
 	return
 }
 
-func (r *PreloadedAccountService) List(ctx context.Context, query *ListAccountsQuery, opts ...*core.RequestOpts) (res *AccountsPage, err error) {
-	page := &AccountsPage{
-		Page: &pagination.Page[Account]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/accounts",
-			},
-			Requester: r.Accounts.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
 func (r *AccountService) Close(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *Account, err error) {
 	err = r.post(
 		ctx,
@@ -446,17 +239,6 @@ func (r *AccountService) Close(ctx context.Context, account_id string, opts ...*
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedAccountService) Close(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *Account, err error) {
-	err = r.Accounts.post(
-		ctx,
-		fmt.Sprintf("/accounts/%s/close", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }

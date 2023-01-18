@@ -23,20 +23,6 @@ func NewDigitalWalletTokenRequestService(requester core.Requester) (r *DigitalWa
 	return
 }
 
-type PreloadedDigitalWalletTokenRequestService struct {
-	DigitalWalletTokenRequests *DigitalWalletTokenRequestService
-}
-
-func (r *PreloadedDigitalWalletTokenRequestService) Init(service *DigitalWalletTokenRequestService) {
-	r.DigitalWalletTokenRequests = service
-}
-
-func NewPreloadedDigitalWalletTokenRequestService(service *DigitalWalletTokenRequestService) (r *PreloadedDigitalWalletTokenRequestService) {
-	r = &PreloadedDigitalWalletTokenRequestService{}
-	r.Init(service)
-	return
-}
-
 // Simulates a user attempting add a Card to a digital wallet such as Apple Pay.
 func (r *DigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *DigitalWalletTokenRequestCreateResponse, err error) {
 	err = r.post(
@@ -48,19 +34,6 @@ func (r *DigitalWalletTokenRequestService) Create(ctx context.Context, body *Sim
 		},
 		&res,
 	)
-	return
-}
 
-// Simulates a user attempting add a Card to a digital wallet such as Apple Pay.
-func (r *PreloadedDigitalWalletTokenRequestService) Create(ctx context.Context, body *SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *DigitalWalletTokenRequestCreateResponse, err error) {
-	err = r.DigitalWalletTokenRequests.post(
-		ctx,
-		"/simulations/digital_wallet_token_requests",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }

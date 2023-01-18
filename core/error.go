@@ -22,13 +22,15 @@ func (e RequestError) StatusCode() int {
 }
 
 func (e RequestError) URL() string {
-	if req := e.Request; req == nil {
+	req := e.Request
+	if req == nil {
 		return "<nil>"
-	} else if url := req.URL; url == nil {
-		return "<nil>"
-	} else {
-		return url.String()
 	}
+	url := req.URL
+	if url == nil {
+		return "<nil>"
+	}
+	return url.String()
 }
 
 func (e RequestError) Error() string {
@@ -73,40 +75,48 @@ func (e GenericAPIError) errorjSON() string {
 	if json := e.errorBodyJSON; json != nil {
 		return *json
 	}
-	if body := e.errorBody; body == nil {
+	body := e.errorBody
+	if body == nil {
 		e.errorBodyJSON = &e.message
 		return e.message
-	} else if bytes, err := json.MarshalIndent(body, "", "  "); err != nil {
+	}
+	bytes, err := json.MarshalIndent(body, "", "  ")
+	if err != nil {
 		json := fmt.Sprintf("{\"error\":\"go runtime error while dumping error body: %s\"}", err.Error())
 		e.errorBodyJSON = &json
 		return json
-	} else {
-		json := string(bytes)
-		e.errorBodyJSON = &json
-		return json
 	}
+	json := string(bytes)
+	e.errorBodyJSON = &json
+	return json
 }
 
 func (e GenericAPIError) Method() string {
-	if coreRequest := e.request; coreRequest == nil {
+	coreRequest := e.request
+	if coreRequest == nil {
 		return "<nil>"
-	} else if request := coreRequest.Request; request == nil {
-		return "<nil>"
-	} else {
-		return request.Method
 	}
+	request := coreRequest.Request
+	if request == nil {
+		return "<nil>"
+	}
+	return request.Method
 }
 
 func (e GenericAPIError) URL() string {
-	if coreReq := e.request; coreReq == nil {
+	coreReq := e.request
+	if coreReq == nil {
 		return "<nil>"
-	} else if req := coreReq.Request; req == nil {
-		return "<nil>"
-	} else if url := req.URL; url == nil {
-		return "<nil>"
-	} else {
-		return url.String()
 	}
+	req := coreReq.Request
+	if req == nil {
+		return "<nil>"
+	}
+	url := req.URL
+	if url == nil {
+		return "<nil>"
+	}
+	return url.String()
 }
 
 func (e GenericAPIError) Error() string {
@@ -156,7 +166,7 @@ func NewAPIError(req *CoreRequest, res *http.Response, status int, error interfa
 func extractResponseText(res *http.Response) (string, error) {
 	buf := new(strings.Builder)
 	if _, err := io.Copy(buf, res.Body); err != nil {
-		return "", err
+		return "", fmt.Errorf("error copying response body into string builder: %w", err)
 	}
 	return buf.String(), nil
 }

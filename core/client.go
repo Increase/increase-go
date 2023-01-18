@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"increase/core/query"
 	"io"
 	"net/http"
@@ -19,7 +20,7 @@ type CoreClient struct {
 
 	QuerySettings query.QuerySettings
 
-	AuthHeaders func() map[string]string
+	AuthHeaders map[string]string
 }
 
 var _ Requester = (*CoreClient)(nil)
@@ -31,9 +32,8 @@ func (c *CoreClient) UserAgent() string {
 func (c *CoreClient) agent() Agent {
 	if c.Agent != nil {
 		return c.Agent
-	} else {
-		return &c.DefaultClient
 	}
+	return &c.DefaultClient
 }
 
 func (c *CoreClient) Do(req *http.Request) (*http.Response, error) {
@@ -50,7 +50,7 @@ func (c *CoreClient) DefaultHeaders() map[string]string {
 		defaultHeaders[key] = value
 	}
 	if c.AuthHeaders != nil {
-		for key, value := range c.AuthHeaders() {
+		for key, value := range c.AuthHeaders {
 			defaultHeaders[key] = value
 		}
 	}
@@ -100,45 +100,61 @@ func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, 
 		*cr.Params.ResponseInto = res
 	}
 
-	if strings.Contains(res.Header.Get("content-type"), "application/json") {
-		contents, _ := io.ReadAll(res.Body)
-		if deserialize := cr.Params.DeserializeReturnValue; deserialize == nil || *deserialize {
-			if err := json.NewDecoder(io.NopCloser(bytes.NewReader(contents))).Decode(&body); err != nil {
-				return err
-			}
+	isJSON := strings.Contains(res.Header.Get("content-type"), "application/json")
+	// If we are not json return plaintext
+	if !isJSON {
+		text, err := extractResponseText(res)
+		if err != nil {
+			return fmt.Errorf("error extracting response text: %w", err)
 		}
-		if cr.Params.ResponseBodyInto != nil {
-			if err := json.NewDecoder(io.NopCloser(bytes.NewReader(contents))).Decode(&cr.Params.ResponseBodyInto); err != nil {
-				return err
-			}
+		body = text
+		return nil
+	}
+
+	// Load the body into bytes
+	contents, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %w", err)
+	}
+
+	parseJSON := func(v any) error {
+		err := json.NewDecoder(io.NopCloser(bytes.NewReader(contents))).Decode(&v)
+		if err != nil {
+			err = fmt.Errorf("error parsing response json: %w", err)
 		}
-	} else {
-		if text, err := extractResponseText(res); err != nil {
+		return err
+	}
+	if deserialize := cr.Params.DeserializeReturnValue; deserialize == nil || *deserialize {
+		if err := parseJSON(&body); err != nil {
 			return err
-		} else {
-			body = text
 		}
 	}
+	if cr.Params.ResponseBodyInto != nil {
+		if err := parseJSON(&cr.Params.ResponseBodyInto); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
 func (c *CoreClient) Get(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
-	req.Params.Method = "Get"
+	req.Params.Method = http.MethodGet
 	return c.Request(ctx, path, req, &res)
 }
 func (c *CoreClient) Post(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
-	req.Params.Method = "Post"
+	req.Params.Method = http.MethodPost
 	return c.Request(ctx, path, req, &res)
 }
 func (c *CoreClient) Patch(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
-	req.Params.Method = "Patch"
+	req.Params.Method = http.MethodPatch
 	return c.Request(ctx, path, req, &res)
 }
 func (c *CoreClient) Put(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
-	req.Params.Method = "Put"
+	req.Params.Method = http.MethodPut
 	return c.Request(ctx, path, req, &res)
 }
 func (c *CoreClient) Delete(ctx context.Context, path string, req *CoreRequest, res interface{}) error {
-	req.Params.Method = "Delete"
+	req.Params.Method = http.MethodDelete
 	return c.Request(ctx, path, req, &res)
 }

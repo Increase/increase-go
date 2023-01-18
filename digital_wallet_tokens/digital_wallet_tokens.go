@@ -25,86 +25,22 @@ func NewDigitalWalletTokenService(requester core.Requester) (r *DigitalWalletTok
 	return
 }
 
-type PreloadedDigitalWalletTokenService struct {
-	DigitalWalletTokens *DigitalWalletTokenService
-}
-
-func (r *PreloadedDigitalWalletTokenService) Init(service *DigitalWalletTokenService) {
-	r.DigitalWalletTokens = service
-}
-
-func NewPreloadedDigitalWalletTokenService(service *DigitalWalletTokenService) (r *PreloadedDigitalWalletTokenService) {
-	r = &PreloadedDigitalWalletTokenService{}
-	r.Init(service)
-	return
-}
-
 //
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
-	CardID *string `json:"card_id"`
+	CardID string `json:"card_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// This indicates if payments can be made with the Digital Wallet Token.
-	Status *DigitalWalletTokenStatus `json:"status"`
+	Status DigitalWalletTokenStatus `json:"status"`
 	// The digital wallet app being used.
-	TokenRequestor *DigitalWalletTokenTokenRequestor `json:"token_requestor"`
+	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
-	Type *DigitalWalletTokenType `json:"type"`
-}
-
-// The Digital Wallet Token identifier.
-func (r *DigitalWalletToken) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// The identifier for the Card this Digital Wallet Token belongs to.
-func (r *DigitalWalletToken) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
-		CardID = *r.CardID
-	}
-	return
-}
-
-// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-// the Card was created.
-func (r *DigitalWalletToken) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// This indicates if payments can be made with the Digital Wallet Token.
-func (r *DigitalWalletToken) GetStatus() (Status DigitalWalletTokenStatus) {
-	if r != nil && r.Status != nil {
-		Status = *r.Status
-	}
-	return
-}
-
-// The digital wallet app being used.
-func (r *DigitalWalletToken) GetTokenRequestor() (TokenRequestor DigitalWalletTokenTokenRequestor) {
-	if r != nil && r.TokenRequestor != nil {
-		TokenRequestor = *r.TokenRequestor
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `digital_wallet_token`.
-func (r *DigitalWalletToken) GetType() (Type DigitalWalletTokenType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
+	Type DigitalWalletTokenType `json:"type"`
 }
 
 type DigitalWalletTokenStatus string
@@ -131,112 +67,36 @@ const (
 
 type ListDigitalWalletTokensQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID    *string                                `query:"card_id"`
-	CreatedAt *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
-}
-
-// Return the page of entries after this one.
-func (r *ListDigitalWalletTokensQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-func (r *ListDigitalWalletTokensQuery) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
-		CardID = *r.CardID
-	}
-	return
-}
-
-func (r *ListDigitalWalletTokensQuery) GetCreatedAt() (CreatedAt ListDigitalWalletTokensQueryCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
+	CardID    string                                `query:"card_id"`
+	CreatedAt ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
 }
 
 type ListDigitalWalletTokensQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
-}
-
-// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
-		After = *r.After
-	}
-	return
-}
-
-// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
-		Before = *r.Before
-	}
-	return
-}
-
-// Return results on or after this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
-		OnOrAfter = *r.OnOrAfter
-	}
-	return
-}
-
-// Return results on or before this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
-		OnOrBefore = *r.OnOrBefore
-	}
-	return
+	OnOrBefore string `json:"on_or_before,omitempty"`
 }
 
 //
 type DigitalWalletTokenList struct {
 	// The contents of the list.
-	Data *[]DigitalWalletToken `json:"data"`
+	Data []DigitalWalletToken `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *DigitalWalletTokenList) GetData() (Data []DigitalWalletToken) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -256,18 +116,7 @@ func (r *DigitalWalletTokenService) Retrieve(ctx context.Context, digital_wallet
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedDigitalWalletTokenService) Retrieve(ctx context.Context, digital_wallet_token_id string, opts ...*core.RequestOpts) (res *DigitalWalletToken, err error) {
-	err = r.DigitalWalletTokens.get(
-		ctx,
-		fmt.Sprintf("/digital_wallet_tokens/%s", digital_wallet_token_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -295,21 +144,6 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query *ListDigital
 				Path:          "/digital_wallet_tokens",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedDigitalWalletTokenService) List(ctx context.Context, query *ListDigitalWalletTokensQuery, opts ...*core.RequestOpts) (res *DigitalWalletTokensPage, err error) {
-	page := &DigitalWalletTokensPage{
-		Page: &pagination.Page[DigitalWalletToken]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/digital_wallet_tokens",
-			},
-			Requester: r.DigitalWalletTokens.Requester,
 			Context:   ctx,
 		},
 	}

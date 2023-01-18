@@ -25,86 +25,22 @@ func NewEventService(requester core.Requester) (r *EventService) {
 	return
 }
 
-type PreloadedEventService struct {
-	Events *EventService
-}
-
-func (r *PreloadedEventService) Init(service *EventService) {
-	r.Events = service
-}
-
-func NewPreloadedEventService(service *EventService) (r *PreloadedEventService) {
-	r = &PreloadedEventService{}
-	r.Init(service)
-	return
-}
-
 //
 type Event struct {
 	// The identifier of the object that generated this Event.
-	AssociatedObjectID *string `json:"associated_object_id"`
+	AssociatedObjectID string `json:"associated_object_id"`
 	// The type of the object that generated this Event.
-	AssociatedObjectType *string `json:"associated_object_type"`
+	AssociatedObjectType string `json:"associated_object_type"`
 	// The category of the Event. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category *EventCategory `json:"category"`
+	Category EventCategory `json:"category"`
 	// The time the Event was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 	// The Event identifier.
-	ID *string `json:"id"`
+	ID string `json:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
-	Type *EventType `json:"type"`
-}
-
-// The identifier of the object that generated this Event.
-func (r *Event) GetAssociatedObjectID() (AssociatedObjectID string) {
-	if r != nil && r.AssociatedObjectID != nil {
-		AssociatedObjectID = *r.AssociatedObjectID
-	}
-	return
-}
-
-// The type of the object that generated this Event.
-func (r *Event) GetAssociatedObjectType() (AssociatedObjectType string) {
-	if r != nil && r.AssociatedObjectType != nil {
-		AssociatedObjectType = *r.AssociatedObjectType
-	}
-	return
-}
-
-// The category of the Event. We may add additional possible values for this enum
-// over time; your application should be able to handle such additions gracefully.
-func (r *Event) GetCategory() (Category EventCategory) {
-	if r != nil && r.Category != nil {
-		Category = *r.Category
-	}
-	return
-}
-
-// The time the Event was created.
-func (r *Event) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-// The Event identifier.
-func (r *Event) GetID() (ID string) {
-	if r != nil && r.ID != nil {
-		ID = *r.ID
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `event`.
-func (r *Event) GetType() (Type EventType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
+	Type EventType `json:"type"`
 }
 
 type EventCategory string
@@ -163,119 +99,35 @@ const (
 
 type ListEventsQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID *string                   `query:"associated_object_id"`
-	CreatedAt          *ListEventsQueryCreatedAt `query:"created_at"`
-	Category           *ListEventsQueryCategory  `query:"category"`
-}
-
-// Return the page of entries after this one.
-func (r *ListEventsQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListEventsQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// Filter Events to those belonging to the object with the provided identifier.
-func (r *ListEventsQuery) GetAssociatedObjectID() (AssociatedObjectID string) {
-	if r != nil && r.AssociatedObjectID != nil {
-		AssociatedObjectID = *r.AssociatedObjectID
-	}
-	return
-}
-
-func (r *ListEventsQuery) GetCreatedAt() (CreatedAt ListEventsQueryCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
-		CreatedAt = *r.CreatedAt
-	}
-	return
-}
-
-func (r *ListEventsQuery) GetCategory() (Category ListEventsQueryCategory) {
-	if r != nil && r.Category != nil {
-		Category = *r.Category
-	}
-	return
+	AssociatedObjectID string                   `query:"associated_object_id"`
+	CreatedAt          ListEventsQueryCreatedAt `query:"created_at"`
+	Category           ListEventsQueryCategory  `query:"category"`
 }
 
 type ListEventsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
-}
-
-// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListEventsQueryCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
-		After = *r.After
-	}
-	return
-}
-
-// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-// timestamp.
-func (r *ListEventsQueryCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
-		Before = *r.Before
-	}
-	return
-}
-
-// Return results on or after this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListEventsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
-		OnOrAfter = *r.OnOrAfter
-	}
-	return
-}
-
-// Return results on or before this
-// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListEventsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
-		OnOrBefore = *r.OnOrBefore
-	}
-	return
+	OnOrBefore string `json:"on_or_before,omitempty"`
 }
 
 type ListEventsQueryCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListEventsQueryCategoryIn `json:"in,omitempty"`
-}
-
-// Return results whose value is in the provided list. For GET requests, this
-// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListEventsQueryCategory) GetIn() (In []ListEventsQueryCategoryIn) {
-	if r != nil && r.In != nil {
-		In = *r.In
-	}
-	return
+	In []ListEventsQueryCategoryIn `json:"in,omitempty"`
 }
 
 type ListEventsQueryCategoryIn string
@@ -329,17 +181,9 @@ const (
 //
 type EventList struct {
 	// The contents of the list.
-	Data *[]Event `json:"data"`
+	Data []Event `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *EventList) GetData() (Data []Event) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -359,18 +203,7 @@ func (r *EventService) Retrieve(ctx context.Context, event_id string, opts ...*c
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedEventService) Retrieve(ctx context.Context, event_id string, opts ...*core.RequestOpts) (res *Event, err error) {
-	err = r.Events.get(
-		ctx,
-		fmt.Sprintf("/events/%s", event_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
 	return
 }
 
@@ -398,21 +231,6 @@ func (r *EventService) List(ctx context.Context, query *ListEventsQuery, opts ..
 				Path:          "/events",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-func (r *PreloadedEventService) List(ctx context.Context, query *ListEventsQuery, opts ...*core.RequestOpts) (res *EventsPage, err error) {
-	page := &EventsPage{
-		Page: &pagination.Page[Event]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/events",
-			},
-			Requester: r.Events.Requester,
 			Context:   ctx,
 		},
 	}

@@ -60,16 +60,9 @@ type PageParams struct {
 
 //
 type PageResponse[Model interface{}] struct {
-	Data *[]Model `json:"data"`
+	Data []Model `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-func (r *PageResponse[Model]) GetData() (Data []Model) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -83,7 +76,7 @@ func (r *PageResponse[Model]) GetNextCursor() (NextCursor string) {
 var _ PageResponseInterface[interface{}] = (*PageResponse[interface{}])(nil)
 
 func (r *PageResponse[Model]) GetItems() []Model {
-	return r.GetData()
+	return r.Data
 }
 
 func (r *PageResponse[Model]) GetItem(index int) *Model {
@@ -110,7 +103,7 @@ type Page[Model interface{}] struct {
 var _ PageInterface[interface{}, *PageResponse[interface{}]] = (*Page[interface{}])(nil)
 
 func (r *Page[Model]) GetNextPageParams() *PageParams {
-	if cursor := r.response.GetNextCursor(); len(cursor) == 0 {
+	if cursor := *r.response.NextCursor; len(cursor) == 0 {
 		if r.fired {
 			return nil
 		} else {

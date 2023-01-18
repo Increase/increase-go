@@ -7,51 +7,112 @@ import (
 	"reflect"
 )
 
+type environmentField struct {
+	v reflect.Value
+	t reflect.StructField
+}
+
+func (field environmentField) tag(name string) (string, bool) {
+	return field.t.Tag.Lookup("env")
+}
+
+func (field environmentField) mustTag(name string) string {
+	tag, ok := field.tag(name)
+	if !ok {
+		panic(fmt.Errorf("expected to find tag %s on type %v but got nothing", name, field.t))
+	}
+	return tag
+}
+
+func (field environmentField) checkEnv() (value string, exists bool) {
+	env, exists := field.t.Tag.Lookup("env")
+	if !exists {
+		return
+	}
+	return os.LookupEnv(env)
+}
+
+func (field environmentField) store(value string) error {
+	var parsed interface{}
+	if field.v.Kind() == reflect.String {
+		// field is a string, incoming is a string (happy path)
+		field.v.Set(reflect.ValueOf(value))
+		return nil
+	}
+	err := json.Unmarshal([]byte(value), &parsed)
+	if err != nil {
+		// unmarshal failure
+		return fmt.Errorf("error while parsing env variable %s: %w", field.mustTag("env"), err)
+	}
+	pv := reflect.ValueOf(parsed)
+	if pv.Kind() != field.v.Kind() {
+		// type mismatch
+		return fmt.Errorf("Unexpectedly found type %v (wanted %s) when parsing %s", pv.Kind().String(), field.v.Kind().String(), value)
+	}
+	field.v.Set(pv.Convert(field.v.Type()))
+	return nil
+}
+
+func (field environmentField) attemptLoad() error {
+	rawValue, ok := field.checkEnv()
+	if !ok {
+		// fallback to defaults
+		rawValue, ok = field.tag("default")
+	}
+	if !ok {
+		// TODO: fail?
+		return nil
+	}
+	err := field.store(rawValue)
+	if err != nil {
+		return fmt.Errorf("error storing: %w", err)
+	}
+	return nil
+}
+
+type environmentLoader struct {
+	v reflect.Value
+	t reflect.Type
+}
+
+func (loader environmentLoader) field(index int) environmentField {
+	return environmentField{loader.v.Field(index), loader.t.Field(index)}
+}
+
+// LoadEnvironmentVariables enumerates all field on the provided struct-value,
+// attempting to set empty values to their environment values (when defined by the `env` struct tag),
+// or from the default value (defined by the `default` tag).
+//
+// Values are parsed as JSON, except when the field is a string, in which case
+// the value is assigned as-is.
+//
+// Examples:
+//
+//	type Settings struct {
+//	  Name string `env:"NAME"`
+//		Age int `env:"AGE"`
+//	}
+//
+// NAME=Eric AGE=20 go run .
+//
+//	Settings.Name == "Eric"
+//	Settings.Age  == 20
+//
+// NAME='"Eric"' AGE=20 go run .
+//
+//	Settings.Name == "\"Eric\""
+//	Settings.Age  == 20
 func LoadEnvironmentVariables(settings any) error {
 	rv := reflect.ValueOf(settings).Elem()
 	rt := rv.Type()
+	loader := environmentLoader{rv, rt}
 	for i := 0; i < rt.NumField(); i++ {
-		fieldv := rv.Field(i)
-		if !fieldv.IsZero() {
+		field := loader.field(i)
+		if !field.v.IsZero() {
 			continue
 		}
-		fieldt := rt.Field(i)
-		if env, ok := fieldt.Tag.Lookup("env"); ok {
-			if value, ok := os.LookupEnv(env); ok {
-				if fieldt.Type.Kind() == reflect.String {
-					fieldv.Set(reflect.ValueOf(value))
-				} else {
-					var parsed interface{}
-					err := json.Unmarshal([]byte(value), &parsed)
-					if err != nil {
-						return fmt.Errorf("error while parsing env variable %s: %w", env, err)
-					}
-					pv := reflect.ValueOf(parsed)
-					if pv.Kind() == fieldv.Kind() {
-						fieldv.Set(pv.Convert(fieldv.Type()))
-						continue
-					} else {
-						return fmt.Errorf("Unexpectedly found type %v (wanted %s) when parsing env %s", pv.Kind().String(), fieldv.Kind().String(), env)
-					}
-				}
-			}
-		}
-		if defaultValue, ok := fieldt.Tag.Lookup("default"); ok {
-			var parsed interface{}
-			if fieldv.Kind() == reflect.String {
-				parsed = defaultValue
-			} else {
-				err := json.Unmarshal([]byte(defaultValue), &parsed)
-				if err != nil {
-					return fmt.Errorf("error while parsing default value for field %s: %w", fieldt.Name, err)
-				}
-			}
-			pv := reflect.ValueOf(parsed)
-			if pv.Kind() == fieldv.Kind() {
-				fieldv.Set(pv.Convert(fieldv.Type()))
-			} else {
-				return fmt.Errorf("Unexpectedly found type %v (wanted %s) when parsing default value for field %s", pv.Kind().String(), fieldv.Kind().String(), rv.Type().Field(i).Name)
-			}
+		if err := field.attemptLoad(); err != nil {
+			return fmt.Errorf("error loading %s from environment/defaults: %w", field.t.Name, err)
 		}
 	}
 	return nil

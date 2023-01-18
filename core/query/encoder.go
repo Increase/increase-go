@@ -85,12 +85,8 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) stringifier {
 			var subkey string = field.name
 			if field.inline {
 				subkey = key
-			} else if len(key) > 0 {
-				if e.settings.NestedFormat == NestedQueryFormatDots {
-					subkey = fmt.Sprintf("%s.%s", key, subkey)
-				} else {
-					subkey = fmt.Sprintf("%s[%s]", key, subkey)
-				}
+			} else {
+				subkey = e.renderKeyPath(key, subkey)
 			}
 			for _, pair := range field.stringifier(subkey, value.Field(i)) {
 				if field.omitempty && len(pair.value) == 0 {
@@ -114,17 +110,21 @@ func (e *encoder) newMapEncoder(t reflect.Type) stringifier {
 				panic("Unexpected number of parts for encoded map key. Are you using a non-primitive for this map?")
 			}
 			subkey := encodedKey[0].value
-			if len(key) > 0 {
-				if e.settings.NestedFormat == NestedQueryFormatDots {
-					subkey = fmt.Sprintf("%s.%s", key, subkey)
-				} else {
-					subkey = fmt.Sprintf("%s[%s]", key, subkey)
-				}
-			}
-			pairs = append(pairs, elementEncoder(subkey, iter.Value())...)
+			keyPath := e.renderKeyPath(key, subkey)
+			pairs = append(pairs, elementEncoder(keyPath, iter.Value())...)
 		}
 		return
 	}
+}
+
+func (e *encoder) renderKeyPath(key string, subkey string) string {
+	if len(key) == 0 {
+		return subkey
+	}
+	if e.settings.NestedFormat == NestedQueryFormatDots {
+		return fmt.Sprintf("%s.%s", key, subkey)
+	}
+	return fmt.Sprintf("%s[%s]", key, subkey)
 }
 
 func (e *encoder) newArrayTypeEncoder(t reflect.Type) stringifier {
@@ -187,9 +187,8 @@ func (e *encoder) newPrimitiveTypeEncoder(t reflect.Type) stringifier {
 		return func(key string, v reflect.Value) []Pair {
 			if v.Bool() {
 				return []Pair{{key, "true"}}
-			} else {
-				return []Pair{{key, "false"}}
 			}
+			return []Pair{{key, "false"}}
 		}
 	case reflect.Int, reflect.Int16, reflect.Int32, reflect.Int64:
 		return func(key string, v reflect.Value) []Pair {

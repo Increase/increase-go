@@ -24,84 +24,21 @@ func NewRoutingNumberService(requester core.Requester) (r *RoutingNumberService)
 	return
 }
 
-type PreloadedRoutingNumberService struct {
-	RoutingNumbers *RoutingNumberService
-}
-
-func (r *PreloadedRoutingNumberService) Init(service *RoutingNumberService) {
-	r.RoutingNumbers = service
-}
-
-func NewPreloadedRoutingNumberService(service *RoutingNumberService) (r *PreloadedRoutingNumberService) {
-	r = &PreloadedRoutingNumberService{}
-	r.Init(service)
-	return
-}
-
 //
 type RoutingNumber struct {
 	// The name of the financial institution belonging to a routing number.
-	Name *string `json:"name"`
+	Name string `json:"name"`
 	// The nine digit routing number identifier.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber string `json:"routing_number"`
 	// A constant representing the object's type. For this resource it will always be
 	// `routing_number`.
-	Type *RoutingNumberType `json:"type"`
+	Type RoutingNumberType `json:"type"`
 	// This routing number's support for ACH Transfers.
-	ACHTransfers *RoutingNumberACHTransfers `json:"ach_transfers"`
+	ACHTransfers RoutingNumberACHTransfers `json:"ach_transfers"`
 	// This routing number's support for Real Time Payments Transfers.
-	RealTimePaymentsTransfers *RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers"`
+	RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers"`
 	// This routing number's support for Wire Transfers.
-	WireTransfers *RoutingNumberWireTransfers `json:"wire_transfers"`
-}
-
-// The name of the financial institution belonging to a routing number.
-func (r *RoutingNumber) GetName() (Name string) {
-	if r != nil && r.Name != nil {
-		Name = *r.Name
-	}
-	return
-}
-
-// The nine digit routing number identifier.
-func (r *RoutingNumber) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
-		RoutingNumber = *r.RoutingNumber
-	}
-	return
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `routing_number`.
-func (r *RoutingNumber) GetType() (Type RoutingNumberType) {
-	if r != nil && r.Type != nil {
-		Type = *r.Type
-	}
-	return
-}
-
-// This routing number's support for ACH Transfers.
-func (r *RoutingNumber) GetACHTransfers() (ACHTransfers RoutingNumberACHTransfers) {
-	if r != nil && r.ACHTransfers != nil {
-		ACHTransfers = *r.ACHTransfers
-	}
-	return
-}
-
-// This routing number's support for Real Time Payments Transfers.
-func (r *RoutingNumber) GetRealTimePaymentsTransfers() (RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers) {
-	if r != nil && r.RealTimePaymentsTransfers != nil {
-		RealTimePaymentsTransfers = *r.RealTimePaymentsTransfers
-	}
-	return
-}
-
-// This routing number's support for Wire Transfers.
-func (r *RoutingNumber) GetWireTransfers() (WireTransfers RoutingNumberWireTransfers) {
-	if r != nil && r.WireTransfers != nil {
-		WireTransfers = *r.WireTransfers
-	}
-	return
+	WireTransfers RoutingNumberWireTransfers `json:"wire_transfers"`
 }
 
 type RoutingNumberType string
@@ -133,53 +70,20 @@ const (
 
 type ListRoutingNumbersQuery struct {
 	// Return the page of entries after this one.
-	Cursor *string `query:"cursor"`
+	Cursor string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit int `query:"limit"`
 	// Filter financial institutions by routing number.
-	RoutingNumber *string `query:"routing_number,omitempty"`
-}
-
-// Return the page of entries after this one.
-func (r *ListRoutingNumbersQuery) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
-		Cursor = *r.Cursor
-	}
-	return
-}
-
-// Limit the size of the list that is returned. The default (and maximum) is 100
-// objects.
-func (r *ListRoutingNumbersQuery) GetLimit() (Limit int) {
-	if r != nil && r.Limit != nil {
-		Limit = *r.Limit
-	}
-	return
-}
-
-// Filter financial institutions by routing number.
-func (r *ListRoutingNumbersQuery) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
-		RoutingNumber = *r.RoutingNumber
-	}
-	return
+	RoutingNumber string `query:"routing_number,omitempty"`
 }
 
 //
 type RoutingNumberList struct {
 	// The contents of the list.
-	Data *[]RoutingNumber `json:"data"`
+	Data []RoutingNumber `json:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string `json:"next_cursor"`
-}
-
-// The contents of the list.
-func (r *RoutingNumberList) GetData() (Data []RoutingNumber) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
 }
 
 // A pointer to a place in the list.
@@ -218,25 +122,6 @@ func (r *RoutingNumberService) List(ctx context.Context, query *ListRoutingNumbe
 				Path:          "/routing_numbers",
 			},
 			Requester: r.Requester,
-			Context:   ctx,
-		},
-	}
-	res, err = page.GetNextPage()
-	return
-}
-
-// You can use this API to confirm if a routing number is valid, such as when a
-// user is providing you with bank account details. Since routing numbers uniquely
-// identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
-// valid routing number for this method is 110000000.
-func (r *PreloadedRoutingNumberService) List(ctx context.Context, query *ListRoutingNumbersQuery, opts ...*core.RequestOpts) (res *RoutingNumbersPage, err error) {
-	page := &RoutingNumbersPage{
-		Page: &pagination.Page[RoutingNumber]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/routing_numbers",
-			},
-			Requester: r.RoutingNumbers.Requester,
 			Context:   ctx,
 		},
 	}

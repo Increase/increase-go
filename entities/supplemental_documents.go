@@ -24,20 +24,6 @@ func NewSupplementalDocumentService(requester core.Requester) (r *SupplementalDo
 	return
 }
 
-type PreloadedSupplementalDocumentService struct {
-	SupplementalDocuments *SupplementalDocumentService
-}
-
-func (r *PreloadedSupplementalDocumentService) Init(service *SupplementalDocumentService) {
-	r.SupplementalDocuments = service
-}
-
-func NewPreloadedSupplementalDocumentService(service *SupplementalDocumentService) (r *PreloadedSupplementalDocumentService) {
-	r = &PreloadedSupplementalDocumentService{}
-	r.Init(service)
-	return
-}
-
 func (r *SupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *Entity, err error) {
 	err = r.post(
 		ctx,
@@ -48,18 +34,6 @@ func (r *SupplementalDocumentService) Create(ctx context.Context, entity_id stri
 		},
 		&res,
 	)
-	return
-}
 
-func (r *PreloadedSupplementalDocumentService) Create(ctx context.Context, entity_id string, body *CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *Entity, err error) {
-	err = r.SupplementalDocuments.post(
-		ctx,
-		fmt.Sprintf("/entities/%s/supplemental_documents", entity_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
 	return
 }
