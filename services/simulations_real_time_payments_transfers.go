@@ -1,0 +1,40 @@
+package services
+
+import "context"
+import "increase/core"
+import "increase/types"
+
+type SimulationsRealTimePaymentsTransferService struct {
+	Requester core.Requester
+	get       func(context.Context, string, *core.CoreRequest, interface{}) error
+	post      func(context.Context, string, *core.CoreRequest, interface{}) error
+	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
+	put       func(context.Context, string, *core.CoreRequest, interface{}) error
+	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+}
+
+func NewSimulationsRealTimePaymentsTransferService(requester core.Requester) (r *SimulationsRealTimePaymentsTransferService) {
+	r = &SimulationsRealTimePaymentsTransferService{}
+	r.Requester = requester
+	r.get = r.Requester.Get
+	r.post = r.Requester.Post
+	r.patch = r.Requester.Patch
+	r.put = r.Requester.Put
+	r.delete = r.Requester.Delete
+	return
+}
+
+// Simulates an inbound Real Time Payments transfer to your account.
+func (r *SimulationsRealTimePaymentsTransferService) CreateInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
+	err = r.post(
+		ctx,
+		"/simulations/inbound_real_time_payments_transfers",
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+			Body:   body,
+		},
+		&res,
+	)
+
+	return
+}
