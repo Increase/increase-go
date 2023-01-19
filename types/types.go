@@ -87,29 +87,87 @@ const (
 
 type CreateAnAccountParameters struct {
 	// The identifier for the Entity that will own the Account.
-	EntityID string `json:"entity_id,omitempty"`
+	EntityID *string `json:"entity_id,omitempty"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
-	InformationalEntityID string `json:"informational_entity_id,omitempty"`
+	InformationalEntityID *string `json:"informational_entity_id,omitempty"`
 	// The name you choose for the Account.
 	Name string `json:"name"`
 }
 
+// The identifier for the Entity that will own the Account.
+func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
+	if r != nil && r.EntityID != nil {
+		EntityID = *r.EntityID
+	}
+	return
+}
+
+// The identifier of an Entity that, while not owning the Account, is associated
+// with its activity. Its relationship to your group must be `informational`.
+func (r *CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
+	if r != nil && r.InformationalEntityID != nil {
+		InformationalEntityID = *r.InformationalEntityID
+	}
+	return
+}
+
 type UpdateAnAccountParameters struct {
 	// The new name of the Account.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
+// The new name of the Account.
+func (r *UpdateAnAccountParameters) GetName() (Name string) {
+	if r != nil && r.Name != nil {
+		Name = *r.Name
+	}
+	return
 }
 
 type ListAccountsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Accounts for those belonging to the specified Entity.
-	EntityID string `query:"entity_id"`
+	EntityID *string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status ListAccountsQueryStatus `query:"status"`
+	Status *ListAccountsQueryStatus `query:"status"`
+}
+
+// Return the page of entries after this one.
+func (r *ListAccountsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListAccountsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Accounts for those belonging to the specified Entity.
+func (r *ListAccountsQuery) GetEntityID() (EntityID string) {
+	if r != nil && r.EntityID != nil {
+		EntityID = *r.EntityID
+	}
+	return
+}
+
+// Filter Accounts for those with the specified status.
+func (r *ListAccountsQuery) GetStatus() (Status ListAccountsQueryStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type ListAccountsQueryStatus string
@@ -196,9 +254,25 @@ type CreateAnAccountNumberParameters struct {
 
 type UpdateAnAccountNumberParameters struct {
 	// The name you choose for the Account Number.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// This indicates if transfers can be made to the Account Number.
-	Status UpdateAnAccountNumberParametersStatus `json:"status,omitempty"`
+	Status *UpdateAnAccountNumberParametersStatus `json:"status,omitempty"`
+}
+
+// The name you choose for the Account Number.
+func (r *UpdateAnAccountNumberParameters) GetName() (Name string) {
+	if r != nil && r.Name != nil {
+		Name = *r.Name
+	}
+	return
+}
+
+// This indicates if transfers can be made to the Account Number.
+func (r *UpdateAnAccountNumberParameters) GetStatus() (Status UpdateAnAccountNumberParametersStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type UpdateAnAccountNumberParametersStatus string
@@ -211,14 +285,47 @@ const (
 
 type ListAccountNumbersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status ListAccountNumbersQueryStatus `query:"status"`
+	Status *ListAccountNumbersQueryStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
+}
+
+// Return the page of entries after this one.
+func (r *ListAccountNumbersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListAccountNumbersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// The status to retrieve Account Numbers for.
+func (r *ListAccountNumbersQuery) GetStatus() (Status ListAccountNumbersQueryStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
+}
+
+// Filter Account Numbers to those belonging to the specified Account.
+func (r *ListAccountNumbersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
 }
 
 type ListAccountNumbersQueryStatus string
@@ -490,13 +597,40 @@ const (
 type ActionARealTimeDecisionParameters struct {
 	// If the Real-Time Decision relates to a card authorization attempt, this object
 	// contains your response to the authorization.
-	CardAuthorization ActionARealTimeDecisionParametersCardAuthorization `json:"card_authorization,omitempty"`
+	CardAuthorization *ActionARealTimeDecisionParametersCardAuthorization `json:"card_authorization,omitempty"`
 	// If the Real-Time Decision relates to a digital wallet token provisioning
 	// attempt, this object contains your response to the attempt.
-	DigitalWalletToken ActionARealTimeDecisionParametersDigitalWalletToken `json:"digital_wallet_token,omitempty"`
+	DigitalWalletToken *ActionARealTimeDecisionParametersDigitalWalletToken `json:"digital_wallet_token,omitempty"`
 	// If the Real-Time Decision relates to a digital wallet authentication attempt,
 	// this object contains your response to the authentication.
-	DigitalWalletAuthentication ActionARealTimeDecisionParametersDigitalWalletAuthentication `json:"digital_wallet_authentication,omitempty"`
+	DigitalWalletAuthentication *ActionARealTimeDecisionParametersDigitalWalletAuthentication `json:"digital_wallet_authentication,omitempty"`
+}
+
+// If the Real-Time Decision relates to a card authorization attempt, this object
+// contains your response to the authorization.
+func (r *ActionARealTimeDecisionParameters) GetCardAuthorization() (CardAuthorization ActionARealTimeDecisionParametersCardAuthorization) {
+	if r != nil && r.CardAuthorization != nil {
+		CardAuthorization = *r.CardAuthorization
+	}
+	return
+}
+
+// If the Real-Time Decision relates to a digital wallet token provisioning
+// attempt, this object contains your response to the attempt.
+func (r *ActionARealTimeDecisionParameters) GetDigitalWalletToken() (DigitalWalletToken ActionARealTimeDecisionParametersDigitalWalletToken) {
+	if r != nil && r.DigitalWalletToken != nil {
+		DigitalWalletToken = *r.DigitalWalletToken
+	}
+	return
+}
+
+// If the Real-Time Decision relates to a digital wallet authentication attempt,
+// this object contains your response to the authentication.
+func (r *ActionARealTimeDecisionParameters) GetDigitalWalletAuthentication() (DigitalWalletAuthentication ActionARealTimeDecisionParametersDigitalWalletAuthentication) {
+	if r != nil && r.DigitalWalletAuthentication != nil {
+		DigitalWalletAuthentication = *r.DigitalWalletAuthentication
+	}
+	return
 }
 
 //
@@ -516,10 +650,28 @@ const (
 type ActionARealTimeDecisionParametersDigitalWalletToken struct {
 	// If your application approves the provisioning attempt, this contains metadata
 	// about the digital wallet token that will be generated.
-	Approval ActionARealTimeDecisionParametersDigitalWalletTokenApproval `json:"approval,omitempty"`
+	Approval *ActionARealTimeDecisionParametersDigitalWalletTokenApproval `json:"approval,omitempty"`
 	// If your application declines the provisioning attempt, this contains details
 	// about the decline.
-	Decline ActionARealTimeDecisionParametersDigitalWalletTokenDecline `json:"decline,omitempty"`
+	Decline *ActionARealTimeDecisionParametersDigitalWalletTokenDecline `json:"decline,omitempty"`
+}
+
+// If your application approves the provisioning attempt, this contains metadata
+// about the digital wallet token that will be generated.
+func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetApproval() (Approval ActionARealTimeDecisionParametersDigitalWalletTokenApproval) {
+	if r != nil && r.Approval != nil {
+		Approval = *r.Approval
+	}
+	return
+}
+
+// If your application declines the provisioning attempt, this contains details
+// about the decline.
+func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decline ActionARealTimeDecisionParametersDigitalWalletTokenDecline) {
+	if r != nil && r.Decline != nil {
+		Decline = *r.Decline
+	}
+	return
 }
 
 //
@@ -528,17 +680,44 @@ type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 	CardProfileID string `json:"card_profile_id"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone string `json:"phone,omitempty"`
+	Phone *string `json:"phone,omitempty"`
 	// An email address that can be used to verify the cardholder via one-time
 	// passcode.
-	Email string `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
+}
+
+// A phone number that can be used to verify the cardholder via one-time passcode
+// over SMS.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetPhone() (Phone string) {
+	if r != nil && r.Phone != nil {
+		Phone = *r.Phone
+	}
+	return
+}
+
+// An email address that can be used to verify the cardholder via one-time
+// passcode.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetEmail() (Email string) {
+	if r != nil && r.Email != nil {
+		Email = *r.Email
+	}
+	return
 }
 
 //
 type ActionARealTimeDecisionParametersDigitalWalletTokenDecline struct {
 	// Why the tokenization attempt was declined. This is for logging purposes only and
 	// is not displayed to the end-user.
-	Reason string `json:"reason,omitempty"`
+	Reason *string `json:"reason,omitempty"`
+}
+
+// Why the tokenization attempt was declined. This is for logging purposes only and
+// is not displayed to the end-user.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason() (Reason string) {
+	if r != nil && r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
 }
 
 //
@@ -747,13 +926,39 @@ type CreateACardParameters struct {
 	// The Account the card should belong to.
 	AccountID string `json:"account_id"`
 	// The description you choose to give the card.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// The card's billing address.
-	BillingAddress CreateACardParametersBillingAddress `json:"billing_address,omitempty"`
+	BillingAddress *CreateACardParametersBillingAddress `json:"billing_address,omitempty"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet CreateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+	DigitalWallet *CreateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+}
+
+// The description you choose to give the card.
+func (r *CreateACardParameters) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The card's billing address.
+func (r *CreateACardParameters) GetBillingAddress() (BillingAddress CreateACardParametersBillingAddress) {
+	if r != nil && r.BillingAddress != nil {
+		BillingAddress = *r.BillingAddress
+	}
+	return
+}
+
+// The contact information used in the two-factor steps for digital wallet card
+// creation. At least one field must be present to complete the digital wallet
+// steps.
+func (r *CreateACardParameters) GetDigitalWallet() (DigitalWallet CreateACardParametersDigitalWallet) {
+	if r != nil && r.DigitalWallet != nil {
+		DigitalWallet = *r.DigitalWallet
+	}
+	return
 }
 
 //
@@ -761,7 +966,7 @@ type CreateACardParametersBillingAddress struct {
 	// The first line of the billing address.
 	Line1 string `json:"line1"`
 	// The second line of the billing address.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the billing address.
 	City string `json:"city"`
 	// The US state of the billing address.
@@ -770,30 +975,99 @@ type CreateACardParametersBillingAddress struct {
 	PostalCode string `json:"postal_code"`
 }
 
+// The second line of the billing address.
+func (r *CreateACardParametersBillingAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
+}
+
 //
 type CreateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email string `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone string `json:"phone,omitempty"`
+	Phone *string `json:"phone,omitempty"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID string `json:"card_profile_id,omitempty"`
+	CardProfileID *string `json:"card_profile_id,omitempty"`
+}
+
+// An email address that can be used to verify the cardholder via one-time passcode
+// over email.
+func (r *CreateACardParametersDigitalWallet) GetEmail() (Email string) {
+	if r != nil && r.Email != nil {
+		Email = *r.Email
+	}
+	return
+}
+
+// A phone number that can be used to verify the cardholder via one-time passcode
+// over SMS.
+func (r *CreateACardParametersDigitalWallet) GetPhone() (Phone string) {
+	if r != nil && r.Phone != nil {
+		Phone = *r.Phone
+	}
+	return
+}
+
+// The card profile assigned to this digital card. Card profiles may also be
+// assigned at the program level.
+func (r *CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
+	}
+	return
 }
 
 type UpdateACardParameters struct {
 	// The description you choose to give the card.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// The status to update the Card with.
-	Status UpdateACardParametersStatus `json:"status,omitempty"`
+	Status *UpdateACardParametersStatus `json:"status,omitempty"`
 	// The card's updated billing address.
-	BillingAddress UpdateACardParametersBillingAddress `json:"billing_address,omitempty"`
+	BillingAddress *UpdateACardParametersBillingAddress `json:"billing_address,omitempty"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet UpdateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+	DigitalWallet *UpdateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+}
+
+// The description you choose to give the card.
+func (r *UpdateACardParameters) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The status to update the Card with.
+func (r *UpdateACardParameters) GetStatus() (Status UpdateACardParametersStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
+}
+
+// The card's updated billing address.
+func (r *UpdateACardParameters) GetBillingAddress() (BillingAddress UpdateACardParametersBillingAddress) {
+	if r != nil && r.BillingAddress != nil {
+		BillingAddress = *r.BillingAddress
+	}
+	return
+}
+
+// The contact information used in the two-factor steps for digital wallet card
+// creation. At least one field must be present to complete the digital wallet
+// steps.
+func (r *UpdateACardParameters) GetDigitalWallet() (DigitalWallet UpdateACardParametersDigitalWallet) {
+	if r != nil && r.DigitalWallet != nil {
+		DigitalWallet = *r.DigitalWallet
+	}
+	return
 }
 
 type UpdateACardParametersStatus string
@@ -809,7 +1083,7 @@ type UpdateACardParametersBillingAddress struct {
 	// The first line of the billing address.
 	Line1 string `json:"line1"`
 	// The second line of the billing address.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the billing address.
 	City string `json:"city"`
 	// The US state of the billing address.
@@ -818,43 +1092,146 @@ type UpdateACardParametersBillingAddress struct {
 	PostalCode string `json:"postal_code"`
 }
 
+// The second line of the billing address.
+func (r *UpdateACardParametersBillingAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
+}
+
 //
 type UpdateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email string `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone string `json:"phone,omitempty"`
+	Phone *string `json:"phone,omitempty"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID string `json:"card_profile_id,omitempty"`
+	CardProfileID *string `json:"card_profile_id,omitempty"`
+}
+
+// An email address that can be used to verify the cardholder via one-time passcode
+// over email.
+func (r *UpdateACardParametersDigitalWallet) GetEmail() (Email string) {
+	if r != nil && r.Email != nil {
+		Email = *r.Email
+	}
+	return
+}
+
+// A phone number that can be used to verify the cardholder via one-time passcode
+// over SMS.
+func (r *UpdateACardParametersDigitalWallet) GetPhone() (Phone string) {
+	if r != nil && r.Phone != nil {
+		Phone = *r.Phone
+	}
+	return
+}
+
+// The card profile assigned to this digital card. Card profiles may also be
+// assigned at the program level.
+func (r *UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r != nil && r.CardProfileID != nil {
+		CardProfileID = *r.CardProfileID
+	}
+	return
 }
 
 type ListCardsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountID string                  `query:"account_id"`
-	CreatedAt ListCardsQueryCreatedAt `query:"created_at"`
+	AccountID *string                  `query:"account_id"`
+	CreatedAt *ListCardsQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListCardsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListCardsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Cards to ones belonging to the specified Account.
+func (r *ListCardsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+func (r *ListCardsQuery) GetCreatedAt() (CreatedAt ListCardsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListCardsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCardsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCardsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCardsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCardsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -978,33 +1355,109 @@ type CreateACardDisputeParameters struct {
 
 type ListCardDisputesQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     int                            `query:"limit"`
-	CreatedAt ListCardDisputesQueryCreatedAt `query:"created_at"`
-	Status    ListCardDisputesQueryStatus    `query:"status"`
+	Limit     *int                            `query:"limit"`
+	CreatedAt *ListCardDisputesQueryCreatedAt `query:"created_at"`
+	Status    *ListCardDisputesQueryStatus    `query:"status"`
+}
+
+// Return the page of entries after this one.
+func (r *ListCardDisputesQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListCardDisputesQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+func (r *ListCardDisputesQuery) GetCreatedAt() (CreatedAt ListCardDisputesQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
+}
+
+func (r *ListCardDisputesQuery) GetStatus() (Status ListCardDisputesQueryStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type ListCardDisputesQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCardDisputesQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCardDisputesQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCardDisputesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCardDisputesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 type ListCardDisputesQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In []ListCardDisputesQueryStatusIn `json:"in,omitempty"`
+	In *[]ListCardDisputesQueryStatusIn `json:"in,omitempty"`
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ListCardDisputesQueryStatus) GetIn() (In []ListCardDisputesQueryStatusIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
 }
 
 type ListCardDisputesQueryStatusIn string
@@ -1146,21 +1599,53 @@ type CreateACardProfileParameters struct {
 //
 type CreateACardProfileParametersDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple. The default is white.
-	TextColor CreateACardProfileParametersDigitalWalletsTextColor `json:"text_color,omitempty"`
+	TextColor *CreateACardProfileParametersDigitalWalletsTextColor `json:"text_color,omitempty"`
 	// A user-facing description for whoever is issuing the card.
 	IssuerName string `json:"issuer_name"`
 	// A user-facing description for the card itself.
 	CardDescription string `json:"card_description"`
 	// A website the user can visit to view and receive support for their card.
-	ContactWebsite string `json:"contact_website,omitempty"`
+	ContactWebsite *string `json:"contact_website,omitempty"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail string `json:"contact_email,omitempty"`
+	ContactEmail *string `json:"contact_email,omitempty"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone string `json:"contact_phone,omitempty"`
+	ContactPhone *string `json:"contact_phone,omitempty"`
 	// The identifier of the File containing the card's front image.
 	BackgroundImageFileID string `json:"background_image_file_id"`
 	// The identifier of the File containing the card's icon image.
 	AppIconFileID string `json:"app_icon_file_id"`
+}
+
+// The Card's text color, specified as an RGB triple. The default is white.
+func (r *CreateACardProfileParametersDigitalWallets) GetTextColor() (TextColor CreateACardProfileParametersDigitalWalletsTextColor) {
+	if r != nil && r.TextColor != nil {
+		TextColor = *r.TextColor
+	}
+	return
+}
+
+// A website the user can visit to view and receive support for their card.
+func (r *CreateACardProfileParametersDigitalWallets) GetContactWebsite() (ContactWebsite string) {
+	if r != nil && r.ContactWebsite != nil {
+		ContactWebsite = *r.ContactWebsite
+	}
+	return
+}
+
+// An email address the user can contact to receive support for their card.
+func (r *CreateACardProfileParametersDigitalWallets) GetContactEmail() (ContactEmail string) {
+	if r != nil && r.ContactEmail != nil {
+		ContactEmail = *r.ContactEmail
+	}
+	return
+}
+
+// A phone number the user can contact to receive support for their card.
+func (r *CreateACardProfileParametersDigitalWallets) GetContactPhone() (ContactPhone string) {
+	if r != nil && r.ContactPhone != nil {
+		ContactPhone = *r.ContactPhone
+	}
+	return
 }
 
 //
@@ -1175,17 +1660,50 @@ type CreateACardProfileParametersDigitalWalletsTextColor struct {
 
 type ListCardProfilesQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  int                         `query:"limit"`
-	Status ListCardProfilesQueryStatus `query:"status"`
+	Limit  *int                         `query:"limit"`
+	Status *ListCardProfilesQueryStatus `query:"status"`
+}
+
+// Return the page of entries after this one.
+func (r *ListCardProfilesQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListCardProfilesQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+func (r *ListCardProfilesQuery) GetStatus() (Status ListCardProfilesQueryStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type ListCardProfilesQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In []ListCardProfilesQueryStatusIn `json:"in,omitempty"`
+	In *[]ListCardProfilesQueryStatusIn `json:"in,omitempty"`
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ListCardProfilesQueryStatus) GetIn() (In []ListCardProfilesQueryStatusIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
 }
 
 type ListCardProfilesQueryStatusIn string
@@ -1270,9 +1788,17 @@ type CreateAnExternalAccountParameters struct {
 	// The account number for the destination account.
 	AccountNumber string `json:"account_number"`
 	// The type of the destination account. Defaults to `checking`.
-	Funding CreateAnExternalAccountParametersFunding `json:"funding,omitempty"`
+	Funding *CreateAnExternalAccountParametersFunding `json:"funding,omitempty"`
 	// The name you choose for the Account.
 	Description string `json:"description"`
+}
+
+// The type of the destination account. Defaults to `checking`.
+func (r *CreateAnExternalAccountParameters) GetFunding() (Funding CreateAnExternalAccountParametersFunding) {
+	if r != nil && r.Funding != nil {
+		Funding = *r.Funding
+	}
+	return
 }
 
 type CreateAnExternalAccountParametersFunding string
@@ -1285,15 +1811,40 @@ const (
 
 type UpdateAnExternalAccountParameters struct {
 	// The description you choose to give the external account.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
+
+// The description you choose to give the external account.
+func (r *UpdateAnExternalAccountParameters) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
 }
 
 type ListExternalAccountsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
+}
+
+// Return the page of entries after this one.
+func (r *ListExternalAccountsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListExternalAccountsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -1370,28 +1921,96 @@ const (
 
 type ListDigitalWalletTokensQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID    string                                `query:"card_id"`
-	CreatedAt ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
+	CardID    *string                                `query:"card_id"`
+	CreatedAt *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListDigitalWalletTokensQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Digital Wallet Tokens to ones belonging to the specified Card.
+func (r *ListDigitalWalletTokensQuery) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
+	}
+	return
+}
+
+func (r *ListDigitalWalletTokensQuery) GetCreatedAt() (CreatedAt ListDigitalWalletTokensQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListDigitalWalletTokensQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListDigitalWalletTokensQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListDigitalWalletTokensQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -3104,30 +3723,106 @@ const (
 
 type ListTransactionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Transactions for those belonging to the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route.
-	RouteID   string                         `query:"route_id"`
-	CreatedAt ListTransactionsQueryCreatedAt `query:"created_at"`
+	RouteID   *string                         `query:"route_id"`
+	CreatedAt *ListTransactionsQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListTransactionsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListTransactionsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Transactions for those belonging to the specified Account.
+func (r *ListTransactionsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+// Filter Transactions for those belonging to the specified route.
+func (r *ListTransactionsQuery) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
+	}
+	return
+}
+
+func (r *ListTransactionsQuery) GetCreatedAt() (CreatedAt ListTransactionsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListTransactionsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListTransactionsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListTransactionsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -3591,23 +4286,80 @@ const (
 
 type ListPendingTransactionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter pending transactions to those belonging to the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter pending transactions to those belonging to the specified Route.
-	RouteID string `query:"route_id"`
+	RouteID *string `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceID string                             `query:"source_id"`
-	Status   ListPendingTransactionsQueryStatus `query:"status"`
+	SourceID *string                             `query:"source_id"`
+	Status   *ListPendingTransactionsQueryStatus `query:"status"`
+}
+
+// Return the page of entries after this one.
+func (r *ListPendingTransactionsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListPendingTransactionsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter pending transactions to those belonging to the specified Account.
+func (r *ListPendingTransactionsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+// Filter pending transactions to those belonging to the specified Route.
+func (r *ListPendingTransactionsQuery) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
+	}
+	return
+}
+
+// Filter pending transactions to those caused by the specified source.
+func (r *ListPendingTransactionsQuery) GetSourceID() (SourceID string) {
+	if r != nil && r.SourceID != nil {
+		SourceID = *r.SourceID
+	}
+	return
+}
+
+func (r *ListPendingTransactionsQuery) GetStatus() (Status ListPendingTransactionsQueryStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type ListPendingTransactionsQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In []ListPendingTransactionsQueryStatusIn `json:"in,omitempty"`
+	In *[]ListPendingTransactionsQueryStatusIn `json:"in,omitempty"`
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ListPendingTransactionsQueryStatus) GetIn() (In []ListPendingTransactionsQueryStatusIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
 }
 
 type ListPendingTransactionsQueryStatusIn string
@@ -4249,30 +5001,106 @@ const (
 
 type ListDeclinedTransactionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Declined Transactions to ones belonging to the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteID   string                                 `query:"route_id"`
-	CreatedAt ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
+	RouteID   *string                                 `query:"route_id"`
+	CreatedAt *ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListDeclinedTransactionsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Declined Transactions to ones belonging to the specified Account.
+func (r *ListDeclinedTransactionsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+// Filter Declined Transactions to those belonging to the specified route.
+func (r *ListDeclinedTransactionsQuery) GetRouteID() (RouteID string) {
+	if r != nil && r.RouteID != nil {
+		RouteID = *r.RouteID
+	}
+	return
+}
+
+func (r *ListDeclinedTransactionsQuery) GetCreatedAt() (CreatedAt ListDeclinedTransactionsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListDeclinedTransactionsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListDeclinedTransactionsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListDeclinedTransactionsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -4381,12 +5209,20 @@ type CreateALimitParameters struct {
 	// The metric for the limit.
 	Metric CreateALimitParametersMetric `json:"metric"`
 	// The interval for the metric. Required if `metric` is `count` or `volume`.
-	Interval CreateALimitParametersInterval `json:"interval,omitempty"`
+	Interval *CreateALimitParametersInterval `json:"interval,omitempty"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
 	ModelID string `json:"model_id"`
 	// The value to test the limit against.
 	Value int `json:"value"`
+}
+
+// The interval for the metric. Required if `metric` is `count` or `volume`.
+func (r *CreateALimitParameters) GetInterval() (Interval CreateALimitParametersInterval) {
+	if r != nil && r.Interval != nil {
+		Interval = *r.Interval
+	}
+	return
 }
 
 type CreateALimitParametersMetric string
@@ -4421,14 +5257,47 @@ const (
 
 type ListLimitsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// The model to retrieve limits for.
-	ModelID string `query:"model_id"`
+	ModelID *string `query:"model_id"`
 	// The status to retrieve limits for.
-	Status string `query:"status"`
+	Status *string `query:"status"`
+}
+
+// Return the page of entries after this one.
+func (r *ListLimitsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListLimitsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// The model to retrieve limits for.
+func (r *ListLimitsQuery) GetModelID() (ModelID string) {
+	if r != nil && r.ModelID != nil {
+		ModelID = *r.ModelID
+	}
+	return
+}
+
+// The status to retrieve limits for.
+func (r *ListLimitsQuery) GetStatus() (Status string) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 //
@@ -4607,28 +5476,96 @@ type CreateAnAccountTransferParameters struct {
 
 type ListAccountTransfersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Account Transfers to those that originated from the specified Account.
-	AccountID string                             `query:"account_id"`
-	CreatedAt ListAccountTransfersQueryCreatedAt `query:"created_at"`
+	AccountID *string                             `query:"account_id"`
+	CreatedAt *ListAccountTransfersQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListAccountTransfersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListAccountTransfersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Account Transfers to those that originated from the specified Account.
+func (r *ListAccountTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+func (r *ListAccountTransfersQuery) GetCreatedAt() (CreatedAt ListAccountTransfersQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListAccountTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListAccountTransfersQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListAccountTransfersQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListAccountTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListAccountTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -4902,42 +5839,150 @@ type CreateAnACHTransferParameters struct {
 	// The identifier for the account that will send the transfer.
 	AccountID string `json:"account_id"`
 	// The account number for the destination account.
-	AccountNumber string `json:"account_number,omitempty"`
+	AccountNumber *string `json:"account_number,omitempty"`
 	// Additional information that will be sent to the recipient.
-	Addendum string `json:"addendum,omitempty"`
+	Addendum *string `json:"addendum,omitempty"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
 	Amount int `json:"amount"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate string `json:"company_descriptive_date,omitempty"`
+	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
 	// The data you choose to associate with the transfer.
-	CompanyDiscretionaryData string `json:"company_discretionary_data,omitempty"`
+	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
 	// The description of the transfer you wish to be shown to the recipient.
-	CompanyEntryDescription string `json:"company_entry_description,omitempty"`
+	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
 	// The name by which the recipient knows you.
-	CompanyName string `json:"company_name,omitempty"`
+	CompanyName *string `json:"company_name,omitempty"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate string `json:"effective_date,omitempty"`
+	EffectiveDate *string `json:"effective_date,omitempty"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
-	ExternalAccountID string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `json:"external_account_id,omitempty"`
 	// The type of the account to which the transfer will be sent.
-	Funding CreateAnACHTransferParametersFunding `json:"funding,omitempty"`
+	Funding *CreateAnACHTransferParametersFunding `json:"funding,omitempty"`
 	// Your identifer for the transfer recipient.
-	IndividualID string `json:"individual_id,omitempty"`
+	IndividualID *string `json:"individual_id,omitempty"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
-	IndividualName string `json:"individual_name,omitempty"`
+	IndividualName *string `json:"individual_name,omitempty"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber string `json:"routing_number,omitempty"`
+	RoutingNumber *string `json:"routing_number,omitempty"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
-	StandardEntryClassCode CreateAnACHTransferParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
+	StandardEntryClassCode *CreateAnACHTransferParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
 	// The description you choose to give the transfer. This will be shown to the
 	// recipient.
 	StatementDescriptor string `json:"statement_descriptor"`
+}
+
+// The account number for the destination account.
+func (r *CreateAnACHTransferParameters) GetAccountNumber() (AccountNumber string) {
+	if r != nil && r.AccountNumber != nil {
+		AccountNumber = *r.AccountNumber
+	}
+	return
+}
+
+// Additional information that will be sent to the recipient.
+func (r *CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
+	if r != nil && r.Addendum != nil {
+		Addendum = *r.Addendum
+	}
+	return
+}
+
+// The description of the date of the transfer.
+func (r *CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r != nil && r.CompanyDescriptiveDate != nil {
+		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
+	}
+	return
+}
+
+// The data you choose to associate with the transfer.
+func (r *CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r != nil && r.CompanyDiscretionaryData != nil {
+		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
+	}
+	return
+}
+
+// The description of the transfer you wish to be shown to the recipient.
+func (r *CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r != nil && r.CompanyEntryDescription != nil {
+		CompanyEntryDescription = *r.CompanyEntryDescription
+	}
+	return
+}
+
+// The name by which the recipient knows you.
+func (r *CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
+	if r != nil && r.CompanyName != nil {
+		CompanyName = *r.CompanyName
+	}
+	return
+}
+
+// The transfer effective date in
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+func (r *CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string) {
+	if r != nil && r.EffectiveDate != nil {
+		EffectiveDate = *r.EffectiveDate
+	}
+	return
+}
+
+// The ID of an External Account to initiate a transfer to. If this parameter is
+// provided, `account_number`, `routing_number`, and `funding` must be absent.
+func (r *CreateAnACHTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
+	}
+	return
+}
+
+// The type of the account to which the transfer will be sent.
+func (r *CreateAnACHTransferParameters) GetFunding() (Funding CreateAnACHTransferParametersFunding) {
+	if r != nil && r.Funding != nil {
+		Funding = *r.Funding
+	}
+	return
+}
+
+// Your identifer for the transfer recipient.
+func (r *CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) {
+	if r != nil && r.IndividualID != nil {
+		IndividualID = *r.IndividualID
+	}
+	return
+}
+
+// The name of the transfer recipient. This value is information and not verified
+// by the recipient's bank.
+func (r *CreateAnACHTransferParameters) GetIndividualName() (IndividualName string) {
+	if r != nil && r.IndividualName != nil {
+		IndividualName = *r.IndividualName
+	}
+	return
+}
+
+// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+// destination account.
+func (r *CreateAnACHTransferParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r != nil && r.RoutingNumber != nil {
+		RoutingNumber = *r.RoutingNumber
+	}
+	return
+}
+
+// The Standard Entry Class (SEC) code to use for the transfer.
+func (r *CreateAnACHTransferParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHTransferParametersStandardEntryClassCode) {
+	if r != nil && r.StandardEntryClassCode != nil {
+		StandardEntryClassCode = *r.StandardEntryClassCode
+	}
+	return
 }
 
 type CreateAnACHTransferParametersFunding string
@@ -4957,30 +6002,106 @@ const (
 
 type ListACHTransfersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter ACH Transfers to those that originated from the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter ACH Transfers to those made to the specified External Account.
-	ExternalAccountID string                         `query:"external_account_id"`
-	CreatedAt         ListACHTransfersQueryCreatedAt `query:"created_at"`
+	ExternalAccountID *string                         `query:"external_account_id"`
+	CreatedAt         *ListACHTransfersQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListACHTransfersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListACHTransfersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter ACH Transfers to those that originated from the specified Account.
+func (r *ListACHTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+// Filter ACH Transfers to those made to the specified External Account.
+func (r *ListACHTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
+	}
+	return
+}
+
+func (r *ListACHTransfersQuery) GetCreatedAt() (CreatedAt ListACHTransfersQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListACHTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListACHTransfersQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListACHTransfersQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListACHTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListACHTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -5148,30 +6269,112 @@ type CreateAnACHPrenotificationParameters struct {
 	// The account number for the destination account.
 	AccountNumber string `json:"account_number"`
 	// Additional information that will be sent to the recipient.
-	Addendum string `json:"addendum,omitempty"`
+	Addendum *string `json:"addendum,omitempty"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate string `json:"company_descriptive_date,omitempty"`
+	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
 	// The data you choose to associate with the transfer.
-	CompanyDiscretionaryData string `json:"company_discretionary_data,omitempty"`
+	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
 	// The description of the transfer you wish to be shown to the recipient.
-	CompanyEntryDescription string `json:"company_entry_description,omitempty"`
+	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
 	// The name by which the recipient knows you.
-	CompanyName string `json:"company_name,omitempty"`
+	CompanyName *string `json:"company_name,omitempty"`
 	// Whether the Prenotification is for a future debit or credit.
-	CreditDebitIndicator CreateAnACHPrenotificationParametersCreditDebitIndicator `json:"credit_debit_indicator,omitempty"`
+	CreditDebitIndicator *CreateAnACHPrenotificationParametersCreditDebitIndicator `json:"credit_debit_indicator,omitempty"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate string `json:"effective_date,omitempty"`
+	EffectiveDate *string `json:"effective_date,omitempty"`
 	// Your identifer for the transfer recipient.
-	IndividualID string `json:"individual_id,omitempty"`
+	IndividualID *string `json:"individual_id,omitempty"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
-	IndividualName string `json:"individual_name,omitempty"`
+	IndividualName *string `json:"individual_name,omitempty"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber string `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
-	StandardEntryClassCode CreateAnACHPrenotificationParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
+	StandardEntryClassCode *CreateAnACHPrenotificationParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
+}
+
+// Additional information that will be sent to the recipient.
+func (r *CreateAnACHPrenotificationParameters) GetAddendum() (Addendum string) {
+	if r != nil && r.Addendum != nil {
+		Addendum = *r.Addendum
+	}
+	return
+}
+
+// The description of the date of the transfer.
+func (r *CreateAnACHPrenotificationParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r != nil && r.CompanyDescriptiveDate != nil {
+		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
+	}
+	return
+}
+
+// The data you choose to associate with the transfer.
+func (r *CreateAnACHPrenotificationParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r != nil && r.CompanyDiscretionaryData != nil {
+		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
+	}
+	return
+}
+
+// The description of the transfer you wish to be shown to the recipient.
+func (r *CreateAnACHPrenotificationParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r != nil && r.CompanyEntryDescription != nil {
+		CompanyEntryDescription = *r.CompanyEntryDescription
+	}
+	return
+}
+
+// The name by which the recipient knows you.
+func (r *CreateAnACHPrenotificationParameters) GetCompanyName() (CompanyName string) {
+	if r != nil && r.CompanyName != nil {
+		CompanyName = *r.CompanyName
+	}
+	return
+}
+
+// Whether the Prenotification is for a future debit or credit.
+func (r *CreateAnACHPrenotificationParameters) GetCreditDebitIndicator() (CreditDebitIndicator CreateAnACHPrenotificationParametersCreditDebitIndicator) {
+	if r != nil && r.CreditDebitIndicator != nil {
+		CreditDebitIndicator = *r.CreditDebitIndicator
+	}
+	return
+}
+
+// The transfer effective date in
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+func (r *CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate string) {
+	if r != nil && r.EffectiveDate != nil {
+		EffectiveDate = *r.EffectiveDate
+	}
+	return
+}
+
+// Your identifer for the transfer recipient.
+func (r *CreateAnACHPrenotificationParameters) GetIndividualID() (IndividualID string) {
+	if r != nil && r.IndividualID != nil {
+		IndividualID = *r.IndividualID
+	}
+	return
+}
+
+// The name of the transfer recipient. This value is information and not verified
+// by the recipient's bank.
+func (r *CreateAnACHPrenotificationParameters) GetIndividualName() (IndividualName string) {
+	if r != nil && r.IndividualName != nil {
+		IndividualName = *r.IndividualName
+	}
+	return
+}
+
+// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+func (r *CreateAnACHPrenotificationParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHPrenotificationParametersStandardEntryClassCode) {
+	if r != nil && r.StandardEntryClassCode != nil {
+		StandardEntryClassCode = *r.StandardEntryClassCode
+	}
+	return
 }
 
 type CreateAnACHPrenotificationParametersCreditDebitIndicator string
@@ -5191,26 +6394,86 @@ const (
 
 type ListACHPrenotificationsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     int                                   `query:"limit"`
-	CreatedAt ListACHPrenotificationsQueryCreatedAt `query:"created_at"`
+	Limit     *int                                   `query:"limit"`
+	CreatedAt *ListACHPrenotificationsQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListACHPrenotificationsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListACHPrenotificationsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+func (r *ListACHPrenotificationsQuery) GetCreatedAt() (CreatedAt ListACHPrenotificationsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListACHPrenotificationsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListACHPrenotificationsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListACHPrenotificationsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -5455,53 +6718,187 @@ type CreateAWireTransferParameters struct {
 	// The identifier for the account that will send the transfer.
 	AccountID string `json:"account_id"`
 	// The account number for the destination account.
-	AccountNumber string `json:"account_number,omitempty"`
+	AccountNumber *string `json:"account_number,omitempty"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber string `json:"routing_number,omitempty"`
+	RoutingNumber *string `json:"routing_number,omitempty"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
-	ExternalAccountID string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `json:"external_account_id,omitempty"`
 	// The transfer amount in cents.
 	Amount int `json:"amount"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient"`
 	// The beneficiary's name.
-	BeneficiaryName string `json:"beneficiary_name,omitempty"`
+	BeneficiaryName *string `json:"beneficiary_name,omitempty"`
 	// The beneficiary's address line 1.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,omitempty"`
+	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1,omitempty"`
 	// The beneficiary's address line 2.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,omitempty"`
+	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2,omitempty"`
 	// The beneficiary's address line 3.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,omitempty"`
+	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3,omitempty"`
+}
+
+// The account number for the destination account.
+func (r *CreateAWireTransferParameters) GetAccountNumber() (AccountNumber string) {
+	if r != nil && r.AccountNumber != nil {
+		AccountNumber = *r.AccountNumber
+	}
+	return
+}
+
+// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+// destination account.
+func (r *CreateAWireTransferParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r != nil && r.RoutingNumber != nil {
+		RoutingNumber = *r.RoutingNumber
+	}
+	return
+}
+
+// The ID of an External Account to initiate a transfer to. If this parameter is
+// provided, `account_number` and `routing_number` must be absent.
+func (r *CreateAWireTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
+	}
+	return
+}
+
+// The beneficiary's name.
+func (r *CreateAWireTransferParameters) GetBeneficiaryName() (BeneficiaryName string) {
+	if r != nil && r.BeneficiaryName != nil {
+		BeneficiaryName = *r.BeneficiaryName
+	}
+	return
+}
+
+// The beneficiary's address line 1.
+func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r != nil && r.BeneficiaryAddressLine1 != nil {
+		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
+	}
+	return
+}
+
+// The beneficiary's address line 2.
+func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r != nil && r.BeneficiaryAddressLine2 != nil {
+		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
+	}
+	return
+}
+
+// The beneficiary's address line 3.
+func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r != nil && r.BeneficiaryAddressLine3 != nil {
+		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
+	}
+	return
 }
 
 type ListWireTransfersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Wire Transfers to those belonging to the specified Account.
-	AccountID string `query:"account_id"`
+	AccountID *string `query:"account_id"`
 	// Filter Wire Transfers to those made to the specified External Account.
-	ExternalAccountID string                          `query:"external_account_id"`
-	CreatedAt         ListWireTransfersQueryCreatedAt `query:"created_at"`
+	ExternalAccountID *string                          `query:"external_account_id"`
+	CreatedAt         *ListWireTransfersQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListWireTransfersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListWireTransfersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Wire Transfers to those belonging to the specified Account.
+func (r *ListWireTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+// Filter Wire Transfers to those made to the specified External Account.
+func (r *ListWireTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+	if r != nil && r.ExternalAccountID != nil {
+		ExternalAccountID = *r.ExternalAccountID
+	}
+	return
+}
+
+func (r *ListWireTransfersQuery) GetCreatedAt() (CreatedAt ListWireTransfersQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListWireTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListWireTransfersQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListWireTransfersQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListWireTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListWireTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -5709,7 +7106,7 @@ type CreateACheckTransferParameters struct {
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 string `json:"address_line2,omitempty"`
+	AddressLine2 *string `json:"address_line2,omitempty"`
 	// The city of the check's destination.
 	AddressCity string `json:"address_city"`
 	// The state of the check's destination.
@@ -5724,30 +7121,106 @@ type CreateACheckTransferParameters struct {
 	RecipientName string `json:"recipient_name"`
 }
 
+// The second line of the address of the check's destination.
+func (r *CreateACheckTransferParameters) GetAddressLine2() (AddressLine2 string) {
+	if r != nil && r.AddressLine2 != nil {
+		AddressLine2 = *r.AddressLine2
+	}
+	return
+}
+
 type ListCheckTransfersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID string                           `query:"account_id"`
-	CreatedAt ListCheckTransfersQueryCreatedAt `query:"created_at"`
+	AccountID *string                           `query:"account_id"`
+	CreatedAt *ListCheckTransfersQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListCheckTransfersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListCheckTransfersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Check Transfers to those that originated from the specified Account.
+func (r *ListCheckTransfersQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+func (r *ListCheckTransfersQuery) GetCreatedAt() (CreatedAt ListCheckTransfersQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListCheckTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCheckTransfersQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCheckTransfersQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCheckTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCheckTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -6353,22 +7826,74 @@ type CreateAnEntityParameters struct {
 	Structure CreateAnEntityParametersStructure `json:"structure"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
-	Corporation CreateAnEntityParametersCorporation `json:"corporation,omitempty"`
+	Corporation *CreateAnEntityParametersCorporation `json:"corporation,omitempty"`
 	// Details of the natural person entity to create. Required if `structure` is equal
 	// to `natural_person`.
-	NaturalPerson CreateAnEntityParametersNaturalPerson `json:"natural_person,omitempty"`
+	NaturalPerson *CreateAnEntityParametersNaturalPerson `json:"natural_person,omitempty"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
-	Joint CreateAnEntityParametersJoint `json:"joint,omitempty"`
+	Joint *CreateAnEntityParametersJoint `json:"joint,omitempty"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
-	Trust CreateAnEntityParametersTrust `json:"trust,omitempty"`
+	Trust *CreateAnEntityParametersTrust `json:"trust,omitempty"`
 	// The description you choose to give the entity.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// The relationship between your group and the entity.
 	Relationship CreateAnEntityParametersRelationship `json:"relationship"`
 	// Additional documentation associated with the entity.
-	SupplementalDocuments []CreateAnEntityParametersSupplementalDocuments `json:"supplemental_documents,omitempty"`
+	SupplementalDocuments *[]CreateAnEntityParametersSupplementalDocuments `json:"supplemental_documents,omitempty"`
+}
+
+// Details of the corporation entity to create. Required if `structure` is equal to
+// `corporation`.
+func (r *CreateAnEntityParameters) GetCorporation() (Corporation CreateAnEntityParametersCorporation) {
+	if r != nil && r.Corporation != nil {
+		Corporation = *r.Corporation
+	}
+	return
+}
+
+// Details of the natural person entity to create. Required if `structure` is equal
+// to `natural_person`.
+func (r *CreateAnEntityParameters) GetNaturalPerson() (NaturalPerson CreateAnEntityParametersNaturalPerson) {
+	if r != nil && r.NaturalPerson != nil {
+		NaturalPerson = *r.NaturalPerson
+	}
+	return
+}
+
+// Details of the joint entity to create. Required if `structure` is equal to
+// `joint`.
+func (r *CreateAnEntityParameters) GetJoint() (Joint CreateAnEntityParametersJoint) {
+	if r != nil && r.Joint != nil {
+		Joint = *r.Joint
+	}
+	return
+}
+
+// Details of the trust entity to create. Required if `structure` is equal to
+// `trust`.
+func (r *CreateAnEntityParameters) GetTrust() (Trust CreateAnEntityParametersTrust) {
+	if r != nil && r.Trust != nil {
+		Trust = *r.Trust
+	}
+	return
+}
+
+// The description you choose to give the entity.
+func (r *CreateAnEntityParameters) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// Additional documentation associated with the entity.
+func (r *CreateAnEntityParameters) GetSupplementalDocuments() (SupplementalDocuments []CreateAnEntityParametersSupplementalDocuments) {
+	if r != nil && r.SupplementalDocuments != nil {
+		SupplementalDocuments = *r.SupplementalDocuments
+	}
+	return
 }
 
 type CreateAnEntityParametersStructure string
@@ -6385,12 +7910,12 @@ type CreateAnEntityParametersCorporation struct {
 	// The legal name of the corporation.
 	Name string `json:"name"`
 	// The website of the corporation.
-	Website string `json:"website,omitempty"`
+	Website *string `json:"website,omitempty"`
 	// The Employer Identification Number (EIN) for the corporation.
 	TaxIdentifier string `json:"tax_identifier"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
-	IncorporationState string `json:"incorporation_state,omitempty"`
+	IncorporationState *string `json:"incorporation_state,omitempty"`
 	// The corporation's address.
 	Address CreateAnEntityParametersCorporationAddress `json:"address"`
 	// The identifying details of anyone controlling or owning 25% or more of the
@@ -6398,12 +7923,29 @@ type CreateAnEntityParametersCorporation struct {
 	BeneficialOwners []CreateAnEntityParametersCorporationBeneficialOwners `json:"beneficial_owners"`
 }
 
+// The website of the corporation.
+func (r *CreateAnEntityParametersCorporation) GetWebsite() (Website string) {
+	if r != nil && r.Website != nil {
+		Website = *r.Website
+	}
+	return
+}
+
+// The two-letter United States Postal Service (USPS) abbreviation for the
+// corporation's state of incorporation.
+func (r *CreateAnEntityParametersCorporation) GetIncorporationState() (IncorporationState string) {
+	if r != nil && r.IncorporationState != nil {
+		IncorporationState = *r.IncorporationState
+	}
+	return
+}
+
 //
 type CreateAnEntityParametersCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6413,13 +7955,29 @@ type CreateAnEntityParametersCorporationAddress struct {
 	Zip string `json:"zip"`
 }
 
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersCorporationAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
 	Individual CreateAnEntityParametersCorporationBeneficialOwnersIndividual `json:"individual"`
 	// This person's role or title within the entity.
-	CompanyTitle string `json:"company_title,omitempty"`
+	CompanyTitle *string `json:"company_title,omitempty"`
 	// Why this person is considered a beneficial owner of the entity.
 	Prong CreateAnEntityParametersCorporationBeneficialOwnersProng `json:"prong"`
+}
+
+// This person's role or title within the entity.
+func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetCompanyTitle() (CompanyTitle string) {
+	if r != nil && r.CompanyTitle != nil {
+		CompanyTitle = *r.CompanyTitle
+	}
+	return
 }
 
 //
@@ -6439,7 +7997,7 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress struct
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6447,6 +8005,14 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress struct
 	State string `json:"state"`
 	// The ZIP code of the address.
 	Zip string `json:"zip"`
+}
+
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
 }
 
 //
@@ -6458,7 +8024,16 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 	Number string `json:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport `json:"passport,omitempty"`
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) {
+	if r != nil && r.Passport != nil {
+		Passport = *r.Passport
+	}
+	return
 }
 
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -6503,7 +8078,7 @@ type CreateAnEntityParametersNaturalPersonAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6511,6 +8086,14 @@ type CreateAnEntityParametersNaturalPersonAddress struct {
 	State string `json:"state"`
 	// The ZIP code of the address.
 	Zip string `json:"zip"`
+}
+
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersNaturalPersonAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
 }
 
 //
@@ -6522,7 +8105,16 @@ type CreateAnEntityParametersNaturalPersonIdentification struct {
 	Number string `json:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport CreateAnEntityParametersNaturalPersonIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersNaturalPersonIdentificationPassport `json:"passport,omitempty"`
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+func (r *CreateAnEntityParametersNaturalPersonIdentification) GetPassport() (Passport CreateAnEntityParametersNaturalPersonIdentificationPassport) {
+	if r != nil && r.Passport != nil {
+		Passport = *r.Passport
+	}
+	return
 }
 
 type CreateAnEntityParametersNaturalPersonIdentificationMethod string
@@ -6546,9 +8138,17 @@ type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 //
 type CreateAnEntityParametersJoint struct {
 	// The name of the joint entity.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The two individuals that share control of the entity.
 	Individuals []CreateAnEntityParametersJointIndividuals `json:"individuals"`
+}
+
+// The name of the joint entity.
+func (r *CreateAnEntityParametersJoint) GetName() (Name string) {
+	if r != nil && r.Name != nil {
+		Name = *r.Name
+	}
+	return
 }
 
 type CreateAnEntityParametersJointIndividuals struct {
@@ -6567,7 +8167,7 @@ type CreateAnEntityParametersJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6575,6 +8175,14 @@ type CreateAnEntityParametersJointIndividualsAddress struct {
 	State string `json:"state"`
 	// The ZIP code of the address.
 	Zip string `json:"zip"`
+}
+
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersJointIndividualsAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
 }
 
 //
@@ -6586,7 +8194,16 @@ type CreateAnEntityParametersJointIndividualsIdentification struct {
 	Number string `json:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport CreateAnEntityParametersJointIndividualsIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersJointIndividualsIdentificationPassport `json:"passport,omitempty"`
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+func (r *CreateAnEntityParametersJointIndividualsIdentification) GetPassport() (Passport CreateAnEntityParametersJointIndividualsIdentificationPassport) {
+	if r != nil && r.Passport != nil {
+		Passport = *r.Passport
+	}
+	return
 }
 
 type CreateAnEntityParametersJointIndividualsIdentificationMethod string
@@ -6617,18 +8234,52 @@ type CreateAnEntityParametersTrust struct {
 	Category CreateAnEntityParametersTrustCategory `json:"category"`
 	// The Employer Identification Number (EIN) for the trust. Required if `category`
 	// is equal to `irrevocable`.
-	TaxIdentifier string `json:"tax_identifier,omitempty"`
+	TaxIdentifier *string `json:"tax_identifier,omitempty"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
 	// which the trust was formed.
-	FormationState string `json:"formation_state,omitempty"`
+	FormationState *string `json:"formation_state,omitempty"`
 	// The trust's address.
 	Address CreateAnEntityParametersTrustAddress `json:"address"`
 	// The identifier of the File containing the formation document of the trust.
-	FormationDocumentFileID string `json:"formation_document_file_id,omitempty"`
+	FormationDocumentFileID *string `json:"formation_document_file_id,omitempty"`
 	// The trustees of the trust.
 	Trustees []CreateAnEntityParametersTrustTrustees `json:"trustees"`
 	// The grantor of the trust. Required if `category` is equal to `revocable`.
-	Grantor CreateAnEntityParametersTrustGrantor `json:"grantor,omitempty"`
+	Grantor *CreateAnEntityParametersTrustGrantor `json:"grantor,omitempty"`
+}
+
+// The Employer Identification Number (EIN) for the trust. Required if `category`
+// is equal to `irrevocable`.
+func (r *CreateAnEntityParametersTrust) GetTaxIdentifier() (TaxIdentifier string) {
+	if r != nil && r.TaxIdentifier != nil {
+		TaxIdentifier = *r.TaxIdentifier
+	}
+	return
+}
+
+// The two-letter United States Postal Service (USPS) abbreviation for the state in
+// which the trust was formed.
+func (r *CreateAnEntityParametersTrust) GetFormationState() (FormationState string) {
+	if r != nil && r.FormationState != nil {
+		FormationState = *r.FormationState
+	}
+	return
+}
+
+// The identifier of the File containing the formation document of the trust.
+func (r *CreateAnEntityParametersTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
+	if r != nil && r.FormationDocumentFileID != nil {
+		FormationDocumentFileID = *r.FormationDocumentFileID
+	}
+	return
+}
+
+// The grantor of the trust. Required if `category` is equal to `revocable`.
+func (r *CreateAnEntityParametersTrust) GetGrantor() (Grantor CreateAnEntityParametersTrustGrantor) {
+	if r != nil && r.Grantor != nil {
+		Grantor = *r.Grantor
+	}
+	return
 }
 
 type CreateAnEntityParametersTrustCategory string
@@ -6643,7 +8294,7 @@ type CreateAnEntityParametersTrustAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6653,12 +8304,29 @@ type CreateAnEntityParametersTrustAddress struct {
 	Zip string `json:"zip"`
 }
 
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersTrustAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
+}
+
 type CreateAnEntityParametersTrustTrustees struct {
 	// The structure of the trustee.
 	Structure CreateAnEntityParametersTrustTrusteesStructure `json:"structure"`
 	// Details of the individual trustee. Required when the trustee `structure` is
 	// equal to `individual`.
-	Individual CreateAnEntityParametersTrustTrusteesIndividual `json:"individual,omitempty"`
+	Individual *CreateAnEntityParametersTrustTrusteesIndividual `json:"individual,omitempty"`
+}
+
+// Details of the individual trustee. Required when the trustee `structure` is
+// equal to `individual`.
+func (r *CreateAnEntityParametersTrustTrustees) GetIndividual() (Individual CreateAnEntityParametersTrustTrusteesIndividual) {
+	if r != nil && r.Individual != nil {
+		Individual = *r.Individual
+	}
+	return
 }
 
 type CreateAnEntityParametersTrustTrusteesStructure string
@@ -6684,7 +8352,7 @@ type CreateAnEntityParametersTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6692,6 +8360,14 @@ type CreateAnEntityParametersTrustTrusteesIndividualAddress struct {
 	State string `json:"state"`
 	// The ZIP code of the address.
 	Zip string `json:"zip"`
+}
+
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
 }
 
 //
@@ -6703,7 +8379,16 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentification struct {
 	Number string `json:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport `json:"passport,omitempty"`
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) {
+	if r != nil && r.Passport != nil {
+		Passport = *r.Passport
+	}
+	return
 }
 
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod string
@@ -6741,7 +8426,7 @@ type CreateAnEntityParametersTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 string `json:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 string `json:"line2,omitempty"`
+	Line2 *string `json:"line2,omitempty"`
 	// The city of the address.
 	City string `json:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
@@ -6749,6 +8434,14 @@ type CreateAnEntityParametersTrustGrantorAddress struct {
 	State string `json:"state"`
 	// The ZIP code of the address.
 	Zip string `json:"zip"`
+}
+
+// The second line of the address. This might be the floor or room number.
+func (r *CreateAnEntityParametersTrustGrantorAddress) GetLine2() (Line2 string) {
+	if r != nil && r.Line2 != nil {
+		Line2 = *r.Line2
+	}
+	return
 }
 
 //
@@ -6760,7 +8453,16 @@ type CreateAnEntityParametersTrustGrantorIdentification struct {
 	Number string `json:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport CreateAnEntityParametersTrustGrantorIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersTrustGrantorIdentificationPassport `json:"passport,omitempty"`
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+func (r *CreateAnEntityParametersTrustGrantorIdentification) GetPassport() (Passport CreateAnEntityParametersTrustGrantorIdentificationPassport) {
+	if r != nil && r.Passport != nil {
+		Passport = *r.Passport
+	}
+	return
 }
 
 type CreateAnEntityParametersTrustGrantorIdentificationMethod string
@@ -6796,10 +8498,27 @@ type CreateAnEntityParametersSupplementalDocuments struct {
 
 type ListEntitiesQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
+}
+
+// Return the page of entries after this one.
+func (r *ListEntitiesQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListEntitiesQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -6957,21 +8676,70 @@ type CreateAWireDrawdownRequestParameters struct {
 	// The drawdown request's recipient's routing number.
 	RecipientRoutingNumber string `json:"recipient_routing_number"`
 	// The drawdown request's recipient's name.
-	RecipientName string `json:"recipient_name,omitempty"`
+	RecipientName *string `json:"recipient_name,omitempty"`
 	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 string `json:"recipient_address_line1,omitempty"`
+	RecipientAddressLine1 *string `json:"recipient_address_line1,omitempty"`
 	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 string `json:"recipient_address_line2,omitempty"`
+	RecipientAddressLine2 *string `json:"recipient_address_line2,omitempty"`
 	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 string `json:"recipient_address_line3,omitempty"`
+	RecipientAddressLine3 *string `json:"recipient_address_line3,omitempty"`
+}
+
+// The drawdown request's recipient's name.
+func (r *CreateAWireDrawdownRequestParameters) GetRecipientName() (RecipientName string) {
+	if r != nil && r.RecipientName != nil {
+		RecipientName = *r.RecipientName
+	}
+	return
+}
+
+// Line 1 of the drawdown request's recipient's address.
+func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
+	if r != nil && r.RecipientAddressLine1 != nil {
+		RecipientAddressLine1 = *r.RecipientAddressLine1
+	}
+	return
+}
+
+// Line 2 of the drawdown request's recipient's address.
+func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
+	if r != nil && r.RecipientAddressLine2 != nil {
+		RecipientAddressLine2 = *r.RecipientAddressLine2
+	}
+	return
+}
+
+// Line 3 of the drawdown request's recipient's address.
+func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
+	if r != nil && r.RecipientAddressLine3 != nil {
+		RecipientAddressLine3 = *r.RecipientAddressLine3
+	}
+	return
 }
 
 type ListWireDrawdownRequestsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
+}
+
+// Return the page of entries after this one.
+func (r *ListWireDrawdownRequestsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -7080,35 +8848,119 @@ const (
 
 type ListEventsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID string                   `query:"associated_object_id"`
-	CreatedAt          ListEventsQueryCreatedAt `query:"created_at"`
-	Category           ListEventsQueryCategory  `query:"category"`
+	AssociatedObjectID *string                   `query:"associated_object_id"`
+	CreatedAt          *ListEventsQueryCreatedAt `query:"created_at"`
+	Category           *ListEventsQueryCategory  `query:"category"`
+}
+
+// Return the page of entries after this one.
+func (r *ListEventsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListEventsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Events to those belonging to the object with the provided identifier.
+func (r *ListEventsQuery) GetAssociatedObjectID() (AssociatedObjectID string) {
+	if r != nil && r.AssociatedObjectID != nil {
+		AssociatedObjectID = *r.AssociatedObjectID
+	}
+	return
+}
+
+func (r *ListEventsQuery) GetCreatedAt() (CreatedAt ListEventsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
+}
+
+func (r *ListEventsQuery) GetCategory() (Category ListEventsQueryCategory) {
+	if r != nil && r.Category != nil {
+		Category = *r.Category
+	}
+	return
 }
 
 type ListEventsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListEventsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListEventsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListEventsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListEventsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 type ListEventsQueryCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In []ListEventsQueryCategoryIn `json:"in,omitempty"`
+	In *[]ListEventsQueryCategoryIn `json:"in,omitempty"`
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ListEventsQueryCategory) GetIn() (In []ListEventsQueryCategoryIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
 }
 
 type ListEventsQueryCategoryIn string
@@ -7288,10 +9140,28 @@ type CreateAnEventSubscriptionParameters struct {
 	URL string `json:"url"`
 	// The key that will be used to sign webhooks. If no value is passed, a random
 	// string will be used as default.
-	SharedSecret string `json:"shared_secret,omitempty"`
+	SharedSecret *string `json:"shared_secret,omitempty"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory `json:"selected_event_category,omitempty"`
+	SelectedEventCategory *CreateAnEventSubscriptionParametersSelectedEventCategory `json:"selected_event_category,omitempty"`
+}
+
+// The key that will be used to sign webhooks. If no value is passed, a random
+// string will be used as default.
+func (r *CreateAnEventSubscriptionParameters) GetSharedSecret() (SharedSecret string) {
+	if r != nil && r.SharedSecret != nil {
+		SharedSecret = *r.SharedSecret
+	}
+	return
+}
+
+// If specified, this subscription will only receive webhooks for Events with the
+// specified `category`.
+func (r *CreateAnEventSubscriptionParameters) GetSelectedEventCategory() (SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory) {
+	if r != nil && r.SelectedEventCategory != nil {
+		SelectedEventCategory = *r.SelectedEventCategory
+	}
+	return
 }
 
 type CreateAnEventSubscriptionParametersSelectedEventCategory string
@@ -7344,7 +9214,15 @@ const (
 
 type UpdateAnEventSubscriptionParameters struct {
 	// The status to update the Event Subscription with.
-	Status UpdateAnEventSubscriptionParametersStatus `json:"status,omitempty"`
+	Status *UpdateAnEventSubscriptionParametersStatus `json:"status,omitempty"`
+}
+
+// The status to update the Event Subscription with.
+func (r *UpdateAnEventSubscriptionParameters) GetStatus() (Status UpdateAnEventSubscriptionParametersStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
 
 type UpdateAnEventSubscriptionParametersStatus string
@@ -7357,10 +9235,27 @@ const (
 
 type ListEventSubscriptionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
+}
+
+// Return the page of entries after this one.
+func (r *ListEventSubscriptionsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -7479,9 +9374,17 @@ type CreateAFileParameters struct {
 	// transfers for the multipart/form-data protocol.
 	File string `json:"file"`
 	// The description you choose to give the File.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// What the File will be used for in Increase's systems.
 	Purpose CreateAFileParametersPurpose `json:"purpose"`
+}
+
+// The description you choose to give the File.
+func (r *CreateAFileParameters) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
 }
 
 type CreateAFileParametersPurpose string
@@ -7500,33 +9403,109 @@ const (
 
 type ListFilesQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     int                     `query:"limit"`
-	CreatedAt ListFilesQueryCreatedAt `query:"created_at"`
-	Purpose   ListFilesQueryPurpose   `query:"purpose"`
+	Limit     *int                     `query:"limit"`
+	CreatedAt *ListFilesQueryCreatedAt `query:"created_at"`
+	Purpose   *ListFilesQueryPurpose   `query:"purpose"`
+}
+
+// Return the page of entries after this one.
+func (r *ListFilesQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListFilesQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+func (r *ListFilesQuery) GetCreatedAt() (CreatedAt ListFilesQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
+}
+
+func (r *ListFilesQuery) GetPurpose() (Purpose ListFilesQueryPurpose) {
+	if r != nil && r.Purpose != nil {
+		Purpose = *r.Purpose
+	}
+	return
 }
 
 type ListFilesQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListFilesQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListFilesQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListFilesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListFilesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 type ListFilesQueryPurpose struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In []ListFilesQueryPurposeIn `json:"in,omitempty"`
+	In *[]ListFilesQueryPurposeIn `json:"in,omitempty"`
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ListFilesQueryPurpose) GetIn() (In []ListFilesQueryPurposeIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
 }
 
 type ListFilesQueryPurposeIn string
@@ -7644,10 +9623,27 @@ const (
 
 type ListOauthConnectionsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
+}
+
+// Return the page of entries after this one.
+func (r *ListOauthConnectionsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListOauthConnectionsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -7924,28 +9920,96 @@ type CreateACheckDepositParameters struct {
 
 type ListCheckDepositsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Check Deposits to those belonging to the specified Account.
-	AccountID string                          `query:"account_id"`
-	CreatedAt ListCheckDepositsQueryCreatedAt `query:"created_at"`
+	AccountID *string                          `query:"account_id"`
+	CreatedAt *ListCheckDepositsQueryCreatedAt `query:"created_at"`
+}
+
+// Return the page of entries after this one.
+func (r *ListCheckDepositsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListCheckDepositsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Check Deposits to those belonging to the specified Account.
+func (r *ListCheckDepositsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+func (r *ListCheckDepositsQuery) GetCreatedAt() (CreatedAt ListCheckDepositsQueryCreatedAt) {
+	if r != nil && r.CreatedAt != nil {
+		CreatedAt = *r.CreatedAt
+	}
+	return
 }
 
 type ListCheckDepositsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCheckDepositsQueryCreatedAt) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListCheckDepositsQueryCreatedAt) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCheckDepositsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListCheckDepositsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -8026,12 +10090,29 @@ const (
 
 type ListRoutingNumbersQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter financial institutions by routing number.
 	RoutingNumber string `query:"routing_number,omitempty"`
+}
+
+// Return the page of entries after this one.
+func (r *ListRoutingNumbersQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListRoutingNumbersQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
 }
 
 //
@@ -8100,28 +10181,96 @@ const (
 
 type ListAccountStatementsQuery struct {
 	// Return the page of entries after this one.
-	Cursor string `query:"cursor"`
+	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit int `query:"limit"`
+	Limit *int `query:"limit"`
 	// Filter Account Statements to those belonging to the specified Account.
-	AccountID            string                                         `query:"account_id"`
-	StatementPeriodStart ListAccountStatementsQueryStatementPeriodStart `query:"statement_period_start"`
+	AccountID            *string                                         `query:"account_id"`
+	StatementPeriodStart *ListAccountStatementsQueryStatementPeriodStart `query:"statement_period_start"`
+}
+
+// Return the page of entries after this one.
+func (r *ListAccountStatementsQuery) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *ListAccountStatementsQuery) GetLimit() (Limit int) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+// Filter Account Statements to those belonging to the specified Account.
+func (r *ListAccountStatementsQuery) GetAccountID() (AccountID string) {
+	if r != nil && r.AccountID != nil {
+		AccountID = *r.AccountID
+	}
+	return
+}
+
+func (r *ListAccountStatementsQuery) GetStatementPeriodStart() (StatementPeriodStart ListAccountStatementsQueryStatementPeriodStart) {
+	if r != nil && r.StatementPeriodStart != nil {
+		StatementPeriodStart = *r.StatementPeriodStart
+	}
+	return
 }
 
 type ListAccountStatementsQueryStatementPeriodStart struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After string `json:"after,omitempty"`
+	After *string `json:"after,omitempty"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before string `json:"before,omitempty"`
+	Before *string `json:"before,omitempty"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `json:"on_or_after,omitempty"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore string `json:"on_or_before,omitempty"`
+	OnOrBefore *string `json:"on_or_before,omitempty"`
+}
+
+// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListAccountStatementsQueryStatementPeriodStart) GetAfter() (After string) {
+	if r != nil && r.After != nil {
+		After = *r.After
+	}
+	return
+}
+
+// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+// timestamp.
+func (r *ListAccountStatementsQueryStatementPeriodStart) GetBefore() (Before string) {
+	if r != nil && r.Before != nil {
+		Before = *r.Before
+	}
+	return
+}
+
+// Return results on or after this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
+	if r != nil && r.OnOrAfter != nil {
+		OnOrAfter = *r.OnOrAfter
+	}
+	return
+}
+
+// Return results on or before this
+// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
+	if r != nil && r.OnOrBefore != nil {
+		OnOrBefore = *r.OnOrBefore
+	}
+	return
 }
 
 //
@@ -10489,7 +12638,15 @@ type SimulatesAdvancingTheStateOfACardDisputeParameters struct {
 	// The status to move the dispute to.
 	Status SimulatesAdvancingTheStateOfACardDisputeParametersStatus `json:"status"`
 	// Why the dispute was rejected. Not required for accepting disputes.
-	Explanation string `json:"explanation,omitempty"`
+	Explanation *string `json:"explanation,omitempty"`
+}
+
+// Why the dispute was rejected. Not required for accepting disputes.
+func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) GetExplanation() (Explanation string) {
+	if r != nil && r.Explanation != nil {
+		Explanation = *r.Explanation
+	}
+	return
 }
 
 type SimulatesAdvancingTheStateOfACardDisputeParametersStatus string
@@ -13320,9 +15477,25 @@ type SimulateAnAuthorizationOnACardParameters struct {
 	// The authorization amount in cents.
 	Amount int `json:"amount"`
 	// The identifier of the Card to be authorized.
-	CardID string `json:"card_id,omitempty"`
+	CardID *string `json:"card_id,omitempty"`
 	// The identifier of the Digital Wallet Token to be authorized.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,omitempty"`
+	DigitalWalletTokenID *string `json:"digital_wallet_token_id,omitempty"`
+}
+
+// The identifier of the Card to be authorized.
+func (r *SimulateAnAuthorizationOnACardParameters) GetCardID() (CardID string) {
+	if r != nil && r.CardID != nil {
+		CardID = *r.CardID
+	}
+	return
+}
+
+// The identifier of the Digital Wallet Token to be authorized.
+func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r != nil && r.DigitalWalletTokenID != nil {
+		DigitalWalletTokenID = *r.DigitalWalletTokenID
+	}
+	return
 }
 
 type SimulateSettlingACardAuthorizationParameters struct {
@@ -13333,7 +15506,16 @@ type SimulateSettlingACardAuthorizationParameters struct {
 	PendingTransactionID string `json:"pending_transaction_id"`
 	// The amount to be settled. This defaults to the amount of the Pending Transaction
 	// being settled.
-	Amount int `json:"amount,omitempty"`
+	Amount *int `json:"amount,omitempty"`
+}
+
+// The amount to be settled. This defaults to the amount of the Pending Transaction
+// being settled.
+func (r *SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int) {
+	if r != nil && r.Amount != nil {
+		Amount = *r.Amount
+	}
+	return
 }
 
 //
