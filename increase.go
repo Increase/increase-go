@@ -35,6 +35,7 @@ type Increase struct {
 	AccountTransfers     *services.AccountTransferService
 	ACHTransfers         *services.ACHTransferService
 	ACHPrenotifications  *services.ACHPrenotificationService
+	Documents            *services.DocumentService
 	WireTransfers        *services.WireTransferService
 	CheckTransfers       *services.CheckTransferService
 	Entities             *services.EntityService
@@ -101,6 +102,8 @@ func NewIncreaseWithOptions(p ClientOptions) (r *Increase) {
 	r.ACHTransfers = services.NewACHTransferService(r.Requester)
 
 	r.ACHPrenotifications = services.NewACHPrenotificationService(r.Requester)
+
+	r.Documents = services.NewDocumentService(r.Requester)
 
 	r.WireTransfers = services.NewWireTransferService(r.Requester)
 

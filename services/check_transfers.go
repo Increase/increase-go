@@ -70,6 +70,32 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.ListCheckT
 	return
 }
 
+func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/check_transfers/%s/approve", check_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/check_transfers/%s/cancel", check_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
 func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,

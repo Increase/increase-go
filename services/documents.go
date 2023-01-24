@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"increase/core"
+	"increase/pagination"
 	"increase/types"
 )
 
-type SimulationsAccountTransferService struct {
+type DocumentService struct {
 	Requester core.Requester
 	get       func(context.Context, string, *core.CoreRequest, interface{}) error
 	post      func(context.Context, string, *core.CoreRequest, interface{}) error
@@ -16,8 +17,8 @@ type SimulationsAccountTransferService struct {
 	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewSimulationsAccountTransferService(requester core.Requester) (r *SimulationsAccountTransferService) {
-	r = &SimulationsAccountTransferService{}
+func NewDocumentService(requester core.Requester) (r *DocumentService) {
+	r = &DocumentService{}
 	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
@@ -27,19 +28,30 @@ func NewSimulationsAccountTransferService(requester core.Requester) (r *Simulati
 	return
 }
 
-// If your account is configured to require approval for each transfer, this
-// endpoint simulates the approval of an [Account Transfer](#account-transfers).
-// You can also approve sandbox Account Transfers in the dashboard. This transfer
-// must first have a `status` of `pending_approval`.
-func (r *SimulationsAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.post(
+func (r *DocumentService) Retrieve(ctx context.Context, document_id string, opts ...*core.RequestOpts) (res *types.Document, err error) {
+	err = r.get(
 		ctx,
-		fmt.Sprintf("/simulations/account_transfers/%s/complete", account_transfer_id),
+		fmt.Sprintf("/documents/%s", document_id),
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
 		},
 		&res,
 	)
 
+	return
+}
+
+func (r *DocumentService) List(ctx context.Context, query *types.ListDocumentsQuery, opts ...*core.RequestOpts) (res *types.DocumentsPage, err error) {
+	page := &types.DocumentsPage{
+		Page: &pagination.Page[types.Document]{
+			Options: pagination.PageOptions{
+				RequestParams: query,
+				Path:          "/documents",
+			},
+			Requester: r.Requester,
+			Context:   ctx,
+		},
+	}
+	res, err = page.GetNextPage()
 	return
 }

@@ -27,8 +27,24 @@ func NewSimulationsCheckTransferService(requester core.Requester) (r *Simulation
 	return
 }
 
-// Simulates the mailing of a Check Transfer. This transfer must first have a
-// `status` of `pending_approval` or `pending_submission`.
+// Simulates a [Check Transfer](#check-transfers) being deposited at a bank. This
+// transfer must first have a `status` of `mailed`.
+func (r *SimulationsCheckTransferService) Deposit(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/simulations/check_transfers/%s/deposit", check_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+// Simulates the mailing of a [Check Transfer](#check-transfers), which happens
+// once per weekday in production but can be sped up in sandbox. This transfer must
+// first have a `status` of `pending_approval` or `pending_submission`.
 func (r *SimulationsCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,

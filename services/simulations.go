@@ -16,7 +16,9 @@ type SimulationService struct {
 	AccountStatements          *SimulationsAccountStatementService
 	ACHTransfers               *SimulationsACHTransferService
 	CardDisputes               *SimulationsCardDisputeService
+	CardRefunds                *SimulationsCardRefundService
 	CheckTransfers             *SimulationsCheckTransferService
+	Documents                  *SimulationsDocumentService
 	DigitalWalletTokenRequests *SimulationsDigitalWalletTokenRequestService
 	CheckDeposits              *SimulationsCheckDepositService
 	WireTransfers              *SimulationsWireTransferService
@@ -36,7 +38,9 @@ func NewSimulationService(requester core.Requester) (r *SimulationService) {
 	r.AccountStatements = NewSimulationsAccountStatementService(requester)
 	r.ACHTransfers = NewSimulationsACHTransferService(requester)
 	r.CardDisputes = NewSimulationsCardDisputeService(requester)
+	r.CardRefunds = NewSimulationsCardRefundService(requester)
 	r.CheckTransfers = NewSimulationsCheckTransferService(requester)
+	r.Documents = NewSimulationsDocumentService(requester)
 	r.DigitalWalletTokenRequests = NewSimulationsDigitalWalletTokenRequestService(requester)
 	r.CheckDeposits = NewSimulationsCheckDepositService(requester)
 	r.WireTransfers = NewSimulationsWireTransferService(requester)

@@ -15,7 +15,7 @@ func TestWireDrawdownRequestsCreateWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.WireDrawdownRequests.Create(context.TODO(), &types.CreateAWireDrawdownRequestParameters{AccountNumberID: increase.P("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.P(10000), MessageToRecipient: increase.P("Invoice 29582"), RecipientAccountNumber: increase.P("987654321"), RecipientRoutingNumber: increase.P("101050001")})
+	_, err := c.WireDrawdownRequests.Create(context.TODO(), &types.CreateAWireDrawdownRequestParameters{AccountNumberID: increase.P("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.P(10000), MessageToRecipient: increase.P("Invoice 29582"), RecipientAccountNumber: increase.P("987654321"), RecipientRoutingNumber: increase.P("101050001"), RecipientName: increase.P("Ian Crease")})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

@@ -69,3 +69,29 @@ func (r *AccountTransferService) List(ctx context.Context, query *types.ListAcco
 	res, err = page.GetNextPage()
 	return
 }
+
+func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/account_transfers/%s/approve", account_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/account_transfers/%s/cancel", account_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}

@@ -27,10 +27,12 @@ func NewSimulationsACHTransferService(requester core.Requester) (r *SimulationsA
 	return
 }
 
-// Simulates an inbound ACH transfer to your account. The transfer may be either a
-// credit or a debit depending on if the `amount` is positive or negative. This
-// will result in either a Transaction or a Declined Transaction depending on if
-// the transfer is allowed.
+// Simulates an inbound ACH transfer to your account. This imitates initiating a
+// transaction to an Increase account from a different financial institution. The
+// transfer may be either a credit or a debit depending on if the `amount` is
+// positive or negative. The result of calling this API will be either a
+// [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
+// depending on whether or not the transfer is allowed.
 func (r *SimulationsACHTransferService) CreateInbound(ctx context.Context, body *types.SimulateAnACHTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.ACHTransferSimulation, err error) {
 	err = r.post(
 		ctx,
@@ -45,15 +47,16 @@ func (r *SimulationsACHTransferService) CreateInbound(ctx context.Context, body 
 	return
 }
 
-// Simulates the return of an ACH Transfer by the Federal Reserve due to error
-// conditions. This will also create a Transaction to account for the returned
-// funds. This transfer must first have a `status` of `submitted`.
-func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
+// Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve
+// due to an error condition. This will also create a Transaction to account for
+// the returned funds. This transfer must first have a `status` of `submitted`.
+func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *types.ReturnASandboxACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.post(
 		ctx,
 		fmt.Sprintf("/simulations/ach_transfers/%s/return", ach_transfer_id),
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
+			Body:   body,
 		},
 		&res,
 	)
@@ -61,9 +64,12 @@ func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer
 	return
 }
 
-// Simulates the submission of an ACH Transfer to the Federal Reserve. This
-// transfer must first have a `status` of `pending_approval` or
-// `pending_submission`.
+// Simulates the submission of an [ACH Transfer](#ach-transfers) to the Federal
+// Reserve. This transfer must first have a `status` of `pending_approval` or
+// `pending_submission`. In production, Increase submits ACH Transfers to the
+// Federal Reserve three times per day on weekdays. Since sandbox ACH Transfers are
+// not submitted to the Federal Reserve, this endpoint allows you to skip that
+// delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationsACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.post(
 		ctx,

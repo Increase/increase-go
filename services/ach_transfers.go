@@ -69,3 +69,29 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ListACHTrans
 	res, err = page.GetNextPage()
 	return
 }
+
+func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/ach_transfers/%s/approve", ach_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/ach_transfers/%s/cancel", ach_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}

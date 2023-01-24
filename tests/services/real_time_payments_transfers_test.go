@@ -9,7 +9,7 @@ import (
 	"increase/types"
 )
 
-func TestRealTimePaymentsTransfersCreateInbound(t *testing.T) {
+func TestRealTimePaymentsTransfersCreateInboundWithOptionalParams(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",

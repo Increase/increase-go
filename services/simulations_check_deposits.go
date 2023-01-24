@@ -27,8 +27,9 @@ func NewSimulationsCheckDepositService(requester core.Requester) (r *Simulations
 	return
 }
 
-// Simulates the rejection of a Check Deposit by Increase due to factors like poor
-// image quality. This Check Deposit must first have a `status` of `pending`.
+// Simulates the rejection of a [Check Deposit](#check-deposits) by Increase due to
+// factors like poor image quality. This Check Deposit must first have a `status`
+// of `pending`.
 func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
 	err = r.post(
 		ctx,
@@ -42,8 +43,8 @@ func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_depos
 	return
 }
 
-// Simulates the submission of a Check Deposit to the Federal Reserve. This Check
-// Deposit must first have a `status` of `pending`.
+// Simulates the submission of a [Check Deposit](#check-deposits) to the Federal
+// Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
 	err = r.post(
 		ctx,

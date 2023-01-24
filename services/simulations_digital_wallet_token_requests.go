@@ -26,8 +26,9 @@ func NewSimulationsDigitalWalletTokenRequestService(requester core.Requester) (r
 	return
 }
 
-// Simulates a user attempting add a Card to a digital wallet such as Apple Pay.
-func (r *SimulationsDigitalWalletTokenRequestService) Create(ctx context.Context, body *types.SimulateDigitalWalletActivityOnACardParameters, opts ...*core.RequestOpts) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
+// Simulates a user attempting add a [Card](#cards) to a digital wallet such as
+// Apple Pay.
+func (r *SimulationsDigitalWalletTokenRequestService) Create(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...*core.RequestOpts) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
 	err = r.post(
 		ctx,
 		"/simulations/digital_wallet_token_requests",

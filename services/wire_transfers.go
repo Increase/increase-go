@@ -70,9 +70,36 @@ func (r *WireTransferService) List(ctx context.Context, query *types.ListWireTra
 	return
 }
 
-// Simulates the reversal of an Wire Transfer by the Federal Reserve due to error
-// conditions. This will also create a Transaction to account for the returned
-// funds. This transfer must first have a `status` of `complete`.
+func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/wire_transfers/%s/approve", wire_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
+	err = r.post(
+		ctx,
+		fmt.Sprintf("/wire_transfers/%s/cancel", wire_transfer_id),
+		&core.CoreRequest{
+			Params: core.MergeRequestOpts(opts...),
+		},
+		&res,
+	)
+
+	return
+}
+
+// Simulates the reversal of a [Wire Transfer](#wire-transfers) by the Federal
+// Reserve due to error conditions. This will also create a
+// [Transaction](#transaction) to account for the returned funds. This Wire
+// Transfer must first have a `status` of `complete`.'
 func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -86,8 +113,9 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 	return
 }
 
-// Simulates the submission of a Wire Transfer to the Federal Reserve. This
-// transfer must first have a `status` of `pending_approval` or `pending_creating`.
+// Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
+// Reserve. This transfer must first have a `status` of `pending_approval` or
+// `pending_creating`.
 func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.post(
 		ctx,

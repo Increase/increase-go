@@ -6,7 +6,7 @@ import (
 	"increase/types"
 )
 
-type SimulationsAccountStatementService struct {
+type SimulationsDocumentService struct {
 	Requester core.Requester
 	get       func(context.Context, string, *core.CoreRequest, interface{}) error
 	post      func(context.Context, string, *core.CoreRequest, interface{}) error
@@ -15,8 +15,8 @@ type SimulationsAccountStatementService struct {
 	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewSimulationsAccountStatementService(requester core.Requester) (r *SimulationsAccountStatementService) {
-	r = &SimulationsAccountStatementService{}
+func NewSimulationsDocumentService(requester core.Requester) (r *SimulationsDocumentService) {
+	r = &SimulationsDocumentService{}
 	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
@@ -26,12 +26,11 @@ func NewSimulationsAccountStatementService(requester core.Requester) (r *Simulat
 	return
 }
 
-// Simulates an [Account Statement](#account-statements) being created for an
-// account. In production, Account Statements are generated once per month.
-func (r *SimulationsAccountStatementService) Create(ctx context.Context, body *types.SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.AccountStatement, err error) {
+// Simulates an tax document being created for an account.
+func (r *SimulationsDocumentService) Create(ctx context.Context, body *types.SimulateATaxDocumentBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.Document, err error) {
 	err = r.post(
 		ctx,
-		"/simulations/account_statements",
+		"/simulations/documents",
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
 			Body:   body,

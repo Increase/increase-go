@@ -6,7 +6,7 @@ import (
 	"increase/types"
 )
 
-type SimulationsAccountStatementService struct {
+type SimulationsCardRefundService struct {
 	Requester core.Requester
 	get       func(context.Context, string, *core.CoreRequest, interface{}) error
 	post      func(context.Context, string, *core.CoreRequest, interface{}) error
@@ -15,8 +15,8 @@ type SimulationsAccountStatementService struct {
 	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
 }
 
-func NewSimulationsAccountStatementService(requester core.Requester) (r *SimulationsAccountStatementService) {
-	r = &SimulationsAccountStatementService{}
+func NewSimulationsCardRefundService(requester core.Requester) (r *SimulationsCardRefundService) {
+	r = &SimulationsCardRefundService{}
 	r.Requester = requester
 	r.get = r.Requester.Get
 	r.post = r.Requester.Post
@@ -26,12 +26,12 @@ func NewSimulationsAccountStatementService(requester core.Requester) (r *Simulat
 	return
 }
 
-// Simulates an [Account Statement](#account-statements) being created for an
-// account. In production, Account Statements are generated once per month.
-func (r *SimulationsAccountStatementService) Create(ctx context.Context, body *types.SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.AccountStatement, err error) {
+// Simulates refunding a card transaction. The full value of the original sandbox
+// transaction is refunded.
+func (r *SimulationsCardRefundService) Create(ctx context.Context, body *types.SimulateARefundOnACardParameters, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
 	err = r.post(
 		ctx,
-		"/simulations/account_statements",
+		"/simulations/card_refunds",
 		&core.CoreRequest{
 			Params: core.MergeRequestOpts(opts...),
 			Body:   body,

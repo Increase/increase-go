@@ -9,7 +9,7 @@ import (
 	"increase/types"
 )
 
-func TestACHTransfersCreateInbound(t *testing.T) {
+func TestACHTransfersCreateInboundWithOptionalParams(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
@@ -20,13 +20,17 @@ func TestACHTransfersCreateInbound(t *testing.T) {
 	}
 }
 
-func TestACHTransfersReturn(t *testing.T) {
+func TestACHTransfersReturnWithOptionalParams(t *testing.T) {
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ACHTransfers.Simulations.Return(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	_, err := c.ACHTransfers.Simulations.Return(
+		context.TODO(),
+		"ach_transfer_uoxatyh3lt5evrsdvo7q",
+		&types.ReturnASandboxACHTransferParameters{},
+	)
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

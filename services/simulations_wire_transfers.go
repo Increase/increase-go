@@ -26,7 +26,7 @@ func NewSimulationsWireTransferService(requester core.Requester) (r *Simulations
 	return
 }
 
-// Simulates an inbound Wire transfer to your account.
+// Simulates an inbound Wire Transfer to your account.
 func (r *SimulationsWireTransferService) CreateInbound(ctx context.Context, body *types.SimulateAWireTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.WireTransferSimulation, err error) {
 	err = r.post(
 		ctx,
