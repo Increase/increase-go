@@ -1,7 +1,9 @@
 package services
 
-import "context"
-import "increase/core"
+import (
+	"context"
+	"increase/core"
+)
 
 type SimulationService struct {
 	Requester                  core.Requester

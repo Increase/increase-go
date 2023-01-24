@@ -1,9 +1,11 @@
 package increase
 
-import "context"
-import "increase/core"
-import "increase/services"
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"increase/core"
+	"increase/services"
+)
 
 type RequestOpts = core.RequestOpts
 

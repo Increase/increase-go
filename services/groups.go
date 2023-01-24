@@ -1,8 +1,10 @@
 package services
 
-import "context"
-import "increase/core"
-import "increase/types"
+import (
+	"context"
+	"increase/core"
+	"increase/types"
+)
 
 type GroupService struct {
 	Requester core.Requester

@@ -68,7 +68,7 @@ func (c *CoreClient) FillDefaultHeaders(req *http.Request) {
 	}
 }
 
-func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, body interface{}) error {
+func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, responseBody interface{}) error {
 	cr.Params.Path = CoalesceStrings(cr.Params.Path, path)
 	cr.LoadDefaults(c)
 
@@ -76,6 +76,7 @@ func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, 
 
 	c.FillDefaultHeaders(req)
 
+	cr.Params.URL = fmt.Sprintf("%s%s", c.BaseURL, path)
 	cr.FillRequestURL(req, c.BaseURL)
 	cr.FillRequestBody(req)
 	cr.FillRequestHeaders()
@@ -107,7 +108,7 @@ func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, 
 		if err != nil {
 			return fmt.Errorf("error extracting response text: %w", err)
 		}
-		body = text
+		responseBody = text
 		return nil
 	}
 
@@ -125,7 +126,7 @@ func (c *CoreClient) Request(ctx context.Context, path string, cr *CoreRequest, 
 		return err
 	}
 	if deserialize := cr.Params.DeserializeReturnValue; deserialize == nil || *deserialize {
-		if err := parseJSON(&body); err != nil {
+		if err := parseJSON(&responseBody); err != nil {
 			return err
 		}
 	}

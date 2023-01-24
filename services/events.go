@@ -1,10 +1,12 @@
 package services
 
-import "context"
-import "increase/core"
-import "increase/types"
-import "fmt"
-import "increase/pagination"
+import (
+	"context"
+	"fmt"
+	"increase/core"
+	"increase/pagination"
+	"increase/types"
+)
 
 type EventService struct {
 	Requester core.Requester

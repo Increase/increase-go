@@ -1,9 +1,11 @@
 package services
 
-import "context"
-import "increase/core"
-import "increase/types"
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"increase/core"
+	"increase/types"
+)
 
 type RealTimeDecisionService struct {
 	Requester core.Requester

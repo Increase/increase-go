@@ -1,9 +1,11 @@
 package services
 
-import "context"
-import "increase/core"
-import "increase/types"
-import "increase/pagination"
+import (
+	"context"
+	"increase/core"
+	"increase/pagination"
+	"increase/types"
+)
 
 type RoutingNumberService struct {
 	Requester core.Requester

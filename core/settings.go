@@ -13,7 +13,7 @@ type environmentField struct {
 }
 
 func (field environmentField) tag(name string) (string, bool) {
-	return field.t.Tag.Lookup("env")
+	return field.t.Tag.Lookup(name)
 }
 
 func (field environmentField) mustTag(name string) string {
@@ -34,20 +34,21 @@ func (field environmentField) checkEnv() (value string, exists bool) {
 
 func (field environmentField) store(value string) error {
 	var parsed interface{}
-	if field.v.Kind() == reflect.String {
-		// field is a string, incoming is a string (happy path)
-		field.v.Set(reflect.ValueOf(value))
-		return nil
-	}
-	err := json.Unmarshal([]byte(value), &parsed)
-	if err != nil {
-		// unmarshal failure
-		return fmt.Errorf("error while parsing env variable %s: %w", field.mustTag("env"), err)
-	}
-	pv := reflect.ValueOf(parsed)
-	if pv.Kind() != field.v.Kind() {
-		// type mismatch
-		return fmt.Errorf("Unexpectedly found type %v (wanted %s) when parsing %s", pv.Kind().String(), field.v.Kind().String(), value)
+	var pv reflect.Value
+	if field.v.Kind() != reflect.String {
+		err := json.Unmarshal([]byte(value), &parsed)
+		if err != nil {
+			// unmarshal failure
+			return fmt.Errorf("error while parsing env variable %s: %w", field.mustTag("env"), err)
+		}
+		pv = reflect.ValueOf(parsed)
+		if pv.Kind() != field.v.Kind() {
+			// type mismatch
+			return fmt.Errorf("unexpectedly found type %v (wanted %s) when parsing %s", pv.Kind().String(), field.v.Kind().String(), value)
+		}
+	} else {
+		parsed = value
+		pv = reflect.ValueOf(value)
 	}
 	field.v.Set(pv.Convert(field.v.Type()))
 	return nil
