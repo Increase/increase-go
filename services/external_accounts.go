@@ -28,6 +28,7 @@ func NewExternalAccountService(requester core.Requester) (r *ExternalAccountServ
 	return
 }
 
+// Create an External Account
 func (r *ExternalAccountService) Create(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *ExternalAccountService) Create(ctx context.Context, body *types.CreateA
 	return
 }
 
+// Retrieve an External Account
 func (r *ExternalAccountService) Retrieve(ctx context.Context, external_account_id string, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *ExternalAccountService) Retrieve(ctx context.Context, external_account_
 	return
 }
 
+// Update an External Account
 func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *types.UpdateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *ExternalAccountService) Update(ctx context.Context, external_account_id
 	return
 }
 
+// List External Accounts
 func (r *ExternalAccountService) List(ctx context.Context, query *types.ListExternalAccountsQuery, opts ...*core.RequestOpts) (res *types.ExternalAccountsPage, err error) {
 	page := &types.ExternalAccountsPage{
 		Page: &pagination.Page[types.ExternalAccount]{

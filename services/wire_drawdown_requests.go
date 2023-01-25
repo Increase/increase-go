@@ -28,6 +28,7 @@ func NewWireDrawdownRequestService(requester core.Requester) (r *WireDrawdownReq
 	return
 }
 
+// Create a Wire Drawdown Request
 func (r *WireDrawdownRequestService) Create(ctx context.Context, body *types.CreateAWireDrawdownRequestParameters, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *WireDrawdownRequestService) Create(ctx context.Context, body *types.Cre
 	return
 }
 
+// Retrieve a Wire Drawdown Request
 func (r *WireDrawdownRequestService) Retrieve(ctx context.Context, wire_drawdown_request_id string, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *WireDrawdownRequestService) Retrieve(ctx context.Context, wire_drawdown
 	return
 }
 
+// List Wire Drawdown Requests
 func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.ListWireDrawdownRequestsQuery, opts ...*core.RequestOpts) (res *types.WireDrawdownRequestsPage, err error) {
 	page := &types.WireDrawdownRequestsPage{
 		Page: &pagination.Page[types.WireDrawdownRequest]{

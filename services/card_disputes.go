@@ -28,6 +28,7 @@ func NewCardDisputeService(requester core.Requester) (r *CardDisputeService) {
 	return
 }
 
+// Create a Card Dispute
 func (r *CardDisputeService) Create(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *CardDisputeService) Create(ctx context.Context, body *types.CreateACard
 	return
 }
 
+// Retrieve a Card Dispute
 func (r *CardDisputeService) Retrieve(ctx context.Context, card_dispute_id string, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *CardDisputeService) Retrieve(ctx context.Context, card_dispute_id strin
 	return
 }
 
+// List Card Disputes
 func (r *CardDisputeService) List(ctx context.Context, query *types.ListCardDisputesQuery, opts ...*core.RequestOpts) (res *types.CardDisputesPage, err error) {
 	page := &types.CardDisputesPage{
 		Page: &pagination.Page[types.CardDispute]{

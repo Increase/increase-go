@@ -28,6 +28,7 @@ func NewDocumentService(requester core.Requester) (r *DocumentService) {
 	return
 }
 
+// Retrieve a Document
 func (r *DocumentService) Retrieve(ctx context.Context, document_id string, opts ...*core.RequestOpts) (res *types.Document, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *DocumentService) Retrieve(ctx context.Context, document_id string, opts
 	return
 }
 
+// List Documents
 func (r *DocumentService) List(ctx context.Context, query *types.ListDocumentsQuery, opts ...*core.RequestOpts) (res *types.DocumentsPage, err error) {
 	page := &types.DocumentsPage{
 		Page: &pagination.Page[types.Document]{

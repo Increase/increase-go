@@ -45,6 +45,7 @@ func (r *FileService) Create(ctx context.Context, body *types.CreateAFileParamet
 	return
 }
 
+// Retrieve a File
 func (r *FileService) Retrieve(ctx context.Context, file_id string, opts ...*core.RequestOpts) (res *types.File, err error) {
 	err = r.get(
 		ctx,
@@ -58,6 +59,7 @@ func (r *FileService) Retrieve(ctx context.Context, file_id string, opts ...*cor
 	return
 }
 
+// List Files
 func (r *FileService) List(ctx context.Context, query *types.ListFilesQuery, opts ...*core.RequestOpts) (res *types.FilesPage, err error) {
 	page := &types.FilesPage{
 		Page: &pagination.Page[types.File]{

@@ -28,6 +28,7 @@ func NewAccountTransferService(requester core.Requester) (r *AccountTransferServ
 	return
 }
 
+// Create an Account Transfer
 func (r *AccountTransferService) Create(ctx context.Context, body *types.CreateAnAccountTransferParameters, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *AccountTransferService) Create(ctx context.Context, body *types.CreateA
 	return
 }
 
+// Retrieve an Account Transfer
 func (r *AccountTransferService) Retrieve(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *AccountTransferService) Retrieve(ctx context.Context, account_transfer_
 	return
 }
 
+// List Account Transfers
 func (r *AccountTransferService) List(ctx context.Context, query *types.ListAccountTransfersQuery, opts ...*core.RequestOpts) (res *types.AccountTransfersPage, err error) {
 	page := &types.AccountTransfersPage{
 		Page: &pagination.Page[types.AccountTransfer]{
@@ -70,6 +73,7 @@ func (r *AccountTransferService) List(ctx context.Context, query *types.ListAcco
 	return
 }
 
+// Approve an Account Transfer
 func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -83,6 +87,7 @@ func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_i
 	return
 }
 
+// Cancel an Account Transfer
 func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
 	err = r.post(
 		ctx,

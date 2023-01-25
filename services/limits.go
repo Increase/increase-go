@@ -28,6 +28,7 @@ func NewLimitService(requester core.Requester) (r *LimitService) {
 	return
 }
 
+// Create a Limit
 func (r *LimitService) Create(ctx context.Context, body *types.CreateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *LimitService) Create(ctx context.Context, body *types.CreateALimitParam
 	return
 }
 
+// Retrieve a Limit
 func (r *LimitService) Retrieve(ctx context.Context, limit_id string, opts ...*core.RequestOpts) (res *types.Limit, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *LimitService) Retrieve(ctx context.Context, limit_id string, opts ...*c
 	return
 }
 
+// Update a Limit
 func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.UpdateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.
 	return
 }
 
+// List Limits
 func (r *LimitService) List(ctx context.Context, query *types.ListLimitsQuery, opts ...*core.RequestOpts) (res *types.LimitsPage, err error) {
 	page := &types.LimitsPage{
 		Page: &pagination.Page[types.Limit]{

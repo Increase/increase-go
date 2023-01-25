@@ -28,6 +28,7 @@ func NewEventSubscriptionService(requester core.Requester) (r *EventSubscription
 	return
 }
 
+// Create an Event Subscription
 func (r *EventSubscriptionService) Create(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *EventSubscriptionService) Create(ctx context.Context, body *types.Creat
 	return
 }
 
+// Retrieve an Event Subscription
 func (r *EventSubscriptionService) Retrieve(ctx context.Context, event_subscription_id string, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *EventSubscriptionService) Retrieve(ctx context.Context, event_subscript
 	return
 }
 
+// Update an Event Subscription
 func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *types.UpdateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, event_subscriptio
 	return
 }
 
+// List Event Subscriptions
 func (r *EventSubscriptionService) List(ctx context.Context, query *types.ListEventSubscriptionsQuery, opts ...*core.RequestOpts) (res *types.EventSubscriptionsPage, err error) {
 	page := &types.EventSubscriptionsPage{
 		Page: &pagination.Page[types.EventSubscription]{

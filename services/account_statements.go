@@ -28,6 +28,7 @@ func NewAccountStatementService(requester core.Requester) (r *AccountStatementSe
 	return
 }
 
+// Retrieve an Account Statement
 func (r *AccountStatementService) Retrieve(ctx context.Context, account_statement_id string, opts ...*core.RequestOpts) (res *types.AccountStatement, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *AccountStatementService) Retrieve(ctx context.Context, account_statemen
 	return
 }
 
+// List Account Statements
 func (r *AccountStatementService) List(ctx context.Context, query *types.ListAccountStatementsQuery, opts ...*core.RequestOpts) (res *types.AccountStatementsPage, err error) {
 	page := &types.AccountStatementsPage{
 		Page: &pagination.Page[types.AccountStatement]{

@@ -28,6 +28,7 @@ func NewOauthConnectionService(requester core.Requester) (r *OauthConnectionServ
 	return
 }
 
+// Retrieve an OAuth Connection
 func (r *OauthConnectionService) Retrieve(ctx context.Context, oauth_connection_id string, opts ...*core.RequestOpts) (res *types.OauthConnection, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *OauthConnectionService) Retrieve(ctx context.Context, oauth_connection_
 	return
 }
 
+// List OAuth Connections
 func (r *OauthConnectionService) List(ctx context.Context, query *types.ListOauthConnectionsQuery, opts ...*core.RequestOpts) (res *types.OauthConnectionsPage, err error) {
 	page := &types.OauthConnectionsPage{
 		Page: &pagination.Page[types.OauthConnection]{

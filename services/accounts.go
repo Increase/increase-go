@@ -28,6 +28,7 @@ func NewAccountService(requester core.Requester) (r *AccountService) {
 	return
 }
 
+// Create an Account
 func (r *AccountService) Create(ctx context.Context, body *types.CreateAnAccountParameters, opts ...*core.RequestOpts) (res *types.Account, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *AccountService) Create(ctx context.Context, body *types.CreateAnAccount
 	return
 }
 
+// Retrieve an Account
 func (r *AccountService) Retrieve(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *types.Account, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *AccountService) Retrieve(ctx context.Context, account_id string, opts .
 	return
 }
 
+// Update an Account
 func (r *AccountService) Update(ctx context.Context, account_id string, body *types.UpdateAnAccountParameters, opts ...*core.RequestOpts) (res *types.Account, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *AccountService) Update(ctx context.Context, account_id string, body *ty
 	return
 }
 
+// List Accounts
 func (r *AccountService) List(ctx context.Context, query *types.ListAccountsQuery, opts ...*core.RequestOpts) (res *types.AccountsPage, err error) {
 	page := &types.AccountsPage{
 		Page: &pagination.Page[types.Account]{
@@ -84,6 +88,7 @@ func (r *AccountService) List(ctx context.Context, query *types.ListAccountsQuer
 	return
 }
 
+// Close an Account
 func (r *AccountService) Close(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *types.Account, err error) {
 	err = r.post(
 		ctx,

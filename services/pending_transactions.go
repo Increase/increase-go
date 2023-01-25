@@ -28,6 +28,7 @@ func NewPendingTransactionService(requester core.Requester) (r *PendingTransacti
 	return
 }
 
+// Retrieve a Pending Transaction
 func (r *PendingTransactionService) Retrieve(ctx context.Context, pending_transaction_id string, opts ...*core.RequestOpts) (res *types.PendingTransaction, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *PendingTransactionService) Retrieve(ctx context.Context, pending_transa
 	return
 }
 
+// List Pending Transactions
 func (r *PendingTransactionService) List(ctx context.Context, query *types.ListPendingTransactionsQuery, opts ...*core.RequestOpts) (res *types.PendingTransactionsPage, err error) {
 	page := &types.PendingTransactionsPage{
 		Page: &pagination.Page[types.PendingTransaction]{

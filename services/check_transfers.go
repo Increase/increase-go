@@ -28,6 +28,7 @@ func NewCheckTransferService(requester core.Requester) (r *CheckTransferService)
 	return
 }
 
+// Create a Check Transfer
 func (r *CheckTransferService) Create(ctx context.Context, body *types.CreateACheckTransferParameters, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *CheckTransferService) Create(ctx context.Context, body *types.CreateACh
 	return
 }
 
+// Retrieve a Check Transfer
 func (r *CheckTransferService) Retrieve(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *CheckTransferService) Retrieve(ctx context.Context, check_transfer_id s
 	return
 }
 
+// List Check Transfers
 func (r *CheckTransferService) List(ctx context.Context, query *types.ListCheckTransfersQuery, opts ...*core.RequestOpts) (res *types.CheckTransfersPage, err error) {
 	page := &types.CheckTransfersPage{
 		Page: &pagination.Page[types.CheckTransfer]{
@@ -70,6 +73,7 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.ListCheckT
 	return
 }
 
+// Approve a Check Transfer
 func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -83,6 +87,7 @@ func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id st
 	return
 }
 
+// Cancel a pending Check Transfer
 func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -96,6 +101,7 @@ func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id str
 	return
 }
 
+// Request a stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
 	err = r.post(
 		ctx,

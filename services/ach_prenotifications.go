@@ -28,6 +28,7 @@ func NewACHPrenotificationService(requester core.Requester) (r *ACHPrenotificati
 	return
 }
 
+// Create an ACH Prenotification
 func (r *ACHPrenotificationService) Create(ctx context.Context, body *types.CreateAnACHPrenotificationParameters, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *ACHPrenotificationService) Create(ctx context.Context, body *types.Crea
 	return
 }
 
+// Retrieve an ACH Prenotification
 func (r *ACHPrenotificationService) Retrieve(ctx context.Context, ach_prenotification_id string, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *ACHPrenotificationService) Retrieve(ctx context.Context, ach_prenotific
 	return
 }
 
+// List ACH Prenotifications
 func (r *ACHPrenotificationService) List(ctx context.Context, query *types.ListACHPrenotificationsQuery, opts ...*core.RequestOpts) (res *types.ACHPrenotificationsPage, err error) {
 	page := &types.ACHPrenotificationsPage{
 		Page: &pagination.Page[types.ACHPrenotification]{

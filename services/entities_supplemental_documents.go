@@ -27,6 +27,7 @@ func NewEntitiesSupplementalDocumentService(requester core.Requester) (r *Entiti
 	return
 }
 
+// Create a supplemental document for an Entity
 func (r *EntitiesSupplementalDocumentService) Create(ctx context.Context, entity_id string, body *types.CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
 	err = r.post(
 		ctx,

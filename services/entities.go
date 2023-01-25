@@ -30,6 +30,7 @@ func NewEntityService(requester core.Requester) (r *EntityService) {
 	return
 }
 
+// Create an Entity
 func (r *EntityService) Create(ctx context.Context, body *types.CreateAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
 	err = r.post(
 		ctx,
@@ -44,6 +45,7 @@ func (r *EntityService) Create(ctx context.Context, body *types.CreateAnEntityPa
 	return
 }
 
+// Retrieve an Entity
 func (r *EntityService) Retrieve(ctx context.Context, entity_id string, opts ...*core.RequestOpts) (res *types.Entity, err error) {
 	err = r.get(
 		ctx,
@@ -57,6 +59,7 @@ func (r *EntityService) Retrieve(ctx context.Context, entity_id string, opts ...
 	return
 }
 
+// List Entities
 func (r *EntityService) List(ctx context.Context, query *types.ListEntitiesQuery, opts ...*core.RequestOpts) (res *types.EntitiesPage, err error) {
 	page := &types.EntitiesPage{
 		Page: &pagination.Page[types.Entity]{

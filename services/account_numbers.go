@@ -28,6 +28,7 @@ func NewAccountNumberService(requester core.Requester) (r *AccountNumberService)
 	return
 }
 
+// Create an Account Number
 func (r *AccountNumberService) Create(ctx context.Context, body *types.CreateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *AccountNumberService) Create(ctx context.Context, body *types.CreateAnA
 	return
 }
 
+// Retrieve an Account Number
 func (r *AccountNumberService) Retrieve(ctx context.Context, account_number_id string, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *AccountNumberService) Retrieve(ctx context.Context, account_number_id s
 	return
 }
 
+// Update an Account Number
 func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *types.UpdateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *AccountNumberService) Update(ctx context.Context, account_number_id str
 	return
 }
 
+// List Account Numbers
 func (r *AccountNumberService) List(ctx context.Context, query *types.ListAccountNumbersQuery, opts ...*core.RequestOpts) (res *types.AccountNumbersPage, err error) {
 	page := &types.AccountNumbersPage{
 		Page: &pagination.Page[types.AccountNumber]{

@@ -28,6 +28,7 @@ func NewDeclinedTransactionService(requester core.Requester) (r *DeclinedTransac
 	return
 }
 
+// Retrieve a Declined Transaction
 func (r *DeclinedTransactionService) Retrieve(ctx context.Context, declined_transaction_id string, opts ...*core.RequestOpts) (res *types.DeclinedTransaction, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *DeclinedTransactionService) Retrieve(ctx context.Context, declined_tran
 	return
 }
 
+// List Declined Transactions
 func (r *DeclinedTransactionService) List(ctx context.Context, query *types.ListDeclinedTransactionsQuery, opts ...*core.RequestOpts) (res *types.DeclinedTransactionsPage, err error) {
 	page := &types.DeclinedTransactionsPage{
 		Page: &pagination.Page[types.DeclinedTransaction]{

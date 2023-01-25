@@ -28,6 +28,7 @@ func NewTransactionService(requester core.Requester) (r *TransactionService) {
 	return
 }
 
+// Retrieve a Transaction
 func (r *TransactionService) Retrieve(ctx context.Context, transaction_id string, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *TransactionService) Retrieve(ctx context.Context, transaction_id string
 	return
 }
 
+// List Transactions
 func (r *TransactionService) List(ctx context.Context, query *types.ListTransactionsQuery, opts ...*core.RequestOpts) (res *types.TransactionsPage, err error) {
 	page := &types.TransactionsPage{
 		Page: &pagination.Page[types.Transaction]{

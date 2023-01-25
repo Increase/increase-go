@@ -28,6 +28,7 @@ func NewACHTransferService(requester core.Requester) (r *ACHTransferService) {
 	return
 }
 
+// Create an ACH Transfer
 func (r *ACHTransferService) Create(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *ACHTransferService) Create(ctx context.Context, body *types.CreateAnACH
 	return
 }
 
+// Retrieve an ACH Transfer
 func (r *ACHTransferService) Retrieve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *ACHTransferService) Retrieve(ctx context.Context, ach_transfer_id strin
 	return
 }
 
+// List ACH Transfers
 func (r *ACHTransferService) List(ctx context.Context, query *types.ListACHTransfersQuery, opts ...*core.RequestOpts) (res *types.ACHTransfersPage, err error) {
 	page := &types.ACHTransfersPage{
 		Page: &pagination.Page[types.ACHTransfer]{
@@ -70,6 +73,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ListACHTrans
 	return
 }
 
+// Approve an ACH Transfer
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -83,6 +87,7 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 	return
 }
 
+// Cancel a pending ACH Transfer
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
 	err = r.post(
 		ctx,

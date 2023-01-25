@@ -28,6 +28,7 @@ func NewEventService(requester core.Requester) (r *EventService) {
 	return
 }
 
+// Retrieve an Event
 func (r *EventService) Retrieve(ctx context.Context, event_id string, opts ...*core.RequestOpts) (res *types.Event, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *EventService) Retrieve(ctx context.Context, event_id string, opts ...*c
 	return
 }
 
+// List Events
 func (r *EventService) List(ctx context.Context, query *types.ListEventsQuery, opts ...*core.RequestOpts) (res *types.EventsPage, err error) {
 	page := &types.EventsPage{
 		Page: &pagination.Page[types.Event]{

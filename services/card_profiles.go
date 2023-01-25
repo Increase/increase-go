@@ -28,6 +28,7 @@ func NewCardProfileService(requester core.Requester) (r *CardProfileService) {
 	return
 }
 
+// Create a Card Profile
 func (r *CardProfileService) Create(ctx context.Context, body *types.CreateACardProfileParameters, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *CardProfileService) Create(ctx context.Context, body *types.CreateACard
 	return
 }
 
+// Retrieve a Card Profile
 func (r *CardProfileService) Retrieve(ctx context.Context, card_profile_id string, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *CardProfileService) Retrieve(ctx context.Context, card_profile_id strin
 	return
 }
 
+// List Card Profiles
 func (r *CardProfileService) List(ctx context.Context, query *types.ListCardProfilesQuery, opts ...*core.RequestOpts) (res *types.CardProfilesPage, err error) {
 	page := &types.CardProfilesPage{
 		Page: &pagination.Page[types.CardProfile]{

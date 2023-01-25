@@ -27,6 +27,7 @@ func NewRealTimeDecisionService(requester core.Requester) (r *RealTimeDecisionSe
 	return
 }
 
+// Retrieve a Real-Time Decision
 func (r *RealTimeDecisionService) Retrieve(ctx context.Context, real_time_decision_id string, opts ...*core.RequestOpts) (res *types.RealTimeDecision, err error) {
 	err = r.get(
 		ctx,
@@ -40,6 +41,7 @@ func (r *RealTimeDecisionService) Retrieve(ctx context.Context, real_time_decisi
 	return
 }
 
+// Action a Real-Time Decision
 func (r *RealTimeDecisionService) Action(ctx context.Context, real_time_decision_id string, body *types.ActionARealTimeDecisionParameters, opts ...*core.RequestOpts) (res *types.RealTimeDecision, err error) {
 	err = r.post(
 		ctx,

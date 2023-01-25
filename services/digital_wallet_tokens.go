@@ -28,6 +28,7 @@ func NewDigitalWalletTokenService(requester core.Requester) (r *DigitalWalletTok
 	return
 }
 
+// Retrieve a Digital Wallet Token
 func (r *DigitalWalletTokenService) Retrieve(ctx context.Context, digital_wallet_token_id string, opts ...*core.RequestOpts) (res *types.DigitalWalletToken, err error) {
 	err = r.get(
 		ctx,
@@ -41,6 +42,7 @@ func (r *DigitalWalletTokenService) Retrieve(ctx context.Context, digital_wallet
 	return
 }
 
+// List Digital Wallet Tokens
 func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.ListDigitalWalletTokensQuery, opts ...*core.RequestOpts) (res *types.DigitalWalletTokensPage, err error) {
 	page := &types.DigitalWalletTokensPage{
 		Page: &pagination.Page[types.DigitalWalletToken]{

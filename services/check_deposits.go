@@ -28,6 +28,7 @@ func NewCheckDepositService(requester core.Requester) (r *CheckDepositService) {
 	return
 }
 
+// Create a Check Deposit
 func (r *CheckDepositService) Create(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *CheckDepositService) Create(ctx context.Context, body *types.CreateAChe
 	return
 }
 
+// Retrieve a Check Deposit
 func (r *CheckDepositService) Retrieve(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *CheckDepositService) Retrieve(ctx context.Context, check_deposit_id str
 	return
 }
 
+// List Check Deposits
 func (r *CheckDepositService) List(ctx context.Context, query *types.ListCheckDepositsQuery, opts ...*core.RequestOpts) (res *types.CheckDepositsPage, err error) {
 	page := &types.CheckDepositsPage{
 		Page: &pagination.Page[types.CheckDeposit]{

@@ -28,6 +28,7 @@ func NewCardService(requester core.Requester) (r *CardService) {
 	return
 }
 
+// Create a Card
 func (r *CardService) Create(ctx context.Context, body *types.CreateACardParameters, opts ...*core.RequestOpts) (res *types.Card, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *CardService) Create(ctx context.Context, body *types.CreateACardParamet
 	return
 }
 
+// Retrieve a Card
 func (r *CardService) Retrieve(ctx context.Context, card_id string, opts ...*core.RequestOpts) (res *types.Card, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *CardService) Retrieve(ctx context.Context, card_id string, opts ...*cor
 	return
 }
 
+// Update a Card
 func (r *CardService) Update(ctx context.Context, card_id string, body *types.UpdateACardParameters, opts ...*core.RequestOpts) (res *types.Card, err error) {
 	err = r.patch(
 		ctx,
@@ -69,6 +72,7 @@ func (r *CardService) Update(ctx context.Context, card_id string, body *types.Up
 	return
 }
 
+// List Cards
 func (r *CardService) List(ctx context.Context, query *types.ListCardsQuery, opts ...*core.RequestOpts) (res *types.CardsPage, err error) {
 	page := &types.CardsPage{
 		Page: &pagination.Page[types.Card]{
@@ -84,6 +88,7 @@ func (r *CardService) List(ctx context.Context, query *types.ListCardsQuery, opt
 	return
 }
 
+// Retrieve sensitive details for a Card
 func (r *CardService) RetrieveSensitiveDetails(ctx context.Context, card_id string, opts ...*core.RequestOpts) (res *types.CardDetails, err error) {
 	err = r.get(
 		ctx,

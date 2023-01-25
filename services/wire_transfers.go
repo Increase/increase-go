@@ -28,6 +28,7 @@ func NewWireTransferService(requester core.Requester) (r *WireTransferService) {
 	return
 }
 
+// Create a Wire Transfer
 func (r *WireTransferService) Create(ctx context.Context, body *types.CreateAWireTransferParameters, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -42,6 +43,7 @@ func (r *WireTransferService) Create(ctx context.Context, body *types.CreateAWir
 	return
 }
 
+// Retrieve a Wire Transfer
 func (r *WireTransferService) Retrieve(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.get(
 		ctx,
@@ -55,6 +57,7 @@ func (r *WireTransferService) Retrieve(ctx context.Context, wire_transfer_id str
 	return
 }
 
+// List Wire Transfers
 func (r *WireTransferService) List(ctx context.Context, query *types.ListWireTransfersQuery, opts ...*core.RequestOpts) (res *types.WireTransfersPage, err error) {
 	page := &types.WireTransfersPage{
 		Page: &pagination.Page[types.WireTransfer]{
@@ -70,6 +73,7 @@ func (r *WireTransferService) List(ctx context.Context, query *types.ListWireTra
 	return
 }
 
+// Approve a Wire Transfer
 func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.post(
 		ctx,
@@ -83,6 +87,7 @@ func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id stri
 	return
 }
 
+// Cancel a pending Wire Transfer
 func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
 	err = r.post(
 		ctx,
