@@ -2710,6 +2710,8 @@ type ExternalAccount struct {
 	AccountNumber *string `json:"account_number"`
 	// The type of the account to which the transfer will be sent.
 	Funding *ExternalAccountFunding `json:"funding"`
+	// If you have verified ownership of the External Account.
+	VerificationStatus *ExternalAccountVerificationStatus `json:"verification_status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
 	Type *ExternalAccountType `json:"type"`
@@ -2764,6 +2766,14 @@ func (r *ExternalAccount) GetFunding() (Funding ExternalAccountFunding) {
 	return
 }
 
+// If you have verified ownership of the External Account.
+func (r *ExternalAccount) GetVerificationStatus() (VerificationStatus ExternalAccountVerificationStatus) {
+	if r != nil && r.VerificationStatus != nil {
+		VerificationStatus = *r.VerificationStatus
+	}
+	return
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `external_account`.
 func (r *ExternalAccount) GetType() (Type ExternalAccountType) {
@@ -2779,6 +2789,14 @@ const (
 	ExternalAccountFundingChecking ExternalAccountFunding = "checking"
 	ExternalAccountFundingSavings  ExternalAccountFunding = "savings"
 	ExternalAccountFundingOther    ExternalAccountFunding = "other"
+)
+
+type ExternalAccountVerificationStatus string
+
+const (
+	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
+	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
+	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
 )
 
 type ExternalAccountType string
@@ -4423,6 +4441,7 @@ type TransactionSourceCheckDepositReturnReturnReason string
 
 const (
 	TransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported TransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
+	TransactionSourceCheckDepositReturnReturnReasonClosedAccount             TransactionSourceCheckDepositReturnReturnReason = "closed_account"
 	TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       TransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
 	TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         TransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
 	TransactionSourceCheckDepositReturnReturnReasonNoAccount                 TransactionSourceCheckDepositReturnReturnReason = "no_account"
@@ -7888,14 +7907,16 @@ const (
 type DeclinedTransactionSourceCardDeclineReason string
 
 const (
-	DeclinedTransactionSourceCardDeclineReasonCardNotActive         DeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	DeclinedTransactionSourceCardDeclineReasonEntityNotActive       DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	DeclinedTransactionSourceCardDeclineReasonGroupLocked           DeclinedTransactionSourceCardDeclineReason = "group_locked"
-	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds     DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	DeclinedTransactionSourceCardDeclineReasonBreachesLimit         DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined       DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut       DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	DeclinedTransactionSourceCardDeclineReasonCardNotActive               DeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	DeclinedTransactionSourceCardDeclineReasonEntityNotActive             DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceCardDeclineReasonGroupLocked                 DeclinedTransactionSourceCardDeclineReason = "group_locked"
+	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds           DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	DeclinedTransactionSourceCardDeclineReasonBreachesLimit               DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined             DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
 //
@@ -9881,23 +9902,28 @@ const (
 )
 
 type CreateAnACHTransferParameters struct {
-	// The identifier for the account that will send the transfer.
+	// The Increase identifier for the account that will send the transfer.
 	AccountID *string `json:"account_id"`
 	// The account number for the destination account.
 	AccountNumber *string `json:"account_number,omitempty"`
-	// Additional information that will be sent to the recipient.
+	// Additional information that will be sent to the recipient. This is included in
+	// the transfer data sent to the receiving bank.
 	Addendum *string `json:"addendum,omitempty"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
 	Amount *int `json:"amount"`
-	// The description of the date of the transfer.
+	// The description of the date of the transfer, usually in the format `YYYYMMDD`.
+	// This is included in the transfer data sent to the receiving bank.
 	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
-	// The data you choose to associate with the transfer.
+	// The data you choose to associate with the transfer. This is included in the
+	// transfer data sent to the receiving bank.
 	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
-	// The description of the transfer you wish to be shown to the recipient.
+	// A description of the transfer. This is included in the transfer data sent to the
+	// receiving bank.
 	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
-	// The name by which the recipient knows you.
+	// The name by which the recipient knows you. This is included in the transfer data
+	// sent to the receiving bank.
 	CompanyName *string `json:"company_name,omitempty"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
@@ -9909,7 +9935,7 @@ type CreateAnACHTransferParameters struct {
 	Funding *CreateAnACHTransferParametersFunding `json:"funding,omitempty"`
 	// Your identifer for the transfer recipient.
 	IndividualID *string `json:"individual_id,omitempty"`
-	// The name of the transfer recipient. This value is information and not verified
+	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
 	IndividualName *string `json:"individual_name,omitempty"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
@@ -9919,12 +9945,16 @@ type CreateAnACHTransferParameters struct {
 	RoutingNumber *string `json:"routing_number,omitempty"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode *CreateAnACHTransferParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
-	// The description you choose to give the transfer. This will be shown to the
-	// recipient.
+	// A description you choose to give the transfer. This will be saved with the
+	// transfer details, displayed in the dashboard, and returned by the API. If
+	// `individual_name` and `company_name` are not explicitly set by this API, the
+	// `statement_descriptor` will be sent in those fields to the receiving bank to
+	// help the customer recognize the transfer. You are highly encouraged to pass
+	// `individual_name` and `company_name` instead of relying on this fallback.
 	StatementDescriptor *string `json:"statement_descriptor"`
 }
 
-// The identifier for the account that will send the transfer.
+// The Increase identifier for the account that will send the transfer.
 func (r *CreateAnACHTransferParameters) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
@@ -9940,7 +9970,8 @@ func (r *CreateAnACHTransferParameters) GetAccountNumber() (AccountNumber string
 	return
 }
 
-// Additional information that will be sent to the recipient.
+// Additional information that will be sent to the recipient. This is included in
+// the transfer data sent to the receiving bank.
 func (r *CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
 	if r != nil && r.Addendum != nil {
 		Addendum = *r.Addendum
@@ -9958,7 +9989,8 @@ func (r *CreateAnACHTransferParameters) GetAmount() (Amount int) {
 	return
 }
 
-// The description of the date of the transfer.
+// The description of the date of the transfer, usually in the format `YYYYMMDD`.
+// This is included in the transfer data sent to the receiving bank.
 func (r *CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
 	if r != nil && r.CompanyDescriptiveDate != nil {
 		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
@@ -9966,7 +9998,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDesc
 	return
 }
 
-// The data you choose to associate with the transfer.
+// The data you choose to associate with the transfer. This is included in the
+// transfer data sent to the receiving bank.
 func (r *CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
 	if r != nil && r.CompanyDiscretionaryData != nil {
 		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
@@ -9974,7 +10007,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDi
 	return
 }
 
-// The description of the transfer you wish to be shown to the recipient.
+// A description of the transfer. This is included in the transfer data sent to the
+// receiving bank.
 func (r *CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
 	if r != nil && r.CompanyEntryDescription != nil {
 		CompanyEntryDescription = *r.CompanyEntryDescription
@@ -9982,7 +10016,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEnt
 	return
 }
 
-// The name by which the recipient knows you.
+// The name by which the recipient knows you. This is included in the transfer data
+// sent to the receiving bank.
 func (r *CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
 	if r != nil && r.CompanyName != nil {
 		CompanyName = *r.CompanyName
@@ -10024,7 +10059,7 @@ func (r *CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) 
 	return
 }
 
-// The name of the transfer recipient. This value is information and not verified
+// The name of the transfer recipient. This value is informational and not verified
 // by the recipient's bank.
 func (r *CreateAnACHTransferParameters) GetIndividualName() (IndividualName string) {
 	if r != nil && r.IndividualName != nil {
@@ -10058,8 +10093,12 @@ func (r *CreateAnACHTransferParameters) GetStandardEntryClassCode() (StandardEnt
 	return
 }
 
-// The description you choose to give the transfer. This will be shown to the
-// recipient.
+// A description you choose to give the transfer. This will be saved with the
+// transfer details, displayed in the dashboard, and returned by the API. If
+// `individual_name` and `company_name` are not explicitly set by this API, the
+// `statement_descriptor` will be sent in those fields to the receiving bank to
+// help the customer recognize the transfer. You are highly encouraged to pass
+// `individual_name` and `company_name` instead of relying on this fallback.
 func (r *CreateAnACHTransferParameters) GetStatementDescriptor() (StatementDescriptor string) {
 	if r != nil && r.StatementDescriptor != nil {
 		StatementDescriptor = *r.StatementDescriptor
@@ -17322,6 +17361,7 @@ type CheckDepositDepositReturnReturnReason string
 
 const (
 	CheckDepositDepositReturnReturnReasonACHConversionNotSupported CheckDepositDepositReturnReturnReason = "ach_conversion_not_supported"
+	CheckDepositDepositReturnReturnReasonClosedAccount             CheckDepositDepositReturnReturnReason = "closed_account"
 	CheckDepositDepositReturnReturnReasonDuplicateSubmission       CheckDepositDepositReturnReturnReason = "duplicate_submission"
 	CheckDepositDepositReturnReturnReasonInsufficientFunds         CheckDepositDepositReturnReturnReason = "insufficient_funds"
 	CheckDepositDepositReturnReturnReasonNoAccount                 CheckDepositDepositReturnReturnReason = "no_account"
@@ -19276,6 +19316,7 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason string
 
 const (
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonClosedAccount             ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "closed_account"
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNoAccount                 ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "no_account"
@@ -21534,14 +21575,16 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive         ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds     ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit         ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined       ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut       ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive               ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds           ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit               ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
 //
@@ -23709,6 +23752,7 @@ type WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason strin
 
 const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonClosedAccount             WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "closed_account"
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNoAccount                 WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "no_account"
@@ -27071,14 +27115,16 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive         CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit         CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined       CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut       CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
 //
@@ -29086,6 +29132,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 
 const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonClosedAccount             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "closed_account"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonNoAccount                 InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "no_account"
@@ -31344,14 +31391,16 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardNotActive         InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonEntityNotActive       InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonGroupLocked           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds     InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit         InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined       InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut       InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardNotActive               InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonEntityNotActive             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonGroupLocked                 InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit               InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
 //
