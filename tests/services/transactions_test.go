@@ -8,12 +8,12 @@ import (
 	"increase/types"
 )
 
-func TestTransactionsRetrieve(t *testing.T) {
+func TestTransactionsGet(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Transactions.Retrieve(context.TODO(), "transaction_uyrp7fld2ium70oa7oi")
+	_, err := c.Transactions.Get(context.TODO(), "transaction_uyrp7fld2ium70oa7oi")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

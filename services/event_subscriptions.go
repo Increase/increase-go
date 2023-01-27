@@ -29,45 +29,36 @@ func NewEventSubscriptionService(requester core.Requester) (r *EventSubscription
 }
 
 // Create an Event Subscription
-func (r *EventSubscriptionService) Create(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	err = r.post(
-		ctx,
-		"/event_subscriptions",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
+	path := "/event_subscriptions"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an Event Subscription
-func (r *EventSubscriptionService) Retrieve(ctx context.Context, event_subscription_id string, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/event_subscriptions/%s", event_subscription_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_id string, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
+	path := fmt.Sprintf("/event_subscriptions/%s", event_subscription_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Update an Event Subscription
 func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *types.UpdateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	err = r.patch(
-		ctx,
-		fmt.Sprintf("/event_subscriptions/%s", event_subscription_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/event_subscriptions/%s", event_subscription_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.patch(ctx, path, req, &res)
 
 	return
 }

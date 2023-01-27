@@ -28,16 +28,13 @@ func NewSimulationsAccountStatementService(requester core.Requester) (r *Simulat
 
 // Simulates an [Account Statement](#account-statements) being created for an
 // account. In production, Account Statements are generated once per month.
-func (r *SimulationsAccountStatementService) Create(ctx context.Context, body *types.SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.AccountStatement, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/account_statements",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsAccountStatementService) New(ctx context.Context, body *types.SimulateAnAccountStatementBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.AccountStatement, err error) {
+	path := "/simulations/account_statements"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

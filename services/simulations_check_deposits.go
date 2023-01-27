@@ -31,14 +31,11 @@ func NewSimulationsCheckDepositService(requester core.Requester) (r *Simulations
 // factors like poor image quality. This Check Deposit must first have a `status`
 // of `pending`.
 func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
@@ -46,14 +43,11 @@ func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_depos
 // Simulates the submission of a [Check Deposit](#check-deposits) to the Federal
 // Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

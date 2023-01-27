@@ -29,45 +29,36 @@ func NewExternalAccountService(requester core.Requester) (r *ExternalAccountServ
 }
 
 // Create an External Account
-func (r *ExternalAccountService) Create(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	err = r.post(
-		ctx,
-		"/external_accounts",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
+	path := "/external_accounts"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an External Account
-func (r *ExternalAccountService) Retrieve(ctx context.Context, external_account_id string, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/external_accounts/%s", external_account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
+	path := fmt.Sprintf("/external_accounts/%s", external_account_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Update an External Account
 func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *types.UpdateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	err = r.patch(
-		ctx,
-		fmt.Sprintf("/external_accounts/%s", external_account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/external_accounts/%s", external_account_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.patch(ctx, path, req, &res)
 
 	return
 }

@@ -29,30 +29,24 @@ func NewACHPrenotificationService(requester core.Requester) (r *ACHPrenotificati
 }
 
 // Create an ACH Prenotification
-func (r *ACHPrenotificationService) Create(ctx context.Context, body *types.CreateAnACHPrenotificationParameters, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
-	err = r.post(
-		ctx,
-		"/ach_prenotifications",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *ACHPrenotificationService) New(ctx context.Context, body *types.CreateAnACHPrenotificationParameters, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
+	path := "/ach_prenotifications"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an ACH Prenotification
-func (r *ACHPrenotificationService) Retrieve(ctx context.Context, ach_prenotification_id string, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/ach_prenotifications/%s", ach_prenotification_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification_id string, opts ...*core.RequestOpts) (res *types.ACHPrenotification, err error) {
+	path := fmt.Sprintf("/ach_prenotifications/%s", ach_prenotification_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

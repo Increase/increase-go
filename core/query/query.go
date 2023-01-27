@@ -12,6 +12,9 @@ const pathParamStructTag = "pathparam"
 var encoders sync.Map // map[QuerySettings]*encoder
 
 func MarshalWithSettings(value interface{}, settings QuerySettings) (v url.Values) {
+	if value == nil {
+		return
+	}
 	settings.assignDefaults()
 	e, _ := encoders.LoadOrStore(settings, &encoder{settings, sync.Map{}})
 

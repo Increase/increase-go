@@ -277,6 +277,10 @@ func (cr *CoreRequest) FillRequestURL(req *http.Request, baseURL string) error {
 		// provided path is an explicit url
 		parsed.RawQuery = compileQuery(parsed.Query())
 		req.URL = parsed
+	} else if parsedBase, err := url.Parse(baseURL); err == nil {
+		parsed.Scheme = parsedBase.Scheme
+		parsed.Host = parsedBase.Host
+		req.URL = parsed
 	}
 	return nil
 }

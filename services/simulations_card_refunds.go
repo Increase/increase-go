@@ -28,16 +28,13 @@ func NewSimulationsCardRefundService(requester core.Requester) (r *SimulationsCa
 
 // Simulates refunding a card transaction. The full value of the original sandbox
 // transaction is refunded.
-func (r *SimulationsCardRefundService) Create(ctx context.Context, body *types.SimulateARefundOnACardParameters, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/card_refunds",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsCardRefundService) New(ctx context.Context, body *types.SimulateARefundOnACardParameters, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
+	path := "/simulations/card_refunds"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

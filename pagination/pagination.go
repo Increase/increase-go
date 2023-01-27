@@ -6,6 +6,10 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+
+	pjson "increase/core/pjson"
+
+	q "increase/core/query"
 )
 
 type PageResponseInterface[Model interface{}] interface {
@@ -62,9 +66,23 @@ type PageParams struct {
 
 //
 type PageResponse[Model interface{}] struct {
-	Data *[]Model `json:"data"`
+	Data *[]Model `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into PageResponse[Model] using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *PageResponse[Model]) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PageResponse[Model] into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *PageResponse[Model]) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *PageResponse[Model]) GetData() (Data []Model) {
@@ -178,7 +196,13 @@ func (r *Page[Model]) infoToOptions(info *PageParams) core.RequestOpts {
 	if len(rawURL) != 0 {
 		params := r.paramsFromURL(rawURL)
 		newURL, _ := url.Parse(rawURL)
-		query := core.MergeURLValues(newURL.Query(), params, info.Params)
+		query := core.MergeURLValues(newURL.Query(), params, q.Marshal(r.Options.RequestParams))
+		for k, vs := range info.Params {
+			query.Del(k)
+			for _, v := range vs {
+				query.Add(k, v)
+			}
+		}
 		newURL.RawQuery = query.Encode()
 		options.Headers = info.Headers
 		options.URL = newURL.String()
@@ -201,7 +225,6 @@ func (r *Page[Model]) getRawNextPage(response **http.Response) (res *PageRespons
 		opts.ResponseInto = response
 		err = r.Requester.Request(r.Context, "", &core.CoreRequest{
 			Params: opts,
-			Query:  r.Options.RequestParams,
 		}, &res)
 		r.fired = true
 	}

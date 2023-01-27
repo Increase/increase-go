@@ -29,30 +29,24 @@ func NewWireDrawdownRequestService(requester core.Requester) (r *WireDrawdownReq
 }
 
 // Create a Wire Drawdown Request
-func (r *WireDrawdownRequestService) Create(ctx context.Context, body *types.CreateAWireDrawdownRequestParameters, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
-	err = r.post(
-		ctx,
-		"/wire_drawdown_requests",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *WireDrawdownRequestService) New(ctx context.Context, body *types.CreateAWireDrawdownRequestParameters, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
+	path := "/wire_drawdown_requests"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Wire Drawdown Request
-func (r *WireDrawdownRequestService) Retrieve(ctx context.Context, wire_drawdown_request_id string, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/wire_drawdown_requests/%s", wire_drawdown_request_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...*core.RequestOpts) (res *types.WireDrawdownRequest, err error) {
+	path := fmt.Sprintf("/wire_drawdown_requests/%s", wire_drawdown_request_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

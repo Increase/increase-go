@@ -27,15 +27,12 @@ func NewGroupService(requester core.Requester) (r *GroupService) {
 }
 
 // Returns details for the currently authenticated Group.
-func (r *GroupService) RetrieveDetails(ctx context.Context, opts ...*core.RequestOpts) (res *types.Group, err error) {
-	err = r.get(
-		ctx,
-		"/groups/current",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *GroupService) GetDetails(ctx context.Context, opts ...*core.RequestOpts) (res *types.Group, err error) {
+	path := "/groups/current"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

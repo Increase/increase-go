@@ -8,12 +8,12 @@ import (
 	"increase/types"
 )
 
-func TestDigitalWalletTokensRetrieve(t *testing.T) {
+func TestDigitalWalletTokensGet(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.DigitalWalletTokens.Retrieve(context.TODO(), "digital_wallet_token_izi62go3h51p369jrie0")
+	_, err := c.DigitalWalletTokens.Get(context.TODO(), "digital_wallet_token_izi62go3h51p369jrie0")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

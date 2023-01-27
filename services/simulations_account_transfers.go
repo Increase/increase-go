@@ -32,14 +32,11 @@ func NewSimulationsAccountTransferService(requester core.Requester) (r *Simulati
 // You can also approve sandbox Account Transfers in the dashboard. This transfer
 // must first have a `status` of `pending_approval`.
 func (r *SimulationsAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/account_transfers/%s/complete", account_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/account_transfers/%s/complete", account_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

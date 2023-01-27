@@ -29,30 +29,24 @@ func NewCardDisputeService(requester core.Requester) (r *CardDisputeService) {
 }
 
 // Create a Card Dispute
-func (r *CardDisputeService) Create(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
-	err = r.post(
-		ctx,
-		"/card_disputes",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *CardDisputeService) New(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
+	path := "/card_disputes"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Card Dispute
-func (r *CardDisputeService) Retrieve(ctx context.Context, card_dispute_id string, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/card_disputes/%s", card_dispute_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
+	path := fmt.Sprintf("/card_disputes/%s", card_dispute_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

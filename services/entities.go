@@ -31,30 +31,24 @@ func NewEntityService(requester core.Requester) (r *EntityService) {
 }
 
 // Create an Entity
-func (r *EntityService) Create(ctx context.Context, body *types.CreateAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
-	err = r.post(
-		ctx,
-		"/entities",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
+	path := "/entities"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an Entity
-func (r *EntityService) Retrieve(ctx context.Context, entity_id string, opts ...*core.RequestOpts) (res *types.Entity, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/entities/%s", entity_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...*core.RequestOpts) (res *types.Entity, err error) {
+	path := fmt.Sprintf("/entities/%s", entity_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

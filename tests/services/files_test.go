@@ -9,24 +9,24 @@ import (
 	"increase/types"
 )
 
-func TestFilesCreateWithOptionalParams(t *testing.T) {
+func TestFilesNewWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: prism mock server is broken for file uploads")
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Files.Create(context.TODO(), &types.CreateAFileParameters{File: nil, Purpose: increase.P(types.CreateAFileParametersPurposeCheckImageFront)})
+	_, err := c.Files.New(context.TODO(), &types.CreateAFileParameters{File: nil, Purpose: increase.P(types.CreateAFileParametersPurposeCheckImageFront)})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
 }
 
-func TestFilesRetrieve(t *testing.T) {
+func TestFilesGet(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Files.Retrieve(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
+	_, err := c.Files.Get(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

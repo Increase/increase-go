@@ -29,15 +29,12 @@ func NewOauthConnectionService(requester core.Requester) (r *OauthConnectionServ
 }
 
 // Retrieve an OAuth Connection
-func (r *OauthConnectionService) Retrieve(ctx context.Context, oauth_connection_id string, opts ...*core.RequestOpts) (res *types.OauthConnection, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/oauth_connections/%s", oauth_connection_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...*core.RequestOpts) (res *types.OauthConnection, err error) {
+	path := fmt.Sprintf("/oauth_connections/%s", oauth_connection_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

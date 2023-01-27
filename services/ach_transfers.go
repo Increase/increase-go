@@ -29,30 +29,24 @@ func NewACHTransferService(requester core.Requester) (r *ACHTransferService) {
 }
 
 // Create an ACH Transfer
-func (r *ACHTransferService) Create(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.post(
-		ctx,
-		"/ach_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
+	path := "/ach_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an ACH Transfer
-func (r *ACHTransferService) Retrieve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/ach_transfers/%s", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
+	path := fmt.Sprintf("/ach_transfers/%s", ach_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
@@ -75,28 +69,22 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ListACHTrans
 
 // Approve an ACH Transfer
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/ach_transfers/%s/approve", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/ach_transfers/%s/approve", ach_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Cancel a pending ACH Transfer
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/ach_transfers/%s/cancel", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/ach_transfers/%s/cancel", ach_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

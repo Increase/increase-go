@@ -9,23 +9,23 @@ import (
 	"increase/types"
 )
 
-func TestExternalAccountsCreateWithOptionalParams(t *testing.T) {
+func TestExternalAccountsNewWithOptionalParams(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ExternalAccounts.Create(context.TODO(), &types.CreateAnExternalAccountParameters{RoutingNumber: increase.P("101050001"), AccountNumber: increase.P("987654321"), Description: increase.P("Landlord")})
+	_, err := c.ExternalAccounts.New(context.TODO(), &types.CreateAnExternalAccountParameters{RoutingNumber: increase.P("101050001"), AccountNumber: increase.P("987654321"), Description: increase.P("Landlord")})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
 }
 
-func TestExternalAccountsRetrieve(t *testing.T) {
+func TestExternalAccountsGet(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ExternalAccounts.Retrieve(context.TODO(), "external_account_ukk55lr923a3ac0pp7iv")
+	_, err := c.ExternalAccounts.Get(context.TODO(), "external_account_ukk55lr923a3ac0pp7iv")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

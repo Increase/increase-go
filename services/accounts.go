@@ -29,45 +29,36 @@ func NewAccountService(requester core.Requester) (r *AccountService) {
 }
 
 // Create an Account
-func (r *AccountService) Create(ctx context.Context, body *types.CreateAnAccountParameters, opts ...*core.RequestOpts) (res *types.Account, err error) {
-	err = r.post(
-		ctx,
-		"/accounts",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *AccountService) New(ctx context.Context, body *types.CreateAnAccountParameters, opts ...*core.RequestOpts) (res *types.Account, err error) {
+	path := "/accounts"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an Account
-func (r *AccountService) Retrieve(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *types.Account, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/accounts/%s", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *AccountService) Get(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *types.Account, err error) {
+	path := fmt.Sprintf("/accounts/%s", account_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Update an Account
 func (r *AccountService) Update(ctx context.Context, account_id string, body *types.UpdateAnAccountParameters, opts ...*core.RequestOpts) (res *types.Account, err error) {
-	err = r.patch(
-		ctx,
-		fmt.Sprintf("/accounts/%s", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/accounts/%s", account_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.patch(ctx, path, req, &res)
 
 	return
 }
@@ -90,14 +81,11 @@ func (r *AccountService) List(ctx context.Context, query *types.ListAccountsQuer
 
 // Close an Account
 func (r *AccountService) Close(ctx context.Context, account_id string, opts ...*core.RequestOpts) (res *types.Account, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/accounts/%s/close", account_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/accounts/%s/close", account_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

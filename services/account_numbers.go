@@ -29,45 +29,36 @@ func NewAccountNumberService(requester core.Requester) (r *AccountNumberService)
 }
 
 // Create an Account Number
-func (r *AccountNumberService) Create(ctx context.Context, body *types.CreateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
-	err = r.post(
-		ctx,
-		"/account_numbers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *AccountNumberService) New(ctx context.Context, body *types.CreateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
+	path := "/account_numbers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an Account Number
-func (r *AccountNumberService) Retrieve(ctx context.Context, account_number_id string, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/account_numbers/%s", account_number_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *AccountNumberService) Get(ctx context.Context, account_number_id string, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
+	path := fmt.Sprintf("/account_numbers/%s", account_number_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Update an Account Number
 func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *types.UpdateAnAccountNumberParameters, opts ...*core.RequestOpts) (res *types.AccountNumber, err error) {
-	err = r.patch(
-		ctx,
-		fmt.Sprintf("/account_numbers/%s", account_number_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/account_numbers/%s", account_number_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.patch(ctx, path, req, &res)
 
 	return
 }

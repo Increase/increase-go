@@ -29,30 +29,24 @@ func NewCheckDepositService(requester core.Requester) (r *CheckDepositService) {
 }
 
 // Create a Check Deposit
-func (r *CheckDepositService) Create(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	err = r.post(
-		ctx,
-		"/check_deposits",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
+	path := "/check_deposits"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Check Deposit
-func (r *CheckDepositService) Retrieve(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/check_deposits/%s", check_deposit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
+	path := fmt.Sprintf("/check_deposits/%s", check_deposit_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

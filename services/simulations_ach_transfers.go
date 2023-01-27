@@ -33,16 +33,13 @@ func NewSimulationsACHTransferService(requester core.Requester) (r *SimulationsA
 // positive or negative. The result of calling this API will be either a
 // [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
 // depending on whether or not the transfer is allowed.
-func (r *SimulationsACHTransferService) CreateInbound(ctx context.Context, body *types.SimulateAnACHTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.ACHTransferSimulation, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/inbound_ach_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *types.SimulateAnACHTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.ACHTransferSimulation, err error) {
+	path := "/simulations/inbound_ach_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
@@ -51,15 +48,12 @@ func (r *SimulationsACHTransferService) CreateInbound(ctx context.Context, body 
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
 func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *types.ReturnASandboxACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/ach_transfers/%s/return", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/ach_transfers/%s/return", ach_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
@@ -71,14 +65,11 @@ func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer
 // not submitted to the Federal Reserve, this endpoint allows you to skip that
 // delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationsACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/ach_transfers/%s/submit", ach_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/ach_transfers/%s/submit", ach_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

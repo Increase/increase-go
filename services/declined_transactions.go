@@ -29,15 +29,12 @@ func NewDeclinedTransactionService(requester core.Requester) (r *DeclinedTransac
 }
 
 // Retrieve a Declined Transaction
-func (r *DeclinedTransactionService) Retrieve(ctx context.Context, declined_transaction_id string, opts ...*core.RequestOpts) (res *types.DeclinedTransaction, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/declined_transactions/%s", declined_transaction_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...*core.RequestOpts) (res *types.DeclinedTransaction, err error) {
+	path := fmt.Sprintf("/declined_transactions/%s", declined_transaction_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

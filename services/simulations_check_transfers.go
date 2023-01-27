@@ -30,14 +30,11 @@ func NewSimulationsCheckTransferService(requester core.Requester) (r *Simulation
 // Simulates a [Check Transfer](#check-transfers) being deposited at a bank. This
 // transfer must first have a `status` of `mailed`.
 func (r *SimulationsCheckTransferService) Deposit(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_transfers/%s/deposit", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/check_transfers/%s/deposit", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
@@ -46,14 +43,11 @@ func (r *SimulationsCheckTransferService) Deposit(ctx context.Context, check_tra
 // once per weekday in production but can be sped up in sandbox. This transfer must
 // first have a `status` of `pending_approval` or `pending_submission`.
 func (r *SimulationsCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/simulations/check_transfers/%s/mail", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/simulations/check_transfers/%s/mail", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

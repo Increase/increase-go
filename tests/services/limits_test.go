@@ -9,23 +9,23 @@ import (
 	"increase/types"
 )
 
-func TestLimitsCreateWithOptionalParams(t *testing.T) {
+func TestLimitsNewWithOptionalParams(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Limits.Create(context.TODO(), &types.CreateALimitParameters{Metric: increase.P(types.CreateALimitParametersMetricCount), ModelID: increase.P("account_in71c4amph0vgo2qllky"), Value: increase.P(1234)})
+	_, err := c.Limits.New(context.TODO(), &types.CreateALimitParameters{Metric: increase.P(types.CreateALimitParametersMetricCount), ModelID: increase.P("account_in71c4amph0vgo2qllky"), Value: increase.P(1234)})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
 }
 
-func TestLimitsRetrieve(t *testing.T) {
+func TestLimitsGet(t *testing.T) {
 	c := client.NewIncreaseWithOptions(client.ClientOptions{
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Limits.Retrieve(context.TODO(), "limit_fku42k0qtc8ulsuas38q")
+	_, err := c.Limits.Get(context.TODO(), "limit_fku42k0qtc8ulsuas38q")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

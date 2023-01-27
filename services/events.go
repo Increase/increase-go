@@ -29,15 +29,12 @@ func NewEventService(requester core.Requester) (r *EventService) {
 }
 
 // Retrieve an Event
-func (r *EventService) Retrieve(ctx context.Context, event_id string, opts ...*core.RequestOpts) (res *types.Event, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/events/%s", event_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *EventService) Get(ctx context.Context, event_id string, opts ...*core.RequestOpts) (res *types.Event, err error) {
+	path := fmt.Sprintf("/events/%s", event_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

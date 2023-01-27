@@ -29,15 +29,12 @@ func NewDocumentService(requester core.Requester) (r *DocumentService) {
 }
 
 // Retrieve a Document
-func (r *DocumentService) Retrieve(ctx context.Context, document_id string, opts ...*core.RequestOpts) (res *types.Document, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/documents/%s", document_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...*core.RequestOpts) (res *types.Document, err error) {
+	path := fmt.Sprintf("/documents/%s", document_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

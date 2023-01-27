@@ -29,15 +29,12 @@ func NewPendingTransactionService(requester core.Requester) (r *PendingTransacti
 }
 
 // Retrieve a Pending Transaction
-func (r *PendingTransactionService) Retrieve(ctx context.Context, pending_transaction_id string, opts ...*core.RequestOpts) (res *types.PendingTransaction, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/pending_transactions/%s", pending_transaction_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...*core.RequestOpts) (res *types.PendingTransaction, err error) {
+	path := fmt.Sprintf("/pending_transactions/%s", pending_transaction_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

@@ -28,16 +28,13 @@ func NewEntitiesSupplementalDocumentService(requester core.Requester) (r *Entiti
 }
 
 // Create a supplemental document for an Entity
-func (r *EntitiesSupplementalDocumentService) Create(ctx context.Context, entity_id string, body *types.CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/entities/%s/supplemental_documents", entity_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *EntitiesSupplementalDocumentService) New(ctx context.Context, entity_id string, body *types.CreateASupplementalDocumentForAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
+	path := fmt.Sprintf("/entities/%s/supplemental_documents", entity_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

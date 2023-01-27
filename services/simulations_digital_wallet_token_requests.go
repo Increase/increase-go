@@ -28,16 +28,13 @@ func NewSimulationsDigitalWalletTokenRequestService(requester core.Requester) (r
 
 // Simulates a user attempting add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
-func (r *SimulationsDigitalWalletTokenRequestService) Create(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...*core.RequestOpts) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/digital_wallet_token_requests",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsDigitalWalletTokenRequestService) New(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...*core.RequestOpts) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
+	path := "/simulations/digital_wallet_token_requests"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

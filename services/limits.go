@@ -29,45 +29,36 @@ func NewLimitService(requester core.Requester) (r *LimitService) {
 }
 
 // Create a Limit
-func (r *LimitService) Create(ctx context.Context, body *types.CreateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	err = r.post(
-		ctx,
-		"/limits",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *LimitService) New(ctx context.Context, body *types.CreateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
+	path := "/limits"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Limit
-func (r *LimitService) Retrieve(ctx context.Context, limit_id string, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/limits/%s", limit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...*core.RequestOpts) (res *types.Limit, err error) {
+	path := fmt.Sprintf("/limits/%s", limit_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Update a Limit
 func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.UpdateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	err = r.patch(
-		ctx,
-		fmt.Sprintf("/limits/%s", limit_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/limits/%s", limit_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.patch(ctx, path, req, &res)
 
 	return
 }

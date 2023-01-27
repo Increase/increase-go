@@ -1,38 +1,55 @@
 package types
 
-import "increase/pagination"
+import (
+	pjson "increase/core/pjson"
+	"increase/pagination"
+)
 
 //
 type Account struct {
 	// The Account's balances in the minor unit of its currency. For dollars, for
 	// example, these values will represent cents.
-	Balances *AccountBalances `json:"balances"`
+	Balances *AccountBalances `pjson:"balances"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 	// currency.
-	Currency *AccountCurrency `json:"currency"`
+	Currency *AccountCurrency `pjson:"currency"`
 	// The identifier for the Entity the Account belongs to.
-	EntityID *string `json:"entity_id"`
+	EntityID *string `pjson:"entity_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
-	InformationalEntityID *string `json:"informational_entity_id"`
+	InformationalEntityID *string `pjson:"informational_entity_id"`
 	// The Account identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The interest accrued but not yet paid, expressed as a string containing a
 	// floating-point value.
-	InterestAccrued *string `json:"interest_accrued"`
+	InterestAccrued *string `pjson:"interest_accrued"`
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
-	InterestAccruedAt *string `json:"interest_accrued_at"`
+	InterestAccruedAt *string `pjson:"interest_accrued_at"`
 	// The name you choose for the Account.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The status of the Account.
-	Status *AccountStatus `json:"status"`
+	Status *AccountStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account`.
-	Type *AccountType `json:"type"`
+	Type       *AccountType           `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Account using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Account) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Account into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Account) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account's balances in the minor unit of its currency. For dollars, for
@@ -134,15 +151,29 @@ func (r *Account) GetType() (Type AccountType) {
 type AccountBalances struct {
 	// The Account's current balance, representing the sum of all posted Transactions
 	// on the Account.
-	CurrentBalance *int `json:"current_balance"`
+	CurrentBalance *int64 `pjson:"current_balance"`
 	// The Account's available balance, representing the current balance less any open
 	// Pending Transactions on the Account.
-	AvailableBalance *int `json:"available_balance"`
+	AvailableBalance *int64                 `pjson:"available_balance"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountBalances using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountBalances) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountBalances into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountBalances) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account's current balance, representing the sum of all posted Transactions
 // on the Account.
-func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int) {
+func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int64) {
 	if r != nil && r.CurrentBalance != nil {
 		CurrentBalance = *r.CurrentBalance
 	}
@@ -151,7 +182,7 @@ func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int) {
 
 // The Account's available balance, representing the current balance less any open
 // Pending Transactions on the Account.
-func (r *AccountBalances) GetAvailableBalance() (AvailableBalance int) {
+func (r *AccountBalances) GetAvailableBalance() (AvailableBalance int64) {
 	if r != nil && r.AvailableBalance != nil {
 		AvailableBalance = *r.AvailableBalance
 	}
@@ -184,12 +215,27 @@ const (
 
 type CreateAnAccountParameters struct {
 	// The identifier for the Entity that will own the Account.
-	EntityID *string `json:"entity_id,omitempty"`
+	EntityID *string `pjson:"entity_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
-	InformationalEntityID *string `json:"informational_entity_id,omitempty"`
+	InformationalEntityID *string `pjson:"informational_entity_id"`
 	// The name you choose for the Account.
-	Name *string `json:"name"`
+	Name       *string                `pjson:"name"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAnAccountParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnAccountParameters into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Entity that will own the Account.
@@ -219,7 +265,22 @@ func (r *CreateAnAccountParameters) GetName() (Name string) {
 
 type UpdateAnAccountParameters struct {
 	// The new name of the Account.
-	Name *string `json:"name,omitempty"`
+	Name       *string                `pjson:"name"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into UpdateAnAccountParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *UpdateAnAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateAnAccountParameters into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *UpdateAnAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The new name of the Account.
@@ -235,11 +296,25 @@ type ListAccountsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID *string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status *ListAccountsQueryStatus `query:"status"`
+	Status     *ListAccountsQueryStatus `query:"status"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListAccountsQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListAccountsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountsQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListAccountsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -252,7 +327,7 @@ func (r *ListAccountsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountsQuery) GetLimit() (Limit int) {
+func (r *ListAccountsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -285,9 +360,23 @@ const (
 //
 type AccountList struct {
 	// The contents of the list.
-	Data *[]Account `json:"data"`
+	Data *[]Account `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -325,23 +414,37 @@ func (r *AccountsPage) GetNextPage() (*AccountsPage, error) {
 //
 type AccountNumber struct {
 	// The identifier for the account this Account Number belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The Account Number identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The name you choose for the Account Number.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// This indicates if payments can be made to the Account Number.
-	Status *AccountNumberStatus `json:"status"`
+	Status *AccountNumberStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
-	Type *AccountNumberType `json:"type"`
+	Type       *AccountNumberType     `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountNumber using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountNumber into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountNumber) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account this Account Number belongs to.
@@ -426,9 +529,24 @@ const (
 
 type CreateAnAccountNumberParameters struct {
 	// The Account the Account Number should belong to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The name you choose for the Account Number.
-	Name *string `json:"name"`
+	Name       *string                `pjson:"name"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnAccountNumberParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *CreateAnAccountNumberParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnAccountNumberParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnAccountNumberParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account the Account Number should belong to.
@@ -449,9 +567,24 @@ func (r *CreateAnAccountNumberParameters) GetName() (Name string) {
 
 type UpdateAnAccountNumberParameters struct {
 	// The name you choose for the Account Number.
-	Name *string `json:"name,omitempty"`
+	Name *string `pjson:"name"`
 	// This indicates if transfers can be made to the Account Number.
-	Status *UpdateAnAccountNumberParametersStatus `json:"status,omitempty"`
+	Status     *UpdateAnAccountNumberParametersStatus `pjson:"status"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// UpdateAnAccountNumberParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *UpdateAnAccountNumberParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateAnAccountNumberParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *UpdateAnAccountNumberParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The name you choose for the Account Number.
@@ -483,11 +616,26 @@ type ListAccountNumbersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// The status to retrieve Account Numbers for.
 	Status *ListAccountNumbersQueryStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID *string `query:"account_id"`
+	AccountID  *string                `query:"account_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListAccountNumbersQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListAccountNumbersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountNumbersQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListAccountNumbersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -500,7 +648,7 @@ func (r *ListAccountNumbersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountNumbersQuery) GetLimit() (Limit int) {
+func (r *ListAccountNumbersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -534,9 +682,23 @@ const (
 //
 type AccountNumberList struct {
 	// The contents of the list.
-	Data *[]AccountNumber `json:"data"`
+	Data *[]AccountNumber `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountNumberList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountNumberList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountNumberList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountNumberList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -574,26 +736,40 @@ func (r *AccountNumbersPage) GetNextPage() (*AccountNumbersPage, error) {
 //
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Real-Time Decision was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// your application can no longer respond to the Real-Time Decision.
-	TimeoutAt *string `json:"timeout_at"`
+	TimeoutAt *string `pjson:"timeout_at"`
 	// The status of the Real-Time Decision.
-	Status *RealTimeDecisionStatus `json:"status"`
+	Status *RealTimeDecisionStatus `pjson:"status"`
 	// The category of the Real-Time Decision.
-	Category *RealTimeDecisionCategory `json:"category"`
+	Category *RealTimeDecisionCategory `pjson:"category"`
 	// Fields related to a card authorization.
-	CardAuthorization *RealTimeDecisionCardAuthorization `json:"card_authorization"`
+	CardAuthorization *RealTimeDecisionCardAuthorization `pjson:"card_authorization"`
 	// Fields related to a digital wallet token provisioning attempt.
-	DigitalWalletToken *RealTimeDecisionDigitalWalletToken `json:"digital_wallet_token"`
+	DigitalWalletToken *RealTimeDecisionDigitalWalletToken `pjson:"digital_wallet_token"`
 	// Fields related to a digital wallet authentication attempt.
-	DigitalWalletAuthentication *RealTimeDecisionDigitalWalletAuthentication `json:"digital_wallet_authentication"`
+	DigitalWalletAuthentication *RealTimeDecisionDigitalWalletAuthentication `pjson:"digital_wallet_authentication"`
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_decision`.
-	Type *RealTimeDecisionType `json:"type"`
+	Type       *RealTimeDecisionType  `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into RealTimeDecision using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecision into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *RealTimeDecision) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Real-Time Decision identifier.
@@ -690,36 +866,51 @@ const (
 //
 type RealTimeDecisionCardAuthorization struct {
 	// Whether or not the authorization was approved.
-	Decision *RealTimeDecisionCardAuthorizationDecision `json:"decision"`
+	Decision *RealTimeDecisionCardAuthorizationDecision `pjson:"decision"`
 	// The identifier of the Card that is being authorized.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The identifier of the Account the authorization will debit.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The amount of the attempted authorization in the currency the card user sees at
 	// the time of purchase, in the minor unit of that currency. For dollars, for
 	// example, this is cents.
-	PresentmentAmount *int `json:"presentment_amount"`
+	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// user sees at the time of purchase.
-	PresentmentCurrency *string `json:"presentment_currency"`
+	PresentmentCurrency *string `pjson:"presentment_currency"`
 	// The amount of the attempted authorization in the currency it will be settled in.
 	// This currency is the same as that of the Account the card belongs to.
-	SettlementAmount *int `json:"settlement_amount"`
+	SettlementAmount *int64 `pjson:"settlement_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
-	SettlementCurrency *string `json:"settlement_currency"`
+	SettlementCurrency *string `pjson:"settlement_currency"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	// The city the merchant resides in.
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string                `pjson:"merchant_country"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimeDecisionCardAuthorization using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecisionCardAuthorization into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *RealTimeDecisionCardAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Whether or not the authorization was approved.
@@ -749,7 +940,7 @@ func (r *RealTimeDecisionCardAuthorization) GetAccountID() (AccountID string) {
 // The amount of the attempted authorization in the currency the card user sees at
 // the time of purchase, in the minor unit of that currency. For dollars, for
 // example, this is cents.
-func (r *RealTimeDecisionCardAuthorization) GetPresentmentAmount() (PresentmentAmount int) {
+func (r *RealTimeDecisionCardAuthorization) GetPresentmentAmount() (PresentmentAmount int64) {
 	if r != nil && r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
@@ -767,7 +958,7 @@ func (r *RealTimeDecisionCardAuthorization) GetPresentmentCurrency() (Presentmen
 
 // The amount of the attempted authorization in the currency it will be settled in.
 // This currency is the same as that of the Account the card belongs to.
-func (r *RealTimeDecisionCardAuthorization) GetSettlementAmount() (SettlementAmount int) {
+func (r *RealTimeDecisionCardAuthorization) GetSettlementAmount() (SettlementAmount int64) {
 	if r != nil && r.SettlementAmount != nil {
 		SettlementAmount = *r.SettlementAmount
 	}
@@ -836,15 +1027,30 @@ const (
 type RealTimeDecisionDigitalWalletToken struct {
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
-	Decision *RealTimeDecisionDigitalWalletTokenDecision `json:"decision"`
+	Decision *RealTimeDecisionDigitalWalletTokenDecision `pjson:"decision"`
 	// The identifier of the Card that is being tokenized.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The digital wallet app being used.
-	DigitalWallet *RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet"`
+	DigitalWallet *RealTimeDecisionDigitalWalletTokenDigitalWallet `pjson:"digital_wallet"`
 	// The identifier of the Card Profile that was set via the real time decision. This
 	// will be null until the real time decision is responded to or if the real time
 	// decision did not set a card profile.
-	CardProfileID *string `json:"card_profile_id"`
+	CardProfileID *string                `pjson:"card_profile_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimeDecisionDigitalWalletToken using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecisionDigitalWalletToken into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *RealTimeDecisionDigitalWalletToken) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Whether or not the provisioning request was approved. This will be null until
@@ -899,20 +1105,35 @@ const (
 //
 type RealTimeDecisionDigitalWalletAuthentication struct {
 	// Whether your application successfully delivered the one-time passcode.
-	Result *RealTimeDecisionDigitalWalletAuthenticationResult `json:"result"`
+	Result *RealTimeDecisionDigitalWalletAuthenticationResult `pjson:"result"`
 	// The identifier of the Card that is being tokenized.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The digital wallet app being used.
-	DigitalWallet *RealTimeDecisionDigitalWalletAuthenticationDigitalWallet `json:"digital_wallet"`
+	DigitalWallet *RealTimeDecisionDigitalWalletAuthenticationDigitalWallet `pjson:"digital_wallet"`
 	// The channel to send the card user their one-time passcode.
-	Channel *RealTimeDecisionDigitalWalletAuthenticationChannel `json:"channel"`
+	Channel *RealTimeDecisionDigitalWalletAuthenticationChannel `pjson:"channel"`
 	// The one-time passcode to send the card user.
-	OneTimePasscode *string `json:"one_time_passcode"`
+	OneTimePasscode *string `pjson:"one_time_passcode"`
 	// The phone number to send the one-time passcode to if `channel` is equal to
 	// `sms`.
-	Phone *string `json:"phone"`
+	Phone *string `pjson:"phone"`
 	// The email to send the one-time passcode to if `channel` is equal to `email`.
-	Email *string `json:"email"`
+	Email      *string                `pjson:"email"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimeDecisionDigitalWalletAuthentication using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecisionDigitalWalletAuthentication into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *RealTimeDecisionDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Whether your application successfully delivered the one-time passcode.
@@ -1002,13 +1223,28 @@ const (
 type ActionARealTimeDecisionParameters struct {
 	// If the Real-Time Decision relates to a card authorization attempt, this object
 	// contains your response to the authorization.
-	CardAuthorization *ActionARealTimeDecisionParametersCardAuthorization `json:"card_authorization,omitempty"`
+	CardAuthorization *ActionARealTimeDecisionParametersCardAuthorization `pjson:"card_authorization"`
 	// If the Real-Time Decision relates to a digital wallet token provisioning
 	// attempt, this object contains your response to the attempt.
-	DigitalWalletToken *ActionARealTimeDecisionParametersDigitalWalletToken `json:"digital_wallet_token,omitempty"`
+	DigitalWalletToken *ActionARealTimeDecisionParametersDigitalWalletToken `pjson:"digital_wallet_token"`
 	// If the Real-Time Decision relates to a digital wallet authentication attempt,
 	// this object contains your response to the authentication.
-	DigitalWalletAuthentication *ActionARealTimeDecisionParametersDigitalWalletAuthentication `json:"digital_wallet_authentication,omitempty"`
+	DigitalWalletAuthentication *ActionARealTimeDecisionParametersDigitalWalletAuthentication `pjson:"digital_wallet_authentication"`
+	jsonFields                  map[string]interface{}                                        `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ActionARealTimeDecisionParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ActionARealTimeDecisionParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the Real-Time Decision relates to a card authorization attempt, this object
@@ -1041,7 +1277,23 @@ func (r *ActionARealTimeDecisionParameters) GetDigitalWalletAuthentication() (Di
 //
 type ActionARealTimeDecisionParametersCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
-	Decision *ActionARealTimeDecisionParametersCardAuthorizationDecision `json:"decision"`
+	Decision   *ActionARealTimeDecisionParametersCardAuthorizationDecision `pjson:"decision"`
+	jsonFields map[string]interface{}                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParametersCardAuthorization using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParametersCardAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ActionARealTimeDecisionParametersCardAuthorization into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ActionARealTimeDecisionParametersCardAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Whether the card authorization should be approved or declined.
@@ -1063,10 +1315,26 @@ const (
 type ActionARealTimeDecisionParametersDigitalWalletToken struct {
 	// If your application approves the provisioning attempt, this contains metadata
 	// about the digital wallet token that will be generated.
-	Approval *ActionARealTimeDecisionParametersDigitalWalletTokenApproval `json:"approval,omitempty"`
+	Approval *ActionARealTimeDecisionParametersDigitalWalletTokenApproval `pjson:"approval"`
 	// If your application declines the provisioning attempt, this contains details
 	// about the decline.
-	Decline *ActionARealTimeDecisionParametersDigitalWalletTokenDecline `json:"decline,omitempty"`
+	Decline    *ActionARealTimeDecisionParametersDigitalWalletTokenDecline `pjson:"decline"`
+	jsonFields map[string]interface{}                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParametersDigitalWalletToken using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParametersDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ActionARealTimeDecisionParametersDigitalWalletToken into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ActionARealTimeDecisionParametersDigitalWalletToken) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If your application approves the provisioning attempt, this contains metadata
@@ -1090,13 +1358,29 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decl
 //
 type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
-	CardProfileID *string `json:"card_profile_id"`
+	CardProfileID *string `pjson:"card_profile_id"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone *string `json:"phone,omitempty"`
+	Phone *string `pjson:"phone"`
 	// An email address that can be used to verify the cardholder via one-time
 	// passcode.
-	Email *string `json:"email,omitempty"`
+	Email      *string                `pjson:"email"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParametersDigitalWalletTokenApproval using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ActionARealTimeDecisionParametersDigitalWalletTokenApproval into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Card Profile to assign to the Digital Wallet token.
@@ -1129,7 +1413,23 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetEmail()
 type ActionARealTimeDecisionParametersDigitalWalletTokenDecline struct {
 	// Why the tokenization attempt was declined. This is for logging purposes only and
 	// is not displayed to the end-user.
-	Reason *string `json:"reason,omitempty"`
+	Reason     *string                `pjson:"reason"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParametersDigitalWalletTokenDecline using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ActionARealTimeDecisionParametersDigitalWalletTokenDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Why the tokenization attempt was declined. This is for logging purposes only and
@@ -1144,7 +1444,23 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason()
 //
 type ActionARealTimeDecisionParametersDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
-	Result *ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult `json:"result"`
+	Result     *ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult `pjson:"result"`
+	jsonFields map[string]interface{}                                              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ActionARealTimeDecisionParametersDigitalWalletAuthentication using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ActionARealTimeDecisionParametersDigitalWalletAuthentication into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Whether your application was able to deliver the one-time passcode.
@@ -1165,31 +1481,45 @@ const (
 //
 type Card struct {
 	// The card identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the account this card belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The card's description for display purposes.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The last 4 digits of the Card's Primary Account Number.
-	Last4 *string `json:"last4"`
+	Last4 *string `pjson:"last4"`
 	// The month the card expires in M format (e.g., August is 8).
-	ExpirationMonth *int `json:"expiration_month"`
+	ExpirationMonth *int64 `pjson:"expiration_month"`
 	// The year the card expires in YYYY format (e.g., 2025).
-	ExpirationYear *int `json:"expiration_year"`
+	ExpirationYear *int64 `pjson:"expiration_year"`
 	// This indicates if payments can be made with the card.
-	Status *CardStatus `json:"status"`
+	Status *CardStatus `pjson:"status"`
 	// The Card's billing address.
-	BillingAddress *CardBillingAddress `json:"billing_address"`
+	BillingAddress *CardBillingAddress `pjson:"billing_address"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet *CardDigitalWallet `json:"digital_wallet"`
+	DigitalWallet *CardDigitalWallet `pjson:"digital_wallet"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card`.
-	Type *CardType `json:"type"`
+	Type       *CardType              `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Card using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *Card) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Card into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Card) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The card identifier.
@@ -1234,7 +1564,7 @@ func (r *Card) GetLast4() (Last4 string) {
 }
 
 // The month the card expires in M format (e.g., August is 8).
-func (r *Card) GetExpirationMonth() (ExpirationMonth int) {
+func (r *Card) GetExpirationMonth() (ExpirationMonth int64) {
 	if r != nil && r.ExpirationMonth != nil {
 		ExpirationMonth = *r.ExpirationMonth
 	}
@@ -1242,7 +1572,7 @@ func (r *Card) GetExpirationMonth() (ExpirationMonth int) {
 }
 
 // The year the card expires in YYYY format (e.g., 2025).
-func (r *Card) GetExpirationYear() (ExpirationYear int) {
+func (r *Card) GetExpirationYear() (ExpirationYear int64) {
 	if r != nil && r.ExpirationYear != nil {
 		ExpirationYear = *r.ExpirationYear
 	}
@@ -1295,15 +1625,29 @@ const (
 //
 type CardBillingAddress struct {
 	// The first line of the billing address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the billing address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the billing address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The US state of the billing address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The postal code of the billing address.
-	PostalCode *string `json:"postal_code"`
+	PostalCode *string                `pjson:"postal_code"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardBillingAddress using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardBillingAddress into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardBillingAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the billing address.
@@ -1350,13 +1694,27 @@ func (r *CardBillingAddress) GetPostalCode() (PostalCode string) {
 type CardDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email *string `json:"email"`
+	Email *string `pjson:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone *string `json:"phone"`
+	Phone *string `pjson:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID *string `json:"card_profile_id"`
+	CardProfileID *string                `pjson:"card_profile_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDigitalWallet using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDigitalWallet into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardDigitalWallet) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -1395,20 +1753,34 @@ const (
 //
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The card number.
-	PrimaryAccountNumber *string `json:"primary_account_number"`
+	PrimaryAccountNumber *string `pjson:"primary_account_number"`
 	// The month the card expires in M format (e.g., August is 8).
-	ExpirationMonth *int `json:"expiration_month"`
+	ExpirationMonth *int64 `pjson:"expiration_month"`
 	// The year the card expires in YYYY format (e.g., 2025).
-	ExpirationYear *int `json:"expiration_year"`
+	ExpirationYear *int64 `pjson:"expiration_year"`
 	// The three-digit verification code for the card. It's also known as the Card
 	// Verification Code (CVC), the Card Verification Value (CVV), or the Card
 	// Identification (CID).
-	VerificationCode *string `json:"verification_code"`
+	VerificationCode *string `pjson:"verification_code"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_details`.
-	Type *CardDetailsType `json:"type"`
+	Type       *CardDetailsType       `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDetails using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDetails into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Card for which sensitive details have been returned.
@@ -1428,7 +1800,7 @@ func (r *CardDetails) GetPrimaryAccountNumber() (PrimaryAccountNumber string) {
 }
 
 // The month the card expires in M format (e.g., August is 8).
-func (r *CardDetails) GetExpirationMonth() (ExpirationMonth int) {
+func (r *CardDetails) GetExpirationMonth() (ExpirationMonth int64) {
 	if r != nil && r.ExpirationMonth != nil {
 		ExpirationMonth = *r.ExpirationMonth
 	}
@@ -1436,7 +1808,7 @@ func (r *CardDetails) GetExpirationMonth() (ExpirationMonth int) {
 }
 
 // The year the card expires in YYYY format (e.g., 2025).
-func (r *CardDetails) GetExpirationYear() (ExpirationYear int) {
+func (r *CardDetails) GetExpirationYear() (ExpirationYear int64) {
 	if r != nil && r.ExpirationYear != nil {
 		ExpirationYear = *r.ExpirationYear
 	}
@@ -1470,15 +1842,30 @@ const (
 
 type CreateACardParameters struct {
 	// The Account the card should belong to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The description you choose to give the card.
-	Description *string `json:"description,omitempty"`
+	Description *string `pjson:"description"`
 	// The card's billing address.
-	BillingAddress *CreateACardParametersBillingAddress `json:"billing_address,omitempty"`
+	BillingAddress *CreateACardParametersBillingAddress `pjson:"billing_address"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet *CreateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+	DigitalWallet *CreateACardParametersDigitalWallet `pjson:"digital_wallet"`
+	jsonFields    map[string]interface{}              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateACardParameters using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateACardParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CreateACardParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account the card should belong to.
@@ -1518,15 +1905,30 @@ func (r *CreateACardParameters) GetDigitalWallet() (DigitalWallet CreateACardPar
 //
 type CreateACardParametersBillingAddress struct {
 	// The first line of the billing address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the billing address.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the billing address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The US state of the billing address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The postal code of the billing address.
-	PostalCode *string `json:"postal_code"`
+	PostalCode *string                `pjson:"postal_code"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACardParametersBillingAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateACardParametersBillingAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardParametersBillingAddress into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateACardParametersBillingAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the billing address.
@@ -1573,13 +1975,28 @@ func (r *CreateACardParametersBillingAddress) GetPostalCode() (PostalCode string
 type CreateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email *string `json:"email,omitempty"`
+	Email *string `pjson:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone *string `json:"phone,omitempty"`
+	Phone *string `pjson:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID *string `json:"card_profile_id,omitempty"`
+	CardProfileID *string                `pjson:"card_profile_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACardParametersDigitalWallet using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateACardParametersDigitalWallet) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardParametersDigitalWallet into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateACardParametersDigitalWallet) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -1611,15 +2028,30 @@ func (r *CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID s
 
 type UpdateACardParameters struct {
 	// The description you choose to give the card.
-	Description *string `json:"description,omitempty"`
+	Description *string `pjson:"description"`
 	// The status to update the Card with.
-	Status *UpdateACardParametersStatus `json:"status,omitempty"`
+	Status *UpdateACardParametersStatus `pjson:"status"`
 	// The card's updated billing address.
-	BillingAddress *UpdateACardParametersBillingAddress `json:"billing_address,omitempty"`
+	BillingAddress *UpdateACardParametersBillingAddress `pjson:"billing_address"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet *UpdateACardParametersDigitalWallet `json:"digital_wallet,omitempty"`
+	DigitalWallet *UpdateACardParametersDigitalWallet `pjson:"digital_wallet"`
+	jsonFields    map[string]interface{}              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into UpdateACardParameters using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *UpdateACardParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateACardParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *UpdateACardParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The description you choose to give the card.
@@ -1667,15 +2099,30 @@ const (
 //
 type UpdateACardParametersBillingAddress struct {
 	// The first line of the billing address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the billing address.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the billing address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The US state of the billing address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The postal code of the billing address.
-	PostalCode *string `json:"postal_code"`
+	PostalCode *string                `pjson:"postal_code"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// UpdateACardParametersBillingAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *UpdateACardParametersBillingAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateACardParametersBillingAddress into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *UpdateACardParametersBillingAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the billing address.
@@ -1722,13 +2169,28 @@ func (r *UpdateACardParametersBillingAddress) GetPostalCode() (PostalCode string
 type UpdateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email *string `json:"email,omitempty"`
+	Email *string `pjson:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone *string `json:"phone,omitempty"`
+	Phone *string `pjson:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID *string `json:"card_profile_id,omitempty"`
+	CardProfileID *string                `pjson:"card_profile_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// UpdateACardParametersDigitalWallet using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *UpdateACardParametersDigitalWallet) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateACardParametersDigitalWallet into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *UpdateACardParametersDigitalWallet) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -1763,10 +2225,24 @@ type ListCardsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountID *string                  `query:"account_id"`
-	CreatedAt *ListCardsQueryCreatedAt `query:"created_at"`
+	AccountID  *string                  `query:"account_id"`
+	CreatedAt  *ListCardsQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardsQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListCardsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardsQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListCardsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -1779,7 +2255,7 @@ func (r *ListCardsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardsQuery) GetLimit() (Limit int) {
+func (r *ListCardsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -1804,16 +2280,31 @@ func (r *ListCardsQuery) GetCreatedAt() (CreatedAt ListCardsQueryCreatedAt) {
 type ListCardsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardsQueryCreatedAt using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCardsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardsQueryCreatedAt into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListCardsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -1855,9 +2346,23 @@ func (r *ListCardsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type CardList struct {
 	// The contents of the list.
-	Data *[]Card `json:"data"`
+	Data *[]Card `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardList using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardList into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *CardList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -1895,25 +2400,39 @@ func (r *CardsPage) GetNextPage() (*CardsPage, error) {
 //
 type CardDispute struct {
 	// The Card Dispute identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// Why you disputed the Transaction in question.
-	Explanation *string `json:"explanation"`
+	Explanation *string `pjson:"explanation"`
 	// The results of the Dispute investigation.
-	Status *CardDisputeStatus `json:"status"`
+	Status *CardDisputeStatus `pjson:"status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `pjson:"disputed_transaction_id"`
 	// If the Card Dispute's status is `accepted`, this will contain details of the
 	// successful dispute.
-	Acceptance *CardDisputeAcceptance `json:"acceptance"`
+	Acceptance *CardDisputeAcceptance `pjson:"acceptance"`
 	// If the Card Dispute's status is `rejected`, this will contain details of the
 	// unsuccessful dispute.
-	Rejection *CardDisputeRejection `json:"rejection"`
+	Rejection *CardDisputeRejection `pjson:"rejection"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
-	Type *CardDisputeType `json:"type"`
+	Type       *CardDisputeType       `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDispute using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDispute into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardDispute) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Card Dispute identifier.
@@ -1996,12 +2515,27 @@ const (
 type CardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt *string `pjson:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDisputeAcceptance using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDisputeAcceptance into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -2033,12 +2567,27 @@ func (r *CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
 //
 type CardDisputeRejection struct {
 	// Why the Card Dispute was rejected.
-	Explanation *string `json:"explanation"`
+	Explanation *string `pjson:"explanation"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was rejected.
-	RejectedAt *string `json:"rejected_at"`
+	RejectedAt *string `pjson:"rejected_at"`
 	// The identifier of the Card Dispute that was rejected.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string                `pjson:"card_dispute_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDisputeRejection using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDisputeRejection into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CardDisputeRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Why the Card Dispute was rejected.
@@ -2075,9 +2624,24 @@ const (
 type CreateACardDisputeParameters struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string `pjson:"disputed_transaction_id"`
 	// Why you are disputing this Transaction.
-	Explanation *string `json:"explanation"`
+	Explanation *string                `pjson:"explanation"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateACardDisputeParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateACardDisputeParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardDisputeParameters into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateACardDisputeParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Transaction you wish to dispute. This Transaction must have a `source_type`
@@ -2102,9 +2666,24 @@ type ListCardDisputesQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     *int                            `query:"limit"`
-	CreatedAt *ListCardDisputesQueryCreatedAt `query:"created_at"`
-	Status    *ListCardDisputesQueryStatus    `query:"status"`
+	Limit      *int64                          `query:"limit"`
+	CreatedAt  *ListCardDisputesQueryCreatedAt `query:"created_at"`
+	Status     *ListCardDisputesQueryStatus    `query:"status"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardDisputesQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCardDisputesQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardDisputesQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListCardDisputesQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -2117,7 +2696,7 @@ func (r *ListCardDisputesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardDisputesQuery) GetLimit() (Limit int) {
+func (r *ListCardDisputesQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -2141,16 +2720,31 @@ func (r *ListCardDisputesQuery) GetStatus() (Status ListCardDisputesQueryStatus)
 type ListCardDisputesQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListCardDisputesQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListCardDisputesQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardDisputesQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListCardDisputesQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -2192,7 +2786,22 @@ func (r *ListCardDisputesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 type ListCardDisputesQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListCardDisputesQueryStatusIn `json:"in,omitempty"`
+	In         *[]ListCardDisputesQueryStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardDisputesQueryStatus
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCardDisputesQueryStatus) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardDisputesQueryStatus into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListCardDisputesQueryStatus) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -2215,9 +2824,23 @@ const (
 //
 type CardDisputeList struct {
 	// The contents of the list.
-	Data *[]CardDispute `json:"data"`
+	Data *[]CardDispute `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardDisputeList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardDisputeList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardDisputeList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardDisputeList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -2255,20 +2878,34 @@ func (r *CardDisputesPage) GetNextPage() (*CardDisputesPage, error) {
 //
 type CardProfile struct {
 	// The Card Profile identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The status of the Card Profile.
-	Status *CardProfileStatus `json:"status"`
+	Status *CardProfileStatus `pjson:"status"`
 	// A description you can use to identify the Card Profile.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
-	DigitalWallets *CardProfileDigitalWallets `json:"digital_wallets"`
+	DigitalWallets *CardProfileDigitalWallets `pjson:"digital_wallets"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_profile`.
-	Type *CardProfileType `json:"type"`
+	Type       *CardProfileType       `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardProfile using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardProfile into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardProfile) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Card Profile identifier.
@@ -2334,21 +2971,36 @@ const (
 //
 type CardProfileDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple.
-	TextColor *CardProfileDigitalWalletsTextColor `json:"text_color"`
+	TextColor *CardProfileDigitalWalletsTextColor `pjson:"text_color"`
 	// A user-facing description for whoever is issuing the card.
-	IssuerName *string `json:"issuer_name"`
+	IssuerName *string `pjson:"issuer_name"`
 	// A user-facing description for the card itself.
-	CardDescription *string `json:"card_description"`
+	CardDescription *string `pjson:"card_description"`
 	// A website the user can visit to view and receive support for their card.
-	ContactWebsite *string `json:"contact_website"`
+	ContactWebsite *string `pjson:"contact_website"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail *string `json:"contact_email"`
+	ContactEmail *string `pjson:"contact_email"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone *string `json:"contact_phone"`
+	ContactPhone *string `pjson:"contact_phone"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID *string `json:"background_image_file_id"`
+	BackgroundImageFileID *string `pjson:"background_image_file_id"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileID *string `json:"app_icon_file_id"`
+	AppIconFileID *string                `pjson:"app_icon_file_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardProfileDigitalWallets
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardProfileDigitalWallets into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CardProfileDigitalWallets) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Card's text color, specified as an RGB triple.
@@ -2418,15 +3070,30 @@ func (r *CardProfileDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
 //
 type CardProfileDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
-	Red *int `json:"red"`
+	Red *int64 `pjson:"red"`
 	// The value of the green channel in the RGB color.
-	Green *int `json:"green"`
+	Green *int64 `pjson:"green"`
 	// The value of the blue channel in the RGB color.
-	Blue *int `json:"blue"`
+	Blue       *int64                 `pjson:"blue"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardProfileDigitalWalletsTextColor using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardProfileDigitalWalletsTextColor into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CardProfileDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The value of the red channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetRed() (Red int) {
+func (r *CardProfileDigitalWalletsTextColor) GetRed() (Red int64) {
 	if r != nil && r.Red != nil {
 		Red = *r.Red
 	}
@@ -2434,7 +3101,7 @@ func (r *CardProfileDigitalWalletsTextColor) GetRed() (Red int) {
 }
 
 // The value of the green channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetGreen() (Green int) {
+func (r *CardProfileDigitalWalletsTextColor) GetGreen() (Green int64) {
 	if r != nil && r.Green != nil {
 		Green = *r.Green
 	}
@@ -2442,7 +3109,7 @@ func (r *CardProfileDigitalWalletsTextColor) GetGreen() (Green int) {
 }
 
 // The value of the blue channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetBlue() (Blue int) {
+func (r *CardProfileDigitalWalletsTextColor) GetBlue() (Blue int64) {
 	if r != nil && r.Blue != nil {
 		Blue = *r.Blue
 	}
@@ -2457,10 +3124,25 @@ const (
 
 type CreateACardProfileParameters struct {
 	// A description you can use to identify the Card Profile.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
-	DigitalWallets *CreateACardProfileParametersDigitalWallets `json:"digital_wallets"`
+	DigitalWallets *CreateACardProfileParametersDigitalWallets `pjson:"digital_wallets"`
+	jsonFields     map[string]interface{}                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateACardProfileParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateACardProfileParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardProfileParameters into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateACardProfileParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A description you can use to identify the Card Profile.
@@ -2483,21 +3165,36 @@ func (r *CreateACardProfileParameters) GetDigitalWallets() (DigitalWallets Creat
 //
 type CreateACardProfileParametersDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple. The default is white.
-	TextColor *CreateACardProfileParametersDigitalWalletsTextColor `json:"text_color,omitempty"`
+	TextColor *CreateACardProfileParametersDigitalWalletsTextColor `pjson:"text_color"`
 	// A user-facing description for whoever is issuing the card.
-	IssuerName *string `json:"issuer_name"`
+	IssuerName *string `pjson:"issuer_name"`
 	// A user-facing description for the card itself.
-	CardDescription *string `json:"card_description"`
+	CardDescription *string `pjson:"card_description"`
 	// A website the user can visit to view and receive support for their card.
-	ContactWebsite *string `json:"contact_website,omitempty"`
+	ContactWebsite *string `pjson:"contact_website"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail *string `json:"contact_email,omitempty"`
+	ContactEmail *string `pjson:"contact_email"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone *string `json:"contact_phone,omitempty"`
+	ContactPhone *string `pjson:"contact_phone"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID *string `json:"background_image_file_id"`
+	BackgroundImageFileID *string `pjson:"background_image_file_id"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileID *string `json:"app_icon_file_id"`
+	AppIconFileID *string                `pjson:"app_icon_file_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACardProfileParametersDigitalWallets using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateACardProfileParametersDigitalWallets) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardProfileParametersDigitalWallets into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateACardProfileParametersDigitalWallets) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Card's text color, specified as an RGB triple. The default is white.
@@ -2567,15 +3264,31 @@ func (r *CreateACardProfileParametersDigitalWallets) GetAppIconFileID() (AppIcon
 //
 type CreateACardProfileParametersDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
-	Red *int `json:"red"`
+	Red *int64 `pjson:"red"`
 	// The value of the green channel in the RGB color.
-	Green *int `json:"green"`
+	Green *int64 `pjson:"green"`
 	// The value of the blue channel in the RGB color.
-	Blue *int `json:"blue"`
+	Blue       *int64                 `pjson:"blue"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACardProfileParametersDigitalWalletsTextColor using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateACardProfileParametersDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACardProfileParametersDigitalWalletsTextColor into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateACardProfileParametersDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The value of the red channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetRed() (Red int) {
+func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetRed() (Red int64) {
 	if r != nil && r.Red != nil {
 		Red = *r.Red
 	}
@@ -2583,7 +3296,7 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetRed() (Red int)
 }
 
 // The value of the green channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetGreen() (Green int) {
+func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetGreen() (Green int64) {
 	if r != nil && r.Green != nil {
 		Green = *r.Green
 	}
@@ -2591,7 +3304,7 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetGreen() (Green 
 }
 
 // The value of the blue channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue int) {
+func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue int64) {
 	if r != nil && r.Blue != nil {
 		Blue = *r.Blue
 	}
@@ -2603,8 +3316,23 @@ type ListCardProfilesQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  *int                         `query:"limit"`
-	Status *ListCardProfilesQueryStatus `query:"status"`
+	Limit      *int64                       `query:"limit"`
+	Status     *ListCardProfilesQueryStatus `query:"status"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardProfilesQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCardProfilesQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardProfilesQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListCardProfilesQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -2617,7 +3345,7 @@ func (r *ListCardProfilesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardProfilesQuery) GetLimit() (Limit int) {
+func (r *ListCardProfilesQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -2634,7 +3362,22 @@ func (r *ListCardProfilesQuery) GetStatus() (Status ListCardProfilesQueryStatus)
 type ListCardProfilesQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListCardProfilesQueryStatusIn `json:"in,omitempty"`
+	In         *[]ListCardProfilesQueryStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCardProfilesQueryStatus
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCardProfilesQueryStatus) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCardProfilesQueryStatus into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListCardProfilesQueryStatus) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -2658,9 +3401,23 @@ const (
 //
 type CardProfileList struct {
 	// The contents of the list.
-	Data *[]CardProfile `json:"data"`
+	Data *[]CardProfile `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardProfileList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardProfileList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardProfileList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CardProfileList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -2698,23 +3455,37 @@ func (r *CardProfilesPage) GetNextPage() (*CardProfilesPage, error) {
 //
 type ExternalAccount struct {
 	// The External Account's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the External Account was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The External Account's description for display purposes.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The type of the account to which the transfer will be sent.
-	Funding *ExternalAccountFunding `json:"funding"`
+	Funding *ExternalAccountFunding `pjson:"funding"`
 	// If you have verified ownership of the External Account.
-	VerificationStatus *ExternalAccountVerificationStatus `json:"verification_status"`
+	VerificationStatus *ExternalAccountVerificationStatus `pjson:"verification_status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
-	Type *ExternalAccountType `json:"type"`
+	Type       *ExternalAccountType   `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ExternalAccount using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ExternalAccount into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ExternalAccount) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The External Account's identifier.
@@ -2808,13 +3579,28 @@ const (
 type CreateAnExternalAccountParameters struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The account number for the destination account.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The type of the destination account. Defaults to `checking`.
-	Funding *CreateAnExternalAccountParametersFunding `json:"funding,omitempty"`
+	Funding *CreateAnExternalAccountParametersFunding `pjson:"funding"`
 	// The name you choose for the Account.
-	Description *string `json:"description"`
+	Description *string                `pjson:"description"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnExternalAccountParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *CreateAnExternalAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnExternalAccountParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnExternalAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -2860,7 +3646,22 @@ const (
 
 type UpdateAnExternalAccountParameters struct {
 	// The description you choose to give the external account.
-	Description *string `json:"description,omitempty"`
+	Description *string                `pjson:"description"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// UpdateAnExternalAccountParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *UpdateAnExternalAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateAnExternalAccountParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *UpdateAnExternalAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The description you choose to give the external account.
@@ -2876,7 +3677,22 @@ type ListExternalAccountsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListExternalAccountsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListExternalAccountsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListExternalAccountsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListExternalAccountsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -2889,7 +3705,7 @@ func (r *ListExternalAccountsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListExternalAccountsQuery) GetLimit() (Limit int) {
+func (r *ListExternalAccountsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -2899,9 +3715,23 @@ func (r *ListExternalAccountsQuery) GetLimit() (Limit int) {
 //
 type ExternalAccountList struct {
 	// The contents of the list.
-	Data *[]ExternalAccount `json:"data"`
+	Data *[]ExternalAccount `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ExternalAccountList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ExternalAccountList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ExternalAccountList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ExternalAccountList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -2939,19 +3769,33 @@ func (r *ExternalAccountsPage) GetNextPage() (*ExternalAccountsPage, error) {
 //
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This indicates if payments can be made with the Digital Wallet Token.
-	Status *DigitalWalletTokenStatus `json:"status"`
+	Status *DigitalWalletTokenStatus `pjson:"status"`
 	// The digital wallet app being used.
-	TokenRequestor *DigitalWalletTokenTokenRequestor `json:"token_requestor"`
+	TokenRequestor *DigitalWalletTokenTokenRequestor `pjson:"token_requestor"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
-	Type *DigitalWalletTokenType `json:"type"`
+	Type       *DigitalWalletTokenType `pjson:"type"`
+	jsonFields map[string]interface{}  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DigitalWalletToken using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DigitalWalletToken into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *DigitalWalletToken) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Digital Wallet Token identifier.
@@ -3031,10 +3875,25 @@ type ListDigitalWalletTokensQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID    *string                                `query:"card_id"`
-	CreatedAt *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
+	CardID     *string                                `query:"card_id"`
+	CreatedAt  *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListDigitalWalletTokensQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListDigitalWalletTokensQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDigitalWalletTokensQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListDigitalWalletTokensQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -3047,7 +3906,7 @@ func (r *ListDigitalWalletTokensQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int) {
+func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -3072,16 +3931,31 @@ func (r *ListDigitalWalletTokensQuery) GetCreatedAt() (CreatedAt ListDigitalWall
 type ListDigitalWalletTokensQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListDigitalWalletTokensQueryCreatedAt using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListDigitalWalletTokensQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDigitalWalletTokensQueryCreatedAt into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ListDigitalWalletTokensQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -3123,9 +3997,24 @@ func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrBefore() (OnOrBefore stri
 //
 type DigitalWalletTokenList struct {
 	// The contents of the list.
-	Data *[]DigitalWalletToken `json:"data"`
+	Data *[]DigitalWalletToken `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DigitalWalletTokenList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *DigitalWalletTokenList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DigitalWalletTokenList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *DigitalWalletTokenList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -3163,36 +4052,50 @@ func (r *DigitalWalletTokensPage) GetNextPage() (*DigitalWalletTokensPage, error
 //
 type Transaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
-	Currency *TransactionCurrency `json:"currency"`
+	Currency *TransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
 	// deprecated and will be removed in the future.
-	Source *TransactionSource `json:"source"`
+	Source *TransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type *TransactionType `json:"type"`
+	Type       *TransactionType       `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Transaction using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Transaction into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *Transaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -3205,7 +4108,7 @@ func (r *Transaction) GetAccountID() (AccountID string) {
 
 // The Transaction amount in the minor unit of its currency. For dollars, for
 // example, this is cents.
-func (r *Transaction) GetAmount() (Amount int) {
+func (r *Transaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -3302,112 +4205,126 @@ type TransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *TransactionSourceCategory `json:"category"`
+	Category *TransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
-	AccountTransferIntention *TransactionSourceAccountTransferIntention `json:"account_transfer_intention"`
+	AccountTransferIntention *TransactionSourceAccountTransferIntention `pjson:"account_transfer_intention"`
 	// A ACH Check Conversion Return object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn *TransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return"`
+	ACHCheckConversionReturn *TransactionSourceACHCheckConversionReturn `pjson:"ach_check_conversion_return"`
 	// A ACH Check Conversion object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion *TransactionSourceACHCheckConversion `json:"ach_check_conversion"`
+	ACHCheckConversion *TransactionSourceACHCheckConversion `pjson:"ach_check_conversion"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
-	ACHTransferIntention *TransactionSourceACHTransferIntention `json:"ach_transfer_intention"`
+	ACHTransferIntention *TransactionSourceACHTransferIntention `pjson:"ach_transfer_intention"`
 	// A ACH Transfer Rejection object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_rejection`.
-	ACHTransferRejection *TransactionSourceACHTransferRejection `json:"ach_transfer_rejection"`
+	ACHTransferRejection *TransactionSourceACHTransferRejection `pjson:"ach_transfer_rejection"`
 	// A ACH Transfer Return object. This field will be present in the JSON response if
 	// and only if `category` is equal to `ach_transfer_return`.
-	ACHTransferReturn *TransactionSourceACHTransferReturn `json:"ach_transfer_return"`
+	ACHTransferReturn *TransactionSourceACHTransferReturn `pjson:"ach_transfer_return"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
-	CardDisputeAcceptance *TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance"`
+	CardDisputeAcceptance *TransactionSourceCardDisputeAcceptance `pjson:"card_dispute_acceptance"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
-	CardRefund *TransactionSourceCardRefund `json:"card_refund"`
+	CardRefund *TransactionSourceCardRefund `pjson:"card_refund"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
-	CardSettlement *TransactionSourceCardSettlement `json:"card_settlement"`
+	CardSettlement *TransactionSourceCardSettlement `pjson:"card_settlement"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
-	CheckDepositAcceptance *TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance"`
+	CheckDepositAcceptance *TransactionSourceCheckDepositAcceptance `pjson:"check_deposit_acceptance"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
-	CheckDepositReturn *TransactionSourceCheckDepositReturn `json:"check_deposit_return"`
+	CheckDepositReturn *TransactionSourceCheckDepositReturn `pjson:"check_deposit_return"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
-	CheckTransferIntention *TransactionSourceCheckTransferIntention `json:"check_transfer_intention"`
+	CheckTransferIntention *TransactionSourceCheckTransferIntention `pjson:"check_transfer_intention"`
 	// A Check Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn *TransactionSourceCheckTransferReturn `json:"check_transfer_return"`
+	CheckTransferReturn *TransactionSourceCheckTransferReturn `pjson:"check_transfer_return"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection *TransactionSourceCheckTransferRejection `json:"check_transfer_rejection"`
+	CheckTransferRejection *TransactionSourceCheckTransferRejection `pjson:"check_transfer_rejection"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
-	CheckTransferStopPaymentRequest *TransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request"`
+	CheckTransferStopPaymentRequest *TransactionSourceCheckTransferStopPaymentRequest `pjson:"check_transfer_stop_payment_request"`
 	// A Dispute Resolution object. This field will be present in the JSON response if
 	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution *TransactionSourceDisputeResolution `json:"dispute_resolution"`
+	DisputeResolution *TransactionSourceDisputeResolution `pjson:"dispute_resolution"`
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit *TransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit"`
+	EmpyrealCashDeposit *TransactionSourceEmpyrealCashDeposit `pjson:"empyreal_cash_deposit"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
-	InboundACHTransfer *TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer"`
+	InboundACHTransfer *TransactionSourceInboundACHTransfer `pjson:"inbound_ach_transfer"`
 	// A Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
-	InboundCheck *TransactionSourceInboundCheck `json:"inbound_check"`
+	InboundCheck *TransactionSourceInboundCheck `pjson:"inbound_check"`
 	// A Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
-	InboundInternationalACHTransfer *TransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer"`
+	InboundInternationalACHTransfer *TransactionSourceInboundInternationalACHTransfer `pjson:"inbound_international_ach_transfer"`
 	// A Inbound Real Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
-	InboundRealTimePaymentsTransferConfirmation *TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation"`
+	InboundRealTimePaymentsTransferConfirmation *TransactionSourceInboundRealTimePaymentsTransferConfirmation `pjson:"inbound_real_time_payments_transfer_confirmation"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
-	InboundWireDrawdownPaymentReversal *TransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal"`
+	InboundWireDrawdownPaymentReversal *TransactionSourceInboundWireDrawdownPaymentReversal `pjson:"inbound_wire_drawdown_payment_reversal"`
 	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment *TransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment"`
+	InboundWireDrawdownPayment *TransactionSourceInboundWireDrawdownPayment `pjson:"inbound_wire_drawdown_payment"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
-	InboundWireReversal *TransactionSourceInboundWireReversal `json:"inbound_wire_reversal"`
+	InboundWireReversal *TransactionSourceInboundWireReversal `pjson:"inbound_wire_reversal"`
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
-	InboundWireTransfer *TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer"`
+	InboundWireTransfer *TransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
-	InternalSource *TransactionSourceInternalSource `json:"internal_source"`
+	InternalSource *TransactionSourceInternalSource `pjson:"internal_source"`
 	// A Deprecated Card Refund object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund *TransactionSourceCardRouteRefund `json:"card_route_refund"`
+	CardRouteRefund *TransactionSourceCardRouteRefund `pjson:"card_route_refund"`
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement *TransactionSourceCardRouteSettlement `json:"card_route_settlement"`
+	CardRouteSettlement *TransactionSourceCardRouteSettlement `pjson:"card_route_settlement"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
-	SampleFunds *TransactionSourceSampleFunds `json:"sample_funds"`
+	SampleFunds *TransactionSourceSampleFunds `pjson:"sample_funds"`
 	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention *TransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention"`
+	WireDrawdownPaymentIntention *TransactionSourceWireDrawdownPaymentIntention `pjson:"wire_drawdown_payment_intention"`
 	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection *TransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection"`
+	WireDrawdownPaymentRejection *TransactionSourceWireDrawdownPaymentRejection `pjson:"wire_drawdown_payment_rejection"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
-	WireTransferIntention *TransactionSourceWireTransferIntention `json:"wire_transfer_intention"`
+	WireTransferIntention *TransactionSourceWireTransferIntention `pjson:"wire_transfer_intention"`
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
-	WireTransferRejection *TransactionSourceWireTransferRejection `json:"wire_transfer_rejection"`
+	WireTransferRejection *TransactionSourceWireTransferRejection `pjson:"wire_transfer_rejection"`
+	jsonFields            map[string]interface{}                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into TransactionSource using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSource into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *TransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -3767,23 +4684,38 @@ const (
 type TransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *TransactionSourceAccountTransferIntentionCurrency `json:"currency"`
+	Currency *TransactionSourceAccountTransferIntentionCurrency `pjson:"currency"`
 	// The description you chose to give the transfer.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountID *string `json:"source_account_id"`
+	SourceAccountID *string `pjson:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceAccountTransferIntention using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceAccountTransferIntention into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceAccountTransferIntention) GetAmount() (Amount int) {
+func (r *TransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -3846,14 +4778,29 @@ const (
 type TransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// Why the transfer was returned.
-	ReturnReasonCode *string `json:"return_reason_code"`
+	ReturnReasonCode *string                `pjson:"return_reason_code"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceACHCheckConversionReturn using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceACHCheckConversionReturn into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHCheckConversionReturn) GetAmount() (Amount int) {
+func (r *TransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -3872,14 +4819,29 @@ func (r *TransactionSourceACHCheckConversionReturn) GetReturnReasonCode() (Retur
 type TransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceACHCheckConversion using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceACHCheckConversion into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHCheckConversion) GetAmount() (Amount int) {
+func (r *TransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -3898,20 +4860,35 @@ func (r *TransactionSourceACHCheckConversion) GetFileID() (FileID string) {
 type TransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceACHTransferIntention using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceACHTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHTransferIntention) GetAmount() (Amount int) {
+func (r *TransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -3950,7 +4927,22 @@ func (r *TransactionSourceACHTransferIntention) GetTransferID() (TransferID stri
 //
 type TransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceACHTransferRejection using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceACHTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
@@ -3965,13 +4957,28 @@ func (r *TransactionSourceACHTransferRejection) GetTransferID() (TransferID stri
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the ACH Transfer was returned.
-	ReturnReasonCode *TransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
+	ReturnReasonCode *TransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceACHTransferReturn using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceACHTransferReturn into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -4039,12 +5046,27 @@ const (
 type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt *string `pjson:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCardDisputeAcceptance using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCardDisputeAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -4077,20 +5099,35 @@ func (r *TransactionSourceCardDisputeAcceptance) GetTransactionID() (Transaction
 type TransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceCardRefundCurrency `json:"currency"`
+	Currency *TransactionSourceCardRefundCurrency `pjson:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `pjson:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type *TransactionSourceCardRefundType `json:"type"`
+	Type       *TransactionSourceCardRefundType `pjson:"type"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into TransactionSourceCardRefund
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCardRefund into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceCardRefund) GetAmount() (Amount int) {
+func (r *TransactionSourceCardRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4144,35 +5181,50 @@ const (
 type TransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency *TransactionSourceCardSettlementCurrency `json:"currency"`
+	Currency *TransactionSourceCardSettlementCurrency `pjson:"currency"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount *int `json:"presentment_amount"`
+	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `json:"presentment_currency"`
+	PresentmentCurrency *string `pjson:"presentment_currency"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantName *string `json:"merchant_name"`
+	MerchantName *string `pjson:"merchant_name"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type *TransactionSourceCardSettlementType `json:"type"`
+	Type       *TransactionSourceCardSettlementType `pjson:"type"`
+	jsonFields map[string]interface{}               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCardSettlement using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCardSettlement into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceCardSettlement) GetAmount() (Amount int) {
+func (r *TransactionSourceCardSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4189,7 +5241,7 @@ func (r *TransactionSourceCardSettlement) GetCurrency() (Currency TransactionSou
 }
 
 // The amount in the minor unit of the transaction's presentment currency.
-func (r *TransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int) {
+func (r *TransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
 	if r != nil && r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
@@ -4278,24 +5330,39 @@ const (
 type TransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
+	Currency *TransactionSourceCheckDepositAcceptanceCurrency `pjson:"currency"`
 	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckDepositAcceptance using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckDepositAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceCheckDepositAcceptance) GetAmount() (Amount int) {
+func (r *TransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4359,25 +5426,40 @@ const (
 type TransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
+	ReturnedAt *string `pjson:"returned_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceCheckDepositReturnCurrency `json:"currency"`
+	Currency *TransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	//
-	ReturnReason *TransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
+	ReturnReason *TransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields   map[string]interface{}                           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckDepositReturn using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckDepositReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceCheckDepositReturn) GetAmount() (Amount int) {
+func (r *TransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4456,24 +5538,39 @@ const (
 //
 type TransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *TransactionSourceCheckTransferIntentionCurrency `json:"currency"`
+	Currency *TransactionSourceCheckTransferIntentionCurrency `pjson:"currency"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckTransferIntention using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The street address of the check's destination.
@@ -4517,7 +5614,7 @@ func (r *TransactionSourceCheckTransferIntention) GetAddressZip() (AddressZip st
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceCheckTransferIntention) GetAmount() (Amount int) {
+func (r *TransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4563,9 +5660,24 @@ const (
 //
 type TransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckTransferReturn using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckTransferReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the returned Check Transfer.
@@ -4587,7 +5699,22 @@ func (r *TransactionSourceCheckTransferReturn) GetFileID() (FileID string) {
 //
 type TransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckTransferRejection using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
@@ -4601,14 +5728,30 @@ func (r *TransactionSourceCheckTransferRejection) GetTransferID() (TransferID st
 //
 type TransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `json:"requested_at"`
+	RequestedAt *string `pjson:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type *TransactionSourceCheckTransferStopPaymentRequestType `json:"type"`
+	Type       *TransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
+	jsonFields map[string]interface{}                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCheckTransferStopPaymentRequest using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCheckTransferStopPaymentRequest into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *TransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID of the check transfer that was stopped.
@@ -4654,17 +5797,32 @@ const (
 type TransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceDisputeResolutionCurrency `json:"currency"`
+	Currency *TransactionSourceDisputeResolutionCurrency `pjson:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string                `pjson:"disputed_transaction_id"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceDisputeResolution using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceDisputeResolution into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceDisputeResolution) GetAmount() (Amount int) {
+func (r *TransactionSourceDisputeResolution) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4703,16 +5861,31 @@ const (
 type TransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BagID *string `json:"bag_id"`
+	BagID *string `pjson:"bag_id"`
 	//
-	DepositDate *string `json:"deposit_date"`
+	DepositDate *string                `pjson:"deposit_date"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceEmpyrealCashDeposit using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceEmpyrealCashDeposit into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int) {
+func (r *TransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4737,28 +5910,43 @@ func (r *TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate str
 type TransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundACHTransfer using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundACHTransfer into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceInboundACHTransfer) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4825,21 +6013,36 @@ func (r *TransactionSourceInboundACHTransfer) GetTraceNumber() (TraceNumber stri
 type TransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceInboundCheckCurrency `json:"currency"`
+	Currency *TransactionSourceInboundCheckCurrency `pjson:"currency"`
 	//
-	CheckNumber *string `json:"check_number"`
+	CheckNumber *string `pjson:"check_number"`
 	//
-	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
 	//
-	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into TransactionSourceInboundCheck
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundCheck into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceInboundCheck) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -4891,82 +6094,98 @@ const (
 type TransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundInternationalACHTransfer using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundInternationalACHTransfer into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *TransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5008,7 +6227,7 @@ func (r *TransactionSourceInboundInternationalACHTransfer) GetDestinationCurrenc
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -5222,27 +6441,43 @@ func (r *TransactionSourceInboundInternationalACHTransfer) GetTraceNumber() (Tra
 type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
-	Currency *TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency"`
+	Currency *TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `pjson:"currency"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the transfer
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundRealTimePaymentsTransferConfirmation using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// TransactionSourceInboundRealTimePaymentsTransferConfirmation into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5320,29 +6555,45 @@ const (
 //
 type TransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string                `pjson:"previous_message_input_source"`
+	jsonFields                 map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundWireDrawdownPaymentReversal using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundWireDrawdownPaymentReversal into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *TransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5425,36 +6676,51 @@ func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessage
 type TransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundWireDrawdownPayment using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundWireDrawdownPayment into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5548,34 +6814,49 @@ func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorToBeneficiary
 //
 type TransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string `pjson:"previous_message_input_source"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
-	ReceiverFinancialInstitutionInformation *string `json:"receiver_financial_institution_information"`
+	ReceiverFinancialInstitutionInformation *string `pjson:"receiver_financial_institution_information"`
 	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation *string `json:"financial_institution_to_financial_institution_information"`
+	FinancialInstitutionToFinancialInstitutionInformation *string                `pjson:"financial_institution_to_financial_institution_information"`
+	jsonFields                                            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundWireReversal using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundWireReversal into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5675,44 +6956,59 @@ func (r *TransactionSourceInboundWireReversal) GetFinancialInstitutionToFinancia
 type TransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformationLine1 *string `json:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
 	//
-	OriginatorToBeneficiaryInformationLine2 *string `json:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
 	//
-	OriginatorToBeneficiaryInformationLine3 *string `json:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
 	//
-	OriginatorToBeneficiaryInformationLine4 *string `json:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInboundWireTransfer using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInboundWireTransfer into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundWireTransfer) GetAmount() (Amount int) {
+func (r *TransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5835,17 +7131,32 @@ func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInforma
 type TransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *TransactionSourceInternalSourceCurrency `json:"currency"`
+	Currency *TransactionSourceInternalSourceCurrency `pjson:"currency"`
 	//
-	Reason *TransactionSourceInternalSourceReason `json:"reason"`
+	Reason     *TransactionSourceInternalSourceReason `pjson:"reason"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceInternalSource using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceInternalSource into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInternalSource) GetAmount() (Amount int) {
+func (r *TransactionSourceInternalSource) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5896,27 +7207,42 @@ const (
 type TransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *TransactionSourceCardRouteRefundCurrency `json:"currency"`
+	Currency *TransactionSourceCardRouteRefundCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCardRouteRefund using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCardRouteRefund into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceCardRouteRefund) GetAmount() (Amount int) {
+func (r *TransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -5989,27 +7315,42 @@ const (
 type TransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *TransactionSourceCardRouteSettlementCurrency `json:"currency"`
+	Currency *TransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceCardRouteSettlement using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceCardRouteSettlement into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceCardRouteSettlement) GetAmount() (Amount int) {
+func (r *TransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6081,7 +7422,22 @@ const (
 //
 type TransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator *string `json:"originator"`
+	Originator *string                `pjson:"originator"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into TransactionSourceSampleFunds
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *TransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceSampleFunds into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Where the sample funds came from.
@@ -6095,19 +7451,35 @@ func (r *TransactionSourceSampleFunds) GetOriginator() (Originator string) {
 //
 type TransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceWireDrawdownPaymentIntention using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceWireDrawdownPaymentIntention into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *TransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int) {
+func (r *TransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6145,7 +7517,23 @@ func (r *TransactionSourceWireDrawdownPaymentIntention) GetTransferID() (Transfe
 //
 type TransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceWireDrawdownPaymentRejection using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceWireDrawdownPaymentRejection into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *TransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
@@ -6158,19 +7546,34 @@ func (r *TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (Transfe
 //
 type TransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceWireTransferIntention using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceWireTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceWireTransferIntention) GetAmount() (Amount int) {
+func (r *TransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6211,7 +7614,22 @@ func (r *TransactionSourceWireTransferIntention) GetTransferID() (TransferID str
 //
 type TransactionSourceWireTransferRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionSourceWireTransferRejection using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionSourceWireTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *TransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *TransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
@@ -6232,13 +7650,28 @@ type ListTransactionsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Transactions for those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route.
-	RouteID   *string                         `query:"route_id"`
-	CreatedAt *ListTransactionsQueryCreatedAt `query:"created_at"`
-	Category  *ListTransactionsQueryCategory  `query:"category"`
+	RouteID    *string                         `query:"route_id"`
+	CreatedAt  *ListTransactionsQueryCreatedAt `query:"created_at"`
+	Category   *ListTransactionsQueryCategory  `query:"category"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListTransactionsQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListTransactionsQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListTransactionsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -6251,7 +7684,7 @@ func (r *ListTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListTransactionsQuery) GetLimit() (Limit int) {
+func (r *ListTransactionsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -6291,16 +7724,31 @@ func (r *ListTransactionsQuery) GetCategory() (Category ListTransactionsQueryCat
 type ListTransactionsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListTransactionsQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListTransactionsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListTransactionsQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListTransactionsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -6342,7 +7790,22 @@ func (r *ListTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 type ListTransactionsQueryCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListTransactionsQueryCategoryIn `json:"in,omitempty"`
+	In         *[]ListTransactionsQueryCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}             `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListTransactionsQueryCategory
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListTransactionsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListTransactionsQueryCategory into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListTransactionsQueryCategory) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -6397,9 +7860,23 @@ const (
 //
 type TransactionList struct {
 	// The contents of the list.
-	Data *[]Transaction `json:"data"`
+	Data *[]Transaction `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into TransactionList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *TransactionList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes TransactionList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *TransactionList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -6437,38 +7914,52 @@ func (r *TransactionsPage) GetNextPage() (*TransactionsPage, error) {
 //
 type PendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 	// Transaction's currency. This will match the currency on the Pending
 	// Transcation's Account.
-	Currency *PendingTransactionCurrency `json:"currency"`
+	Currency *PendingTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Pending Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Pending Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Pending Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location.
-	Source *PendingTransactionSource `json:"source"`
+	Source *PendingTransactionSource `pjson:"source"`
 	// Whether the Pending Transaction has been confirmed and has an associated
 	// Transaction.
-	Status *PendingTransactionStatus `json:"status"`
+	Status *PendingTransactionStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
-	Type *PendingTransactionType `json:"type"`
+	Type       *PendingTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into PendingTransaction using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransaction into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *PendingTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account this Pending Transaction belongs to.
@@ -6481,7 +7972,7 @@ func (r *PendingTransaction) GetAccountID() (AccountID string) {
 
 // The Pending Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransaction) GetAmount() (Amount int) {
+func (r *PendingTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6586,35 +8077,50 @@ type PendingTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *PendingTransactionSourceCategory `json:"category"`
+	Category *PendingTransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
-	AccountTransferInstruction *PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction"`
+	AccountTransferInstruction *PendingTransactionSourceAccountTransferInstruction `pjson:"account_transfer_instruction"`
 	// A ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
-	ACHTransferInstruction *PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction"`
+	ACHTransferInstruction *PendingTransactionSourceACHTransferInstruction `pjson:"ach_transfer_instruction"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
-	CardAuthorization *PendingTransactionSourceCardAuthorization `json:"card_authorization"`
+	CardAuthorization *PendingTransactionSourceCardAuthorization `pjson:"card_authorization"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
-	CheckDepositInstruction *PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction"`
+	CheckDepositInstruction *PendingTransactionSourceCheckDepositInstruction `pjson:"check_deposit_instruction"`
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
-	CheckTransferInstruction *PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction"`
+	CheckTransferInstruction *PendingTransactionSourceCheckTransferInstruction `pjson:"check_transfer_instruction"`
 	// A Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
-	InboundFundsHold *PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold"`
+	InboundFundsHold *PendingTransactionSourceInboundFundsHold `pjson:"inbound_funds_hold"`
 	// A Deprecated Card Authorization object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_authorization`.
-	CardRouteAuthorization *PendingTransactionSourceCardRouteAuthorization `json:"card_route_authorization"`
+	CardRouteAuthorization *PendingTransactionSourceCardRouteAuthorization `pjson:"card_route_authorization"`
 	// A Wire Drawdown Payment Instruction object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `wire_drawdown_payment_instruction`.
-	WireDrawdownPaymentInstruction *PendingTransactionSourceWireDrawdownPaymentInstruction `json:"wire_drawdown_payment_instruction"`
+	WireDrawdownPaymentInstruction *PendingTransactionSourceWireDrawdownPaymentInstruction `pjson:"wire_drawdown_payment_instruction"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
-	WireTransferInstruction *PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction"`
+	WireTransferInstruction *PendingTransactionSourceWireTransferInstruction `pjson:"wire_transfer_instruction"`
+	jsonFields              map[string]interface{}                           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into PendingTransactionSource
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSource into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *PendingTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -6729,17 +8235,33 @@ const (
 type PendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency"`
+	Currency *PendingTransactionSourceAccountTransferInstructionCurrency `pjson:"currency"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceAccountTransferInstruction using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceAccountTransferInstruction into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceAccountTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6778,14 +8300,30 @@ const (
 type PendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceACHTransferInstruction using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceACHTransferInstruction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceACHTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6804,31 +8342,46 @@ func (r *PendingTransactionSourceACHTransferInstruction) GetTransferID() (Transf
 type PendingTransactionSourceCardAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *PendingTransactionSourceCardAuthorizationCurrency `json:"currency"`
+	Currency *PendingTransactionSourceCardAuthorizationCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCardAuthorization using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceCardAuthorization into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *PendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6912,21 +8465,37 @@ const (
 type PendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency"`
+	Currency *PendingTransactionSourceCheckDepositInstructionCurrency `pjson:"currency"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileID *string `json:"front_image_file_id"`
+	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileID *string `json:"back_image_file_id"`
+	BackImageFileID *string                `pjson:"back_image_file_id"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCheckDepositInstruction using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceCheckDepositInstruction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceCheckDepositInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -6975,17 +8544,33 @@ const (
 type PendingTransactionSourceCheckTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency"`
+	Currency *PendingTransactionSourceCheckTransferInstructionCurrency `pjson:"currency"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCheckTransferInstruction using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceCheckTransferInstruction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceCheckTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7024,24 +8609,39 @@ const (
 type PendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
-	Currency *PendingTransactionSourceInboundFundsHoldCurrency `json:"currency"`
+	Currency *PendingTransactionSourceInboundFundsHoldCurrency `pjson:"currency"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt *string `json:"automatically_releases_at"`
+	AutomaticallyReleasesAt *string `pjson:"automatically_releases_at"`
 	// When the hold was released (if it has been released).
-	ReleasedAt *string `json:"released_at"`
+	ReleasedAt *string `pjson:"released_at"`
 	// The status of the hold.
-	Status *PendingTransactionSourceInboundFundsHoldStatus `json:"status"`
+	Status *PendingTransactionSourceInboundFundsHoldStatus `pjson:"status"`
 	// The ID of the Transaction for which funds were held.
-	HeldTransactionID *string `json:"held_transaction_id"`
+	HeldTransactionID *string                `pjson:"held_transaction_id"`
+	jsonFields        map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceInboundFundsHold using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceInboundFundsHold into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *PendingTransactionSourceInboundFundsHold) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The held amount in the minor unit of the account's currency. For dollars, for
 // example, this is cents.
-func (r *PendingTransactionSourceInboundFundsHold) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7112,27 +8712,43 @@ const (
 type PendingTransactionSourceCardRouteAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *PendingTransactionSourceCardRouteAuthorizationCurrency `json:"currency"`
+	Currency *PendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string                `pjson:"merchant_state"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCardRouteAuthorization using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceCardRouteAuthorization into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceCardRouteAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7205,18 +8821,34 @@ const (
 type PendingTransactionSourceWireDrawdownPaymentInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceWireDrawdownPaymentInstruction using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceWireDrawdownPaymentInstruction
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7248,20 +8880,36 @@ func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRec
 type PendingTransactionSourceWireTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceWireTransferInstruction using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceWireTransferInstruction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceWireTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int) {
+func (r *PendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7314,14 +8962,29 @@ type ListPendingTransactionsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter pending transactions to those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter pending transactions to those belonging to the specified Route.
 	RouteID *string `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceID *string                             `query:"source_id"`
-	Status   *ListPendingTransactionsQueryStatus `query:"status"`
+	SourceID   *string                             `query:"source_id"`
+	Status     *ListPendingTransactionsQueryStatus `query:"status"`
+	jsonFields map[string]interface{}              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListPendingTransactionsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListPendingTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListPendingTransactionsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListPendingTransactionsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -7334,7 +8997,7 @@ func (r *ListPendingTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListPendingTransactionsQuery) GetLimit() (Limit int) {
+func (r *ListPendingTransactionsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -7375,7 +9038,22 @@ func (r *ListPendingTransactionsQuery) GetStatus() (Status ListPendingTransactio
 type ListPendingTransactionsQueryStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListPendingTransactionsQueryStatusIn `json:"in,omitempty"`
+	In         *[]ListPendingTransactionsQueryStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListPendingTransactionsQueryStatus using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListPendingTransactionsQueryStatus) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListPendingTransactionsQueryStatus into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListPendingTransactionsQueryStatus) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -7397,9 +9075,24 @@ const (
 //
 type PendingTransactionList struct {
 	// The contents of the list.
-	Data *[]PendingTransaction `json:"data"`
+	Data *[]PendingTransaction `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into PendingTransactionList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *PendingTransactionList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *PendingTransactionList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -7437,35 +9130,49 @@ func (r *PendingTransactionsPage) GetNextPage() (*PendingTransactionsPage, error
 //
 type DeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transcation's Account.
-	Currency *DeclinedTransactionCurrency `json:"currency"`
+	Currency *DeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This is the description the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Declined Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
 	// additional undocumented keys may appear in this object. These should be treated
 	// as deprecated and will be removed in the future.
-	Source *DeclinedTransactionSource `json:"source"`
+	Source *DeclinedTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type *DeclinedTransactionType `json:"type"`
+	Type       *DeclinedTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DeclinedTransaction using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransaction into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *DeclinedTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -7478,7 +9185,7 @@ func (r *DeclinedTransaction) GetAccountID() (AccountID string) {
 
 // The Declined Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *DeclinedTransaction) GetAmount() (Amount int) {
+func (r *DeclinedTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7574,26 +9281,41 @@ type DeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category *DeclinedTransactionSourceCategory `json:"category"`
+	Category *DeclinedTransactionSourceCategory `pjson:"category"`
 	// A ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
-	ACHDecline *DeclinedTransactionSourceACHDecline `json:"ach_decline"`
+	ACHDecline *DeclinedTransactionSourceACHDecline `pjson:"ach_decline"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline *DeclinedTransactionSourceCardDecline `json:"card_decline"`
+	CardDecline *DeclinedTransactionSourceCardDecline `pjson:"card_decline"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline *DeclinedTransactionSourceCheckDecline `json:"check_decline"`
+	CheckDecline *DeclinedTransactionSourceCheckDecline `pjson:"check_decline"`
 	// A Inbound Real Time Payments Transfer Decline object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline"`
+	InboundRealTimePaymentsTransferDecline *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `pjson:"inbound_real_time_payments_transfer_decline"`
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline *DeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline"`
+	InternationalACHDecline *DeclinedTransactionSourceInternationalACHDecline `pjson:"international_ach_decline"`
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline *DeclinedTransactionSourceCardRouteDecline `json:"card_route_decline"`
+	CardRouteDecline *DeclinedTransactionSourceCardRouteDecline `pjson:"card_route_decline"`
+	jsonFields       map[string]interface{}                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DeclinedTransactionSource
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSource into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -7677,28 +9399,43 @@ const (
 type DeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *DeclinedTransactionSourceACHDeclineReason `json:"reason"`
+	Reason *DeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceACHDecline using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceACHDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceACHDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7781,35 +9518,50 @@ const (
 type DeclinedTransactionSourceCardDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *DeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
+	Currency *DeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
-	Reason *DeclinedTransactionSourceCardDeclineReason `json:"reason"`
+	Reason *DeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceCardDecline using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceCardDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceCardDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7923,16 +9675,31 @@ const (
 type DeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
-	Reason *DeclinedTransactionSourceCheckDeclineReason `json:"reason"`
+	Reason     *DeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
+	jsonFields map[string]interface{}                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceCheckDecline using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceCheckDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceCheckDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -7974,30 +9741,46 @@ const (
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real Time Payments
 	// transfer.
-	Currency *DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency"`
+	Currency *DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `pjson:"currency"`
 	// Why the transfer was declined.
-	Reason *DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason"`
+	Reason *DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `pjson:"reason"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -8095,82 +9878,98 @@ const (
 type DeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceInternationalACHDecline using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceInternationalACHDecline into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *DeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -8212,7 +10011,7 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) GetDestinationCurrenc
 	return
 }
 
-func (r *DeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *DeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -8426,27 +10225,42 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) GetTraceNumber() (Tra
 type DeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *DeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
+	Currency *DeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceCardRouteDecline using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceCardRouteDecline into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *DeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *DeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int) {
+func (r *DeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -8526,12 +10340,27 @@ type ListDeclinedTransactionsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Declined Transactions to ones belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteID   *string                                 `query:"route_id"`
-	CreatedAt *ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
+	RouteID    *string                                 `query:"route_id"`
+	CreatedAt  *ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListDeclinedTransactionsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListDeclinedTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDeclinedTransactionsQuery into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListDeclinedTransactionsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -8544,7 +10373,7 @@ func (r *ListDeclinedTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int) {
+func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -8577,16 +10406,31 @@ func (r *ListDeclinedTransactionsQuery) GetCreatedAt() (CreatedAt ListDeclinedTr
 type ListDeclinedTransactionsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListDeclinedTransactionsQueryCreatedAt using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListDeclinedTransactionsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDeclinedTransactionsQueryCreatedAt into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ListDeclinedTransactionsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -8628,9 +10472,24 @@ func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore str
 //
 type DeclinedTransactionList struct {
 	// The contents of the list.
-	Data *[]DeclinedTransaction `json:"data"`
+	Data *[]DeclinedTransaction `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DeclinedTransactionList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *DeclinedTransactionList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *DeclinedTransactionList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -8668,23 +10527,37 @@ func (r *DeclinedTransactionsPage) GetNextPage() (*DeclinedTransactionsPage, err
 //
 type Limit struct {
 	// The Limit identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The interval for the metric. This is required if `metric` is `count` or
 	// `volume`.
-	Interval *LimitInterval `json:"interval"`
+	Interval *LimitInterval `pjson:"interval"`
 	// The metric for the Limit.
-	Metric *LimitMetric `json:"metric"`
+	Metric *LimitMetric `pjson:"metric"`
 	// The identifier of the Account Number, Account, or Card the Limit applies to.
-	ModelID *string `json:"model_id"`
+	ModelID *string `pjson:"model_id"`
 	// The type of the model you wish to associate the Limit with.
-	ModelType *LimitModelType `json:"model_type"`
+	ModelType *LimitModelType `pjson:"model_type"`
 	// The current status of the Limit.
-	Status *LimitStatus `json:"status"`
+	Status *LimitStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `limit`.
-	Type *LimitType `json:"type"`
+	Type *LimitType `pjson:"type"`
 	// The value to evaluate the Limit against.
-	Value *int `json:"value"`
+	Value      *int64                 `pjson:"value"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Limit using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Limit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Limit into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Limit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Limit identifier.
@@ -8746,7 +10619,7 @@ func (r *Limit) GetType() (Type LimitType) {
 }
 
 // The value to evaluate the Limit against.
-func (r *Limit) GetValue() (Value int) {
+func (r *Limit) GetValue() (Value int64) {
 	if r != nil && r.Value != nil {
 		Value = *r.Value
 	}
@@ -8794,14 +10667,29 @@ const (
 
 type CreateALimitParameters struct {
 	// The metric for the limit.
-	Metric *CreateALimitParametersMetric `json:"metric"`
+	Metric *CreateALimitParametersMetric `pjson:"metric"`
 	// The interval for the metric. Required if `metric` is `count` or `volume`.
-	Interval *CreateALimitParametersInterval `json:"interval,omitempty"`
+	Interval *CreateALimitParametersInterval `pjson:"interval"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
-	ModelID *string `json:"model_id"`
+	ModelID *string `pjson:"model_id"`
 	// The value to test the limit against.
-	Value *int `json:"value"`
+	Value      *int64                 `pjson:"value"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateALimitParameters using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateALimitParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateALimitParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CreateALimitParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The metric for the limit.
@@ -8830,7 +10718,7 @@ func (r *CreateALimitParameters) GetModelID() (ModelID string) {
 }
 
 // The value to test the limit against.
-func (r *CreateALimitParameters) GetValue() (Value int) {
+func (r *CreateALimitParameters) GetValue() (Value int64) {
 	if r != nil && r.Value != nil {
 		Value = *r.Value
 	}
@@ -8857,7 +10745,22 @@ const (
 
 type UpdateALimitParameters struct {
 	// The status to update the limit with.
-	Status *UpdateALimitParametersStatus `json:"status"`
+	Status     *UpdateALimitParametersStatus `pjson:"status"`
+	jsonFields map[string]interface{}        `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into UpdateALimitParameters using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *UpdateALimitParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateALimitParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *UpdateALimitParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The status to update the limit with.
@@ -8880,11 +10783,25 @@ type ListLimitsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// The model to retrieve limits for.
 	ModelID *string `query:"model_id"`
 	// The status to retrieve limits for.
-	Status *string `query:"status"`
+	Status     *string                `query:"status"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListLimitsQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListLimitsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListLimitsQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListLimitsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -8897,7 +10814,7 @@ func (r *ListLimitsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListLimitsQuery) GetLimit() (Limit int) {
+func (r *ListLimitsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -8923,9 +10840,23 @@ func (r *ListLimitsQuery) GetStatus() (Status string) {
 //
 type LimitList struct {
 	// The contents of the list.
-	Data *[]Limit `json:"data"`
+	Data *[]Limit `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into LimitList using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *LimitList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes LimitList into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *LimitList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -8963,41 +10894,55 @@ func (r *LimitsPage) GetNextPage() (*LimitsPage, error) {
 //
 type AccountTransfer struct {
 	// The account transfer's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The transfer amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The Account to which the transfer belongs.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *AccountTransferCurrency `json:"currency"`
+	Currency *AccountTransferCurrency `pjson:"currency"`
 	// The destination account's identifier.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// The ID for the transaction receiving the transfer.
-	DestinationTransactionID *string `json:"destination_transaction_id"`
+	DestinationTransactionID *string `pjson:"destination_transaction_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The description that will show on the transactions.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The transfer's network.
-	Network *AccountTransferNetwork `json:"network"`
+	Network *AccountTransferNetwork `pjson:"network"`
 	// The lifecycle status of the transfer.
-	Status *AccountTransferStatus `json:"status"`
+	Status *AccountTransferStatus `pjson:"status"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID *string `json:"template_id"`
+	TemplateID *string `pjson:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval *AccountTransferApproval `json:"approval"`
+	Approval *AccountTransferApproval `pjson:"approval"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation *AccountTransferCancellation `json:"cancellation"`
+	Cancellation *AccountTransferCancellation `pjson:"cancellation"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
-	Type *AccountTransferType `json:"type"`
+	Type       *AccountTransferType   `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountTransfer into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The account transfer's identifier.
@@ -9010,7 +10955,7 @@ func (r *AccountTransfer) GetID() (ID string) {
 
 // The transfer amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *AccountTransfer) GetAmount() (Amount int) {
+func (r *AccountTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -9158,7 +11103,22 @@ const (
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string `json:"approved_at"`
+	ApprovedAt *string                `pjson:"approved_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountTransferApproval using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *AccountTransferApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountTransferApproval into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *AccountTransferApproval) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9174,7 +11134,22 @@ func (r *AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
 type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string `json:"canceled_at"`
+	CanceledAt *string                `pjson:"canceled_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountTransferCancellation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountTransferCancellation into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *AccountTransferCancellation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9194,16 +11169,31 @@ const (
 
 type CreateAnAccountTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The transfer amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description you choose to give the transfer.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The identifier for the account that will receive the transfer.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
-	RequireApproval *bool `json:"require_approval,omitempty"`
+	RequireApproval *bool                  `pjson:"require_approval"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnAccountTransferParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *CreateAnAccountTransferParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnAccountTransferParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnAccountTransferParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account that will send the transfer.
@@ -9216,7 +11206,7 @@ func (r *CreateAnAccountTransferParameters) GetAccountID() (AccountID string) {
 
 // The transfer amount in the minor unit of the account currency. For dollars, for
 // example, this is cents.
-func (r *CreateAnAccountTransferParameters) GetAmount() (Amount int) {
+func (r *CreateAnAccountTransferParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -9252,10 +11242,25 @@ type ListAccountTransfersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Account Transfers to those that originated from the specified Account.
-	AccountID *string                             `query:"account_id"`
-	CreatedAt *ListAccountTransfersQueryCreatedAt `query:"created_at"`
+	AccountID  *string                             `query:"account_id"`
+	CreatedAt  *ListAccountTransfersQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListAccountTransfersQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListAccountTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountTransfersQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListAccountTransfersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -9268,7 +11273,7 @@ func (r *ListAccountTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountTransfersQuery) GetLimit() (Limit int) {
+func (r *ListAccountTransfersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -9293,16 +11298,31 @@ func (r *ListAccountTransfersQuery) GetCreatedAt() (CreatedAt ListAccountTransfe
 type ListAccountTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListAccountTransfersQueryCreatedAt using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListAccountTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountTransfersQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListAccountTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -9344,9 +11364,23 @@ func (r *ListAccountTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string)
 //
 type AccountTransferList struct {
 	// The contents of the list.
-	Data *[]AccountTransfer `json:"data"`
+	Data *[]AccountTransfer `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountTransferList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountTransferList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountTransferList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *AccountTransferList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -9384,71 +11418,85 @@ func (r *AccountTransfersPage) GetNextPage() (*AccountTransfersPage, error) {
 //
 type ACHTransfer struct {
 	// The Account to which the transfer belongs.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// Additional information that will be sent to the recipient.
-	Addendum *string `json:"addendum"`
+	Addendum *string `pjson:"addendum"`
 	// The transfer amount in USD cents. A positive amount indicates a credit transfer
 	// pushing funds to the receiving account. A negative amount indicates a debit
 	// transfer pulling funds from the receiving account.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For ACH transfers this is always equal to `usd`.
-	Currency *ACHTransferCurrency `json:"currency"`
+	Currency *ACHTransferCurrency `pjson:"currency"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval *ACHTransferApproval `json:"approval"`
+	Approval *ACHTransferApproval `pjson:"approval"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation *ACHTransferCancellation `json:"cancellation"`
+	Cancellation *ACHTransferCancellation `pjson:"cancellation"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID *string `json:"external_account_id"`
+	ExternalAccountID *string `pjson:"external_account_id"`
 	// The ACH transfer's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The transfer's network.
-	Network *ACHTransferNetwork `json:"network"`
+	Network *ACHTransferNetwork `pjson:"network"`
 	// If the receiving bank accepts the transfer but notifies that future transfers
 	// should use different details, this will contain those details.
-	NotificationOfChange *ACHTransferNotificationOfChange `json:"notification_of_change"`
+	NotificationOfChange *ACHTransferNotificationOfChange `pjson:"notification_of_change"`
 	// If your transfer is returned, this will contain details of the return.
-	Return *ACHTransferReturn `json:"return"`
+	Return *ACHTransferReturn `pjson:"return"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The descriptor that will show on the recipient's bank statement.
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The lifecycle status of the transfer.
-	Status *ACHTransferStatus `json:"status"`
+	Status *ACHTransferStatus `pjson:"status"`
 	// After the transfer is submitted to FedACH, this will contain supplemental
 	// details.
-	Submission *ACHTransferSubmission `json:"submission"`
+	Submission *ACHTransferSubmission `pjson:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID *string `json:"template_id"`
+	TemplateID *string `pjson:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate *string `json:"company_descriptive_date"`
+	CompanyDescriptiveDate *string `pjson:"company_descriptive_date"`
 	// The data you chose to associate with the transfer.
-	CompanyDiscretionaryData *string `json:"company_discretionary_data"`
+	CompanyDiscretionaryData *string `pjson:"company_discretionary_data"`
 	// The description of the transfer you set to be shown to the recipient.
-	CompanyEntryDescription *string `json:"company_entry_description"`
+	CompanyEntryDescription *string `pjson:"company_entry_description"`
 	// The name by which the recipient knows you.
-	CompanyName *string `json:"company_name"`
+	CompanyName *string `pjson:"company_name"`
 	// The type of the account to which the transfer will be sent.
-	Funding *ACHTransferFunding `json:"funding"`
+	Funding *ACHTransferFunding `pjson:"funding"`
 	// Your identifer for the transfer recipient.
-	IndividualID *string `json:"individual_id"`
+	IndividualID *string `pjson:"individual_id"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
-	IndividualName *string `json:"individual_name"`
+	IndividualName *string `pjson:"individual_name"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
-	StandardEntryClassCode *ACHTransferStandardEntryClassCode `json:"standard_entry_class_code"`
+	StandardEntryClassCode *ACHTransferStandardEntryClassCode `pjson:"standard_entry_class_code"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
-	Type *ACHTransferType `json:"type"`
+	Type       *ACHTransferType       `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransfer into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account to which the transfer belongs.
@@ -9478,7 +11526,7 @@ func (r *ACHTransfer) GetAddendum() (Addendum string) {
 // The transfer amount in USD cents. A positive amount indicates a credit transfer
 // pushing funds to the receiving account. A negative amount indicates a debit
 // transfer pulling funds from the receiving account.
-func (r *ACHTransfer) GetAmount() (Amount int) {
+func (r *ACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -9700,7 +11748,21 @@ const (
 type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string `json:"approved_at"`
+	ApprovedAt *string                `pjson:"approved_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferApproval using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferApproval into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ACHTransferApproval) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9716,7 +11778,22 @@ func (r *ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
 type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string `json:"canceled_at"`
+	CanceledAt *string                `pjson:"canceled_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferCancellation using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferCancellation into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ACHTransferCancellation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9738,11 +11815,26 @@ const (
 type ACHTransferNotificationOfChange struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The type of change that occurred.
-	ChangeCode *string `json:"change_code"`
+	ChangeCode *string `pjson:"change_code"`
 	// The corrected data.
-	CorrectedData *string `json:"corrected_data"`
+	CorrectedData *string                `pjson:"corrected_data"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferNotificationOfChange using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferNotificationOfChange into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ACHTransferNotificationOfChange) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9774,13 +11866,27 @@ func (r *ACHTransferNotificationOfChange) GetCorrectedData() (CorrectedData stri
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the ACH Transfer was returned.
-	ReturnReasonCode *ACHTransferReturnReturnReasonCode `json:"return_reason_code"`
+	ReturnReasonCode *ACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferReturn using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferReturn into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ACHTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -9859,9 +11965,24 @@ const (
 //
 type ACHTransferSubmission struct {
 	// The trace number for the submission.
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string `pjson:"trace_number"`
 	// When the ACH transfer was sent to FedACH.
-	SubmittedAt *string `json:"submitted_at"`
+	SubmittedAt *string                `pjson:"submitted_at"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferSubmission using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSubmission into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ACHTransferSubmission) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The trace number for the submission.
@@ -9903,55 +12024,70 @@ const (
 
 type CreateAnACHTransferParameters struct {
 	// The Increase identifier for the account that will send the transfer.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The account number for the destination account.
-	AccountNumber *string `json:"account_number,omitempty"`
+	AccountNumber *string `pjson:"account_number"`
 	// Additional information that will be sent to the recipient. This is included in
 	// the transfer data sent to the receiving bank.
-	Addendum *string `json:"addendum,omitempty"`
+	Addendum *string `pjson:"addendum"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description of the date of the transfer, usually in the format `YYYYMMDD`.
 	// This is included in the transfer data sent to the receiving bank.
-	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
+	CompanyDescriptiveDate *string `pjson:"company_descriptive_date"`
 	// The data you choose to associate with the transfer. This is included in the
 	// transfer data sent to the receiving bank.
-	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
+	CompanyDiscretionaryData *string `pjson:"company_discretionary_data"`
 	// A description of the transfer. This is included in the transfer data sent to the
 	// receiving bank.
-	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
+	CompanyEntryDescription *string `pjson:"company_entry_description"`
 	// The name by which the recipient knows you. This is included in the transfer data
 	// sent to the receiving bank.
-	CompanyName *string `json:"company_name,omitempty"`
+	CompanyName *string `pjson:"company_name"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `json:"effective_date,omitempty"`
+	EffectiveDate *string `pjson:"effective_date"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
-	ExternalAccountID *string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `pjson:"external_account_id"`
 	// The type of the account to which the transfer will be sent.
-	Funding *CreateAnACHTransferParametersFunding `json:"funding,omitempty"`
+	Funding *CreateAnACHTransferParametersFunding `pjson:"funding"`
 	// Your identifer for the transfer recipient.
-	IndividualID *string `json:"individual_id,omitempty"`
+	IndividualID *string `pjson:"individual_id"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
-	IndividualName *string `json:"individual_name,omitempty"`
+	IndividualName *string `pjson:"individual_name"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
-	RequireApproval *bool `json:"require_approval,omitempty"`
+	RequireApproval *bool `pjson:"require_approval"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber *string `json:"routing_number,omitempty"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
-	StandardEntryClassCode *CreateAnACHTransferParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
+	StandardEntryClassCode *CreateAnACHTransferParametersStandardEntryClassCode `pjson:"standard_entry_class_code"`
 	// A description you choose to give the transfer. This will be saved with the
 	// transfer details, displayed in the dashboard, and returned by the API. If
 	// `individual_name` and `company_name` are not explicitly set by this API, the
 	// `statement_descriptor` will be sent in those fields to the receiving bank to
 	// help the customer recognize the transfer. You are highly encouraged to pass
 	// `individual_name` and `company_name` instead of relying on this fallback.
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string                `pjson:"statement_descriptor"`
+	jsonFields          map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAnACHTransferParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnACHTransferParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnACHTransferParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnACHTransferParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Increase identifier for the account that will send the transfer.
@@ -9982,7 +12118,7 @@ func (r *CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
 // The transfer amount in cents. A positive amount originates a credit transfer
 // pushing funds to the receiving account. A negative amount originates a debit
 // transfer pulling funds from the receiving account.
-func (r *CreateAnACHTransferParameters) GetAmount() (Amount int) {
+func (r *CreateAnACHTransferParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -10126,12 +12262,27 @@ type ListACHTransfersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter ACH Transfers to those that originated from the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter ACH Transfers to those made to the specified External Account.
 	ExternalAccountID *string                         `query:"external_account_id"`
 	CreatedAt         *ListACHTransfersQueryCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListACHTransfersQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListACHTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListACHTransfersQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListACHTransfersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -10144,7 +12295,7 @@ func (r *ListACHTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListACHTransfersQuery) GetLimit() (Limit int) {
+func (r *ListACHTransfersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -10177,16 +12328,31 @@ func (r *ListACHTransfersQuery) GetCreatedAt() (CreatedAt ListACHTransfersQueryC
 type ListACHTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListACHTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListACHTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListACHTransfersQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListACHTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -10228,9 +12394,23 @@ func (r *ListACHTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type ACHTransferList struct {
 	// The contents of the list.
-	Data *[]ACHTransfer `json:"data"`
+	Data *[]ACHTransfer `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ACHTransferList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -10268,35 +12448,49 @@ func (r *ACHTransfersPage) GetNextPage() (*ACHTransfersPage, error) {
 //
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// Additional information for the recipient.
-	Addendum *string `json:"addendum"`
+	Addendum *string `pjson:"addendum"`
 	// The description of the date of the notification.
-	CompanyDescriptiveDate *string `json:"company_descriptive_date"`
+	CompanyDescriptiveDate *string `pjson:"company_descriptive_date"`
 	// Optional data associated with the notification.
-	CompanyDiscretionaryData *string `json:"company_discretionary_data"`
+	CompanyDiscretionaryData *string `pjson:"company_discretionary_data"`
 	// The description of the notification.
-	CompanyEntryDescription *string `json:"company_entry_description"`
+	CompanyEntryDescription *string `pjson:"company_entry_description"`
 	// The name by which you know the company.
-	CompanyName *string `json:"company_name"`
+	CompanyName *string `pjson:"company_name"`
 	// If the notification is for a future credit or debit.
-	CreditDebitIndicator *ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator"`
+	CreditDebitIndicator *ACHPrenotificationCreditDebitIndicator `pjson:"credit_debit_indicator"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `json:"effective_date"`
+	EffectiveDate *string `pjson:"effective_date"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// If your prenotification is returned, this will contain details of the return.
-	PrenotificationReturn *ACHPrenotificationPrenotificationReturn `json:"prenotification_return"`
+	PrenotificationReturn *ACHPrenotificationPrenotificationReturn `pjson:"prenotification_return"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the prenotification was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The lifecycle status of the ACH Prenotification.
-	Status *ACHPrenotificationStatus `json:"status"`
+	Status *ACHPrenotificationStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_prenotification`.
-	Type *ACHPrenotificationType `json:"type"`
+	Type       *ACHPrenotificationType `pjson:"type"`
+	jsonFields map[string]interface{}  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHPrenotification using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHPrenotification into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ACHPrenotification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ACH Prenotification's identifier.
@@ -10424,9 +12618,24 @@ const (
 type ACHPrenotificationPrenotificationReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Prenotification was returned.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the Prenotification was returned.
-	ReturnReasonCode *string `json:"return_reason_code"`
+	ReturnReasonCode *string                `pjson:"return_reason_code"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHPrenotificationPrenotificationReturn using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHPrenotificationPrenotificationReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHPrenotificationPrenotificationReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -10463,32 +12672,47 @@ const (
 
 type CreateAnACHPrenotificationParameters struct {
 	// The account number for the destination account.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// Additional information that will be sent to the recipient.
-	Addendum *string `json:"addendum,omitempty"`
+	Addendum *string `pjson:"addendum"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
+	CompanyDescriptiveDate *string `pjson:"company_descriptive_date"`
 	// The data you choose to associate with the transfer.
-	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
+	CompanyDiscretionaryData *string `pjson:"company_discretionary_data"`
 	// The description of the transfer you wish to be shown to the recipient.
-	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
+	CompanyEntryDescription *string `pjson:"company_entry_description"`
 	// The name by which the recipient knows you.
-	CompanyName *string `json:"company_name,omitempty"`
+	CompanyName *string `pjson:"company_name"`
 	// Whether the Prenotification is for a future debit or credit.
-	CreditDebitIndicator *CreateAnACHPrenotificationParametersCreditDebitIndicator `json:"credit_debit_indicator,omitempty"`
+	CreditDebitIndicator *CreateAnACHPrenotificationParametersCreditDebitIndicator `pjson:"credit_debit_indicator"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `json:"effective_date,omitempty"`
+	EffectiveDate *string `pjson:"effective_date"`
 	// Your identifer for the transfer recipient.
-	IndividualID *string `json:"individual_id,omitempty"`
+	IndividualID *string `pjson:"individual_id"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
-	IndividualName *string `json:"individual_name,omitempty"`
+	IndividualName *string `pjson:"individual_name"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
-	StandardEntryClassCode *CreateAnACHPrenotificationParametersStandardEntryClassCode `json:"standard_entry_class_code,omitempty"`
+	StandardEntryClassCode *CreateAnACHPrenotificationParametersStandardEntryClassCode `pjson:"standard_entry_class_code"`
+	jsonFields             map[string]interface{}                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnACHPrenotificationParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnACHPrenotificationParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnACHPrenotificationParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnACHPrenotificationParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The account number for the destination account.
@@ -10610,8 +12834,23 @@ type ListACHPrenotificationsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     *int                                   `query:"limit"`
-	CreatedAt *ListACHPrenotificationsQueryCreatedAt `query:"created_at"`
+	Limit      *int64                                 `query:"limit"`
+	CreatedAt  *ListACHPrenotificationsQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListACHPrenotificationsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListACHPrenotificationsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListACHPrenotificationsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListACHPrenotificationsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -10624,7 +12863,7 @@ func (r *ListACHPrenotificationsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListACHPrenotificationsQuery) GetLimit() (Limit int) {
+func (r *ListACHPrenotificationsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -10641,16 +12880,31 @@ func (r *ListACHPrenotificationsQuery) GetCreatedAt() (CreatedAt ListACHPrenotif
 type ListACHPrenotificationsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListACHPrenotificationsQueryCreatedAt using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListACHPrenotificationsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListACHPrenotificationsQueryCreatedAt into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ListACHPrenotificationsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -10692,9 +12946,24 @@ func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrBefore() (OnOrBefore stri
 //
 type ACHPrenotificationList struct {
 	// The contents of the list.
-	Data *[]ACHPrenotification `json:"data"`
+	Data *[]ACHPrenotification `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHPrenotificationList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHPrenotificationList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHPrenotificationList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ACHPrenotificationList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -10732,19 +13001,33 @@ func (r *ACHPrenotificationsPage) GetNextPage() (*ACHPrenotificationsPage, error
 //
 type Document struct {
 	// The Document identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The type of document.
-	Category *DocumentCategory `json:"category"`
+	Category *DocumentCategory `pjson:"category"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Document was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The identifier of the Entity the document was generated for.
-	EntityID *string `json:"entity_id"`
+	EntityID *string `pjson:"entity_id"`
 	// The identifier of the File containing the Document's contents.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `document`.
-	Type *DocumentType `json:"type"`
+	Type       *DocumentType          `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Document using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Document) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Document into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Document) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Document identifier.
@@ -10814,11 +13097,25 @@ type ListDocumentsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Documents to ones belonging to the specified Entity.
-	EntityID  *string                      `query:"entity_id"`
-	Category  *ListDocumentsQueryCategory  `query:"category"`
-	CreatedAt *ListDocumentsQueryCreatedAt `query:"created_at"`
+	EntityID   *string                      `query:"entity_id"`
+	Category   *ListDocumentsQueryCategory  `query:"category"`
+	CreatedAt  *ListDocumentsQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListDocumentsQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListDocumentsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDocumentsQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListDocumentsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -10831,7 +13128,7 @@ func (r *ListDocumentsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDocumentsQuery) GetLimit() (Limit int) {
+func (r *ListDocumentsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -10863,7 +13160,22 @@ func (r *ListDocumentsQuery) GetCreatedAt() (CreatedAt ListDocumentsQueryCreated
 type ListDocumentsQueryCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListDocumentsQueryCategoryIn `json:"in,omitempty"`
+	In         *[]ListDocumentsQueryCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListDocumentsQueryCategory
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListDocumentsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDocumentsQueryCategory into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListDocumentsQueryCategory) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -10884,16 +13196,31 @@ const (
 type ListDocumentsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListDocumentsQueryCreatedAt
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListDocumentsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListDocumentsQueryCreatedAt into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListDocumentsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -10935,9 +13262,23 @@ func (r *ListDocumentsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type DocumentList struct {
 	// The contents of the list.
-	Data *[]Document `json:"data"`
+	Data *[]Document `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into DocumentList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *DocumentList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DocumentList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *DocumentList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -10975,55 +13316,69 @@ func (r *DocumentsPage) GetNextPage() (*DocumentsPage, error) {
 //
 type WireTransfer struct {
 	// The wire transfer's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For wire transfers this is always equal to `usd`.
-	Currency *WireTransferCurrency `json:"currency"`
+	Currency *WireTransferCurrency `pjson:"currency"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The beneficiary's name.
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	// The beneficiary's address line 1.
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	// The beneficiary's address line 2.
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	// The beneficiary's address line 3.
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	// The Account to which the transfer belongs.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID *string `json:"external_account_id"`
+	ExternalAccountID *string `pjson:"external_account_id"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval *WireTransferApproval `json:"approval"`
+	Approval *WireTransferApproval `pjson:"approval"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation *WireTransferCancellation `json:"cancellation"`
+	Cancellation *WireTransferCancellation `pjson:"cancellation"`
 	// If your transfer is reversed, this will contain details of the reversal.
-	Reversal *WireTransferReversal `json:"reversal"`
+	Reversal *WireTransferReversal `pjson:"reversal"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The transfer's network.
-	Network *WireTransferNetwork `json:"network"`
+	Network *WireTransferNetwork `pjson:"network"`
 	// The lifecycle status of the transfer.
-	Status *WireTransferStatus `json:"status"`
+	Status *WireTransferStatus `pjson:"status"`
 	// After the transfer is submitted to Fedwire, this will contain supplemental
 	// details.
-	Submission *WireTransferSubmission `json:"submission"`
+	Submission *WireTransferSubmission `pjson:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID *string `json:"template_id"`
+	TemplateID *string `pjson:"template_id"`
 	// The ID for the transaction funding the transfer.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
-	Type *WireTransferType `json:"type"`
+	Type       *WireTransferType      `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransfer into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *WireTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The wire transfer's identifier.
@@ -11043,7 +13398,7 @@ func (r *WireTransfer) GetMessageToRecipient() (MessageToRecipient string) {
 }
 
 // The transfer amount in USD cents.
-func (r *WireTransfer) GetAmount() (Amount int) {
+func (r *WireTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -11223,7 +13578,22 @@ const (
 type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string `json:"approved_at"`
+	ApprovedAt *string                `pjson:"approved_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferApproval using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferApproval into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireTransferApproval) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -11239,7 +13609,22 @@ func (r *WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
 type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string `json:"canceled_at"`
+	CanceledAt *string                `pjson:"canceled_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferCancellation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferCancellation into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireTransferCancellation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -11254,34 +13639,49 @@ func (r *WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
 //
 type WireTransferReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string `pjson:"previous_message_input_source"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
-	ReceiverFinancialInstitutionInformation *string `json:"receiver_financial_institution_information"`
+	ReceiverFinancialInstitutionInformation *string `pjson:"receiver_financial_institution_information"`
 	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation *string `json:"financial_institution_to_financial_institution_information"`
+	FinancialInstitutionToFinancialInstitutionInformation *string                `pjson:"financial_institution_to_financial_institution_information"`
+	jsonFields                                            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferReversal using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferReversal into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireTransferReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *WireTransferReversal) GetAmount() (Amount int) {
+func (r *WireTransferReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -11398,9 +13798,24 @@ const (
 //
 type WireTransferSubmission struct {
 	// The accountability data for the submission.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// When this wire transfer was submitted to Fedwire.
-	SubmittedAt *string `json:"submitted_at"`
+	SubmittedAt *string                `pjson:"submitted_at"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferSubmission using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSubmission into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireTransferSubmission) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The accountability data for the submission.
@@ -11427,29 +13842,44 @@ const (
 
 type CreateAWireTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The account number for the destination account.
-	AccountNumber *string `json:"account_number,omitempty"`
+	AccountNumber *string `pjson:"account_number"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber *string `json:"routing_number,omitempty"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
-	ExternalAccountID *string `json:"external_account_id,omitempty"`
+	ExternalAccountID *string `pjson:"external_account_id"`
 	// The transfer amount in cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	// The beneficiary's name.
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	// The beneficiary's address line 1.
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1,omitempty"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	// The beneficiary's address line 2.
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2,omitempty"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	// The beneficiary's address line 3.
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3,omitempty"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
-	RequireApproval *bool `json:"require_approval,omitempty"`
+	RequireApproval *bool                  `pjson:"require_approval"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAWireTransferParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAWireTransferParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAWireTransferParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAWireTransferParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account that will send the transfer.
@@ -11487,7 +13917,7 @@ func (r *CreateAWireTransferParameters) GetExternalAccountID() (ExternalAccountI
 }
 
 // The transfer amount in cents.
-func (r *CreateAWireTransferParameters) GetAmount() (Amount int) {
+func (r *CreateAWireTransferParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -11547,12 +13977,27 @@ type ListWireTransfersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Wire Transfers to those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Wire Transfers to those made to the specified External Account.
 	ExternalAccountID *string                          `query:"external_account_id"`
 	CreatedAt         *ListWireTransfersQueryCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListWireTransfersQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListWireTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListWireTransfersQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListWireTransfersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -11565,7 +14010,7 @@ func (r *ListWireTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListWireTransfersQuery) GetLimit() (Limit int) {
+func (r *ListWireTransfersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -11598,16 +14043,31 @@ func (r *ListWireTransfersQuery) GetCreatedAt() (CreatedAt ListWireTransfersQuer
 type ListWireTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListWireTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListWireTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListWireTransfersQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListWireTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -11649,9 +14109,23 @@ func (r *ListWireTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type WireTransferList struct {
 	// The contents of the list.
-	Data *[]WireTransfer `json:"data"`
+	Data *[]WireTransfer `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *WireTransferList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -11689,55 +14163,69 @@ func (r *WireTransfersPage) GetNextPage() (*WireTransfersPage, error) {
 //
 type CheckTransfer struct {
 	// The identifier of the Account from which funds will be transferred.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The return address to be printed on the check.
-	ReturnAddress *CheckTransferReturnAddress `json:"return_address"`
+	ReturnAddress *CheckTransferReturnAddress `pjson:"return_address"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *CheckTransferCurrency `json:"currency"`
+	Currency *CheckTransferCurrency `pjson:"currency"`
 	// The Check transfer's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt *string `json:"mailed_at"`
+	MailedAt *string `pjson:"mailed_at"`
 	// The descriptor that is printed on the check.
-	Message *string `json:"message"`
+	Message *string `pjson:"message"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// The lifecycle status of the transfer.
-	Status *CheckTransferStatus `json:"status"`
+	Status *CheckTransferStatus `pjson:"status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was submitted.
-	SubmittedAt *string `json:"submitted_at"`
+	SubmittedAt *string `pjson:"submitted_at"`
 	// After the transfer is submitted, this will contain supplemental details.
-	Submission *CheckTransferSubmission `json:"submission"`
+	Submission *CheckTransferSubmission `pjson:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID *string `json:"template_id"`
+	TemplateID *string `pjson:"template_id"`
 	// The ID for the transaction caused by the transfer.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// After a stop-payment is requested on the check, this will contain supplemental
 	// details.
-	StopPaymentRequest *CheckTransferStopPaymentRequest `json:"stop_payment_request"`
+	StopPaymentRequest *CheckTransferStopPaymentRequest `pjson:"stop_payment_request"`
 	// After a check transfer is deposited, this will contain supplemental details.
-	Deposit *CheckTransferDeposit `json:"deposit"`
+	Deposit *CheckTransferDeposit `pjson:"deposit"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
-	Type *CheckTransferType `json:"type"`
+	Type       *CheckTransferType     `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransfer into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CheckTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account from which funds will be transferred.
@@ -11797,7 +14285,7 @@ func (r *CheckTransfer) GetReturnAddress() (ReturnAddress CheckTransferReturnAdd
 }
 
 // The transfer amount in USD cents.
-func (r *CheckTransfer) GetAmount() (Amount int) {
+func (r *CheckTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -11925,17 +14413,32 @@ func (r *CheckTransfer) GetType() (Type CheckTransferType) {
 //
 type CheckTransferReturnAddress struct {
 	// The name of the address.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The US state of the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The postal code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferReturnAddress
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferReturnAddress into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckTransferReturnAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The name of the address.
@@ -12017,7 +14520,22 @@ const (
 //
 type CheckTransferSubmission struct {
 	// The identitying number of the check.
-	CheckNumber *string `json:"check_number"`
+	CheckNumber *string                `pjson:"check_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferSubmission using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferSubmission into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CheckTransferSubmission) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identitying number of the check.
@@ -12031,14 +14549,29 @@ func (r *CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
 //
 type CheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `json:"requested_at"`
+	RequestedAt *string `pjson:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type *CheckTransferStopPaymentRequestType `json:"type"`
+	Type       *CheckTransferStopPaymentRequestType `pjson:"type"`
+	jsonFields map[string]interface{}               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CheckTransferStopPaymentRequest using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferStopPaymentRequest into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID of the check transfer that was stopped.
@@ -12083,12 +14616,27 @@ const (
 //
 type CheckTransferDeposit struct {
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID *string `json:"front_image_file_id"`
+	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The ID for the File containing the image of the rear of the check.
-	BackImageFileID *string `json:"back_image_file_id"`
+	BackImageFileID *string `pjson:"back_image_file_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
-	Type *CheckTransferDepositType `json:"type"`
+	Type       *CheckTransferDepositType `pjson:"type"`
+	jsonFields map[string]interface{}    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferDeposit using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferDeposit into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CheckTransferDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID for the File containing the image of the front of the check.
@@ -12130,28 +14678,43 @@ const (
 
 type CreateACheckTransferParameters struct {
 	// The identifier for the account that will send the transfer.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2,omitempty"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The return address to be printed on the check. If omitted this will default to
 	// the address of the Entity of the Account used to make the Check Transfer.
-	ReturnAddress *CreateACheckTransferParametersReturnAddress `json:"return_address,omitempty"`
+	ReturnAddress *CreateACheckTransferParametersReturnAddress `pjson:"return_address"`
 	// The transfer amount in cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The descriptor that will be printed on the check.
-	Message *string `json:"message"`
+	Message *string `pjson:"message"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
-	RequireApproval *bool `json:"require_approval,omitempty"`
+	RequireApproval *bool                  `pjson:"require_approval"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACheckTransferParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *CreateACheckTransferParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACheckTransferParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateACheckTransferParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account that will send the transfer.
@@ -12212,7 +14775,7 @@ func (r *CreateACheckTransferParameters) GetReturnAddress() (ReturnAddress Creat
 }
 
 // The transfer amount in cents.
-func (r *CreateACheckTransferParameters) GetAmount() (Amount int) {
+func (r *CreateACheckTransferParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -12246,17 +14809,32 @@ func (r *CreateACheckTransferParameters) GetRequireApproval() (RequireApproval b
 //
 type CreateACheckTransferParametersReturnAddress struct {
 	// The name of the return address.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The first line of the return address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the return address.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the return address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The US state of the return address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The postal code of the return address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateACheckTransferParametersReturnAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateACheckTransferParametersReturnAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACheckTransferParametersReturnAddress into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateACheckTransferParametersReturnAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The name of the return address.
@@ -12312,10 +14890,25 @@ type ListCheckTransfersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID *string                           `query:"account_id"`
-	CreatedAt *ListCheckTransfersQueryCreatedAt `query:"created_at"`
+	AccountID  *string                           `query:"account_id"`
+	CreatedAt  *ListCheckTransfersQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCheckTransfersQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCheckTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCheckTransfersQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListCheckTransfersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -12328,7 +14921,7 @@ func (r *ListCheckTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCheckTransfersQuery) GetLimit() (Limit int) {
+func (r *ListCheckTransfersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -12353,16 +14946,31 @@ func (r *ListCheckTransfersQuery) GetCreatedAt() (CreatedAt ListCheckTransfersQu
 type ListCheckTransfersQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListCheckTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListCheckTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCheckTransfersQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListCheckTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -12404,9 +15012,23 @@ func (r *ListCheckTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type CheckTransferList struct {
 	// The contents of the list.
-	Data *[]CheckTransfer `json:"data"`
+	Data *[]CheckTransfer `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CheckTransferList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CheckTransferList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -12444,28 +15066,42 @@ func (r *CheckTransfersPage) GetNextPage() (*CheckTransfersPage, error) {
 //
 type Entity struct {
 	// The entity's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The entity's legal structure.
-	Structure *EntityStructure `json:"structure"`
+	Structure *EntityStructure `pjson:"structure"`
 	// Details of the corporation entity. Will be present if `structure` is equal to
 	// `corporation`.
-	Corporation *EntityCorporation `json:"corporation"`
+	Corporation *EntityCorporation `pjson:"corporation"`
 	// Details of the natural person entity. Will be present if `structure` is equal to
 	// `natural_person`.
-	NaturalPerson *EntityNaturalPerson `json:"natural_person"`
+	NaturalPerson *EntityNaturalPerson `pjson:"natural_person"`
 	// Details of the joint entity. Will be present if `structure` is equal to `joint`.
-	Joint *EntityJoint `json:"joint"`
+	Joint *EntityJoint `pjson:"joint"`
 	// Details of the trust entity. Will be present if `structure` is equal to `trust`.
-	Trust *EntityTrust `json:"trust"`
+	Trust *EntityTrust `pjson:"trust"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
-	Type *EntityType `json:"type"`
+	Type *EntityType `pjson:"type"`
 	// The entity's description for display purposes.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The relationship between your group and the entity.
-	Relationship *EntityRelationship `json:"relationship"`
+	Relationship *EntityRelationship `pjson:"relationship"`
 	// Additional documentation associated with the entity.
-	SupplementalDocuments *[]EntitySupplementalDocuments `json:"supplemental_documents"`
+	SupplementalDocuments *[]EntitySupplementalDocuments `pjson:"supplemental_documents"`
+	jsonFields            map[string]interface{}         `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Entity using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Entity) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Entity into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Entity) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The entity's identifier.
@@ -12563,19 +15199,33 @@ const (
 //
 type EntityCorporation struct {
 	// The legal name of the corporation.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The website of the corporation.
-	Website *string `json:"website"`
+	Website *string `pjson:"website"`
 	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier *string `json:"tax_identifier"`
+	TaxIdentifier *string `pjson:"tax_identifier"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
-	IncorporationState *string `json:"incorporation_state"`
+	IncorporationState *string `pjson:"incorporation_state"`
 	// The corporation's address.
-	Address *EntityCorporationAddress `json:"address"`
+	Address *EntityCorporationAddress `pjson:"address"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners *[]EntityCorporationBeneficialOwners `json:"beneficial_owners"`
+	BeneficialOwners *[]EntityCorporationBeneficialOwners `pjson:"beneficial_owners"`
+	jsonFields       map[string]interface{}               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityCorporation using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporation into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityCorporation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The legal name of the corporation.
@@ -12631,16 +15281,31 @@ func (r *EntityCorporation) GetBeneficialOwners() (BeneficialOwners []EntityCorp
 //
 type EntityCorporationAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityCorporationAddress
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporationAddress into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *EntityCorporationAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -12686,11 +15351,26 @@ func (r *EntityCorporationAddress) GetZip() (Zip string) {
 
 type EntityCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
-	Individual *EntityCorporationBeneficialOwnersIndividual `json:"individual"`
+	Individual *EntityCorporationBeneficialOwnersIndividual `pjson:"individual"`
 	// This person's role or title within the entity.
-	CompanyTitle *string `json:"company_title"`
+	CompanyTitle *string `pjson:"company_title"`
 	// Why this person is considered a beneficial owner of the entity.
-	Prong *EntityCorporationBeneficialOwnersProng `json:"prong"`
+	Prong      *EntityCorporationBeneficialOwnersProng `pjson:"prong"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityCorporationBeneficialOwners using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporationBeneficialOwners into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Personal details for the beneficial owner.
@@ -12720,13 +15400,28 @@ func (r *EntityCorporationBeneficialOwners) GetProng() (Prong EntityCorporationB
 //
 type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The person's address.
-	Address *EntityCorporationBeneficialOwnersIndividualAddress `json:"address"`
+	Address *EntityCorporationBeneficialOwnersIndividualAddress `pjson:"address"`
 	// A means of verifying the person's identity.
-	Identification *EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification"`
+	Identification *EntityCorporationBeneficialOwnersIndividualIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityCorporationBeneficialOwnersIndividual using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporationBeneficialOwnersIndividual into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *EntityCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -12764,16 +15459,32 @@ func (r *EntityCorporationBeneficialOwnersIndividual) GetIdentification() (Ident
 //
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityCorporationBeneficialOwnersIndividualAddress using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporationBeneficialOwnersIndividualAddress into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *EntityCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -12820,10 +15531,26 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip strin
 //
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *EntityCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method"`
+	Method *EntityCorporationBeneficialOwnersIndividualIdentificationMethod `pjson:"method"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 *string `json:"number_last4"`
+	NumberLast4 *string                `pjson:"number_last4"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityCorporationBeneficialOwnersIndividualIdentification using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityCorporationBeneficialOwnersIndividualIdentification
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *EntityCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -12862,13 +15589,27 @@ const (
 //
 type EntityNaturalPerson struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The person's address.
-	Address *EntityNaturalPersonAddress `json:"address"`
+	Address *EntityNaturalPersonAddress `pjson:"address"`
 	// A means of verifying the person's identity.
-	Identification *EntityNaturalPersonIdentification `json:"identification"`
+	Identification *EntityNaturalPersonIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}             `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityNaturalPerson using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityNaturalPerson into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *EntityNaturalPerson) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -12906,16 +15647,31 @@ func (r *EntityNaturalPerson) GetIdentification() (Identification EntityNaturalP
 //
 type EntityNaturalPersonAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityNaturalPersonAddress
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityNaturalPersonAddress into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -12962,10 +15718,25 @@ func (r *EntityNaturalPersonAddress) GetZip() (Zip string) {
 //
 type EntityNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *EntityNaturalPersonIdentificationMethod `json:"method"`
+	Method *EntityNaturalPersonIdentificationMethod `pjson:"method"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 *string `json:"number_last4"`
+	NumberLast4 *string                `pjson:"number_last4"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityNaturalPersonIdentification using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityNaturalPersonIdentification into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -12997,9 +15768,23 @@ const (
 //
 type EntityJoint struct {
 	// The entity's name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The two individuals that share control of the entity.
-	Individuals *[]EntityJointIndividuals `json:"individuals"`
+	Individuals *[]EntityJointIndividuals `pjson:"individuals"`
+	jsonFields  map[string]interface{}    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityJoint using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityJoint into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityJoint) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The entity's name.
@@ -13020,13 +15805,28 @@ func (r *EntityJoint) GetIndividuals() (Individuals []EntityJointIndividuals) {
 
 type EntityJointIndividuals struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The person's address.
-	Address *EntityJointIndividualsAddress `json:"address"`
+	Address *EntityJointIndividualsAddress `pjson:"address"`
 	// A means of verifying the person's identity.
-	Identification *EntityJointIndividualsIdentification `json:"identification"`
+	Identification *EntityJointIndividualsIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityJointIndividuals using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityJointIndividuals into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *EntityJointIndividuals) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -13064,16 +15864,31 @@ func (r *EntityJointIndividuals) GetIdentification() (Identification EntityJoint
 //
 type EntityJointIndividualsAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityJointIndividualsAddress
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityJointIndividualsAddress into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -13120,10 +15935,25 @@ func (r *EntityJointIndividualsAddress) GetZip() (Zip string) {
 //
 type EntityJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *EntityJointIndividualsIdentificationMethod `json:"method"`
+	Method *EntityJointIndividualsIdentificationMethod `pjson:"method"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 *string `json:"number_last4"`
+	NumberLast4 *string                `pjson:"number_last4"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityJointIndividualsIdentification using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityJointIndividualsIdentification into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *EntityJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -13155,22 +15985,36 @@ const (
 //
 type EntityTrust struct {
 	// The trust's name
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// Whether the trust is `revocable` or `irrevocable`.
-	Category *EntityTrustCategory `json:"category"`
+	Category *EntityTrustCategory `pjson:"category"`
 	// The trust's address.
-	Address *EntityTrustAddress `json:"address"`
+	Address *EntityTrustAddress `pjson:"address"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
 	// which the trust was formed.
-	FormationState *string `json:"formation_state"`
+	FormationState *string `pjson:"formation_state"`
 	// The Employer Identification Number (EIN) of the trust itself.
-	TaxIdentifier *string `json:"tax_identifier"`
+	TaxIdentifier *string `pjson:"tax_identifier"`
 	// The trustees of the trust.
-	Trustees *[]EntityTrustTrustees `json:"trustees"`
+	Trustees *[]EntityTrustTrustees `pjson:"trustees"`
 	// The grantor of the trust. Will be present if the `category` is `revocable`.
-	Grantor *EntityTrustGrantor `json:"grantor"`
+	Grantor *EntityTrustGrantor `pjson:"grantor"`
 	// The ID for the File containing the formation document of the trust.
-	FormationDocumentFileID *string `json:"formation_document_file_id"`
+	FormationDocumentFileID *string                `pjson:"formation_document_file_id"`
+	jsonFields              map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrust using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrust into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityTrust) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The trust's name
@@ -13248,16 +16092,30 @@ const (
 //
 type EntityTrustAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrustAddress using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustAddress into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityTrustAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -13303,10 +16161,24 @@ func (r *EntityTrustAddress) GetZip() (Zip string) {
 
 type EntityTrustTrustees struct {
 	// The structure of the trustee. Will always be equal to `individual`.
-	Structure *EntityTrustTrusteesStructure `json:"structure"`
+	Structure *EntityTrustTrusteesStructure `pjson:"structure"`
 	// The individual trustee of the trust. Will be present if the trustee's
 	// `structure` is equal to `individual`.
-	Individual *EntityTrustTrusteesIndividual `json:"individual"`
+	Individual *EntityTrustTrusteesIndividual `pjson:"individual"`
+	jsonFields map[string]interface{}         `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrustTrustees using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustTrustees into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *EntityTrustTrustees) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The structure of the trustee. Will always be equal to `individual`.
@@ -13335,13 +16207,28 @@ const (
 //
 type EntityTrustTrusteesIndividual struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The person's address.
-	Address *EntityTrustTrusteesIndividualAddress `json:"address"`
+	Address *EntityTrustTrusteesIndividualAddress `pjson:"address"`
 	// A means of verifying the person's identity.
-	Identification *EntityTrustTrusteesIndividualIdentification `json:"identification"`
+	Identification *EntityTrustTrusteesIndividualIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrustTrusteesIndividual
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustTrusteesIndividual into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -13379,16 +16266,31 @@ func (r *EntityTrustTrusteesIndividual) GetIdentification() (Identification Enti
 //
 type EntityTrustTrusteesIndividualAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityTrustTrusteesIndividualAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustTrusteesIndividualAddress into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *EntityTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -13435,10 +16337,25 @@ func (r *EntityTrustTrusteesIndividualAddress) GetZip() (Zip string) {
 //
 type EntityTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *EntityTrustTrusteesIndividualIdentificationMethod `json:"method"`
+	Method *EntityTrustTrusteesIndividualIdentificationMethod `pjson:"method"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 *string `json:"number_last4"`
+	NumberLast4 *string                `pjson:"number_last4"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityTrustTrusteesIndividualIdentification using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustTrusteesIndividualIdentification into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *EntityTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -13470,13 +16387,27 @@ const (
 //
 type EntityTrustGrantor struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The person's address.
-	Address *EntityTrustGrantorAddress `json:"address"`
+	Address *EntityTrustGrantorAddress `pjson:"address"`
 	// A means of verifying the person's identity.
-	Identification *EntityTrustGrantorIdentification `json:"identification"`
+	Identification *EntityTrustGrantorIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}            `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrustGrantor using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustGrantor into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityTrustGrantor) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -13514,16 +16445,31 @@ func (r *EntityTrustGrantor) GetIdentification() (Identification EntityTrustGran
 //
 type EntityTrustGrantorAddress struct {
 	// The first line of the address.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address.
-	Line2 *string `json:"line2"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityTrustGrantorAddress
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustGrantorAddress into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address.
@@ -13570,10 +16516,25 @@ func (r *EntityTrustGrantorAddress) GetZip() (Zip string) {
 //
 type EntityTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *EntityTrustGrantorIdentificationMethod `json:"method"`
+	Method *EntityTrustGrantorIdentificationMethod `pjson:"method"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 *string `json:"number_last4"`
+	NumberLast4 *string                `pjson:"number_last4"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// EntityTrustGrantorIdentification using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityTrustGrantorIdentification into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntityTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -13618,7 +16579,22 @@ const (
 
 type EntitySupplementalDocuments struct {
 	// The File containing the document.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntitySupplementalDocuments
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntitySupplementalDocuments into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EntitySupplementalDocuments) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The File containing the document.
@@ -13631,25 +16607,40 @@ func (r *EntitySupplementalDocuments) GetFileID() (FileID string) {
 
 type CreateAnEntityParameters struct {
 	// The type of Entity to create.
-	Structure *CreateAnEntityParametersStructure `json:"structure"`
+	Structure *CreateAnEntityParametersStructure `pjson:"structure"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
-	Corporation *CreateAnEntityParametersCorporation `json:"corporation,omitempty"`
+	Corporation *CreateAnEntityParametersCorporation `pjson:"corporation"`
 	// Details of the natural person entity to create. Required if `structure` is equal
 	// to `natural_person`.
-	NaturalPerson *CreateAnEntityParametersNaturalPerson `json:"natural_person,omitempty"`
+	NaturalPerson *CreateAnEntityParametersNaturalPerson `pjson:"natural_person"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
-	Joint *CreateAnEntityParametersJoint `json:"joint,omitempty"`
+	Joint *CreateAnEntityParametersJoint `pjson:"joint"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
-	Trust *CreateAnEntityParametersTrust `json:"trust,omitempty"`
+	Trust *CreateAnEntityParametersTrust `pjson:"trust"`
 	// The description you choose to give the entity.
-	Description *string `json:"description,omitempty"`
+	Description *string `pjson:"description"`
 	// The relationship between your group and the entity.
-	Relationship *CreateAnEntityParametersRelationship `json:"relationship"`
+	Relationship *CreateAnEntityParametersRelationship `pjson:"relationship"`
 	// Additional documentation associated with the entity.
-	SupplementalDocuments *[]CreateAnEntityParametersSupplementalDocuments `json:"supplemental_documents,omitempty"`
+	SupplementalDocuments *[]CreateAnEntityParametersSupplementalDocuments `pjson:"supplemental_documents"`
+	jsonFields            map[string]interface{}                           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAnEntityParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CreateAnEntityParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of Entity to create.
@@ -13732,19 +16723,34 @@ const (
 //
 type CreateAnEntityParametersCorporation struct {
 	// The legal name of the corporation.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The website of the corporation.
-	Website *string `json:"website,omitempty"`
+	Website *string `pjson:"website"`
 	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier *string `json:"tax_identifier"`
+	TaxIdentifier *string `pjson:"tax_identifier"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
-	IncorporationState *string `json:"incorporation_state,omitempty"`
+	IncorporationState *string `pjson:"incorporation_state"`
 	// The corporation's address.
-	Address *CreateAnEntityParametersCorporationAddress `json:"address"`
+	Address *CreateAnEntityParametersCorporationAddress `pjson:"address"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners *[]CreateAnEntityParametersCorporationBeneficialOwners `json:"beneficial_owners"`
+	BeneficialOwners *[]CreateAnEntityParametersCorporationBeneficialOwners `pjson:"beneficial_owners"`
+	jsonFields       map[string]interface{}                                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporation using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersCorporation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersCorporation into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersCorporation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The legal name of the corporation.
@@ -13800,16 +16806,31 @@ func (r *CreateAnEntityParametersCorporation) GetBeneficialOwners() (BeneficialO
 //
 type CreateAnEntityParametersCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersCorporationAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersCorporationAddress into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersCorporationAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -13855,11 +16876,27 @@ func (r *CreateAnEntityParametersCorporationAddress) GetZip() (Zip string) {
 
 type CreateAnEntityParametersCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
-	Individual *CreateAnEntityParametersCorporationBeneficialOwnersIndividual `json:"individual"`
+	Individual *CreateAnEntityParametersCorporationBeneficialOwnersIndividual `pjson:"individual"`
 	// This person's role or title within the entity.
-	CompanyTitle *string `json:"company_title,omitempty"`
+	CompanyTitle *string `pjson:"company_title"`
 	// Why this person is considered a beneficial owner of the entity.
-	Prong *CreateAnEntityParametersCorporationBeneficialOwnersProng `json:"prong"`
+	Prong      *CreateAnEntityParametersCorporationBeneficialOwnersProng `pjson:"prong"`
+	jsonFields map[string]interface{}                                    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwners using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersCorporationBeneficialOwners into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Personal details for the beneficial owner.
@@ -13889,17 +16926,33 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetProng() (Prong 
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
-	Address *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress `json:"address"`
+	Address *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport or driver's
 	// license if you've confirmed they do not have a US tax id (either a Social
 	// Security Number or Individual Taxpayer Identification Number).
-	ConfirmedNoUsTaxID *bool `json:"confirmed_no_us_tax_id,omitempty"`
+	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification `json:"identification"`
+	Identification *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividual using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividual into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -13947,16 +17000,33 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetIdent
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -14003,16 +17073,34 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) G
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method"`
+	Method *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod `pjson:"method"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number *string `json:"number"`
+	Number *string `pjson:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport `pjson:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense `json:"drivers_license,omitempty"`
+	DriversLicense *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense `pjson:"drivers_license"`
+	jsonFields     map[string]interface{}                                                                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -14062,11 +17150,29 @@ const (
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The country that issued the passport.
-	Country *string `json:"country"`
+	Country    *string                `pjson:"country"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the passport.
@@ -14096,11 +17202,29 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 //
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The state that issued the provided driver's license.
-	State *string `json:"state"`
+	State      *string                `pjson:"state"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the driver's license.
@@ -14137,17 +17261,32 @@ const (
 //
 type CreateAnEntityParametersNaturalPerson struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
-	Address *CreateAnEntityParametersNaturalPersonAddress `json:"address"`
+	Address *CreateAnEntityParametersNaturalPersonAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport or driver's
 	// license if you've confirmed they do not have a US tax id (either a Social
 	// Security Number or Individual Taxpayer Identification Number).
-	ConfirmedNoUsTaxID *bool `json:"confirmed_no_us_tax_id,omitempty"`
+	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification *CreateAnEntityParametersNaturalPersonIdentification `json:"identification"`
+	Identification *CreateAnEntityParametersNaturalPersonIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPerson using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPerson) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersNaturalPerson into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersNaturalPerson) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -14195,16 +17334,32 @@ func (r *CreateAnEntityParametersNaturalPerson) GetIdentification() (Identificat
 //
 type CreateAnEntityParametersNaturalPersonAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPersonAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersNaturalPersonAddress into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -14251,16 +17406,32 @@ func (r *CreateAnEntityParametersNaturalPersonAddress) GetZip() (Zip string) {
 //
 type CreateAnEntityParametersNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *CreateAnEntityParametersNaturalPersonIdentificationMethod `json:"method"`
+	Method *CreateAnEntityParametersNaturalPersonIdentificationMethod `pjson:"method"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number *string `json:"number"`
+	Number *string `pjson:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport *CreateAnEntityParametersNaturalPersonIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersNaturalPersonIdentificationPassport `pjson:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense `json:"drivers_license,omitempty"`
+	DriversLicense *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense `pjson:"drivers_license"`
+	jsonFields     map[string]interface{}                                             `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPersonIdentification using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersNaturalPersonIdentification into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -14310,11 +17481,27 @@ const (
 //
 type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The country that issued the passport.
-	Country *string `json:"country"`
+	Country    *string                `pjson:"country"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPersonIdentificationPassport using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersNaturalPersonIdentificationPassport into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the passport.
@@ -14344,11 +17531,27 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetCountry
 //
 type CreateAnEntityParametersNaturalPersonIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The state that issued the provided driver's license.
-	State *string `json:"state"`
+	State      *string                `pjson:"state"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPersonIdentificationDriversLicense using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersNaturalPersonIdentificationDriversLicense into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the driver's license.
@@ -14378,9 +17581,24 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetS
 //
 type CreateAnEntityParametersJoint struct {
 	// The name of the joint entity.
-	Name *string `json:"name,omitempty"`
+	Name *string `pjson:"name"`
 	// The two individuals that share control of the entity.
-	Individuals *[]CreateAnEntityParametersJointIndividuals `json:"individuals"`
+	Individuals *[]CreateAnEntityParametersJointIndividuals `pjson:"individuals"`
+	jsonFields  map[string]interface{}                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAnEntityParametersJoint
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersJoint) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersJoint into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersJoint) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The name of the joint entity.
@@ -14401,17 +17619,32 @@ func (r *CreateAnEntityParametersJoint) GetIndividuals() (Individuals []CreateAn
 
 type CreateAnEntityParametersJointIndividuals struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
-	Address *CreateAnEntityParametersJointIndividualsAddress `json:"address"`
+	Address *CreateAnEntityParametersJointIndividualsAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport or driver's
 	// license if you've confirmed they do not have a US tax id (either a Social
 	// Security Number or Individual Taxpayer Identification Number).
-	ConfirmedNoUsTaxID *bool `json:"confirmed_no_us_tax_id,omitempty"`
+	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification *CreateAnEntityParametersJointIndividualsIdentification `json:"identification"`
+	Identification *CreateAnEntityParametersJointIndividualsIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividuals using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividuals) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersJointIndividuals into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersJointIndividuals) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -14459,16 +17692,32 @@ func (r *CreateAnEntityParametersJointIndividuals) GetIdentification() (Identifi
 //
 type CreateAnEntityParametersJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividualsAddress using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersJointIndividualsAddress into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -14515,16 +17764,32 @@ func (r *CreateAnEntityParametersJointIndividualsAddress) GetZip() (Zip string) 
 //
 type CreateAnEntityParametersJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *CreateAnEntityParametersJointIndividualsIdentificationMethod `json:"method"`
+	Method *CreateAnEntityParametersJointIndividualsIdentificationMethod `pjson:"method"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number *string `json:"number"`
+	Number *string `pjson:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport *CreateAnEntityParametersJointIndividualsIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersJointIndividualsIdentificationPassport `pjson:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense `json:"drivers_license,omitempty"`
+	DriversLicense *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense `pjson:"drivers_license"`
+	jsonFields     map[string]interface{}                                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividualsIdentification using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersJointIndividualsIdentification
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -14574,11 +17839,27 @@ const (
 //
 type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The country that issued the passport.
-	Country *string `json:"country"`
+	Country    *string                `pjson:"country"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividualsIdentificationPassport using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersJointIndividualsIdentificationPassport into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the passport.
@@ -14608,11 +17889,28 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetCoun
 //
 type CreateAnEntityParametersJointIndividualsIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The state that issued the provided driver's license.
-	State *string `json:"state"`
+	State      *string                `pjson:"state"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividualsIdentificationDriversLicense using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersJointIndividualsIdentificationDriversLicense into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the driver's license.
@@ -14642,25 +17940,40 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) G
 //
 type CreateAnEntityParametersTrust struct {
 	// The legal name of the trust.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
 	// their own Employer Identification Number. Revocable trusts require information
 	// about the individual `grantor` who created the trust.
-	Category *CreateAnEntityParametersTrustCategory `json:"category"`
+	Category *CreateAnEntityParametersTrustCategory `pjson:"category"`
 	// The Employer Identification Number (EIN) for the trust. Required if `category`
 	// is equal to `irrevocable`.
-	TaxIdentifier *string `json:"tax_identifier,omitempty"`
+	TaxIdentifier *string `pjson:"tax_identifier"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
 	// which the trust was formed.
-	FormationState *string `json:"formation_state,omitempty"`
+	FormationState *string `pjson:"formation_state"`
 	// The trust's address.
-	Address *CreateAnEntityParametersTrustAddress `json:"address"`
+	Address *CreateAnEntityParametersTrustAddress `pjson:"address"`
 	// The identifier of the File containing the formation document of the trust.
-	FormationDocumentFileID *string `json:"formation_document_file_id,omitempty"`
+	FormationDocumentFileID *string `pjson:"formation_document_file_id"`
 	// The trustees of the trust.
-	Trustees *[]CreateAnEntityParametersTrustTrustees `json:"trustees"`
+	Trustees *[]CreateAnEntityParametersTrustTrustees `pjson:"trustees"`
 	// The grantor of the trust. Required if `category` is equal to `revocable`.
-	Grantor *CreateAnEntityParametersTrustGrantor `json:"grantor,omitempty"`
+	Grantor    *CreateAnEntityParametersTrustGrantor `pjson:"grantor"`
+	jsonFields map[string]interface{}                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAnEntityParametersTrust
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersTrust) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrust into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrust) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The legal name of the trust.
@@ -14741,16 +18054,31 @@ const (
 //
 type CreateAnEntityParametersTrustAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustAddress into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -14796,10 +18124,25 @@ func (r *CreateAnEntityParametersTrustAddress) GetZip() (Zip string) {
 
 type CreateAnEntityParametersTrustTrustees struct {
 	// The structure of the trustee.
-	Structure *CreateAnEntityParametersTrustTrusteesStructure `json:"structure"`
+	Structure *CreateAnEntityParametersTrustTrusteesStructure `pjson:"structure"`
 	// Details of the individual trustee. Required when the trustee `structure` is
 	// equal to `individual`.
-	Individual *CreateAnEntityParametersTrustTrusteesIndividual `json:"individual,omitempty"`
+	Individual *CreateAnEntityParametersTrustTrusteesIndividual `pjson:"individual"`
+	jsonFields map[string]interface{}                           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrustees using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrustees) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustTrustees into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustTrustees) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The structure of the trustee.
@@ -14828,17 +18171,33 @@ const (
 //
 type CreateAnEntityParametersTrustTrusteesIndividual struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
-	Address *CreateAnEntityParametersTrustTrusteesIndividualAddress `json:"address"`
+	Address *CreateAnEntityParametersTrustTrusteesIndividualAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport or driver's
 	// license if you've confirmed they do not have a US tax id (either a Social
 	// Security Number or Individual Taxpayer Identification Number).
-	ConfirmedNoUsTaxID *bool `json:"confirmed_no_us_tax_id,omitempty"`
+	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification *CreateAnEntityParametersTrustTrusteesIndividualIdentification `json:"identification"`
+	Identification *CreateAnEntityParametersTrustTrusteesIndividualIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                                         `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividual using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustTrusteesIndividual into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -14886,16 +18245,32 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetIdentification() (I
 //
 type CreateAnEntityParametersTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividualAddress using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustTrusteesIndividualAddress
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -14942,16 +18317,32 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetZip() (Zip s
 //
 type CreateAnEntityParametersTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod `json:"method"`
+	Method *CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod `pjson:"method"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number *string `json:"number"`
+	Number *string `pjson:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport `pjson:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense `json:"drivers_license,omitempty"`
+	DriversLicense *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense `pjson:"drivers_license"`
+	jsonFields     map[string]interface{}                                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividualIdentification using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustTrusteesIndividualIdentification into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -15001,11 +18392,28 @@ const (
 //
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The country that issued the passport.
-	Country *string `json:"country"`
+	Country    *string                `pjson:"country"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the passport.
@@ -15035,11 +18443,29 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) 
 //
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The state that issued the provided driver's license.
-	State *string `json:"state"`
+	State      *string                `pjson:"state"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the driver's license.
@@ -15069,17 +18495,32 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLic
 //
 type CreateAnEntityParametersTrustGrantor struct {
 	// The person's legal name.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `json:"date_of_birth"`
+	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
-	Address *CreateAnEntityParametersTrustGrantorAddress `json:"address"`
+	Address *CreateAnEntityParametersTrustGrantorAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport or driver's
 	// license if you've confirmed they do not have a US tax id (either a Social
 	// Security Number or Individual Taxpayer Identification Number).
-	ConfirmedNoUsTaxID *bool `json:"confirmed_no_us_tax_id,omitempty"`
+	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification *CreateAnEntityParametersTrustGrantorIdentification `json:"identification"`
+	Identification *CreateAnEntityParametersTrustGrantorIdentification `pjson:"identification"`
+	jsonFields     map[string]interface{}                              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantor using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantor) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustGrantor into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustGrantor) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The person's legal name.
@@ -15127,16 +18568,31 @@ func (r *CreateAnEntityParametersTrustGrantor) GetIdentification() (Identificati
 //
 type CreateAnEntityParametersTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 *string `json:"line1"`
+	Line1 *string `pjson:"line1"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 *string `json:"line2,omitempty"`
+	Line2 *string `pjson:"line2"`
 	// The city of the address.
-	City *string `json:"city"`
+	City *string `pjson:"city"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State *string `json:"state"`
+	State *string `pjson:"state"`
 	// The ZIP code of the address.
-	Zip *string `json:"zip"`
+	Zip        *string                `pjson:"zip"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantorAddress using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustGrantorAddress into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -15183,16 +18639,32 @@ func (r *CreateAnEntityParametersTrustGrantorAddress) GetZip() (Zip string) {
 //
 type CreateAnEntityParametersTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method *CreateAnEntityParametersTrustGrantorIdentificationMethod `json:"method"`
+	Method *CreateAnEntityParametersTrustGrantorIdentificationMethod `pjson:"method"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number *string `json:"number"`
+	Number *string `pjson:"number"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport *CreateAnEntityParametersTrustGrantorIdentificationPassport `json:"passport,omitempty"`
+	Passport *CreateAnEntityParametersTrustGrantorIdentificationPassport `pjson:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense `json:"drivers_license,omitempty"`
+	DriversLicense *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense `pjson:"drivers_license"`
+	jsonFields     map[string]interface{}                                            `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantorIdentification using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustGrantorIdentification into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -15242,11 +18714,27 @@ const (
 //
 type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The country that issued the passport.
-	Country *string `json:"country"`
+	Country    *string                `pjson:"country"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantorIdentificationPassport using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustGrantorIdentificationPassport into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the passport.
@@ -15276,11 +18764,27 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetCountry(
 //
 type CreateAnEntityParametersTrustGrantorIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `json:"expiration_date"`
+	ExpirationDate *string `pjson:"expiration_date"`
 	// The state that issued the provided driver's license.
-	State *string `json:"state"`
+	State      *string                `pjson:"state"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantorIdentificationDriversLicense using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustGrantorIdentificationDriversLicense into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the driver's license.
@@ -15317,7 +18821,23 @@ const (
 
 type CreateAnEntityParametersSupplementalDocuments struct {
 	// The identifier of the File containing the document.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersSupplementalDocuments using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersSupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersSupplementalDocuments into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersSupplementalDocuments) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the document.
@@ -15333,7 +18853,21 @@ type ListEntitiesQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListEntitiesQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListEntitiesQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListEntitiesQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListEntitiesQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -15346,7 +18880,7 @@ func (r *ListEntitiesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEntitiesQuery) GetLimit() (Limit int) {
+func (r *ListEntitiesQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -15356,9 +18890,23 @@ func (r *ListEntitiesQuery) GetLimit() (Limit int) {
 //
 type EntityList struct {
 	// The contents of the list.
-	Data *[]Entity `json:"data"`
+	Data *[]Entity `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EntityList using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EntityList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EntityList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EntityList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -15379,7 +18927,23 @@ func (r *EntityList) GetNextCursor() (NextCursor string) {
 
 type CreateASupplementalDocumentForAnEntityParameters struct {
 	// The identifier of the File containing the document.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateASupplementalDocumentForAnEntityParameters using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateASupplementalDocumentForAnEntityParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateASupplementalDocumentForAnEntityParameters into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateASupplementalDocumentForAnEntityParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the File containing the document.
@@ -15410,39 +18974,53 @@ func (r *EntitiesPage) GetNextPage() (*EntitiesPage, error) {
 type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
-	Type *WireDrawdownRequestType `json:"type"`
+	Type *WireDrawdownRequestType `pjson:"type"`
 	// The Wire drawdown request identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The Account Number to which the recipient of this request is being requested to
 	// send funds.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID *string `pjson:"account_number_id"`
 	// The drawdown request's recipient's account number.
-	RecipientAccountNumber *string `json:"recipient_account_number"`
+	RecipientAccountNumber *string `pjson:"recipient_account_number"`
 	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber *string `json:"recipient_routing_number"`
+	RecipientRoutingNumber *string `pjson:"recipient_routing_number"`
 	// The amount being requested in cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
-	Currency *string `json:"currency"`
+	Currency *string `pjson:"currency"`
 	// The message the recipient will see as part of the drawdown request.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	// The drawdown request's recipient's name.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 *string `json:"recipient_address_line1"`
+	RecipientAddressLine1 *string `pjson:"recipient_address_line1"`
 	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 *string `json:"recipient_address_line2"`
+	RecipientAddressLine2 *string `pjson:"recipient_address_line2"`
 	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 *string `json:"recipient_address_line3"`
+	RecipientAddressLine3 *string `pjson:"recipient_address_line3"`
 	// After the drawdown request is submitted to Fedwire, this will contain
 	// supplemental details.
-	Submission *WireDrawdownRequestSubmission `json:"submission"`
+	Submission *WireDrawdownRequestSubmission `pjson:"submission"`
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
-	FulfillmentTransactionID *string `json:"fulfillment_transaction_id"`
+	FulfillmentTransactionID *string `pjson:"fulfillment_transaction_id"`
 	// The lifecycle status of the drawdown request.
-	Status *WireDrawdownRequestStatus `json:"status"`
+	Status     *WireDrawdownRequestStatus `pjson:"status"`
+	jsonFields map[string]interface{}     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequest using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireDrawdownRequest into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireDrawdownRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -15488,7 +19066,7 @@ func (r *WireDrawdownRequest) GetRecipientRoutingNumber() (RecipientRoutingNumbe
 }
 
 // The amount being requested in cents.
-func (r *WireDrawdownRequest) GetAmount() (Amount int) {
+func (r *WireDrawdownRequest) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -15580,7 +19158,22 @@ const (
 type WireDrawdownRequestSubmission struct {
 	// The input message accountability data (IMAD) uniquely identifying the submission
 	// with Fedwire.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string                `pjson:"input_message_accountability_data"`
+	jsonFields                     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestSubmission
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireDrawdownRequestSubmission) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireDrawdownRequestSubmission into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *WireDrawdownRequestSubmission) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The input message accountability data (IMAD) uniquely identifying the submission
@@ -15603,23 +19196,38 @@ const (
 
 type CreateAWireDrawdownRequestParameters struct {
 	// The Account Number to which the recipient should send funds.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID *string `pjson:"account_number_id"`
 	// The amount requested from the recipient, in cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// A message the recipient will see as part of the request.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	// The drawdown request's recipient's account number.
-	RecipientAccountNumber *string `json:"recipient_account_number"`
+	RecipientAccountNumber *string `pjson:"recipient_account_number"`
 	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber *string `json:"recipient_routing_number"`
+	RecipientRoutingNumber *string `pjson:"recipient_routing_number"`
 	// The drawdown request's recipient's name.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 *string `json:"recipient_address_line1,omitempty"`
+	RecipientAddressLine1 *string `pjson:"recipient_address_line1"`
 	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 *string `json:"recipient_address_line2,omitempty"`
+	RecipientAddressLine2 *string `pjson:"recipient_address_line2"`
 	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 *string `json:"recipient_address_line3,omitempty"`
+	RecipientAddressLine3 *string                `pjson:"recipient_address_line3"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAWireDrawdownRequestParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAWireDrawdownRequestParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAWireDrawdownRequestParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAWireDrawdownRequestParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account Number to which the recipient should send funds.
@@ -15631,7 +19239,7 @@ func (r *CreateAWireDrawdownRequestParameters) GetAccountNumberID() (AccountNumb
 }
 
 // The amount requested from the recipient, in cents.
-func (r *CreateAWireDrawdownRequestParameters) GetAmount() (Amount int) {
+func (r *CreateAWireDrawdownRequestParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -15699,7 +19307,22 @@ type ListWireDrawdownRequestsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListWireDrawdownRequestsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListWireDrawdownRequestsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListWireDrawdownRequestsQuery into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListWireDrawdownRequestsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -15712,7 +19335,7 @@ func (r *ListWireDrawdownRequestsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int) {
+func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -15722,9 +19345,24 @@ func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int) {
 //
 type WireDrawdownRequestList struct {
 	// The contents of the list.
-	Data *[]WireDrawdownRequest `json:"data"`
+	Data *[]WireDrawdownRequest `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireDrawdownRequestList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireDrawdownRequestList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireDrawdownRequestList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -15762,19 +19400,33 @@ func (r *WireDrawdownRequestsPage) GetNextPage() (*WireDrawdownRequestsPage, err
 //
 type Event struct {
 	// The identifier of the object that generated this Event.
-	AssociatedObjectID *string `json:"associated_object_id"`
+	AssociatedObjectID *string `pjson:"associated_object_id"`
 	// The type of the object that generated this Event.
-	AssociatedObjectType *string `json:"associated_object_type"`
+	AssociatedObjectType *string `pjson:"associated_object_type"`
 	// The category of the Event. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category *EventCategory `json:"category"`
+	Category *EventCategory `pjson:"category"`
 	// The time the Event was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The Event identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
-	Type *EventType `json:"type"`
+	Type       *EventType             `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Event using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Event) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Event into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Event) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the object that generated this Event.
@@ -15888,11 +19540,25 @@ type ListEventsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
 	AssociatedObjectID *string                   `query:"associated_object_id"`
 	CreatedAt          *ListEventsQueryCreatedAt `query:"created_at"`
 	Category           *ListEventsQueryCategory  `query:"category"`
+	jsonFields         map[string]interface{}    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListEventsQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListEventsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListEventsQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListEventsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -15905,7 +19571,7 @@ func (r *ListEventsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEventsQuery) GetLimit() (Limit int) {
+func (r *ListEventsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -15937,16 +19603,31 @@ func (r *ListEventsQuery) GetCategory() (Category ListEventsQueryCategory) {
 type ListEventsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListEventsQueryCreatedAt
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListEventsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListEventsQueryCreatedAt into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListEventsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -15988,7 +19669,22 @@ func (r *ListEventsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 type ListEventsQueryCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListEventsQueryCategoryIn `json:"in,omitempty"`
+	In         *[]ListEventsQueryCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListEventsQueryCategory using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListEventsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListEventsQueryCategory into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListEventsQueryCategory) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -16053,9 +19749,23 @@ const (
 //
 type EventList struct {
 	// The contents of the list.
-	Data *[]Event `json:"data"`
+	Data *[]Event `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EventList using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EventList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EventList into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *EventList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -16093,21 +19803,35 @@ func (r *EventsPage) GetNextPage() (*EventsPage, error) {
 //
 type EventSubscription struct {
 	// The event subscription identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The time the event subscription was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This indicates if we'll send notifications to this subscription.
-	Status *EventSubscriptionStatus `json:"status"`
+	Status *EventSubscriptionStatus `pjson:"status"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory *EventSubscriptionSelectedEventCategory `json:"selected_event_category"`
+	SelectedEventCategory *EventSubscriptionSelectedEventCategory `pjson:"selected_event_category"`
 	// The webhook url where we'll send notifications.
-	URL *string `json:"url"`
+	URL *string `pjson:"url"`
 	// The key that will be used to sign webhooks.
-	SharedSecret *string `json:"shared_secret"`
+	SharedSecret *string `pjson:"shared_secret"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
-	Type *EventSubscriptionType `json:"type"`
+	Type       *EventSubscriptionType `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EventSubscription using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EventSubscription into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *EventSubscription) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The event subscription identifier.
@@ -16235,13 +19959,28 @@ const (
 
 type CreateAnEventSubscriptionParameters struct {
 	// The URL you'd like us to send webhooks to.
-	URL *string `json:"url"`
+	URL *string `pjson:"url"`
 	// The key that will be used to sign webhooks. If no value is passed, a random
 	// string will be used as default.
-	SharedSecret *string `json:"shared_secret,omitempty"`
+	SharedSecret *string `pjson:"shared_secret"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory *CreateAnEventSubscriptionParametersSelectedEventCategory `json:"selected_event_category,omitempty"`
+	SelectedEventCategory *CreateAnEventSubscriptionParametersSelectedEventCategory `pjson:"selected_event_category"`
+	jsonFields            map[string]interface{}                                    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEventSubscriptionParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEventSubscriptionParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEventSubscriptionParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The URL you'd like us to send webhooks to.
@@ -16322,7 +20061,22 @@ const (
 
 type UpdateAnEventSubscriptionParameters struct {
 	// The status to update the Event Subscription with.
-	Status *UpdateAnEventSubscriptionParametersStatus `json:"status,omitempty"`
+	Status     *UpdateAnEventSubscriptionParametersStatus `pjson:"status"`
+	jsonFields map[string]interface{}                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// UpdateAnEventSubscriptionParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *UpdateAnEventSubscriptionParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes UpdateAnEventSubscriptionParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *UpdateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The status to update the Event Subscription with.
@@ -16346,7 +20100,22 @@ type ListEventSubscriptionsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListEventSubscriptionsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListEventSubscriptionsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListEventSubscriptionsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListEventSubscriptionsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -16359,7 +20128,7 @@ func (r *ListEventSubscriptionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int) {
+func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -16369,9 +20138,24 @@ func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int) {
 //
 type EventSubscriptionList struct {
 	// The contents of the list.
-	Data *[]EventSubscription `json:"data"`
+	Data *[]EventSubscription `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into EventSubscriptionList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *EventSubscriptionList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes EventSubscriptionList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *EventSubscriptionList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -16409,25 +20193,39 @@ func (r *EventSubscriptionsPage) GetNextPage() (*EventSubscriptionsPage, error) 
 //
 type File struct {
 	// The time the File was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The File's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// What the File will be used for. We may add additional possible values for this
 	// enum over time; your application should be able to handle such additions
 	// gracefully.
-	Purpose *FilePurpose `json:"purpose"`
+	Purpose *FilePurpose `pjson:"purpose"`
 	// A description of the File.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// Whether the File was generated by Increase or by you and sent to Increase.
-	Direction *FileDirection `json:"direction"`
+	Direction *FileDirection `pjson:"direction"`
 	// The filename that was provided upon upload or generated by Increase.
-	Filename *string `json:"filename"`
+	Filename *string `pjson:"filename"`
 	// A URL from where the File can be downloaded at this point in time. The location
 	// of this URL may change over time.
-	DownloadURL *string `json:"download_url"`
+	DownloadURL *string `pjson:"download_url"`
 	// A constant representing the object's type. For this resource it will always be
 	// `file`.
-	Type *FileType `json:"type"`
+	Type       *FileType              `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into File using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *File) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes File into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *File) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The time the File was created.
@@ -16531,11 +20329,26 @@ type CreateAFileParameters struct {
 	// The file contents. This should follow the specifications of
 	// [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file
 	// transfers for the multipart/form-data protocol.
-	File *string `json:"file"`
+	File *string `pjson:"file"`
 	// The description you choose to give the File.
-	Description *string `json:"description,omitempty"`
+	Description *string `pjson:"description"`
 	// What the File will be used for in Increase's systems.
-	Purpose *CreateAFileParametersPurpose `json:"purpose"`
+	Purpose    *CreateAFileParametersPurpose `pjson:"purpose"`
+	jsonFields map[string]interface{}        `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateAFileParameters using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAFileParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAFileParameters into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *CreateAFileParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The file contents. This should follow the specifications of
@@ -16583,9 +20396,23 @@ type ListFilesQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     *int                     `query:"limit"`
-	CreatedAt *ListFilesQueryCreatedAt `query:"created_at"`
-	Purpose   *ListFilesQueryPurpose   `query:"purpose"`
+	Limit      *int64                   `query:"limit"`
+	CreatedAt  *ListFilesQueryCreatedAt `query:"created_at"`
+	Purpose    *ListFilesQueryPurpose   `query:"purpose"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListFilesQuery using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ListFilesQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListFilesQuery into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *ListFilesQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -16598,7 +20425,7 @@ func (r *ListFilesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListFilesQuery) GetLimit() (Limit int) {
+func (r *ListFilesQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -16622,16 +20449,31 @@ func (r *ListFilesQuery) GetPurpose() (Purpose ListFilesQueryPurpose) {
 type ListFilesQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListFilesQueryCreatedAt using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListFilesQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListFilesQueryCreatedAt into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListFilesQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -16673,7 +20515,22 @@ func (r *ListFilesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 type ListFilesQueryPurpose struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In *[]ListFilesQueryPurposeIn `json:"in,omitempty"`
+	In         *[]ListFilesQueryPurposeIn `pjson:"in"`
+	jsonFields map[string]interface{}     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListFilesQueryPurpose using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListFilesQueryPurpose) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListFilesQueryPurpose into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListFilesQueryPurpose) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -16704,9 +20561,23 @@ const (
 //
 type FileList struct {
 	// The contents of the list.
-	Data *[]File `json:"data"`
+	Data *[]File `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into FileList using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *FileList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes FileList into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *FileList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -16744,17 +20615,31 @@ func (r *FilesPage) GetNextPage() (*FilesPage, error) {
 //
 type Group struct {
 	// If the Group is activated or not.
-	ActivationStatus *GroupActivationStatus `json:"activation_status"`
+	ActivationStatus *GroupActivationStatus `pjson:"activation_status"`
 	// If the Group is allowed to create ACH debits.
-	ACHDebitStatus *GroupACHDebitStatus `json:"ach_debit_status"`
+	ACHDebitStatus *GroupACHDebitStatus `pjson:"ach_debit_status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The Group identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
-	Type *GroupType `json:"type"`
+	Type       *GroupType             `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into Group using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *Group) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes Group into an array of bytes using the gjson library.
+// Members of the `Extras` field are serialized into the top-level, and will
+// overwrite known members of the same name.
+func (r *Group) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the Group is activated or not.
@@ -16822,17 +20707,31 @@ const (
 //
 type OauthConnection struct {
 	// The OAuth Connection's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The identifier of the Group that has authorized your OAuth application.
-	GroupID *string `json:"group_id"`
+	GroupID *string `pjson:"group_id"`
 	// Whether the connection is active.
-	Status *OauthConnectionStatus `json:"status"`
+	Status *OauthConnectionStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_connection`.
-	Type *OauthConnectionType `json:"type"`
+	Type       *OauthConnectionType   `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into OauthConnection using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes OauthConnection into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *OauthConnection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The OAuth Connection's identifier.
@@ -16895,7 +20794,22 @@ type ListOauthConnectionsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListOauthConnectionsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListOauthConnectionsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListOauthConnectionsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListOauthConnectionsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -16908,7 +20822,7 @@ func (r *ListOauthConnectionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListOauthConnectionsQuery) GetLimit() (Limit int) {
+func (r *ListOauthConnectionsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -16918,9 +20832,23 @@ func (r *ListOauthConnectionsQuery) GetLimit() (Limit int) {
 //
 type OauthConnectionList struct {
 	// The contents of the list.
-	Data *[]OauthConnection `json:"data"`
+	Data *[]OauthConnection `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into OauthConnectionList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *OauthConnectionList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes OauthConnectionList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *OauthConnectionList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -16958,37 +20886,51 @@ func (r *OauthConnectionsPage) GetNextPage() (*OauthConnectionsPage, error) {
 //
 type CheckDeposit struct {
 	// The deposit's identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The deposited amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-	Currency *CheckDepositCurrency `json:"currency"`
+	Currency *CheckDepositCurrency `pjson:"currency"`
 	// The status of the Check Deposit.
-	Status *CheckDepositStatus `json:"status"`
+	Status *CheckDepositStatus `pjson:"status"`
 	// The Account the check was deposited into.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID *string `json:"front_image_file_id"`
+	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The ID for the File containing the image of the back of the check.
-	BackImageFileID *string `json:"back_image_file_id"`
+	BackImageFileID *string `pjson:"back_image_file_id"`
 	// The ID for the Transaction created by the deposit.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// If your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
-	DepositAcceptance *CheckDepositDepositAcceptance `json:"deposit_acceptance"`
+	DepositAcceptance *CheckDepositDepositAcceptance `pjson:"deposit_acceptance"`
 	// If your deposit is rejected by Increase, this will contain details as to why it
 	// was rejected.
-	DepositRejection *CheckDepositDepositRejection `json:"deposit_rejection"`
+	DepositRejection *CheckDepositDepositRejection `pjson:"deposit_rejection"`
 	// If your deposit is returned, this will contain details as to why it was
 	// returned.
-	DepositReturn *CheckDepositDepositReturn `json:"deposit_return"`
+	DepositReturn *CheckDepositDepositReturn `pjson:"deposit_return"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
-	Type *CheckDepositType `json:"type"`
+	Type       *CheckDepositType      `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckDeposit using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckDeposit into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CheckDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The deposit's identifier.
@@ -17001,7 +20943,7 @@ func (r *CheckDeposit) GetID() (ID string) {
 
 // The deposited amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CheckDeposit) GetAmount() (Amount int) {
+func (r *CheckDeposit) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -17125,24 +21067,39 @@ const (
 type CheckDepositDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CheckDepositDepositAcceptanceCurrency `json:"currency"`
+	Currency *CheckDepositDepositAcceptanceCurrency `pjson:"currency"`
 	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositAcceptance
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckDepositDepositAcceptance into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckDepositDepositAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *CheckDepositDepositAcceptance) GetAmount() (Amount int) {
+func (r *CheckDepositDepositAcceptance) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -17206,20 +21163,35 @@ const (
 type CheckDepositDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *CheckDepositDepositRejectionCurrency `json:"currency"`
+	Currency *CheckDepositDepositRejectionCurrency `pjson:"currency"`
 	// Why the check deposit was rejected.
-	Reason *CheckDepositDepositRejectionReason `json:"reason"`
+	Reason *CheckDepositDepositRejectionReason `pjson:"reason"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt *string `json:"rejected_at"`
+	RejectedAt *string                `pjson:"rejected_at"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositRejection
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckDepositDepositRejection into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckDepositDepositRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The rejected amount in the minor unit of check's currency. For dollars, for
 // example, this is cents.
-func (r *CheckDepositDepositRejection) GetAmount() (Amount int) {
+func (r *CheckDepositDepositRejection) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -17279,25 +21251,40 @@ const (
 type CheckDepositDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
+	ReturnedAt *string `pjson:"returned_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CheckDepositDepositReturnCurrency `json:"currency"`
+	Currency *CheckDepositDepositReturnCurrency `pjson:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	//
-	ReturnReason *CheckDepositDepositReturnReturnReason `json:"return_reason"`
+	ReturnReason *CheckDepositDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields   map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositReturn
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckDepositDepositReturn into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckDepositDepositReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *CheckDepositDepositReturn) GetAmount() (Amount int) {
+func (r *CheckDepositDepositReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -17381,16 +21368,31 @@ const (
 
 type CreateACheckDepositParameters struct {
 	// The identifier for the Account to deposit the check in.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The deposit amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The currency to use for the deposit.
-	Currency *string `json:"currency"`
+	Currency *string `pjson:"currency"`
 	// The File containing the check's front image.
-	FrontImageFileID *string `json:"front_image_file_id"`
+	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The File containing the check's back image.
-	BackImageFileID *string `json:"back_image_file_id"`
+	BackImageFileID *string                `pjson:"back_image_file_id"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CreateACheckDepositParameters
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateACheckDepositParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateACheckDepositParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CreateACheckDepositParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account to deposit the check in.
@@ -17403,7 +21405,7 @@ func (r *CreateACheckDepositParameters) GetAccountID() (AccountID string) {
 
 // The deposit amount in the minor unit of the account currency. For dollars, for
 // example, this is cents.
-func (r *CreateACheckDepositParameters) GetAmount() (Amount int) {
+func (r *CreateACheckDepositParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -17439,10 +21441,25 @@ type ListCheckDepositsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Check Deposits to those belonging to the specified Account.
-	AccountID *string                          `query:"account_id"`
-	CreatedAt *ListCheckDepositsQueryCreatedAt `query:"created_at"`
+	AccountID  *string                          `query:"account_id"`
+	CreatedAt  *ListCheckDepositsQueryCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListCheckDepositsQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListCheckDepositsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCheckDepositsQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListCheckDepositsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -17455,7 +21472,7 @@ func (r *ListCheckDepositsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCheckDepositsQuery) GetLimit() (Limit int) {
+func (r *ListCheckDepositsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -17480,16 +21497,31 @@ func (r *ListCheckDepositsQuery) GetCreatedAt() (CreatedAt ListCheckDepositsQuer
 type ListCheckDepositsQueryCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListCheckDepositsQueryCreatedAt using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ListCheckDepositsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListCheckDepositsQueryCreatedAt into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListCheckDepositsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -17531,9 +21563,23 @@ func (r *ListCheckDepositsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 //
 type CheckDepositList struct {
 	// The contents of the list.
-	Data *[]CheckDeposit `json:"data"`
+	Data *[]CheckDeposit `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckDepositList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CheckDepositList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckDepositList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *CheckDepositList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -17571,18 +21617,32 @@ func (r *CheckDepositsPage) GetNextPage() (*CheckDepositsPage, error) {
 //
 type RoutingNumber struct {
 	// The name of the financial institution belonging to a routing number.
-	Name *string `json:"name"`
+	Name *string `pjson:"name"`
 	// The nine digit routing number identifier.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// A constant representing the object's type. For this resource it will always be
 	// `routing_number`.
-	Type *RoutingNumberType `json:"type"`
+	Type *RoutingNumberType `pjson:"type"`
 	// This routing number's support for ACH Transfers.
-	ACHTransfers *RoutingNumberACHTransfers `json:"ach_transfers"`
+	ACHTransfers *RoutingNumberACHTransfers `pjson:"ach_transfers"`
 	// This routing number's support for Real Time Payments Transfers.
-	RealTimePaymentsTransfers *RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers"`
+	RealTimePaymentsTransfers *RoutingNumberRealTimePaymentsTransfers `pjson:"real_time_payments_transfers"`
 	// This routing number's support for Wire Transfers.
-	WireTransfers *RoutingNumberWireTransfers `json:"wire_transfers"`
+	WireTransfers *RoutingNumberWireTransfers `pjson:"wire_transfers"`
+	jsonFields    map[string]interface{}      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into RoutingNumber using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RoutingNumber into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *RoutingNumber) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The name of the financial institution belonging to a routing number.
@@ -17666,9 +21726,24 @@ type ListRoutingNumbersQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter financial institutions by routing number.
-	RoutingNumber *string `query:"routing_number,omitempty"`
+	RoutingNumber *string                `query:"routing_number,omitempty"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListRoutingNumbersQuery using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListRoutingNumbersQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListRoutingNumbersQuery into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ListRoutingNumbersQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -17681,7 +21756,7 @@ func (r *ListRoutingNumbersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListRoutingNumbersQuery) GetLimit() (Limit int) {
+func (r *ListRoutingNumbersQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -17699,9 +21774,23 @@ func (r *ListRoutingNumbersQuery) GetRoutingNumber() (RoutingNumber string) {
 //
 type RoutingNumberList struct {
 	// The contents of the list.
-	Data *[]RoutingNumber `json:"data"`
+	Data *[]RoutingNumber `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into RoutingNumberList using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *RoutingNumberList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RoutingNumberList into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *RoutingNumberList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -17739,27 +21828,41 @@ func (r *RoutingNumbersPage) GetNextPage() (*RoutingNumbersPage, error) {
 //
 type AccountStatement struct {
 	// The Account Statement identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the Account this Account Statement belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// The identifier of the File containing a PDF of the statement.
-	FileID *string `json:"file_id"`
+	FileID *string `pjson:"file_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 	// start of the period the Account Statement covers.
-	StatementPeriodStart *string `json:"statement_period_start"`
+	StatementPeriodStart *string `pjson:"statement_period_start"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 	// of the period the Account Statement covers.
-	StatementPeriodEnd *string `json:"statement_period_end"`
+	StatementPeriodEnd *string `pjson:"statement_period_end"`
 	// The Account's balance at the start of its statement period.
-	StartingBalance *int `json:"starting_balance"`
+	StartingBalance *int64 `pjson:"starting_balance"`
 	// The Account's balance at the start of its statement period.
-	EndingBalance *int `json:"ending_balance"`
+	EndingBalance *int64 `pjson:"ending_balance"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
-	Type *AccountStatementType `json:"type"`
+	Type       *AccountStatementType  `pjson:"type"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountStatement using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountStatement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountStatement into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *AccountStatement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The Account Statement identifier.
@@ -17814,7 +21917,7 @@ func (r *AccountStatement) GetStatementPeriodEnd() (StatementPeriodEnd string) {
 }
 
 // The Account's balance at the start of its statement period.
-func (r *AccountStatement) GetStartingBalance() (StartingBalance int) {
+func (r *AccountStatement) GetStartingBalance() (StartingBalance int64) {
 	if r != nil && r.StartingBalance != nil {
 		StartingBalance = *r.StartingBalance
 	}
@@ -17822,7 +21925,7 @@ func (r *AccountStatement) GetStartingBalance() (StartingBalance int) {
 }
 
 // The Account's balance at the start of its statement period.
-func (r *AccountStatement) GetEndingBalance() (EndingBalance int) {
+func (r *AccountStatement) GetEndingBalance() (EndingBalance int64) {
 	if r != nil && r.EndingBalance != nil {
 		EndingBalance = *r.EndingBalance
 	}
@@ -17849,10 +21952,25 @@ type ListAccountStatementsQuery struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit *int `query:"limit"`
+	Limit *int64 `query:"limit"`
 	// Filter Account Statements to those belonging to the specified Account.
 	AccountID            *string                                         `query:"account_id"`
 	StatementPeriodStart *ListAccountStatementsQueryStatementPeriodStart `query:"statement_period_start"`
+	jsonFields           map[string]interface{}                          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ListAccountStatementsQuery
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ListAccountStatementsQuery) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountStatementsQuery into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ListAccountStatementsQuery) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
@@ -17865,7 +21983,7 @@ func (r *ListAccountStatementsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountStatementsQuery) GetLimit() (Limit int) {
+func (r *ListAccountStatementsQuery) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -17890,16 +22008,32 @@ func (r *ListAccountStatementsQuery) GetStatementPeriodStart() (StatementPeriodS
 type ListAccountStatementsQueryStatementPeriodStart struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `json:"after,omitempty"`
+	After *string `pjson:"after"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `json:"before,omitempty"`
+	Before *string `pjson:"before"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `json:"on_or_after,omitempty"`
+	OnOrAfter *string `pjson:"on_or_after"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string `json:"on_or_before,omitempty"`
+	OnOrBefore *string                `pjson:"on_or_before"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ListAccountStatementsQueryStatementPeriodStart using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ListAccountStatementsQueryStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ListAccountStatementsQueryStatementPeriodStart into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ListAccountStatementsQueryStatementPeriodStart) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -17941,9 +22075,24 @@ func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrBefore() (OnOrBe
 //
 type AccountStatementList struct {
 	// The contents of the list.
-	Data *[]AccountStatement `json:"data"`
+	Data *[]AccountStatement `pjson:"data"`
 	// A pointer to a place in the list.
-	NextCursor *string `json:"next_cursor"`
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into AccountStatementList using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *AccountStatementList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes AccountStatementList into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *AccountStatementList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The contents of the list.
@@ -17980,7 +22129,23 @@ func (r *AccountStatementsPage) GetNextPage() (*AccountStatementsPage, error) {
 
 type SimulateAnAccountStatementBeingCreatedParameters struct {
 	// The identifier of the Account the statement is for.
-	AccountID *string `json:"account_id"`
+	AccountID  *string                `pjson:"account_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateAnAccountStatementBeingCreatedParameters using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateAnAccountStatementBeingCreatedParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateAnAccountStatementBeingCreatedParameters into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateAnAccountStatementBeingCreatedParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account the statement is for.
@@ -17996,14 +22161,29 @@ type ACHTransferSimulation struct {
 	// If the ACH Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
 	// `category: inbound_ach_transfer`.
-	Transaction *ACHTransferSimulationTransaction `json:"transaction"`
+	Transaction *ACHTransferSimulationTransaction `pjson:"transaction"`
 	// If the ACH Transfer attempt fails, this will contain the resulting
 	// [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of `category: inbound_ach_transfer`.
-	DeclinedTransaction *ACHTransferSimulationDeclinedTransaction `json:"declined_transaction"`
+	DeclinedTransaction *ACHTransferSimulationDeclinedTransaction `pjson:"declined_transaction"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_simulation_result`.
-	Type *ACHTransferSimulationType `json:"type"`
+	Type       *ACHTransferSimulationType `pjson:"type"`
+	jsonFields map[string]interface{}     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into ACHTransferSimulation using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulation into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *ACHTransferSimulation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the ACH Transfer attempt succeeds, this will contain the resulting
@@ -18038,36 +22218,51 @@ func (r *ACHTransferSimulation) GetType() (Type ACHTransferSimulationType) {
 //
 type ACHTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
-	Currency *ACHTransferSimulationTransactionCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
 	// deprecated and will be removed in the future.
-	Source *ACHTransferSimulationTransactionSource `json:"source"`
+	Source *ACHTransferSimulationTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type *ACHTransferSimulationTransactionType `json:"type"`
+	Type       *ACHTransferSimulationTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransaction using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransaction into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -18080,7 +22275,7 @@ func (r *ACHTransferSimulationTransaction) GetAccountID() (AccountID string) {
 
 // The Transaction amount in the minor unit of its currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransaction) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -18177,112 +22372,127 @@ type ACHTransferSimulationTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *ACHTransferSimulationTransactionSourceCategory `json:"category"`
+	Category *ACHTransferSimulationTransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
-	AccountTransferIntention *ACHTransferSimulationTransactionSourceAccountTransferIntention `json:"account_transfer_intention"`
+	AccountTransferIntention *ACHTransferSimulationTransactionSourceAccountTransferIntention `pjson:"account_transfer_intention"`
 	// A ACH Check Conversion Return object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn *ACHTransferSimulationTransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return"`
+	ACHCheckConversionReturn *ACHTransferSimulationTransactionSourceACHCheckConversionReturn `pjson:"ach_check_conversion_return"`
 	// A ACH Check Conversion object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion *ACHTransferSimulationTransactionSourceACHCheckConversion `json:"ach_check_conversion"`
+	ACHCheckConversion *ACHTransferSimulationTransactionSourceACHCheckConversion `pjson:"ach_check_conversion"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
-	ACHTransferIntention *ACHTransferSimulationTransactionSourceACHTransferIntention `json:"ach_transfer_intention"`
+	ACHTransferIntention *ACHTransferSimulationTransactionSourceACHTransferIntention `pjson:"ach_transfer_intention"`
 	// A ACH Transfer Rejection object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_rejection`.
-	ACHTransferRejection *ACHTransferSimulationTransactionSourceACHTransferRejection `json:"ach_transfer_rejection"`
+	ACHTransferRejection *ACHTransferSimulationTransactionSourceACHTransferRejection `pjson:"ach_transfer_rejection"`
 	// A ACH Transfer Return object. This field will be present in the JSON response if
 	// and only if `category` is equal to `ach_transfer_return`.
-	ACHTransferReturn *ACHTransferSimulationTransactionSourceACHTransferReturn `json:"ach_transfer_return"`
+	ACHTransferReturn *ACHTransferSimulationTransactionSourceACHTransferReturn `pjson:"ach_transfer_return"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
-	CardDisputeAcceptance *ACHTransferSimulationTransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance"`
+	CardDisputeAcceptance *ACHTransferSimulationTransactionSourceCardDisputeAcceptance `pjson:"card_dispute_acceptance"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
-	CardRefund *ACHTransferSimulationTransactionSourceCardRefund `json:"card_refund"`
+	CardRefund *ACHTransferSimulationTransactionSourceCardRefund `pjson:"card_refund"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
-	CardSettlement *ACHTransferSimulationTransactionSourceCardSettlement `json:"card_settlement"`
+	CardSettlement *ACHTransferSimulationTransactionSourceCardSettlement `pjson:"card_settlement"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
-	CheckDepositAcceptance *ACHTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance"`
+	CheckDepositAcceptance *ACHTransferSimulationTransactionSourceCheckDepositAcceptance `pjson:"check_deposit_acceptance"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
-	CheckDepositReturn *ACHTransferSimulationTransactionSourceCheckDepositReturn `json:"check_deposit_return"`
+	CheckDepositReturn *ACHTransferSimulationTransactionSourceCheckDepositReturn `pjson:"check_deposit_return"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
-	CheckTransferIntention *ACHTransferSimulationTransactionSourceCheckTransferIntention `json:"check_transfer_intention"`
+	CheckTransferIntention *ACHTransferSimulationTransactionSourceCheckTransferIntention `pjson:"check_transfer_intention"`
 	// A Check Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn *ACHTransferSimulationTransactionSourceCheckTransferReturn `json:"check_transfer_return"`
+	CheckTransferReturn *ACHTransferSimulationTransactionSourceCheckTransferReturn `pjson:"check_transfer_return"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection *ACHTransferSimulationTransactionSourceCheckTransferRejection `json:"check_transfer_rejection"`
+	CheckTransferRejection *ACHTransferSimulationTransactionSourceCheckTransferRejection `pjson:"check_transfer_rejection"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
-	CheckTransferStopPaymentRequest *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request"`
+	CheckTransferStopPaymentRequest *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest `pjson:"check_transfer_stop_payment_request"`
 	// A Dispute Resolution object. This field will be present in the JSON response if
 	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution *ACHTransferSimulationTransactionSourceDisputeResolution `json:"dispute_resolution"`
+	DisputeResolution *ACHTransferSimulationTransactionSourceDisputeResolution `pjson:"dispute_resolution"`
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit"`
+	EmpyrealCashDeposit *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit `pjson:"empyreal_cash_deposit"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
-	InboundACHTransfer *ACHTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer"`
+	InboundACHTransfer *ACHTransferSimulationTransactionSourceInboundACHTransfer `pjson:"inbound_ach_transfer"`
 	// A Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
-	InboundCheck *ACHTransferSimulationTransactionSourceInboundCheck `json:"inbound_check"`
+	InboundCheck *ACHTransferSimulationTransactionSourceInboundCheck `pjson:"inbound_check"`
 	// A Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
-	InboundInternationalACHTransfer *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer"`
+	InboundInternationalACHTransfer *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer `pjson:"inbound_international_ach_transfer"`
 	// A Inbound Real Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
-	InboundRealTimePaymentsTransferConfirmation *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation"`
+	InboundRealTimePaymentsTransferConfirmation *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `pjson:"inbound_real_time_payments_transfer_confirmation"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
-	InboundWireDrawdownPaymentReversal *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal"`
+	InboundWireDrawdownPaymentReversal *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `pjson:"inbound_wire_drawdown_payment_reversal"`
 	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment"`
+	InboundWireDrawdownPayment *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment `pjson:"inbound_wire_drawdown_payment"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
-	InboundWireReversal *ACHTransferSimulationTransactionSourceInboundWireReversal `json:"inbound_wire_reversal"`
+	InboundWireReversal *ACHTransferSimulationTransactionSourceInboundWireReversal `pjson:"inbound_wire_reversal"`
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
-	InboundWireTransfer *ACHTransferSimulationTransactionSourceInboundWireTransfer `json:"inbound_wire_transfer"`
+	InboundWireTransfer *ACHTransferSimulationTransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
-	InternalSource *ACHTransferSimulationTransactionSourceInternalSource `json:"internal_source"`
+	InternalSource *ACHTransferSimulationTransactionSourceInternalSource `pjson:"internal_source"`
 	// A Deprecated Card Refund object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund *ACHTransferSimulationTransactionSourceCardRouteRefund `json:"card_route_refund"`
+	CardRouteRefund *ACHTransferSimulationTransactionSourceCardRouteRefund `pjson:"card_route_refund"`
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement *ACHTransferSimulationTransactionSourceCardRouteSettlement `json:"card_route_settlement"`
+	CardRouteSettlement *ACHTransferSimulationTransactionSourceCardRouteSettlement `pjson:"card_route_settlement"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
-	SampleFunds *ACHTransferSimulationTransactionSourceSampleFunds `json:"sample_funds"`
+	SampleFunds *ACHTransferSimulationTransactionSourceSampleFunds `pjson:"sample_funds"`
 	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention"`
+	WireDrawdownPaymentIntention *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention `pjson:"wire_drawdown_payment_intention"`
 	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection"`
+	WireDrawdownPaymentRejection *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection `pjson:"wire_drawdown_payment_rejection"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
-	WireTransferIntention *ACHTransferSimulationTransactionSourceWireTransferIntention `json:"wire_transfer_intention"`
+	WireTransferIntention *ACHTransferSimulationTransactionSourceWireTransferIntention `pjson:"wire_transfer_intention"`
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
-	WireTransferRejection *ACHTransferSimulationTransactionSourceWireTransferRejection `json:"wire_transfer_rejection"`
+	WireTransferRejection *ACHTransferSimulationTransactionSourceWireTransferRejection `pjson:"wire_transfer_rejection"`
+	jsonFields            map[string]interface{}                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSource using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSource into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -18642,23 +22852,39 @@ const (
 type ACHTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency `pjson:"currency"`
 	// The description you chose to give the transfer.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountID *string `json:"source_account_id"`
+	SourceAccountID *string `pjson:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceAccountTransferIntention using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceAccountTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -18721,14 +22947,30 @@ const (
 type ACHTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// Why the transfer was returned.
-	ReturnReasonCode *string `json:"return_reason_code"`
+	ReturnReasonCode *string                `pjson:"return_reason_code"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceACHCheckConversionReturn using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceACHCheckConversionReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -18747,14 +22989,30 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) GetRetu
 type ACHTransferSimulationTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceACHCheckConversion using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceACHCheckConversion
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -18773,20 +23031,36 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetFileID() (
 type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceACHTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceACHTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -18825,7 +23099,23 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetTransfer
 //
 type ACHTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceACHTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceACHTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
@@ -18840,13 +23130,29 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) GetTransfer
 type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the ACH Transfer was returned.
-	ReturnReasonCode *ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
+	ReturnReasonCode *ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceACHTransferReturn using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceACHTransferReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -18914,12 +23220,28 @@ const (
 type ACHTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt *string `pjson:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardDisputeAcceptance using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceCardDisputeAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -18952,20 +23274,36 @@ func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransac
 type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceCardRefundCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCardRefundCurrency `pjson:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `pjson:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type *ACHTransferSimulationTransactionSourceCardRefundType `json:"type"`
+	Type       *ACHTransferSimulationTransactionSourceCardRefundType `pjson:"type"`
+	jsonFields map[string]interface{}                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardRefund using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCardRefund into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCardRefund) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCardRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19019,35 +23357,51 @@ const (
 type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency *ACHTransferSimulationTransactionSourceCardSettlementCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCardSettlementCurrency `pjson:"currency"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount *int `json:"presentment_amount"`
+	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `json:"presentment_currency"`
+	PresentmentCurrency *string `pjson:"presentment_currency"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantName *string `json:"merchant_name"`
+	MerchantName *string `pjson:"merchant_name"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type *ACHTransferSimulationTransactionSourceCardSettlementType `json:"type"`
+	Type       *ACHTransferSimulationTransactionSourceCardSettlementType `pjson:"type"`
+	jsonFields map[string]interface{}                                    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardSettlement using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCardSettlement into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19064,7 +23418,7 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetCurrency() (Cu
 }
 
 // The amount in the minor unit of the transaction's presentment currency.
-func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int) {
+func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
 	if r != nil && r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
@@ -19153,24 +23507,40 @@ const (
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `pjson:"currency"`
 	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckDepositAcceptance using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceCheckDepositAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19234,25 +23604,41 @@ const (
 type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
+	ReturnedAt *string `pjson:"returned_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	//
-	ReturnReason *ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
+	ReturnReason *ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields   map[string]interface{}                                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckDepositReturn using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCheckDepositReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19331,24 +23717,40 @@ const (
 //
 type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency `pjson:"currency"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceCheckTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The street address of the check's destination.
@@ -19392,7 +23794,7 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetAddres
 }
 
 // The transfer amount in USD cents.
-func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19438,9 +23840,25 @@ const (
 //
 type ACHTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckTransferReturn using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCheckTransferReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the returned Check Transfer.
@@ -19462,7 +23880,23 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) GetFileID() 
 //
 type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceCheckTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
@@ -19476,14 +23910,31 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransf
 //
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `json:"requested_at"`
+	RequestedAt *string `pjson:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type"`
+	Type       *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
+	jsonFields map[string]interface{}                                                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID of the check transfer that was stopped.
@@ -19529,17 +23980,33 @@ const (
 type ACHTransferSimulationTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceDisputeResolutionCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceDisputeResolutionCurrency `pjson:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string                `pjson:"disputed_transaction_id"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceDisputeResolution using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceDisputeResolution
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19578,16 +24045,32 @@ const (
 type ACHTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BagID *string `json:"bag_id"`
+	BagID *string `pjson:"bag_id"`
 	//
-	DepositDate *string `json:"deposit_date"`
+	DepositDate *string                `pjson:"deposit_date"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceEmpyrealCashDeposit using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceEmpyrealCashDeposit
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19612,28 +24095,44 @@ func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetDepositDa
 type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundACHTransfer using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInboundACHTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19700,21 +24199,37 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetTraceNumbe
 type ACHTransferSimulationTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
 	//
-	CheckNumber *string `json:"check_number"`
+	CheckNumber *string `pjson:"check_number"`
 	//
-	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
 	//
-	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundCheck using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInboundCheck into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19766,82 +24281,99 @@ const (
 type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -19883,7 +24415,7 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return
 }
 
-func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -20097,27 +24629,45 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
-	Currency *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `pjson:"currency"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the transfer
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20195,29 +24745,47 @@ const (
 //
 type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string                `pjson:"previous_message_input_source"`
+	jsonFields                 map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20300,36 +24868,52 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversa
 type ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20423,34 +25007,50 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetOr
 //
 type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string `pjson:"previous_message_input_source"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
-	ReceiverFinancialInstitutionInformation *string `json:"receiver_financial_institution_information"`
+	ReceiverFinancialInstitutionInformation *string `pjson:"receiver_financial_institution_information"`
 	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation *string `json:"financial_institution_to_financial_institution_information"`
+	FinancialInstitutionToFinancialInstitutionInformation *string                `pjson:"financial_institution_to_financial_institution_information"`
+	jsonFields                                            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundWireReversal using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInboundWireReversal
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20550,44 +25150,60 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) GetFinancial
 type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformationLine1 *string `json:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
 	//
-	OriginatorToBeneficiaryInformationLine2 *string `json:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
 	//
-	OriginatorToBeneficiaryInformationLine3 *string `json:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
 	//
-	OriginatorToBeneficiaryInformationLine4 *string `json:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInboundWireTransfer using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInboundWireTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20710,17 +25326,33 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) GetOriginato
 type ACHTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceInternalSourceCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
 	//
-	Reason *ACHTransferSimulationTransactionSourceInternalSourceReason `json:"reason"`
+	Reason     *ACHTransferSimulationTransactionSourceInternalSourceReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInternalSource using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInternalSource into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceInternalSource) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceInternalSource) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20771,27 +25403,43 @@ const (
 type ACHTransferSimulationTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceCardRouteRefundCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardRouteRefund using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCardRouteRefund
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
 // example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20864,27 +25512,43 @@ const (
 type ACHTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency `json:"currency"`
+	Currency *ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardRouteSettlement using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceCardRouteSettlement
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
 // for example, this is cents.
-func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -20956,7 +25620,23 @@ const (
 //
 type ACHTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator *string `json:"originator"`
+	Originator *string                `pjson:"originator"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceSampleFunds using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceSampleFunds into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationTransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Where the sample funds came from.
@@ -20970,19 +25650,35 @@ func (r *ACHTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Ori
 //
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21020,7 +25716,23 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Get
 //
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
@@ -21033,19 +25745,35 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Get
 //
 type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceWireTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceWireTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21086,7 +25814,23 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetTransfe
 //
 type ACHTransferSimulationTransactionSourceWireTransferRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceWireTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationTransactionSourceWireTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
@@ -21105,35 +25849,50 @@ const (
 //
 type ACHTransferSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transcation's Account.
-	Currency *ACHTransferSimulationDeclinedTransactionCurrency `json:"currency"`
+	Currency *ACHTransferSimulationDeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This is the description the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Declined Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
 	// additional undocumented keys may appear in this object. These should be treated
 	// as deprecated and will be removed in the future.
-	Source *ACHTransferSimulationDeclinedTransactionSource `json:"source"`
+	Source *ACHTransferSimulationDeclinedTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type *ACHTransferSimulationDeclinedTransactionType `json:"type"`
+	Type       *ACHTransferSimulationDeclinedTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                        `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransaction using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationDeclinedTransaction into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationDeclinedTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -21146,7 +25905,7 @@ func (r *ACHTransferSimulationDeclinedTransaction) GetAccountID() (AccountID str
 
 // The Declined Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransaction) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21242,26 +26001,42 @@ type ACHTransferSimulationDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category *ACHTransferSimulationDeclinedTransactionSourceCategory `json:"category"`
+	Category *ACHTransferSimulationDeclinedTransactionSourceCategory `pjson:"category"`
 	// A ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
-	ACHDecline *ACHTransferSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline"`
+	ACHDecline *ACHTransferSimulationDeclinedTransactionSourceACHDecline `pjson:"ach_decline"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline *ACHTransferSimulationDeclinedTransactionSourceCardDecline `json:"card_decline"`
+	CardDecline *ACHTransferSimulationDeclinedTransactionSourceCardDecline `pjson:"card_decline"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline *ACHTransferSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline"`
+	CheckDecline *ACHTransferSimulationDeclinedTransactionSourceCheckDecline `pjson:"check_decline"`
 	// A Inbound Real Time Payments Transfer Decline object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline"`
+	InboundRealTimePaymentsTransferDecline *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `pjson:"inbound_real_time_payments_transfer_decline"`
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline"`
+	InternationalACHDecline *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline `pjson:"international_ach_decline"`
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline"`
+	CardRouteDecline *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline `pjson:"card_route_decline"`
+	jsonFields       map[string]interface{}                                          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSource using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationDeclinedTransactionSource into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -21345,28 +26120,44 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason"`
+	Reason *ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceACHDecline using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationDeclinedTransactionSourceACHDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21449,35 +26240,51 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
+	Currency *ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
-	Reason *ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason"`
+	Reason *ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceCardDecline using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationDeclinedTransactionSourceCardDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21591,16 +26398,32 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
-	Reason *ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason"`
+	Reason     *ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                            `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceCheckDecline using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceCheckDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21642,30 +26465,48 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real Time Payments
 	// transfer.
-	Currency *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency"`
+	Currency *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `pjson:"currency"`
 	// Why the transfer was declined.
-	Reason *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason"`
+	Reason *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `pjson:"reason"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21763,82 +26604,99 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -21880,7 +26738,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -22094,27 +26952,43 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 type ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
+	Currency *ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int) {
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -22197,21 +27071,37 @@ const (
 
 type SimulateAnACHTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID *string `pjson:"account_number_id"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate *string `json:"company_descriptive_date,omitempty"`
+	CompanyDescriptiveDate *string `pjson:"company_descriptive_date"`
 	// Data associated with the transfer set by the sender.
-	CompanyDiscretionaryData *string `json:"company_discretionary_data,omitempty"`
+	CompanyDiscretionaryData *string `pjson:"company_discretionary_data"`
 	// The description of the transfer set by the sender.
-	CompanyEntryDescription *string `json:"company_entry_description,omitempty"`
+	CompanyEntryDescription *string `pjson:"company_entry_description"`
 	// The name of the sender.
-	CompanyName *string `json:"company_name,omitempty"`
+	CompanyName *string `pjson:"company_name"`
 	// The sender's company id.
-	CompanyID *string `json:"company_id,omitempty"`
+	CompanyID  *string                `pjson:"company_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateAnACHTransferToYourAccountParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateAnACHTransferToYourAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateAnACHTransferToYourAccountParameters into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateAnACHTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account Number the inbound ACH Transfer is for.
@@ -22225,7 +27115,7 @@ func (r *SimulateAnACHTransferToYourAccountParameters) GetAccountNumberID() (Acc
 // The transfer amount in cents. A positive amount originates a credit transfer
 // pushing funds to the receiving account. A negative amount originates a debit
 // transfer pulling funds from the receiving account.
-func (r *SimulateAnACHTransferToYourAccountParameters) GetAmount() (Amount int) {
+func (r *SimulateAnACHTransferToYourAccountParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -22275,7 +27165,22 @@ func (r *SimulateAnACHTransferToYourAccountParameters) GetCompanyID() (CompanyID
 type ReturnASandboxACHTransferParameters struct {
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
-	Reason *ReturnASandboxACHTransferParametersReason `json:"reason,omitempty"`
+	Reason     *ReturnASandboxACHTransferParametersReason `pjson:"reason"`
+	jsonFields map[string]interface{}                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ReturnASandboxACHTransferParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *ReturnASandboxACHTransferParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ReturnASandboxACHTransferParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *ReturnASandboxACHTransferParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The reason why the Federal Reserve or destination bank returned this transfer.
@@ -22317,9 +27222,25 @@ const (
 
 type SimulatesAdvancingTheStateOfACardDisputeParameters struct {
 	// The status to move the dispute to.
-	Status *SimulatesAdvancingTheStateOfACardDisputeParametersStatus `json:"status"`
+	Status *SimulatesAdvancingTheStateOfACardDisputeParametersStatus `pjson:"status"`
 	// Why the dispute was rejected. Not required for accepting disputes.
-	Explanation *string `json:"explanation,omitempty"`
+	Explanation *string                `pjson:"explanation"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulatesAdvancingTheStateOfACardDisputeParameters using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulatesAdvancingTheStateOfACardDisputeParameters into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The status to move the dispute to.
@@ -22348,7 +27269,22 @@ const (
 type SimulateARefundOnACardParameters struct {
 	// The identifier for the Transaction to refund. The Transaction's source must have
 	// a category of card_settlement.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateARefundOnACardParameters using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *SimulateARefundOnACardParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateARefundOnACardParameters into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *SimulateARefundOnACardParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Transaction to refund. The Transaction's source must have
@@ -22362,7 +27298,22 @@ func (r *SimulateARefundOnACardParameters) GetTransactionID() (TransactionID str
 
 type SimulateATaxDocumentBeingCreatedParameters struct {
 	// The identifier of the Account the tax document is for.
-	AccountID *string `json:"account_id"`
+	AccountID  *string                `pjson:"account_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateATaxDocumentBeingCreatedParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateATaxDocumentBeingCreatedParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateATaxDocumentBeingCreatedParameters into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *SimulateATaxDocumentBeingCreatedParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account the tax document is for.
@@ -22377,13 +27328,28 @@ func (r *SimulateATaxDocumentBeingCreatedParameters) GetAccountID() (AccountID s
 type DigitalWalletTokenRequestCreateResponse struct {
 	// If the simulated tokenization attempt was declined, this field contains details
 	// as to why.
-	DeclineReason *DigitalWalletTokenRequestCreateResponseDeclineReason `json:"decline_reason"`
+	DeclineReason *DigitalWalletTokenRequestCreateResponseDeclineReason `pjson:"decline_reason"`
 	// If the simulated tokenization attempt was accepted, this field contains the id
 	// of the Digital Wallet Token that was created.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string `pjson:"digital_wallet_token_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
-	Type *DigitalWalletTokenRequestCreateResponseType `json:"type"`
+	Type       *DigitalWalletTokenRequestCreateResponseType `pjson:"type"`
+	jsonFields map[string]interface{}                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DigitalWalletTokenRequestCreateResponse using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DigitalWalletTokenRequestCreateResponse into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *DigitalWalletTokenRequestCreateResponse) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the simulated tokenization attempt was declined, this field contains details
@@ -22430,7 +27396,23 @@ const (
 
 type SimulateDigitalWalletProvisioningForACardParameters struct {
 	// The identifier of the Card to be authorized.
-	CardID *string `json:"card_id"`
+	CardID     *string                `pjson:"card_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateDigitalWalletProvisioningForACardParameters using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateDigitalWalletProvisioningForACardParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateDigitalWalletProvisioningForACardParameters into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateDigitalWalletProvisioningForACardParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Card to be authorized.
@@ -22446,10 +27428,25 @@ type WireTransferSimulation struct {
 	// If the Wire Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
 	// `category: inbound_wire_transfer`.
-	Transaction *WireTransferSimulationTransaction `json:"transaction"`
+	Transaction *WireTransferSimulationTransaction `pjson:"transaction"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer_simulation_result`.
-	Type *WireTransferSimulationType `json:"type"`
+	Type       *WireTransferSimulationType `pjson:"type"`
+	jsonFields map[string]interface{}      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into WireTransferSimulation using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferSimulation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulation into an array of bytes using the
+// gjson library. Members of the `Extras` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *WireTransferSimulation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the Wire Transfer attempt succeeds, this will contain the resulting
@@ -22474,36 +27471,51 @@ func (r *WireTransferSimulation) GetType() (Type WireTransferSimulationType) {
 //
 type WireTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
-	Currency *WireTransferSimulationTransactionCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
 	// deprecated and will be removed in the future.
-	Source *WireTransferSimulationTransactionSource `json:"source"`
+	Source *WireTransferSimulationTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type *WireTransferSimulationTransactionType `json:"type"`
+	Type       *WireTransferSimulationTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransaction using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransaction into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -22516,7 +27528,7 @@ func (r *WireTransferSimulationTransaction) GetAccountID() (AccountID string) {
 
 // The Transaction amount in the minor unit of its currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransaction) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -22613,112 +27625,127 @@ type WireTransferSimulationTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *WireTransferSimulationTransactionSourceCategory `json:"category"`
+	Category *WireTransferSimulationTransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
-	AccountTransferIntention *WireTransferSimulationTransactionSourceAccountTransferIntention `json:"account_transfer_intention"`
+	AccountTransferIntention *WireTransferSimulationTransactionSourceAccountTransferIntention `pjson:"account_transfer_intention"`
 	// A ACH Check Conversion Return object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn *WireTransferSimulationTransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return"`
+	ACHCheckConversionReturn *WireTransferSimulationTransactionSourceACHCheckConversionReturn `pjson:"ach_check_conversion_return"`
 	// A ACH Check Conversion object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion *WireTransferSimulationTransactionSourceACHCheckConversion `json:"ach_check_conversion"`
+	ACHCheckConversion *WireTransferSimulationTransactionSourceACHCheckConversion `pjson:"ach_check_conversion"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
-	ACHTransferIntention *WireTransferSimulationTransactionSourceACHTransferIntention `json:"ach_transfer_intention"`
+	ACHTransferIntention *WireTransferSimulationTransactionSourceACHTransferIntention `pjson:"ach_transfer_intention"`
 	// A ACH Transfer Rejection object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_rejection`.
-	ACHTransferRejection *WireTransferSimulationTransactionSourceACHTransferRejection `json:"ach_transfer_rejection"`
+	ACHTransferRejection *WireTransferSimulationTransactionSourceACHTransferRejection `pjson:"ach_transfer_rejection"`
 	// A ACH Transfer Return object. This field will be present in the JSON response if
 	// and only if `category` is equal to `ach_transfer_return`.
-	ACHTransferReturn *WireTransferSimulationTransactionSourceACHTransferReturn `json:"ach_transfer_return"`
+	ACHTransferReturn *WireTransferSimulationTransactionSourceACHTransferReturn `pjson:"ach_transfer_return"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
-	CardDisputeAcceptance *WireTransferSimulationTransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance"`
+	CardDisputeAcceptance *WireTransferSimulationTransactionSourceCardDisputeAcceptance `pjson:"card_dispute_acceptance"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
-	CardRefund *WireTransferSimulationTransactionSourceCardRefund `json:"card_refund"`
+	CardRefund *WireTransferSimulationTransactionSourceCardRefund `pjson:"card_refund"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
-	CardSettlement *WireTransferSimulationTransactionSourceCardSettlement `json:"card_settlement"`
+	CardSettlement *WireTransferSimulationTransactionSourceCardSettlement `pjson:"card_settlement"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
-	CheckDepositAcceptance *WireTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance"`
+	CheckDepositAcceptance *WireTransferSimulationTransactionSourceCheckDepositAcceptance `pjson:"check_deposit_acceptance"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
-	CheckDepositReturn *WireTransferSimulationTransactionSourceCheckDepositReturn `json:"check_deposit_return"`
+	CheckDepositReturn *WireTransferSimulationTransactionSourceCheckDepositReturn `pjson:"check_deposit_return"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
-	CheckTransferIntention *WireTransferSimulationTransactionSourceCheckTransferIntention `json:"check_transfer_intention"`
+	CheckTransferIntention *WireTransferSimulationTransactionSourceCheckTransferIntention `pjson:"check_transfer_intention"`
 	// A Check Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn *WireTransferSimulationTransactionSourceCheckTransferReturn `json:"check_transfer_return"`
+	CheckTransferReturn *WireTransferSimulationTransactionSourceCheckTransferReturn `pjson:"check_transfer_return"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection *WireTransferSimulationTransactionSourceCheckTransferRejection `json:"check_transfer_rejection"`
+	CheckTransferRejection *WireTransferSimulationTransactionSourceCheckTransferRejection `pjson:"check_transfer_rejection"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
-	CheckTransferStopPaymentRequest *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request"`
+	CheckTransferStopPaymentRequest *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest `pjson:"check_transfer_stop_payment_request"`
 	// A Dispute Resolution object. This field will be present in the JSON response if
 	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution *WireTransferSimulationTransactionSourceDisputeResolution `json:"dispute_resolution"`
+	DisputeResolution *WireTransferSimulationTransactionSourceDisputeResolution `pjson:"dispute_resolution"`
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit *WireTransferSimulationTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit"`
+	EmpyrealCashDeposit *WireTransferSimulationTransactionSourceEmpyrealCashDeposit `pjson:"empyreal_cash_deposit"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
-	InboundACHTransfer *WireTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer"`
+	InboundACHTransfer *WireTransferSimulationTransactionSourceInboundACHTransfer `pjson:"inbound_ach_transfer"`
 	// A Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
-	InboundCheck *WireTransferSimulationTransactionSourceInboundCheck `json:"inbound_check"`
+	InboundCheck *WireTransferSimulationTransactionSourceInboundCheck `pjson:"inbound_check"`
 	// A Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
-	InboundInternationalACHTransfer *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer"`
+	InboundInternationalACHTransfer *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer `pjson:"inbound_international_ach_transfer"`
 	// A Inbound Real Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
-	InboundRealTimePaymentsTransferConfirmation *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation"`
+	InboundRealTimePaymentsTransferConfirmation *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `pjson:"inbound_real_time_payments_transfer_confirmation"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
-	InboundWireDrawdownPaymentReversal *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal"`
+	InboundWireDrawdownPaymentReversal *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `pjson:"inbound_wire_drawdown_payment_reversal"`
 	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment"`
+	InboundWireDrawdownPayment *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment `pjson:"inbound_wire_drawdown_payment"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
-	InboundWireReversal *WireTransferSimulationTransactionSourceInboundWireReversal `json:"inbound_wire_reversal"`
+	InboundWireReversal *WireTransferSimulationTransactionSourceInboundWireReversal `pjson:"inbound_wire_reversal"`
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
-	InboundWireTransfer *WireTransferSimulationTransactionSourceInboundWireTransfer `json:"inbound_wire_transfer"`
+	InboundWireTransfer *WireTransferSimulationTransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
-	InternalSource *WireTransferSimulationTransactionSourceInternalSource `json:"internal_source"`
+	InternalSource *WireTransferSimulationTransactionSourceInternalSource `pjson:"internal_source"`
 	// A Deprecated Card Refund object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund *WireTransferSimulationTransactionSourceCardRouteRefund `json:"card_route_refund"`
+	CardRouteRefund *WireTransferSimulationTransactionSourceCardRouteRefund `pjson:"card_route_refund"`
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement *WireTransferSimulationTransactionSourceCardRouteSettlement `json:"card_route_settlement"`
+	CardRouteSettlement *WireTransferSimulationTransactionSourceCardRouteSettlement `pjson:"card_route_settlement"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
-	SampleFunds *WireTransferSimulationTransactionSourceSampleFunds `json:"sample_funds"`
+	SampleFunds *WireTransferSimulationTransactionSourceSampleFunds `pjson:"sample_funds"`
 	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention"`
+	WireDrawdownPaymentIntention *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention `pjson:"wire_drawdown_payment_intention"`
 	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection"`
+	WireDrawdownPaymentRejection *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection `pjson:"wire_drawdown_payment_rejection"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
-	WireTransferIntention *WireTransferSimulationTransactionSourceWireTransferIntention `json:"wire_transfer_intention"`
+	WireTransferIntention *WireTransferSimulationTransactionSourceWireTransferIntention `pjson:"wire_transfer_intention"`
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
-	WireTransferRejection *WireTransferSimulationTransactionSourceWireTransferRejection `json:"wire_transfer_rejection"`
+	WireTransferRejection *WireTransferSimulationTransactionSourceWireTransferRejection `pjson:"wire_transfer_rejection"`
+	jsonFields            map[string]interface{}                                        `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSource using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSource into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -23078,23 +28105,39 @@ const (
 type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency `pjson:"currency"`
 	// The description you chose to give the transfer.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountID *string `json:"source_account_id"`
+	SourceAccountID *string `pjson:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceAccountTransferIntention using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceAccountTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23157,14 +28200,30 @@ const (
 type WireTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// Why the transfer was returned.
-	ReturnReasonCode *string `json:"return_reason_code"`
+	ReturnReasonCode *string                `pjson:"return_reason_code"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceACHCheckConversionReturn using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceACHCheckConversionReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23183,14 +28242,30 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) GetRet
 type WireTransferSimulationTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceACHCheckConversion using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceACHCheckConversion
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23209,20 +28284,36 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetFileID() 
 type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceACHTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceACHTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23261,7 +28352,23 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetTransfe
 //
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceACHTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceACHTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
@@ -23276,13 +28383,29 @@ func (r *WireTransferSimulationTransactionSourceACHTransferRejection) GetTransfe
 type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the ACH Transfer was returned.
-	ReturnReasonCode *WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
+	ReturnReasonCode *WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceACHTransferReturn using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceACHTransferReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -23350,12 +28473,28 @@ const (
 type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt *string `pjson:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardDisputeAcceptance using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCardDisputeAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -23388,20 +28527,36 @@ func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransa
 type WireTransferSimulationTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceCardRefundCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCardRefundCurrency `pjson:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `pjson:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type *WireTransferSimulationTransactionSourceCardRefundType `json:"type"`
+	Type       *WireTransferSimulationTransactionSourceCardRefundType `pjson:"type"`
+	jsonFields map[string]interface{}                                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardRefund using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceCardRefund into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCardRefund) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCardRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23455,35 +28610,51 @@ const (
 type WireTransferSimulationTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency *WireTransferSimulationTransactionSourceCardSettlementCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCardSettlementCurrency `pjson:"currency"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount *int `json:"presentment_amount"`
+	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `json:"presentment_currency"`
+	PresentmentCurrency *string `pjson:"presentment_currency"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantName *string `json:"merchant_name"`
+	MerchantName *string `pjson:"merchant_name"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type *WireTransferSimulationTransactionSourceCardSettlementType `json:"type"`
+	Type       *WireTransferSimulationTransactionSourceCardSettlementType `pjson:"type"`
+	jsonFields map[string]interface{}                                     `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardSettlement using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceCardSettlement
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
 // dollars, for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCardSettlement) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCardSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23500,7 +28671,7 @@ func (r *WireTransferSimulationTransactionSourceCardSettlement) GetCurrency() (C
 }
 
 // The amount in the minor unit of the transaction's presentment currency.
-func (r *WireTransferSimulationTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int) {
+func (r *WireTransferSimulationTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
 	if r != nil && r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
@@ -23589,24 +28760,40 @@ const (
 type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `pjson:"currency"`
 	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckDepositAcceptance using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCheckDepositAcceptance into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23670,25 +28857,41 @@ const (
 type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
+	ReturnedAt *string `pjson:"returned_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	//
-	ReturnReason *WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
+	ReturnReason *WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields   map[string]interface{}                                                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckDepositReturn using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceCheckDepositReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23767,24 +28970,40 @@ const (
 //
 type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency `pjson:"currency"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCheckTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The street address of the check's destination.
@@ -23828,7 +29047,7 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetAddre
 }
 
 // The transfer amount in USD cents.
-func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -23874,9 +29093,25 @@ const (
 //
 type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckTransferReturn using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCheckTransferReturn into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the returned Check Transfer.
@@ -23898,7 +29133,23 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) GetFileID()
 //
 type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCheckTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
@@ -23912,14 +29163,31 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTrans
 //
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `json:"requested_at"`
+	RequestedAt *string `pjson:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type"`
+	Type       *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
+	jsonFields map[string]interface{}                                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID of the check transfer that was stopped.
@@ -23965,17 +29233,33 @@ const (
 type WireTransferSimulationTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceDisputeResolutionCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceDisputeResolutionCurrency `pjson:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string                `pjson:"disputed_transaction_id"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceDisputeResolution using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceDisputeResolution
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24014,16 +29298,32 @@ const (
 type WireTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BagID *string `json:"bag_id"`
+	BagID *string `pjson:"bag_id"`
 	//
-	DepositDate *string `json:"deposit_date"`
+	DepositDate *string                `pjson:"deposit_date"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceEmpyrealCashDeposit using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceEmpyrealCashDeposit into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24048,28 +29348,44 @@ func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetDepositD
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundACHTransfer using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceInboundACHTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24136,21 +29452,37 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetTraceNumb
 type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
 	//
-	CheckNumber *string `json:"check_number"`
+	CheckNumber *string `pjson:"check_number"`
 	//
-	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
 	//
-	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundCheck using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceInboundCheck into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24202,82 +29534,99 @@ const (
 type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundInternationalACHTransfer using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundInternationalACHTransfer into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24319,7 +29668,7 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return
 }
 
-func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -24533,27 +29882,45 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
-	Currency *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `pjson:"currency"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the transfer
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24631,29 +29998,47 @@ const (
 //
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string                `pjson:"previous_message_input_source"`
+	jsonFields                 map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24736,36 +30121,52 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentRevers
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundWireDrawdownPayment using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundWireDrawdownPayment into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24859,34 +30260,50 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetO
 //
 type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string `pjson:"previous_message_input_source"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
-	ReceiverFinancialInstitutionInformation *string `json:"receiver_financial_institution_information"`
+	ReceiverFinancialInstitutionInformation *string `pjson:"receiver_financial_institution_information"`
 	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation *string `json:"financial_institution_to_financial_institution_information"`
+	FinancialInstitutionToFinancialInstitutionInformation *string                `pjson:"financial_institution_to_financial_institution_information"`
+	jsonFields                                            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundWireReversal using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundWireReversal into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *WireTransferSimulationTransactionSourceInboundWireReversal) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -24986,44 +30403,60 @@ func (r *WireTransferSimulationTransactionSourceInboundWireReversal) GetFinancia
 type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformationLine1 *string `json:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
 	//
-	OriginatorToBeneficiaryInformationLine2 *string `json:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
 	//
-	OriginatorToBeneficiaryInformationLine3 *string `json:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
 	//
-	OriginatorToBeneficiaryInformationLine4 *string `json:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInboundWireTransfer using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceInboundWireTransfer into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25146,17 +30579,33 @@ func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) GetOriginat
 type WireTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceInternalSourceCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
 	//
-	Reason *WireTransferSimulationTransactionSourceInternalSourceReason `json:"reason"`
+	Reason     *WireTransferSimulationTransactionSourceInternalSourceReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceInternalSource using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceInternalSource
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceInternalSource) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceInternalSource) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25207,27 +30656,43 @@ const (
 type WireTransferSimulationTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceCardRouteRefundCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardRouteRefund using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceCardRouteRefund
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
 // example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25300,27 +30765,43 @@ const (
 type WireTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceCardRouteSettlementCurrency `json:"currency"`
+	Currency *WireTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardRouteSettlement using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceCardRouteSettlement into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
 // for example, this is cents.
-func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25392,7 +30873,23 @@ const (
 //
 type WireTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator *string `json:"originator"`
+	Originator *string                `pjson:"originator"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceSampleFunds using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes WireTransferSimulationTransactionSourceSampleFunds into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Where the sample funds came from.
@@ -25406,19 +30903,36 @@ func (r *WireTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Or
 //
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25456,7 +30970,24 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Ge
 //
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
@@ -25469,19 +31000,35 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Ge
 //
 type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceWireTransferIntention using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceWireTransferIntention into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetAmount() (Amount int) {
+func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25522,7 +31069,23 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetTransf
 //
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceWireTransferRejection using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *WireTransferSimulationTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// WireTransferSimulationTransactionSourceWireTransferRejection into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *WireTransferSimulationTransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *WireTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
@@ -25546,48 +31109,64 @@ const (
 
 type SimulateAWireTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound Wire Transfer is for.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID *string `pjson:"account_number_id"`
 	// The transfer amount in cents. Must be positive.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The sending bank will set beneficiary_address_line1 in production. You can
 	// simulate any value here.
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1,omitempty"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	// The sending bank will set beneficiary_address_line2 in production. You can
 	// simulate any value here.
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2,omitempty"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	// The sending bank will set beneficiary_address_line3 in production. You can
 	// simulate any value here.
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3,omitempty"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	// The sending bank will set beneficiary_name in production. You can simulate any
 	// value here.
-	BeneficiaryName *string `json:"beneficiary_name,omitempty"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	// The sending bank will set beneficiary_reference in production. You can simulate
 	// any value here.
-	BeneficiaryReference *string `json:"beneficiary_reference,omitempty"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	// The sending bank will set originator_address_line1 in production. You can
 	// simulate any value here.
-	OriginatorAddressLine1 *string `json:"originator_address_line1,omitempty"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	// The sending bank will set originator_address_line2 in production. You can
 	// simulate any value here.
-	OriginatorAddressLine2 *string `json:"originator_address_line2,omitempty"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	// The sending bank will set originator_address_line3 in production. You can
 	// simulate any value here.
-	OriginatorAddressLine3 *string `json:"originator_address_line3,omitempty"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	// The sending bank will set originator_name in production. You can simulate any
 	// value here.
-	OriginatorName *string `json:"originator_name,omitempty"`
+	OriginatorName *string `pjson:"originator_name"`
 	// The sending bank will set originator_to_beneficiary_information_line1 in
 	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine1 *string `json:"originator_to_beneficiary_information_line1,omitempty"`
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
 	// The sending bank will set originator_to_beneficiary_information_line2 in
 	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine2 *string `json:"originator_to_beneficiary_information_line2,omitempty"`
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
 	// The sending bank will set originator_to_beneficiary_information_line3 in
 	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine3 *string `json:"originator_to_beneficiary_information_line3,omitempty"`
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
 	// The sending bank will set originator_to_beneficiary_information_line4 in
 	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine4 *string `json:"originator_to_beneficiary_information_line4,omitempty"`
+	OriginatorToBeneficiaryInformationLine4 *string                `pjson:"originator_to_beneficiary_information_line4"`
+	jsonFields                              map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateAWireTransferToYourAccountParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateAWireTransferToYourAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateAWireTransferToYourAccountParameters into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateAWireTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account Number the inbound Wire Transfer is for.
@@ -25599,7 +31178,7 @@ func (r *SimulateAWireTransferToYourAccountParameters) GetAccountNumberID() (Acc
 }
 
 // The transfer amount in cents. Must be positive.
-func (r *SimulateAWireTransferToYourAccountParameters) GetAmount() (Amount int) {
+func (r *SimulateAWireTransferToYourAccountParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25728,14 +31307,29 @@ type CardAuthorizationSimulation struct {
 	// If the authorization attempt succeeds, this will contain the resulting Pending
 	// Transaction object. The Pending Transaction's `source` will be of
 	// `category: card_authorization`.
-	PendingTransaction *CardAuthorizationSimulationPendingTransaction `json:"pending_transaction"`
+	PendingTransaction *CardAuthorizationSimulationPendingTransaction `pjson:"pending_transaction"`
 	// If the authorization attempt fails, this will contain the resulting
 	// [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of `category: card_decline`.
-	DeclinedTransaction *CardAuthorizationSimulationDeclinedTransaction `json:"declined_transaction"`
+	DeclinedTransaction *CardAuthorizationSimulationDeclinedTransaction `pjson:"declined_transaction"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_card_authorization_simulation_result`.
-	Type *CardAuthorizationSimulationType `json:"type"`
+	Type       *CardAuthorizationSimulationType `pjson:"type"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CardAuthorizationSimulation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardAuthorizationSimulation into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CardAuthorizationSimulation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the authorization attempt succeeds, this will contain the resulting Pending
@@ -25770,38 +31364,54 @@ func (r *CardAuthorizationSimulation) GetType() (Type CardAuthorizationSimulatio
 //
 type CardAuthorizationSimulationPendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 	// Transaction's currency. This will match the currency on the Pending
 	// Transcation's Account.
-	Currency *CardAuthorizationSimulationPendingTransactionCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Pending Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Pending Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Pending Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location.
-	Source *CardAuthorizationSimulationPendingTransactionSource `json:"source"`
+	Source *CardAuthorizationSimulationPendingTransactionSource `pjson:"source"`
 	// Whether the Pending Transaction has been confirmed and has an associated
 	// Transaction.
-	Status *CardAuthorizationSimulationPendingTransactionStatus `json:"status"`
+	Status *CardAuthorizationSimulationPendingTransactionStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
-	Type *CardAuthorizationSimulationPendingTransactionType `json:"type"`
+	Type       *CardAuthorizationSimulationPendingTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                             `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransaction using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardAuthorizationSimulationPendingTransaction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the account this Pending Transaction belongs to.
@@ -25814,7 +31424,7 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetAccountID() (AccountI
 
 // The Pending Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransaction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -25919,35 +31529,51 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *CardAuthorizationSimulationPendingTransactionSourceCategory `json:"category"`
+	Category *CardAuthorizationSimulationPendingTransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
-	AccountTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction"`
+	AccountTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction `pjson:"account_transfer_instruction"`
 	// A ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
-	ACHTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction"`
+	ACHTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction `pjson:"ach_transfer_instruction"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
-	CardAuthorization *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization `json:"card_authorization"`
+	CardAuthorization *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization `pjson:"card_authorization"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
-	CheckDepositInstruction *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction"`
+	CheckDepositInstruction *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction `pjson:"check_deposit_instruction"`
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
-	CheckTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction"`
+	CheckTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction `pjson:"check_transfer_instruction"`
 	// A Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
-	InboundFundsHold *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold"`
+	InboundFundsHold *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold `pjson:"inbound_funds_hold"`
 	// A Deprecated Card Authorization object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_authorization`.
-	CardRouteAuthorization *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization `json:"card_route_authorization"`
+	CardRouteAuthorization *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization `pjson:"card_route_authorization"`
 	// A Wire Drawdown Payment Instruction object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `wire_drawdown_payment_instruction`.
-	WireDrawdownPaymentInstruction *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction `json:"wire_drawdown_payment_instruction"`
+	WireDrawdownPaymentInstruction *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction `pjson:"wire_drawdown_payment_instruction"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
-	WireTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction"`
+	WireTransferInstruction *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction `pjson:"wire_transfer_instruction"`
+	jsonFields              map[string]interface{}                                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSource using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardAuthorizationSimulationPendingTransactionSource into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -26062,17 +31688,35 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency `pjson:"currency"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26111,14 +31755,32 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26137,31 +31799,48 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorization using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorization into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26245,21 +31924,39 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency `pjson:"currency"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileID *string `json:"front_image_file_id"`
+	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileID *string `json:"back_image_file_id"`
+	BackImageFileID *string                `pjson:"back_image_file_id"`
+	jsonFields      map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26308,17 +32005,35 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency `pjson:"currency"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26357,24 +32072,41 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency `pjson:"currency"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt *string `json:"automatically_releases_at"`
+	AutomaticallyReleasesAt *string `pjson:"automatically_releases_at"`
 	// When the hold was released (if it has been released).
-	ReleasedAt *string `json:"released_at"`
+	ReleasedAt *string `pjson:"released_at"`
 	// The status of the hold.
-	Status *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `json:"status"`
+	Status *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `pjson:"status"`
 	// The ID of the Transaction for which funds were held.
-	HeldTransactionID *string `json:"held_transaction_id"`
+	HeldTransactionID *string                `pjson:"held_transaction_id"`
+	jsonFields        map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The held amount in the minor unit of the account's currency. For dollars, for
 // example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26445,27 +32177,45 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string                `pjson:"merchant_state"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26538,18 +32288,36 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26581,20 +32349,38 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentI
 type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26645,35 +32431,51 @@ const (
 //
 type CardAuthorizationSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transcation's Account.
-	Currency *CardAuthorizationSimulationDeclinedTransactionCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationDeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This is the description the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Declined Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
 	// additional undocumented keys may appear in this object. These should be treated
 	// as deprecated and will be removed in the future.
-	Source *CardAuthorizationSimulationDeclinedTransactionSource `json:"source"`
+	Source *CardAuthorizationSimulationDeclinedTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type *CardAuthorizationSimulationDeclinedTransactionType `json:"type"`
+	Type       *CardAuthorizationSimulationDeclinedTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransaction using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardAuthorizationSimulationDeclinedTransaction into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -26686,7 +32488,7 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetAccountID() (Account
 
 // The Declined Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26782,26 +32584,42 @@ type CardAuthorizationSimulationDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category *CardAuthorizationSimulationDeclinedTransactionSourceCategory `json:"category"`
+	Category *CardAuthorizationSimulationDeclinedTransactionSourceCategory `pjson:"category"`
 	// A ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
-	ACHDecline *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline"`
+	ACHDecline *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline `pjson:"ach_decline"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline `json:"card_decline"`
+	CardDecline *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline `pjson:"card_decline"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline"`
+	CheckDecline *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `pjson:"check_decline"`
 	// A Inbound Real Time Payments Transfer Decline object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline"`
+	InboundRealTimePaymentsTransferDecline *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `pjson:"inbound_real_time_payments_transfer_decline"`
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline"`
+	InternationalACHDecline *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `pjson:"international_ach_decline"`
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline"`
+	CardRouteDecline *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline `pjson:"card_route_decline"`
+	jsonFields       map[string]interface{}                                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSource using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CardAuthorizationSimulationDeclinedTransactionSource into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -26885,28 +32703,44 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason"`
+	Reason *CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceACHDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceACHDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -26989,35 +32823,51 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
-	Reason *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason"`
+	Reason *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDecline into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27131,16 +32981,32 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
-	Reason *CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason"`
+	Reason     *CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27182,30 +33048,48 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real Time Payments
 	// transfer.
-	Currency *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `pjson:"currency"`
 	// Why the transfer was declined.
-	Reason *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason"`
+	Reason *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `pjson:"reason"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27303,82 +33187,100 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27420,7 +33322,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -27634,27 +33536,44 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
+	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int) {
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27737,15 +33656,30 @@ const (
 
 type SimulateAnAuthorizationOnACardParameters struct {
 	// The authorization amount in cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the Card to be authorized.
-	CardID *string `json:"card_id,omitempty"`
+	CardID *string `pjson:"card_id"`
 	// The identifier of the Digital Wallet Token to be authorized.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id,omitempty"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateAnAuthorizationOnACardParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateAnAuthorizationOnACardParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateAnAuthorizationOnACardParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *SimulateAnAuthorizationOnACardParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The authorization amount in cents.
-func (r *SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int) {
+func (r *SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27770,13 +33704,29 @@ func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (Di
 
 type SimulateSettlingACardAuthorizationParameters struct {
 	// The identifier of the Card to create a settlement on.
-	CardID *string `json:"card_id"`
+	CardID *string `pjson:"card_id"`
 	// The identifier of the Pending Transaction for the Card Authorization you wish to
 	// settle.
-	PendingTransactionID *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// The amount to be settled. This defaults to the amount of the Pending Transaction
 	// being settled.
-	Amount *int `json:"amount,omitempty"`
+	Amount     *int64                 `pjson:"amount"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateSettlingACardAuthorizationParameters using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateSettlingACardAuthorizationParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateSettlingACardAuthorizationParameters into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateSettlingACardAuthorizationParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Card to create a settlement on.
@@ -27798,7 +33748,7 @@ func (r *SimulateSettlingACardAuthorizationParameters) GetPendingTransactionID()
 
 // The amount to be settled. This defaults to the amount of the Pending Transaction
 // being settled.
-func (r *SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int) {
+func (r *SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27810,15 +33760,31 @@ type InboundRealTimePaymentsTransferSimulationResult struct {
 	// If the Real Time Payments Transfer attempt succeeds, this will contain the
 	// resulting [Transaction](#transactions) object. The Transaction's `source` will
 	// be of `category: inbound_real_time_payments_transfer_confirmation`.
-	Transaction *InboundRealTimePaymentsTransferSimulationResultTransaction `json:"transaction"`
+	Transaction *InboundRealTimePaymentsTransferSimulationResultTransaction `pjson:"transaction"`
 	// If the Real Time Payments Transfer attempt fails, this will contain the
 	// resulting [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of
 	// `category: inbound_real_time_payments_transfer_decline`.
-	DeclinedTransaction *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction `json:"declined_transaction"`
+	DeclinedTransaction *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction `pjson:"declined_transaction"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_real_time_payments_transfer_simulation_result`.
-	Type *InboundRealTimePaymentsTransferSimulationResultType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultType `pjson:"type"`
+	jsonFields map[string]interface{}                               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResult using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *InboundRealTimePaymentsTransferSimulationResult) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes InboundRealTimePaymentsTransferSimulationResult into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResult) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // If the Real Time Payments Transfer attempt succeeds, this will contain the
@@ -27854,36 +33820,52 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) GetType() (Type Inboun
 //
 type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
 	// deprecated and will be removed in the future.
-	Source *InboundRealTimePaymentsTransferSimulationResultTransactionSource `json:"source"`
+	Source *InboundRealTimePaymentsTransferSimulationResultTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type *InboundRealTimePaymentsTransferSimulationResultTransactionType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                                          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransaction using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransaction into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -27896,7 +33878,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetAccountI
 
 // The Transaction amount in the minor unit of its currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -27993,112 +33975,128 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
 	// additions gracefully.
-	Category *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory `json:"category"`
+	Category *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory `pjson:"category"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
-	AccountTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention `json:"account_transfer_intention"`
+	AccountTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention `pjson:"account_transfer_intention"`
 	// A ACH Check Conversion Return object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return"`
+	ACHCheckConversionReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn `pjson:"ach_check_conversion_return"`
 	// A ACH Check Conversion object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion `json:"ach_check_conversion"`
+	ACHCheckConversion *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion `pjson:"ach_check_conversion"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
-	ACHTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention `json:"ach_transfer_intention"`
+	ACHTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention `pjson:"ach_transfer_intention"`
 	// A ACH Transfer Rejection object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_rejection`.
-	ACHTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection `json:"ach_transfer_rejection"`
+	ACHTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection `pjson:"ach_transfer_rejection"`
 	// A ACH Transfer Return object. This field will be present in the JSON response if
 	// and only if `category` is equal to `ach_transfer_return`.
-	ACHTransferReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn `json:"ach_transfer_return"`
+	ACHTransferReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn `pjson:"ach_transfer_return"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
-	CardDisputeAcceptance *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance"`
+	CardDisputeAcceptance *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance `pjson:"card_dispute_acceptance"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
-	CardRefund *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund `json:"card_refund"`
+	CardRefund *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund `pjson:"card_refund"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
-	CardSettlement *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement `json:"card_settlement"`
+	CardSettlement *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement `pjson:"card_settlement"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
-	CheckDepositAcceptance *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance"`
+	CheckDepositAcceptance *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance `pjson:"check_deposit_acceptance"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
-	CheckDepositReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn `json:"check_deposit_return"`
+	CheckDepositReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn `pjson:"check_deposit_return"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
-	CheckTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention `json:"check_transfer_intention"`
+	CheckTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention `pjson:"check_transfer_intention"`
 	// A Check Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn `json:"check_transfer_return"`
+	CheckTransferReturn *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn `pjson:"check_transfer_return"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection `json:"check_transfer_rejection"`
+	CheckTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection `pjson:"check_transfer_rejection"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
-	CheckTransferStopPaymentRequest *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request"`
+	CheckTransferStopPaymentRequest *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest `pjson:"check_transfer_stop_payment_request"`
 	// A Dispute Resolution object. This field will be present in the JSON response if
 	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution `json:"dispute_resolution"`
+	DisputeResolution *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution `pjson:"dispute_resolution"`
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit"`
+	EmpyrealCashDeposit *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit `pjson:"empyreal_cash_deposit"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
-	InboundACHTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer"`
+	InboundACHTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer `pjson:"inbound_ach_transfer"`
 	// A Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
-	InboundCheck *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck `json:"inbound_check"`
+	InboundCheck *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck `pjson:"inbound_check"`
 	// A Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
-	InboundInternationalACHTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer"`
+	InboundInternationalACHTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer `pjson:"inbound_international_ach_transfer"`
 	// A Inbound Real Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
-	InboundRealTimePaymentsTransferConfirmation *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation"`
+	InboundRealTimePaymentsTransferConfirmation *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation `pjson:"inbound_real_time_payments_transfer_confirmation"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
-	InboundWireDrawdownPaymentReversal *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal"`
+	InboundWireDrawdownPaymentReversal *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal `pjson:"inbound_wire_drawdown_payment_reversal"`
 	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment"`
+	InboundWireDrawdownPayment *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment `pjson:"inbound_wire_drawdown_payment"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
-	InboundWireReversal *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal `json:"inbound_wire_reversal"`
+	InboundWireReversal *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal `pjson:"inbound_wire_reversal"`
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
-	InboundWireTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer `json:"inbound_wire_transfer"`
+	InboundWireTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
-	InternalSource *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource `json:"internal_source"`
+	InternalSource *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource `pjson:"internal_source"`
 	// A Deprecated Card Refund object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund `json:"card_route_refund"`
+	CardRouteRefund *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund `pjson:"card_route_refund"`
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement `json:"card_route_settlement"`
+	CardRouteSettlement *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement `pjson:"card_route_settlement"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
-	SampleFunds *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds `json:"sample_funds"`
+	SampleFunds *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds `pjson:"sample_funds"`
 	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention"`
+	WireDrawdownPaymentIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention `pjson:"wire_drawdown_payment_intention"`
 	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection"`
+	WireDrawdownPaymentRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection `pjson:"wire_drawdown_payment_rejection"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
-	WireTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention `json:"wire_transfer_intention"`
+	WireTransferIntention *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention `pjson:"wire_transfer_intention"`
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
-	WireTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection `json:"wire_transfer_rejection"`
+	WireTransferRejection *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection `pjson:"wire_transfer_rejection"`
+	jsonFields            map[string]interface{}                                                                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSource using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSource into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -28458,23 +34456,41 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency `pjson:"currency"`
 	// The description you chose to give the transfer.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountID *string `json:"destination_account_id"`
+	DestinationAccountID *string `pjson:"destination_account_id"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountID *string `json:"source_account_id"`
+	SourceAccountID *string `pjson:"source_account_id"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28537,14 +34553,32 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// Why the transfer was returned.
-	ReturnReasonCode *string `json:"return_reason_code"`
+	ReturnReasonCode *string                `pjson:"return_reason_code"`
+	jsonFields       map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28563,14 +34597,32 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of the File containing an image of the returned check.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28589,20 +34641,38 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	StatementDescriptor *string `json:"statement_descriptor"`
+	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28641,7 +34711,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
@@ -28656,13 +34744,31 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// Why the ACH Transfer was returned.
-	ReturnReasonCode *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code"`
+	ReturnReasonCode *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The identifier of the Tranasaction associated with this return.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -28730,12 +34836,30 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `json:"accepted_at"`
+	AcceptedAt *string `pjson:"accepted_at"`
 	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID *string `json:"card_dispute_id"`
+	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string                `pjson:"transaction_id"`
+	jsonFields    map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -28768,20 +34892,38 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency `pjson:"currency"`
 	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionID *string `json:"card_settlement_transaction_id"`
+	CardSettlementTransactionID *string `pjson:"card_settlement_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType `pjson:"type"`
+	jsonFields map[string]interface{}                                                          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28835,35 +34977,53 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency `pjson:"currency"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount *int `json:"presentment_amount"`
+	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `json:"presentment_currency"`
+	PresentmentCurrency *string `pjson:"presentment_currency"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantName *string `json:"merchant_name"`
+	MerchantName *string `pjson:"merchant_name"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID *string `json:"pending_transaction_id"`
+	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType `pjson:"type"`
+	jsonFields map[string]interface{}                                                              `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -28880,7 +35040,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 }
 
 // The amount in the minor unit of the transaction's presentment currency.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
 	if r != nil && r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
@@ -28969,24 +35129,42 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency `pjson:"currency"`
 	// The account number printed on the check.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The routing number printed on the check.
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number.
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29050,25 +35228,43 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `json:"returned_at"`
+	ReturnedAt *string `pjson:"returned_at"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID *string `json:"check_deposit_id"`
+	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	//
-	ReturnReason *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `json:"return_reason"`
+	ReturnReason *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields   map[string]interface{}                                                                          `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29147,24 +35343,42 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
-	AddressLine1 *string `json:"address_line1"`
+	AddressLine1 *string `pjson:"address_line1"`
 	// The second line of the address of the check's destination.
-	AddressLine2 *string `json:"address_line2"`
+	AddressLine2 *string `pjson:"address_line2"`
 	// The city of the check's destination.
-	AddressCity *string `json:"address_city"`
+	AddressCity *string `pjson:"address_city"`
 	// The state of the check's destination.
-	AddressState *string `json:"address_state"`
+	AddressState *string `pjson:"address_state"`
 	// The postal code of the check's destination.
-	AddressZip *string `json:"address_zip"`
+	AddressZip *string `pjson:"address_zip"`
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency `pjson:"currency"`
 	// The name that will be printed on the check.
-	RecipientName *string `json:"recipient_name"`
+	RecipientName *string `pjson:"recipient_name"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The street address of the check's destination.
@@ -29208,7 +35422,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 }
 
 // The transfer amount in USD cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29254,9 +35468,27 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID *string `json:"file_id"`
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the returned Check Transfer.
@@ -29278,7 +35510,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
@@ -29292,14 +35542,32 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
-	TransferID *string `json:"transfer_id"`
+	TransferID *string `pjson:"transfer_id"`
 	// The transaction ID of the corresponding credit transaction.
-	TransactionID *string `json:"transaction_id"`
+	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `json:"requested_at"`
+	RequestedAt *string `pjson:"requested_at"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
+	jsonFields map[string]interface{}                                                                               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The ID of the check transfer that was stopped.
@@ -29345,17 +35613,35 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency `pjson:"currency"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID *string `json:"disputed_transaction_id"`
+	DisputedTransactionID *string                `pjson:"disputed_transaction_id"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29394,16 +35680,34 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BagID *string `json:"bag_id"`
+	BagID *string `pjson:"bag_id"`
 	//
-	DepositDate *string `json:"deposit_date"`
+	DepositDate *string                `pjson:"deposit_date"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29428,28 +35732,46 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrea
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29516,21 +35838,39 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `pjson:"currency"`
 	//
-	CheckNumber *string `json:"check_number"`
+	CheckNumber *string `pjson:"check_number"`
 	//
-	CheckFrontImageFileID *string `json:"check_front_image_file_id"`
+	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
 	//
-	CheckRearImageFileID *string `json:"check_rear_image_file_id"`
+	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29582,82 +35922,100 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -29699,7 +36057,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -29913,27 +36271,45 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `pjson:"currency"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the transfer
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30011,29 +36387,47 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string                `pjson:"previous_message_input_source"`
+	jsonFields                 map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30116,36 +36510,54 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30239,34 +36651,52 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The description on the reversal message from Fedwire.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `json:"input_cycle_date"`
+	InputCycleDate *string `pjson:"input_cycle_date"`
 	// The Fedwire sequence number.
-	InputSequenceNumber *string `json:"input_sequence_number"`
+	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
-	InputSource *string `json:"input_source"`
+	InputSource *string `pjson:"input_source"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData *string `json:"previous_message_input_message_accountability_data"`
+	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `json:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber *string `json:"previous_message_input_sequence_number"`
+	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource *string `json:"previous_message_input_source"`
+	PreviousMessageInputSource *string `pjson:"previous_message_input_source"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
-	ReceiverFinancialInstitutionInformation *string `json:"receiver_financial_institution_information"`
+	ReceiverFinancialInstitutionInformation *string `pjson:"receiver_financial_institution_information"`
 	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation *string `json:"financial_institution_to_financial_institution_information"`
+	FinancialInstitutionToFinancialInstitutionInformation *string                `pjson:"financial_institution_to_financial_institution_information"`
+	jsonFields                                            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount that was reversed.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30366,44 +36796,62 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	BeneficiaryAddressLine1 *string `json:"beneficiary_address_line1"`
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
 	//
-	BeneficiaryAddressLine2 *string `json:"beneficiary_address_line2"`
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
 	//
-	BeneficiaryAddressLine3 *string `json:"beneficiary_address_line3"`
+	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
 	//
-	BeneficiaryName *string `json:"beneficiary_name"`
+	BeneficiaryName *string `pjson:"beneficiary_name"`
 	//
-	BeneficiaryReference *string `json:"beneficiary_reference"`
+	BeneficiaryReference *string `pjson:"beneficiary_reference"`
 	//
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	//
-	InputMessageAccountabilityData *string `json:"input_message_accountability_data"`
+	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	//
-	OriginatorAddressLine1 *string `json:"originator_address_line1"`
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
 	//
-	OriginatorAddressLine2 *string `json:"originator_address_line2"`
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
 	//
-	OriginatorAddressLine3 *string `json:"originator_address_line3"`
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorToBeneficiaryInformationLine1 *string `json:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
 	//
-	OriginatorToBeneficiaryInformationLine2 *string `json:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
 	//
-	OriginatorToBeneficiaryInformationLine3 *string `json:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
 	//
-	OriginatorToBeneficiaryInformationLine4 *string `json:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
 	//
-	OriginatorToBeneficiaryInformation *string `json:"originator_to_beneficiary_information"`
+	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30526,17 +36974,35 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency `pjson:"currency"`
 	//
-	Reason *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason `json:"reason"`
+	Reason     *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                                                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30587,27 +37053,45 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
 // example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30680,27 +37164,45 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
 // for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30772,7 +37274,25 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator *string `json:"originator"`
+	Originator *string                `pjson:"originator"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // Where the sample funds came from.
@@ -30786,19 +37306,37 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleF
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	//
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	//
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30836,7 +37374,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
@@ -30849,19 +37405,37 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The destination account number.
-	AccountNumber *string `json:"account_number"`
+	AccountNumber *string `pjson:"account_number"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber *string `json:"routing_number"`
+	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `json:"message_to_recipient"`
+	MessageToRecipient *string `pjson:"message_to_recipient"`
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The transfer amount in USD cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -30902,7 +37476,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 //
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
 	//
-	TransferID *string `json:"transfer_id"`
+	TransferID *string                `pjson:"transfer_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
@@ -30921,35 +37513,51 @@ const (
 //
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID *string `json:"account_id"`
+	AccountID *string `pjson:"account_id"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transcation's Account.
-	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `json:"created_at"`
+	CreatedAt *string `pjson:"created_at"`
 	// This is the description the vendor provides.
-	Description *string `json:"description"`
+	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
-	ID *string `json:"id"`
+	ID *string `pjson:"id"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID *string `json:"route_id"`
+	RouteID *string `pjson:"route_id"`
 	// The type of the route this Declined Transaction came through.
-	RouteType *string `json:"route_type"`
+	RouteType *string `pjson:"route_type"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
 	// additional undocumented keys may appear in this object. These should be treated
 	// as deprecated and will be removed in the future.
-	Source *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource `json:"source"`
+	Source *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource `pjson:"source"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionType `json:"type"`
+	Type       *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionType `pjson:"type"`
+	jsonFields map[string]interface{}                                                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -30962,7 +37570,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) Get
 
 // The Declined Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31058,26 +37666,44 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory `json:"category"`
+	Category *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory `pjson:"category"`
 	// A ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
-	ACHDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline `json:"ach_decline"`
+	ACHDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline `pjson:"ach_decline"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline `json:"card_decline"`
+	CardDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline `pjson:"card_decline"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline `json:"check_decline"`
+	CheckDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline `pjson:"check_decline"`
 	// A Inbound Real Time Payments Transfer Decline object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline"`
+	InboundRealTimePaymentsTransferDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `pjson:"inbound_real_time_payments_transfer_decline"`
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline"`
+	InternationalACHDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline `pjson:"international_ach_decline"`
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline"`
+	CardRouteDecline *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline `pjson:"card_route_decline"`
+	jsonFields       map[string]interface{}                                                                    `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -31161,28 +37787,46 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	OriginatorCompanyName *string `json:"originator_company_name"`
+	OriginatorCompanyName *string `pjson:"originator_company_name"`
 	//
-	OriginatorCompanyDescriptiveDate *string `json:"originator_company_descriptive_date"`
+	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
 	//
-	OriginatorCompanyDiscretionaryData *string `json:"originator_company_discretionary_data"`
+	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
 	//
-	OriginatorCompanyID *string `json:"originator_company_id"`
+	OriginatorCompanyID *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `json:"reason"`
+	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
 	//
-	ReceiverIDNumber *string `json:"receiver_id_number"`
+	ReceiverIDNumber *string `pjson:"receiver_id_number"`
 	//
-	ReceiverName *string `json:"receiver_name"`
+	ReceiverName *string `pjson:"receiver_name"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31265,35 +37909,53 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
-	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `json:"reason"`
+	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID *string `json:"real_time_decision_id"`
+	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID *string `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID *string                `pjson:"digital_wallet_token_id"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31407,16 +38069,34 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	AuxiliaryOnUs *string `json:"auxiliary_on_us"`
+	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
-	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `json:"reason"`
+	Reason     *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                                                      `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31458,30 +38138,48 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real Time Payments
 	// transfer.
-	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `pjson:"currency"`
 	// Why the transfer was declined.
-	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason"`
+	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `pjson:"reason"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName *string `json:"creditor_name"`
+	CreditorName *string `pjson:"creditor_name"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification *string `json:"transaction_identification"`
+	TransactionIdentification *string `pjson:"transaction_identification"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31579,82 +38277,100 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	//
-	ForeignExchangeIndicator *string `json:"foreign_exchange_indicator"`
+	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
 	//
-	ForeignExchangeReferenceIndicator *string `json:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
 	//
-	ForeignExchangeReference *string `json:"foreign_exchange_reference"`
+	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
 	//
-	DestinationCountryCode *string `json:"destination_country_code"`
+	DestinationCountryCode *string `pjson:"destination_country_code"`
 	//
-	DestinationCurrencyCode *string `json:"destination_currency_code"`
+	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
 	//
-	ForeignPaymentAmount *int `json:"foreign_payment_amount"`
+	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
 	//
-	ForeignTraceNumber *string `json:"foreign_trace_number"`
+	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
 	//
-	InternationalTransactionTypeCode *string `json:"international_transaction_type_code"`
+	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
 	//
-	OriginatingCurrencyCode *string `json:"originating_currency_code"`
+	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
 	//
-	OriginatingDepositoryFinancialInstitutionName *string `json:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
 	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `json:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
 	//
-	OriginatingDepositoryFinancialInstitutionID *string `json:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
 	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `json:"originating_depository_financial_institution_branch_country"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
 	//
-	OriginatorCity *string `json:"originator_city"`
+	OriginatorCity *string `pjson:"originator_city"`
 	//
-	OriginatorCompanyEntryDescription *string `json:"originator_company_entry_description"`
+	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
 	//
-	OriginatorCountry *string `json:"originator_country"`
+	OriginatorCountry *string `pjson:"originator_country"`
 	//
-	OriginatorIdentification *string `json:"originator_identification"`
+	OriginatorIdentification *string `pjson:"originator_identification"`
 	//
-	OriginatorName *string `json:"originator_name"`
+	OriginatorName *string `pjson:"originator_name"`
 	//
-	OriginatorPostalCode *string `json:"originator_postal_code"`
+	OriginatorPostalCode *string `pjson:"originator_postal_code"`
 	//
-	OriginatorStreetAddress *string `json:"originator_street_address"`
+	OriginatorStreetAddress *string `pjson:"originator_street_address"`
 	//
-	OriginatorStateOrProvince *string `json:"originator_state_or_province"`
+	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
 	//
-	PaymentRelatedInformation *string `json:"payment_related_information"`
+	PaymentRelatedInformation *string `pjson:"payment_related_information"`
 	//
-	PaymentRelatedInformation2 *string `json:"payment_related_information2"`
+	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
 	//
-	ReceiverIdentificationNumber *string `json:"receiver_identification_number"`
+	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
 	//
-	ReceiverStreetAddress *string `json:"receiver_street_address"`
+	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
 	//
-	ReceiverCity *string `json:"receiver_city"`
+	ReceiverCity *string `pjson:"receiver_city"`
 	//
-	ReceiverStateOrProvince *string `json:"receiver_state_or_province"`
+	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
 	//
-	ReceiverCountry *string `json:"receiver_country"`
+	ReceiverCountry *string `pjson:"receiver_country"`
 	//
-	ReceiverPostalCode *string `json:"receiver_postal_code"`
+	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
 	//
-	ReceivingCompanyOrIndividualName *string `json:"receiving_company_or_individual_name"`
+	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionName *string `json:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
 	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `json:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
 	//
-	ReceivingDepositoryFinancialInstitutionID *string `json:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
 	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `json:"receiving_depository_financial_institution_country"`
+	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
 	//
-	TraceNumber *string `json:"trace_number"`
+	TraceNumber *string                `pjson:"trace_number"`
+	jsonFields  map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -31696,7 +38412,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
 	if r != nil && r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
@@ -31910,27 +38626,45 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency"`
+	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
 	//
-	MerchantAcceptorID *string `json:"merchant_acceptor_id"`
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
 	//
-	MerchantCity *string `json:"merchant_city"`
+	MerchantCity *string `pjson:"merchant_city"`
 	//
-	MerchantCountry *string `json:"merchant_country"`
+	MerchantCountry *string `pjson:"merchant_country"`
 	//
-	MerchantDescriptor *string `json:"merchant_descriptor"`
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
 	//
-	MerchantState *string `json:"merchant_state"`
+	MerchantState *string `pjson:"merchant_state"`
 	//
-	MerchantCategoryCode *string `json:"merchant_category_code"`
+	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int) {
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}
@@ -32014,19 +38748,35 @@ const (
 type SimulateARealTimePaymentsTransferToYourAccountParameters struct {
 	// The identifier of the Account Number the inbound Real Time Payments Transfer is
 	// for.
-	AccountNumberID *string `json:"account_number_id"`
+	AccountNumberID *string `pjson:"account_number_id"`
 	// The transfer amount in USD cents. Must be positive.
-	Amount *int `json:"amount"`
+	Amount *int64 `pjson:"amount"`
 	// The identifier of a pending Request for Payment that this transfer will fulfill.
-	RequestForPaymentID *string `json:"request_for_payment_id,omitempty"`
+	RequestForPaymentID *string `pjson:"request_for_payment_id"`
 	// The name provided by the sender of the transfer.
-	DebtorName *string `json:"debtor_name,omitempty"`
+	DebtorName *string `pjson:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber *string `json:"debtor_account_number,omitempty"`
+	DebtorAccountNumber *string `pjson:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber *string `json:"debtor_routing_number,omitempty"`
+	DebtorRoutingNumber *string `pjson:"debtor_routing_number"`
 	// Additional information included with the transfer.
-	RemittanceInformation *string `json:"remittance_information,omitempty"`
+	RemittanceInformation *string                `pjson:"remittance_information"`
+	jsonFields            map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateARealTimePaymentsTransferToYourAccountParameters using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes SimulateARealTimePaymentsTransferToYourAccountParameters
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
 }
 
 // The identifier of the Account Number the inbound Real Time Payments Transfer is
@@ -32039,7 +38789,7 @@ func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAccountNum
 }
 
 // The transfer amount in USD cents. Must be positive.
-func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAmount() (Amount int) {
+func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
 	}

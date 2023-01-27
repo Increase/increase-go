@@ -28,30 +28,24 @@ func NewRealTimeDecisionService(requester core.Requester) (r *RealTimeDecisionSe
 }
 
 // Retrieve a Real-Time Decision
-func (r *RealTimeDecisionService) Retrieve(ctx context.Context, real_time_decision_id string, opts ...*core.RequestOpts) (res *types.RealTimeDecision, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/real_time_decisions/%s", real_time_decision_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *RealTimeDecisionService) Get(ctx context.Context, real_time_decision_id string, opts ...*core.RequestOpts) (res *types.RealTimeDecision, err error) {
+	path := fmt.Sprintf("/real_time_decisions/%s", real_time_decision_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
 
 // Action a Real-Time Decision
 func (r *RealTimeDecisionService) Action(ctx context.Context, real_time_decision_id string, body *types.ActionARealTimeDecisionParameters, opts ...*core.RequestOpts) (res *types.RealTimeDecision, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/real_time_decisions/%s/action", real_time_decision_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/real_time_decisions/%s/action", real_time_decision_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

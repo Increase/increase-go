@@ -29,30 +29,24 @@ func NewCardProfileService(requester core.Requester) (r *CardProfileService) {
 }
 
 // Create a Card Profile
-func (r *CardProfileService) Create(ctx context.Context, body *types.CreateACardProfileParameters, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
-	err = r.post(
-		ctx,
-		"/card_profiles",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardProfileParameters, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
+	path := "/card_profiles"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Card Profile
-func (r *CardProfileService) Retrieve(ctx context.Context, card_profile_id string, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/card_profiles/%s", card_profile_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...*core.RequestOpts) (res *types.CardProfile, err error) {
+	path := fmt.Sprintf("/card_profiles/%s", card_profile_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

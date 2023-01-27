@@ -28,16 +28,13 @@ func NewSimulationsRealTimePaymentsTransferService(requester core.Requester) (r 
 
 // Simulates an inbound Real Time Payments transfer to your account. Real Time
 // Payments are a beta feature.
-func (r *SimulationsRealTimePaymentsTransferService) CreateInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/inbound_real_time_payments_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
+	path := "/simulations/inbound_real_time_payments_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

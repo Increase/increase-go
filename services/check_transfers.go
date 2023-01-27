@@ -29,30 +29,24 @@ func NewCheckTransferService(requester core.Requester) (r *CheckTransferService)
 }
 
 // Create a Check Transfer
-func (r *CheckTransferService) Create(ctx context.Context, body *types.CreateACheckTransferParameters, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		"/check_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *CheckTransferService) New(ctx context.Context, body *types.CreateACheckTransferParameters, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
+	path := "/check_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve a Check Transfer
-func (r *CheckTransferService) Retrieve(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/check_transfers/%s", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
+	path := fmt.Sprintf("/check_transfers/%s", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
@@ -75,42 +69,33 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.ListCheckT
 
 // Approve a Check Transfer
 func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/check_transfers/%s/approve", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/check_transfers/%s/approve", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Cancel a pending Check Transfer
 func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/check_transfers/%s/cancel", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/check_transfers/%s/cancel", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Request a stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...*core.RequestOpts) (res *types.CheckTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/check_transfers/%s/stop_payment", check_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/check_transfers/%s/stop_payment", check_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

@@ -29,15 +29,12 @@ func NewDigitalWalletTokenService(requester core.Requester) (r *DigitalWalletTok
 }
 
 // Retrieve a Digital Wallet Token
-func (r *DigitalWalletTokenService) Retrieve(ctx context.Context, digital_wallet_token_id string, opts ...*core.RequestOpts) (res *types.DigitalWalletToken, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/digital_wallet_tokens/%s", digital_wallet_token_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...*core.RequestOpts) (res *types.DigitalWalletToken, err error) {
+	path := fmt.Sprintf("/digital_wallet_tokens/%s", digital_wallet_token_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

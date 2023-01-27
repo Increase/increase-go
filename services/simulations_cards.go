@@ -34,15 +34,12 @@ func NewSimulationsCardService(requester core.Requester) (r *SimulationsCardServ
 // [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
 // ways purchases can be made.
 func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *types.CardAuthorizationSimulation, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/card_authorizations",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := "/simulations/card_authorizations"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
@@ -53,15 +50,12 @@ func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.Simu
 // production. The amount settled can be different from the amount originally
 // authorized, for example, when adding a tip to a restaurant bill.
 func (r *SimulationsCardService) Settlement(ctx context.Context, body *types.SimulateSettlingACardAuthorizationParameters, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/card_settlements",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+	path := "/simulations/card_settlements"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

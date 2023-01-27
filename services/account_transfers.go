@@ -29,30 +29,24 @@ func NewAccountTransferService(requester core.Requester) (r *AccountTransferServ
 }
 
 // Create an Account Transfer
-func (r *AccountTransferService) Create(ctx context.Context, body *types.CreateAnAccountTransferParameters, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.post(
-		ctx,
-		"/account_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *AccountTransferService) New(ctx context.Context, body *types.CreateAnAccountTransferParameters, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
+	path := "/account_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Retrieve an Account Transfer
-func (r *AccountTransferService) Retrieve(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/account_transfers/%s", account_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
+	path := fmt.Sprintf("/account_transfers/%s", account_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }
@@ -75,28 +69,22 @@ func (r *AccountTransferService) List(ctx context.Context, query *types.ListAcco
 
 // Approve an Account Transfer
 func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/account_transfers/%s/approve", account_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/account_transfers/%s/approve", account_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
 
 // Cancel an Account Transfer
 func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	err = r.post(
-		ctx,
-		fmt.Sprintf("/account_transfers/%s/cancel", account_transfer_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+	path := fmt.Sprintf("/account_transfers/%s/cancel", account_transfer_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

@@ -29,15 +29,12 @@ func NewTransactionService(requester core.Requester) (r *TransactionService) {
 }
 
 // Retrieve a Transaction
-func (r *TransactionService) Retrieve(ctx context.Context, transaction_id string, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
-	err = r.get(
-		ctx,
-		fmt.Sprintf("/transactions/%s", transaction_id),
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-		},
-		&res,
-	)
+func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
+	path := fmt.Sprintf("/transactions/%s", transaction_id)
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+	}
+	err = r.get(ctx, path, req, &res)
 
 	return
 }

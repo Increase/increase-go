@@ -27,16 +27,13 @@ func NewSimulationsDocumentService(requester core.Requester) (r *SimulationsDocu
 }
 
 // Simulates an tax document being created for an account.
-func (r *SimulationsDocumentService) Create(ctx context.Context, body *types.SimulateATaxDocumentBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.Document, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/documents",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsDocumentService) New(ctx context.Context, body *types.SimulateATaxDocumentBeingCreatedParameters, opts ...*core.RequestOpts) (res *types.Document, err error) {
+	path := "/simulations/documents"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }

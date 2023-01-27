@@ -27,16 +27,13 @@ func NewSimulationsWireTransferService(requester core.Requester) (r *Simulations
 }
 
 // Simulates an inbound Wire Transfer to your account.
-func (r *SimulationsWireTransferService) CreateInbound(ctx context.Context, body *types.SimulateAWireTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.WireTransferSimulation, err error) {
-	err = r.post(
-		ctx,
-		"/simulations/inbound_wire_transfers",
-		&core.CoreRequest{
-			Params: core.MergeRequestOpts(opts...),
-			Body:   body,
-		},
-		&res,
-	)
+func (r *SimulationsWireTransferService) NewInbound(ctx context.Context, body *types.SimulateAWireTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.WireTransferSimulation, err error) {
+	path := "/simulations/inbound_wire_transfers"
+	req := &core.CoreRequest{
+		Params: core.MergeRequestOpts(opts...),
+		Body:   body,
+	}
+	err = r.post(ctx, path, req, &res)
 
 	return
 }
