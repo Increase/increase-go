@@ -37,7 +37,7 @@ func TestFilesListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Files.List(context.TODO(), &types.ListFilesQuery{})
+	_, err := c.Files.List(context.TODO(), &types.FileListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

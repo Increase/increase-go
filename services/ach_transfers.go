@@ -52,7 +52,7 @@ func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, op
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) List(ctx context.Context, query *types.ListACHTransfersQuery, opts ...*core.RequestOpts) (res *types.ACHTransfersPage, err error) {
+func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferListParams, opts ...*core.RequestOpts) (res *types.ACHTransfersPage, err error) {
 	page := &types.ACHTransfersPage{
 		Page: &pagination.Page[types.ACHTransfer]{
 			Options: pagination.PageOptions{

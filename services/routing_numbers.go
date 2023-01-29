@@ -31,7 +31,7 @@ func NewRoutingNumberService(requester core.Requester) (r *RoutingNumberService)
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) List(ctx context.Context, query *types.ListRoutingNumbersQuery, opts ...*core.RequestOpts) (res *types.RoutingNumbersPage, err error) {
+func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNumberListParams, opts ...*core.RequestOpts) (res *types.RoutingNumbersPage, err error) {
 	page := &types.RoutingNumbersPage{
 		Page: &pagination.Page[types.RoutingNumber]{
 			Options: pagination.PageOptions{

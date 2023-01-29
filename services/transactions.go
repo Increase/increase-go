@@ -40,7 +40,7 @@ func (r *TransactionService) Get(ctx context.Context, transaction_id string, opt
 }
 
 // List Transactions
-func (r *TransactionService) List(ctx context.Context, query *types.ListTransactionsQuery, opts ...*core.RequestOpts) (res *types.TransactionsPage, err error) {
+func (r *TransactionService) List(ctx context.Context, query *types.TransactionListParams, opts ...*core.RequestOpts) (res *types.TransactionsPage, err error) {
 	page := &types.TransactionsPage{
 		Page: &pagination.Page[types.Transaction]{
 			Options: pagination.PageOptions{

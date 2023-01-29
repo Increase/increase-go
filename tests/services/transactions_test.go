@@ -24,7 +24,7 @@ func TestTransactionsListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Transactions.List(context.TODO(), &types.ListTransactionsQuery{})
+	_, err := c.Transactions.List(context.TODO(), &types.TransactionListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

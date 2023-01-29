@@ -52,7 +52,7 @@ func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, op
 }
 
 // List Card Disputes
-func (r *CardDisputeService) List(ctx context.Context, query *types.ListCardDisputesQuery, opts ...*core.RequestOpts) (res *types.CardDisputesPage, err error) {
+func (r *CardDisputeService) List(ctx context.Context, query *types.CardDisputeListParams, opts ...*core.RequestOpts) (res *types.CardDisputesPage, err error) {
 	page := &types.CardDisputesPage{
 		Page: &pagination.Page[types.CardDispute]{
 			Options: pagination.PageOptions{

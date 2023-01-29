@@ -40,7 +40,7 @@ func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction
 }
 
 // List Pending Transactions
-func (r *PendingTransactionService) List(ctx context.Context, query *types.ListPendingTransactionsQuery, opts ...*core.RequestOpts) (res *types.PendingTransactionsPage, err error) {
+func (r *PendingTransactionService) List(ctx context.Context, query *types.PendingTransactionListParams, opts ...*core.RequestOpts) (res *types.PendingTransactionsPage, err error) {
 	page := &types.PendingTransactionsPage{
 		Page: &pagination.Page[types.PendingTransaction]{
 			Options: pagination.PageOptions{

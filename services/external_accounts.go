@@ -64,7 +64,7 @@ func (r *ExternalAccountService) Update(ctx context.Context, external_account_id
 }
 
 // List External Accounts
-func (r *ExternalAccountService) List(ctx context.Context, query *types.ListExternalAccountsQuery, opts ...*core.RequestOpts) (res *types.ExternalAccountsPage, err error) {
+func (r *ExternalAccountService) List(ctx context.Context, query *types.ExternalAccountListParams, opts ...*core.RequestOpts) (res *types.ExternalAccountsPage, err error) {
 	page := &types.ExternalAccountsPage{
 		Page: &pagination.Page[types.ExternalAccount]{
 			Options: pagination.PageOptions{

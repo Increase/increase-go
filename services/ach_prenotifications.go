@@ -52,7 +52,7 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) List(ctx context.Context, query *types.ListACHPrenotificationsQuery, opts ...*core.RequestOpts) (res *types.ACHPrenotificationsPage, err error) {
+func (r *ACHPrenotificationService) List(ctx context.Context, query *types.ACHPrenotificationListParams, opts ...*core.RequestOpts) (res *types.ACHPrenotificationsPage, err error) {
 	page := &types.ACHPrenotificationsPage{
 		Page: &pagination.Page[types.ACHPrenotification]{
 			Options: pagination.PageOptions{

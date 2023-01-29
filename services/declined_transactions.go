@@ -40,7 +40,7 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transacti
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) List(ctx context.Context, query *types.ListDeclinedTransactionsQuery, opts ...*core.RequestOpts) (res *types.DeclinedTransactionsPage, err error) {
+func (r *DeclinedTransactionService) List(ctx context.Context, query *types.DeclinedTransactionListParams, opts ...*core.RequestOpts) (res *types.DeclinedTransactionsPage, err error) {
 	page := &types.DeclinedTransactionsPage{
 		Page: &pagination.Page[types.DeclinedTransaction]{
 			Options: pagination.PageOptions{

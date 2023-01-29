@@ -36,7 +36,7 @@ func TestCardProfilesListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.CardProfiles.List(context.TODO(), &types.ListCardProfilesQuery{})
+	_, err := c.CardProfiles.List(context.TODO(), &types.CardProfileListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

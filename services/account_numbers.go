@@ -64,7 +64,7 @@ func (r *AccountNumberService) Update(ctx context.Context, account_number_id str
 }
 
 // List Account Numbers
-func (r *AccountNumberService) List(ctx context.Context, query *types.ListAccountNumbersQuery, opts ...*core.RequestOpts) (res *types.AccountNumbersPage, err error) {
+func (r *AccountNumberService) List(ctx context.Context, query *types.AccountNumberListParams, opts ...*core.RequestOpts) (res *types.AccountNumbersPage, err error) {
 	page := &types.AccountNumbersPage{
 		Page: &pagination.Page[types.AccountNumber]{
 			Options: pagination.PageOptions{

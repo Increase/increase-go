@@ -64,7 +64,7 @@ func (r *AccountService) Update(ctx context.Context, account_id string, body *ty
 }
 
 // List Accounts
-func (r *AccountService) List(ctx context.Context, query *types.ListAccountsQuery, opts ...*core.RequestOpts) (res *types.AccountsPage, err error) {
+func (r *AccountService) List(ctx context.Context, query *types.AccountListParams, opts ...*core.RequestOpts) (res *types.AccountsPage, err error) {
 	page := &types.AccountsPage{
 		Page: &pagination.Page[types.Account]{
 			Options: pagination.PageOptions{

@@ -36,7 +36,7 @@ func TestEntitiesListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Entities.List(context.TODO(), &types.ListEntitiesQuery{})
+	_, err := c.Entities.List(context.TODO(), &types.EntityListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

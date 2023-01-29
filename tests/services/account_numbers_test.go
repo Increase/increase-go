@@ -51,7 +51,7 @@ func TestAccountNumbersListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.AccountNumbers.List(context.TODO(), &types.ListAccountNumbersQuery{})
+	_, err := c.AccountNumbers.List(context.TODO(), &types.AccountNumberListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

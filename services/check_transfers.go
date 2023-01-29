@@ -52,7 +52,7 @@ func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string
 }
 
 // List Check Transfers
-func (r *CheckTransferService) List(ctx context.Context, query *types.ListCheckTransfersQuery, opts ...*core.RequestOpts) (res *types.CheckTransfersPage, err error) {
+func (r *CheckTransferService) List(ctx context.Context, query *types.CheckTransferListParams, opts ...*core.RequestOpts) (res *types.CheckTransfersPage, err error) {
 	page := &types.CheckTransfersPage{
 		Page: &pagination.Page[types.CheckTransfer]{
 			Options: pagination.PageOptions{

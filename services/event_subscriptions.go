@@ -64,7 +64,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, event_subscriptio
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) List(ctx context.Context, query *types.ListEventSubscriptionsQuery, opts ...*core.RequestOpts) (res *types.EventSubscriptionsPage, err error) {
+func (r *EventSubscriptionService) List(ctx context.Context, query *types.EventSubscriptionListParams, opts ...*core.RequestOpts) (res *types.EventSubscriptionsPage, err error) {
 	page := &types.EventSubscriptionsPage{
 		Page: &pagination.Page[types.EventSubscription]{
 			Options: pagination.PageOptions{

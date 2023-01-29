@@ -52,7 +52,7 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_requ
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.ListWireDrawdownRequestsQuery, opts ...*core.RequestOpts) (res *types.WireDrawdownRequestsPage, err error) {
+func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.WireDrawdownRequestListParams, opts ...*core.RequestOpts) (res *types.WireDrawdownRequestsPage, err error) {
 	page := &types.WireDrawdownRequestsPage{
 		Page: &pagination.Page[types.WireDrawdownRequest]{
 			Options: pagination.PageOptions{

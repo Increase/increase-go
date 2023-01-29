@@ -291,7 +291,7 @@ func (r *UpdateAnAccountParameters) GetName() (Name string) {
 	return
 }
 
-type ListAccountsQuery struct {
+type AccountListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -300,25 +300,25 @@ type ListAccountsQuery struct {
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID *string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status     *ListAccountsQueryStatus `query:"status"`
-	jsonFields map[string]interface{}   `pjson:"-,extras"`
+	Status     *AccountsListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}    `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListAccountsQuery using the
+// UnmarshalJSON deserializes the provided bytes into AccountListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListAccountsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountsQuery into an array of bytes using the gjson
+// MarshalJSON serializes AccountListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListAccountsQuery) MarshalJSON() (data []byte, err error) {
+func (r *AccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListAccountsQuery) GetCursor() (Cursor string) {
+func (r *AccountListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -327,7 +327,7 @@ func (r *ListAccountsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountsQuery) GetLimit() (Limit int64) {
+func (r *AccountListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -335,7 +335,7 @@ func (r *ListAccountsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Accounts for those belonging to the specified Entity.
-func (r *ListAccountsQuery) GetEntityID() (EntityID string) {
+func (r *AccountListParams) GetEntityID() (EntityID string) {
 	if r != nil && r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
@@ -343,18 +343,18 @@ func (r *ListAccountsQuery) GetEntityID() (EntityID string) {
 }
 
 // Filter Accounts for those with the specified status.
-func (r *ListAccountsQuery) GetStatus() (Status ListAccountsQueryStatus) {
+func (r *AccountListParams) GetStatus() (Status AccountsListParamsStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
-type ListAccountsQueryStatus string
+type AccountsListParamsStatus string
 
 const (
-	ListAccountsQueryStatusOpen   ListAccountsQueryStatus = "open"
-	ListAccountsQueryStatusClosed ListAccountsQueryStatus = "closed"
+	AccountsListParamsStatusOpen   AccountsListParamsStatus = "open"
+	AccountsListParamsStatusClosed AccountsListParamsStatus = "closed"
 )
 
 //
@@ -611,35 +611,35 @@ const (
 	UpdateAnAccountNumberParametersStatusCanceled UpdateAnAccountNumberParametersStatus = "canceled"
 )
 
-type ListAccountNumbersQuery struct {
+type AccountNumberListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status *ListAccountNumbersQueryStatus `query:"status"`
+	Status *AccountNumbersListParamsStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
 	AccountID  *string                `query:"account_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListAccountNumbersQuery using
+// UnmarshalJSON deserializes the provided bytes into AccountNumberListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListAccountNumbersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountNumberListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountNumbersQuery into an array of bytes using the
+// MarshalJSON serializes AccountNumberListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListAccountNumbersQuery) MarshalJSON() (data []byte, err error) {
+func (r *AccountNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListAccountNumbersQuery) GetCursor() (Cursor string) {
+func (r *AccountNumberListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -648,7 +648,7 @@ func (r *ListAccountNumbersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountNumbersQuery) GetLimit() (Limit int64) {
+func (r *AccountNumberListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -656,7 +656,7 @@ func (r *ListAccountNumbersQuery) GetLimit() (Limit int64) {
 }
 
 // The status to retrieve Account Numbers for.
-func (r *ListAccountNumbersQuery) GetStatus() (Status ListAccountNumbersQueryStatus) {
+func (r *AccountNumberListParams) GetStatus() (Status AccountNumbersListParamsStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
@@ -664,19 +664,19 @@ func (r *ListAccountNumbersQuery) GetStatus() (Status ListAccountNumbersQuerySta
 }
 
 // Filter Account Numbers to those belonging to the specified Account.
-func (r *ListAccountNumbersQuery) GetAccountID() (AccountID string) {
+func (r *AccountNumberListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-type ListAccountNumbersQueryStatus string
+type AccountNumbersListParamsStatus string
 
 const (
-	ListAccountNumbersQueryStatusActive   ListAccountNumbersQueryStatus = "active"
-	ListAccountNumbersQueryStatusDisabled ListAccountNumbersQueryStatus = "disabled"
-	ListAccountNumbersQueryStatusCanceled ListAccountNumbersQueryStatus = "canceled"
+	AccountNumbersListParamsStatusActive   AccountNumbersListParamsStatus = "active"
+	AccountNumbersListParamsStatusDisabled AccountNumbersListParamsStatus = "disabled"
+	AccountNumbersListParamsStatusCanceled AccountNumbersListParamsStatus = "canceled"
 )
 
 //
@@ -2220,33 +2220,33 @@ func (r *UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID s
 	return
 }
 
-type ListCardsQuery struct {
+type CardListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountID  *string                  `query:"account_id"`
-	CreatedAt  *ListCardsQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}   `pjson:"-,extras"`
+	AccountID  *string                   `query:"account_id"`
+	CreatedAt  *CardsListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}    `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardsQuery using the
+// UnmarshalJSON deserializes the provided bytes into CardListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListCardsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *CardListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardsQuery into an array of bytes using the gjson
+// MarshalJSON serializes CardListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListCardsQuery) MarshalJSON() (data []byte, err error) {
+func (r *CardListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListCardsQuery) GetCursor() (Cursor string) {
+func (r *CardListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -2255,7 +2255,7 @@ func (r *ListCardsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardsQuery) GetLimit() (Limit int64) {
+func (r *CardListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -2263,21 +2263,21 @@ func (r *ListCardsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Cards to ones belonging to the specified Account.
-func (r *ListCardsQuery) GetAccountID() (AccountID string) {
+func (r *CardListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *ListCardsQuery) GetCreatedAt() (CreatedAt ListCardsQueryCreatedAt) {
+func (r *CardListParams) GetCreatedAt() (CreatedAt CardsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListCardsQueryCreatedAt struct {
+type CardsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -2293,23 +2293,23 @@ type ListCardsQueryCreatedAt struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardsQueryCreatedAt using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// UnmarshalJSON deserializes the provided bytes into CardsListParamsCreatedAt
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCardsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CardsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardsQueryCreatedAt into an array of bytes using the
+// MarshalJSON serializes CardsListParamsCreatedAt into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListCardsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CardsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCardsQueryCreatedAt) GetAfter() (After string) {
+func (r *CardsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -2318,7 +2318,7 @@ func (r *ListCardsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCardsQueryCreatedAt) GetBefore() (Before string) {
+func (r *CardsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -2327,7 +2327,7 @@ func (r *ListCardsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -2336,7 +2336,7 @@ func (r *ListCardsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *CardsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -2661,33 +2661,33 @@ func (r *CreateACardDisputeParameters) GetExplanation() (Explanation string) {
 	return
 }
 
-type ListCardDisputesQuery struct {
+type CardDisputeListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                          `query:"limit"`
-	CreatedAt  *ListCardDisputesQueryCreatedAt `query:"created_at"`
-	Status     *ListCardDisputesQueryStatus    `query:"status"`
-	jsonFields map[string]interface{}          `pjson:"-,extras"`
+	Limit      *int64                           `query:"limit"`
+	CreatedAt  *CardDisputesListParamsCreatedAt `query:"created_at"`
+	Status     *CardDisputesListParamsStatus    `query:"status"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardDisputesQuery using
+// UnmarshalJSON deserializes the provided bytes into CardDisputeListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCardDisputesQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *CardDisputeListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardDisputesQuery into an array of bytes using the
+// MarshalJSON serializes CardDisputeListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListCardDisputesQuery) MarshalJSON() (data []byte, err error) {
+func (r *CardDisputeListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListCardDisputesQuery) GetCursor() (Cursor string) {
+func (r *CardDisputeListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -2696,28 +2696,28 @@ func (r *ListCardDisputesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardDisputesQuery) GetLimit() (Limit int64) {
+func (r *CardDisputeListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ListCardDisputesQuery) GetCreatedAt() (CreatedAt ListCardDisputesQueryCreatedAt) {
+func (r *CardDisputeListParams) GetCreatedAt() (CreatedAt CardDisputesListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *ListCardDisputesQuery) GetStatus() (Status ListCardDisputesQueryStatus) {
+func (r *CardDisputeListParams) GetStatus() (Status CardDisputesListParamsStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
-type ListCardDisputesQueryCreatedAt struct {
+type CardDisputesListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -2734,22 +2734,22 @@ type ListCardDisputesQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListCardDisputesQueryCreatedAt using the internal pjson library. Unrecognized
+// CardDisputesListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListCardDisputesQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CardDisputesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardDisputesQueryCreatedAt into an array of bytes
+// MarshalJSON serializes CardDisputesListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListCardDisputesQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CardDisputesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetAfter() (After string) {
+func (r *CardDisputesListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -2758,7 +2758,7 @@ func (r *ListCardDisputesQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetBefore() (Before string) {
+func (r *CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -2767,7 +2767,7 @@ func (r *ListCardDisputesQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -2776,49 +2776,49 @@ func (r *ListCardDisputesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCardDisputesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *CardDisputesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-type ListCardDisputesQueryStatus struct {
+type CardDisputesListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListCardDisputesQueryStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	In         *[]CardDisputesListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardDisputesQueryStatus
+// UnmarshalJSON deserializes the provided bytes into CardDisputesListParamsStatus
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCardDisputesQueryStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *CardDisputesListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardDisputesQueryStatus into an array of bytes using
+// MarshalJSON serializes CardDisputesListParamsStatus into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListCardDisputesQueryStatus) MarshalJSON() (data []byte, err error) {
+func (r *CardDisputesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListCardDisputesQueryStatus) GetIn() (In []ListCardDisputesQueryStatusIn) {
+func (r *CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListCardDisputesQueryStatusIn string
+type CardDisputesListParamsStatusIn string
 
 const (
-	ListCardDisputesQueryStatusInPendingReviewing ListCardDisputesQueryStatusIn = "pending_reviewing"
-	ListCardDisputesQueryStatusInAccepted         ListCardDisputesQueryStatusIn = "accepted"
-	ListCardDisputesQueryStatusInRejected         ListCardDisputesQueryStatusIn = "rejected"
+	CardDisputesListParamsStatusInPendingReviewing CardDisputesListParamsStatusIn = "pending_reviewing"
+	CardDisputesListParamsStatusInAccepted         CardDisputesListParamsStatusIn = "accepted"
+	CardDisputesListParamsStatusInRejected         CardDisputesListParamsStatusIn = "rejected"
 )
 
 //
@@ -3311,32 +3311,32 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue in
 	return
 }
 
-type ListCardProfilesQuery struct {
+type CardProfileListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                       `query:"limit"`
-	Status     *ListCardProfilesQueryStatus `query:"status"`
-	jsonFields map[string]interface{}       `pjson:"-,extras"`
+	Limit      *int64                        `query:"limit"`
+	Status     *CardProfilesListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}        `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardProfilesQuery using
+// UnmarshalJSON deserializes the provided bytes into CardProfileListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCardProfilesQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *CardProfileListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardProfilesQuery into an array of bytes using the
+// MarshalJSON serializes CardProfileListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListCardProfilesQuery) MarshalJSON() (data []byte, err error) {
+func (r *CardProfileListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListCardProfilesQuery) GetCursor() (Cursor string) {
+func (r *CardProfileListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -3345,57 +3345,57 @@ func (r *ListCardProfilesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCardProfilesQuery) GetLimit() (Limit int64) {
+func (r *CardProfileListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ListCardProfilesQuery) GetStatus() (Status ListCardProfilesQueryStatus) {
+func (r *CardProfileListParams) GetStatus() (Status CardProfilesListParamsStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
-type ListCardProfilesQueryStatus struct {
+type CardProfilesListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListCardProfilesQueryStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	In         *[]CardProfilesListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCardProfilesQueryStatus
+// UnmarshalJSON deserializes the provided bytes into CardProfilesListParamsStatus
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCardProfilesQueryStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *CardProfilesListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCardProfilesQueryStatus into an array of bytes using
+// MarshalJSON serializes CardProfilesListParamsStatus into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListCardProfilesQueryStatus) MarshalJSON() (data []byte, err error) {
+func (r *CardProfilesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListCardProfilesQueryStatus) GetIn() (In []ListCardProfilesQueryStatusIn) {
+func (r *CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListCardProfilesQueryStatusIn string
+type CardProfilesListParamsStatusIn string
 
 const (
-	ListCardProfilesQueryStatusInPending  ListCardProfilesQueryStatusIn = "pending"
-	ListCardProfilesQueryStatusInRejected ListCardProfilesQueryStatusIn = "rejected"
-	ListCardProfilesQueryStatusInActive   ListCardProfilesQueryStatusIn = "active"
-	ListCardProfilesQueryStatusInArchived ListCardProfilesQueryStatusIn = "archived"
+	CardProfilesListParamsStatusInPending  CardProfilesListParamsStatusIn = "pending"
+	CardProfilesListParamsStatusInRejected CardProfilesListParamsStatusIn = "rejected"
+	CardProfilesListParamsStatusInActive   CardProfilesListParamsStatusIn = "active"
+	CardProfilesListParamsStatusInArchived CardProfilesListParamsStatusIn = "archived"
 )
 
 //
@@ -3672,7 +3672,7 @@ func (r *UpdateAnExternalAccountParameters) GetDescription() (Description string
 	return
 }
 
-type ListExternalAccountsQuery struct {
+type ExternalAccountListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -3681,22 +3681,22 @@ type ListExternalAccountsQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListExternalAccountsQuery
+// UnmarshalJSON deserializes the provided bytes into ExternalAccountListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListExternalAccountsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *ExternalAccountListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListExternalAccountsQuery into an array of bytes using
+// MarshalJSON serializes ExternalAccountListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListExternalAccountsQuery) MarshalJSON() (data []byte, err error) {
+func (r *ExternalAccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListExternalAccountsQuery) GetCursor() (Cursor string) {
+func (r *ExternalAccountListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -3705,7 +3705,7 @@ func (r *ListExternalAccountsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListExternalAccountsQuery) GetLimit() (Limit int64) {
+func (r *ExternalAccountListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -3870,34 +3870,34 @@ const (
 	DigitalWalletTokenTypeDigitalWalletToken DigitalWalletTokenType = "digital_wallet_token"
 )
 
-type ListDigitalWalletTokensQuery struct {
+type DigitalWalletTokenListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID     *string                                `query:"card_id"`
-	CreatedAt  *ListDigitalWalletTokensQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+	CardID     *string                                 `query:"card_id"`
+	CreatedAt  *DigitalWalletTokensListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListDigitalWalletTokensQuery
+// UnmarshalJSON deserializes the provided bytes into DigitalWalletTokenListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListDigitalWalletTokensQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *DigitalWalletTokenListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDigitalWalletTokensQuery into an array of bytes using
+// MarshalJSON serializes DigitalWalletTokenListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListDigitalWalletTokensQuery) MarshalJSON() (data []byte, err error) {
+func (r *DigitalWalletTokenListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListDigitalWalletTokensQuery) GetCursor() (Cursor string) {
+func (r *DigitalWalletTokenListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -3906,7 +3906,7 @@ func (r *ListDigitalWalletTokensQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int64) {
+func (r *DigitalWalletTokenListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -3914,21 +3914,21 @@ func (r *ListDigitalWalletTokensQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Digital Wallet Tokens to ones belonging to the specified Card.
-func (r *ListDigitalWalletTokensQuery) GetCardID() (CardID string) {
+func (r *DigitalWalletTokenListParams) GetCardID() (CardID string) {
 	if r != nil && r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
-func (r *ListDigitalWalletTokensQuery) GetCreatedAt() (CreatedAt ListDigitalWalletTokensQueryCreatedAt) {
+func (r *DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTokensListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListDigitalWalletTokensQueryCreatedAt struct {
+type DigitalWalletTokensListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -3945,22 +3945,22 @@ type ListDigitalWalletTokensQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListDigitalWalletTokensQueryCreatedAt using the internal pjson library.
+// DigitalWalletTokensListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `Extras` property.
-func (r *ListDigitalWalletTokensQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DigitalWalletTokensListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDigitalWalletTokensQueryCreatedAt into an array of
+// MarshalJSON serializes DigitalWalletTokensListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `Extras` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *ListDigitalWalletTokensQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DigitalWalletTokensListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetAfter() (After string) {
+func (r *DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -3969,7 +3969,7 @@ func (r *ListDigitalWalletTokensQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetBefore() (Before string) {
+func (r *DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -3978,7 +3978,7 @@ func (r *ListDigitalWalletTokensQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -3987,7 +3987,7 @@ func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrAfter() (OnOrAfter string
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDigitalWalletTokensQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -7645,7 +7645,7 @@ const (
 	TransactionTypeTransaction TransactionType = "transaction"
 )
 
-type ListTransactionsQuery struct {
+type TransactionListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -7654,28 +7654,28 @@ type ListTransactionsQuery struct {
 	// Filter Transactions for those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route.
-	RouteID    *string                         `query:"route_id"`
-	CreatedAt  *ListTransactionsQueryCreatedAt `query:"created_at"`
-	Category   *ListTransactionsQueryCategory  `query:"category"`
-	jsonFields map[string]interface{}          `pjson:"-,extras"`
+	RouteID    *string                          `query:"route_id"`
+	CreatedAt  *TransactionsListParamsCreatedAt `query:"created_at"`
+	Category   *TransactionsListParamsCategory  `query:"category"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListTransactionsQuery using
+// UnmarshalJSON deserializes the provided bytes into TransactionListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *TransactionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListTransactionsQuery into an array of bytes using the
+// MarshalJSON serializes TransactionListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListTransactionsQuery) MarshalJSON() (data []byte, err error) {
+func (r *TransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListTransactionsQuery) GetCursor() (Cursor string) {
+func (r *TransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -7684,7 +7684,7 @@ func (r *ListTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListTransactionsQuery) GetLimit() (Limit int64) {
+func (r *TransactionListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -7692,7 +7692,7 @@ func (r *ListTransactionsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Transactions for those belonging to the specified Account.
-func (r *ListTransactionsQuery) GetAccountID() (AccountID string) {
+func (r *TransactionListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
@@ -7700,28 +7700,28 @@ func (r *ListTransactionsQuery) GetAccountID() (AccountID string) {
 }
 
 // Filter Transactions for those belonging to the specified route.
-func (r *ListTransactionsQuery) GetRouteID() (RouteID string) {
+func (r *TransactionListParams) GetRouteID() (RouteID string) {
 	if r != nil && r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
-func (r *ListTransactionsQuery) GetCreatedAt() (CreatedAt ListTransactionsQueryCreatedAt) {
+func (r *TransactionListParams) GetCreatedAt() (CreatedAt TransactionsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *ListTransactionsQuery) GetCategory() (Category ListTransactionsQueryCategory) {
+func (r *TransactionListParams) GetCategory() (Category TransactionsListParamsCategory) {
 	if r != nil && r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
-type ListTransactionsQueryCreatedAt struct {
+type TransactionsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -7738,22 +7738,22 @@ type ListTransactionsQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListTransactionsQueryCreatedAt using the internal pjson library. Unrecognized
+// TransactionsListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListTransactionsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *TransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListTransactionsQueryCreatedAt into an array of bytes
+// MarshalJSON serializes TransactionsListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListTransactionsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *TransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListTransactionsQueryCreatedAt) GetAfter() (After string) {
+func (r *TransactionsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -7762,7 +7762,7 @@ func (r *ListTransactionsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListTransactionsQueryCreatedAt) GetBefore() (Before string) {
+func (r *TransactionsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -7771,7 +7771,7 @@ func (r *ListTransactionsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -7780,81 +7780,81 @@ func (r *ListTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *TransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-type ListTransactionsQueryCategory struct {
+type TransactionsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListTransactionsQueryCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}             `pjson:"-,extras"`
+	In         *[]TransactionsListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}              `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListTransactionsQueryCategory
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
-func (r *ListTransactionsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// TransactionsListParamsCategory using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *TransactionsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListTransactionsQueryCategory into an array of bytes
+// MarshalJSON serializes TransactionsListParamsCategory into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListTransactionsQueryCategory) MarshalJSON() (data []byte, err error) {
+func (r *TransactionsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListTransactionsQueryCategory) GetIn() (In []ListTransactionsQueryCategoryIn) {
+func (r *TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCategoryIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListTransactionsQueryCategoryIn string
+type TransactionsListParamsCategoryIn string
 
 const (
-	ListTransactionsQueryCategoryInAccountTransferIntention                    ListTransactionsQueryCategoryIn = "account_transfer_intention"
-	ListTransactionsQueryCategoryInACHCheckConversionReturn                    ListTransactionsQueryCategoryIn = "ach_check_conversion_return"
-	ListTransactionsQueryCategoryInACHCheckConversion                          ListTransactionsQueryCategoryIn = "ach_check_conversion"
-	ListTransactionsQueryCategoryInACHTransferIntention                        ListTransactionsQueryCategoryIn = "ach_transfer_intention"
-	ListTransactionsQueryCategoryInACHTransferRejection                        ListTransactionsQueryCategoryIn = "ach_transfer_rejection"
-	ListTransactionsQueryCategoryInACHTransferReturn                           ListTransactionsQueryCategoryIn = "ach_transfer_return"
-	ListTransactionsQueryCategoryInCardDisputeAcceptance                       ListTransactionsQueryCategoryIn = "card_dispute_acceptance"
-	ListTransactionsQueryCategoryInCardRefund                                  ListTransactionsQueryCategoryIn = "card_refund"
-	ListTransactionsQueryCategoryInCardSettlement                              ListTransactionsQueryCategoryIn = "card_settlement"
-	ListTransactionsQueryCategoryInCheckDepositAcceptance                      ListTransactionsQueryCategoryIn = "check_deposit_acceptance"
-	ListTransactionsQueryCategoryInCheckDepositReturn                          ListTransactionsQueryCategoryIn = "check_deposit_return"
-	ListTransactionsQueryCategoryInCheckTransferIntention                      ListTransactionsQueryCategoryIn = "check_transfer_intention"
-	ListTransactionsQueryCategoryInCheckTransferReturn                         ListTransactionsQueryCategoryIn = "check_transfer_return"
-	ListTransactionsQueryCategoryInCheckTransferRejection                      ListTransactionsQueryCategoryIn = "check_transfer_rejection"
-	ListTransactionsQueryCategoryInCheckTransferStopPaymentRequest             ListTransactionsQueryCategoryIn = "check_transfer_stop_payment_request"
-	ListTransactionsQueryCategoryInDisputeResolution                           ListTransactionsQueryCategoryIn = "dispute_resolution"
-	ListTransactionsQueryCategoryInEmpyrealCashDeposit                         ListTransactionsQueryCategoryIn = "empyreal_cash_deposit"
-	ListTransactionsQueryCategoryInInboundACHTransfer                          ListTransactionsQueryCategoryIn = "inbound_ach_transfer"
-	ListTransactionsQueryCategoryInInboundCheck                                ListTransactionsQueryCategoryIn = "inbound_check"
-	ListTransactionsQueryCategoryInInboundInternationalACHTransfer             ListTransactionsQueryCategoryIn = "inbound_international_ach_transfer"
-	ListTransactionsQueryCategoryInInboundRealTimePaymentsTransferConfirmation ListTransactionsQueryCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	ListTransactionsQueryCategoryInInboundWireDrawdownPaymentReversal          ListTransactionsQueryCategoryIn = "inbound_wire_drawdown_payment_reversal"
-	ListTransactionsQueryCategoryInInboundWireDrawdownPayment                  ListTransactionsQueryCategoryIn = "inbound_wire_drawdown_payment"
-	ListTransactionsQueryCategoryInInboundWireReversal                         ListTransactionsQueryCategoryIn = "inbound_wire_reversal"
-	ListTransactionsQueryCategoryInInboundWireTransfer                         ListTransactionsQueryCategoryIn = "inbound_wire_transfer"
-	ListTransactionsQueryCategoryInInternalSource                              ListTransactionsQueryCategoryIn = "internal_source"
-	ListTransactionsQueryCategoryInCardRouteRefund                             ListTransactionsQueryCategoryIn = "card_route_refund"
-	ListTransactionsQueryCategoryInCardRouteSettlement                         ListTransactionsQueryCategoryIn = "card_route_settlement"
-	ListTransactionsQueryCategoryInRealTimePaymentsTransferAcknowledgement     ListTransactionsQueryCategoryIn = "real_time_payments_transfer_acknowledgement"
-	ListTransactionsQueryCategoryInSampleFunds                                 ListTransactionsQueryCategoryIn = "sample_funds"
-	ListTransactionsQueryCategoryInWireDrawdownPaymentIntention                ListTransactionsQueryCategoryIn = "wire_drawdown_payment_intention"
-	ListTransactionsQueryCategoryInWireDrawdownPaymentRejection                ListTransactionsQueryCategoryIn = "wire_drawdown_payment_rejection"
-	ListTransactionsQueryCategoryInWireTransferIntention                       ListTransactionsQueryCategoryIn = "wire_transfer_intention"
-	ListTransactionsQueryCategoryInWireTransferRejection                       ListTransactionsQueryCategoryIn = "wire_transfer_rejection"
-	ListTransactionsQueryCategoryInOther                                       ListTransactionsQueryCategoryIn = "other"
+	TransactionsListParamsCategoryInAccountTransferIntention                    TransactionsListParamsCategoryIn = "account_transfer_intention"
+	TransactionsListParamsCategoryInACHCheckConversionReturn                    TransactionsListParamsCategoryIn = "ach_check_conversion_return"
+	TransactionsListParamsCategoryInACHCheckConversion                          TransactionsListParamsCategoryIn = "ach_check_conversion"
+	TransactionsListParamsCategoryInACHTransferIntention                        TransactionsListParamsCategoryIn = "ach_transfer_intention"
+	TransactionsListParamsCategoryInACHTransferRejection                        TransactionsListParamsCategoryIn = "ach_transfer_rejection"
+	TransactionsListParamsCategoryInACHTransferReturn                           TransactionsListParamsCategoryIn = "ach_transfer_return"
+	TransactionsListParamsCategoryInCardDisputeAcceptance                       TransactionsListParamsCategoryIn = "card_dispute_acceptance"
+	TransactionsListParamsCategoryInCardRefund                                  TransactionsListParamsCategoryIn = "card_refund"
+	TransactionsListParamsCategoryInCardSettlement                              TransactionsListParamsCategoryIn = "card_settlement"
+	TransactionsListParamsCategoryInCheckDepositAcceptance                      TransactionsListParamsCategoryIn = "check_deposit_acceptance"
+	TransactionsListParamsCategoryInCheckDepositReturn                          TransactionsListParamsCategoryIn = "check_deposit_return"
+	TransactionsListParamsCategoryInCheckTransferIntention                      TransactionsListParamsCategoryIn = "check_transfer_intention"
+	TransactionsListParamsCategoryInCheckTransferReturn                         TransactionsListParamsCategoryIn = "check_transfer_return"
+	TransactionsListParamsCategoryInCheckTransferRejection                      TransactionsListParamsCategoryIn = "check_transfer_rejection"
+	TransactionsListParamsCategoryInCheckTransferStopPaymentRequest             TransactionsListParamsCategoryIn = "check_transfer_stop_payment_request"
+	TransactionsListParamsCategoryInDisputeResolution                           TransactionsListParamsCategoryIn = "dispute_resolution"
+	TransactionsListParamsCategoryInEmpyrealCashDeposit                         TransactionsListParamsCategoryIn = "empyreal_cash_deposit"
+	TransactionsListParamsCategoryInInboundACHTransfer                          TransactionsListParamsCategoryIn = "inbound_ach_transfer"
+	TransactionsListParamsCategoryInInboundCheck                                TransactionsListParamsCategoryIn = "inbound_check"
+	TransactionsListParamsCategoryInInboundInternationalACHTransfer             TransactionsListParamsCategoryIn = "inbound_international_ach_transfer"
+	TransactionsListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionsListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
+	TransactionsListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionsListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
+	TransactionsListParamsCategoryInInboundWireDrawdownPayment                  TransactionsListParamsCategoryIn = "inbound_wire_drawdown_payment"
+	TransactionsListParamsCategoryInInboundWireReversal                         TransactionsListParamsCategoryIn = "inbound_wire_reversal"
+	TransactionsListParamsCategoryInInboundWireTransfer                         TransactionsListParamsCategoryIn = "inbound_wire_transfer"
+	TransactionsListParamsCategoryInInternalSource                              TransactionsListParamsCategoryIn = "internal_source"
+	TransactionsListParamsCategoryInCardRouteRefund                             TransactionsListParamsCategoryIn = "card_route_refund"
+	TransactionsListParamsCategoryInCardRouteSettlement                         TransactionsListParamsCategoryIn = "card_route_settlement"
+	TransactionsListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionsListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
+	TransactionsListParamsCategoryInSampleFunds                                 TransactionsListParamsCategoryIn = "sample_funds"
+	TransactionsListParamsCategoryInWireDrawdownPaymentIntention                TransactionsListParamsCategoryIn = "wire_drawdown_payment_intention"
+	TransactionsListParamsCategoryInWireDrawdownPaymentRejection                TransactionsListParamsCategoryIn = "wire_drawdown_payment_rejection"
+	TransactionsListParamsCategoryInWireTransferIntention                       TransactionsListParamsCategoryIn = "wire_transfer_intention"
+	TransactionsListParamsCategoryInWireTransferRejection                       TransactionsListParamsCategoryIn = "wire_transfer_rejection"
+	TransactionsListParamsCategoryInOther                                       TransactionsListParamsCategoryIn = "other"
 )
 
 //
@@ -8957,7 +8957,7 @@ const (
 	PendingTransactionTypePendingTransaction PendingTransactionType = "pending_transaction"
 )
 
-type ListPendingTransactionsQuery struct {
+type PendingTransactionListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -8968,27 +8968,27 @@ type ListPendingTransactionsQuery struct {
 	// Filter pending transactions to those belonging to the specified Route.
 	RouteID *string `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceID   *string                             `query:"source_id"`
-	Status     *ListPendingTransactionsQueryStatus `query:"status"`
-	jsonFields map[string]interface{}              `pjson:"-,extras"`
+	SourceID   *string                              `query:"source_id"`
+	Status     *PendingTransactionsListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}               `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListPendingTransactionsQuery
+// UnmarshalJSON deserializes the provided bytes into PendingTransactionListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListPendingTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *PendingTransactionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListPendingTransactionsQuery into an array of bytes using
+// MarshalJSON serializes PendingTransactionListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListPendingTransactionsQuery) MarshalJSON() (data []byte, err error) {
+func (r *PendingTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListPendingTransactionsQuery) GetCursor() (Cursor string) {
+func (r *PendingTransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -8997,7 +8997,7 @@ func (r *ListPendingTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListPendingTransactionsQuery) GetLimit() (Limit int64) {
+func (r *PendingTransactionListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -9005,7 +9005,7 @@ func (r *ListPendingTransactionsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter pending transactions to those belonging to the specified Account.
-func (r *ListPendingTransactionsQuery) GetAccountID() (AccountID string) {
+func (r *PendingTransactionListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
@@ -9013,7 +9013,7 @@ func (r *ListPendingTransactionsQuery) GetAccountID() (AccountID string) {
 }
 
 // Filter pending transactions to those belonging to the specified Route.
-func (r *ListPendingTransactionsQuery) GetRouteID() (RouteID string) {
+func (r *PendingTransactionListParams) GetRouteID() (RouteID string) {
 	if r != nil && r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
@@ -9021,55 +9021,55 @@ func (r *ListPendingTransactionsQuery) GetRouteID() (RouteID string) {
 }
 
 // Filter pending transactions to those caused by the specified source.
-func (r *ListPendingTransactionsQuery) GetSourceID() (SourceID string) {
+func (r *PendingTransactionListParams) GetSourceID() (SourceID string) {
 	if r != nil && r.SourceID != nil {
 		SourceID = *r.SourceID
 	}
 	return
 }
 
-func (r *ListPendingTransactionsQuery) GetStatus() (Status ListPendingTransactionsQueryStatus) {
+func (r *PendingTransactionListParams) GetStatus() (Status PendingTransactionsListParamsStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
-type ListPendingTransactionsQueryStatus struct {
+type PendingTransactionsListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListPendingTransactionsQueryStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+	In         *[]PendingTransactionsListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}                   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListPendingTransactionsQueryStatus using the internal pjson library.
+// PendingTransactionsListParamsStatus using the internal pjson library.
 // Unrecognized fields are stored in the `Extras` property.
-func (r *ListPendingTransactionsQueryStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *PendingTransactionsListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListPendingTransactionsQueryStatus into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r *ListPendingTransactionsQueryStatus) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes PendingTransactionsListParamsStatus into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *PendingTransactionsListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListPendingTransactionsQueryStatus) GetIn() (In []ListPendingTransactionsQueryStatusIn) {
+func (r *PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListPendingTransactionsQueryStatusIn string
+type PendingTransactionsListParamsStatusIn string
 
 const (
-	ListPendingTransactionsQueryStatusInPending  ListPendingTransactionsQueryStatusIn = "pending"
-	ListPendingTransactionsQueryStatusInComplete ListPendingTransactionsQueryStatusIn = "complete"
+	PendingTransactionsListParamsStatusInPending  PendingTransactionsListParamsStatusIn = "pending"
+	PendingTransactionsListParamsStatusInComplete PendingTransactionsListParamsStatusIn = "complete"
 )
 
 //
@@ -10335,7 +10335,7 @@ const (
 	DeclinedTransactionTypeDeclinedTransaction DeclinedTransactionType = "declined_transaction"
 )
 
-type ListDeclinedTransactionsQuery struct {
+type DeclinedTransactionListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -10344,27 +10344,27 @@ type ListDeclinedTransactionsQuery struct {
 	// Filter Declined Transactions to ones belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteID    *string                                 `query:"route_id"`
-	CreatedAt  *ListDeclinedTransactionsQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+	RouteID    *string                                  `query:"route_id"`
+	CreatedAt  *DeclinedTransactionsListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                   `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListDeclinedTransactionsQuery
+// UnmarshalJSON deserializes the provided bytes into DeclinedTransactionListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListDeclinedTransactionsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *DeclinedTransactionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDeclinedTransactionsQuery into an array of bytes
+// MarshalJSON serializes DeclinedTransactionListParams into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListDeclinedTransactionsQuery) MarshalJSON() (data []byte, err error) {
+func (r *DeclinedTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListDeclinedTransactionsQuery) GetCursor() (Cursor string) {
+func (r *DeclinedTransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -10373,7 +10373,7 @@ func (r *ListDeclinedTransactionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int64) {
+func (r *DeclinedTransactionListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -10381,7 +10381,7 @@ func (r *ListDeclinedTransactionsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Declined Transactions to ones belonging to the specified Account.
-func (r *ListDeclinedTransactionsQuery) GetAccountID() (AccountID string) {
+func (r *DeclinedTransactionListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
@@ -10389,21 +10389,21 @@ func (r *ListDeclinedTransactionsQuery) GetAccountID() (AccountID string) {
 }
 
 // Filter Declined Transactions to those belonging to the specified route.
-func (r *ListDeclinedTransactionsQuery) GetRouteID() (RouteID string) {
+func (r *DeclinedTransactionListParams) GetRouteID() (RouteID string) {
 	if r != nil && r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
-func (r *ListDeclinedTransactionsQuery) GetCreatedAt() (CreatedAt ListDeclinedTransactionsQueryCreatedAt) {
+func (r *DeclinedTransactionListParams) GetCreatedAt() (CreatedAt DeclinedTransactionsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListDeclinedTransactionsQueryCreatedAt struct {
+type DeclinedTransactionsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -10420,22 +10420,22 @@ type ListDeclinedTransactionsQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListDeclinedTransactionsQueryCreatedAt using the internal pjson library.
+// DeclinedTransactionsListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `Extras` property.
-func (r *ListDeclinedTransactionsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DeclinedTransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDeclinedTransactionsQueryCreatedAt into an array of
+// MarshalJSON serializes DeclinedTransactionsListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `Extras` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *ListDeclinedTransactionsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DeclinedTransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDeclinedTransactionsQueryCreatedAt) GetAfter() (After string) {
+func (r *DeclinedTransactionsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -10444,7 +10444,7 @@ func (r *ListDeclinedTransactionsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDeclinedTransactionsQueryCreatedAt) GetBefore() (Before string) {
+func (r *DeclinedTransactionsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -10453,7 +10453,7 @@ func (r *ListDeclinedTransactionsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *DeclinedTransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -10462,7 +10462,7 @@ func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrAfter() (OnOrAfter strin
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDeclinedTransactionsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *DeclinedTransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -10778,7 +10778,7 @@ const (
 	UpdateALimitParametersStatusActive   UpdateALimitParametersStatus = "active"
 )
 
-type ListLimitsQuery struct {
+type LimitListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -10791,21 +10791,21 @@ type ListLimitsQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListLimitsQuery using the
+// UnmarshalJSON deserializes the provided bytes into LimitListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListLimitsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *LimitListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListLimitsQuery into an array of bytes using the gjson
+// MarshalJSON serializes LimitListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListLimitsQuery) MarshalJSON() (data []byte, err error) {
+func (r *LimitListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListLimitsQuery) GetCursor() (Cursor string) {
+func (r *LimitListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -10814,7 +10814,7 @@ func (r *ListLimitsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListLimitsQuery) GetLimit() (Limit int64) {
+func (r *LimitListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -10822,7 +10822,7 @@ func (r *ListLimitsQuery) GetLimit() (Limit int64) {
 }
 
 // The model to retrieve limits for.
-func (r *ListLimitsQuery) GetModelID() (ModelID string) {
+func (r *LimitListParams) GetModelID() (ModelID string) {
 	if r != nil && r.ModelID != nil {
 		ModelID = *r.ModelID
 	}
@@ -10830,7 +10830,7 @@ func (r *ListLimitsQuery) GetModelID() (ModelID string) {
 }
 
 // The status to retrieve limits for.
-func (r *ListLimitsQuery) GetStatus() (Status string) {
+func (r *LimitListParams) GetStatus() (Status string) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
@@ -11237,34 +11237,34 @@ func (r *CreateAnAccountTransferParameters) GetRequireApproval() (RequireApprova
 	return
 }
 
-type ListAccountTransfersQuery struct {
+type AccountTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Account Transfers to those that originated from the specified Account.
-	AccountID  *string                             `query:"account_id"`
-	CreatedAt  *ListAccountTransfersQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}              `pjson:"-,extras"`
+	AccountID  *string                              `query:"account_id"`
+	CreatedAt  *AccountTransfersListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}               `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListAccountTransfersQuery
+// UnmarshalJSON deserializes the provided bytes into AccountTransferListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListAccountTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountTransferListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountTransfersQuery into an array of bytes using
+// MarshalJSON serializes AccountTransferListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListAccountTransfersQuery) MarshalJSON() (data []byte, err error) {
+func (r *AccountTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListAccountTransfersQuery) GetCursor() (Cursor string) {
+func (r *AccountTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -11273,7 +11273,7 @@ func (r *ListAccountTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountTransfersQuery) GetLimit() (Limit int64) {
+func (r *AccountTransferListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -11281,21 +11281,21 @@ func (r *ListAccountTransfersQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Account Transfers to those that originated from the specified Account.
-func (r *ListAccountTransfersQuery) GetAccountID() (AccountID string) {
+func (r *AccountTransferListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *ListAccountTransfersQuery) GetCreatedAt() (CreatedAt ListAccountTransfersQueryCreatedAt) {
+func (r *AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransfersListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListAccountTransfersQueryCreatedAt struct {
+type AccountTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -11312,22 +11312,22 @@ type ListAccountTransfersQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListAccountTransfersQueryCreatedAt using the internal pjson library.
+// AccountTransfersListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `Extras` property.
-func (r *ListAccountTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountTransfersQueryCreatedAt into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r *ListAccountTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes AccountTransfersListParamsCreatedAt into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *AccountTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListAccountTransfersQueryCreatedAt) GetAfter() (After string) {
+func (r *AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -11336,7 +11336,7 @@ func (r *ListAccountTransfersQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListAccountTransfersQueryCreatedAt) GetBefore() (Before string) {
+func (r *AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -11345,7 +11345,7 @@ func (r *ListAccountTransfersQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListAccountTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -11354,7 +11354,7 @@ func (r *ListAccountTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListAccountTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *AccountTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -12257,7 +12257,7 @@ const (
 	CreateAnACHTransferParametersStandardEntryClassCodeInternetInitiated             CreateAnACHTransferParametersStandardEntryClassCode = "internet_initiated"
 )
 
-type ListACHTransfersQuery struct {
+type ACHTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -12266,27 +12266,27 @@ type ListACHTransfersQuery struct {
 	// Filter ACH Transfers to those that originated from the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter ACH Transfers to those made to the specified External Account.
-	ExternalAccountID *string                         `query:"external_account_id"`
-	CreatedAt         *ListACHTransfersQueryCreatedAt `query:"created_at"`
-	jsonFields        map[string]interface{}          `pjson:"-,extras"`
+	ExternalAccountID *string                          `query:"external_account_id"`
+	CreatedAt         *ACHTransfersListParamsCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListACHTransfersQuery using
+// UnmarshalJSON deserializes the provided bytes into ACHTransferListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListACHTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHTransferListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListACHTransfersQuery into an array of bytes using the
+// MarshalJSON serializes ACHTransferListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListACHTransfersQuery) MarshalJSON() (data []byte, err error) {
+func (r *ACHTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListACHTransfersQuery) GetCursor() (Cursor string) {
+func (r *ACHTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -12295,7 +12295,7 @@ func (r *ListACHTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListACHTransfersQuery) GetLimit() (Limit int64) {
+func (r *ACHTransferListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -12303,7 +12303,7 @@ func (r *ListACHTransfersQuery) GetLimit() (Limit int64) {
 }
 
 // Filter ACH Transfers to those that originated from the specified Account.
-func (r *ListACHTransfersQuery) GetAccountID() (AccountID string) {
+func (r *ACHTransferListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
@@ -12311,21 +12311,21 @@ func (r *ListACHTransfersQuery) GetAccountID() (AccountID string) {
 }
 
 // Filter ACH Transfers to those made to the specified External Account.
-func (r *ListACHTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+func (r *ACHTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
 	if r != nil && r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
-func (r *ListACHTransfersQuery) GetCreatedAt() (CreatedAt ListACHTransfersQueryCreatedAt) {
+func (r *ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransfersListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListACHTransfersQueryCreatedAt struct {
+type ACHTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -12342,22 +12342,22 @@ type ListACHTransfersQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListACHTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// ACHTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListACHTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListACHTransfersQueryCreatedAt into an array of bytes
+// MarshalJSON serializes ACHTransfersListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListACHTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *ACHTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListACHTransfersQueryCreatedAt) GetAfter() (After string) {
+func (r *ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -12366,7 +12366,7 @@ func (r *ListACHTransfersQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListACHTransfersQueryCreatedAt) GetBefore() (Before string) {
+func (r *ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -12375,7 +12375,7 @@ func (r *ListACHTransfersQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListACHTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -12384,7 +12384,7 @@ func (r *ListACHTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListACHTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *ACHTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -12829,32 +12829,32 @@ const (
 	CreateAnACHPrenotificationParametersStandardEntryClassCodeInternetInitiated             CreateAnACHPrenotificationParametersStandardEntryClassCode = "internet_initiated"
 )
 
-type ListACHPrenotificationsQuery struct {
+type ACHPrenotificationListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                                 `query:"limit"`
-	CreatedAt  *ListACHPrenotificationsQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+	Limit      *int64                                  `query:"limit"`
+	CreatedAt  *ACHPrenotificationsListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListACHPrenotificationsQuery
+// UnmarshalJSON deserializes the provided bytes into ACHPrenotificationListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListACHPrenotificationsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHPrenotificationListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListACHPrenotificationsQuery into an array of bytes using
+// MarshalJSON serializes ACHPrenotificationListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListACHPrenotificationsQuery) MarshalJSON() (data []byte, err error) {
+func (r *ACHPrenotificationListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListACHPrenotificationsQuery) GetCursor() (Cursor string) {
+func (r *ACHPrenotificationListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -12863,21 +12863,21 @@ func (r *ListACHPrenotificationsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListACHPrenotificationsQuery) GetLimit() (Limit int64) {
+func (r *ACHPrenotificationListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ListACHPrenotificationsQuery) GetCreatedAt() (CreatedAt ListACHPrenotificationsQueryCreatedAt) {
+func (r *ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificationsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListACHPrenotificationsQueryCreatedAt struct {
+type ACHPrenotificationsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -12894,22 +12894,22 @@ type ListACHPrenotificationsQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListACHPrenotificationsQueryCreatedAt using the internal pjson library.
+// ACHPrenotificationsListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `Extras` property.
-func (r *ListACHPrenotificationsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHPrenotificationsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListACHPrenotificationsQueryCreatedAt into an array of
+// MarshalJSON serializes ACHPrenotificationsListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `Extras` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *ListACHPrenotificationsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *ACHPrenotificationsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListACHPrenotificationsQueryCreatedAt) GetAfter() (After string) {
+func (r *ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -12918,7 +12918,7 @@ func (r *ListACHPrenotificationsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListACHPrenotificationsQueryCreatedAt) GetBefore() (Before string) {
+func (r *ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -12927,7 +12927,7 @@ func (r *ListACHPrenotificationsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -12936,7 +12936,7 @@ func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListACHPrenotificationsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -13092,34 +13092,34 @@ const (
 	DocumentTypeDocument DocumentType = "document"
 )
 
-type ListDocumentsQuery struct {
+type DocumentListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Documents to ones belonging to the specified Entity.
-	EntityID   *string                      `query:"entity_id"`
-	Category   *ListDocumentsQueryCategory  `query:"category"`
-	CreatedAt  *ListDocumentsQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}       `pjson:"-,extras"`
+	EntityID   *string                       `query:"entity_id"`
+	Category   *DocumentsListParamsCategory  `query:"category"`
+	CreatedAt  *DocumentsListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}        `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListDocumentsQuery using the
+// UnmarshalJSON deserializes the provided bytes into DocumentListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListDocumentsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *DocumentListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDocumentsQuery into an array of bytes using the gjson
+// MarshalJSON serializes DocumentListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListDocumentsQuery) MarshalJSON() (data []byte, err error) {
+func (r *DocumentListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListDocumentsQuery) GetCursor() (Cursor string) {
+func (r *DocumentListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -13128,7 +13128,7 @@ func (r *ListDocumentsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListDocumentsQuery) GetLimit() (Limit int64) {
+func (r *DocumentListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -13136,64 +13136,64 @@ func (r *ListDocumentsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Documents to ones belonging to the specified Entity.
-func (r *ListDocumentsQuery) GetEntityID() (EntityID string) {
+func (r *DocumentListParams) GetEntityID() (EntityID string) {
 	if r != nil && r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
 }
 
-func (r *ListDocumentsQuery) GetCategory() (Category ListDocumentsQueryCategory) {
+func (r *DocumentListParams) GetCategory() (Category DocumentsListParamsCategory) {
 	if r != nil && r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
-func (r *ListDocumentsQuery) GetCreatedAt() (CreatedAt ListDocumentsQueryCreatedAt) {
+func (r *DocumentListParams) GetCreatedAt() (CreatedAt DocumentsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListDocumentsQueryCategory struct {
+type DocumentsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListDocumentsQueryCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}          `pjson:"-,extras"`
+	In         *[]DocumentsListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListDocumentsQueryCategory
+// UnmarshalJSON deserializes the provided bytes into DocumentsListParamsCategory
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListDocumentsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+func (r *DocumentsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDocumentsQueryCategory into an array of bytes using
+// MarshalJSON serializes DocumentsListParamsCategory into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListDocumentsQueryCategory) MarshalJSON() (data []byte, err error) {
+func (r *DocumentsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListDocumentsQueryCategory) GetIn() (In []ListDocumentsQueryCategoryIn) {
+func (r *DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListDocumentsQueryCategoryIn string
+type DocumentsListParamsCategoryIn string
 
 const (
-	ListDocumentsQueryCategoryInForm_1099Int ListDocumentsQueryCategoryIn = "form_1099_int"
+	DocumentsListParamsCategoryInForm_1099Int DocumentsListParamsCategoryIn = "form_1099_int"
 )
 
-type ListDocumentsQueryCreatedAt struct {
+type DocumentsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -13209,23 +13209,23 @@ type ListDocumentsQueryCreatedAt struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListDocumentsQueryCreatedAt
+// UnmarshalJSON deserializes the provided bytes into DocumentsListParamsCreatedAt
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListDocumentsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DocumentsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListDocumentsQueryCreatedAt into an array of bytes using
+// MarshalJSON serializes DocumentsListParamsCreatedAt into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListDocumentsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DocumentsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDocumentsQueryCreatedAt) GetAfter() (After string) {
+func (r *DocumentsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -13234,7 +13234,7 @@ func (r *ListDocumentsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListDocumentsQueryCreatedAt) GetBefore() (Before string) {
+func (r *DocumentsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -13243,7 +13243,7 @@ func (r *ListDocumentsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDocumentsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -13252,7 +13252,7 @@ func (r *ListDocumentsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListDocumentsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *DocumentsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -13972,7 +13972,7 @@ func (r *CreateAWireTransferParameters) GetRequireApproval() (RequireApproval bo
 	return
 }
 
-type ListWireTransfersQuery struct {
+type WireTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -13981,27 +13981,27 @@ type ListWireTransfersQuery struct {
 	// Filter Wire Transfers to those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Wire Transfers to those made to the specified External Account.
-	ExternalAccountID *string                          `query:"external_account_id"`
-	CreatedAt         *ListWireTransfersQueryCreatedAt `query:"created_at"`
-	jsonFields        map[string]interface{}           `pjson:"-,extras"`
+	ExternalAccountID *string                           `query:"external_account_id"`
+	CreatedAt         *WireTransfersListParamsCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}            `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListWireTransfersQuery using
+// UnmarshalJSON deserializes the provided bytes into WireTransferListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListWireTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *WireTransferListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListWireTransfersQuery into an array of bytes using the
+// MarshalJSON serializes WireTransferListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListWireTransfersQuery) MarshalJSON() (data []byte, err error) {
+func (r *WireTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListWireTransfersQuery) GetCursor() (Cursor string) {
+func (r *WireTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -14010,7 +14010,7 @@ func (r *ListWireTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListWireTransfersQuery) GetLimit() (Limit int64) {
+func (r *WireTransferListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -14018,7 +14018,7 @@ func (r *ListWireTransfersQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Wire Transfers to those belonging to the specified Account.
-func (r *ListWireTransfersQuery) GetAccountID() (AccountID string) {
+func (r *WireTransferListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
@@ -14026,21 +14026,21 @@ func (r *ListWireTransfersQuery) GetAccountID() (AccountID string) {
 }
 
 // Filter Wire Transfers to those made to the specified External Account.
-func (r *ListWireTransfersQuery) GetExternalAccountID() (ExternalAccountID string) {
+func (r *WireTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
 	if r != nil && r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
-func (r *ListWireTransfersQuery) GetCreatedAt() (CreatedAt ListWireTransfersQueryCreatedAt) {
+func (r *WireTransferListParams) GetCreatedAt() (CreatedAt WireTransfersListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListWireTransfersQueryCreatedAt struct {
+type WireTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -14057,22 +14057,22 @@ type ListWireTransfersQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListWireTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// WireTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListWireTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *WireTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListWireTransfersQueryCreatedAt into an array of bytes
+// MarshalJSON serializes WireTransfersListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListWireTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *WireTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListWireTransfersQueryCreatedAt) GetAfter() (After string) {
+func (r *WireTransfersListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -14081,7 +14081,7 @@ func (r *ListWireTransfersQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListWireTransfersQueryCreatedAt) GetBefore() (Before string) {
+func (r *WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -14090,7 +14090,7 @@ func (r *ListWireTransfersQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListWireTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -14099,7 +14099,7 @@ func (r *ListWireTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListWireTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *WireTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -14885,34 +14885,34 @@ func (r *CreateACheckTransferParametersReturnAddress) GetZip() (Zip string) {
 	return
 }
 
-type ListCheckTransfersQuery struct {
+type CheckTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID  *string                           `query:"account_id"`
-	CreatedAt  *ListCheckTransfersQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}            `pjson:"-,extras"`
+	AccountID  *string                            `query:"account_id"`
+	CreatedAt  *CheckTransfersListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}             `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCheckTransfersQuery using
+// UnmarshalJSON deserializes the provided bytes into CheckTransferListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCheckTransfersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckTransferListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCheckTransfersQuery into an array of bytes using the
+// MarshalJSON serializes CheckTransferListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListCheckTransfersQuery) MarshalJSON() (data []byte, err error) {
+func (r *CheckTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListCheckTransfersQuery) GetCursor() (Cursor string) {
+func (r *CheckTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -14921,7 +14921,7 @@ func (r *ListCheckTransfersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCheckTransfersQuery) GetLimit() (Limit int64) {
+func (r *CheckTransferListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -14929,21 +14929,21 @@ func (r *ListCheckTransfersQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Check Transfers to those that originated from the specified Account.
-func (r *ListCheckTransfersQuery) GetAccountID() (AccountID string) {
+func (r *CheckTransferListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *ListCheckTransfersQuery) GetCreatedAt() (CreatedAt ListCheckTransfersQueryCreatedAt) {
+func (r *CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransfersListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListCheckTransfersQueryCreatedAt struct {
+type CheckTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -14960,22 +14960,22 @@ type ListCheckTransfersQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListCheckTransfersQueryCreatedAt using the internal pjson library. Unrecognized
+// CheckTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListCheckTransfersQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCheckTransfersQueryCreatedAt into an array of bytes
+// MarshalJSON serializes CheckTransfersListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListCheckTransfersQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CheckTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCheckTransfersQueryCreatedAt) GetAfter() (After string) {
+func (r *CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -14984,7 +14984,7 @@ func (r *ListCheckTransfersQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCheckTransfersQueryCreatedAt) GetBefore() (Before string) {
+func (r *CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -14993,7 +14993,7 @@ func (r *ListCheckTransfersQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCheckTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -15002,7 +15002,7 @@ func (r *ListCheckTransfersQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCheckTransfersQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *CheckTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -18848,7 +18848,7 @@ func (r *CreateAnEntityParametersSupplementalDocuments) GetFileID() (FileID stri
 	return
 }
 
-type ListEntitiesQuery struct {
+type EntityListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -18857,21 +18857,21 @@ type ListEntitiesQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListEntitiesQuery using the
+// UnmarshalJSON deserializes the provided bytes into EntityListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListEntitiesQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *EntityListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListEntitiesQuery into an array of bytes using the gjson
+// MarshalJSON serializes EntityListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListEntitiesQuery) MarshalJSON() (data []byte, err error) {
+func (r *EntityListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListEntitiesQuery) GetCursor() (Cursor string) {
+func (r *EntityListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -18880,7 +18880,7 @@ func (r *ListEntitiesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEntitiesQuery) GetLimit() (Limit int64) {
+func (r *EntityListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -19302,7 +19302,7 @@ func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (Recip
 	return
 }
 
-type ListWireDrawdownRequestsQuery struct {
+type WireDrawdownRequestListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -19311,22 +19311,22 @@ type ListWireDrawdownRequestsQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListWireDrawdownRequestsQuery
+// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListWireDrawdownRequestsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *WireDrawdownRequestListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListWireDrawdownRequestsQuery into an array of bytes
+// MarshalJSON serializes WireDrawdownRequestListParams into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListWireDrawdownRequestsQuery) MarshalJSON() (data []byte, err error) {
+func (r *WireDrawdownRequestListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListWireDrawdownRequestsQuery) GetCursor() (Cursor string) {
+func (r *WireDrawdownRequestListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -19335,7 +19335,7 @@ func (r *ListWireDrawdownRequestsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListWireDrawdownRequestsQuery) GetLimit() (Limit int64) {
+func (r *WireDrawdownRequestListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -19535,34 +19535,34 @@ const (
 	EventTypeEvent EventType = "event"
 )
 
-type ListEventsQuery struct {
+type EventListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID *string                   `query:"associated_object_id"`
-	CreatedAt          *ListEventsQueryCreatedAt `query:"created_at"`
-	Category           *ListEventsQueryCategory  `query:"category"`
-	jsonFields         map[string]interface{}    `pjson:"-,extras"`
+	AssociatedObjectID *string                    `query:"associated_object_id"`
+	CreatedAt          *EventsListParamsCreatedAt `query:"created_at"`
+	Category           *EventsListParamsCategory  `query:"category"`
+	jsonFields         map[string]interface{}     `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListEventsQuery using the
+// UnmarshalJSON deserializes the provided bytes into EventListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListEventsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *EventListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListEventsQuery into an array of bytes using the gjson
+// MarshalJSON serializes EventListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListEventsQuery) MarshalJSON() (data []byte, err error) {
+func (r *EventListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListEventsQuery) GetCursor() (Cursor string) {
+func (r *EventListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -19571,7 +19571,7 @@ func (r *ListEventsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEventsQuery) GetLimit() (Limit int64) {
+func (r *EventListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -19579,28 +19579,28 @@ func (r *ListEventsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Events to those belonging to the object with the provided identifier.
-func (r *ListEventsQuery) GetAssociatedObjectID() (AssociatedObjectID string) {
+func (r *EventListParams) GetAssociatedObjectID() (AssociatedObjectID string) {
 	if r != nil && r.AssociatedObjectID != nil {
 		AssociatedObjectID = *r.AssociatedObjectID
 	}
 	return
 }
 
-func (r *ListEventsQuery) GetCreatedAt() (CreatedAt ListEventsQueryCreatedAt) {
+func (r *EventListParams) GetCreatedAt() (CreatedAt EventsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *ListEventsQuery) GetCategory() (Category ListEventsQueryCategory) {
+func (r *EventListParams) GetCategory() (Category EventsListParamsCategory) {
 	if r != nil && r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
-type ListEventsQueryCreatedAt struct {
+type EventsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -19616,23 +19616,23 @@ type ListEventsQueryCreatedAt struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListEventsQueryCreatedAt
+// UnmarshalJSON deserializes the provided bytes into EventsListParamsCreatedAt
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListEventsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *EventsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListEventsQueryCreatedAt into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
-func (r *ListEventsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes EventsListParamsCreatedAt into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *EventsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListEventsQueryCreatedAt) GetAfter() (After string) {
+func (r *EventsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -19641,7 +19641,7 @@ func (r *ListEventsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListEventsQueryCreatedAt) GetBefore() (Before string) {
+func (r *EventsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -19650,7 +19650,7 @@ func (r *ListEventsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListEventsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -19659,91 +19659,91 @@ func (r *ListEventsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListEventsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *EventsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-type ListEventsQueryCategory struct {
+type EventsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListEventsQueryCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}       `pjson:"-,extras"`
+	In         *[]EventsListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}        `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListEventsQueryCategory using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// UnmarshalJSON deserializes the provided bytes into EventsListParamsCategory
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListEventsQueryCategory) UnmarshalJSON(data []byte) (err error) {
+func (r *EventsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListEventsQueryCategory into an array of bytes using the
+// MarshalJSON serializes EventsListParamsCategory into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListEventsQueryCategory) MarshalJSON() (data []byte, err error) {
+func (r *EventsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListEventsQueryCategory) GetIn() (In []ListEventsQueryCategoryIn) {
+func (r *EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListEventsQueryCategoryIn string
+type EventsListParamsCategoryIn string
 
 const (
-	ListEventsQueryCategoryInAccountCreated                                       ListEventsQueryCategoryIn = "account.created"
-	ListEventsQueryCategoryInAccountUpdated                                       ListEventsQueryCategoryIn = "account.updated"
-	ListEventsQueryCategoryInAccountNumberCreated                                 ListEventsQueryCategoryIn = "account_number.created"
-	ListEventsQueryCategoryInAccountNumberUpdated                                 ListEventsQueryCategoryIn = "account_number.updated"
-	ListEventsQueryCategoryInAccountStatementCreated                              ListEventsQueryCategoryIn = "account_statement.created"
-	ListEventsQueryCategoryInAccountTransferCreated                               ListEventsQueryCategoryIn = "account_transfer.created"
-	ListEventsQueryCategoryInAccountTransferUpdated                               ListEventsQueryCategoryIn = "account_transfer.updated"
-	ListEventsQueryCategoryInACHPrenotificationCreated                            ListEventsQueryCategoryIn = "ach_prenotification.created"
-	ListEventsQueryCategoryInACHPrenotificationUpdated                            ListEventsQueryCategoryIn = "ach_prenotification.updated"
-	ListEventsQueryCategoryInACHTransferCreated                                   ListEventsQueryCategoryIn = "ach_transfer.created"
-	ListEventsQueryCategoryInACHTransferUpdated                                   ListEventsQueryCategoryIn = "ach_transfer.updated"
-	ListEventsQueryCategoryInCardCreated                                          ListEventsQueryCategoryIn = "card.created"
-	ListEventsQueryCategoryInCardUpdated                                          ListEventsQueryCategoryIn = "card.updated"
-	ListEventsQueryCategoryInCardDisputeCreated                                   ListEventsQueryCategoryIn = "card_dispute.created"
-	ListEventsQueryCategoryInCardDisputeUpdated                                   ListEventsQueryCategoryIn = "card_dispute.updated"
-	ListEventsQueryCategoryInCheckDepositCreated                                  ListEventsQueryCategoryIn = "check_deposit.created"
-	ListEventsQueryCategoryInCheckDepositUpdated                                  ListEventsQueryCategoryIn = "check_deposit.updated"
-	ListEventsQueryCategoryInCheckTransferCreated                                 ListEventsQueryCategoryIn = "check_transfer.created"
-	ListEventsQueryCategoryInCheckTransferUpdated                                 ListEventsQueryCategoryIn = "check_transfer.updated"
-	ListEventsQueryCategoryInDeclinedTransactionCreated                           ListEventsQueryCategoryIn = "declined_transaction.created"
-	ListEventsQueryCategoryInDigitalWalletTokenCreated                            ListEventsQueryCategoryIn = "digital_wallet_token.created"
-	ListEventsQueryCategoryInDigitalWalletTokenUpdated                            ListEventsQueryCategoryIn = "digital_wallet_token.updated"
-	ListEventsQueryCategoryInDocumentCreated                                      ListEventsQueryCategoryIn = "document.created"
-	ListEventsQueryCategoryInEntityCreated                                        ListEventsQueryCategoryIn = "entity.created"
-	ListEventsQueryCategoryInEntityUpdated                                        ListEventsQueryCategoryIn = "entity.updated"
-	ListEventsQueryCategoryInExternalAccountCreated                               ListEventsQueryCategoryIn = "external_account.created"
-	ListEventsQueryCategoryInFileCreated                                          ListEventsQueryCategoryIn = "file.created"
-	ListEventsQueryCategoryInGroupUpdated                                         ListEventsQueryCategoryIn = "group.updated"
-	ListEventsQueryCategoryInGroupHeartbeat                                       ListEventsQueryCategoryIn = "group.heartbeat"
-	ListEventsQueryCategoryInOauthConnectionCreated                               ListEventsQueryCategoryIn = "oauth_connection.created"
-	ListEventsQueryCategoryInOauthConnectionDeactivated                           ListEventsQueryCategoryIn = "oauth_connection.deactivated"
-	ListEventsQueryCategoryInPendingTransactionCreated                            ListEventsQueryCategoryIn = "pending_transaction.created"
-	ListEventsQueryCategoryInPendingTransactionUpdated                            ListEventsQueryCategoryIn = "pending_transaction.updated"
-	ListEventsQueryCategoryInRealTimeDecisionCardAuthorizationRequested           ListEventsQueryCategoryIn = "real_time_decision.card_authorization_requested"
-	ListEventsQueryCategoryInRealTimeDecisionDigitalWalletTokenRequested          ListEventsQueryCategoryIn = "real_time_decision.digital_wallet_token_requested"
-	ListEventsQueryCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested ListEventsQueryCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
-	ListEventsQueryCategoryInRealTimePaymentsTransferCreated                      ListEventsQueryCategoryIn = "real_time_payments_transfer.created"
-	ListEventsQueryCategoryInRealTimePaymentsTransferUpdated                      ListEventsQueryCategoryIn = "real_time_payments_transfer.updated"
-	ListEventsQueryCategoryInRealTimePaymentsRequestForPaymentCreated             ListEventsQueryCategoryIn = "real_time_payments_request_for_payment.created"
-	ListEventsQueryCategoryInRealTimePaymentsRequestForPaymentUpdated             ListEventsQueryCategoryIn = "real_time_payments_request_for_payment.updated"
-	ListEventsQueryCategoryInTransactionCreated                                   ListEventsQueryCategoryIn = "transaction.created"
-	ListEventsQueryCategoryInWireDrawdownRequestCreated                           ListEventsQueryCategoryIn = "wire_drawdown_request.created"
-	ListEventsQueryCategoryInWireDrawdownRequestUpdated                           ListEventsQueryCategoryIn = "wire_drawdown_request.updated"
-	ListEventsQueryCategoryInWireTransferCreated                                  ListEventsQueryCategoryIn = "wire_transfer.created"
-	ListEventsQueryCategoryInWireTransferUpdated                                  ListEventsQueryCategoryIn = "wire_transfer.updated"
+	EventsListParamsCategoryInAccountCreated                                       EventsListParamsCategoryIn = "account.created"
+	EventsListParamsCategoryInAccountUpdated                                       EventsListParamsCategoryIn = "account.updated"
+	EventsListParamsCategoryInAccountNumberCreated                                 EventsListParamsCategoryIn = "account_number.created"
+	EventsListParamsCategoryInAccountNumberUpdated                                 EventsListParamsCategoryIn = "account_number.updated"
+	EventsListParamsCategoryInAccountStatementCreated                              EventsListParamsCategoryIn = "account_statement.created"
+	EventsListParamsCategoryInAccountTransferCreated                               EventsListParamsCategoryIn = "account_transfer.created"
+	EventsListParamsCategoryInAccountTransferUpdated                               EventsListParamsCategoryIn = "account_transfer.updated"
+	EventsListParamsCategoryInACHPrenotificationCreated                            EventsListParamsCategoryIn = "ach_prenotification.created"
+	EventsListParamsCategoryInACHPrenotificationUpdated                            EventsListParamsCategoryIn = "ach_prenotification.updated"
+	EventsListParamsCategoryInACHTransferCreated                                   EventsListParamsCategoryIn = "ach_transfer.created"
+	EventsListParamsCategoryInACHTransferUpdated                                   EventsListParamsCategoryIn = "ach_transfer.updated"
+	EventsListParamsCategoryInCardCreated                                          EventsListParamsCategoryIn = "card.created"
+	EventsListParamsCategoryInCardUpdated                                          EventsListParamsCategoryIn = "card.updated"
+	EventsListParamsCategoryInCardDisputeCreated                                   EventsListParamsCategoryIn = "card_dispute.created"
+	EventsListParamsCategoryInCardDisputeUpdated                                   EventsListParamsCategoryIn = "card_dispute.updated"
+	EventsListParamsCategoryInCheckDepositCreated                                  EventsListParamsCategoryIn = "check_deposit.created"
+	EventsListParamsCategoryInCheckDepositUpdated                                  EventsListParamsCategoryIn = "check_deposit.updated"
+	EventsListParamsCategoryInCheckTransferCreated                                 EventsListParamsCategoryIn = "check_transfer.created"
+	EventsListParamsCategoryInCheckTransferUpdated                                 EventsListParamsCategoryIn = "check_transfer.updated"
+	EventsListParamsCategoryInDeclinedTransactionCreated                           EventsListParamsCategoryIn = "declined_transaction.created"
+	EventsListParamsCategoryInDigitalWalletTokenCreated                            EventsListParamsCategoryIn = "digital_wallet_token.created"
+	EventsListParamsCategoryInDigitalWalletTokenUpdated                            EventsListParamsCategoryIn = "digital_wallet_token.updated"
+	EventsListParamsCategoryInDocumentCreated                                      EventsListParamsCategoryIn = "document.created"
+	EventsListParamsCategoryInEntityCreated                                        EventsListParamsCategoryIn = "entity.created"
+	EventsListParamsCategoryInEntityUpdated                                        EventsListParamsCategoryIn = "entity.updated"
+	EventsListParamsCategoryInExternalAccountCreated                               EventsListParamsCategoryIn = "external_account.created"
+	EventsListParamsCategoryInFileCreated                                          EventsListParamsCategoryIn = "file.created"
+	EventsListParamsCategoryInGroupUpdated                                         EventsListParamsCategoryIn = "group.updated"
+	EventsListParamsCategoryInGroupHeartbeat                                       EventsListParamsCategoryIn = "group.heartbeat"
+	EventsListParamsCategoryInOauthConnectionCreated                               EventsListParamsCategoryIn = "oauth_connection.created"
+	EventsListParamsCategoryInOauthConnectionDeactivated                           EventsListParamsCategoryIn = "oauth_connection.deactivated"
+	EventsListParamsCategoryInPendingTransactionCreated                            EventsListParamsCategoryIn = "pending_transaction.created"
+	EventsListParamsCategoryInPendingTransactionUpdated                            EventsListParamsCategoryIn = "pending_transaction.updated"
+	EventsListParamsCategoryInRealTimeDecisionCardAuthorizationRequested           EventsListParamsCategoryIn = "real_time_decision.card_authorization_requested"
+	EventsListParamsCategoryInRealTimeDecisionDigitalWalletTokenRequested          EventsListParamsCategoryIn = "real_time_decision.digital_wallet_token_requested"
+	EventsListParamsCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested EventsListParamsCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
+	EventsListParamsCategoryInRealTimePaymentsTransferCreated                      EventsListParamsCategoryIn = "real_time_payments_transfer.created"
+	EventsListParamsCategoryInRealTimePaymentsTransferUpdated                      EventsListParamsCategoryIn = "real_time_payments_transfer.updated"
+	EventsListParamsCategoryInRealTimePaymentsRequestForPaymentCreated             EventsListParamsCategoryIn = "real_time_payments_request_for_payment.created"
+	EventsListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated             EventsListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
+	EventsListParamsCategoryInTransactionCreated                                   EventsListParamsCategoryIn = "transaction.created"
+	EventsListParamsCategoryInWireDrawdownRequestCreated                           EventsListParamsCategoryIn = "wire_drawdown_request.created"
+	EventsListParamsCategoryInWireDrawdownRequestUpdated                           EventsListParamsCategoryIn = "wire_drawdown_request.updated"
+	EventsListParamsCategoryInWireTransferCreated                                  EventsListParamsCategoryIn = "wire_transfer.created"
+	EventsListParamsCategoryInWireTransferUpdated                                  EventsListParamsCategoryIn = "wire_transfer.updated"
 )
 
 //
@@ -20095,7 +20095,7 @@ const (
 	UpdateAnEventSubscriptionParametersStatusDeleted  UpdateAnEventSubscriptionParametersStatus = "deleted"
 )
 
-type ListEventSubscriptionsQuery struct {
+type EventSubscriptionListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -20104,22 +20104,22 @@ type ListEventSubscriptionsQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListEventSubscriptionsQuery
+// UnmarshalJSON deserializes the provided bytes into EventSubscriptionListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListEventSubscriptionsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *EventSubscriptionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListEventSubscriptionsQuery into an array of bytes using
+// MarshalJSON serializes EventSubscriptionListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListEventSubscriptionsQuery) MarshalJSON() (data []byte, err error) {
+func (r *EventSubscriptionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListEventSubscriptionsQuery) GetCursor() (Cursor string) {
+func (r *EventSubscriptionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -20128,7 +20128,7 @@ func (r *ListEventSubscriptionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListEventSubscriptionsQuery) GetLimit() (Limit int64) {
+func (r *EventSubscriptionListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -20391,32 +20391,32 @@ const (
 	CreateAFileParametersPurposeEntitySupplementalDocument CreateAFileParametersPurpose = "entity_supplemental_document"
 )
 
-type ListFilesQuery struct {
+type FileListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                   `query:"limit"`
-	CreatedAt  *ListFilesQueryCreatedAt `query:"created_at"`
-	Purpose    *ListFilesQueryPurpose   `query:"purpose"`
-	jsonFields map[string]interface{}   `pjson:"-,extras"`
+	Limit      *int64                    `query:"limit"`
+	CreatedAt  *FilesListParamsCreatedAt `query:"created_at"`
+	Purpose    *FilesListParamsPurpose   `query:"purpose"`
+	jsonFields map[string]interface{}    `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListFilesQuery using the
+// UnmarshalJSON deserializes the provided bytes into FileListParams using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *ListFilesQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *FileListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListFilesQuery into an array of bytes using the gjson
+// MarshalJSON serializes FileListParams into an array of bytes using the gjson
 // library. Members of the `Extras` field are serialized into the top-level, and
 // will overwrite known members of the same name.
-func (r *ListFilesQuery) MarshalJSON() (data []byte, err error) {
+func (r *FileListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListFilesQuery) GetCursor() (Cursor string) {
+func (r *FileListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -20425,28 +20425,28 @@ func (r *ListFilesQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListFilesQuery) GetLimit() (Limit int64) {
+func (r *FileListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ListFilesQuery) GetCreatedAt() (CreatedAt ListFilesQueryCreatedAt) {
+func (r *FileListParams) GetCreatedAt() (CreatedAt FilesListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *ListFilesQuery) GetPurpose() (Purpose ListFilesQueryPurpose) {
+func (r *FileListParams) GetPurpose() (Purpose FilesListParamsPurpose) {
 	if r != nil && r.Purpose != nil {
 		Purpose = *r.Purpose
 	}
 	return
 }
 
-type ListFilesQueryCreatedAt struct {
+type FilesListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -20462,23 +20462,23 @@ type ListFilesQueryCreatedAt struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListFilesQueryCreatedAt using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// UnmarshalJSON deserializes the provided bytes into FilesListParamsCreatedAt
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListFilesQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *FilesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListFilesQueryCreatedAt into an array of bytes using the
+// MarshalJSON serializes FilesListParamsCreatedAt into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListFilesQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *FilesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListFilesQueryCreatedAt) GetAfter() (After string) {
+func (r *FilesListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -20487,7 +20487,7 @@ func (r *ListFilesQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListFilesQueryCreatedAt) GetBefore() (Before string) {
+func (r *FilesListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -20496,7 +20496,7 @@ func (r *ListFilesQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListFilesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *FilesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -20505,57 +20505,57 @@ func (r *ListFilesQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListFilesQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *FilesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-type ListFilesQueryPurpose struct {
+type FilesListParamsPurpose struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ListFilesQueryPurposeIn `pjson:"in"`
-	jsonFields map[string]interface{}     `pjson:"-,extras"`
+	In         *[]FilesListParamsPurposeIn `pjson:"in"`
+	jsonFields map[string]interface{}      `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListFilesQueryPurpose using
+// UnmarshalJSON deserializes the provided bytes into FilesListParamsPurpose using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListFilesQueryPurpose) UnmarshalJSON(data []byte) (err error) {
+func (r *FilesListParamsPurpose) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListFilesQueryPurpose into an array of bytes using the
+// MarshalJSON serializes FilesListParamsPurpose into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListFilesQueryPurpose) MarshalJSON() (data []byte, err error) {
+func (r *FilesListParamsPurpose) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ListFilesQueryPurpose) GetIn() (In []ListFilesQueryPurposeIn) {
+func (r *FilesListParamsPurpose) GetIn() (In []FilesListParamsPurposeIn) {
 	if r != nil && r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-type ListFilesQueryPurposeIn string
+type FilesListParamsPurposeIn string
 
 const (
-	ListFilesQueryPurposeInCheckImageFront            ListFilesQueryPurposeIn = "check_image_front"
-	ListFilesQueryPurposeInCheckImageBack             ListFilesQueryPurposeIn = "check_image_back"
-	ListFilesQueryPurposeInForm_1099Int               ListFilesQueryPurposeIn = "form_1099_int"
-	ListFilesQueryPurposeInFormSs_4                   ListFilesQueryPurposeIn = "form_ss_4"
-	ListFilesQueryPurposeInIdentityDocument           ListFilesQueryPurposeIn = "identity_document"
-	ListFilesQueryPurposeInIncreaseStatement          ListFilesQueryPurposeIn = "increase_statement"
-	ListFilesQueryPurposeInOther                      ListFilesQueryPurposeIn = "other"
-	ListFilesQueryPurposeInTrustFormationDocument     ListFilesQueryPurposeIn = "trust_formation_document"
-	ListFilesQueryPurposeInDigitalWalletArtwork       ListFilesQueryPurposeIn = "digital_wallet_artwork"
-	ListFilesQueryPurposeInDigitalWalletAppIcon       ListFilesQueryPurposeIn = "digital_wallet_app_icon"
-	ListFilesQueryPurposeInEntitySupplementalDocument ListFilesQueryPurposeIn = "entity_supplemental_document"
+	FilesListParamsPurposeInCheckImageFront            FilesListParamsPurposeIn = "check_image_front"
+	FilesListParamsPurposeInCheckImageBack             FilesListParamsPurposeIn = "check_image_back"
+	FilesListParamsPurposeInForm_1099Int               FilesListParamsPurposeIn = "form_1099_int"
+	FilesListParamsPurposeInFormSs_4                   FilesListParamsPurposeIn = "form_ss_4"
+	FilesListParamsPurposeInIdentityDocument           FilesListParamsPurposeIn = "identity_document"
+	FilesListParamsPurposeInIncreaseStatement          FilesListParamsPurposeIn = "increase_statement"
+	FilesListParamsPurposeInOther                      FilesListParamsPurposeIn = "other"
+	FilesListParamsPurposeInTrustFormationDocument     FilesListParamsPurposeIn = "trust_formation_document"
+	FilesListParamsPurposeInDigitalWalletArtwork       FilesListParamsPurposeIn = "digital_wallet_artwork"
+	FilesListParamsPurposeInDigitalWalletAppIcon       FilesListParamsPurposeIn = "digital_wallet_app_icon"
+	FilesListParamsPurposeInEntitySupplementalDocument FilesListParamsPurposeIn = "entity_supplemental_document"
 )
 
 //
@@ -20789,7 +20789,7 @@ const (
 	OauthConnectionTypeOauthConnection OauthConnectionType = "oauth_connection"
 )
 
-type ListOauthConnectionsQuery struct {
+type OauthConnectionListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -20798,22 +20798,22 @@ type ListOauthConnectionsQuery struct {
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListOauthConnectionsQuery
+// UnmarshalJSON deserializes the provided bytes into OauthConnectionListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListOauthConnectionsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *OauthConnectionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListOauthConnectionsQuery into an array of bytes using
+// MarshalJSON serializes OauthConnectionListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListOauthConnectionsQuery) MarshalJSON() (data []byte, err error) {
+func (r *OauthConnectionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListOauthConnectionsQuery) GetCursor() (Cursor string) {
+func (r *OauthConnectionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -20822,7 +20822,7 @@ func (r *ListOauthConnectionsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListOauthConnectionsQuery) GetLimit() (Limit int64) {
+func (r *OauthConnectionListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -21436,34 +21436,34 @@ func (r *CreateACheckDepositParameters) GetBackImageFileID() (BackImageFileID st
 	return
 }
 
-type ListCheckDepositsQuery struct {
+type CheckDepositListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Check Deposits to those belonging to the specified Account.
-	AccountID  *string                          `query:"account_id"`
-	CreatedAt  *ListCheckDepositsQueryCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	AccountID  *string                           `query:"account_id"`
+	CreatedAt  *CheckDepositsListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListCheckDepositsQuery using
+// UnmarshalJSON deserializes the provided bytes into CheckDepositListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListCheckDepositsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckDepositListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCheckDepositsQuery into an array of bytes using the
+// MarshalJSON serializes CheckDepositListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListCheckDepositsQuery) MarshalJSON() (data []byte, err error) {
+func (r *CheckDepositListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListCheckDepositsQuery) GetCursor() (Cursor string) {
+func (r *CheckDepositListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -21472,7 +21472,7 @@ func (r *ListCheckDepositsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListCheckDepositsQuery) GetLimit() (Limit int64) {
+func (r *CheckDepositListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -21480,21 +21480,21 @@ func (r *ListCheckDepositsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Check Deposits to those belonging to the specified Account.
-func (r *ListCheckDepositsQuery) GetAccountID() (AccountID string) {
+func (r *CheckDepositListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *ListCheckDepositsQuery) GetCreatedAt() (CreatedAt ListCheckDepositsQueryCreatedAt) {
+func (r *CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositsListParamsCreatedAt) {
 	if r != nil && r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-type ListCheckDepositsQueryCreatedAt struct {
+type CheckDepositsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -21511,22 +21511,22 @@ type ListCheckDepositsQueryCreatedAt struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListCheckDepositsQueryCreatedAt using the internal pjson library. Unrecognized
+// CheckDepositsListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `Extras` property.
-func (r *ListCheckDepositsQueryCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckDepositsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListCheckDepositsQueryCreatedAt into an array of bytes
+// MarshalJSON serializes CheckDepositsListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListCheckDepositsQueryCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CheckDepositsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCheckDepositsQueryCreatedAt) GetAfter() (After string) {
+func (r *CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -21535,7 +21535,7 @@ func (r *ListCheckDepositsQueryCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListCheckDepositsQueryCreatedAt) GetBefore() (Before string) {
+func (r *CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -21544,7 +21544,7 @@ func (r *ListCheckDepositsQueryCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCheckDepositsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r *CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -21553,7 +21553,7 @@ func (r *ListCheckDepositsQueryCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListCheckDepositsQueryCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r *CheckDepositsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
@@ -21721,7 +21721,7 @@ const (
 	RoutingNumberWireTransfersNotSupported RoutingNumberWireTransfers = "not_supported"
 )
 
-type ListRoutingNumbersQuery struct {
+type RoutingNumberListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -21732,22 +21732,22 @@ type ListRoutingNumbersQuery struct {
 	jsonFields    map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListRoutingNumbersQuery using
+// UnmarshalJSON deserializes the provided bytes into RoutingNumberListParams using
 // the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListRoutingNumbersQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *RoutingNumberListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListRoutingNumbersQuery into an array of bytes using the
+// MarshalJSON serializes RoutingNumberListParams into an array of bytes using the
 // gjson library. Members of the `Extras` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *ListRoutingNumbersQuery) MarshalJSON() (data []byte, err error) {
+func (r *RoutingNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListRoutingNumbersQuery) GetCursor() (Cursor string) {
+func (r *RoutingNumberListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -21756,7 +21756,7 @@ func (r *ListRoutingNumbersQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListRoutingNumbersQuery) GetLimit() (Limit int64) {
+func (r *RoutingNumberListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -21764,7 +21764,7 @@ func (r *ListRoutingNumbersQuery) GetLimit() (Limit int64) {
 }
 
 // Filter financial institutions by routing number.
-func (r *ListRoutingNumbersQuery) GetRoutingNumber() (RoutingNumber string) {
+func (r *RoutingNumberListParams) GetRoutingNumber() (RoutingNumber string) {
 	if r != nil && r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
@@ -21947,34 +21947,34 @@ const (
 	AccountStatementTypeAccountStatement AccountStatementType = "account_statement"
 )
 
-type ListAccountStatementsQuery struct {
+type AccountStatementListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Account Statements to those belonging to the specified Account.
-	AccountID            *string                                         `query:"account_id"`
-	StatementPeriodStart *ListAccountStatementsQueryStatementPeriodStart `query:"statement_period_start"`
-	jsonFields           map[string]interface{}                          `pjson:"-,extras"`
+	AccountID            *string                                          `query:"account_id"`
+	StatementPeriodStart *AccountStatementsListParamsStatementPeriodStart `query:"statement_period_start"`
+	jsonFields           map[string]interface{}                           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into ListAccountStatementsQuery
+// UnmarshalJSON deserializes the provided bytes into AccountStatementListParams
 // using the internal pjson library. Unrecognized fields are stored in the `Extras`
 // property.
-func (r *ListAccountStatementsQuery) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountStatementListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountStatementsQuery into an array of bytes using
+// MarshalJSON serializes AccountStatementListParams into an array of bytes using
 // the gjson library. Members of the `Extras` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ListAccountStatementsQuery) MarshalJSON() (data []byte, err error) {
+func (r *AccountStatementListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return the page of entries after this one.
-func (r *ListAccountStatementsQuery) GetCursor() (Cursor string) {
+func (r *AccountStatementListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
@@ -21983,7 +21983,7 @@ func (r *ListAccountStatementsQuery) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ListAccountStatementsQuery) GetLimit() (Limit int64) {
+func (r *AccountStatementListParams) GetLimit() (Limit int64) {
 	if r != nil && r.Limit != nil {
 		Limit = *r.Limit
 	}
@@ -21991,21 +21991,21 @@ func (r *ListAccountStatementsQuery) GetLimit() (Limit int64) {
 }
 
 // Filter Account Statements to those belonging to the specified Account.
-func (r *ListAccountStatementsQuery) GetAccountID() (AccountID string) {
+func (r *AccountStatementListParams) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *ListAccountStatementsQuery) GetStatementPeriodStart() (StatementPeriodStart ListAccountStatementsQueryStatementPeriodStart) {
+func (r *AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodStart AccountStatementsListParamsStatementPeriodStart) {
 	if r != nil && r.StatementPeriodStart != nil {
 		StatementPeriodStart = *r.StatementPeriodStart
 	}
 	return
 }
 
-type ListAccountStatementsQueryStatementPeriodStart struct {
+type AccountStatementsListParamsStatementPeriodStart struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
 	After *string `pjson:"after"`
@@ -22022,23 +22022,23 @@ type ListAccountStatementsQueryStatementPeriodStart struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ListAccountStatementsQueryStatementPeriodStart using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
-func (r *ListAccountStatementsQueryStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
+// AccountStatementsListParamsStatementPeriodStart using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *AccountStatementsListParamsStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ListAccountStatementsQueryStatementPeriodStart into an
+// MarshalJSON serializes AccountStatementsListParamsStatementPeriodStart into an
 // array of bytes using the gjson library. Members of the `Extras` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
-func (r *ListAccountStatementsQueryStatementPeriodStart) MarshalJSON() (data []byte, err error) {
+func (r *AccountStatementsListParamsStatementPeriodStart) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListAccountStatementsQueryStatementPeriodStart) GetAfter() (After string) {
+func (r *AccountStatementsListParamsStatementPeriodStart) GetAfter() (After string) {
 	if r != nil && r.After != nil {
 		After = *r.After
 	}
@@ -22047,7 +22047,7 @@ func (r *ListAccountStatementsQueryStatementPeriodStart) GetAfter() (After strin
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ListAccountStatementsQueryStatementPeriodStart) GetBefore() (Before string) {
+func (r *AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before string) {
 	if r != nil && r.Before != nil {
 		Before = *r.Before
 	}
@@ -22056,7 +22056,7 @@ func (r *ListAccountStatementsQueryStatementPeriodStart) GetBefore() (Before str
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
+func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
 	if r != nil && r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -22065,7 +22065,7 @@ func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrAfter() (OnOrAft
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ListAccountStatementsQueryStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
+func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
 	if r != nil && r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}

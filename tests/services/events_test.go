@@ -24,7 +24,7 @@ func TestEventsListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.Events.List(context.TODO(), &types.ListEventsQuery{})
+	_, err := c.Events.List(context.TODO(), &types.EventListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

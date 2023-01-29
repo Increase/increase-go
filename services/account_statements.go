@@ -40,7 +40,7 @@ func (r *AccountStatementService) Get(ctx context.Context, account_statement_id 
 }
 
 // List Account Statements
-func (r *AccountStatementService) List(ctx context.Context, query *types.ListAccountStatementsQuery, opts ...*core.RequestOpts) (res *types.AccountStatementsPage, err error) {
+func (r *AccountStatementService) List(ctx context.Context, query *types.AccountStatementListParams, opts ...*core.RequestOpts) (res *types.AccountStatementsPage, err error) {
 	page := &types.AccountStatementsPage{
 		Page: &pagination.Page[types.AccountStatement]{
 			Options: pagination.PageOptions{

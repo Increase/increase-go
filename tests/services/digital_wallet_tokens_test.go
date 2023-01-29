@@ -24,7 +24,7 @@ func TestDigitalWalletTokensListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.DigitalWalletTokens.List(context.TODO(), &types.ListDigitalWalletTokensQuery{})
+	_, err := c.DigitalWalletTokens.List(context.TODO(), &types.DigitalWalletTokenListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

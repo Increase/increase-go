@@ -40,7 +40,7 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_toke
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.ListDigitalWalletTokensQuery, opts ...*core.RequestOpts) (res *types.DigitalWalletTokensPage, err error) {
+func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.DigitalWalletTokenListParams, opts ...*core.RequestOpts) (res *types.DigitalWalletTokensPage, err error) {
 	page := &types.DigitalWalletTokensPage{
 		Page: &pagination.Page[types.DigitalWalletToken]{
 			Options: pagination.PageOptions{

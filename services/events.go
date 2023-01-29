@@ -40,7 +40,7 @@ func (r *EventService) Get(ctx context.Context, event_id string, opts ...*core.R
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query *types.ListEventsQuery, opts ...*core.RequestOpts) (res *types.EventsPage, err error) {
+func (r *EventService) List(ctx context.Context, query *types.EventListParams, opts ...*core.RequestOpts) (res *types.EventsPage, err error) {
 	page := &types.EventsPage{
 		Page: &pagination.Page[types.Event]{
 			Options: pagination.PageOptions{

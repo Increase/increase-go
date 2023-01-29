@@ -52,7 +52,7 @@ func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, 
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query *types.ListCheckDepositsQuery, opts ...*core.RequestOpts) (res *types.CheckDepositsPage, err error) {
+func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDepositListParams, opts ...*core.RequestOpts) (res *types.CheckDepositsPage, err error) {
 	page := &types.CheckDepositsPage{
 		Page: &pagination.Page[types.CheckDeposit]{
 			Options: pagination.PageOptions{

@@ -52,7 +52,7 @@ func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, 
 }
 
 // List Wire Transfers
-func (r *WireTransferService) List(ctx context.Context, query *types.ListWireTransfersQuery, opts ...*core.RequestOpts) (res *types.WireTransfersPage, err error) {
+func (r *WireTransferService) List(ctx context.Context, query *types.WireTransferListParams, opts ...*core.RequestOpts) (res *types.WireTransfersPage, err error) {
 	page := &types.WireTransfersPage{
 		Page: &pagination.Page[types.WireTransfer]{
 			Options: pagination.PageOptions{

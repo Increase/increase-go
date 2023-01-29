@@ -52,7 +52,7 @@ func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id st
 }
 
 // List Account Transfers
-func (r *AccountTransferService) List(ctx context.Context, query *types.ListAccountTransfersQuery, opts ...*core.RequestOpts) (res *types.AccountTransfersPage, err error) {
+func (r *AccountTransferService) List(ctx context.Context, query *types.AccountTransferListParams, opts ...*core.RequestOpts) (res *types.AccountTransfersPage, err error) {
 	page := &types.AccountTransfersPage{
 		Page: &pagination.Page[types.AccountTransfer]{
 			Options: pagination.PageOptions{

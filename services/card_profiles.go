@@ -52,7 +52,7 @@ func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, op
 }
 
 // List Card Profiles
-func (r *CardProfileService) List(ctx context.Context, query *types.ListCardProfilesQuery, opts ...*core.RequestOpts) (res *types.CardProfilesPage, err error) {
+func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileListParams, opts ...*core.RequestOpts) (res *types.CardProfilesPage, err error) {
 	page := &types.CardProfilesPage{
 		Page: &pagination.Page[types.CardProfile]{
 			Options: pagination.PageOptions{

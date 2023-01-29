@@ -54,7 +54,7 @@ func (r *FileService) Get(ctx context.Context, file_id string, opts ...*core.Req
 }
 
 // List Files
-func (r *FileService) List(ctx context.Context, query *types.ListFilesQuery, opts ...*core.RequestOpts) (res *types.FilesPage, err error) {
+func (r *FileService) List(ctx context.Context, query *types.FileListParams, opts ...*core.RequestOpts) (res *types.FilesPage, err error) {
 	page := &types.FilesPage{
 		Page: &pagination.Page[types.File]{
 			Options: pagination.PageOptions{

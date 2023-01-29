@@ -64,7 +64,7 @@ func (r *CardService) Update(ctx context.Context, card_id string, body *types.Up
 }
 
 // List Cards
-func (r *CardService) List(ctx context.Context, query *types.ListCardsQuery, opts ...*core.RequestOpts) (res *types.CardsPage, err error) {
+func (r *CardService) List(ctx context.Context, query *types.CardListParams, opts ...*core.RequestOpts) (res *types.CardsPage, err error) {
 	page := &types.CardsPage{
 		Page: &pagination.Page[types.Card]{
 			Options: pagination.PageOptions{

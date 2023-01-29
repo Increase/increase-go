@@ -36,7 +36,7 @@ func TestACHPrenotificationsListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ACHPrenotifications.List(context.TODO(), &types.ListACHPrenotificationsQuery{})
+	_, err := c.ACHPrenotifications.List(context.TODO(), &types.ACHPrenotificationListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

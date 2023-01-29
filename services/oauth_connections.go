@@ -40,7 +40,7 @@ func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id st
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) List(ctx context.Context, query *types.ListOauthConnectionsQuery, opts ...*core.RequestOpts) (res *types.OauthConnectionsPage, err error) {
+func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthConnectionListParams, opts ...*core.RequestOpts) (res *types.OauthConnectionsPage, err error) {
 	page := &types.OauthConnectionsPage{
 		Page: &pagination.Page[types.OauthConnection]{
 			Options: pagination.PageOptions{

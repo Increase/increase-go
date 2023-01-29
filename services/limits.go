@@ -64,7 +64,7 @@ func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.
 }
 
 // List Limits
-func (r *LimitService) List(ctx context.Context, query *types.ListLimitsQuery, opts ...*core.RequestOpts) (res *types.LimitsPage, err error) {
+func (r *LimitService) List(ctx context.Context, query *types.LimitListParams, opts ...*core.RequestOpts) (res *types.LimitsPage, err error) {
 	page := &types.LimitsPage{
 		Page: &pagination.Page[types.Limit]{
 			Options: pagination.PageOptions{

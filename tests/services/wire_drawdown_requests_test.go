@@ -37,7 +37,7 @@ func TestWireDrawdownRequestsListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.WireDrawdownRequests.List(context.TODO(), &types.ListWireDrawdownRequestsQuery{})
+	_, err := c.WireDrawdownRequests.List(context.TODO(), &types.WireDrawdownRequestListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

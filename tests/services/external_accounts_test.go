@@ -51,7 +51,7 @@ func TestExternalAccountsListWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ExternalAccounts.List(context.TODO(), &types.ListExternalAccountsQuery{})
+	_, err := c.ExternalAccounts.List(context.TODO(), &types.ExternalAccountListParams{})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

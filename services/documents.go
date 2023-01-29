@@ -40,7 +40,7 @@ func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...*
 }
 
 // List Documents
-func (r *DocumentService) List(ctx context.Context, query *types.ListDocumentsQuery, opts ...*core.RequestOpts) (res *types.DocumentsPage, err error) {
+func (r *DocumentService) List(ctx context.Context, query *types.DocumentListParams, opts ...*core.RequestOpts) (res *types.DocumentsPage, err error) {
 	page := &types.DocumentsPage{
 		Page: &pagination.Page[types.Document]{
 			Options: pagination.PageOptions{
