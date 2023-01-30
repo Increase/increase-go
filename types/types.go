@@ -865,6 +865,21 @@ const (
 
 //
 type RealTimeDecisionCardAuthorization struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *RealTimeDecisionCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// Whether or not the authorization was approved.
 	Decision *RealTimeDecisionCardAuthorizationDecision `pjson:"decision"`
 	// The identifier of the Card that is being authorized.
@@ -883,20 +898,8 @@ type RealTimeDecisionCardAuthorization struct {
 	SettlementAmount *int64 `pjson:"settlement_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
-	SettlementCurrency *string `pjson:"settlement_currency"`
-	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
-	// card is transacting with.
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-	// is transacting with.
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	// The city the merchant resides in.
-	MerchantCity *string `pjson:"merchant_city"`
-	// The country the merchant resides in.
-	MerchantCountry *string                `pjson:"merchant_country"`
-	jsonFields      map[string]interface{} `pjson:"-,extras"`
+	SettlementCurrency *string                `pjson:"settlement_currency"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -911,6 +914,57 @@ func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionCardAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *RealTimeDecisionCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *RealTimeDecisionCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *RealTimeDecisionCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *RealTimeDecisionCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *RealTimeDecisionCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode RealTimeDecisionCardAuthorizationPointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
 }
 
 // Whether or not the authorization was approved.
@@ -974,47 +1028,19 @@ func (r *RealTimeDecisionCardAuthorization) GetSettlementCurrency() (SettlementC
 	return
 }
 
-// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
-// card is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
-	}
-	return
-}
+type RealTimeDecisionCardAuthorizationPointOfServiceEntryMode string
 
-// The merchant descriptor of the merchant the card is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-// is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-// The city the merchant resides in.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-// The country the merchant resides in.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
+const (
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeManual                     RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "manual"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeOpticalCode                RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "optical_code"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeContactless                RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "contactless"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeCredentialOnFile           RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeMagneticStripe             RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type RealTimeDecisionCardAuthorizationDecision string
 
@@ -8340,22 +8366,27 @@ func (r *PendingTransactionSourceACHTransferInstruction) GetTransferID() (Transf
 
 //
 type PendingTransactionSourceCardAuthorization struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency *PendingTransactionSourceCardAuthorizationCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -8379,6 +8410,57 @@ func (r *PendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, 
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *PendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *PendingTransactionSourceCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
@@ -8393,41 +8475,6 @@ func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
 func (r *PendingTransactionSourceCardAuthorization) GetCurrency() (Currency PendingTransactionSourceCardAuthorizationCurrency) {
 	if r != nil && r.Currency != nil {
 		Currency = *r.Currency
-	}
-	return
-}
-
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
@@ -8449,6 +8496,20 @@ func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (D
 	}
 	return
 }
+
+type PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
+
+const (
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeManual                     PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "manual"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeOpticalCode                PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "optical_code"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactless                PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeCredentialOnFile           PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripe             PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type PendingTransactionSourceCardAuthorizationCurrency string
 
@@ -9508,6 +9569,7 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	DeclinedTransactionSourceACHDeclineReasonDuplicateReturn              DeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	DeclinedTransactionSourceACHDeclineReasonEntityNotActive              DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	DeclinedTransactionSourceACHDeclineReasonGroupLocked                  DeclinedTransactionSourceACHDeclineReason = "group_locked"
 	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds            DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	DeclinedTransactionSourceACHDeclineReasonNoACHRoute                   DeclinedTransactionSourceACHDeclineReason = "no_ach_route"
@@ -9516,26 +9578,31 @@ const (
 
 //
 type DeclinedTransactionSourceCardDecline struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency *DeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
 	Reason *DeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
+	// The state the merchant resides in.
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -9559,6 +9626,57 @@ func (r *DeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err e
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *DeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
 func (r *DeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
@@ -9577,52 +9695,18 @@ func (r *DeclinedTransactionSourceCardDecline) GetCurrency() (Currency DeclinedT
 	return
 }
 
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
-		MerchantState = *r.MerchantState
-	}
-	return
-}
-
-func (r *DeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
-	}
-	return
-}
-
 // Why the transaction was declined.
 func (r *DeclinedTransactionSourceCardDecline) GetReason() (Reason DeclinedTransactionSourceCardDeclineReason) {
 	if r != nil && r.Reason != nil {
 		Reason = *r.Reason
+	}
+	return
+}
+
+// The state the merchant resides in.
+func (r *DeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
+	if r != nil && r.MerchantState != nil {
+		MerchantState = *r.MerchantState
 	}
 	return
 }
@@ -9644,6 +9728,20 @@ func (r *DeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (Digita
 	}
 	return
 }
+
+type DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+
+const (
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
+	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type DeclinedTransactionSourceCardDeclineCurrency string
 
@@ -26230,6 +26328,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
@@ -26238,26 +26337,31 @@ const (
 
 //
 type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency *ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
 	Reason *ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
+	// The state the merchant resides in.
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -26282,6 +26386,57 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) MarshalJSON(
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
@@ -26300,52 +26455,18 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetCurrency(
 	return
 }
 
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
-		MerchantState = *r.MerchantState
-	}
-	return
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
-	}
-	return
-}
-
 // Why the transaction was declined.
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetReason() (Reason ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason) {
 	if r != nil && r.Reason != nil {
 		Reason = *r.Reason
+	}
+	return
+}
+
+// The state the merchant resides in.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
+	if r != nil && r.MerchantState != nil {
+		MerchantState = *r.MerchantState
 	}
 	return
 }
@@ -26367,6 +26488,20 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetDigitalWa
 	}
 	return
 }
+
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -31797,22 +31932,27 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 
 //
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -31838,6 +31978,57 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) M
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
@@ -31852,41 +32043,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency) {
 	if r != nil && r.Currency != nil {
 		Currency = *r.Currency
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
@@ -31908,6 +32064,20 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 	}
 	return
 }
+
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeManual                     CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "manual"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeOpticalCode                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "optical_code"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactless                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeCredentialOnFile           CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripe             CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
 
@@ -32813,6 +32983,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
@@ -32821,26 +32992,31 @@ const (
 
 //
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
 	Reason *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
+	// The state the merchant resides in.
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -32865,6 +33041,57 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Marsha
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
@@ -32883,52 +33110,18 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetCur
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
-		MerchantState = *r.MerchantState
-	}
-	return
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
-	}
-	return
-}
-
 // Why the transaction was declined.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason) {
 	if r != nil && r.Reason != nil {
 		Reason = *r.Reason
+	}
+	return
+}
+
+// The state the merchant resides in.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
+	if r != nil && r.MerchantState != nil {
+		MerchantState = *r.MerchantState
 	}
 	return
 }
@@ -32950,6 +33143,20 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDig
 	}
 	return
 }
+
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -37899,6 +38106,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonEntityNotActive              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonGroupLocked                  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
@@ -37907,26 +38115,31 @@ const (
 
 //
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline struct {
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor *string `pjson:"merchant_descriptor"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode *string `pjson:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity *string `pjson:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry *string `pjson:"merchant_country"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
 	// Why the transaction was declined.
 	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `pjson:"reason"`
+	// The state the merchant resides in.
+	MerchantState *string `pjson:"merchant_state"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID *string `pjson:"real_time_decision_id"`
@@ -37953,6 +38166,57 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return pjson.Marshal(r)
 }
 
+// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+// is transacting with.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r != nil && r.MerchantAcceptorID != nil {
+		MerchantAcceptorID = *r.MerchantAcceptorID
+	}
+	return
+}
+
+// The merchant descriptor of the merchant the card is transacting with.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r != nil && r.MerchantDescriptor != nil {
+		MerchantDescriptor = *r.MerchantDescriptor
+	}
+	return
+}
+
+// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+// card is transacting with.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r != nil && r.MerchantCategoryCode != nil {
+		MerchantCategoryCode = *r.MerchantCategoryCode
+	}
+	return
+}
+
+// The city the merchant resides in.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
+	if r != nil && r.MerchantCity != nil {
+		MerchantCity = *r.MerchantCity
+	}
+	return
+}
+
+// The country the merchant resides in.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r != nil && r.MerchantCountry != nil {
+		MerchantCountry = *r.MerchantCountry
+	}
+	return
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
@@ -37971,52 +38235,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
-		MerchantAcceptorID = *r.MerchantAcceptorID
-	}
-	return
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
-		MerchantCity = *r.MerchantCity
-	}
-	return
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
-		MerchantCountry = *r.MerchantCountry
-	}
-	return
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
-		MerchantDescriptor = *r.MerchantDescriptor
-	}
-	return
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
-		MerchantState = *r.MerchantState
-	}
-	return
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
-		MerchantCategoryCode = *r.MerchantCategoryCode
-	}
-	return
-}
-
 // Why the transaction was declined.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetReason() (Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason) {
 	if r != nil && r.Reason != nil {
 		Reason = *r.Reason
+	}
+	return
+}
+
+// The state the merchant resides in.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
+	if r != nil && r.MerchantState != nil {
+		MerchantState = *r.MerchantState
 	}
 	return
 }
@@ -38038,6 +38268,20 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	}
 	return
 }
+
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency string
 
