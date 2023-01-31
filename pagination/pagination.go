@@ -2,6 +2,7 @@ package pagination
 
 import (
 	"context"
+	"fmt"
 	"increase/core"
 	"net/http"
 	"net/url"
@@ -83,6 +84,10 @@ func (r *PageResponse[Model]) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *PageResponse[Model]) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+func (r PageResponse[Model]) String() (result string) {
+	return fmt.Sprintf("&PageResponse[Model]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 func (r *PageResponse[Model]) GetData() (Data []Model) {
