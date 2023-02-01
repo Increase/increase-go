@@ -7,7 +7,6 @@ import (
 	"increase/pagination"
 )
 
-//
 type Account struct {
 	// The Account's balances in the minor unit of its currency. For dollars, for
 	// example, these values will represent cents.
@@ -52,10 +51,6 @@ func (r *Account) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Account) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Account) String() (result string) {
-	return fmt.Sprintf("&Account{Balances:%s CreatedAt:%s Currency:%s EntityID:%s InformationalEntityID:%s ID:%s InterestAccrued:%s InterestAccruedAt:%s Name:%s Status:%s Type:%s}", r.Balances, core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.EntityID), core.FmtP(r.InformationalEntityID), core.FmtP(r.ID), core.FmtP(r.InterestAccrued), core.FmtP(r.InterestAccruedAt), core.FmtP(r.Name), core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The Account's balances in the minor unit of its currency. For dollars, for
@@ -153,7 +148,10 @@ func (r *Account) GetType() (Type AccountType) {
 	return
 }
 
-//
+func (r Account) String() (result string) {
+	return fmt.Sprintf("&Account{Balances:%s CreatedAt:%s Currency:%s EntityID:%s InformationalEntityID:%s ID:%s InterestAccrued:%s InterestAccruedAt:%s Name:%s Status:%s Type:%s}", r.Balances, core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.EntityID), core.FmtP(r.InformationalEntityID), core.FmtP(r.ID), core.FmtP(r.InterestAccrued), core.FmtP(r.InterestAccruedAt), core.FmtP(r.Name), core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type AccountBalances struct {
 	// The Account's current balance, representing the sum of all posted Transactions
 	// on the Account.
@@ -177,10 +175,6 @@ func (r *AccountBalances) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountBalances) String() (result string) {
-	return fmt.Sprintf("&AccountBalances{CurrentBalance:%s AvailableBalance:%s}", core.FmtP(r.CurrentBalance), core.FmtP(r.AvailableBalance))
-}
-
 // The Account's current balance, representing the sum of all posted Transactions
 // on the Account.
 func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int64) {
@@ -197,6 +191,10 @@ func (r *AccountBalances) GetAvailableBalance() (AvailableBalance int64) {
 		AvailableBalance = *r.AvailableBalance
 	}
 	return
+}
+
+func (r AccountBalances) String() (result string) {
+	return fmt.Sprintf("&AccountBalances{CurrentBalance:%s AvailableBalance:%s}", core.FmtP(r.CurrentBalance), core.FmtP(r.AvailableBalance))
 }
 
 type AccountCurrency string
@@ -248,10 +246,6 @@ func (r *CreateAnAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnAccountParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnAccountParameters{EntityID:%s InformationalEntityID:%s Name:%s}", core.FmtP(r.EntityID), core.FmtP(r.InformationalEntityID), core.FmtP(r.Name))
-}
-
 // The identifier for the Entity that will own the Account.
 func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
 	if r != nil && r.EntityID != nil {
@@ -277,6 +271,10 @@ func (r *CreateAnAccountParameters) GetName() (Name string) {
 	return
 }
 
+func (r CreateAnAccountParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnAccountParameters{EntityID:%s InformationalEntityID:%s Name:%s}", core.FmtP(r.EntityID), core.FmtP(r.InformationalEntityID), core.FmtP(r.Name))
+}
+
 type UpdateAnAccountParameters struct {
 	// The new name of the Account.
 	Name       *string                `pjson:"name"`
@@ -297,16 +295,16 @@ func (r *UpdateAnAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r UpdateAnAccountParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnAccountParameters{Name:%s}", core.FmtP(r.Name))
-}
-
 // The new name of the Account.
 func (r *UpdateAnAccountParameters) GetName() (Name string) {
 	if r != nil && r.Name != nil {
 		Name = *r.Name
 	}
 	return
+}
+
+func (r UpdateAnAccountParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateAnAccountParameters{Name:%s}", core.FmtP(r.Name))
 }
 
 type AccountListParams struct {
@@ -333,10 +331,6 @@ func (r *AccountListParams) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *AccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountListParams) String() (result string) {
-	return fmt.Sprintf("&AccountListParams{Cursor:%s Limit:%s EntityID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), core.FmtP(r.Status))
 }
 
 // Return the page of entries after this one.
@@ -372,6 +366,10 @@ func (r *AccountListParams) GetStatus() (Status AccountsListParamsStatus) {
 	return
 }
 
+func (r AccountListParams) String() (result string) {
+	return fmt.Sprintf("&AccountListParams{Cursor:%s Limit:%s EntityID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), core.FmtP(r.Status))
+}
+
 type AccountsListParamsStatus string
 
 const (
@@ -379,7 +377,6 @@ const (
 	AccountsListParamsStatusClosed AccountsListParamsStatus = "closed"
 )
 
-//
 type AccountList struct {
 	// The contents of the list.
 	Data *[]Account `pjson:"data"`
@@ -401,10 +398,6 @@ func (r *AccountList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountList) String() (result string) {
-	return fmt.Sprintf("&AccountList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *AccountList) GetData() (Data []Account) {
 	if r != nil && r.Data != nil {
@@ -419,6 +412,10 @@ func (r *AccountList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r AccountList) String() (result string) {
+	return fmt.Sprintf("&AccountList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type AccountsPage struct {
@@ -437,7 +434,6 @@ func (r *AccountsPage) GetNextPage() (*AccountsPage, error) {
 	}
 }
 
-//
 type AccountNumber struct {
 	// The identifier for the account this Account Number belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -471,10 +467,6 @@ func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *AccountNumber) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountNumber) String() (result string) {
-	return fmt.Sprintf("&AccountNumber{AccountID:%s AccountNumber:%s ID:%s CreatedAt:%s Name:%s RoutingNumber:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Name), core.FmtP(r.RoutingNumber), core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The identifier for the account this Account Number belongs to.
@@ -543,6 +535,10 @@ func (r *AccountNumber) GetType() (Type AccountNumberType) {
 	return
 }
 
+func (r AccountNumber) String() (result string) {
+	return fmt.Sprintf("&AccountNumber{AccountID:%s AccountNumber:%s ID:%s CreatedAt:%s Name:%s RoutingNumber:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Name), core.FmtP(r.RoutingNumber), core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type AccountNumberStatus string
 
 const (
@@ -579,10 +575,6 @@ func (r *CreateAnAccountNumberParameters) MarshalJSON() (data []byte, err error)
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnAccountNumberParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnAccountNumberParameters{AccountID:%s Name:%s}", core.FmtP(r.AccountID), core.FmtP(r.Name))
-}
-
 // The Account the Account Number should belong to.
 func (r *CreateAnAccountNumberParameters) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
@@ -597,6 +589,10 @@ func (r *CreateAnAccountNumberParameters) GetName() (Name string) {
 		Name = *r.Name
 	}
 	return
+}
+
+func (r CreateAnAccountNumberParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnAccountNumberParameters{AccountID:%s Name:%s}", core.FmtP(r.AccountID), core.FmtP(r.Name))
 }
 
 type UpdateAnAccountNumberParameters struct {
@@ -621,10 +617,6 @@ func (r *UpdateAnAccountNumberParameters) MarshalJSON() (data []byte, err error)
 	return pjson.Marshal(r)
 }
 
-func (r UpdateAnAccountNumberParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnAccountNumberParameters{Name:%s Status:%s}", core.FmtP(r.Name), core.FmtP(r.Status))
-}
-
 // The name you choose for the Account Number.
 func (r *UpdateAnAccountNumberParameters) GetName() (Name string) {
 	if r != nil && r.Name != nil {
@@ -639,6 +631,10 @@ func (r *UpdateAnAccountNumberParameters) GetStatus() (Status UpdateAnAccountNum
 		Status = *r.Status
 	}
 	return
+}
+
+func (r UpdateAnAccountNumberParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateAnAccountNumberParameters{Name:%s Status:%s}", core.FmtP(r.Name), core.FmtP(r.Status))
 }
 
 type UpdateAnAccountNumberParametersStatus string
@@ -676,10 +672,6 @@ func (r *AccountNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountNumberListParams) String() (result string) {
-	return fmt.Sprintf("&AccountNumberListParams{Cursor:%s Limit:%s Status:%s AccountID:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.Status), core.FmtP(r.AccountID))
-}
-
 // Return the page of entries after this one.
 func (r *AccountNumberListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -713,6 +705,10 @@ func (r *AccountNumberListParams) GetAccountID() (AccountID string) {
 	return
 }
 
+func (r AccountNumberListParams) String() (result string) {
+	return fmt.Sprintf("&AccountNumberListParams{Cursor:%s Limit:%s Status:%s AccountID:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.Status), core.FmtP(r.AccountID))
+}
+
 type AccountNumbersListParamsStatus string
 
 const (
@@ -721,7 +717,6 @@ const (
 	AccountNumbersListParamsStatusCanceled AccountNumbersListParamsStatus = "canceled"
 )
 
-//
 type AccountNumberList struct {
 	// The contents of the list.
 	Data *[]AccountNumber `pjson:"data"`
@@ -743,10 +738,6 @@ func (r *AccountNumberList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountNumberList) String() (result string) {
-	return fmt.Sprintf("&AccountNumberList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *AccountNumberList) GetData() (Data []AccountNumber) {
 	if r != nil && r.Data != nil {
@@ -761,6 +752,10 @@ func (r *AccountNumberList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r AccountNumberList) String() (result string) {
+	return fmt.Sprintf("&AccountNumberList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type AccountNumbersPage struct {
@@ -779,7 +774,6 @@ func (r *AccountNumbersPage) GetNextPage() (*AccountNumbersPage, error) {
 	}
 }
 
-//
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
 	ID *string `pjson:"id"`
@@ -816,10 +810,6 @@ func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *RealTimeDecision) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r RealTimeDecision) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecision{ID:%s CreatedAt:%s TimeoutAt:%s Status:%s Category:%s CardAuthorization:%s DigitalWalletToken:%s DigitalWalletAuthentication:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.TimeoutAt), core.FmtP(r.Status), core.FmtP(r.Category), r.CardAuthorization, r.DigitalWalletToken, r.DigitalWalletAuthentication, core.FmtP(r.Type))
 }
 
 // The Real-Time Decision identifier.
@@ -897,6 +887,10 @@ func (r *RealTimeDecision) GetType() (Type RealTimeDecisionType) {
 	return
 }
 
+func (r RealTimeDecision) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecision{ID:%s CreatedAt:%s TimeoutAt:%s Status:%s Category:%s CardAuthorization:%s DigitalWalletToken:%s DigitalWalletAuthentication:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.TimeoutAt), core.FmtP(r.Status), core.FmtP(r.Category), r.CardAuthorization, r.DigitalWalletToken, r.DigitalWalletAuthentication, core.FmtP(r.Type))
+}
+
 type RealTimeDecisionStatus string
 
 const (
@@ -913,7 +907,6 @@ const (
 	RealTimeDecisionCategoryDigitalWalletAuthenticationRequested RealTimeDecisionCategory = "digital_wallet_authentication_requested"
 )
 
-//
 type RealTimeDecisionCardAuthorization struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -964,10 +957,6 @@ func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionCardAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r RealTimeDecisionCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecisionCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Decision:%s CardID:%s AccountID:%s PresentmentAmount:%s PresentmentCurrency:%s SettlementAmount:%s SettlementCurrency:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.AccountID), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.SettlementAmount), core.FmtP(r.SettlementCurrency))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -1082,6 +1071,10 @@ func (r *RealTimeDecisionCardAuthorization) GetSettlementCurrency() (SettlementC
 	return
 }
 
+func (r RealTimeDecisionCardAuthorization) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecisionCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Decision:%s CardID:%s AccountID:%s PresentmentAmount:%s PresentmentCurrency:%s SettlementAmount:%s SettlementCurrency:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.AccountID), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.SettlementAmount), core.FmtP(r.SettlementCurrency))
+}
+
 type RealTimeDecisionCardAuthorizationPointOfServiceEntryMode string
 
 const (
@@ -1103,7 +1096,6 @@ const (
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
-//
 type RealTimeDecisionDigitalWalletToken struct {
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
@@ -1131,10 +1123,6 @@ func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err err
 // top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionDigitalWalletToken) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r RealTimeDecisionDigitalWalletToken) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecisionDigitalWalletToken{Decision:%s CardID:%s DigitalWallet:%s CardProfileID:%s}", core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.DigitalWallet), core.FmtP(r.CardProfileID))
 }
 
 // Whether or not the provisioning request was approved. This will be null until
@@ -1172,6 +1160,10 @@ func (r *RealTimeDecisionDigitalWalletToken) GetCardProfileID() (CardProfileID s
 	return
 }
 
+func (r RealTimeDecisionDigitalWalletToken) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecisionDigitalWalletToken{Decision:%s CardID:%s DigitalWallet:%s CardProfileID:%s}", core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.DigitalWallet), core.FmtP(r.CardProfileID))
+}
+
 type RealTimeDecisionDigitalWalletTokenDecision string
 
 const (
@@ -1186,7 +1178,6 @@ const (
 	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
 )
 
-//
 type RealTimeDecisionDigitalWalletAuthentication struct {
 	// Whether your application successfully delivered the one-time passcode.
 	Result *RealTimeDecisionDigitalWalletAuthenticationResult `pjson:"result"`
@@ -1218,10 +1209,6 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte)
 // into the top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r RealTimeDecisionDigitalWalletAuthentication) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecisionDigitalWalletAuthentication{Result:%s CardID:%s DigitalWallet:%s Channel:%s OneTimePasscode:%s Phone:%s Email:%s}", core.FmtP(r.Result), core.FmtP(r.CardID), core.FmtP(r.DigitalWallet), core.FmtP(r.Channel), core.FmtP(r.OneTimePasscode), core.FmtP(r.Phone), core.FmtP(r.Email))
 }
 
 // Whether your application successfully delivered the one-time passcode.
@@ -1281,6 +1268,10 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) GetEmail() (Email string) 
 	return
 }
 
+func (r RealTimeDecisionDigitalWalletAuthentication) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecisionDigitalWalletAuthentication{Result:%s CardID:%s DigitalWallet:%s Channel:%s OneTimePasscode:%s Phone:%s Email:%s}", core.FmtP(r.Result), core.FmtP(r.CardID), core.FmtP(r.DigitalWallet), core.FmtP(r.Channel), core.FmtP(r.OneTimePasscode), core.FmtP(r.Phone), core.FmtP(r.Email))
+}
+
 type RealTimeDecisionDigitalWalletAuthenticationResult string
 
 const (
@@ -1335,10 +1326,6 @@ func (r *ActionARealTimeDecisionParameters) MarshalJSON() (data []byte, err erro
 	return pjson.Marshal(r)
 }
 
-func (r ActionARealTimeDecisionParameters) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParameters{CardAuthorization:%s DigitalWalletToken:%s DigitalWalletAuthentication:%s}", r.CardAuthorization, r.DigitalWalletToken, r.DigitalWalletAuthentication)
-}
-
 // If the Real-Time Decision relates to a card authorization attempt, this object
 // contains your response to the authorization.
 func (r *ActionARealTimeDecisionParameters) GetCardAuthorization() (CardAuthorization ActionARealTimeDecisionParametersCardAuthorization) {
@@ -1366,7 +1353,10 @@ func (r *ActionARealTimeDecisionParameters) GetDigitalWalletAuthentication() (Di
 	return
 }
 
-//
+func (r ActionARealTimeDecisionParameters) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParameters{CardAuthorization:%s DigitalWalletToken:%s DigitalWalletAuthentication:%s}", r.CardAuthorization, r.DigitalWalletToken, r.DigitalWalletAuthentication)
+}
+
 type ActionARealTimeDecisionParametersCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
 	Decision   *ActionARealTimeDecisionParametersCardAuthorizationDecision `pjson:"decision"`
@@ -1388,16 +1378,16 @@ func (r *ActionARealTimeDecisionParametersCardAuthorization) MarshalJSON() (data
 	return pjson.Marshal(r)
 }
 
-func (r ActionARealTimeDecisionParametersCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParametersCardAuthorization{Decision:%s}", core.FmtP(r.Decision))
-}
-
 // Whether the card authorization should be approved or declined.
 func (r *ActionARealTimeDecisionParametersCardAuthorization) GetDecision() (Decision ActionARealTimeDecisionParametersCardAuthorizationDecision) {
 	if r != nil && r.Decision != nil {
 		Decision = *r.Decision
 	}
 	return
+}
+
+func (r ActionARealTimeDecisionParametersCardAuthorization) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParametersCardAuthorization{Decision:%s}", core.FmtP(r.Decision))
 }
 
 type ActionARealTimeDecisionParametersCardAuthorizationDecision string
@@ -1407,7 +1397,6 @@ const (
 	ActionARealTimeDecisionParametersCardAuthorizationDecisionDecline ActionARealTimeDecisionParametersCardAuthorizationDecision = "decline"
 )
 
-//
 type ActionARealTimeDecisionParametersDigitalWalletToken struct {
 	// If your application approves the provisioning attempt, this contains metadata
 	// about the digital wallet token that will be generated.
@@ -1433,10 +1422,6 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) MarshalJSON() (dat
 	return pjson.Marshal(r)
 }
 
-func (r ActionARealTimeDecisionParametersDigitalWalletToken) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletToken{Approval:%s Decline:%s}", r.Approval, r.Decline)
-}
-
 // If your application approves the provisioning attempt, this contains metadata
 // about the digital wallet token that will be generated.
 func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetApproval() (Approval ActionARealTimeDecisionParametersDigitalWalletTokenApproval) {
@@ -1455,7 +1440,10 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decl
 	return
 }
 
-//
+func (r ActionARealTimeDecisionParametersDigitalWalletToken) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletToken{Approval:%s Decline:%s}", r.Approval, r.Decline)
+}
+
 type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
 	CardProfileID *string `pjson:"card_profile_id"`
@@ -1481,10 +1469,6 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) UnmarshalJ
 // the top-level, and will overwrite known members of the same name.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ActionARealTimeDecisionParametersDigitalWalletTokenApproval) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletTokenApproval{CardProfileID:%s Phone:%s Email:%s}", core.FmtP(r.CardProfileID), core.FmtP(r.Phone), core.FmtP(r.Email))
 }
 
 // The identifier of the Card Profile to assign to the Digital Wallet token.
@@ -1513,7 +1497,10 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetEmail()
 	return
 }
 
-//
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenApproval) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletTokenApproval{CardProfileID:%s Phone:%s Email:%s}", core.FmtP(r.CardProfileID), core.FmtP(r.Phone), core.FmtP(r.Email))
+}
+
 type ActionARealTimeDecisionParametersDigitalWalletTokenDecline struct {
 	// Why the tokenization attempt was declined. This is for logging purposes only and
 	// is not displayed to the end-user.
@@ -1536,10 +1523,6 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) MarshalJSON
 	return pjson.Marshal(r)
 }
 
-func (r ActionARealTimeDecisionParametersDigitalWalletTokenDecline) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletTokenDecline{Reason:%s}", core.FmtP(r.Reason))
-}
-
 // Why the tokenization attempt was declined. This is for logging purposes only and
 // is not displayed to the end-user.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason() (Reason string) {
@@ -1549,7 +1532,10 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason()
 	return
 }
 
-//
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenDecline) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletTokenDecline{Reason:%s}", core.FmtP(r.Reason))
+}
+
 type ActionARealTimeDecisionParametersDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
 	Result     *ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult `pjson:"result"`
@@ -1571,16 +1557,16 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) MarshalJS
 	return pjson.Marshal(r)
 }
 
-func (r ActionARealTimeDecisionParametersDigitalWalletAuthentication) String() (result string) {
-	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletAuthentication{Result:%s}", core.FmtP(r.Result))
-}
-
 // Whether your application was able to deliver the one-time passcode.
 func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) GetResult() (Result ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult) {
 	if r != nil && r.Result != nil {
 		Result = *r.Result
 	}
 	return
+}
+
+func (r ActionARealTimeDecisionParametersDigitalWalletAuthentication) String() (result string) {
+	return fmt.Sprintf("&ActionARealTimeDecisionParametersDigitalWalletAuthentication{Result:%s}", core.FmtP(r.Result))
 }
 
 type ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult string
@@ -1590,7 +1576,6 @@ const (
 	ActionARealTimeDecisionParametersDigitalWalletAuthenticationResultFailure ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult = "failure"
 )
 
-//
 type Card struct {
 	// The card identifier.
 	ID *string `pjson:"id"`
@@ -1632,10 +1617,6 @@ func (r *Card) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Card) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Card) String() (result string) {
-	return fmt.Sprintf("&Card{ID:%s AccountID:%s CreatedAt:%s Description:%s Last4:%s ExpirationMonth:%s ExpirationYear:%s Status:%s BillingAddress:%s DigitalWallet:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.Last4), core.FmtP(r.ExpirationMonth), core.FmtP(r.ExpirationYear), core.FmtP(r.Status), r.BillingAddress, r.DigitalWallet, core.FmtP(r.Type))
 }
 
 // The card identifier.
@@ -1730,6 +1711,10 @@ func (r *Card) GetType() (Type CardType) {
 	return
 }
 
+func (r Card) String() (result string) {
+	return fmt.Sprintf("&Card{ID:%s AccountID:%s CreatedAt:%s Description:%s Last4:%s ExpirationMonth:%s ExpirationYear:%s Status:%s BillingAddress:%s DigitalWallet:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.Last4), core.FmtP(r.ExpirationMonth), core.FmtP(r.ExpirationYear), core.FmtP(r.Status), r.BillingAddress, r.DigitalWallet, core.FmtP(r.Type))
+}
+
 type CardStatus string
 
 const (
@@ -1738,7 +1723,6 @@ const (
 	CardStatusCanceled CardStatus = "canceled"
 )
 
-//
 type CardBillingAddress struct {
 	// The first line of the billing address.
 	Line1 *string `pjson:"line1"`
@@ -1764,10 +1748,6 @@ func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardBillingAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardBillingAddress) String() (result string) {
-	return fmt.Sprintf("&CardBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
 }
 
 // The first line of the billing address.
@@ -1810,7 +1790,10 @@ func (r *CardBillingAddress) GetPostalCode() (PostalCode string) {
 	return
 }
 
-//
+func (r CardBillingAddress) String() (result string) {
+	return fmt.Sprintf("&CardBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
+}
+
 type CardDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -1835,10 +1818,6 @@ func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardDigitalWallet) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDigitalWallet) String() (result string) {
-	return fmt.Sprintf("&CardDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -1868,13 +1847,16 @@ func (r *CardDigitalWallet) GetCardProfileID() (CardProfileID string) {
 	return
 }
 
+func (r CardDigitalWallet) String() (result string) {
+	return fmt.Sprintf("&CardDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
+}
+
 type CardType string
 
 const (
 	CardTypeCard CardType = "card"
 )
 
-//
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
 	CardID *string `pjson:"card_id"`
@@ -1905,10 +1887,6 @@ func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardDetails) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDetails) String() (result string) {
-	return fmt.Sprintf("&CardDetails{CardID:%s PrimaryAccountNumber:%s ExpirationMonth:%s ExpirationYear:%s VerificationCode:%s Type:%s}", core.FmtP(r.CardID), core.FmtP(r.PrimaryAccountNumber), core.FmtP(r.ExpirationMonth), core.FmtP(r.ExpirationYear), core.FmtP(r.VerificationCode), core.FmtP(r.Type))
 }
 
 // The identifier for the Card for which sensitive details have been returned.
@@ -1962,6 +1940,10 @@ func (r *CardDetails) GetType() (Type CardDetailsType) {
 	return
 }
 
+func (r CardDetails) String() (result string) {
+	return fmt.Sprintf("&CardDetails{CardID:%s PrimaryAccountNumber:%s ExpirationMonth:%s ExpirationYear:%s VerificationCode:%s Type:%s}", core.FmtP(r.CardID), core.FmtP(r.PrimaryAccountNumber), core.FmtP(r.ExpirationMonth), core.FmtP(r.ExpirationYear), core.FmtP(r.VerificationCode), core.FmtP(r.Type))
+}
+
 type CardDetailsType string
 
 const (
@@ -1994,10 +1976,6 @@ func (r *CreateACardParameters) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CreateACardParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACardParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACardParameters{AccountID:%s Description:%s BillingAddress:%s DigitalWallet:%s}", core.FmtP(r.AccountID), core.FmtP(r.Description), r.BillingAddress, r.DigitalWallet)
 }
 
 // The Account the card should belong to.
@@ -2034,7 +2012,10 @@ func (r *CreateACardParameters) GetDigitalWallet() (DigitalWallet CreateACardPar
 	return
 }
 
-//
+func (r CreateACardParameters) String() (result string) {
+	return fmt.Sprintf("&CreateACardParameters{AccountID:%s Description:%s BillingAddress:%s DigitalWallet:%s}", core.FmtP(r.AccountID), core.FmtP(r.Description), r.BillingAddress, r.DigitalWallet)
+}
+
 type CreateACardParametersBillingAddress struct {
 	// The first line of the billing address.
 	Line1 *string `pjson:"line1"`
@@ -2061,10 +2042,6 @@ func (r *CreateACardParametersBillingAddress) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateACardParametersBillingAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACardParametersBillingAddress) String() (result string) {
-	return fmt.Sprintf("&CreateACardParametersBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
 }
 
 // The first line of the billing address.
@@ -2107,7 +2084,10 @@ func (r *CreateACardParametersBillingAddress) GetPostalCode() (PostalCode string
 	return
 }
 
-//
+func (r CreateACardParametersBillingAddress) String() (result string) {
+	return fmt.Sprintf("&CreateACardParametersBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
+}
+
 type CreateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -2133,10 +2113,6 @@ func (r *CreateACardParametersDigitalWallet) UnmarshalJSON(data []byte) (err err
 // top-level, and will overwrite known members of the same name.
 func (r *CreateACardParametersDigitalWallet) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACardParametersDigitalWallet) String() (result string) {
-	return fmt.Sprintf("&CreateACardParametersDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -2166,6 +2142,10 @@ func (r *CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID s
 	return
 }
 
+func (r CreateACardParametersDigitalWallet) String() (result string) {
+	return fmt.Sprintf("&CreateACardParametersDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
+}
+
 type UpdateACardParameters struct {
 	// The description you choose to give the card.
 	Description *string `pjson:"description"`
@@ -2192,10 +2172,6 @@ func (r *UpdateACardParameters) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *UpdateACardParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r UpdateACardParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateACardParameters{Description:%s Status:%s BillingAddress:%s DigitalWallet:%s}", core.FmtP(r.Description), core.FmtP(r.Status), r.BillingAddress, r.DigitalWallet)
 }
 
 // The description you choose to give the card.
@@ -2232,6 +2208,10 @@ func (r *UpdateACardParameters) GetDigitalWallet() (DigitalWallet UpdateACardPar
 	return
 }
 
+func (r UpdateACardParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateACardParameters{Description:%s Status:%s BillingAddress:%s DigitalWallet:%s}", core.FmtP(r.Description), core.FmtP(r.Status), r.BillingAddress, r.DigitalWallet)
+}
+
 type UpdateACardParametersStatus string
 
 const (
@@ -2240,7 +2220,6 @@ const (
 	UpdateACardParametersStatusCanceled UpdateACardParametersStatus = "canceled"
 )
 
-//
 type UpdateACardParametersBillingAddress struct {
 	// The first line of the billing address.
 	Line1 *string `pjson:"line1"`
@@ -2267,10 +2246,6 @@ func (r *UpdateACardParametersBillingAddress) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *UpdateACardParametersBillingAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r UpdateACardParametersBillingAddress) String() (result string) {
-	return fmt.Sprintf("&UpdateACardParametersBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
 }
 
 // The first line of the billing address.
@@ -2313,7 +2288,10 @@ func (r *UpdateACardParametersBillingAddress) GetPostalCode() (PostalCode string
 	return
 }
 
-//
+func (r UpdateACardParametersBillingAddress) String() (result string) {
+	return fmt.Sprintf("&UpdateACardParametersBillingAddress{Line1:%s Line2:%s City:%s State:%s PostalCode:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.PostalCode))
+}
+
 type UpdateACardParametersDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -2339,10 +2317,6 @@ func (r *UpdateACardParametersDigitalWallet) UnmarshalJSON(data []byte) (err err
 // top-level, and will overwrite known members of the same name.
 func (r *UpdateACardParametersDigitalWallet) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r UpdateACardParametersDigitalWallet) String() (result string) {
-	return fmt.Sprintf("&UpdateACardParametersDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
 }
 
 // An email address that can be used to verify the cardholder via one-time passcode
@@ -2372,6 +2346,10 @@ func (r *UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID s
 	return
 }
 
+func (r UpdateACardParametersDigitalWallet) String() (result string) {
+	return fmt.Sprintf("&UpdateACardParametersDigitalWallet{Email:%s Phone:%s CardProfileID:%s}", core.FmtP(r.Email), core.FmtP(r.Phone), core.FmtP(r.CardProfileID))
+}
+
 type CardListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -2395,10 +2373,6 @@ func (r *CardListParams) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardListParams) String() (result string) {
-	return fmt.Sprintf("&CardListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -2433,6 +2407,10 @@ func (r *CardListParams) GetCreatedAt() (CreatedAt CardsListParamsCreatedAt) {
 	return
 }
 
+func (r CardListParams) String() (result string) {
+	return fmt.Sprintf("&CardListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
+}
+
 type CardsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -2461,10 +2439,6 @@ func (r *CardsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CardsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -2503,7 +2477,10 @@ func (r *CardsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
-//
+func (r CardsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CardsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type CardList struct {
 	// The contents of the list.
 	Data *[]Card `pjson:"data"`
@@ -2525,10 +2502,6 @@ func (r *CardList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardList) String() (result string) {
-	return fmt.Sprintf("&CardList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *CardList) GetData() (Data []Card) {
 	if r != nil && r.Data != nil {
@@ -2543,6 +2516,10 @@ func (r *CardList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r CardList) String() (result string) {
+	return fmt.Sprintf("&CardList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CardsPage struct {
@@ -2561,7 +2538,6 @@ func (r *CardsPage) GetNextPage() (*CardsPage, error) {
 	}
 }
 
-//
 type CardDispute struct {
 	// The Card Dispute identifier.
 	ID *string `pjson:"id"`
@@ -2597,10 +2573,6 @@ func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardDispute) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDispute) String() (result string) {
-	return fmt.Sprintf("&CardDispute{ID:%s Explanation:%s Status:%s CreatedAt:%s DisputedTransactionID:%s Acceptance:%s Rejection:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Explanation), core.FmtP(r.Status), core.FmtP(r.CreatedAt), core.FmtP(r.DisputedTransactionID), r.Acceptance, r.Rejection, core.FmtP(r.Type))
 }
 
 // The Card Dispute identifier.
@@ -2671,6 +2643,10 @@ func (r *CardDispute) GetType() (Type CardDisputeType) {
 	return
 }
 
+func (r CardDispute) String() (result string) {
+	return fmt.Sprintf("&CardDispute{ID:%s Explanation:%s Status:%s CreatedAt:%s DisputedTransactionID:%s Acceptance:%s Rejection:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Explanation), core.FmtP(r.Status), core.FmtP(r.CreatedAt), core.FmtP(r.DisputedTransactionID), r.Acceptance, r.Rejection, core.FmtP(r.Type))
+}
+
 type CardDisputeStatus string
 
 const (
@@ -2679,7 +2655,6 @@ const (
 	CardDisputeStatusRejected         CardDisputeStatus = "rejected"
 )
 
-//
 type CardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -2704,10 +2679,6 @@ func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDisputeAcceptance) String() (result string) {
-	return fmt.Sprintf("&CardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -2736,7 +2707,10 @@ func (r *CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
 	return
 }
 
-//
+func (r CardDisputeAcceptance) String() (result string) {
+	return fmt.Sprintf("&CardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
+}
+
 type CardDisputeRejection struct {
 	// Why the Card Dispute was rejected.
 	Explanation *string `pjson:"explanation"`
@@ -2762,10 +2736,6 @@ func (r *CardDisputeRejection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardDisputeRejection) String() (result string) {
-	return fmt.Sprintf("&CardDisputeRejection{Explanation:%s RejectedAt:%s CardDisputeID:%s}", core.FmtP(r.Explanation), core.FmtP(r.RejectedAt), core.FmtP(r.CardDisputeID))
-}
-
 // Why the Card Dispute was rejected.
 func (r *CardDisputeRejection) GetExplanation() (Explanation string) {
 	if r != nil && r.Explanation != nil {
@@ -2789,6 +2759,10 @@ func (r *CardDisputeRejection) GetCardDisputeID() (CardDisputeID string) {
 		CardDisputeID = *r.CardDisputeID
 	}
 	return
+}
+
+func (r CardDisputeRejection) String() (result string) {
+	return fmt.Sprintf("&CardDisputeRejection{Explanation:%s RejectedAt:%s CardDisputeID:%s}", core.FmtP(r.Explanation), core.FmtP(r.RejectedAt), core.FmtP(r.CardDisputeID))
 }
 
 type CardDisputeType string
@@ -2820,10 +2794,6 @@ func (r *CreateACardDisputeParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateACardDisputeParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACardDisputeParameters{DisputedTransactionID:%s Explanation:%s}", core.FmtP(r.DisputedTransactionID), core.FmtP(r.Explanation))
-}
-
 // The Transaction you wish to dispute. This Transaction must have a `source_type`
 // of `card_settlement`.
 func (r *CreateACardDisputeParameters) GetDisputedTransactionID() (DisputedTransactionID string) {
@@ -2839,6 +2809,10 @@ func (r *CreateACardDisputeParameters) GetExplanation() (Explanation string) {
 		Explanation = *r.Explanation
 	}
 	return
+}
+
+func (r CreateACardDisputeParameters) String() (result string) {
+	return fmt.Sprintf("&CreateACardDisputeParameters{DisputedTransactionID:%s Explanation:%s}", core.FmtP(r.DisputedTransactionID), core.FmtP(r.Explanation))
 }
 
 type CardDisputeListParams struct {
@@ -2864,10 +2838,6 @@ func (r *CardDisputeListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardDisputeListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDisputeListParams) String() (result string) {
-	return fmt.Sprintf("&CardDisputeListParams{Cursor:%s Limit:%s CreatedAt:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Status)
 }
 
 // Return the page of entries after this one.
@@ -2901,6 +2871,10 @@ func (r *CardDisputeListParams) GetStatus() (Status CardDisputesListParamsStatus
 	return
 }
 
+func (r CardDisputeListParams) String() (result string) {
+	return fmt.Sprintf("&CardDisputeListParams{Cursor:%s Limit:%s CreatedAt:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Status)
+}
+
 type CardDisputesListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -2929,10 +2903,6 @@ func (r *CardDisputesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *CardDisputesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardDisputesListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CardDisputesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -2971,6 +2941,10 @@ func (r *CardDisputesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
+func (r CardDisputesListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CardDisputesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type CardDisputesListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -2992,10 +2966,6 @@ func (r *CardDisputesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardDisputesListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&CardDisputesListParamsStatus{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
@@ -3003,6 +2973,10 @@ func (r *CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatu
 		In = *r.In
 	}
 	return
+}
+
+func (r CardDisputesListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&CardDisputesListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
 type CardDisputesListParamsStatusIn string
@@ -3013,7 +2987,6 @@ const (
 	CardDisputesListParamsStatusInRejected         CardDisputesListParamsStatusIn = "rejected"
 )
 
-//
 type CardDisputeList struct {
 	// The contents of the list.
 	Data *[]CardDispute `pjson:"data"`
@@ -3035,10 +3008,6 @@ func (r *CardDisputeList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardDisputeList) String() (result string) {
-	return fmt.Sprintf("&CardDisputeList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *CardDisputeList) GetData() (Data []CardDispute) {
 	if r != nil && r.Data != nil {
@@ -3053,6 +3022,10 @@ func (r *CardDisputeList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r CardDisputeList) String() (result string) {
+	return fmt.Sprintf("&CardDisputeList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CardDisputesPage struct {
@@ -3071,7 +3044,6 @@ func (r *CardDisputesPage) GetNextPage() (*CardDisputesPage, error) {
 	}
 }
 
-//
 type CardProfile struct {
 	// The Card Profile identifier.
 	ID *string `pjson:"id"`
@@ -3102,10 +3074,6 @@ func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CardProfile) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardProfile) String() (result string) {
-	return fmt.Sprintf("&CardProfile{ID:%s CreatedAt:%s Status:%s Description:%s DigitalWallets:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.Description), r.DigitalWallets, core.FmtP(r.Type))
 }
 
 // The Card Profile identifier.
@@ -3159,6 +3127,10 @@ func (r *CardProfile) GetType() (Type CardProfileType) {
 	return
 }
 
+func (r CardProfile) String() (result string) {
+	return fmt.Sprintf("&CardProfile{ID:%s CreatedAt:%s Status:%s Description:%s DigitalWallets:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.Description), r.DigitalWallets, core.FmtP(r.Type))
+}
+
 type CardProfileStatus string
 
 const (
@@ -3168,7 +3140,6 @@ const (
 	CardProfileStatusArchived CardProfileStatus = "archived"
 )
 
-//
 type CardProfileDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple.
 	TextColor *CardProfileDigitalWalletsTextColor `pjson:"text_color"`
@@ -3201,10 +3172,6 @@ func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CardProfileDigitalWallets) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardProfileDigitalWallets) String() (result string) {
-	return fmt.Sprintf("&CardProfileDigitalWallets{TextColor:%s IssuerName:%s CardDescription:%s ContactWebsite:%s ContactEmail:%s ContactPhone:%s BackgroundImageFileID:%s AppIconFileID:%s}", r.TextColor, core.FmtP(r.IssuerName), core.FmtP(r.CardDescription), core.FmtP(r.ContactWebsite), core.FmtP(r.ContactEmail), core.FmtP(r.ContactPhone), core.FmtP(r.BackgroundImageFileID), core.FmtP(r.AppIconFileID))
 }
 
 // The Card's text color, specified as an RGB triple.
@@ -3271,7 +3238,10 @@ func (r *CardProfileDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
 	return
 }
 
-//
+func (r CardProfileDigitalWallets) String() (result string) {
+	return fmt.Sprintf("&CardProfileDigitalWallets{TextColor:%s IssuerName:%s CardDescription:%s ContactWebsite:%s ContactEmail:%s ContactPhone:%s BackgroundImageFileID:%s AppIconFileID:%s}", r.TextColor, core.FmtP(r.IssuerName), core.FmtP(r.CardDescription), core.FmtP(r.ContactWebsite), core.FmtP(r.ContactEmail), core.FmtP(r.ContactPhone), core.FmtP(r.BackgroundImageFileID), core.FmtP(r.AppIconFileID))
+}
+
 type CardProfileDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
 	Red *int64 `pjson:"red"`
@@ -3296,10 +3266,6 @@ func (r *CardProfileDigitalWalletsTextColor) MarshalJSON() (data []byte, err err
 	return pjson.Marshal(r)
 }
 
-func (r CardProfileDigitalWalletsTextColor) String() (result string) {
-	return fmt.Sprintf("&CardProfileDigitalWalletsTextColor{Red:%s Green:%s Blue:%s}", core.FmtP(r.Red), core.FmtP(r.Green), core.FmtP(r.Blue))
-}
-
 // The value of the red channel in the RGB color.
 func (r *CardProfileDigitalWalletsTextColor) GetRed() (Red int64) {
 	if r != nil && r.Red != nil {
@@ -3322,6 +3288,10 @@ func (r *CardProfileDigitalWalletsTextColor) GetBlue() (Blue int64) {
 		Blue = *r.Blue
 	}
 	return
+}
+
+func (r CardProfileDigitalWalletsTextColor) String() (result string) {
+	return fmt.Sprintf("&CardProfileDigitalWalletsTextColor{Red:%s Green:%s Blue:%s}", core.FmtP(r.Red), core.FmtP(r.Green), core.FmtP(r.Blue))
 }
 
 type CardProfileType string
@@ -3353,10 +3323,6 @@ func (r *CreateACardProfileParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateACardProfileParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACardProfileParameters{Description:%s DigitalWallets:%s}", core.FmtP(r.Description), r.DigitalWallets)
-}
-
 // A description you can use to identify the Card Profile.
 func (r *CreateACardProfileParameters) GetDescription() (Description string) {
 	if r != nil && r.Description != nil {
@@ -3374,7 +3340,10 @@ func (r *CreateACardProfileParameters) GetDigitalWallets() (DigitalWallets Creat
 	return
 }
 
-//
+func (r CreateACardProfileParameters) String() (result string) {
+	return fmt.Sprintf("&CreateACardProfileParameters{Description:%s DigitalWallets:%s}", core.FmtP(r.Description), r.DigitalWallets)
+}
+
 type CreateACardProfileParametersDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple. The default is white.
 	TextColor *CreateACardProfileParametersDigitalWalletsTextColor `pjson:"text_color"`
@@ -3407,10 +3376,6 @@ func (r *CreateACardProfileParametersDigitalWallets) UnmarshalJSON(data []byte) 
 // into the top-level, and will overwrite known members of the same name.
 func (r *CreateACardProfileParametersDigitalWallets) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACardProfileParametersDigitalWallets) String() (result string) {
-	return fmt.Sprintf("&CreateACardProfileParametersDigitalWallets{TextColor:%s IssuerName:%s CardDescription:%s ContactWebsite:%s ContactEmail:%s ContactPhone:%s BackgroundImageFileID:%s AppIconFileID:%s}", r.TextColor, core.FmtP(r.IssuerName), core.FmtP(r.CardDescription), core.FmtP(r.ContactWebsite), core.FmtP(r.ContactEmail), core.FmtP(r.ContactPhone), core.FmtP(r.BackgroundImageFileID), core.FmtP(r.AppIconFileID))
 }
 
 // The Card's text color, specified as an RGB triple. The default is white.
@@ -3477,7 +3442,10 @@ func (r *CreateACardProfileParametersDigitalWallets) GetAppIconFileID() (AppIcon
 	return
 }
 
-//
+func (r CreateACardProfileParametersDigitalWallets) String() (result string) {
+	return fmt.Sprintf("&CreateACardProfileParametersDigitalWallets{TextColor:%s IssuerName:%s CardDescription:%s ContactWebsite:%s ContactEmail:%s ContactPhone:%s BackgroundImageFileID:%s AppIconFileID:%s}", r.TextColor, core.FmtP(r.IssuerName), core.FmtP(r.CardDescription), core.FmtP(r.ContactWebsite), core.FmtP(r.ContactEmail), core.FmtP(r.ContactPhone), core.FmtP(r.BackgroundImageFileID), core.FmtP(r.AppIconFileID))
+}
+
 type CreateACardProfileParametersDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
 	Red *int64 `pjson:"red"`
@@ -3501,10 +3469,6 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) UnmarshalJSON(data
 // name.
 func (r *CreateACardProfileParametersDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACardProfileParametersDigitalWalletsTextColor) String() (result string) {
-	return fmt.Sprintf("&CreateACardProfileParametersDigitalWalletsTextColor{Red:%s Green:%s Blue:%s}", core.FmtP(r.Red), core.FmtP(r.Green), core.FmtP(r.Blue))
 }
 
 // The value of the red channel in the RGB color.
@@ -3531,6 +3495,10 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue in
 	return
 }
 
+func (r CreateACardProfileParametersDigitalWalletsTextColor) String() (result string) {
+	return fmt.Sprintf("&CreateACardProfileParametersDigitalWalletsTextColor{Red:%s Green:%s Blue:%s}", core.FmtP(r.Red), core.FmtP(r.Green), core.FmtP(r.Blue))
+}
+
 type CardProfileListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -3553,10 +3521,6 @@ func (r *CardProfileListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardProfileListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardProfileListParams) String() (result string) {
-	return fmt.Sprintf("&CardProfileListParams{Cursor:%s Limit:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.Status)
 }
 
 // Return the page of entries after this one.
@@ -3583,6 +3547,10 @@ func (r *CardProfileListParams) GetStatus() (Status CardProfilesListParamsStatus
 	return
 }
 
+func (r CardProfileListParams) String() (result string) {
+	return fmt.Sprintf("&CardProfileListParams{Cursor:%s Limit:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.Status)
+}
+
 type CardProfilesListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -3604,10 +3572,6 @@ func (r *CardProfilesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardProfilesListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&CardProfilesListParamsStatus{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
@@ -3615,6 +3579,10 @@ func (r *CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatu
 		In = *r.In
 	}
 	return
+}
+
+func (r CardProfilesListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&CardProfilesListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
 type CardProfilesListParamsStatusIn string
@@ -3626,7 +3594,6 @@ const (
 	CardProfilesListParamsStatusInArchived CardProfilesListParamsStatusIn = "archived"
 )
 
-//
 type CardProfileList struct {
 	// The contents of the list.
 	Data *[]CardProfile `pjson:"data"`
@@ -3648,10 +3615,6 @@ func (r *CardProfileList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CardProfileList) String() (result string) {
-	return fmt.Sprintf("&CardProfileList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *CardProfileList) GetData() (Data []CardProfile) {
 	if r != nil && r.Data != nil {
@@ -3666,6 +3629,10 @@ func (r *CardProfileList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r CardProfileList) String() (result string) {
+	return fmt.Sprintf("&CardProfileList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CardProfilesPage struct {
@@ -3684,7 +3651,6 @@ func (r *CardProfilesPage) GetNextPage() (*CardProfilesPage, error) {
 	}
 }
 
-//
 type ExternalAccount struct {
 	// The External Account's identifier.
 	ID *string `pjson:"id"`
@@ -3718,10 +3684,6 @@ func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *ExternalAccount) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ExternalAccount) String() (result string) {
-	return fmt.Sprintf("&ExternalAccount{ID:%s CreatedAt:%s Description:%s RoutingNumber:%s AccountNumber:%s Funding:%s VerificationStatus:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.VerificationStatus), core.FmtP(r.Type))
 }
 
 // The External Account's identifier.
@@ -3790,6 +3752,10 @@ func (r *ExternalAccount) GetType() (Type ExternalAccountType) {
 	return
 }
 
+func (r ExternalAccount) String() (result string) {
+	return fmt.Sprintf("&ExternalAccount{ID:%s CreatedAt:%s Description:%s RoutingNumber:%s AccountNumber:%s Funding:%s VerificationStatus:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.VerificationStatus), core.FmtP(r.Type))
+}
+
 type ExternalAccountFunding string
 
 const (
@@ -3839,10 +3805,6 @@ func (r *CreateAnExternalAccountParameters) MarshalJSON() (data []byte, err erro
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnExternalAccountParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnExternalAccountParameters{RoutingNumber:%s AccountNumber:%s Funding:%s Description:%s}", core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.Description))
-}
-
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 // destination account.
 func (r *CreateAnExternalAccountParameters) GetRoutingNumber() (RoutingNumber string) {
@@ -3876,6 +3838,10 @@ func (r *CreateAnExternalAccountParameters) GetDescription() (Description string
 	return
 }
 
+func (r CreateAnExternalAccountParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnExternalAccountParameters{RoutingNumber:%s AccountNumber:%s Funding:%s Description:%s}", core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.Description))
+}
+
 type CreateAnExternalAccountParametersFunding string
 
 const (
@@ -3904,16 +3870,16 @@ func (r *UpdateAnExternalAccountParameters) MarshalJSON() (data []byte, err erro
 	return pjson.Marshal(r)
 }
 
-func (r UpdateAnExternalAccountParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnExternalAccountParameters{Description:%s}", core.FmtP(r.Description))
-}
-
 // The description you choose to give the external account.
 func (r *UpdateAnExternalAccountParameters) GetDescription() (Description string) {
 	if r != nil && r.Description != nil {
 		Description = *r.Description
 	}
 	return
+}
+
+func (r UpdateAnExternalAccountParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateAnExternalAccountParameters{Description:%s}", core.FmtP(r.Description))
 }
 
 type ExternalAccountListParams struct {
@@ -3939,10 +3905,6 @@ func (r *ExternalAccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ExternalAccountListParams) String() (result string) {
-	return fmt.Sprintf("&ExternalAccountListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
-}
-
 // Return the page of entries after this one.
 func (r *ExternalAccountListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -3960,7 +3922,10 @@ func (r *ExternalAccountListParams) GetLimit() (Limit int64) {
 	return
 }
 
-//
+func (r ExternalAccountListParams) String() (result string) {
+	return fmt.Sprintf("&ExternalAccountListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
 type ExternalAccountList struct {
 	// The contents of the list.
 	Data *[]ExternalAccount `pjson:"data"`
@@ -3982,10 +3947,6 @@ func (r *ExternalAccountList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ExternalAccountList) String() (result string) {
-	return fmt.Sprintf("&ExternalAccountList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *ExternalAccountList) GetData() (Data []ExternalAccount) {
 	if r != nil && r.Data != nil {
@@ -4000,6 +3961,10 @@ func (r *ExternalAccountList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r ExternalAccountList) String() (result string) {
+	return fmt.Sprintf("&ExternalAccountList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type ExternalAccountsPage struct {
@@ -4018,7 +3983,6 @@ func (r *ExternalAccountsPage) GetNextPage() (*ExternalAccountsPage, error) {
 	}
 }
 
-//
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
 	ID *string `pjson:"id"`
@@ -4048,10 +4012,6 @@ func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *DigitalWalletToken) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DigitalWalletToken) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletToken{ID:%s CardID:%s CreatedAt:%s Status:%s TokenRequestor:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CardID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.TokenRequestor), core.FmtP(r.Type))
 }
 
 // The Digital Wallet Token identifier.
@@ -4104,6 +4064,10 @@ func (r *DigitalWalletToken) GetType() (Type DigitalWalletTokenType) {
 	return
 }
 
+func (r DigitalWalletToken) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletToken{ID:%s CardID:%s CreatedAt:%s Status:%s TokenRequestor:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CardID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.TokenRequestor), core.FmtP(r.Type))
+}
+
 type DigitalWalletTokenStatus string
 
 const (
@@ -4152,10 +4116,6 @@ func (r *DigitalWalletTokenListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DigitalWalletTokenListParams) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletTokenListParams{Cursor:%s Limit:%s CardID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.CardID), r.CreatedAt)
-}
-
 // Return the page of entries after this one.
 func (r *DigitalWalletTokenListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -4188,6 +4148,10 @@ func (r *DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTo
 	return
 }
 
+func (r DigitalWalletTokenListParams) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletTokenListParams{Cursor:%s Limit:%s CardID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.CardID), r.CreatedAt)
+}
+
 type DigitalWalletTokensListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -4216,10 +4180,6 @@ func (r *DigitalWalletTokensListParamsCreatedAt) UnmarshalJSON(data []byte) (err
 // the top-level, and will overwrite known members of the same name.
 func (r *DigitalWalletTokensListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DigitalWalletTokensListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletTokensListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -4258,7 +4218,10 @@ func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrBefore() (OnOrBefore str
 	return
 }
 
-//
+func (r DigitalWalletTokensListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletTokensListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type DigitalWalletTokenList struct {
 	// The contents of the list.
 	Data *[]DigitalWalletToken `pjson:"data"`
@@ -4281,10 +4244,6 @@ func (r *DigitalWalletTokenList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DigitalWalletTokenList) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletTokenList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *DigitalWalletTokenList) GetData() (Data []DigitalWalletToken) {
 	if r != nil && r.Data != nil {
@@ -4299,6 +4258,10 @@ func (r *DigitalWalletTokenList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r DigitalWalletTokenList) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletTokenList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type DigitalWalletTokensPage struct {
@@ -4317,7 +4280,6 @@ func (r *DigitalWalletTokensPage) GetNextPage() (*DigitalWalletTokensPage, error
 	}
 }
 
-//
 type Transaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -4364,10 +4326,6 @@ func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *Transaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Transaction) String() (result string) {
-	return fmt.Sprintf("&Transaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -4461,6 +4419,10 @@ func (r *Transaction) GetType() (Type TransactionType) {
 	return
 }
 
+func (r Transaction) String() (result string) {
+	return fmt.Sprintf("&Transaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type TransactionCurrency string
 
 const (
@@ -4472,7 +4434,6 @@ const (
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
-//
 type TransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -4597,10 +4558,6 @@ func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *TransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSource) String() (result string) {
-	return fmt.Sprintf("&TransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -4916,6 +4873,10 @@ func (r *TransactionSource) GetWireTransferRejection() (WireTransferRejection Tr
 	return
 }
 
+func (r TransactionSource) String() (result string) {
+	return fmt.Sprintf("&TransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+}
+
 type TransactionSourceCategory string
 
 const (
@@ -4956,7 +4917,6 @@ const (
 	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
 )
 
-//
 type TransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -4987,10 +4947,6 @@ func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (
 // into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceAccountTransferIntention) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -5043,6 +4999,10 @@ func (r *TransactionSourceAccountTransferIntention) GetTransferID() (TransferID 
 	return
 }
 
+func (r TransactionSourceAccountTransferIntention) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
+}
+
 type TransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -5054,7 +5014,6 @@ const (
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
-//
 type TransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -5078,10 +5037,6 @@ func (r *TransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, 
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceACHCheckConversionReturn) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *TransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
@@ -5099,7 +5054,10 @@ func (r *TransactionSourceACHCheckConversionReturn) GetReturnReasonCode() (Retur
 	return
 }
 
-//
+func (r TransactionSourceACHCheckConversionReturn) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
+}
+
 type TransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -5123,10 +5081,6 @@ func (r *TransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceACHCheckConversion) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *TransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
@@ -5144,16 +5098,16 @@ func (r *TransactionSourceACHCheckConversion) GetFileID() (FileID string) {
 	return
 }
 
-//
+func (r TransactionSourceACHCheckConversion) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
+}
+
 type TransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount              *int64  `pjson:"amount"`
+	AccountNumber       *string `pjson:"account_number"`
+	RoutingNumber       *string `pjson:"routing_number"`
 	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -5172,10 +5126,6 @@ func (r *TransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err 
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceACHTransferIntention) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5216,7 +5166,10 @@ func (r *TransactionSourceACHTransferIntention) GetTransferID() (TransferID stri
 	return
 }
 
-//
+func (r TransactionSourceACHTransferIntention) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
+}
+
 type TransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -5237,10 +5190,6 @@ func (r *TransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err 
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceACHTransferRejection) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the ACH Transfer that led to this Transaction.
 func (r *TransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -5249,7 +5198,10 @@ func (r *TransactionSourceACHTransferRejection) GetTransferID() (TransferID stri
 	return
 }
 
-//
+func (r TransactionSourceACHTransferRejection) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -5275,10 +5227,6 @@ func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err err
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceACHTransferReturn) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -5314,6 +5262,10 @@ func (r *TransactionSourceACHTransferReturn) GetTransactionID() (TransactionID s
 	return
 }
 
+func (r TransactionSourceACHTransferReturn) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
+}
+
 type TransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -5342,7 +5294,6 @@ const (
 	TransactionSourceACHTransferReturnReturnReasonCodeOther                                                     TransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
-//
 type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -5367,10 +5318,6 @@ func (r *TransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCardDisputeAcceptance) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -5399,7 +5346,10 @@ func (r *TransactionSourceCardDisputeAcceptance) GetTransactionID() (Transaction
 	return
 }
 
-//
+func (r TransactionSourceCardDisputeAcceptance) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
+}
+
 type TransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -5427,10 +5377,6 @@ func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCardRefund) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -5468,6 +5414,10 @@ func (r *TransactionSourceCardRefund) GetType() (Type TransactionSourceCardRefun
 	return
 }
 
+func (r TransactionSourceCardRefund) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
+}
+
 type TransactionSourceCardRefundCurrency string
 
 const (
@@ -5485,7 +5435,6 @@ const (
 	TransactionSourceCardRefundTypeCardRefund TransactionSourceCardRefundType = "card_refund"
 )
 
-//
 type TransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
@@ -5497,17 +5446,12 @@ type TransactionSourceCardSettlement struct {
 	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `pjson:"presentment_currency"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantName *string `pjson:"merchant_name"`
-	//
+	PresentmentCurrency  *string `pjson:"presentment_currency"`
+	MerchantCity         *string `pjson:"merchant_city"`
+	MerchantCountry      *string `pjson:"merchant_country"`
+	MerchantName         *string `pjson:"merchant_name"`
 	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
+	MerchantState        *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -5528,10 +5472,6 @@ func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCardSettlement) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
@@ -5621,6 +5561,10 @@ func (r *TransactionSourceCardSettlement) GetType() (Type TransactionSourceCardS
 	return
 }
 
+func (r TransactionSourceCardSettlement) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
+}
+
 type TransactionSourceCardSettlementCurrency string
 
 const (
@@ -5638,7 +5582,6 @@ const (
 	TransactionSourceCardSettlementTypeCardSettlement TransactionSourceCardSettlementType = "card_settlement"
 )
 
-//
 type TransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -5670,10 +5613,6 @@ func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (er
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
@@ -5727,6 +5666,10 @@ func (r *TransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepo
 	return
 }
 
+func (r TransactionSourceCheckDepositAcceptance) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+}
+
 type TransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -5738,7 +5681,6 @@ const (
 	TransactionSourceCheckDepositAcceptanceCurrencyUsd TransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
-//
 type TransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -5753,10 +5695,9 @@ type TransactionSourceCheckDepositReturn struct {
 	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `pjson:"transaction_id"`
-	//
-	ReturnReason *TransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
-	jsonFields   map[string]interface{}                           `pjson:"-,extras"`
+	TransactionID *string                                          `pjson:"transaction_id"`
+	ReturnReason  *TransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields    map[string]interface{}                           `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -5771,10 +5712,6 @@ func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCheckDepositReturn) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -5828,6 +5765,10 @@ func (r *TransactionSourceCheckDepositReturn) GetReturnReason() (ReturnReason Tr
 	return
 }
 
+func (r TransactionSourceCheckDepositReturn) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
+}
+
 type TransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -5855,7 +5796,6 @@ const (
 	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage           TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
-//
 type TransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 *string `pjson:"address_line1"`
@@ -5891,10 +5831,6 @@ func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (er
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCheckTransferIntention) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
 }
 
 // The street address of the check's destination.
@@ -5970,6 +5906,10 @@ func (r *TransactionSourceCheckTransferIntention) GetTransferID() (TransferID st
 	return
 }
 
+func (r TransactionSourceCheckTransferIntention) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
+}
+
 type TransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -5981,7 +5921,6 @@ const (
 	TransactionSourceCheckTransferIntentionCurrencyUsd TransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-//
 type TransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
@@ -6004,10 +5943,6 @@ func (r *TransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err e
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
-}
-
 // The identifier of the returned Check Transfer.
 func (r *TransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -6024,7 +5959,10 @@ func (r *TransactionSourceCheckTransferReturn) GetFileID() (FileID string) {
 	return
 }
 
-//
+func (r TransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+}
+
 type TransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -6045,10 +5983,6 @@ func (r *TransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, er
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceCheckTransferRejection) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the Check Transfer that led to this Transaction.
 func (r *TransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -6057,7 +5991,10 @@ func (r *TransactionSourceCheckTransferRejection) GetTransferID() (TransferID st
 	return
 }
 
-//
+func (r TransactionSourceCheckTransferRejection) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type TransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID *string `pjson:"transfer_id"`
@@ -6084,10 +6021,6 @@ func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []
 // name.
 func (r *TransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
 }
 
 // The ID of the check transfer that was stopped.
@@ -6123,13 +6056,16 @@ func (r *TransactionSourceCheckTransferStopPaymentRequest) GetType() (Type Trans
 	return
 }
 
+func (r TransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
+}
+
 type TransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
 	TransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
-//
 type TransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -6154,10 +6090,6 @@ func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err err
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceDisputeResolution) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -6186,6 +6118,10 @@ func (r *TransactionSourceDisputeResolution) GetDisputedTransactionID() (Dispute
 	return
 }
 
+func (r TransactionSourceDisputeResolution) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
+}
+
 type TransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -6197,14 +6133,11 @@ const (
 	TransactionSourceDisputeResolutionCurrencyUsd TransactionSourceDisputeResolutionCurrency = "USD"
 )
 
-//
 type TransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BagID *string `pjson:"bag_id"`
-	//
+	Amount      *int64                 `pjson:"amount"`
+	BagID       *string                `pjson:"bag_id"`
 	DepositDate *string                `pjson:"deposit_date"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
@@ -6221,10 +6154,6 @@ func (r *TransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceEmpyrealCashDeposit) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -6250,28 +6179,23 @@ func (r *TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate str
 	return
 }
 
-//
+func (r TransactionSourceEmpyrealCashDeposit) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
+}
+
 type TransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
-	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                             *int64                 `pjson:"amount"`
+	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
+	OriginatorCompanyDiscretionaryData *string                `pjson:"originator_company_discretionary_data"`
+	OriginatorCompanyEntryDescription  *string                `pjson:"originator_company_entry_description"`
+	OriginatorCompanyID                *string                `pjson:"originator_company_id"`
+	ReceiverIDNumber                   *string                `pjson:"receiver_id_number"`
+	ReceiverName                       *string                `pjson:"receiver_name"`
+	TraceNumber                        *string                `pjson:"trace_number"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -6286,10 +6210,6 @@ func (r *TransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundACHTransfer) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -6357,21 +6277,21 @@ func (r *TransactionSourceInboundACHTransfer) GetTraceNumber() (TraceNumber stri
 	return
 }
 
-//
+func (r TransactionSourceInboundACHTransfer) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type TransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *TransactionSourceInboundCheckCurrency `pjson:"currency"`
-	//
-	CheckNumber *string `pjson:"check_number"`
-	//
-	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
-	//
-	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency              *TransactionSourceInboundCheckCurrency `pjson:"currency"`
+	CheckNumber           *string                                `pjson:"check_number"`
+	CheckFrontImageFileID *string                                `pjson:"check_front_image_file_id"`
+	CheckRearImageFileID  *string                                `pjson:"check_rear_image_file_id"`
+	jsonFields            map[string]interface{}                 `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionSourceInboundCheck
@@ -6386,10 +6306,6 @@ func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundCheck) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -6431,6 +6347,10 @@ func (r *TransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImag
 	return
 }
 
+func (r TransactionSourceInboundCheck) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
+}
+
 type TransactionSourceInboundCheckCurrency string
 
 const (
@@ -6442,82 +6362,46 @@ const (
 	TransactionSourceInboundCheckCurrencyUsd TransactionSourceInboundCheckCurrency = "USD"
 )
 
-//
 type TransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -6533,10 +6417,6 @@ func (r *TransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []
 // name.
 func (r *TransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundInternationalACHTransfer) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -6793,7 +6673,10 @@ func (r *TransactionSourceInboundInternationalACHTransfer) GetTraceNumber() (Tra
 	return
 }
 
-//
+func (r TransactionSourceInboundInternationalACHTransfer) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -6829,10 +6712,6 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) Unmarshal
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
@@ -6901,6 +6780,10 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetRemitt
 	return
 }
 
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -6912,7 +6795,6 @@ const (
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
-//
 type TransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -6950,10 +6832,6 @@ func (r *TransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data
 // name.
 func (r *TransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
 }
 
 // The amount that was reversed.
@@ -7036,34 +6914,25 @@ func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessage
 	return
 }
 
-//
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
+}
+
 type TransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
+	Amount                             *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1            *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2            *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3            *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                    *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference               *string                `pjson:"beneficiary_reference"`
+	Description                        *string                `pjson:"description"`
+	InputMessageAccountabilityData     *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1             *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2             *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3             *string                `pjson:"originator_address_line3"`
+	OriginatorName                     *string                `pjson:"originator_name"`
 	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
 	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
@@ -7080,10 +6949,6 @@ func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte)
 // into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundWireDrawdownPayment) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -7179,7 +7044,10 @@ func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorToBeneficiary
 	return
 }
 
-//
+func (r TransactionSourceInboundWireDrawdownPayment) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type TransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -7221,10 +7089,6 @@ func (r *TransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundWireReversal) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
 }
 
 // The amount that was reversed.
@@ -7324,44 +7188,31 @@ func (r *TransactionSourceInboundWireReversal) GetFinancialInstitutionToFinancia
 	return
 }
 
-//
+func (r TransactionSourceInboundWireReversal) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
+}
+
 type TransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
-	//
-	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
-	//
-	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
-	//
-	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
-	//
-	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
-	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+	Amount                                  *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1                 *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2                 *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3                 *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                         *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference                    *string                `pjson:"beneficiary_reference"`
+	Description                             *string                `pjson:"description"`
+	InputMessageAccountabilityData          *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1                  *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2                  *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3                  *string                `pjson:"originator_address_line3"`
+	OriginatorName                          *string                `pjson:"originator_name"`
+	OriginatorToBeneficiaryInformationLine1 *string                `pjson:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine2 *string                `pjson:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine3 *string                `pjson:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine4 *string                `pjson:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformation      *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                              map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7376,10 +7227,6 @@ func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInboundWireTransfer) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -7503,17 +7350,19 @@ func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInforma
 	return
 }
 
-//
+func (r TransactionSourceInboundWireTransfer) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type TransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *TransactionSourceInternalSourceCurrency `pjson:"currency"`
-	//
-	Reason     *TransactionSourceInternalSourceReason `pjson:"reason"`
-	jsonFields map[string]interface{}                 `pjson:"-,extras"`
+	Currency   *TransactionSourceInternalSourceCurrency `pjson:"currency"`
+	Reason     *TransactionSourceInternalSourceReason   `pjson:"reason"`
+	jsonFields map[string]interface{}                   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7528,10 +7377,6 @@ func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceInternalSource) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -7559,6 +7404,10 @@ func (r *TransactionSourceInternalSource) GetReason() (Reason TransactionSourceI
 	return
 }
 
+func (r TransactionSourceInternalSource) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
+}
+
 type TransactionSourceInternalSourceCurrency string
 
 const (
@@ -7583,27 +7432,20 @@ const (
 	TransactionSourceInternalSourceReasonSampleFundsReturn  TransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-//
 type TransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *TransactionSourceCardRouteRefundCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *TransactionSourceCardRouteRefundCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                   `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                   `pjson:"merchant_city"`
+	MerchantCountry      *string                                   `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                   `pjson:"merchant_descriptor"`
+	MerchantState        *string                                   `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                   `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                    `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7618,10 +7460,6 @@ func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCardRouteRefund) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
@@ -7684,6 +7522,10 @@ func (r *TransactionSourceCardRouteRefund) GetMerchantCategoryCode() (MerchantCa
 	return
 }
 
+func (r TransactionSourceCardRouteRefund) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type TransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -7695,27 +7537,20 @@ const (
 	TransactionSourceCardRouteRefundCurrencyUsd TransactionSourceCardRouteRefundCurrency = "USD"
 )
 
-//
 type TransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *TransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *TransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                       `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                       `pjson:"merchant_city"`
+	MerchantCountry      *string                                       `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                       `pjson:"merchant_descriptor"`
+	MerchantState        *string                                       `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                       `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                        `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7730,10 +7565,6 @@ func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceCardRouteSettlement) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
@@ -7796,6 +7627,10 @@ func (r *TransactionSourceCardRouteSettlement) GetMerchantCategoryCode() (Mercha
 	return
 }
 
+func (r TransactionSourceCardRouteSettlement) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type TransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -7807,7 +7642,6 @@ const (
 	TransactionSourceCardRouteSettlementCurrencyUsd TransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
-//
 type TransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator *string                `pjson:"originator"`
@@ -7828,10 +7662,6 @@ func (r *TransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceSampleFunds) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
-}
-
 // Where the sample funds came from.
 func (r *TransactionSourceSampleFunds) GetOriginator() (Originator string) {
 	if r != nil && r.Originator != nil {
@@ -7840,19 +7670,18 @@ func (r *TransactionSourceSampleFunds) GetOriginator() (Originator string) {
 	return
 }
 
-//
+func (r TransactionSourceSampleFunds) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
+}
+
 type TransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7868,10 +7697,6 @@ func (r *TransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byt
 // name.
 func (r *TransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceWireDrawdownPaymentIntention) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -7910,9 +7735,11 @@ func (r *TransactionSourceWireDrawdownPaymentIntention) GetTransferID() (Transfe
 	return
 }
 
-//
+func (r TransactionSourceWireDrawdownPaymentIntention) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type TransactionSourceWireDrawdownPaymentRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -7932,10 +7759,6 @@ func (r *TransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []by
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceWireDrawdownPaymentRejection) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
@@ -7943,7 +7766,10 @@ func (r *TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (Transfe
 	return
 }
 
-//
+func (r TransactionSourceWireDrawdownPaymentRejection) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type TransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount *int64 `pjson:"amount"`
@@ -7952,10 +7778,9 @@ type TransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -7970,10 +7795,6 @@ func (r *TransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionSourceWireTransferIntention) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -8015,9 +7836,11 @@ func (r *TransactionSourceWireTransferIntention) GetTransferID() (TransferID str
 	return
 }
 
-//
+func (r TransactionSourceWireTransferIntention) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type TransactionSourceWireTransferRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -8036,15 +7859,15 @@ func (r *TransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err
 	return pjson.Marshal(r)
 }
 
-func (r TransactionSourceWireTransferRejection) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *TransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
+}
+
+func (r TransactionSourceWireTransferRejection) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
 }
 
 type TransactionType string
@@ -8080,10 +7903,6 @@ func (r *TransactionListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *TransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionListParams) String() (result string) {
-	return fmt.Sprintf("&TransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt, r.Category)
 }
 
 // Return the page of entries after this one.
@@ -8133,6 +7952,10 @@ func (r *TransactionListParams) GetCategory() (Category TransactionsListParamsCa
 	return
 }
 
+func (r TransactionListParams) String() (result string) {
+	return fmt.Sprintf("&TransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt, r.Category)
+}
+
 type TransactionsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -8161,10 +7984,6 @@ func (r *TransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r TransactionsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&TransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -8203,6 +8022,10 @@ func (r *TransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
+func (r TransactionsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&TransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type TransactionsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -8224,10 +8047,6 @@ func (r *TransactionsListParamsCategory) MarshalJSON() (data []byte, err error) 
 	return pjson.Marshal(r)
 }
 
-func (r TransactionsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&TransactionsListParamsCategory{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCategoryIn) {
@@ -8235,6 +8054,10 @@ func (r *TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCat
 		In = *r.In
 	}
 	return
+}
+
+func (r TransactionsListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&TransactionsListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
 type TransactionsListParamsCategoryIn string
@@ -8277,7 +8100,6 @@ const (
 	TransactionsListParamsCategoryInOther                                       TransactionsListParamsCategoryIn = "other"
 )
 
-//
 type TransactionList struct {
 	// The contents of the list.
 	Data *[]Transaction `pjson:"data"`
@@ -8299,10 +8121,6 @@ func (r *TransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r TransactionList) String() (result string) {
-	return fmt.Sprintf("&TransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *TransactionList) GetData() (Data []Transaction) {
 	if r != nil && r.Data != nil {
@@ -8317,6 +8135,10 @@ func (r *TransactionList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r TransactionList) String() (result string) {
+	return fmt.Sprintf("&TransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type TransactionsPage struct {
@@ -8335,7 +8157,6 @@ func (r *TransactionsPage) GetNextPage() (*TransactionsPage, error) {
 	}
 }
 
-//
 type PendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -8384,10 +8205,6 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *PendingTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransaction) String() (result string) {
-	return fmt.Sprintf("&PendingTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The identifier for the account this Pending Transaction belongs to.
@@ -8489,6 +8306,10 @@ func (r *PendingTransaction) GetType() (Type PendingTransactionType) {
 	return
 }
 
+func (r PendingTransaction) String() (result string) {
+	return fmt.Sprintf("&PendingTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type PendingTransactionCurrency string
 
 const (
@@ -8500,7 +8321,6 @@ const (
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
-//
 type PendingTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -8549,10 +8369,6 @@ func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *PendingTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSource) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSource{Category:%s AccountTransferInstruction:%s ACHTransferInstruction:%s CardAuthorization:%s CheckDepositInstruction:%s CheckTransferInstruction:%s InboundFundsHold:%s CardRouteAuthorization:%s WireDrawdownPaymentInstruction:%s WireTransferInstruction:%s}", core.FmtP(r.Category), r.AccountTransferInstruction, r.ACHTransferInstruction, r.CardAuthorization, r.CheckDepositInstruction, r.CheckTransferInstruction, r.InboundFundsHold, r.CardRouteAuthorization, r.WireDrawdownPaymentInstruction, r.WireTransferInstruction)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -8647,6 +8463,10 @@ func (r *PendingTransactionSource) GetWireTransferInstruction() (WireTransferIns
 	return
 }
 
+func (r PendingTransactionSource) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSource{Category:%s AccountTransferInstruction:%s ACHTransferInstruction:%s CardAuthorization:%s CheckDepositInstruction:%s CheckTransferInstruction:%s InboundFundsHold:%s CardRouteAuthorization:%s WireDrawdownPaymentInstruction:%s WireTransferInstruction:%s}", core.FmtP(r.Category), r.AccountTransferInstruction, r.ACHTransferInstruction, r.CardAuthorization, r.CheckDepositInstruction, r.CheckTransferInstruction, r.InboundFundsHold, r.CardRouteAuthorization, r.WireDrawdownPaymentInstruction, r.WireTransferInstruction)
+}
+
 type PendingTransactionSourceCategory string
 
 const (
@@ -8663,7 +8483,6 @@ const (
 	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
 )
 
-//
 type PendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -8689,10 +8508,6 @@ func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data 
 // name.
 func (r *PendingTransactionSourceAccountTransferInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceAccountTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceAccountTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -8721,6 +8536,10 @@ func (r *PendingTransactionSourceAccountTransferInstruction) GetTransferID() (Tr
 	return
 }
 
+func (r PendingTransactionSourceAccountTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceAccountTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
+}
+
 type PendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
@@ -8732,7 +8551,6 @@ const (
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
-//
 type PendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -8757,10 +8575,6 @@ func (r *PendingTransactionSourceACHTransferInstruction) MarshalJSON() (data []b
 	return pjson.Marshal(r)
 }
 
-func (r PendingTransactionSourceACHTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceACHTransferInstruction{Amount:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.TransferID))
-}
-
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
@@ -8778,7 +8592,10 @@ func (r *PendingTransactionSourceACHTransferInstruction) GetTransferID() (Transf
 	return
 }
 
-//
+func (r PendingTransactionSourceACHTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceACHTransferInstruction{Amount:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.TransferID))
+}
+
 type PendingTransactionSourceCardAuthorization struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -8822,10 +8639,6 @@ func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (
 // into the top-level, and will overwrite known members of the same name.
 func (r *PendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -8915,6 +8728,10 @@ func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (D
 	return
 }
 
+func (r PendingTransactionSourceCardAuthorization) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
 
 const (
@@ -8940,7 +8757,6 @@ const (
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
-//
 type PendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -8970,10 +8786,6 @@ func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []b
 // name.
 func (r *PendingTransactionSourceCheckDepositInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceCheckDepositInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9012,6 +8824,10 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (
 	return
 }
 
+func (r PendingTransactionSourceCheckDepositInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
+}
+
 type PendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
@@ -9023,7 +8839,6 @@ const (
 	PendingTransactionSourceCheckDepositInstructionCurrencyUsd PendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
-//
 type PendingTransactionSourceCheckTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -9049,10 +8864,6 @@ func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []
 // name.
 func (r *PendingTransactionSourceCheckTransferInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceCheckTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCheckTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9081,6 +8892,10 @@ func (r *PendingTransactionSourceCheckTransferInstruction) GetTransferID() (Tran
 	return
 }
 
+func (r PendingTransactionSourceCheckTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCheckTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
+}
+
 type PendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
@@ -9092,7 +8907,6 @@ const (
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
-//
 type PendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
@@ -9124,10 +8938,6 @@ func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (e
 // the top-level, and will overwrite known members of the same name.
 func (r *PendingTransactionSourceInboundFundsHold) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceInboundFundsHold) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceInboundFundsHold{Amount:%s Currency:%s AutomaticallyReleasesAt:%s ReleasedAt:%s Status:%s HeldTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AutomaticallyReleasesAt), core.FmtP(r.ReleasedAt), core.FmtP(r.Status), core.FmtP(r.HeldTransactionID))
 }
 
 // The held amount in the minor unit of the account's currency. For dollars, for
@@ -9181,6 +8991,10 @@ func (r *PendingTransactionSourceInboundFundsHold) GetHeldTransactionID() (HeldT
 	return
 }
 
+func (r PendingTransactionSourceInboundFundsHold) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceInboundFundsHold{Amount:%s Currency:%s AutomaticallyReleasesAt:%s ReleasedAt:%s Status:%s HeldTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AutomaticallyReleasesAt), core.FmtP(r.ReleasedAt), core.FmtP(r.Status), core.FmtP(r.HeldTransactionID))
+}
+
 type PendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
@@ -9199,27 +9013,20 @@ const (
 	PendingTransactionSourceInboundFundsHoldStatusComplete PendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
-//
 type PendingTransactionSourceCardRouteAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *PendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string                `pjson:"merchant_state"`
-	jsonFields    map[string]interface{} `pjson:"-,extras"`
+	Currency             *PendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                 `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                 `pjson:"merchant_city"`
+	MerchantCountry      *string                                                 `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                 `pjson:"merchant_descriptor"`
+	MerchantCategoryCode *string                                                 `pjson:"merchant_category_code"`
+	MerchantState        *string                                                 `pjson:"merchant_state"`
+	jsonFields           map[string]interface{}                                  `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -9235,10 +9042,6 @@ func (r *PendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []by
 // name.
 func (r *PendingTransactionSourceCardRouteAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceCardRouteAuthorization) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCardRouteAuthorization{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantState:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9301,6 +9104,10 @@ func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantState() (Mer
 	return
 }
 
+func (r PendingTransactionSourceCardRouteAuthorization) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCardRouteAuthorization{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantState:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState))
+}
+
 type PendingTransactionSourceCardRouteAuthorizationCurrency string
 
 const (
@@ -9312,16 +9119,12 @@ const (
 	PendingTransactionSourceCardRouteAuthorizationCurrencyUsd PendingTransactionSourceCardRouteAuthorizationCurrency = "USD"
 )
 
-//
 type PendingTransactionSourceWireDrawdownPaymentInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
 	MessageToRecipient *string                `pjson:"message_to_recipient"`
 	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
@@ -9339,10 +9142,6 @@ func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(d
 // name.
 func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceWireDrawdownPaymentInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceWireDrawdownPaymentInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9375,20 +9174,19 @@ func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRec
 	return
 }
 
-//
+func (r PendingTransactionSourceWireDrawdownPaymentInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceWireDrawdownPaymentInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient))
+}
+
 type PendingTransactionSourceWireTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -9404,10 +9202,6 @@ func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []b
 // name.
 func (r *PendingTransactionSourceWireTransferInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionSourceWireTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceWireTransferInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -9445,6 +9239,10 @@ func (r *PendingTransactionSourceWireTransferInstruction) GetTransferID() (Trans
 		TransferID = *r.TransferID
 	}
 	return
+}
+
+func (r PendingTransactionSourceWireTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceWireTransferInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 type PendingTransactionStatus string
@@ -9488,10 +9286,6 @@ func (r *PendingTransactionListParams) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *PendingTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r PendingTransactionListParams) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s SourceID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), core.FmtP(r.SourceID), r.Status)
 }
 
 // Return the page of entries after this one.
@@ -9542,6 +9336,10 @@ func (r *PendingTransactionListParams) GetStatus() (Status PendingTransactionsLi
 	return
 }
 
+func (r PendingTransactionListParams) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s SourceID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), core.FmtP(r.SourceID), r.Status)
+}
+
 type PendingTransactionsListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -9563,10 +9361,6 @@ func (r *PendingTransactionsListParamsStatus) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-func (r PendingTransactionsListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionsListParamsStatus{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
@@ -9576,6 +9370,10 @@ func (r *PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsL
 	return
 }
 
+func (r PendingTransactionsListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionsListParamsStatus{In:%s}", core.Fmt(r.In))
+}
+
 type PendingTransactionsListParamsStatusIn string
 
 const (
@@ -9583,7 +9381,6 @@ const (
 	PendingTransactionsListParamsStatusInComplete PendingTransactionsListParamsStatusIn = "complete"
 )
 
-//
 type PendingTransactionList struct {
 	// The contents of the list.
 	Data *[]PendingTransaction `pjson:"data"`
@@ -9606,10 +9403,6 @@ func (r *PendingTransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r PendingTransactionList) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *PendingTransactionList) GetData() (Data []PendingTransaction) {
 	if r != nil && r.Data != nil {
@@ -9624,6 +9417,10 @@ func (r *PendingTransactionList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r PendingTransactionList) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type PendingTransactionsPage struct {
@@ -9642,7 +9439,6 @@ func (r *PendingTransactionsPage) GetNextPage() (*PendingTransactionsPage, error
 	}
 }
 
-//
 type DeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -9688,10 +9484,6 @@ func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *DeclinedTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransaction) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -9784,6 +9576,10 @@ func (r *DeclinedTransaction) GetType() (Type DeclinedTransactionType) {
 	return
 }
 
+func (r DeclinedTransaction) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type DeclinedTransactionCurrency string
 
 const (
@@ -9795,7 +9591,6 @@ const (
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
 )
 
-//
 type DeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -9835,10 +9630,6 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSource) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -9906,6 +9697,10 @@ func (r *DeclinedTransactionSource) GetCardRouteDecline() (CardRouteDecline Decl
 	return
 }
 
+func (r DeclinedTransactionSource) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
+}
+
 type DeclinedTransactionSourceCategory string
 
 const (
@@ -9918,28 +9713,20 @@ const (
 	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
 
-//
 type DeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
+	Amount                             *int64  `pjson:"amount"`
+	OriginatorCompanyName              *string `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string `pjson:"originator_company_descriptive_date"`
 	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
+	OriginatorCompanyID                *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *DeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Reason           *DeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
+	ReceiverIDNumber *string                                    `pjson:"receiver_id_number"`
+	ReceiverName     *string                                    `pjson:"receiver_name"`
+	TraceNumber      *string                                    `pjson:"trace_number"`
+	jsonFields       map[string]interface{}                     `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -9954,10 +9741,6 @@ func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceACHDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10026,6 +9809,10 @@ func (r *DeclinedTransactionSourceACHDecline) GetTraceNumber() (TraceNumber stri
 	return
 }
 
+func (r DeclinedTransactionSourceACHDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type DeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -10042,7 +9829,6 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonOriginatorRequest            DeclinedTransactionSourceACHDeclineReason = "originator_request"
 )
 
-//
 type DeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -10090,10 +9876,6 @@ func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -10199,6 +9981,10 @@ func (r *DeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (Digita
 	return
 }
 
+func (r DeclinedTransactionSourceCardDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
 
 const (
@@ -10239,12 +10025,10 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
-//
 type DeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
+	Amount        *int64  `pjson:"amount"`
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
 	Reason     *DeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
@@ -10263,10 +10047,6 @@ func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err 
 // the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceCheckDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10293,6 +10073,10 @@ func (r *DeclinedTransactionSourceCheckDecline) GetReason() (Reason DeclinedTran
 	return
 }
 
+func (r DeclinedTransactionSourceCheckDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
+}
+
 type DeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -10309,7 +10093,6 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonReturned              DeclinedTransactionSourceCheckDeclineReason = "returned"
 )
 
-//
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -10348,10 +10131,6 @@ func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) Unmars
 // the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10429,6 +10208,10 @@ func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetRem
 	return
 }
 
+func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -10450,82 +10233,46 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-//
 type DeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -10541,10 +10288,6 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []
 // name.
 func (r *DeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceInternationalACHDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10801,27 +10544,24 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) GetTraceNumber() (Tra
 	return
 }
 
-//
+func (r DeclinedTransactionSourceInternationalACHDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type DeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *DeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *DeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                            `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                            `pjson:"merchant_city"`
+	MerchantCountry      *string                                            `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                            `pjson:"merchant_descriptor"`
+	MerchantState        *string                                            `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                            `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                             `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -10836,10 +10576,6 @@ func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (
 // into the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionSourceCardRouteDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -10902,6 +10638,10 @@ func (r *DeclinedTransactionSourceCardRouteDecline) GetMerchantCategoryCode() (M
 	return
 }
 
+func (r DeclinedTransactionSourceCardRouteDecline) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type DeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -10947,10 +10687,6 @@ func (r *DeclinedTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DeclinedTransactionListParams) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt)
-}
-
 // Return the page of entries after this one.
 func (r *DeclinedTransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -10991,6 +10727,10 @@ func (r *DeclinedTransactionListParams) GetCreatedAt() (CreatedAt DeclinedTransa
 	return
 }
 
+func (r DeclinedTransactionListParams) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt)
+}
+
 type DeclinedTransactionsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -11019,10 +10759,6 @@ func (r *DeclinedTransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (er
 // the top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DeclinedTransactionsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -11061,7 +10797,10 @@ func (r *DeclinedTransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore st
 	return
 }
 
-//
+func (r DeclinedTransactionsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type DeclinedTransactionList struct {
 	// The contents of the list.
 	Data *[]DeclinedTransaction `pjson:"data"`
@@ -11084,10 +10823,6 @@ func (r *DeclinedTransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DeclinedTransactionList) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *DeclinedTransactionList) GetData() (Data []DeclinedTransaction) {
 	if r != nil && r.Data != nil {
@@ -11102,6 +10837,10 @@ func (r *DeclinedTransactionList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r DeclinedTransactionList) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type DeclinedTransactionsPage struct {
@@ -11120,7 +10859,6 @@ func (r *DeclinedTransactionsPage) GetNextPage() (*DeclinedTransactionsPage, err
 	}
 }
 
-//
 type Limit struct {
 	// The Limit identifier.
 	ID *string `pjson:"id"`
@@ -11154,10 +10892,6 @@ func (r *Limit) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Limit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Limit) String() (result string) {
-	return fmt.Sprintf("&Limit{ID:%s Interval:%s Metric:%s ModelID:%s ModelType:%s Status:%s Type:%s Value:%s}", core.FmtP(r.ID), core.FmtP(r.Interval), core.FmtP(r.Metric), core.FmtP(r.ModelID), core.FmtP(r.ModelType), core.FmtP(r.Status), core.FmtP(r.Type), core.FmtP(r.Value))
 }
 
 // The Limit identifier.
@@ -11226,6 +10960,10 @@ func (r *Limit) GetValue() (Value int64) {
 	return
 }
 
+func (r Limit) String() (result string) {
+	return fmt.Sprintf("&Limit{ID:%s Interval:%s Metric:%s ModelID:%s ModelType:%s Status:%s Type:%s Value:%s}", core.FmtP(r.ID), core.FmtP(r.Interval), core.FmtP(r.Metric), core.FmtP(r.ModelID), core.FmtP(r.ModelType), core.FmtP(r.Status), core.FmtP(r.Type), core.FmtP(r.Value))
+}
+
 type LimitInterval string
 
 const (
@@ -11292,10 +11030,6 @@ func (r *CreateALimitParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateALimitParameters) String() (result string) {
-	return fmt.Sprintf("&CreateALimitParameters{Metric:%s Interval:%s ModelID:%s Value:%s}", core.FmtP(r.Metric), core.FmtP(r.Interval), core.FmtP(r.ModelID), core.FmtP(r.Value))
-}
-
 // The metric for the limit.
 func (r *CreateALimitParameters) GetMetric() (Metric CreateALimitParametersMetric) {
 	if r != nil && r.Metric != nil {
@@ -11327,6 +11061,10 @@ func (r *CreateALimitParameters) GetValue() (Value int64) {
 		Value = *r.Value
 	}
 	return
+}
+
+func (r CreateALimitParameters) String() (result string) {
+	return fmt.Sprintf("&CreateALimitParameters{Metric:%s Interval:%s ModelID:%s Value:%s}", core.FmtP(r.Metric), core.FmtP(r.Interval), core.FmtP(r.ModelID), core.FmtP(r.Value))
 }
 
 type CreateALimitParametersMetric string
@@ -11367,16 +11105,16 @@ func (r *UpdateALimitParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r UpdateALimitParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateALimitParameters{Status:%s}", core.FmtP(r.Status))
-}
-
 // The status to update the limit with.
 func (r *UpdateALimitParameters) GetStatus() (Status UpdateALimitParametersStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
+}
+
+func (r UpdateALimitParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateALimitParameters{Status:%s}", core.FmtP(r.Status))
 }
 
 type UpdateALimitParametersStatus string
@@ -11412,10 +11150,6 @@ func (r *LimitListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r LimitListParams) String() (result string) {
-	return fmt.Sprintf("&LimitListParams{Cursor:%s Limit:%s ModelID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.ModelID), core.FmtP(r.Status))
-}
-
 // Return the page of entries after this one.
 func (r *LimitListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -11449,7 +11183,10 @@ func (r *LimitListParams) GetStatus() (Status string) {
 	return
 }
 
-//
+func (r LimitListParams) String() (result string) {
+	return fmt.Sprintf("&LimitListParams{Cursor:%s Limit:%s ModelID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.ModelID), core.FmtP(r.Status))
+}
+
 type LimitList struct {
 	// The contents of the list.
 	Data *[]Limit `pjson:"data"`
@@ -11471,10 +11208,6 @@ func (r *LimitList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r LimitList) String() (result string) {
-	return fmt.Sprintf("&LimitList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *LimitList) GetData() (Data []Limit) {
 	if r != nil && r.Data != nil {
@@ -11489,6 +11222,10 @@ func (r *LimitList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r LimitList) String() (result string) {
+	return fmt.Sprintf("&LimitList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type LimitsPage struct {
@@ -11507,7 +11244,6 @@ func (r *LimitsPage) GetNextPage() (*LimitsPage, error) {
 	}
 }
 
-//
 type AccountTransfer struct {
 	// The account transfer's identifier.
 	ID *string `pjson:"id"`
@@ -11559,10 +11295,6 @@ func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *AccountTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountTransfer) String() (result string) {
-	return fmt.Sprintf("&AccountTransfer{ID:%s Amount:%s AccountID:%s Currency:%s DestinationAccountID:%s DestinationTransactionID:%s CreatedAt:%s Description:%s Network:%s Status:%s TemplateID:%s TransactionID:%s Approval:%s Cancellation:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Amount), core.FmtP(r.AccountID), core.FmtP(r.Currency), core.FmtP(r.DestinationAccountID), core.FmtP(r.DestinationTransactionID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.Network), core.FmtP(r.Status), core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.Approval, r.Cancellation, core.FmtP(r.Type))
 }
 
 // The account transfer's identifier.
@@ -11691,6 +11423,10 @@ func (r *AccountTransfer) GetType() (Type AccountTransferType) {
 	return
 }
 
+func (r AccountTransfer) String() (result string) {
+	return fmt.Sprintf("&AccountTransfer{ID:%s Amount:%s AccountID:%s Currency:%s DestinationAccountID:%s DestinationTransactionID:%s CreatedAt:%s Description:%s Network:%s Status:%s TemplateID:%s TransactionID:%s Approval:%s Cancellation:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Amount), core.FmtP(r.AccountID), core.FmtP(r.Currency), core.FmtP(r.DestinationAccountID), core.FmtP(r.DestinationTransactionID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.Network), core.FmtP(r.Status), core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.Approval, r.Cancellation, core.FmtP(r.Type))
+}
+
 type AccountTransferCurrency string
 
 const (
@@ -11719,7 +11455,6 @@ const (
 	AccountTransferStatusComplete          AccountTransferStatus = "complete"
 )
 
-//
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -11741,10 +11476,6 @@ func (r *AccountTransferApproval) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountTransferApproval) String() (result string) {
-	return fmt.Sprintf("&AccountTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
 func (r *AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
@@ -11754,7 +11485,10 @@ func (r *AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
 	return
 }
 
-//
+func (r AccountTransferApproval) String() (result string) {
+	return fmt.Sprintf("&AccountTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
+}
+
 type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -11776,10 +11510,6 @@ func (r *AccountTransferCancellation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountTransferCancellation) String() (result string) {
-	return fmt.Sprintf("&AccountTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
 func (r *AccountTransferCancellation) GetCanceledAt() (CanceledAt string) {
@@ -11787,6 +11517,10 @@ func (r *AccountTransferCancellation) GetCanceledAt() (CanceledAt string) {
 		CanceledAt = *r.CanceledAt
 	}
 	return
+}
+
+func (r AccountTransferCancellation) String() (result string) {
+	return fmt.Sprintf("&AccountTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
 }
 
 type AccountTransferType string
@@ -11822,10 +11556,6 @@ func (r *CreateAnAccountTransferParameters) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *CreateAnAccountTransferParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnAccountTransferParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnAccountTransferParameters{AccountID:%s Amount:%s Description:%s DestinationAccountID:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.RequireApproval))
 }
 
 // The identifier for the account that will send the transfer.
@@ -11869,6 +11599,10 @@ func (r *CreateAnAccountTransferParameters) GetRequireApproval() (RequireApprova
 	return
 }
 
+func (r CreateAnAccountTransferParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnAccountTransferParameters{AccountID:%s Amount:%s Description:%s DestinationAccountID:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.RequireApproval))
+}
+
 type AccountTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -11893,10 +11627,6 @@ func (r *AccountTransferListParams) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *AccountTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountTransferListParams) String() (result string) {
-	return fmt.Sprintf("&AccountTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -11931,6 +11661,10 @@ func (r *AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransfersLi
 	return
 }
 
+func (r AccountTransferListParams) String() (result string) {
+	return fmt.Sprintf("&AccountTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
+}
+
 type AccountTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -11959,10 +11693,6 @@ func (r *AccountTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *AccountTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&AccountTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -12001,7 +11731,10 @@ func (r *AccountTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string
 	return
 }
 
-//
+func (r AccountTransfersListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&AccountTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type AccountTransferList struct {
 	// The contents of the list.
 	Data *[]AccountTransfer `pjson:"data"`
@@ -12023,10 +11756,6 @@ func (r *AccountTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountTransferList) String() (result string) {
-	return fmt.Sprintf("&AccountTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *AccountTransferList) GetData() (Data []AccountTransfer) {
 	if r != nil && r.Data != nil {
@@ -12041,6 +11770,10 @@ func (r *AccountTransferList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r AccountTransferList) String() (result string) {
+	return fmt.Sprintf("&AccountTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type AccountTransfersPage struct {
@@ -12059,7 +11792,6 @@ func (r *AccountTransfersPage) GetNextPage() (*AccountTransfersPage, error) {
 	}
 }
 
-//
 type ACHTransfer struct {
 	// The Account to which the transfer belongs.
 	AccountID *string `pjson:"account_id"`
@@ -12141,10 +11873,6 @@ func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *ACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransfer) String() (result string) {
-	return fmt.Sprintf("&ACHTransfer{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s Currency:%s Approval:%s Cancellation:%s CreatedAt:%s ExternalAccountID:%s ID:%s Network:%s NotificationOfChange:%s Return:%s RoutingNumber:%s StatementDescriptor:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s Funding:%s IndividualID:%s IndividualName:%s StandardEntryClassCode:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.Amount), core.FmtP(r.Currency), r.Approval, r.Cancellation, core.FmtP(r.CreatedAt), core.FmtP(r.ExternalAccountID), core.FmtP(r.ID), core.FmtP(r.Network), r.NotificationOfChange, r.Return, core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.Status), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.Funding), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.StandardEntryClassCode), core.FmtP(r.Type))
 }
 
 // The Account to which the transfer belongs.
@@ -12381,6 +12109,10 @@ func (r *ACHTransfer) GetType() (Type ACHTransferType) {
 	return
 }
 
+func (r ACHTransfer) String() (result string) {
+	return fmt.Sprintf("&ACHTransfer{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s Currency:%s Approval:%s Cancellation:%s CreatedAt:%s ExternalAccountID:%s ID:%s Network:%s NotificationOfChange:%s Return:%s RoutingNumber:%s StatementDescriptor:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s Funding:%s IndividualID:%s IndividualName:%s StandardEntryClassCode:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.Amount), core.FmtP(r.Currency), r.Approval, r.Cancellation, core.FmtP(r.CreatedAt), core.FmtP(r.ExternalAccountID), core.FmtP(r.ID), core.FmtP(r.Network), r.NotificationOfChange, r.Return, core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.Status), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.Funding), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.StandardEntryClassCode), core.FmtP(r.Type))
+}
+
 type ACHTransferCurrency string
 
 const (
@@ -12392,7 +12124,6 @@ const (
 	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
 )
 
-//
 type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -12413,10 +12144,6 @@ func (r *ACHTransferApproval) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferApproval) String() (result string) {
-	return fmt.Sprintf("&ACHTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
 func (r *ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
@@ -12426,7 +12153,10 @@ func (r *ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
 	return
 }
 
-//
+func (r ACHTransferApproval) String() (result string) {
+	return fmt.Sprintf("&ACHTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
+}
+
 type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -12448,10 +12178,6 @@ func (r *ACHTransferCancellation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferCancellation) String() (result string) {
-	return fmt.Sprintf("&ACHTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
 func (r *ACHTransferCancellation) GetCanceledAt() (CanceledAt string) {
@@ -12461,13 +12187,16 @@ func (r *ACHTransferCancellation) GetCanceledAt() (CanceledAt string) {
 	return
 }
 
+func (r ACHTransferCancellation) String() (result string) {
+	return fmt.Sprintf("&ACHTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
+}
+
 type ACHTransferNetwork string
 
 const (
 	ACHTransferNetworkACH ACHTransferNetwork = "ach"
 )
 
-//
 type ACHTransferNotificationOfChange struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
@@ -12491,10 +12220,6 @@ func (r *ACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *ACHTransferNotificationOfChange) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferNotificationOfChange) String() (result string) {
-	return fmt.Sprintf("&ACHTransferNotificationOfChange{CreatedAt:%s ChangeCode:%s CorrectedData:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ChangeCode), core.FmtP(r.CorrectedData))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -12522,7 +12247,10 @@ func (r *ACHTransferNotificationOfChange) GetCorrectedData() (CorrectedData stri
 	return
 }
 
-//
+func (r ACHTransferNotificationOfChange) String() (result string) {
+	return fmt.Sprintf("&ACHTransferNotificationOfChange{CreatedAt:%s ChangeCode:%s CorrectedData:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ChangeCode), core.FmtP(r.CorrectedData))
+}
+
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -12547,10 +12275,6 @@ func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *ACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -12584,6 +12308,10 @@ func (r *ACHTransferReturn) GetTransactionID() (TransactionID string) {
 		TransactionID = *r.TransactionID
 	}
 	return
+}
+
+func (r ACHTransferReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 type ACHTransferReturnReturnReasonCode string
@@ -12626,7 +12354,6 @@ const (
 	ACHTransferStatusRejected          ACHTransferStatus = "rejected"
 )
 
-//
 type ACHTransferSubmission struct {
 	// The trace number for the submission.
 	TraceNumber *string `pjson:"trace_number"`
@@ -12649,10 +12376,6 @@ func (r *ACHTransferSubmission) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSubmission) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSubmission{TraceNumber:%s SubmittedAt:%s}", core.FmtP(r.TraceNumber), core.FmtP(r.SubmittedAt))
-}
-
 // The trace number for the submission.
 func (r *ACHTransferSubmission) GetTraceNumber() (TraceNumber string) {
 	if r != nil && r.TraceNumber != nil {
@@ -12667,6 +12390,10 @@ func (r *ACHTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
+}
+
+func (r ACHTransferSubmission) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSubmission{TraceNumber:%s SubmittedAt:%s}", core.FmtP(r.TraceNumber), core.FmtP(r.SubmittedAt))
 }
 
 type ACHTransferFunding string
@@ -12756,10 +12483,6 @@ func (r *CreateAnACHTransferParameters) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CreateAnACHTransferParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnACHTransferParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnACHTransferParameters{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s EffectiveDate:%s ExternalAccountID:%s Funding:%s IndividualID:%s IndividualName:%s RequireApproval:%s RoutingNumber:%s StandardEntryClassCode:%s StatementDescriptor:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.Amount), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.EffectiveDate), core.FmtP(r.ExternalAccountID), core.FmtP(r.Funding), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.RequireApproval), core.FmtP(r.RoutingNumber), core.FmtP(r.StandardEntryClassCode), core.FmtP(r.StatementDescriptor))
 }
 
 // The Increase identifier for the account that will send the transfer.
@@ -12914,6 +12637,10 @@ func (r *CreateAnACHTransferParameters) GetStatementDescriptor() (StatementDescr
 	return
 }
 
+func (r CreateAnACHTransferParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnACHTransferParameters{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s EffectiveDate:%s ExternalAccountID:%s Funding:%s IndividualID:%s IndividualName:%s RequireApproval:%s RoutingNumber:%s StandardEntryClassCode:%s StatementDescriptor:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.Amount), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.EffectiveDate), core.FmtP(r.ExternalAccountID), core.FmtP(r.Funding), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.RequireApproval), core.FmtP(r.RoutingNumber), core.FmtP(r.StandardEntryClassCode), core.FmtP(r.StatementDescriptor))
+}
+
 type CreateAnACHTransferParametersFunding string
 
 const (
@@ -12957,10 +12684,6 @@ func (r *ACHTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferListParams) String() (result string) {
-	return fmt.Sprintf("&ACHTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
-}
-
 // Return the page of entries after this one.
 func (r *ACHTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -13001,6 +12724,10 @@ func (r *ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransfersListParams
 	return
 }
 
+func (r ACHTransferListParams) String() (result string) {
+	return fmt.Sprintf("&ACHTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
+}
+
 type ACHTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -13029,10 +12756,6 @@ func (r *ACHTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *ACHTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&ACHTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -13071,7 +12794,10 @@ func (r *ACHTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
-//
+func (r ACHTransfersListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&ACHTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type ACHTransferList struct {
 	// The contents of the list.
 	Data *[]ACHTransfer `pjson:"data"`
@@ -13093,10 +12819,6 @@ func (r *ACHTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferList) String() (result string) {
-	return fmt.Sprintf("&ACHTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *ACHTransferList) GetData() (Data []ACHTransfer) {
 	if r != nil && r.Data != nil {
@@ -13111,6 +12833,10 @@ func (r *ACHTransferList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r ACHTransferList) String() (result string) {
+	return fmt.Sprintf("&ACHTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type ACHTransfersPage struct {
@@ -13129,7 +12855,6 @@ func (r *ACHTransfersPage) GetNextPage() (*ACHTransfersPage, error) {
 	}
 }
 
-//
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
 	ID *string `pjson:"id"`
@@ -13175,10 +12900,6 @@ func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *ACHPrenotification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHPrenotification) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotification{ID:%s AccountNumber:%s Addendum:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CreditDebitIndicator:%s EffectiveDate:%s RoutingNumber:%s PrenotificationReturn:%s CreatedAt:%s Status:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CreditDebitIndicator), core.FmtP(r.EffectiveDate), core.FmtP(r.RoutingNumber), r.PrenotificationReturn, core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The ACH Prenotification's identifier.
@@ -13295,6 +13016,10 @@ func (r *ACHPrenotification) GetType() (Type ACHPrenotificationType) {
 	return
 }
 
+func (r ACHPrenotification) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotification{ID:%s AccountNumber:%s Addendum:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CreditDebitIndicator:%s EffectiveDate:%s RoutingNumber:%s PrenotificationReturn:%s CreatedAt:%s Status:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CreditDebitIndicator), core.FmtP(r.EffectiveDate), core.FmtP(r.RoutingNumber), r.PrenotificationReturn, core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type ACHPrenotificationCreditDebitIndicator string
 
 const (
@@ -13302,7 +13027,6 @@ const (
 	ACHPrenotificationCreditDebitIndicatorDebit  ACHPrenotificationCreditDebitIndicator = "debit"
 )
 
-//
 type ACHPrenotificationPrenotificationReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Prenotification was returned.
@@ -13326,10 +13050,6 @@ func (r *ACHPrenotificationPrenotificationReturn) MarshalJSON() (data []byte, er
 	return pjson.Marshal(r)
 }
 
-func (r ACHPrenotificationPrenotificationReturn) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotificationPrenotificationReturn{CreatedAt:%s ReturnReasonCode:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Prenotification was returned.
 func (r *ACHPrenotificationPrenotificationReturn) GetCreatedAt() (CreatedAt string) {
@@ -13345,6 +13065,10 @@ func (r *ACHPrenotificationPrenotificationReturn) GetReturnReasonCode() (ReturnR
 		ReturnReasonCode = *r.ReturnReasonCode
 	}
 	return
+}
+
+func (r ACHPrenotificationPrenotificationReturn) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotificationPrenotificationReturn{CreatedAt:%s ReturnReasonCode:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode))
 }
 
 type ACHPrenotificationStatus string
@@ -13405,10 +13129,6 @@ func (r *CreateAnACHPrenotificationParameters) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnACHPrenotificationParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnACHPrenotificationParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnACHPrenotificationParameters{AccountNumber:%s Addendum:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CreditDebitIndicator:%s EffectiveDate:%s IndividualID:%s IndividualName:%s RoutingNumber:%s StandardEntryClassCode:%s}", core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CreditDebitIndicator), core.FmtP(r.EffectiveDate), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.RoutingNumber), core.FmtP(r.StandardEntryClassCode))
 }
 
 // The account number for the destination account.
@@ -13510,6 +13230,10 @@ func (r *CreateAnACHPrenotificationParameters) GetStandardEntryClassCode() (Stan
 	return
 }
 
+func (r CreateAnACHPrenotificationParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnACHPrenotificationParameters{AccountNumber:%s Addendum:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CreditDebitIndicator:%s EffectiveDate:%s IndividualID:%s IndividualName:%s RoutingNumber:%s StandardEntryClassCode:%s}", core.FmtP(r.AccountNumber), core.FmtP(r.Addendum), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CreditDebitIndicator), core.FmtP(r.EffectiveDate), core.FmtP(r.IndividualID), core.FmtP(r.IndividualName), core.FmtP(r.RoutingNumber), core.FmtP(r.StandardEntryClassCode))
+}
+
 type CreateAnACHPrenotificationParametersCreditDebitIndicator string
 
 const (
@@ -13549,10 +13273,6 @@ func (r *ACHPrenotificationListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHPrenotificationListParams) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotificationListParams{Cursor:%s Limit:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt)
-}
-
 // Return the page of entries after this one.
 func (r *ACHPrenotificationListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -13575,6 +13295,10 @@ func (r *ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificat
 		CreatedAt = *r.CreatedAt
 	}
 	return
+}
+
+func (r ACHPrenotificationListParams) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotificationListParams{Cursor:%s Limit:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt)
 }
 
 type ACHPrenotificationsListParamsCreatedAt struct {
@@ -13605,10 +13329,6 @@ func (r *ACHPrenotificationsListParamsCreatedAt) UnmarshalJSON(data []byte) (err
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHPrenotificationsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotificationsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -13647,7 +13367,10 @@ func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore str
 	return
 }
 
-//
+func (r ACHPrenotificationsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotificationsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type ACHPrenotificationList struct {
 	// The contents of the list.
 	Data *[]ACHPrenotification `pjson:"data"`
@@ -13670,10 +13393,6 @@ func (r *ACHPrenotificationList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r ACHPrenotificationList) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotificationList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *ACHPrenotificationList) GetData() (Data []ACHPrenotification) {
 	if r != nil && r.Data != nil {
@@ -13688,6 +13407,10 @@ func (r *ACHPrenotificationList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r ACHPrenotificationList) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotificationList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type ACHPrenotificationsPage struct {
@@ -13706,7 +13429,6 @@ func (r *ACHPrenotificationsPage) GetNextPage() (*ACHPrenotificationsPage, error
 	}
 }
 
-//
 type Document struct {
 	// The Document identifier.
 	ID *string `pjson:"id"`
@@ -13736,10 +13458,6 @@ func (r *Document) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Document) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Document) String() (result string) {
-	return fmt.Sprintf("&Document{ID:%s Category:%s CreatedAt:%s EntityID:%s FileID:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Category), core.FmtP(r.CreatedAt), core.FmtP(r.EntityID), core.FmtP(r.FileID), core.FmtP(r.Type))
 }
 
 // The Document identifier.
@@ -13792,6 +13510,10 @@ func (r *Document) GetType() (Type DocumentType) {
 	return
 }
 
+func (r Document) String() (result string) {
+	return fmt.Sprintf("&Document{ID:%s Category:%s CreatedAt:%s EntityID:%s FileID:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Category), core.FmtP(r.CreatedAt), core.FmtP(r.EntityID), core.FmtP(r.FileID), core.FmtP(r.Type))
+}
+
 type DocumentCategory string
 
 const (
@@ -13828,10 +13550,6 @@ func (r *DocumentListParams) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *DocumentListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r DocumentListParams) String() (result string) {
-	return fmt.Sprintf("&DocumentListParams{Cursor:%s Limit:%s EntityID:%s Category:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), r.Category, r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -13873,6 +13591,10 @@ func (r *DocumentListParams) GetCreatedAt() (CreatedAt DocumentsListParamsCreate
 	return
 }
 
+func (r DocumentListParams) String() (result string) {
+	return fmt.Sprintf("&DocumentListParams{Cursor:%s Limit:%s EntityID:%s Category:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), r.Category, r.CreatedAt)
+}
+
 type DocumentsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -13894,10 +13616,6 @@ func (r *DocumentsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DocumentsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&DocumentsListParamsCategory{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
@@ -13905,6 +13623,10 @@ func (r *DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryI
 		In = *r.In
 	}
 	return
+}
+
+func (r DocumentsListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&DocumentsListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
 type DocumentsListParamsCategoryIn string
@@ -13943,10 +13665,6 @@ func (r *DocumentsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DocumentsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DocumentsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
-}
-
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *DocumentsListParamsCreatedAt) GetAfter() (After string) {
@@ -13983,7 +13701,10 @@ func (r *DocumentsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
-//
+func (r DocumentsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DocumentsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type DocumentList struct {
 	// The contents of the list.
 	Data *[]Document `pjson:"data"`
@@ -14005,10 +13726,6 @@ func (r *DocumentList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r DocumentList) String() (result string) {
-	return fmt.Sprintf("&DocumentList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *DocumentList) GetData() (Data []Document) {
 	if r != nil && r.Data != nil {
@@ -14023,6 +13740,10 @@ func (r *DocumentList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r DocumentList) String() (result string) {
+	return fmt.Sprintf("&DocumentList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type DocumentsPage struct {
@@ -14041,7 +13762,6 @@ func (r *DocumentsPage) GetNextPage() (*DocumentsPage, error) {
 	}
 }
 
-//
 type WireTransfer struct {
 	// The wire transfer's identifier.
 	ID *string `pjson:"id"`
@@ -14107,10 +13827,6 @@ func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *WireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransfer) String() (result string) {
-	return fmt.Sprintf("&WireTransfer{ID:%s MessageToRecipient:%s Amount:%s Currency:%s AccountNumber:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s AccountID:%s ExternalAccountID:%s RoutingNumber:%s Approval:%s Cancellation:%s Reversal:%s CreatedAt:%s Network:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.MessageToRecipient), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), core.FmtP(r.RoutingNumber), r.Approval, r.Cancellation, r.Reversal, core.FmtP(r.CreatedAt), core.FmtP(r.Network), core.FmtP(r.Status), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), core.FmtP(r.Type))
 }
 
 // The wire transfer's identifier.
@@ -14295,6 +14011,10 @@ func (r *WireTransfer) GetType() (Type WireTransferType) {
 	return
 }
 
+func (r WireTransfer) String() (result string) {
+	return fmt.Sprintf("&WireTransfer{ID:%s MessageToRecipient:%s Amount:%s Currency:%s AccountNumber:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s AccountID:%s ExternalAccountID:%s RoutingNumber:%s Approval:%s Cancellation:%s Reversal:%s CreatedAt:%s Network:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.MessageToRecipient), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), core.FmtP(r.RoutingNumber), r.Approval, r.Cancellation, r.Reversal, core.FmtP(r.CreatedAt), core.FmtP(r.Network), core.FmtP(r.Status), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), core.FmtP(r.Type))
+}
+
 type WireTransferCurrency string
 
 const (
@@ -14306,7 +14026,6 @@ const (
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
-//
 type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -14328,10 +14047,6 @@ func (r *WireTransferApproval) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferApproval) String() (result string) {
-	return fmt.Sprintf("&WireTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
 func (r *WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
@@ -14341,7 +14056,10 @@ func (r *WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
 	return
 }
 
-//
+func (r WireTransferApproval) String() (result string) {
+	return fmt.Sprintf("&WireTransferApproval{ApprovedAt:%s}", core.FmtP(r.ApprovedAt))
+}
+
 type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -14363,10 +14081,6 @@ func (r *WireTransferCancellation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferCancellation) String() (result string) {
-	return fmt.Sprintf("&WireTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
 func (r *WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
@@ -14376,7 +14090,10 @@ func (r *WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
 	return
 }
 
-//
+func (r WireTransferCancellation) String() (result string) {
+	return fmt.Sprintf("&WireTransferCancellation{CanceledAt:%s}", core.FmtP(r.CanceledAt))
+}
+
 type WireTransferReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -14418,10 +14135,6 @@ func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *WireTransferReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferReversal) String() (result string) {
-	return fmt.Sprintf("&WireTransferReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
 }
 
 // The amount that was reversed.
@@ -14521,6 +14234,10 @@ func (r *WireTransferReversal) GetFinancialInstitutionToFinancialInstitutionInfo
 	return
 }
 
+func (r WireTransferReversal) String() (result string) {
+	return fmt.Sprintf("&WireTransferReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
+}
+
 type WireTransferNetwork string
 
 const (
@@ -14539,7 +14256,6 @@ const (
 	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
 )
 
-//
 type WireTransferSubmission struct {
 	// The accountability data for the submission.
 	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
@@ -14562,10 +14278,6 @@ func (r *WireTransferSubmission) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSubmission) String() (result string) {
-	return fmt.Sprintf("&WireTransferSubmission{InputMessageAccountabilityData:%s SubmittedAt:%s}", core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.SubmittedAt))
-}
-
 // The accountability data for the submission.
 func (r *WireTransferSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
 	if r != nil && r.InputMessageAccountabilityData != nil {
@@ -14580,6 +14292,10 @@ func (r *WireTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
+}
+
+func (r WireTransferSubmission) String() (result string) {
+	return fmt.Sprintf("&WireTransferSubmission{InputMessageAccountabilityData:%s SubmittedAt:%s}", core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.SubmittedAt))
 }
 
 type WireTransferType string
@@ -14628,10 +14344,6 @@ func (r *CreateAWireTransferParameters) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CreateAWireTransferParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAWireTransferParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAWireTransferParameters{AccountID:%s AccountNumber:%s RoutingNumber:%s ExternalAccountID:%s Amount:%s MessageToRecipient:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.ExternalAccountID), core.FmtP(r.Amount), core.FmtP(r.MessageToRecipient), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.RequireApproval))
 }
 
 // The identifier for the account that will send the transfer.
@@ -14724,6 +14436,10 @@ func (r *CreateAWireTransferParameters) GetRequireApproval() (RequireApproval bo
 	return
 }
 
+func (r CreateAWireTransferParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAWireTransferParameters{AccountID:%s AccountNumber:%s RoutingNumber:%s ExternalAccountID:%s Amount:%s MessageToRecipient:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.ExternalAccountID), core.FmtP(r.Amount), core.FmtP(r.MessageToRecipient), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.RequireApproval))
+}
+
 type WireTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -14750,10 +14466,6 @@ func (r *WireTransferListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *WireTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferListParams) String() (result string) {
-	return fmt.Sprintf("&WireTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -14796,6 +14508,10 @@ func (r *WireTransferListParams) GetCreatedAt() (CreatedAt WireTransfersListPara
 	return
 }
 
+func (r WireTransferListParams) String() (result string) {
+	return fmt.Sprintf("&WireTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
+}
+
 type WireTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -14824,10 +14540,6 @@ func (r *WireTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error
 // top-level, and will overwrite known members of the same name.
 func (r *WireTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&WireTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -14866,7 +14578,10 @@ func (r *WireTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
-//
+func (r WireTransfersListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&WireTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type WireTransferList struct {
 	// The contents of the list.
 	Data *[]WireTransfer `pjson:"data"`
@@ -14888,10 +14603,6 @@ func (r *WireTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferList) String() (result string) {
-	return fmt.Sprintf("&WireTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *WireTransferList) GetData() (Data []WireTransfer) {
 	if r != nil && r.Data != nil {
@@ -14906,6 +14617,10 @@ func (r *WireTransferList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r WireTransferList) String() (result string) {
+	return fmt.Sprintf("&WireTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type WireTransfersPage struct {
@@ -14924,7 +14639,6 @@ func (r *WireTransfersPage) GetNextPage() (*WireTransfersPage, error) {
 	}
 }
 
-//
 type CheckTransfer struct {
 	// The identifier of the Account from which funds will be transferred.
 	AccountID *string `pjson:"account_id"`
@@ -14990,10 +14704,6 @@ func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CheckTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckTransfer) String() (result string) {
-	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, core.FmtP(r.Type))
 }
 
 // The identifier of the Account from which funds will be transferred.
@@ -15178,7 +14888,10 @@ func (r *CheckTransfer) GetType() (Type CheckTransferType) {
 	return
 }
 
-//
+func (r CheckTransfer) String() (result string) {
+	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, core.FmtP(r.Type))
+}
+
 type CheckTransferReturnAddress struct {
 	// The name of the address.
 	Name *string `pjson:"name"`
@@ -15207,10 +14920,6 @@ func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CheckTransferReturnAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckTransferReturnAddress) String() (result string) {
-	return fmt.Sprintf("&CheckTransferReturnAddress{Name:%s Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Name), core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The name of the address.
@@ -15261,6 +14970,10 @@ func (r *CheckTransferReturnAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r CheckTransferReturnAddress) String() (result string) {
+	return fmt.Sprintf("&CheckTransferReturnAddress{Name:%s Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Name), core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CheckTransferCurrency string
 
 const (
@@ -15289,7 +15002,6 @@ const (
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 )
 
-//
 type CheckTransferSubmission struct {
 	// The identitying number of the check.
 	CheckNumber *string                `pjson:"check_number"`
@@ -15310,10 +15022,6 @@ func (r *CheckTransferSubmission) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CheckTransferSubmission) String() (result string) {
-	return fmt.Sprintf("&CheckTransferSubmission{CheckNumber:%s}", core.FmtP(r.CheckNumber))
-}
-
 // The identitying number of the check.
 func (r *CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
 	if r != nil && r.CheckNumber != nil {
@@ -15322,7 +15030,10 @@ func (r *CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
 	return
 }
 
-//
+func (r CheckTransferSubmission) String() (result string) {
+	return fmt.Sprintf("&CheckTransferSubmission{CheckNumber:%s}", core.FmtP(r.CheckNumber))
+}
+
 type CheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID *string `pjson:"transfer_id"`
@@ -15348,10 +15059,6 @@ func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error)
 // top-level, and will overwrite known members of the same name.
 func (r *CheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckTransferStopPaymentRequest) String() (result string) {
-	return fmt.Sprintf("&CheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
 }
 
 // The ID of the check transfer that was stopped.
@@ -15387,13 +15094,16 @@ func (r *CheckTransferStopPaymentRequest) GetType() (Type CheckTransferStopPayme
 	return
 }
 
+func (r CheckTransferStopPaymentRequest) String() (result string) {
+	return fmt.Sprintf("&CheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
+}
+
 type CheckTransferStopPaymentRequestType string
 
 const (
 	CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest CheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
-//
 type CheckTransferDeposit struct {
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID *string `pjson:"front_image_file_id"`
@@ -15419,10 +15129,6 @@ func (r *CheckTransferDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CheckTransferDeposit) String() (result string) {
-	return fmt.Sprintf("&CheckTransferDeposit{FrontImageFileID:%s BackImageFileID:%s Type:%s}", core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.Type))
-}
-
 // The ID for the File containing the image of the front of the check.
 func (r *CheckTransferDeposit) GetFrontImageFileID() (FrontImageFileID string) {
 	if r != nil && r.FrontImageFileID != nil {
@@ -15446,6 +15152,10 @@ func (r *CheckTransferDeposit) GetType() (Type CheckTransferDepositType) {
 		Type = *r.Type
 	}
 	return
+}
+
+func (r CheckTransferDeposit) String() (result string) {
+	return fmt.Sprintf("&CheckTransferDeposit{FrontImageFileID:%s BackImageFileID:%s Type:%s}", core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.Type))
 }
 
 type CheckTransferDepositType string
@@ -15499,10 +15209,6 @@ func (r *CreateACheckTransferParameters) UnmarshalJSON(data []byte) (err error) 
 // top-level, and will overwrite known members of the same name.
 func (r *CreateACheckTransferParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACheckTransferParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACheckTransferParameters{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s Message:%s RecipientName:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.RequireApproval))
 }
 
 // The identifier for the account that will send the transfer.
@@ -15594,7 +15300,10 @@ func (r *CreateACheckTransferParameters) GetRequireApproval() (RequireApproval b
 	return
 }
 
-//
+func (r CreateACheckTransferParameters) String() (result string) {
+	return fmt.Sprintf("&CreateACheckTransferParameters{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s Message:%s RecipientName:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.RequireApproval))
+}
+
 type CreateACheckTransferParametersReturnAddress struct {
 	// The name of the return address.
 	Name *string `pjson:"name"`
@@ -15623,10 +15332,6 @@ func (r *CreateACheckTransferParametersReturnAddress) UnmarshalJSON(data []byte)
 // into the top-level, and will overwrite known members of the same name.
 func (r *CreateACheckTransferParametersReturnAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateACheckTransferParametersReturnAddress) String() (result string) {
-	return fmt.Sprintf("&CreateACheckTransferParametersReturnAddress{Name:%s Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Name), core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The name of the return address.
@@ -15677,6 +15382,10 @@ func (r *CreateACheckTransferParametersReturnAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r CreateACheckTransferParametersReturnAddress) String() (result string) {
+	return fmt.Sprintf("&CreateACheckTransferParametersReturnAddress{Name:%s Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Name), core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CheckTransferListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -15701,10 +15410,6 @@ func (r *CheckTransferListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CheckTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckTransferListParams) String() (result string) {
-	return fmt.Sprintf("&CheckTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -15739,6 +15444,10 @@ func (r *CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransfersListPa
 	return
 }
 
+func (r CheckTransferListParams) String() (result string) {
+	return fmt.Sprintf("&CheckTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
+}
+
 type CheckTransfersListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -15767,10 +15476,6 @@ func (r *CheckTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *CheckTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CheckTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -15809,7 +15514,10 @@ func (r *CheckTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) 
 	return
 }
 
-//
+func (r CheckTransfersListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CheckTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type CheckTransferList struct {
 	// The contents of the list.
 	Data *[]CheckTransfer `pjson:"data"`
@@ -15831,10 +15539,6 @@ func (r *CheckTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CheckTransferList) String() (result string) {
-	return fmt.Sprintf("&CheckTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *CheckTransferList) GetData() (Data []CheckTransfer) {
 	if r != nil && r.Data != nil {
@@ -15849,6 +15553,10 @@ func (r *CheckTransferList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r CheckTransferList) String() (result string) {
+	return fmt.Sprintf("&CheckTransferList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CheckTransfersPage struct {
@@ -15867,7 +15575,6 @@ func (r *CheckTransfersPage) GetNextPage() (*CheckTransfersPage, error) {
 	}
 }
 
-//
 type Entity struct {
 	// The entity's identifier.
 	ID *string `pjson:"id"`
@@ -15906,10 +15613,6 @@ func (r *Entity) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Entity) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Entity) String() (result string) {
-	return fmt.Sprintf("&Entity{ID:%s Structure:%s Corporation:%s NaturalPerson:%s Joint:%s Trust:%s Type:%s Description:%s Relationship:%s SupplementalDocuments:%s}", core.FmtP(r.ID), core.FmtP(r.Structure), r.Corporation, r.NaturalPerson, r.Joint, r.Trust, core.FmtP(r.Type), core.FmtP(r.Description), core.FmtP(r.Relationship), core.Fmt(r.SupplementalDocuments))
 }
 
 // The entity's identifier.
@@ -15995,6 +15698,10 @@ func (r *Entity) GetSupplementalDocuments() (SupplementalDocuments []EntitySuppl
 	return
 }
 
+func (r Entity) String() (result string) {
+	return fmt.Sprintf("&Entity{ID:%s Structure:%s Corporation:%s NaturalPerson:%s Joint:%s Trust:%s Type:%s Description:%s Relationship:%s SupplementalDocuments:%s}", core.FmtP(r.ID), core.FmtP(r.Structure), r.Corporation, r.NaturalPerson, r.Joint, r.Trust, core.FmtP(r.Type), core.FmtP(r.Description), core.FmtP(r.Relationship), core.Fmt(r.SupplementalDocuments))
+}
+
 type EntityStructure string
 
 const (
@@ -16004,7 +15711,6 @@ const (
 	EntityStructureTrust         EntityStructure = "trust"
 )
 
-//
 type EntityCorporation struct {
 	// The legal name of the corporation.
 	Name *string `pjson:"name"`
@@ -16034,10 +15740,6 @@ func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *EntityCorporation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityCorporation) String() (result string) {
-	return fmt.Sprintf("&EntityCorporation{Name:%s Website:%s TaxIdentifier:%s IncorporationState:%s Address:%s BeneficialOwners:%s}", core.FmtP(r.Name), core.FmtP(r.Website), core.FmtP(r.TaxIdentifier), core.FmtP(r.IncorporationState), r.Address, core.Fmt(r.BeneficialOwners))
 }
 
 // The legal name of the corporation.
@@ -16090,7 +15792,10 @@ func (r *EntityCorporation) GetBeneficialOwners() (BeneficialOwners []EntityCorp
 	return
 }
 
-//
+func (r EntityCorporation) String() (result string) {
+	return fmt.Sprintf("&EntityCorporation{Name:%s Website:%s TaxIdentifier:%s IncorporationState:%s Address:%s BeneficialOwners:%s}", core.FmtP(r.Name), core.FmtP(r.Website), core.FmtP(r.TaxIdentifier), core.FmtP(r.IncorporationState), r.Address, core.Fmt(r.BeneficialOwners))
+}
+
 type EntityCorporationAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -16118,10 +15823,6 @@ func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *EntityCorporationAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityCorporationAddress) String() (result string) {
-	return fmt.Sprintf("&EntityCorporationAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -16165,6 +15866,10 @@ func (r *EntityCorporationAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r EntityCorporationAddress) String() (result string) {
+	return fmt.Sprintf("&EntityCorporationAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
 	Individual *EntityCorporationBeneficialOwnersIndividual `pjson:"individual"`
@@ -16187,10 +15892,6 @@ func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *EntityCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityCorporationBeneficialOwners) String() (result string) {
-	return fmt.Sprintf("&EntityCorporationBeneficialOwners{Individual:%s CompanyTitle:%s Prong:%s}", r.Individual, core.FmtP(r.CompanyTitle), core.FmtP(r.Prong))
 }
 
 // Personal details for the beneficial owner.
@@ -16217,7 +15918,10 @@ func (r *EntityCorporationBeneficialOwners) GetProng() (Prong EntityCorporationB
 	return
 }
 
-//
+func (r EntityCorporationBeneficialOwners) String() (result string) {
+	return fmt.Sprintf("&EntityCorporationBeneficialOwners{Individual:%s CompanyTitle:%s Prong:%s}", r.Individual, core.FmtP(r.CompanyTitle), core.FmtP(r.Prong))
+}
+
 type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -16242,10 +15946,6 @@ func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte)
 // into the top-level, and will overwrite known members of the same name.
 func (r *EntityCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityCorporationBeneficialOwnersIndividual) String() (result string) {
-	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividual{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
 }
 
 // The person's legal name.
@@ -16280,7 +15980,10 @@ func (r *EntityCorporationBeneficialOwnersIndividual) GetIdentification() (Ident
 	return
 }
 
-//
+func (r EntityCorporationBeneficialOwnersIndividual) String() (result string) {
+	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividual{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
+}
+
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -16309,10 +16012,6 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data 
 // name.
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityCorporationBeneficialOwnersIndividualAddress) String() (result string) {
-	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -16356,7 +16055,10 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip strin
 	return
 }
 
-//
+func (r EntityCorporationBeneficialOwnersIndividualAddress) String() (result string) {
+	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *EntityCorporationBeneficialOwnersIndividualIdentificationMethod `pjson:"method"`
@@ -16381,10 +16083,6 @@ func (r *EntityCorporationBeneficialOwnersIndividualIdentification) MarshalJSON(
 	return pjson.Marshal(r)
 }
 
-func (r EntityCorporationBeneficialOwnersIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividualIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
-}
-
 // A method that can be used to verify the individual's identity.
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) GetMethod() (Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod) {
 	if r != nil && r.Method != nil {
@@ -16400,6 +16098,10 @@ func (r *EntityCorporationBeneficialOwnersIndividualIdentification) GetNumberLas
 		NumberLast4 = *r.NumberLast4
 	}
 	return
+}
+
+func (r EntityCorporationBeneficialOwnersIndividualIdentification) String() (result string) {
+	return fmt.Sprintf("&EntityCorporationBeneficialOwnersIndividualIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
 }
 
 type EntityCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -16418,7 +16120,6 @@ const (
 	EntityCorporationBeneficialOwnersProngControl   EntityCorporationBeneficialOwnersProng = "control"
 )
 
-//
 type EntityNaturalPerson struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -16442,10 +16143,6 @@ func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *EntityNaturalPerson) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityNaturalPerson) String() (result string) {
-	return fmt.Sprintf("&EntityNaturalPerson{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
 }
 
 // The person's legal name.
@@ -16480,7 +16177,10 @@ func (r *EntityNaturalPerson) GetIdentification() (Identification EntityNaturalP
 	return
 }
 
-//
+func (r EntityNaturalPerson) String() (result string) {
+	return fmt.Sprintf("&EntityNaturalPerson{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
+}
+
 type EntityNaturalPersonAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -16508,10 +16208,6 @@ func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EntityNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityNaturalPersonAddress) String() (result string) {
-	return fmt.Sprintf("&EntityNaturalPersonAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -16555,7 +16251,10 @@ func (r *EntityNaturalPersonAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r EntityNaturalPersonAddress) String() (result string) {
+	return fmt.Sprintf("&EntityNaturalPersonAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *EntityNaturalPersonIdentificationMethod `pjson:"method"`
@@ -16579,10 +16278,6 @@ func (r *EntityNaturalPersonIdentification) MarshalJSON() (data []byte, err erro
 	return pjson.Marshal(r)
 }
 
-func (r EntityNaturalPersonIdentification) String() (result string) {
-	return fmt.Sprintf("&EntityNaturalPersonIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
-}
-
 // A method that can be used to verify the individual's identity.
 func (r *EntityNaturalPersonIdentification) GetMethod() (Method EntityNaturalPersonIdentificationMethod) {
 	if r != nil && r.Method != nil {
@@ -16600,6 +16295,10 @@ func (r *EntityNaturalPersonIdentification) GetNumberLast4() (NumberLast4 string
 	return
 }
 
+func (r EntityNaturalPersonIdentification) String() (result string) {
+	return fmt.Sprintf("&EntityNaturalPersonIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
+}
+
 type EntityNaturalPersonIdentificationMethod string
 
 const (
@@ -16609,7 +16308,6 @@ const (
 	EntityNaturalPersonIdentificationMethodDriversLicense                         EntityNaturalPersonIdentificationMethod = "drivers_license"
 )
 
-//
 type EntityJoint struct {
 	// The entity's name.
 	Name *string `pjson:"name"`
@@ -16631,10 +16329,6 @@ func (r *EntityJoint) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EntityJoint) String() (result string) {
-	return fmt.Sprintf("&EntityJoint{Name:%s Individuals:%s}", core.FmtP(r.Name), core.Fmt(r.Individuals))
-}
-
 // The entity's name.
 func (r *EntityJoint) GetName() (Name string) {
 	if r != nil && r.Name != nil {
@@ -16649,6 +16343,10 @@ func (r *EntityJoint) GetIndividuals() (Individuals []EntityJointIndividuals) {
 		Individuals = *r.Individuals
 	}
 	return
+}
+
+func (r EntityJoint) String() (result string) {
+	return fmt.Sprintf("&EntityJoint{Name:%s Individuals:%s}", core.FmtP(r.Name), core.Fmt(r.Individuals))
 }
 
 type EntityJointIndividuals struct {
@@ -16675,10 +16373,6 @@ func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *EntityJointIndividuals) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityJointIndividuals) String() (result string) {
-	return fmt.Sprintf("&EntityJointIndividuals{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
 }
 
 // The person's legal name.
@@ -16713,7 +16407,10 @@ func (r *EntityJointIndividuals) GetIdentification() (Identification EntityJoint
 	return
 }
 
-//
+func (r EntityJointIndividuals) String() (result string) {
+	return fmt.Sprintf("&EntityJointIndividuals{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
+}
+
 type EntityJointIndividualsAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -16741,10 +16438,6 @@ func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EntityJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityJointIndividualsAddress) String() (result string) {
-	return fmt.Sprintf("&EntityJointIndividualsAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -16788,7 +16481,10 @@ func (r *EntityJointIndividualsAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r EntityJointIndividualsAddress) String() (result string) {
+	return fmt.Sprintf("&EntityJointIndividualsAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *EntityJointIndividualsIdentificationMethod `pjson:"method"`
@@ -16812,10 +16508,6 @@ func (r *EntityJointIndividualsIdentification) MarshalJSON() (data []byte, err e
 	return pjson.Marshal(r)
 }
 
-func (r EntityJointIndividualsIdentification) String() (result string) {
-	return fmt.Sprintf("&EntityJointIndividualsIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
-}
-
 // A method that can be used to verify the individual's identity.
 func (r *EntityJointIndividualsIdentification) GetMethod() (Method EntityJointIndividualsIdentificationMethod) {
 	if r != nil && r.Method != nil {
@@ -16833,6 +16525,10 @@ func (r *EntityJointIndividualsIdentification) GetNumberLast4() (NumberLast4 str
 	return
 }
 
+func (r EntityJointIndividualsIdentification) String() (result string) {
+	return fmt.Sprintf("&EntityJointIndividualsIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
+}
+
 type EntityJointIndividualsIdentificationMethod string
 
 const (
@@ -16842,7 +16538,6 @@ const (
 	EntityJointIndividualsIdentificationMethodDriversLicense                         EntityJointIndividualsIdentificationMethod = "drivers_license"
 )
 
-//
 type EntityTrust struct {
 	// The trust's name
 	Name *string `pjson:"name"`
@@ -16875,10 +16570,6 @@ func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *EntityTrust) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrust) String() (result string) {
-	return fmt.Sprintf("&EntityTrust{Name:%s Category:%s Address:%s FormationState:%s TaxIdentifier:%s Trustees:%s Grantor:%s FormationDocumentFileID:%s}", core.FmtP(r.Name), core.FmtP(r.Category), r.Address, core.FmtP(r.FormationState), core.FmtP(r.TaxIdentifier), core.Fmt(r.Trustees), r.Grantor, core.FmtP(r.FormationDocumentFileID))
 }
 
 // The trust's name
@@ -16946,6 +16637,10 @@ func (r *EntityTrust) GetFormationDocumentFileID() (FormationDocumentFileID stri
 	return
 }
 
+func (r EntityTrust) String() (result string) {
+	return fmt.Sprintf("&EntityTrust{Name:%s Category:%s Address:%s FormationState:%s TaxIdentifier:%s Trustees:%s Grantor:%s FormationDocumentFileID:%s}", core.FmtP(r.Name), core.FmtP(r.Category), r.Address, core.FmtP(r.FormationState), core.FmtP(r.TaxIdentifier), core.Fmt(r.Trustees), r.Grantor, core.FmtP(r.FormationDocumentFileID))
+}
+
 type EntityTrustCategory string
 
 const (
@@ -16953,7 +16648,6 @@ const (
 	EntityTrustCategoryIrrevocable EntityTrustCategory = "irrevocable"
 )
 
-//
 type EntityTrustAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -16980,10 +16674,6 @@ func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *EntityTrustAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrustAddress) String() (result string) {
-	return fmt.Sprintf("&EntityTrustAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -17027,6 +16717,10 @@ func (r *EntityTrustAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r EntityTrustAddress) String() (result string) {
+	return fmt.Sprintf("&EntityTrustAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityTrustTrustees struct {
 	// The structure of the trustee. Will always be equal to `individual`.
 	Structure *EntityTrustTrusteesStructure `pjson:"structure"`
@@ -17049,10 +16743,6 @@ func (r *EntityTrustTrustees) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EntityTrustTrustees) String() (result string) {
-	return fmt.Sprintf("&EntityTrustTrustees{Structure:%s Individual:%s}", core.FmtP(r.Structure), r.Individual)
-}
-
 // The structure of the trustee. Will always be equal to `individual`.
 func (r *EntityTrustTrustees) GetStructure() (Structure EntityTrustTrusteesStructure) {
 	if r != nil && r.Structure != nil {
@@ -17070,13 +16760,16 @@ func (r *EntityTrustTrustees) GetIndividual() (Individual EntityTrustTrusteesInd
 	return
 }
 
+func (r EntityTrustTrustees) String() (result string) {
+	return fmt.Sprintf("&EntityTrustTrustees{Structure:%s Individual:%s}", core.FmtP(r.Structure), r.Individual)
+}
+
 type EntityTrustTrusteesStructure string
 
 const (
 	EntityTrustTrusteesStructureIndividual EntityTrustTrusteesStructure = "individual"
 )
 
-//
 type EntityTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -17101,10 +16794,6 @@ func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EntityTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrustTrusteesIndividual) String() (result string) {
-	return fmt.Sprintf("&EntityTrustTrusteesIndividual{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
 }
 
 // The person's legal name.
@@ -17139,7 +16828,10 @@ func (r *EntityTrustTrusteesIndividual) GetIdentification() (Identification Enti
 	return
 }
 
-//
+func (r EntityTrustTrusteesIndividual) String() (result string) {
+	return fmt.Sprintf("&EntityTrustTrusteesIndividual{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
+}
+
 type EntityTrustTrusteesIndividualAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -17167,10 +16859,6 @@ func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *EntityTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrustTrusteesIndividualAddress) String() (result string) {
-	return fmt.Sprintf("&EntityTrustTrusteesIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -17214,7 +16902,10 @@ func (r *EntityTrustTrusteesIndividualAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r EntityTrustTrusteesIndividualAddress) String() (result string) {
+	return fmt.Sprintf("&EntityTrustTrusteesIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *EntityTrustTrusteesIndividualIdentificationMethod `pjson:"method"`
@@ -17238,10 +16929,6 @@ func (r *EntityTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte
 	return pjson.Marshal(r)
 }
 
-func (r EntityTrustTrusteesIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&EntityTrustTrusteesIndividualIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
-}
-
 // A method that can be used to verify the individual's identity.
 func (r *EntityTrustTrusteesIndividualIdentification) GetMethod() (Method EntityTrustTrusteesIndividualIdentificationMethod) {
 	if r != nil && r.Method != nil {
@@ -17259,6 +16946,10 @@ func (r *EntityTrustTrusteesIndividualIdentification) GetNumberLast4() (NumberLa
 	return
 }
 
+func (r EntityTrustTrusteesIndividualIdentification) String() (result string) {
+	return fmt.Sprintf("&EntityTrustTrusteesIndividualIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
+}
+
 type EntityTrustTrusteesIndividualIdentificationMethod string
 
 const (
@@ -17268,7 +16959,6 @@ const (
 	EntityTrustTrusteesIndividualIdentificationMethodDriversLicense                         EntityTrustTrusteesIndividualIdentificationMethod = "drivers_license"
 )
 
-//
 type EntityTrustGrantor struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -17292,10 +16982,6 @@ func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *EntityTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrustGrantor) String() (result string) {
-	return fmt.Sprintf("&EntityTrustGrantor{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
 }
 
 // The person's legal name.
@@ -17330,7 +17016,10 @@ func (r *EntityTrustGrantor) GetIdentification() (Identification EntityTrustGran
 	return
 }
 
-//
+func (r EntityTrustGrantor) String() (result string) {
+	return fmt.Sprintf("&EntityTrustGrantor{Name:%s DateOfBirth:%s Address:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, r.Identification)
+}
+
 type EntityTrustGrantorAddress struct {
 	// The first line of the address.
 	Line1 *string `pjson:"line1"`
@@ -17358,10 +17047,6 @@ func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EntityTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EntityTrustGrantorAddress) String() (result string) {
-	return fmt.Sprintf("&EntityTrustGrantorAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address.
@@ -17405,7 +17090,10 @@ func (r *EntityTrustGrantorAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r EntityTrustGrantorAddress) String() (result string) {
+	return fmt.Sprintf("&EntityTrustGrantorAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type EntityTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *EntityTrustGrantorIdentificationMethod `pjson:"method"`
@@ -17429,10 +17117,6 @@ func (r *EntityTrustGrantorIdentification) MarshalJSON() (data []byte, err error
 	return pjson.Marshal(r)
 }
 
-func (r EntityTrustGrantorIdentification) String() (result string) {
-	return fmt.Sprintf("&EntityTrustGrantorIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
-}
-
 // A method that can be used to verify the individual's identity.
 func (r *EntityTrustGrantorIdentification) GetMethod() (Method EntityTrustGrantorIdentificationMethod) {
 	if r != nil && r.Method != nil {
@@ -17448,6 +17132,10 @@ func (r *EntityTrustGrantorIdentification) GetNumberLast4() (NumberLast4 string)
 		NumberLast4 = *r.NumberLast4
 	}
 	return
+}
+
+func (r EntityTrustGrantorIdentification) String() (result string) {
+	return fmt.Sprintf("&EntityTrustGrantorIdentification{Method:%s NumberLast4:%s}", core.FmtP(r.Method), core.FmtP(r.NumberLast4))
 }
 
 type EntityTrustGrantorIdentificationMethod string
@@ -17493,16 +17181,16 @@ func (r *EntitySupplementalDocuments) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EntitySupplementalDocuments) String() (result string) {
-	return fmt.Sprintf("&EntitySupplementalDocuments{FileID:%s}", core.FmtP(r.FileID))
-}
-
 // The File containing the document.
 func (r *EntitySupplementalDocuments) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
+}
+
+func (r EntitySupplementalDocuments) String() (result string) {
+	return fmt.Sprintf("&EntitySupplementalDocuments{FileID:%s}", core.FmtP(r.FileID))
 }
 
 type CreateAnEntityParameters struct {
@@ -17541,10 +17229,6 @@ func (r *CreateAnEntityParameters) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CreateAnEntityParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParameters{Structure:%s Corporation:%s NaturalPerson:%s Joint:%s Trust:%s Description:%s Relationship:%s SupplementalDocuments:%s}", core.FmtP(r.Structure), r.Corporation, r.NaturalPerson, r.Joint, r.Trust, core.FmtP(r.Description), core.FmtP(r.Relationship), core.Fmt(r.SupplementalDocuments))
 }
 
 // The type of Entity to create.
@@ -17615,6 +17299,10 @@ func (r *CreateAnEntityParameters) GetSupplementalDocuments() (SupplementalDocum
 	return
 }
 
+func (r CreateAnEntityParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParameters{Structure:%s Corporation:%s NaturalPerson:%s Joint:%s Trust:%s Description:%s Relationship:%s SupplementalDocuments:%s}", core.FmtP(r.Structure), r.Corporation, r.NaturalPerson, r.Joint, r.Trust, core.FmtP(r.Description), core.FmtP(r.Relationship), core.Fmt(r.SupplementalDocuments))
+}
+
 type CreateAnEntityParametersStructure string
 
 const (
@@ -17624,7 +17312,6 @@ const (
 	CreateAnEntityParametersStructureTrust         CreateAnEntityParametersStructure = "trust"
 )
 
-//
 type CreateAnEntityParametersCorporation struct {
 	// The legal name of the corporation.
 	Name *string `pjson:"name"`
@@ -17655,10 +17342,6 @@ func (r *CreateAnEntityParametersCorporation) UnmarshalJSON(data []byte) (err er
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersCorporation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporation) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporation{Name:%s Website:%s TaxIdentifier:%s IncorporationState:%s Address:%s BeneficialOwners:%s}", core.FmtP(r.Name), core.FmtP(r.Website), core.FmtP(r.TaxIdentifier), core.FmtP(r.IncorporationState), r.Address, core.Fmt(r.BeneficialOwners))
 }
 
 // The legal name of the corporation.
@@ -17711,7 +17394,10 @@ func (r *CreateAnEntityParametersCorporation) GetBeneficialOwners() (BeneficialO
 	return
 }
 
-//
+func (r CreateAnEntityParametersCorporation) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporation{Name:%s Website:%s TaxIdentifier:%s IncorporationState:%s Address:%s BeneficialOwners:%s}", core.FmtP(r.Name), core.FmtP(r.Website), core.FmtP(r.TaxIdentifier), core.FmtP(r.IncorporationState), r.Address, core.Fmt(r.BeneficialOwners))
+}
+
 type CreateAnEntityParametersCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -17739,10 +17425,6 @@ func (r *CreateAnEntityParametersCorporationAddress) UnmarshalJSON(data []byte) 
 // into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersCorporationAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporationAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -17786,6 +17468,10 @@ func (r *CreateAnEntityParametersCorporationAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r CreateAnEntityParametersCorporationAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
 	Individual *CreateAnEntityParametersCorporationBeneficialOwnersIndividual `pjson:"individual"`
@@ -17809,10 +17495,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwners) UnmarshalJSON(data
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporationBeneficialOwners) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwners{Individual:%s CompanyTitle:%s Prong:%s}", r.Individual, core.FmtP(r.CompanyTitle), core.FmtP(r.Prong))
 }
 
 // Personal details for the beneficial owner.
@@ -17839,7 +17521,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetProng() (Prong 
 	return
 }
 
-//
+func (r CreateAnEntityParametersCorporationBeneficialOwners) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwners{Individual:%s CompanyTitle:%s Prong:%s}", r.Individual, core.FmtP(r.CompanyTitle), core.FmtP(r.Prong))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -17869,10 +17554,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) Unmarsha
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividual{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
 }
 
 // The person's legal name.
@@ -17917,7 +17598,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetIdent
 	return
 }
 
-//
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividual{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -17947,10 +17631,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) U
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -17994,7 +17674,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) G
 	return
 }
 
-//
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod `pjson:"method"`
@@ -18025,10 +17708,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -18066,6 +17745,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return
 }
 
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
@@ -18075,7 +17758,6 @@ const (
 	CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
 )
 
-//
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
@@ -18103,10 +17785,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
-}
-
 // The identifier of the File containing the passport.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -18131,7 +17809,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return
 }
 
-//
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
@@ -18159,10 +17840,6 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
-}
-
 // The identifier of the File containing the driver's license.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -18187,6 +17864,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return
 }
 
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersProng string
 
 const (
@@ -18194,7 +17875,6 @@ const (
 	CreateAnEntityParametersCorporationBeneficialOwnersProngControl   CreateAnEntityParametersCorporationBeneficialOwnersProng = "control"
 )
 
-//
 type CreateAnEntityParametersNaturalPerson struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -18223,10 +17903,6 @@ func (r *CreateAnEntityParametersNaturalPerson) UnmarshalJSON(data []byte) (err 
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersNaturalPerson) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersNaturalPerson) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPerson{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
 }
 
 // The person's legal name.
@@ -18271,7 +17947,10 @@ func (r *CreateAnEntityParametersNaturalPerson) GetIdentification() (Identificat
 	return
 }
 
-//
+func (r CreateAnEntityParametersNaturalPerson) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPerson{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
+}
+
 type CreateAnEntityParametersNaturalPersonAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -18300,10 +17979,6 @@ func (r *CreateAnEntityParametersNaturalPersonAddress) UnmarshalJSON(data []byte
 // name.
 func (r *CreateAnEntityParametersNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersNaturalPersonAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -18347,7 +18022,10 @@ func (r *CreateAnEntityParametersNaturalPersonAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r CreateAnEntityParametersNaturalPersonAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *CreateAnEntityParametersNaturalPersonIdentificationMethod `pjson:"method"`
@@ -18376,10 +18054,6 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) UnmarshalJSON(data
 // name.
 func (r *CreateAnEntityParametersNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersNaturalPersonIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -18417,6 +18091,10 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetDriversLicense(
 	return
 }
 
+func (r CreateAnEntityParametersNaturalPersonIdentification) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+}
+
 type CreateAnEntityParametersNaturalPersonIdentificationMethod string
 
 const (
@@ -18426,7 +18104,6 @@ const (
 	CreateAnEntityParametersNaturalPersonIdentificationMethodDriversLicense                         CreateAnEntityParametersNaturalPersonIdentificationMethod = "drivers_license"
 )
 
-//
 type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
@@ -18450,10 +18127,6 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) UnmarshalJ
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
 }
 
 // The identifier of the File containing the passport.
@@ -18480,7 +18153,10 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetCountry
 	return
 }
 
-//
+func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
+}
+
 type CreateAnEntityParametersNaturalPersonIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
@@ -18504,10 +18180,6 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) Unma
 // into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
 }
 
 // The identifier of the File containing the driver's license.
@@ -18534,7 +18206,10 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetS
 	return
 }
 
-//
+func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
 type CreateAnEntityParametersJoint struct {
 	// The name of the joint entity.
 	Name *string `pjson:"name"`
@@ -18557,10 +18232,6 @@ func (r *CreateAnEntityParametersJoint) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersJoint) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJoint{Name:%s Individuals:%s}", core.FmtP(r.Name), core.Fmt(r.Individuals))
-}
-
 // The name of the joint entity.
 func (r *CreateAnEntityParametersJoint) GetName() (Name string) {
 	if r != nil && r.Name != nil {
@@ -18575,6 +18246,10 @@ func (r *CreateAnEntityParametersJoint) GetIndividuals() (Individuals []CreateAn
 		Individuals = *r.Individuals
 	}
 	return
+}
+
+func (r CreateAnEntityParametersJoint) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJoint{Name:%s Individuals:%s}", core.FmtP(r.Name), core.Fmt(r.Individuals))
 }
 
 type CreateAnEntityParametersJointIndividuals struct {
@@ -18605,10 +18280,6 @@ func (r *CreateAnEntityParametersJointIndividuals) UnmarshalJSON(data []byte) (e
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJointIndividuals) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersJointIndividuals) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividuals{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
 }
 
 // The person's legal name.
@@ -18653,7 +18324,10 @@ func (r *CreateAnEntityParametersJointIndividuals) GetIdentification() (Identifi
 	return
 }
 
-//
+func (r CreateAnEntityParametersJointIndividuals) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividuals{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
+}
+
 type CreateAnEntityParametersJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -18682,10 +18356,6 @@ func (r *CreateAnEntityParametersJointIndividualsAddress) UnmarshalJSON(data []b
 // name.
 func (r *CreateAnEntityParametersJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersJointIndividualsAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -18729,7 +18399,10 @@ func (r *CreateAnEntityParametersJointIndividualsAddress) GetZip() (Zip string) 
 	return
 }
 
-//
+func (r CreateAnEntityParametersJointIndividualsAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *CreateAnEntityParametersJointIndividualsIdentificationMethod `pjson:"method"`
@@ -18758,10 +18431,6 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) UnmarshalJSON(d
 // name.
 func (r *CreateAnEntityParametersJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersJointIndividualsIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -18799,6 +18468,10 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetDriversLicen
 	return
 }
 
+func (r CreateAnEntityParametersJointIndividualsIdentification) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+}
+
 type CreateAnEntityParametersJointIndividualsIdentificationMethod string
 
 const (
@@ -18808,7 +18481,6 @@ const (
 	CreateAnEntityParametersJointIndividualsIdentificationMethodDriversLicense                         CreateAnEntityParametersJointIndividualsIdentificationMethod = "drivers_license"
 )
 
-//
 type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
@@ -18832,10 +18504,6 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) Unmarsh
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
 }
 
 // The identifier of the File containing the passport.
@@ -18862,7 +18530,10 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetCoun
 	return
 }
 
-//
+func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
+}
+
 type CreateAnEntityParametersJointIndividualsIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
@@ -18889,10 +18560,6 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) M
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
-}
-
 // The identifier of the File containing the driver's license.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -18917,7 +18584,10 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) G
 	return
 }
 
-//
+func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
 type CreateAnEntityParametersTrust struct {
 	// The legal name of the trust.
 	Name *string `pjson:"name"`
@@ -18954,10 +18624,6 @@ func (r *CreateAnEntityParametersTrust) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrust) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrust) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrust{Name:%s Category:%s TaxIdentifier:%s FormationState:%s Address:%s FormationDocumentFileID:%s Trustees:%s Grantor:%s}", core.FmtP(r.Name), core.FmtP(r.Category), core.FmtP(r.TaxIdentifier), core.FmtP(r.FormationState), r.Address, core.FmtP(r.FormationDocumentFileID), core.Fmt(r.Trustees), r.Grantor)
 }
 
 // The legal name of the trust.
@@ -19028,6 +18694,10 @@ func (r *CreateAnEntityParametersTrust) GetGrantor() (Grantor CreateAnEntityPara
 	return
 }
 
+func (r CreateAnEntityParametersTrust) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrust{Name:%s Category:%s TaxIdentifier:%s FormationState:%s Address:%s FormationDocumentFileID:%s Trustees:%s Grantor:%s}", core.FmtP(r.Name), core.FmtP(r.Category), core.FmtP(r.TaxIdentifier), core.FmtP(r.FormationState), r.Address, core.FmtP(r.FormationDocumentFileID), core.Fmt(r.Trustees), r.Grantor)
+}
+
 type CreateAnEntityParametersTrustCategory string
 
 const (
@@ -19035,7 +18705,6 @@ const (
 	CreateAnEntityParametersTrustCategoryIrrevocable CreateAnEntityParametersTrustCategory = "irrevocable"
 )
 
-//
 type CreateAnEntityParametersTrustAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -19063,10 +18732,6 @@ func (r *CreateAnEntityParametersTrustAddress) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -19110,6 +18775,10 @@ func (r *CreateAnEntityParametersTrustAddress) GetZip() (Zip string) {
 	return
 }
 
+func (r CreateAnEntityParametersTrustAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersTrustTrustees struct {
 	// The structure of the trustee.
 	Structure *CreateAnEntityParametersTrustTrusteesStructure `pjson:"structure"`
@@ -19133,10 +18802,6 @@ func (r *CreateAnEntityParametersTrustTrustees) MarshalJSON() (data []byte, err 
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersTrustTrustees) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrustees{Structure:%s Individual:%s}", core.FmtP(r.Structure), r.Individual)
-}
-
 // The structure of the trustee.
 func (r *CreateAnEntityParametersTrustTrustees) GetStructure() (Structure CreateAnEntityParametersTrustTrusteesStructure) {
 	if r != nil && r.Structure != nil {
@@ -19154,13 +18819,16 @@ func (r *CreateAnEntityParametersTrustTrustees) GetIndividual() (Individual Crea
 	return
 }
 
+func (r CreateAnEntityParametersTrustTrustees) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrustees{Structure:%s Individual:%s}", core.FmtP(r.Structure), r.Individual)
+}
+
 type CreateAnEntityParametersTrustTrusteesStructure string
 
 const (
 	CreateAnEntityParametersTrustTrusteesStructureIndividual CreateAnEntityParametersTrustTrusteesStructure = "individual"
 )
 
-//
 type CreateAnEntityParametersTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -19190,10 +18858,6 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) UnmarshalJSON(data []b
 // name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustTrusteesIndividual) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividual{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
 }
 
 // The person's legal name.
@@ -19238,7 +18902,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetIdentification() (I
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustTrusteesIndividual) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividual{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
+}
+
 type CreateAnEntityParametersTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -19267,10 +18934,6 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) UnmarshalJSON(d
 // name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -19314,7 +18977,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetZip() (Zip s
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod `pjson:"method"`
@@ -19343,10 +19009,6 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) Unmarsha
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -19384,6 +19046,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetDrive
 	return
 }
 
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+}
+
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod string
 
 const (
@@ -19393,7 +19059,6 @@ const (
 	CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethodDriversLicense                         CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod = "drivers_license"
 )
 
-//
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
@@ -19420,10 +19085,6 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) 
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
-}
-
 // The identifier of the File containing the passport.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -19448,7 +19109,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) 
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
+}
+
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
@@ -19476,10 +19140,6 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLic
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
-}
-
 // The identifier of the File containing the driver's license.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -19504,7 +19164,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLic
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
 type CreateAnEntityParametersTrustGrantor struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -19533,10 +19196,6 @@ func (r *CreateAnEntityParametersTrustGrantor) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustGrantor) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantor{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
 }
 
 // The person's legal name.
@@ -19581,7 +19240,10 @@ func (r *CreateAnEntityParametersTrustGrantor) GetIdentification() (Identificati
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustGrantor) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantor{Name:%s DateOfBirth:%s Address:%s ConfirmedNoUsTaxID:%s Identification:%s}", core.FmtP(r.Name), core.FmtP(r.DateOfBirth), r.Address, core.FmtP(r.ConfirmedNoUsTaxID), r.Identification)
+}
+
 type CreateAnEntityParametersTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 *string `pjson:"line1"`
@@ -19609,10 +19271,6 @@ func (r *CreateAnEntityParametersTrustGrantorAddress) UnmarshalJSON(data []byte)
 // into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustGrantorAddress) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
 }
 
 // The first line of the address. This is usually the street number and street.
@@ -19656,7 +19314,10 @@ func (r *CreateAnEntityParametersTrustGrantorAddress) GetZip() (Zip string) {
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustGrantorAddress) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorAddress{Line1:%s Line2:%s City:%s State:%s Zip:%s}", core.FmtP(r.Line1), core.FmtP(r.Line2), core.FmtP(r.City), core.FmtP(r.State), core.FmtP(r.Zip))
+}
+
 type CreateAnEntityParametersTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method *CreateAnEntityParametersTrustGrantorIdentificationMethod `pjson:"method"`
@@ -19685,10 +19346,6 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) UnmarshalJSON(data 
 // name.
 func (r *CreateAnEntityParametersTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustGrantorIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
 }
 
 // A method that can be used to verify the individual's identity.
@@ -19726,6 +19383,10 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetDriversLicense()
 	return
 }
 
+func (r CreateAnEntityParametersTrustGrantorIdentification) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+}
+
 type CreateAnEntityParametersTrustGrantorIdentificationMethod string
 
 const (
@@ -19735,7 +19396,6 @@ const (
 	CreateAnEntityParametersTrustGrantorIdentificationMethodDriversLicense                         CreateAnEntityParametersTrustGrantorIdentificationMethod = "drivers_license"
 )
 
-//
 type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
@@ -19759,10 +19419,6 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
 }
 
 // The identifier of the File containing the passport.
@@ -19789,7 +19445,10 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetCountry(
 	return
 }
 
-//
+func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationPassport{FileID:%s ExpirationDate:%s Country:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.Country))
+}
+
 type CreateAnEntityParametersTrustGrantorIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
@@ -19815,10 +19474,6 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) Marsh
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
-}
-
 // The identifier of the File containing the driver's license.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
@@ -19841,6 +19496,10 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetSt
 		State = *r.State
 	}
 	return
+}
+
+func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
 }
 
 type CreateAnEntityParametersRelationship string
@@ -19872,16 +19531,16 @@ func (r *CreateAnEntityParametersSupplementalDocuments) MarshalJSON() (data []by
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEntityParametersSupplementalDocuments) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersSupplementalDocuments{FileID:%s}", core.FmtP(r.FileID))
-}
-
 // The identifier of the File containing the document.
 func (r *CreateAnEntityParametersSupplementalDocuments) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
+}
+
+func (r CreateAnEntityParametersSupplementalDocuments) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersSupplementalDocuments{FileID:%s}", core.FmtP(r.FileID))
 }
 
 type EntityListParams struct {
@@ -19906,10 +19565,6 @@ func (r *EntityListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EntityListParams) String() (result string) {
-	return fmt.Sprintf("&EntityListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
-}
-
 // Return the page of entries after this one.
 func (r *EntityListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -19927,7 +19582,10 @@ func (r *EntityListParams) GetLimit() (Limit int64) {
 	return
 }
 
-//
+func (r EntityListParams) String() (result string) {
+	return fmt.Sprintf("&EntityListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
 type EntityList struct {
 	// The contents of the list.
 	Data *[]Entity `pjson:"data"`
@@ -19949,10 +19607,6 @@ func (r *EntityList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EntityList) String() (result string) {
-	return fmt.Sprintf("&EntityList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *EntityList) GetData() (Data []Entity) {
 	if r != nil && r.Data != nil {
@@ -19967,6 +19621,10 @@ func (r *EntityList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r EntityList) String() (result string) {
+	return fmt.Sprintf("&EntityList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CreateASupplementalDocumentForAnEntityParameters struct {
@@ -19990,16 +19648,16 @@ func (r *CreateASupplementalDocumentForAnEntityParameters) MarshalJSON() (data [
 	return pjson.Marshal(r)
 }
 
-func (r CreateASupplementalDocumentForAnEntityParameters) String() (result string) {
-	return fmt.Sprintf("&CreateASupplementalDocumentForAnEntityParameters{FileID:%s}", core.FmtP(r.FileID))
-}
-
 // The identifier of the File containing the document.
 func (r *CreateASupplementalDocumentForAnEntityParameters) GetFileID() (FileID string) {
 	if r != nil && r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
+}
+
+func (r CreateASupplementalDocumentForAnEntityParameters) String() (result string) {
+	return fmt.Sprintf("&CreateASupplementalDocumentForAnEntityParameters{FileID:%s}", core.FmtP(r.FileID))
 }
 
 type EntitiesPage struct {
@@ -20018,7 +19676,6 @@ func (r *EntitiesPage) GetNextPage() (*EntitiesPage, error) {
 	}
 }
 
-//
 type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
@@ -20069,10 +19726,6 @@ func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *WireDrawdownRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireDrawdownRequest) String() (result string) {
-	return fmt.Sprintf("&WireDrawdownRequest{Type:%s ID:%s AccountNumberID:%s RecipientAccountNumber:%s RecipientRoutingNumber:%s Amount:%s Currency:%s MessageToRecipient:%s RecipientName:%s RecipientAddressLine1:%s RecipientAddressLine2:%s RecipientAddressLine3:%s Submission:%s FulfillmentTransactionID:%s Status:%s}", core.FmtP(r.Type), core.FmtP(r.ID), core.FmtP(r.AccountNumberID), core.FmtP(r.RecipientAccountNumber), core.FmtP(r.RecipientRoutingNumber), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MessageToRecipient), core.FmtP(r.RecipientName), core.FmtP(r.RecipientAddressLine1), core.FmtP(r.RecipientAddressLine2), core.FmtP(r.RecipientAddressLine3), r.Submission, core.FmtP(r.FulfillmentTransactionID), core.FmtP(r.Status))
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -20200,13 +19853,16 @@ func (r *WireDrawdownRequest) GetStatus() (Status WireDrawdownRequestStatus) {
 	return
 }
 
+func (r WireDrawdownRequest) String() (result string) {
+	return fmt.Sprintf("&WireDrawdownRequest{Type:%s ID:%s AccountNumberID:%s RecipientAccountNumber:%s RecipientRoutingNumber:%s Amount:%s Currency:%s MessageToRecipient:%s RecipientName:%s RecipientAddressLine1:%s RecipientAddressLine2:%s RecipientAddressLine3:%s Submission:%s FulfillmentTransactionID:%s Status:%s}", core.FmtP(r.Type), core.FmtP(r.ID), core.FmtP(r.AccountNumberID), core.FmtP(r.RecipientAccountNumber), core.FmtP(r.RecipientRoutingNumber), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MessageToRecipient), core.FmtP(r.RecipientName), core.FmtP(r.RecipientAddressLine1), core.FmtP(r.RecipientAddressLine2), core.FmtP(r.RecipientAddressLine3), r.Submission, core.FmtP(r.FulfillmentTransactionID), core.FmtP(r.Status))
+}
+
 type WireDrawdownRequestType string
 
 const (
 	WireDrawdownRequestTypeWireDrawdownRequest WireDrawdownRequestType = "wire_drawdown_request"
 )
 
-//
 type WireDrawdownRequestSubmission struct {
 	// The input message accountability data (IMAD) uniquely identifying the submission
 	// with Fedwire.
@@ -20228,10 +19884,6 @@ func (r *WireDrawdownRequestSubmission) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireDrawdownRequestSubmission) String() (result string) {
-	return fmt.Sprintf("&WireDrawdownRequestSubmission{InputMessageAccountabilityData:%s}", core.FmtP(r.InputMessageAccountabilityData))
-}
-
 // The input message accountability data (IMAD) uniquely identifying the submission
 // with Fedwire.
 func (r *WireDrawdownRequestSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
@@ -20239,6 +19891,10 @@ func (r *WireDrawdownRequestSubmission) GetInputMessageAccountabilityData() (Inp
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
+}
+
+func (r WireDrawdownRequestSubmission) String() (result string) {
+	return fmt.Sprintf("&WireDrawdownRequestSubmission{InputMessageAccountabilityData:%s}", core.FmtP(r.InputMessageAccountabilityData))
 }
 
 type WireDrawdownRequestStatus string
@@ -20284,10 +19940,6 @@ func (r *CreateAWireDrawdownRequestParameters) UnmarshalJSON(data []byte) (err e
 // the top-level, and will overwrite known members of the same name.
 func (r *CreateAWireDrawdownRequestParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CreateAWireDrawdownRequestParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAWireDrawdownRequestParameters{AccountNumberID:%s Amount:%s MessageToRecipient:%s RecipientAccountNumber:%s RecipientRoutingNumber:%s RecipientName:%s RecipientAddressLine1:%s RecipientAddressLine2:%s RecipientAddressLine3:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.MessageToRecipient), core.FmtP(r.RecipientAccountNumber), core.FmtP(r.RecipientRoutingNumber), core.FmtP(r.RecipientName), core.FmtP(r.RecipientAddressLine1), core.FmtP(r.RecipientAddressLine2), core.FmtP(r.RecipientAddressLine3))
 }
 
 // The Account Number to which the recipient should send funds.
@@ -20362,6 +20014,10 @@ func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (Recip
 	return
 }
 
+func (r CreateAWireDrawdownRequestParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAWireDrawdownRequestParameters{AccountNumberID:%s Amount:%s MessageToRecipient:%s RecipientAccountNumber:%s RecipientRoutingNumber:%s RecipientName:%s RecipientAddressLine1:%s RecipientAddressLine2:%s RecipientAddressLine3:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.MessageToRecipient), core.FmtP(r.RecipientAccountNumber), core.FmtP(r.RecipientRoutingNumber), core.FmtP(r.RecipientName), core.FmtP(r.RecipientAddressLine1), core.FmtP(r.RecipientAddressLine2), core.FmtP(r.RecipientAddressLine3))
+}
+
 type WireDrawdownRequestListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -20385,10 +20041,6 @@ func (r *WireDrawdownRequestListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireDrawdownRequestListParams) String() (result string) {
-	return fmt.Sprintf("&WireDrawdownRequestListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
-}
-
 // Return the page of entries after this one.
 func (r *WireDrawdownRequestListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -20406,7 +20058,10 @@ func (r *WireDrawdownRequestListParams) GetLimit() (Limit int64) {
 	return
 }
 
-//
+func (r WireDrawdownRequestListParams) String() (result string) {
+	return fmt.Sprintf("&WireDrawdownRequestListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
 type WireDrawdownRequestList struct {
 	// The contents of the list.
 	Data *[]WireDrawdownRequest `pjson:"data"`
@@ -20429,10 +20084,6 @@ func (r *WireDrawdownRequestList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireDrawdownRequestList) String() (result string) {
-	return fmt.Sprintf("&WireDrawdownRequestList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *WireDrawdownRequestList) GetData() (Data []WireDrawdownRequest) {
 	if r != nil && r.Data != nil {
@@ -20447,6 +20098,10 @@ func (r *WireDrawdownRequestList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r WireDrawdownRequestList) String() (result string) {
+	return fmt.Sprintf("&WireDrawdownRequestList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type WireDrawdownRequestsPage struct {
@@ -20465,7 +20120,6 @@ func (r *WireDrawdownRequestsPage) GetNextPage() (*WireDrawdownRequestsPage, err
 	}
 }
 
-//
 type Event struct {
 	// The identifier of the object that generated this Event.
 	AssociatedObjectID *string `pjson:"associated_object_id"`
@@ -20495,10 +20149,6 @@ func (r *Event) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Event) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Event) String() (result string) {
-	return fmt.Sprintf("&Event{AssociatedObjectID:%s AssociatedObjectType:%s Category:%s CreatedAt:%s ID:%s Type:%s}", core.FmtP(r.AssociatedObjectID), core.FmtP(r.AssociatedObjectType), core.FmtP(r.Category), core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Type))
 }
 
 // The identifier of the object that generated this Event.
@@ -20549,6 +20199,10 @@ func (r *Event) GetType() (Type EventType) {
 		Type = *r.Type
 	}
 	return
+}
+
+func (r Event) String() (result string) {
+	return fmt.Sprintf("&Event{AssociatedObjectID:%s AssociatedObjectType:%s Category:%s CreatedAt:%s ID:%s Type:%s}", core.FmtP(r.AssociatedObjectID), core.FmtP(r.AssociatedObjectType), core.FmtP(r.Category), core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Type))
 }
 
 type EventCategory string
@@ -20633,10 +20287,6 @@ func (r *EventListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EventListParams) String() (result string) {
-	return fmt.Sprintf("&EventListParams{Cursor:%s Limit:%s AssociatedObjectID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AssociatedObjectID), r.CreatedAt, r.Category)
-}
-
 // Return the page of entries after this one.
 func (r *EventListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -20676,6 +20326,10 @@ func (r *EventListParams) GetCategory() (Category EventsListParamsCategory) {
 	return
 }
 
+func (r EventListParams) String() (result string) {
+	return fmt.Sprintf("&EventListParams{Cursor:%s Limit:%s AssociatedObjectID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AssociatedObjectID), r.CreatedAt, r.Category)
+}
+
 type EventsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -20704,10 +20358,6 @@ func (r *EventsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EventsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EventsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&EventsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -20746,6 +20396,10 @@ func (r *EventsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
+func (r EventsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&EventsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type EventsListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -20767,10 +20421,6 @@ func (r *EventsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EventsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&EventsListParamsCategory{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
@@ -20778,6 +20428,10 @@ func (r *EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
 		In = *r.In
 	}
 	return
+}
+
+func (r EventsListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&EventsListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
 type EventsListParamsCategoryIn string
@@ -20830,7 +20484,6 @@ const (
 	EventsListParamsCategoryInWireTransferUpdated                                  EventsListParamsCategoryIn = "wire_transfer.updated"
 )
 
-//
 type EventList struct {
 	// The contents of the list.
 	Data *[]Event `pjson:"data"`
@@ -20852,10 +20505,6 @@ func (r *EventList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EventList) String() (result string) {
-	return fmt.Sprintf("&EventList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *EventList) GetData() (Data []Event) {
 	if r != nil && r.Data != nil {
@@ -20870,6 +20519,10 @@ func (r *EventList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r EventList) String() (result string) {
+	return fmt.Sprintf("&EventList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type EventsPage struct {
@@ -20888,7 +20541,6 @@ func (r *EventsPage) GetNextPage() (*EventsPage, error) {
 	}
 }
 
-//
 type EventSubscription struct {
 	// The event subscription identifier.
 	ID *string `pjson:"id"`
@@ -20920,10 +20572,6 @@ func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *EventSubscription) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r EventSubscription) String() (result string) {
-	return fmt.Sprintf("&EventSubscription{ID:%s CreatedAt:%s Status:%s SelectedEventCategory:%s URL:%s SharedSecret:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.SelectedEventCategory), core.FmtP(r.URL), core.FmtP(r.SharedSecret), core.FmtP(r.Type))
 }
 
 // The event subscription identifier.
@@ -20982,6 +20630,10 @@ func (r *EventSubscription) GetType() (Type EventSubscriptionType) {
 		Type = *r.Type
 	}
 	return
+}
+
+func (r EventSubscription) String() (result string) {
+	return fmt.Sprintf("&EventSubscription{ID:%s CreatedAt:%s Status:%s SelectedEventCategory:%s URL:%s SharedSecret:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Status), core.FmtP(r.SelectedEventCategory), core.FmtP(r.URL), core.FmtP(r.SharedSecret), core.FmtP(r.Type))
 }
 
 type EventSubscriptionStatus string
@@ -21075,10 +20727,6 @@ func (r *CreateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-func (r CreateAnEventSubscriptionParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnEventSubscriptionParameters{URL:%s SharedSecret:%s SelectedEventCategory:%s}", core.FmtP(r.URL), core.FmtP(r.SharedSecret), core.FmtP(r.SelectedEventCategory))
-}
-
 // The URL you'd like us to send webhooks to.
 func (r *CreateAnEventSubscriptionParameters) GetURL() (URL string) {
 	if r != nil && r.URL != nil {
@@ -21103,6 +20751,10 @@ func (r *CreateAnEventSubscriptionParameters) GetSelectedEventCategory() (Select
 		SelectedEventCategory = *r.SelectedEventCategory
 	}
 	return
+}
+
+func (r CreateAnEventSubscriptionParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAnEventSubscriptionParameters{URL:%s SharedSecret:%s SelectedEventCategory:%s}", core.FmtP(r.URL), core.FmtP(r.SharedSecret), core.FmtP(r.SelectedEventCategory))
 }
 
 type CreateAnEventSubscriptionParametersSelectedEventCategory string
@@ -21175,16 +20827,16 @@ func (r *UpdateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-func (r UpdateAnEventSubscriptionParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnEventSubscriptionParameters{Status:%s}", core.FmtP(r.Status))
-}
-
 // The status to update the Event Subscription with.
 func (r *UpdateAnEventSubscriptionParameters) GetStatus() (Status UpdateAnEventSubscriptionParametersStatus) {
 	if r != nil && r.Status != nil {
 		Status = *r.Status
 	}
 	return
+}
+
+func (r UpdateAnEventSubscriptionParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateAnEventSubscriptionParameters{Status:%s}", core.FmtP(r.Status))
 }
 
 type UpdateAnEventSubscriptionParametersStatus string
@@ -21218,10 +20870,6 @@ func (r *EventSubscriptionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EventSubscriptionListParams) String() (result string) {
-	return fmt.Sprintf("&EventSubscriptionListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
-}
-
 // Return the page of entries after this one.
 func (r *EventSubscriptionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -21239,7 +20887,10 @@ func (r *EventSubscriptionListParams) GetLimit() (Limit int64) {
 	return
 }
 
-//
+func (r EventSubscriptionListParams) String() (result string) {
+	return fmt.Sprintf("&EventSubscriptionListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
 type EventSubscriptionList struct {
 	// The contents of the list.
 	Data *[]EventSubscription `pjson:"data"`
@@ -21262,10 +20913,6 @@ func (r *EventSubscriptionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r EventSubscriptionList) String() (result string) {
-	return fmt.Sprintf("&EventSubscriptionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *EventSubscriptionList) GetData() (Data []EventSubscription) {
 	if r != nil && r.Data != nil {
@@ -21280,6 +20927,10 @@ func (r *EventSubscriptionList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r EventSubscriptionList) String() (result string) {
+	return fmt.Sprintf("&EventSubscriptionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type EventSubscriptionsPage struct {
@@ -21298,7 +20949,6 @@ func (r *EventSubscriptionsPage) GetNextPage() (*EventSubscriptionsPage, error) 
 	}
 }
 
-//
 type File struct {
 	// The time the File was created.
 	CreatedAt *string `pjson:"created_at"`
@@ -21334,10 +20984,6 @@ func (r *File) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *File) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r File) String() (result string) {
-	return fmt.Sprintf("&File{CreatedAt:%s ID:%s Purpose:%s Description:%s Direction:%s Filename:%s DownloadURL:%s Type:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Purpose), core.FmtP(r.Description), core.FmtP(r.Direction), core.FmtP(r.Filename), core.FmtP(r.DownloadURL), core.FmtP(r.Type))
 }
 
 // The time the File was created.
@@ -21408,6 +21054,10 @@ func (r *File) GetType() (Type FileType) {
 	return
 }
 
+func (r File) String() (result string) {
+	return fmt.Sprintf("&File{CreatedAt:%s ID:%s Purpose:%s Description:%s Direction:%s Filename:%s DownloadURL:%s Type:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Purpose), core.FmtP(r.Description), core.FmtP(r.Direction), core.FmtP(r.Filename), core.FmtP(r.DownloadURL), core.FmtP(r.Type))
+}
+
 type FilePurpose string
 
 const (
@@ -21463,10 +21113,6 @@ func (r *CreateAFileParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateAFileParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAFileParameters{File:%s Description:%s Purpose:%s}", core.FmtP(r.File), core.FmtP(r.Description), core.FmtP(r.Purpose))
-}
-
 // The file contents. This should follow the specifications of
 // [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file
 // transfers for the multipart/form-data protocol.
@@ -21491,6 +21137,10 @@ func (r *CreateAFileParameters) GetPurpose() (Purpose CreateAFileParametersPurpo
 		Purpose = *r.Purpose
 	}
 	return
+}
+
+func (r CreateAFileParameters) String() (result string) {
+	return fmt.Sprintf("&CreateAFileParameters{File:%s Description:%s Purpose:%s}", core.FmtP(r.File), core.FmtP(r.Description), core.FmtP(r.Purpose))
 }
 
 type CreateAFileParametersPurpose string
@@ -21531,10 +21181,6 @@ func (r *FileListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r FileListParams) String() (result string) {
-	return fmt.Sprintf("&FileListParams{Cursor:%s Limit:%s CreatedAt:%s Purpose:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Purpose)
-}
-
 // Return the page of entries after this one.
 func (r *FileListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -21566,6 +21212,10 @@ func (r *FileListParams) GetPurpose() (Purpose FilesListParamsPurpose) {
 	return
 }
 
+func (r FileListParams) String() (result string) {
+	return fmt.Sprintf("&FileListParams{Cursor:%s Limit:%s CreatedAt:%s Purpose:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Purpose)
+}
+
 type FilesListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -21594,10 +21244,6 @@ func (r *FilesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *FilesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r FilesListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&FilesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -21636,6 +21282,10 @@ func (r *FilesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
+func (r FilesListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&FilesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type FilesListParamsPurpose struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
@@ -21657,10 +21307,6 @@ func (r *FilesListParamsPurpose) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r FilesListParamsPurpose) String() (result string) {
-	return fmt.Sprintf("&FilesListParamsPurpose{In:%s}", core.Fmt(r.In))
-}
-
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *FilesListParamsPurpose) GetIn() (In []FilesListParamsPurposeIn) {
@@ -21668,6 +21314,10 @@ func (r *FilesListParamsPurpose) GetIn() (In []FilesListParamsPurposeIn) {
 		In = *r.In
 	}
 	return
+}
+
+func (r FilesListParamsPurpose) String() (result string) {
+	return fmt.Sprintf("&FilesListParamsPurpose{In:%s}", core.Fmt(r.In))
 }
 
 type FilesListParamsPurposeIn string
@@ -21686,7 +21336,6 @@ const (
 	FilesListParamsPurposeInEntitySupplementalDocument FilesListParamsPurposeIn = "entity_supplemental_document"
 )
 
-//
 type FileList struct {
 	// The contents of the list.
 	Data *[]File `pjson:"data"`
@@ -21708,10 +21357,6 @@ func (r *FileList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r FileList) String() (result string) {
-	return fmt.Sprintf("&FileList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *FileList) GetData() (Data []File) {
 	if r != nil && r.Data != nil {
@@ -21726,6 +21371,10 @@ func (r *FileList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r FileList) String() (result string) {
+	return fmt.Sprintf("&FileList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type FilesPage struct {
@@ -21744,7 +21393,6 @@ func (r *FilesPage) GetNextPage() (*FilesPage, error) {
 	}
 }
 
-//
 type Group struct {
 	// If the Group is activated or not.
 	ActivationStatus *GroupActivationStatus `pjson:"activation_status"`
@@ -21772,10 +21420,6 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *Group) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r Group) String() (result string) {
-	return fmt.Sprintf("&Group{ActivationStatus:%s ACHDebitStatus:%s CreatedAt:%s ID:%s Type:%s}", core.FmtP(r.ActivationStatus), core.FmtP(r.ACHDebitStatus), core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Type))
 }
 
 // If the Group is activated or not.
@@ -21820,6 +21464,10 @@ func (r *Group) GetType() (Type GroupType) {
 	return
 }
 
+func (r Group) String() (result string) {
+	return fmt.Sprintf("&Group{ActivationStatus:%s ACHDebitStatus:%s CreatedAt:%s ID:%s Type:%s}", core.FmtP(r.ActivationStatus), core.FmtP(r.ACHDebitStatus), core.FmtP(r.CreatedAt), core.FmtP(r.ID), core.FmtP(r.Type))
+}
+
 type GroupActivationStatus string
 
 const (
@@ -21840,7 +21488,6 @@ const (
 	GroupTypeGroup GroupType = "group"
 )
 
-//
 type OauthConnection struct {
 	// The OAuth Connection's identifier.
 	ID *string `pjson:"id"`
@@ -21868,10 +21515,6 @@ func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *OauthConnection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r OauthConnection) String() (result string) {
-	return fmt.Sprintf("&OauthConnection{ID:%s CreatedAt:%s GroupID:%s Status:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.GroupID), core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The OAuth Connection's identifier.
@@ -21916,6 +21559,10 @@ func (r *OauthConnection) GetType() (Type OauthConnectionType) {
 	return
 }
 
+func (r OauthConnection) String() (result string) {
+	return fmt.Sprintf("&OauthConnection{ID:%s CreatedAt:%s GroupID:%s Status:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.GroupID), core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type OauthConnectionStatus string
 
 const (
@@ -21952,10 +21599,6 @@ func (r *OauthConnectionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r OauthConnectionListParams) String() (result string) {
-	return fmt.Sprintf("&OauthConnectionListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
-}
-
 // Return the page of entries after this one.
 func (r *OauthConnectionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -21973,7 +21616,10 @@ func (r *OauthConnectionListParams) GetLimit() (Limit int64) {
 	return
 }
 
-//
+func (r OauthConnectionListParams) String() (result string) {
+	return fmt.Sprintf("&OauthConnectionListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
 type OauthConnectionList struct {
 	// The contents of the list.
 	Data *[]OauthConnection `pjson:"data"`
@@ -21995,10 +21641,6 @@ func (r *OauthConnectionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r OauthConnectionList) String() (result string) {
-	return fmt.Sprintf("&OauthConnectionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *OauthConnectionList) GetData() (Data []OauthConnection) {
 	if r != nil && r.Data != nil {
@@ -22013,6 +21655,10 @@ func (r *OauthConnectionList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r OauthConnectionList) String() (result string) {
+	return fmt.Sprintf("&OauthConnectionList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type OauthConnectionsPage struct {
@@ -22031,7 +21677,6 @@ func (r *OauthConnectionsPage) GetNextPage() (*OauthConnectionsPage, error) {
 	}
 }
 
-//
 type CheckDeposit struct {
 	// The deposit's identifier.
 	ID *string `pjson:"id"`
@@ -22079,10 +21724,6 @@ func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *CheckDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDeposit) String() (result string) {
-	return fmt.Sprintf("&CheckDeposit{ID:%s Amount:%s CreatedAt:%s Currency:%s Status:%s AccountID:%s FrontImageFileID:%s BackImageFileID:%s TransactionID:%s DepositAcceptance:%s DepositRejection:%s DepositReturn:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.Status), core.FmtP(r.AccountID), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.TransactionID), r.DepositAcceptance, r.DepositRejection, r.DepositReturn, core.FmtP(r.Type))
 }
 
 // The deposit's identifier.
@@ -22195,6 +21836,10 @@ func (r *CheckDeposit) GetType() (Type CheckDepositType) {
 	return
 }
 
+func (r CheckDeposit) String() (result string) {
+	return fmt.Sprintf("&CheckDeposit{ID:%s Amount:%s CreatedAt:%s Currency:%s Status:%s AccountID:%s FrontImageFileID:%s BackImageFileID:%s TransactionID:%s DepositAcceptance:%s DepositRejection:%s DepositReturn:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.Status), core.FmtP(r.AccountID), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.TransactionID), r.DepositAcceptance, r.DepositRejection, r.DepositReturn, core.FmtP(r.Type))
+}
+
 type CheckDepositCurrency string
 
 const (
@@ -22215,7 +21860,6 @@ const (
 	CheckDepositStatusReturned  CheckDepositStatus = "returned"
 )
 
-//
 type CheckDepositDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -22247,10 +21891,6 @@ func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CheckDepositDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDepositDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&CheckDepositDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
@@ -22304,6 +21944,10 @@ func (r *CheckDepositDepositAcceptance) GetCheckDepositID() (CheckDepositID stri
 	return
 }
 
+func (r CheckDepositDepositAcceptance) String() (result string) {
+	return fmt.Sprintf("&CheckDepositDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+}
+
 type CheckDepositDepositAcceptanceCurrency string
 
 const (
@@ -22315,7 +21959,6 @@ const (
 	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
 )
 
-//
 type CheckDepositDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
@@ -22343,10 +21986,6 @@ func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CheckDepositDepositRejection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDepositDepositRejection) String() (result string) {
-	return fmt.Sprintf("&CheckDepositDepositRejection{Amount:%s Currency:%s Reason:%s RejectedAt:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.RejectedAt))
 }
 
 // The rejected amount in the minor unit of check's currency. For dollars, for
@@ -22384,6 +22023,10 @@ func (r *CheckDepositDepositRejection) GetRejectedAt() (RejectedAt string) {
 	return
 }
 
+func (r CheckDepositDepositRejection) String() (result string) {
+	return fmt.Sprintf("&CheckDepositDepositRejection{Amount:%s Currency:%s Reason:%s RejectedAt:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.RejectedAt))
+}
+
 type CheckDepositDepositRejectionCurrency string
 
 const (
@@ -22407,7 +22050,6 @@ const (
 	CheckDepositDepositRejectionReasonUnknown                     CheckDepositDepositRejectionReason = "unknown"
 )
 
-//
 type CheckDepositDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -22422,10 +22064,9 @@ type CheckDepositDepositReturn struct {
 	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `pjson:"transaction_id"`
-	//
-	ReturnReason *CheckDepositDepositReturnReturnReason `pjson:"return_reason"`
-	jsonFields   map[string]interface{}                 `pjson:"-,extras"`
+	TransactionID *string                                `pjson:"transaction_id"`
+	ReturnReason  *CheckDepositDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields    map[string]interface{}                 `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositReturn
@@ -22440,10 +22081,6 @@ func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CheckDepositDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDepositDepositReturn) String() (result string) {
-	return fmt.Sprintf("&CheckDepositDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -22495,6 +22132,10 @@ func (r *CheckDepositDepositReturn) GetReturnReason() (ReturnReason CheckDeposit
 		ReturnReason = *r.ReturnReason
 	}
 	return
+}
+
+func (r CheckDepositDepositReturn) String() (result string) {
+	return fmt.Sprintf("&CheckDepositDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 type CheckDepositDepositReturnCurrency string
@@ -22559,10 +22200,6 @@ func (r *CreateACheckDepositParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CreateACheckDepositParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACheckDepositParameters{AccountID:%s Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
-}
-
 // The identifier for the Account to deposit the check in.
 func (r *CreateACheckDepositParameters) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
@@ -22604,6 +22241,10 @@ func (r *CreateACheckDepositParameters) GetBackImageFileID() (BackImageFileID st
 	return
 }
 
+func (r CreateACheckDepositParameters) String() (result string) {
+	return fmt.Sprintf("&CreateACheckDepositParameters{AccountID:%s Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
+}
+
 type CheckDepositListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
@@ -22628,10 +22269,6 @@ func (r *CheckDepositListParams) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CheckDepositListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDepositListParams) String() (result string) {
-	return fmt.Sprintf("&CheckDepositListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
 // Return the page of entries after this one.
@@ -22666,6 +22303,10 @@ func (r *CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositsListPara
 	return
 }
 
+func (r CheckDepositListParams) String() (result string) {
+	return fmt.Sprintf("&CheckDepositListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
+}
+
 type CheckDepositsListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -22694,10 +22335,6 @@ func (r *CheckDepositsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error
 // top-level, and will overwrite known members of the same name.
 func (r *CheckDepositsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CheckDepositsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CheckDepositsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -22736,7 +22373,10 @@ func (r *CheckDepositsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
 	return
 }
 
-//
+func (r CheckDepositsListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CheckDepositsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type CheckDepositList struct {
 	// The contents of the list.
 	Data *[]CheckDeposit `pjson:"data"`
@@ -22758,10 +22398,6 @@ func (r *CheckDepositList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r CheckDepositList) String() (result string) {
-	return fmt.Sprintf("&CheckDepositList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *CheckDepositList) GetData() (Data []CheckDeposit) {
 	if r != nil && r.Data != nil {
@@ -22776,6 +22412,10 @@ func (r *CheckDepositList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r CheckDepositList) String() (result string) {
+	return fmt.Sprintf("&CheckDepositList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type CheckDepositsPage struct {
@@ -22794,7 +22434,6 @@ func (r *CheckDepositsPage) GetNextPage() (*CheckDepositsPage, error) {
 	}
 }
 
-//
 type RoutingNumber struct {
 	// The name of the financial institution belonging to a routing number.
 	Name *string `pjson:"name"`
@@ -22823,10 +22462,6 @@ func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *RoutingNumber) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r RoutingNumber) String() (result string) {
-	return fmt.Sprintf("&RoutingNumber{Name:%s RoutingNumber:%s Type:%s ACHTransfers:%s RealTimePaymentsTransfers:%s WireTransfers:%s}", core.FmtP(r.Name), core.FmtP(r.RoutingNumber), core.FmtP(r.Type), core.FmtP(r.ACHTransfers), core.FmtP(r.RealTimePaymentsTransfers), core.FmtP(r.WireTransfers))
 }
 
 // The name of the financial institution belonging to a routing number.
@@ -22876,6 +22511,10 @@ func (r *RoutingNumber) GetWireTransfers() (WireTransfers RoutingNumberWireTrans
 		WireTransfers = *r.WireTransfers
 	}
 	return
+}
+
+func (r RoutingNumber) String() (result string) {
+	return fmt.Sprintf("&RoutingNumber{Name:%s RoutingNumber:%s Type:%s ACHTransfers:%s RealTimePaymentsTransfers:%s WireTransfers:%s}", core.FmtP(r.Name), core.FmtP(r.RoutingNumber), core.FmtP(r.Type), core.FmtP(r.ACHTransfers), core.FmtP(r.RealTimePaymentsTransfers), core.FmtP(r.WireTransfers))
 }
 
 type RoutingNumberType string
@@ -22930,10 +22569,6 @@ func (r *RoutingNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r RoutingNumberListParams) String() (result string) {
-	return fmt.Sprintf("&RoutingNumberListParams{Cursor:%s Limit:%s RoutingNumber:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.RoutingNumber))
-}
-
 // Return the page of entries after this one.
 func (r *RoutingNumberListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -22959,7 +22594,10 @@ func (r *RoutingNumberListParams) GetRoutingNumber() (RoutingNumber string) {
 	return
 }
 
-//
+func (r RoutingNumberListParams) String() (result string) {
+	return fmt.Sprintf("&RoutingNumberListParams{Cursor:%s Limit:%s RoutingNumber:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.RoutingNumber))
+}
+
 type RoutingNumberList struct {
 	// The contents of the list.
 	Data *[]RoutingNumber `pjson:"data"`
@@ -22981,10 +22619,6 @@ func (r *RoutingNumberList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r RoutingNumberList) String() (result string) {
-	return fmt.Sprintf("&RoutingNumberList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *RoutingNumberList) GetData() (Data []RoutingNumber) {
 	if r != nil && r.Data != nil {
@@ -22999,6 +22633,10 @@ func (r *RoutingNumberList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r RoutingNumberList) String() (result string) {
+	return fmt.Sprintf("&RoutingNumberList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type RoutingNumbersPage struct {
@@ -23017,7 +22655,6 @@ func (r *RoutingNumbersPage) GetNextPage() (*RoutingNumbersPage, error) {
 	}
 }
 
-//
 type AccountStatement struct {
 	// The Account Statement identifier.
 	ID *string `pjson:"id"`
@@ -23055,10 +22692,6 @@ func (r *AccountStatement) UnmarshalJSON(data []byte) (err error) {
 // will overwrite known members of the same name.
 func (r *AccountStatement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountStatement) String() (result string) {
-	return fmt.Sprintf("&AccountStatement{ID:%s AccountID:%s CreatedAt:%s FileID:%s StatementPeriodStart:%s StatementPeriodEnd:%s StartingBalance:%s EndingBalance:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountID), core.FmtP(r.CreatedAt), core.FmtP(r.FileID), core.FmtP(r.StatementPeriodStart), core.FmtP(r.StatementPeriodEnd), core.FmtP(r.StartingBalance), core.FmtP(r.EndingBalance), core.FmtP(r.Type))
 }
 
 // The Account Statement identifier.
@@ -23137,6 +22770,10 @@ func (r *AccountStatement) GetType() (Type AccountStatementType) {
 	return
 }
 
+func (r AccountStatement) String() (result string) {
+	return fmt.Sprintf("&AccountStatement{ID:%s AccountID:%s CreatedAt:%s FileID:%s StatementPeriodStart:%s StatementPeriodEnd:%s StartingBalance:%s EndingBalance:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.AccountID), core.FmtP(r.CreatedAt), core.FmtP(r.FileID), core.FmtP(r.StatementPeriodStart), core.FmtP(r.StatementPeriodEnd), core.FmtP(r.StartingBalance), core.FmtP(r.EndingBalance), core.FmtP(r.Type))
+}
+
 type AccountStatementType string
 
 const (
@@ -23167,10 +22804,6 @@ func (r *AccountStatementListParams) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *AccountStatementListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountStatementListParams) String() (result string) {
-	return fmt.Sprintf("&AccountStatementListParams{Cursor:%s Limit:%s AccountID:%s StatementPeriodStart:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.StatementPeriodStart)
 }
 
 // Return the page of entries after this one.
@@ -23205,6 +22838,10 @@ func (r *AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodS
 	return
 }
 
+func (r AccountStatementListParams) String() (result string) {
+	return fmt.Sprintf("&AccountStatementListParams{Cursor:%s Limit:%s AccountID:%s StatementPeriodStart:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.StatementPeriodStart)
+}
+
 type AccountStatementsListParamsStatementPeriodStart struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -23234,10 +22871,6 @@ func (r *AccountStatementsListParamsStatementPeriodStart) UnmarshalJSON(data []b
 // name.
 func (r *AccountStatementsListParamsStatementPeriodStart) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r AccountStatementsListParamsStatementPeriodStart) String() (result string) {
-	return fmt.Sprintf("&AccountStatementsListParamsStatementPeriodStart{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -23276,7 +22909,10 @@ func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrBefore() (OnOrB
 	return
 }
 
-//
+func (r AccountStatementsListParamsStatementPeriodStart) String() (result string) {
+	return fmt.Sprintf("&AccountStatementsListParamsStatementPeriodStart{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+}
+
 type AccountStatementList struct {
 	// The contents of the list.
 	Data *[]AccountStatement `pjson:"data"`
@@ -23299,10 +22935,6 @@ func (r *AccountStatementList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r AccountStatementList) String() (result string) {
-	return fmt.Sprintf("&AccountStatementList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 // The contents of the list.
 func (r *AccountStatementList) GetData() (Data []AccountStatement) {
 	if r != nil && r.Data != nil {
@@ -23317,6 +22949,10 @@ func (r *AccountStatementList) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r AccountStatementList) String() (result string) {
+	return fmt.Sprintf("&AccountStatementList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 type AccountStatementsPage struct {
@@ -23356,10 +22992,6 @@ func (r *SimulateAnAccountStatementBeingCreatedParameters) MarshalJSON() (data [
 	return pjson.Marshal(r)
 }
 
-func (r SimulateAnAccountStatementBeingCreatedParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAnAccountStatementBeingCreatedParameters{AccountID:%s}", core.FmtP(r.AccountID))
-}
-
 // The identifier of the Account the statement is for.
 func (r *SimulateAnAccountStatementBeingCreatedParameters) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
@@ -23368,7 +23000,10 @@ func (r *SimulateAnAccountStatementBeingCreatedParameters) GetAccountID() (Accou
 	return
 }
 
-//
+func (r SimulateAnAccountStatementBeingCreatedParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateAnAccountStatementBeingCreatedParameters{AccountID:%s}", core.FmtP(r.AccountID))
+}
+
 type ACHTransferSimulation struct {
 	// If the ACH Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
@@ -23396,10 +23031,6 @@ func (r *ACHTransferSimulation) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *ACHTransferSimulation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulation) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulation{Transaction:%s DeclinedTransaction:%s Type:%s}", r.Transaction, r.DeclinedTransaction, core.FmtP(r.Type))
 }
 
 // If the ACH Transfer attempt succeeds, this will contain the resulting
@@ -23431,7 +23062,10 @@ func (r *ACHTransferSimulation) GetType() (Type ACHTransferSimulationType) {
 	return
 }
 
-//
+func (r ACHTransferSimulation) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulation{Transaction:%s DeclinedTransaction:%s Type:%s}", r.Transaction, r.DeclinedTransaction, core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -23479,10 +23113,6 @@ func (r *ACHTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error
 // top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransaction) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -23576,6 +23206,10 @@ func (r *ACHTransferSimulationTransaction) GetType() (Type ACHTransferSimulation
 	return
 }
 
+func (r ACHTransferSimulationTransaction) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationTransactionCurrency string
 
 const (
@@ -23587,7 +23221,6 @@ const (
 	ACHTransferSimulationTransactionCurrencyUsd ACHTransferSimulationTransactionCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -23713,10 +23346,6 @@ func (r *ACHTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSource) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -24032,6 +23661,10 @@ func (r *ACHTransferSimulationTransactionSource) GetWireTransferRejection() (Wir
 	return
 }
 
+func (r ACHTransferSimulationTransactionSource) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+}
+
 type ACHTransferSimulationTransactionSourceCategory string
 
 const (
@@ -24072,7 +23705,6 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryOther                                       ACHTransferSimulationTransactionSourceCategory = "other"
 )
 
-//
 type ACHTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -24104,10 +23736,6 @@ func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) Unmarsh
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceAccountTransferIntention) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -24160,6 +23788,10 @@ func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) GetTran
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceAccountTransferIntention) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -24171,7 +23803,6 @@ const (
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyUsd ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -24196,10 +23827,6 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) Marshal
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceACHCheckConversionReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
@@ -24217,7 +23844,10 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversionReturn) GetRetu
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceACHCheckConversionReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
+}
+
 type ACHTransferSimulationTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -24242,10 +23872,6 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) MarshalJSON()
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceACHCheckConversion) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
@@ -24263,16 +23889,16 @@ func (r *ACHTransferSimulationTransactionSourceACHCheckConversion) GetFileID() (
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceACHCheckConversion) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
+}
+
 type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount              *int64  `pjson:"amount"`
+	AccountNumber       *string `pjson:"account_number"`
+	RoutingNumber       *string `pjson:"routing_number"`
 	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -24292,10 +23918,6 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceACHTransferIntention) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -24336,7 +23958,10 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) GetTransfer
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceACHTransferIntention) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -24358,10 +23983,6 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) MarshalJSON
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceACHTransferRejection) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the ACH Transfer that led to this Transaction.
 func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -24370,7 +23991,10 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferRejection) GetTransfer
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceACHTransferRejection) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -24397,10 +24021,6 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(
 // name.
 func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceACHTransferReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -24436,6 +24056,10 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) GetTransaction
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceACHTransferReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
+}
+
 type ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -24464,7 +24088,6 @@ const (
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -24490,10 +24113,6 @@ func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) UnmarshalJ
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCardDisputeAcceptance) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -24522,7 +24141,10 @@ func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransac
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceCardDisputeAcceptance) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
+}
+
 type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -24551,10 +24173,6 @@ func (r *ACHTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []
 // name.
 func (r *ACHTransferSimulationTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCardRefund) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -24592,6 +24210,10 @@ func (r *ACHTransferSimulationTransactionSourceCardRefund) GetType() (Type ACHTr
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCardRefund) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationTransactionSourceCardRefundCurrency string
 
 const (
@@ -24609,7 +24231,6 @@ const (
 	ACHTransferSimulationTransactionSourceCardRefundTypeCardRefund ACHTransferSimulationTransactionSourceCardRefundType = "card_refund"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
@@ -24621,17 +24242,12 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `pjson:"presentment_currency"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantName *string `pjson:"merchant_name"`
-	//
+	PresentmentCurrency  *string `pjson:"presentment_currency"`
+	MerchantCity         *string `pjson:"merchant_city"`
+	MerchantCountry      *string `pjson:"merchant_country"`
+	MerchantName         *string `pjson:"merchant_name"`
 	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
+	MerchantState        *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -24653,10 +24269,6 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(dat
 // name.
 func (r *ACHTransferSimulationTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCardSettlement) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
@@ -24746,6 +24358,10 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) GetType() (Type A
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCardSettlement) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationTransactionSourceCardSettlementCurrency string
 
 const (
@@ -24763,7 +24379,6 @@ const (
 	ACHTransferSimulationTransactionSourceCardSettlementTypeCardSettlement ACHTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -24796,10 +24411,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) Unmarshal
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
@@ -24853,6 +24464,10 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckD
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+}
+
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -24864,7 +24479,6 @@ const (
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyUsd ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -24879,10 +24493,9 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `pjson:"transaction_id"`
-	//
-	ReturnReason *ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
-	jsonFields   map[string]interface{}                                                `pjson:"-,extras"`
+	TransactionID *string                                                               `pjson:"transaction_id"`
+	ReturnReason  *ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields    map[string]interface{}                                                `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -24898,10 +24511,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON
 // name.
 func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCheckDepositReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -24955,6 +24564,10 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) GetReturnReas
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCheckDepositReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
+}
+
 type ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -24982,7 +24595,6 @@ const (
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 *string `pjson:"address_line1"`
@@ -25019,10 +24631,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) Unmarshal
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCheckTransferIntention) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
 }
 
 // The street address of the check's destination.
@@ -25098,6 +24706,10 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) GetTransf
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCheckTransferIntention) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -25109,7 +24721,6 @@ const (
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
@@ -25133,10 +24744,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) MarshalJSON(
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
-}
-
 // The identifier of the returned Check Transfer.
 func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -25153,7 +24760,10 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) GetFileID() 
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+}
+
 type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -25175,10 +24785,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) MarshalJS
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceCheckTransferRejection) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the Check Transfer that led to this Transaction.
 func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -25187,7 +24793,10 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) GetTransf
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceCheckTransferRejection) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID *string `pjson:"transfer_id"`
@@ -25215,10 +24824,6 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) 
 // name.
 func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
 }
 
 // The ID of the check transfer that was stopped.
@@ -25254,13 +24859,16 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) 
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
-//
 type ACHTransferSimulationTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -25286,10 +24894,6 @@ func (r *ACHTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON(
 // name.
 func (r *ACHTransferSimulationTransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceDisputeResolution) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -25318,6 +24922,10 @@ func (r *ACHTransferSimulationTransactionSourceDisputeResolution) GetDisputedTra
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceDisputeResolution) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
+}
+
 type ACHTransferSimulationTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -25329,14 +24937,11 @@ const (
 	ACHTransferSimulationTransactionSourceDisputeResolutionCurrencyUsd ACHTransferSimulationTransactionSourceDisputeResolutionCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BagID *string `pjson:"bag_id"`
-	//
+	Amount      *int64                 `pjson:"amount"`
+	BagID       *string                `pjson:"bag_id"`
 	DepositDate *string                `pjson:"deposit_date"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
@@ -25354,10 +24959,6 @@ func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSO
 // name.
 func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -25383,28 +24984,23 @@ func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) GetDepositDa
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
+}
+
 type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
-	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                             *int64                 `pjson:"amount"`
+	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
+	OriginatorCompanyDiscretionaryData *string                `pjson:"originator_company_discretionary_data"`
+	OriginatorCompanyEntryDescription  *string                `pjson:"originator_company_entry_description"`
+	OriginatorCompanyID                *string                `pjson:"originator_company_id"`
+	ReceiverIDNumber                   *string                `pjson:"receiver_id_number"`
+	ReceiverName                       *string                `pjson:"receiver_name"`
+	TraceNumber                        *string                `pjson:"trace_number"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -25420,10 +25016,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundACHTransfer) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -25491,21 +25083,21 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetTraceNumbe
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundACHTransfer) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type ACHTransferSimulationTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *ACHTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
-	//
-	CheckNumber *string `pjson:"check_number"`
-	//
-	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
-	//
-	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency              *ACHTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
+	CheckNumber           *string                                                     `pjson:"check_number"`
+	CheckFrontImageFileID *string                                                     `pjson:"check_front_image_file_id"`
+	CheckRearImageFileID  *string                                                     `pjson:"check_rear_image_file_id"`
+	jsonFields            map[string]interface{}                                      `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -25521,10 +25113,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data 
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundCheck) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -25566,6 +25154,10 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageFi
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceInboundCheck) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
+}
+
 type ACHTransferSimulationTransactionSourceInboundCheckCurrency string
 
 const (
@@ -25577,82 +25169,46 @@ const (
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyUsd ACHTransferSimulationTransactionSourceInboundCheckCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -25669,10 +25225,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -25929,7 +25481,10 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -25967,10 +25522,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferCo
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
@@ -26039,6 +25590,10 @@ func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferCo
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -26050,7 +25605,6 @@ const (
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -26090,10 +25644,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversa
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
 }
 
 // The amount that was reversed.
@@ -26176,34 +25726,25 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversa
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
+}
+
 type ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
+	Amount                             *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1            *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2            *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3            *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                    *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference               *string                `pjson:"beneficiary_reference"`
+	Description                        *string                `pjson:"description"`
+	InputMessageAccountabilityData     *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1             *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2             *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3             *string                `pjson:"originator_address_line3"`
+	OriginatorName                     *string                `pjson:"originator_name"`
 	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
 	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
@@ -26221,10 +25762,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) Unmar
 // into the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -26320,7 +25857,10 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetOr
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -26363,10 +25903,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSO
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundWireReversal) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
 }
 
 // The amount that was reversed.
@@ -26466,44 +26002,31 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) GetFinancial
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundWireReversal) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
+}
+
 type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
-	//
-	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
-	//
-	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
-	//
-	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
-	//
-	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
-	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+	Amount                                  *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1                 *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2                 *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3                 *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                         *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference                    *string                `pjson:"beneficiary_reference"`
+	Description                             *string                `pjson:"description"`
+	InputMessageAccountabilityData          *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1                  *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2                  *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3                  *string                `pjson:"originator_address_line3"`
+	OriginatorName                          *string                `pjson:"originator_name"`
+	OriginatorToBeneficiaryInformationLine1 *string                `pjson:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine2 *string                `pjson:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine3 *string                `pjson:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine4 *string                `pjson:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformation      *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                              map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -26519,10 +26042,6 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSO
 // name.
 func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInboundWireTransfer) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -26646,17 +26165,19 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) GetOriginato
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceInboundWireTransfer) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type ACHTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
-	//
-	Reason     *ACHTransferSimulationTransactionSourceInternalSourceReason `pjson:"reason"`
-	jsonFields map[string]interface{}                                      `pjson:"-,extras"`
+	Currency   *ACHTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
+	Reason     *ACHTransferSimulationTransactionSourceInternalSourceReason   `pjson:"reason"`
+	jsonFields map[string]interface{}                                        `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -26672,10 +26193,6 @@ func (r *ACHTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(dat
 // name.
 func (r *ACHTransferSimulationTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceInternalSource) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -26703,6 +26220,10 @@ func (r *ACHTransferSimulationTransactionSourceInternalSource) GetReason() (Reas
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceInternalSource) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
+}
+
 type ACHTransferSimulationTransactionSourceInternalSourceCurrency string
 
 const (
@@ -26727,27 +26248,20 @@ const (
 	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn  ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *ACHTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                        `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                        `pjson:"merchant_city"`
+	MerchantCountry      *string                                                        `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                        `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                        `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                        `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                         `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -26763,10 +26277,6 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(da
 // name.
 func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCardRouteRefund) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
@@ -26829,6 +26339,10 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) GetMerchantCateg
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCardRouteRefund) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type ACHTransferSimulationTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -26840,27 +26354,20 @@ const (
 	ACHTransferSimulationTransactionSourceCardRouteRefundCurrencyUsd ACHTransferSimulationTransactionSourceCardRouteRefundCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                            `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                            `pjson:"merchant_city"`
+	MerchantCountry      *string                                                            `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                            `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                            `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                            `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                             `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -26876,10 +26383,6 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJSO
 // name.
 func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceCardRouteSettlement) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
@@ -26942,6 +26445,10 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) GetMerchantC
 	return
 }
 
+func (r ACHTransferSimulationTransactionSourceCardRouteSettlement) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -26953,7 +26460,6 @@ const (
 	ACHTransferSimulationTransactionSourceCardRouteSettlementCurrencyUsd ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator *string                `pjson:"originator"`
@@ -26975,10 +26481,6 @@ func (r *ACHTransferSimulationTransactionSourceSampleFunds) MarshalJSON() (data 
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceSampleFunds) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
-}
-
 // Where the sample funds came from.
 func (r *ACHTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Originator string) {
 	if r != nil && r.Originator != nil {
@@ -26987,19 +26489,18 @@ func (r *ACHTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Ori
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceSampleFunds) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
+}
+
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -27015,10 +26516,6 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Unm
 // into the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -27057,9 +26554,11 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Get
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -27079,10 +26578,6 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Mar
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
@@ -27090,7 +26585,10 @@ func (r *ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Get
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount *int64 `pjson:"amount"`
@@ -27099,10 +26597,9 @@ type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -27118,10 +26615,6 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) UnmarshalJ
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationTransactionSourceWireTransferIntention) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -27163,9 +26656,11 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) GetTransfe
 	return
 }
 
-//
+func (r ACHTransferSimulationTransactionSourceWireTransferIntention) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type ACHTransferSimulationTransactionSourceWireTransferRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -27185,15 +26680,15 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) MarshalJSO
 	return pjson.Marshal(r)
 }
 
-func (r ACHTransferSimulationTransactionSourceWireTransferRejection) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
+}
+
+func (r ACHTransferSimulationTransactionSourceWireTransferRejection) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
 }
 
 type ACHTransferSimulationTransactionType string
@@ -27202,7 +26697,6 @@ const (
 	ACHTransferSimulationTransactionTypeTransaction ACHTransferSimulationTransactionType = "transaction"
 )
 
-//
 type ACHTransferSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -27249,10 +26743,6 @@ func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (e
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationDeclinedTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransaction) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -27345,6 +26835,10 @@ func (r *ACHTransferSimulationDeclinedTransaction) GetType() (Type ACHTransferSi
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransaction) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type ACHTransferSimulationDeclinedTransactionCurrency string
 
 const (
@@ -27356,7 +26850,6 @@ const (
 	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -27397,10 +26890,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSource) UnmarshalJSON(data []by
 // name.
 func (r *ACHTransferSimulationDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSource) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -27468,6 +26957,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSource) GetCardRouteDecline() (
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSource) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceCategory string
 
 const (
@@ -27480,28 +26973,20 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCategoryOther                                  ACHTransferSimulationDeclinedTransactionSourceCategory = "other"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
+	Amount                             *int64  `pjson:"amount"`
+	OriginatorCompanyName              *string `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string `pjson:"originator_company_descriptive_date"`
 	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
+	OriginatorCompanyID                *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Reason           *ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
+	ReceiverIDNumber *string                                                         `pjson:"receiver_id_number"`
+	ReceiverName     *string                                                         `pjson:"receiver_name"`
+	TraceNumber      *string                                                         `pjson:"trace_number"`
+	jsonFields       map[string]interface{}                                          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -27517,10 +27002,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON
 // name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceACHDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -27589,6 +27070,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) GetTraceNumbe
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSourceACHDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -27605,7 +27090,6 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -27654,10 +27138,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSO
 // name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -27763,6 +27243,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetDigitalWa
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
 
 const (
@@ -27803,12 +27287,10 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
+	Amount        *int64  `pjson:"amount"`
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
 	Reason     *ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
@@ -27828,10 +27310,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceCheckDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -27858,6 +27336,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) GetReason()
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSourceCheckDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -27874,7 +27356,6 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -27915,10 +27396,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTr
 // name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -27996,6 +27473,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTr
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -28017,82 +27498,46 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-//
 type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -28109,10 +27554,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 // name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -28369,27 +27810,24 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) 
 	return
 }
 
-//
+func (r ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                 `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                 `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                 `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                 `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                                 `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                                 `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                                  `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -28405,10 +27843,6 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) Unmarsh
 // the top-level, and will overwrite known members of the same name.
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -28471,6 +27905,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) GetMerc
 	return
 }
 
+func (r ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -28527,10 +27965,6 @@ func (r *SimulateAnACHTransferToYourAccountParameters) UnmarshalJSON(data []byte
 // name.
 func (r *SimulateAnACHTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r SimulateAnACHTransferToYourAccountParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAnACHTransferToYourAccountParameters{AccountNumberID:%s Amount:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CompanyID:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CompanyID))
 }
 
 // The identifier of the Account Number the inbound ACH Transfer is for.
@@ -28591,6 +28025,10 @@ func (r *SimulateAnACHTransferToYourAccountParameters) GetCompanyID() (CompanyID
 	return
 }
 
+func (r SimulateAnACHTransferToYourAccountParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateAnACHTransferToYourAccountParameters{AccountNumberID:%s Amount:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CompanyID:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.CompanyDescriptiveDate), core.FmtP(r.CompanyDiscretionaryData), core.FmtP(r.CompanyEntryDescription), core.FmtP(r.CompanyName), core.FmtP(r.CompanyID))
+}
+
 type ReturnASandboxACHTransferParameters struct {
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
@@ -28612,10 +28050,6 @@ func (r *ReturnASandboxACHTransferParameters) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-func (r ReturnASandboxACHTransferParameters) String() (result string) {
-	return fmt.Sprintf("&ReturnASandboxACHTransferParameters{Reason:%s}", core.FmtP(r.Reason))
-}
-
 // The reason why the Federal Reserve or destination bank returned this transfer.
 // Defaults to `no_account`.
 func (r *ReturnASandboxACHTransferParameters) GetReason() (Reason ReturnASandboxACHTransferParametersReason) {
@@ -28623,6 +28057,10 @@ func (r *ReturnASandboxACHTransferParameters) GetReason() (Reason ReturnASandbox
 		Reason = *r.Reason
 	}
 	return
+}
+
+func (r ReturnASandboxACHTransferParameters) String() (result string) {
+	return fmt.Sprintf("&ReturnASandboxACHTransferParameters{Reason:%s}", core.FmtP(r.Reason))
 }
 
 type ReturnASandboxACHTransferParametersReason string
@@ -28676,10 +28114,6 @@ func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) MarshalJSON() (data
 	return pjson.Marshal(r)
 }
 
-func (r SimulatesAdvancingTheStateOfACardDisputeParameters) String() (result string) {
-	return fmt.Sprintf("&SimulatesAdvancingTheStateOfACardDisputeParameters{Status:%s Explanation:%s}", core.FmtP(r.Status), core.FmtP(r.Explanation))
-}
-
 // The status to move the dispute to.
 func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) GetStatus() (Status SimulatesAdvancingTheStateOfACardDisputeParametersStatus) {
 	if r != nil && r.Status != nil {
@@ -28694,6 +28128,10 @@ func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) GetExplanation() (E
 		Explanation = *r.Explanation
 	}
 	return
+}
+
+func (r SimulatesAdvancingTheStateOfACardDisputeParameters) String() (result string) {
+	return fmt.Sprintf("&SimulatesAdvancingTheStateOfACardDisputeParameters{Status:%s Explanation:%s}", core.FmtP(r.Status), core.FmtP(r.Explanation))
 }
 
 type SimulatesAdvancingTheStateOfACardDisputeParametersStatus string
@@ -28724,10 +28162,6 @@ func (r *SimulateARefundOnACardParameters) MarshalJSON() (data []byte, err error
 	return pjson.Marshal(r)
 }
 
-func (r SimulateARefundOnACardParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateARefundOnACardParameters{TransactionID:%s}", core.FmtP(r.TransactionID))
-}
-
 // The identifier for the Transaction to refund. The Transaction's source must have
 // a category of card_settlement.
 func (r *SimulateARefundOnACardParameters) GetTransactionID() (TransactionID string) {
@@ -28735,6 +28169,10 @@ func (r *SimulateARefundOnACardParameters) GetTransactionID() (TransactionID str
 		TransactionID = *r.TransactionID
 	}
 	return
+}
+
+func (r SimulateARefundOnACardParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateARefundOnACardParameters{TransactionID:%s}", core.FmtP(r.TransactionID))
 }
 
 type SimulateATaxDocumentBeingCreatedParameters struct {
@@ -28757,10 +28195,6 @@ func (r *SimulateATaxDocumentBeingCreatedParameters) MarshalJSON() (data []byte,
 	return pjson.Marshal(r)
 }
 
-func (r SimulateATaxDocumentBeingCreatedParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateATaxDocumentBeingCreatedParameters{AccountID:%s}", core.FmtP(r.AccountID))
-}
-
 // The identifier of the Account the tax document is for.
 func (r *SimulateATaxDocumentBeingCreatedParameters) GetAccountID() (AccountID string) {
 	if r != nil && r.AccountID != nil {
@@ -28769,7 +28203,10 @@ func (r *SimulateATaxDocumentBeingCreatedParameters) GetAccountID() (AccountID s
 	return
 }
 
-//
+func (r SimulateATaxDocumentBeingCreatedParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateATaxDocumentBeingCreatedParameters{AccountID:%s}", core.FmtP(r.AccountID))
+}
+
 type DigitalWalletTokenRequestCreateResponse struct {
 	// If the simulated tokenization attempt was declined, this field contains details
 	// as to why.
@@ -28797,10 +28234,6 @@ func (r *DigitalWalletTokenRequestCreateResponse) MarshalJSON() (data []byte, er
 	return pjson.Marshal(r)
 }
 
-func (r DigitalWalletTokenRequestCreateResponse) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletTokenRequestCreateResponse{DeclineReason:%s DigitalWalletTokenID:%s Type:%s}", core.FmtP(r.DeclineReason), core.FmtP(r.DigitalWalletTokenID), core.FmtP(r.Type))
-}
-
 // If the simulated tokenization attempt was declined, this field contains details
 // as to why.
 func (r *DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineReason DigitalWalletTokenRequestCreateResponseDeclineReason) {
@@ -28826,6 +28259,10 @@ func (r *DigitalWalletTokenRequestCreateResponse) GetType() (Type DigitalWalletT
 		Type = *r.Type
 	}
 	return
+}
+
+func (r DigitalWalletTokenRequestCreateResponse) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletTokenRequestCreateResponse{DeclineReason:%s DigitalWalletTokenID:%s Type:%s}", core.FmtP(r.DeclineReason), core.FmtP(r.DigitalWalletTokenID), core.FmtP(r.Type))
 }
 
 type DigitalWalletTokenRequestCreateResponseDeclineReason string
@@ -28864,10 +28301,6 @@ func (r *SimulateDigitalWalletProvisioningForACardParameters) MarshalJSON() (dat
 	return pjson.Marshal(r)
 }
 
-func (r SimulateDigitalWalletProvisioningForACardParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateDigitalWalletProvisioningForACardParameters{CardID:%s}", core.FmtP(r.CardID))
-}
-
 // The identifier of the Card to be authorized.
 func (r *SimulateDigitalWalletProvisioningForACardParameters) GetCardID() (CardID string) {
 	if r != nil && r.CardID != nil {
@@ -28876,7 +28309,10 @@ func (r *SimulateDigitalWalletProvisioningForACardParameters) GetCardID() (CardI
 	return
 }
 
-//
+func (r SimulateDigitalWalletProvisioningForACardParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateDigitalWalletProvisioningForACardParameters{CardID:%s}", core.FmtP(r.CardID))
+}
+
 type WireTransferSimulation struct {
 	// If the Wire Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
@@ -28902,10 +28338,6 @@ func (r *WireTransferSimulation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulation) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulation{Transaction:%s Type:%s}", r.Transaction, core.FmtP(r.Type))
-}
-
 // If the Wire Transfer attempt succeeds, this will contain the resulting
 // [Transaction](#transactions) object. The Transaction's `source` will be of
 // `category: inbound_wire_transfer`.
@@ -28925,7 +28357,10 @@ func (r *WireTransferSimulation) GetType() (Type WireTransferSimulationType) {
 	return
 }
 
-//
+func (r WireTransferSimulation) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulation{Transaction:%s Type:%s}", r.Transaction, core.FmtP(r.Type))
+}
+
 type WireTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -28973,10 +28408,6 @@ func (r *WireTransferSimulationTransaction) UnmarshalJSON(data []byte) (err erro
 // top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransaction) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -29070,6 +28501,10 @@ func (r *WireTransferSimulationTransaction) GetType() (Type WireTransferSimulati
 	return
 }
 
+func (r WireTransferSimulationTransaction) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type WireTransferSimulationTransactionCurrency string
 
 const (
@@ -29081,7 +28516,6 @@ const (
 	WireTransferSimulationTransactionCurrencyUsd WireTransferSimulationTransactionCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -29207,10 +28641,6 @@ func (r *WireTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (er
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSource) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -29526,6 +28956,10 @@ func (r *WireTransferSimulationTransactionSource) GetWireTransferRejection() (Wi
 	return
 }
 
+func (r WireTransferSimulationTransactionSource) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+}
+
 type WireTransferSimulationTransactionSourceCategory string
 
 const (
@@ -29566,7 +29000,6 @@ const (
 	WireTransferSimulationTransactionSourceCategoryOther                                       WireTransferSimulationTransactionSourceCategory = "other"
 )
 
-//
 type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -29598,10 +29031,6 @@ func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) Unmars
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceAccountTransferIntention) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -29654,6 +29083,10 @@ func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) GetTra
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceAccountTransferIntention) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -29665,7 +29098,6 @@ const (
 	WireTransferSimulationTransactionSourceAccountTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -29690,10 +29122,6 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) Marsha
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceACHCheckConversionReturn) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
@@ -29711,7 +29139,10 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) GetRet
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceACHCheckConversionReturn) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
+}
+
 type WireTransferSimulationTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -29736,10 +29167,6 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversion) MarshalJSON(
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceACHCheckConversion) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
@@ -29757,16 +29184,16 @@ func (r *WireTransferSimulationTransactionSourceACHCheckConversion) GetFileID() 
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceACHCheckConversion) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
+}
+
 type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount              *int64  `pjson:"amount"`
+	AccountNumber       *string `pjson:"account_number"`
+	RoutingNumber       *string `pjson:"routing_number"`
 	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -29786,10 +29213,6 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJ
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceACHTransferIntention) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -29830,7 +29253,10 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) GetTransfe
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceACHTransferIntention) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -29852,10 +29278,6 @@ func (r *WireTransferSimulationTransactionSourceACHTransferRejection) MarshalJSO
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceACHTransferRejection) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the ACH Transfer that led to this Transaction.
 func (r *WireTransferSimulationTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -29864,7 +29286,10 @@ func (r *WireTransferSimulationTransactionSourceACHTransferRejection) GetTransfe
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceACHTransferRejection) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -29891,10 +29316,6 @@ func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON
 // name.
 func (r *WireTransferSimulationTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceACHTransferReturn) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -29930,6 +29351,10 @@ func (r *WireTransferSimulationTransactionSourceACHTransferReturn) GetTransactio
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceACHTransferReturn) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
+}
+
 type WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -29958,7 +29383,6 @@ const (
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
-//
 type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -29984,10 +29408,6 @@ func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) Unmarshal
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCardDisputeAcceptance) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -30016,7 +29436,10 @@ func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) GetTransa
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceCardDisputeAcceptance) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
+}
+
 type WireTransferSimulationTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -30045,10 +29468,6 @@ func (r *WireTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data [
 // name.
 func (r *WireTransferSimulationTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCardRefund) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -30086,6 +29505,10 @@ func (r *WireTransferSimulationTransactionSourceCardRefund) GetType() (Type Wire
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCardRefund) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
+}
+
 type WireTransferSimulationTransactionSourceCardRefundCurrency string
 
 const (
@@ -30103,7 +29526,6 @@ const (
 	WireTransferSimulationTransactionSourceCardRefundTypeCardRefund WireTransferSimulationTransactionSourceCardRefundType = "card_refund"
 )
 
-//
 type WireTransferSimulationTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
@@ -30115,17 +29537,12 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `pjson:"presentment_currency"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantName *string `pjson:"merchant_name"`
-	//
+	PresentmentCurrency  *string `pjson:"presentment_currency"`
+	MerchantCity         *string `pjson:"merchant_city"`
+	MerchantCountry      *string `pjson:"merchant_country"`
+	MerchantName         *string `pjson:"merchant_name"`
 	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
+	MerchantState        *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -30147,10 +29564,6 @@ func (r *WireTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(da
 // name.
 func (r *WireTransferSimulationTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCardSettlement) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
@@ -30240,6 +29653,10 @@ func (r *WireTransferSimulationTransactionSourceCardSettlement) GetType() (Type 
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCardSettlement) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
+}
+
 type WireTransferSimulationTransactionSourceCardSettlementCurrency string
 
 const (
@@ -30257,7 +29674,6 @@ const (
 	WireTransferSimulationTransactionSourceCardSettlementTypeCardSettlement WireTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
 )
 
-//
 type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -30290,10 +29706,6 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) Unmarsha
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
@@ -30347,6 +29759,10 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheck
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+}
+
 type WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -30358,7 +29774,6 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyUsd WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -30373,10 +29788,9 @@ type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `pjson:"transaction_id"`
-	//
-	ReturnReason *WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
-	jsonFields   map[string]interface{}                                                 `pjson:"-,extras"`
+	TransactionID *string                                                                `pjson:"transaction_id"`
+	ReturnReason  *WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields    map[string]interface{}                                                 `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -30392,10 +29806,6 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSO
 // name.
 func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCheckDepositReturn) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -30449,6 +29859,10 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) GetReturnRea
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCheckDepositReturn) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
+}
+
 type WireTransferSimulationTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -30476,7 +29890,6 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
-//
 type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 *string `pjson:"address_line1"`
@@ -30513,10 +29926,6 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) Unmarsha
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCheckTransferIntention) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
 }
 
 // The street address of the check's destination.
@@ -30592,6 +30001,10 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) GetTrans
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCheckTransferIntention) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -30603,7 +30016,6 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
@@ -30627,10 +30039,6 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) MarshalJSON
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
-}
-
 // The identifier of the returned Check Transfer.
 func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -30647,7 +30055,10 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) GetFileID()
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+}
+
 type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -30669,10 +30080,6 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) MarshalJ
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceCheckTransferRejection) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the Check Transfer that led to this Transaction.
 func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -30681,7 +30088,10 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) GetTrans
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceCheckTransferRejection) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID *string `pjson:"transfer_id"`
@@ -30709,10 +30119,6 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest)
 // name.
 func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
 }
 
 // The ID of the check transfer that was stopped.
@@ -30748,13 +30154,16 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest)
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
+}
+
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
 	WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
-//
 type WireTransferSimulationTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -30780,10 +30189,6 @@ func (r *WireTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON
 // name.
 func (r *WireTransferSimulationTransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceDisputeResolution) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -30812,6 +30217,10 @@ func (r *WireTransferSimulationTransactionSourceDisputeResolution) GetDisputedTr
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceDisputeResolution) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
+}
+
 type WireTransferSimulationTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -30823,14 +30232,11 @@ const (
 	WireTransferSimulationTransactionSourceDisputeResolutionCurrencyUsd WireTransferSimulationTransactionSourceDisputeResolutionCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BagID *string `pjson:"bag_id"`
-	//
+	Amount      *int64                 `pjson:"amount"`
+	BagID       *string                `pjson:"bag_id"`
 	DepositDate *string                `pjson:"deposit_date"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
@@ -30848,10 +30254,6 @@ func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -30877,28 +30279,23 @@ func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) GetDepositD
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
+}
+
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
-	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                             *int64                 `pjson:"amount"`
+	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
+	OriginatorCompanyDiscretionaryData *string                `pjson:"originator_company_discretionary_data"`
+	OriginatorCompanyEntryDescription  *string                `pjson:"originator_company_entry_description"`
+	OriginatorCompanyID                *string                `pjson:"originator_company_id"`
+	ReceiverIDNumber                   *string                `pjson:"receiver_id_number"`
+	ReceiverName                       *string                `pjson:"receiver_name"`
+	TraceNumber                        *string                `pjson:"trace_number"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -30914,10 +30311,6 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSO
 // name.
 func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundACHTransfer) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -30985,21 +30378,21 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetTraceNumb
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundACHTransfer) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *WireTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
-	//
-	CheckNumber *string `pjson:"check_number"`
-	//
-	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
-	//
-	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency              *WireTransferSimulationTransactionSourceInboundCheckCurrency `pjson:"currency"`
+	CheckNumber           *string                                                      `pjson:"check_number"`
+	CheckFrontImageFileID *string                                                      `pjson:"check_front_image_file_id"`
+	CheckRearImageFileID  *string                                                      `pjson:"check_rear_image_file_id"`
+	jsonFields            map[string]interface{}                                       `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -31015,10 +30408,6 @@ func (r *WireTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data
 // name.
 func (r *WireTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundCheck) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -31060,6 +30449,10 @@ func (r *WireTransferSimulationTransactionSourceInboundCheck) GetCheckRearImageF
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceInboundCheck) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
+}
+
 type WireTransferSimulationTransactionSourceInboundCheckCurrency string
 
 const (
@@ -31071,82 +30464,46 @@ const (
 	WireTransferSimulationTransactionSourceInboundCheckCurrencyUsd WireTransferSimulationTransactionSourceInboundCheckCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -31163,10 +30520,6 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 // name.
 func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -31423,7 +30776,10 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -31461,10 +30817,6 @@ func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferC
 // name.
 func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
@@ -31533,6 +30885,10 @@ func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferC
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -31544,7 +30900,6 @@ const (
 	WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -31584,10 +30939,6 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentRevers
 // name.
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
 }
 
 // The amount that was reversed.
@@ -31670,34 +31021,25 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentRevers
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
+}
+
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
+	Amount                             *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1            *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2            *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3            *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                    *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference               *string                `pjson:"beneficiary_reference"`
+	Description                        *string                `pjson:"description"`
+	InputMessageAccountabilityData     *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1             *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2             *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3             *string                `pjson:"originator_address_line3"`
+	OriginatorName                     *string                `pjson:"originator_name"`
 	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
 	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
@@ -31715,10 +31057,6 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) Unma
 // into the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -31814,7 +31152,10 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) GetO
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -31857,10 +31198,6 @@ func (r *WireTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundWireReversal) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
 }
 
 // The amount that was reversed.
@@ -31960,44 +31297,31 @@ func (r *WireTransferSimulationTransactionSourceInboundWireReversal) GetFinancia
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundWireReversal) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
+}
+
 type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
-	//
-	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
-	//
-	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
-	//
-	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
-	//
-	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
-	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+	Amount                                  *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1                 *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2                 *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3                 *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                         *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference                    *string                `pjson:"beneficiary_reference"`
+	Description                             *string                `pjson:"description"`
+	InputMessageAccountabilityData          *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1                  *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2                  *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3                  *string                `pjson:"originator_address_line3"`
+	OriginatorName                          *string                `pjson:"originator_name"`
+	OriginatorToBeneficiaryInformationLine1 *string                `pjson:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine2 *string                `pjson:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine3 *string                `pjson:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine4 *string                `pjson:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformation      *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                              map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32013,10 +31337,6 @@ func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInboundWireTransfer) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -32140,17 +31460,19 @@ func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) GetOriginat
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceInboundWireTransfer) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type WireTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
-	//
-	Reason     *WireTransferSimulationTransactionSourceInternalSourceReason `pjson:"reason"`
-	jsonFields map[string]interface{}                                       `pjson:"-,extras"`
+	Currency   *WireTransferSimulationTransactionSourceInternalSourceCurrency `pjson:"currency"`
+	Reason     *WireTransferSimulationTransactionSourceInternalSourceReason   `pjson:"reason"`
+	jsonFields map[string]interface{}                                         `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32166,10 +31488,6 @@ func (r *WireTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(da
 // name.
 func (r *WireTransferSimulationTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceInternalSource) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -32197,6 +31515,10 @@ func (r *WireTransferSimulationTransactionSourceInternalSource) GetReason() (Rea
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceInternalSource) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
+}
+
 type WireTransferSimulationTransactionSourceInternalSourceCurrency string
 
 const (
@@ -32221,27 +31543,20 @@ const (
 	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn  WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-//
 type WireTransferSimulationTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *WireTransferSimulationTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                         `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                         `pjson:"merchant_city"`
+	MerchantCountry      *string                                                         `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                         `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                         `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                         `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32257,10 +31572,6 @@ func (r *WireTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(d
 // name.
 func (r *WireTransferSimulationTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCardRouteRefund) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
@@ -32323,6 +31634,10 @@ func (r *WireTransferSimulationTransactionSourceCardRouteRefund) GetMerchantCate
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCardRouteRefund) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type WireTransferSimulationTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -32334,27 +31649,20 @@ const (
 	WireTransferSimulationTransactionSourceCardRouteRefundCurrencyUsd WireTransferSimulationTransactionSourceCardRouteRefundCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *WireTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *WireTransferSimulationTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                             `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                             `pjson:"merchant_city"`
+	MerchantCountry      *string                                                             `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                             `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                             `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                             `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                              `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32370,10 +31678,6 @@ func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceCardRouteSettlement) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
@@ -32436,6 +31740,10 @@ func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) GetMerchant
 	return
 }
 
+func (r WireTransferSimulationTransactionSourceCardRouteSettlement) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type WireTransferSimulationTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -32447,7 +31755,6 @@ const (
 	WireTransferSimulationTransactionSourceCardRouteSettlementCurrencyUsd WireTransferSimulationTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
-//
 type WireTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator *string                `pjson:"originator"`
@@ -32469,10 +31776,6 @@ func (r *WireTransferSimulationTransactionSourceSampleFunds) MarshalJSON() (data
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceSampleFunds) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
-}
-
 // Where the sample funds came from.
 func (r *WireTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Originator string) {
 	if r != nil && r.Originator != nil {
@@ -32481,19 +31784,18 @@ func (r *WireTransferSimulationTransactionSourceSampleFunds) GetOriginator() (Or
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceSampleFunds) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
+}
+
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32510,10 +31812,6 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Un
 // name.
 func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -32552,9 +31850,11 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) Ge
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -32575,10 +31875,6 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Ma
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
@@ -32586,7 +31882,10 @@ func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) Ge
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount *int64 `pjson:"amount"`
@@ -32595,10 +31894,9 @@ type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -32614,10 +31912,6 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) Unmarshal
 // the top-level, and will overwrite known members of the same name.
 func (r *WireTransferSimulationTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r WireTransferSimulationTransactionSourceWireTransferIntention) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -32659,9 +31953,11 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) GetTransf
 	return
 }
 
-//
+func (r WireTransferSimulationTransactionSourceWireTransferIntention) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -32681,15 +31977,15 @@ func (r *WireTransferSimulationTransactionSourceWireTransferRejection) MarshalJS
 	return pjson.Marshal(r)
 }
 
-func (r WireTransferSimulationTransactionSourceWireTransferRejection) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *WireTransferSimulationTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
+}
+
+func (r WireTransferSimulationTransactionSourceWireTransferRejection) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
 }
 
 type WireTransferSimulationTransactionType string
@@ -32764,10 +32060,6 @@ func (r *SimulateAWireTransferToYourAccountParameters) UnmarshalJSON(data []byte
 // name.
 func (r *SimulateAWireTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r SimulateAWireTransferToYourAccountParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAWireTransferToYourAccountParameters{AccountNumberID:%s Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4))
 }
 
 // The identifier of the Account Number the inbound Wire Transfer is for.
@@ -32903,7 +32195,10 @@ func (r *SimulateAWireTransferToYourAccountParameters) GetOriginatorToBeneficiar
 	return
 }
 
-//
+func (r SimulateAWireTransferToYourAccountParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateAWireTransferToYourAccountParameters{AccountNumberID:%s Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4))
+}
+
 type CardAuthorizationSimulation struct {
 	// If the authorization attempt succeeds, this will contain the resulting Pending
 	// Transaction object. The Pending Transaction's `source` will be of
@@ -32931,10 +32226,6 @@ func (r *CardAuthorizationSimulation) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *CardAuthorizationSimulation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulation) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulation{PendingTransaction:%s DeclinedTransaction:%s Type:%s}", r.PendingTransaction, r.DeclinedTransaction, core.FmtP(r.Type))
 }
 
 // If the authorization attempt succeeds, this will contain the resulting Pending
@@ -32966,7 +32257,10 @@ func (r *CardAuthorizationSimulation) GetType() (Type CardAuthorizationSimulatio
 	return
 }
 
-//
+func (r CardAuthorizationSimulation) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulation{PendingTransaction:%s DeclinedTransaction:%s Type:%s}", r.PendingTransaction, r.DeclinedTransaction, core.FmtP(r.Type))
+}
+
 type CardAuthorizationSimulationPendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -33017,10 +32311,6 @@ func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byt
 // name.
 func (r *CardAuthorizationSimulationPendingTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransaction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Status), core.FmtP(r.Type))
 }
 
 // The identifier for the account this Pending Transaction belongs to.
@@ -33122,6 +32412,10 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetType() (Type CardAuth
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransaction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Status:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Status), core.FmtP(r.Type))
+}
+
 type CardAuthorizationSimulationPendingTransactionCurrency string
 
 const (
@@ -33133,7 +32427,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionCurrencyUsd CardAuthorizationSimulationPendingTransactionCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -33183,10 +32476,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSource) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSource{Category:%s AccountTransferInstruction:%s ACHTransferInstruction:%s CardAuthorization:%s CheckDepositInstruction:%s CheckTransferInstruction:%s InboundFundsHold:%s CardRouteAuthorization:%s WireDrawdownPaymentInstruction:%s WireTransferInstruction:%s}", core.FmtP(r.Category), r.AccountTransferInstruction, r.ACHTransferInstruction, r.CardAuthorization, r.CheckDepositInstruction, r.CheckTransferInstruction, r.InboundFundsHold, r.CardRouteAuthorization, r.WireDrawdownPaymentInstruction, r.WireTransferInstruction)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -33281,6 +32570,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetWireTransferIns
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSource) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSource{Category:%s AccountTransferInstruction:%s ACHTransferInstruction:%s CardAuthorization:%s CheckDepositInstruction:%s CheckTransferInstruction:%s InboundFundsHold:%s CardRouteAuthorization:%s WireDrawdownPaymentInstruction:%s WireTransferInstruction:%s}", core.FmtP(r.Category), r.AccountTransferInstruction, r.ACHTransferInstruction, r.CardAuthorization, r.CheckDepositInstruction, r.CheckTransferInstruction, r.InboundFundsHold, r.CardRouteAuthorization, r.WireDrawdownPaymentInstruction, r.WireTransferInstruction)
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCategory string
 
 const (
@@ -33297,7 +32590,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCategoryOther                               CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -33327,10 +32619,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 	return pjson.Marshal(r)
 }
 
-func (r CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
-}
-
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
@@ -33357,6 +32645,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
@@ -33368,7 +32660,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -33395,10 +32686,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 	return pjson.Marshal(r)
 }
 
-func (r CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction{Amount:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.TransferID))
-}
-
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
@@ -33416,7 +32703,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 	return
 }
 
-//
+func (r CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction{Amount:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.TransferID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -33462,10 +32752,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) U
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -33555,6 +32841,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
 
 const (
@@ -33580,7 +32870,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -33612,10 +32901,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -33654,6 +32939,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
@@ -33665,7 +32954,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -33695,10 +32983,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 	return pjson.Marshal(r)
 }
 
-func (r CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
-}
-
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
 func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
@@ -33725,6 +33009,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction{Amount:%s Currency:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.TransferID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
@@ -33736,7 +33024,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
@@ -33770,10 +33057,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Un
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold{Amount:%s Currency:%s AutomaticallyReleasesAt:%s ReleasedAt:%s Status:%s HeldTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AutomaticallyReleasesAt), core.FmtP(r.ReleasedAt), core.FmtP(r.Status), core.FmtP(r.HeldTransactionID))
 }
 
 // The held amount in the minor unit of the account's currency. For dollars, for
@@ -33827,6 +33110,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Ge
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold{Amount:%s Currency:%s AutomaticallyReleasesAt:%s ReleasedAt:%s Status:%s HeldTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AutomaticallyReleasesAt), core.FmtP(r.ReleasedAt), core.FmtP(r.Status), core.FmtP(r.HeldTransactionID))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
@@ -33845,27 +33132,20 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusComplete CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string                `pjson:"merchant_state"`
-	jsonFields    map[string]interface{} `pjson:"-,extras"`
+	Currency             *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                            `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                            `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                            `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                            `pjson:"merchant_descriptor"`
+	MerchantCategoryCode *string                                                                            `pjson:"merchant_category_code"`
+	MerchantState        *string                                                                            `pjson:"merchant_state"`
+	jsonFields           map[string]interface{}                                                             `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -33883,10 +33163,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantState:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -33949,6 +33225,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantState:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency string
 
 const (
@@ -33960,16 +33240,12 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
 	MessageToRecipient *string                `pjson:"message_to_recipient"`
 	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
@@ -33989,10 +33265,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentI
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -34025,20 +33297,19 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentI
 	return
 }
 
-//
+func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient))
+}
+
 type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -34056,10 +33327,6 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 // name.
 func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -34099,6 +33366,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 	return
 }
 
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type CardAuthorizationSimulationPendingTransactionStatus string
 
 const (
@@ -34112,7 +33383,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionTypePendingTransaction CardAuthorizationSimulationPendingTransactionType = "pending_transaction"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -34160,10 +33430,6 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []by
 // name.
 func (r *CardAuthorizationSimulationDeclinedTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransaction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -34256,6 +33522,10 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetType() (Type CardAut
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransaction) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionCurrency string
 
 const (
@@ -34267,7 +33537,6 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -34308,10 +33577,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(dat
 // name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSource) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -34379,6 +33644,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCardRouteDecli
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSource) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
 
 const (
@@ -34391,28 +33660,20 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther                                  CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
+	Amount                             *int64  `pjson:"amount"`
+	OriginatorCompanyName              *string `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string `pjson:"originator_company_descriptive_date"`
 	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
+	OriginatorCompanyID                *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Reason           *CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
+	ReceiverIDNumber *string                                                               `pjson:"receiver_id_number"`
+	ReceiverName     *string                                                               `pjson:"receiver_name"`
+	TraceNumber      *string                                                               `pjson:"trace_number"`
+	jsonFields       map[string]interface{}                                                `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -34428,10 +33689,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) Unmarsh
 // the top-level, and will overwrite known members of the same name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -34500,6 +33757,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetTrac
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -34516,7 +33777,6 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -34565,10 +33825,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Unmars
 // the top-level, and will overwrite known members of the same name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -34674,6 +33930,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDig
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
 
 const (
@@ -34714,12 +33974,10 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
+	Amount        *int64  `pjson:"amount"`
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
 	Reason     *CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
@@ -34739,10 +33997,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) Unmar
 // into the top-level, and will overwrite known members of the same name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -34769,6 +34023,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetRe
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -34785,7 +34043,6 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -34826,10 +34083,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 // name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -34907,6 +34160,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -34928,82 +34185,46 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-//
 type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -35021,10 +34242,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 // name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -35281,27 +34498,24 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 	return
 }
 
-//
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                       `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                       `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                       `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                       `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                                       `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                                       `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                                        `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -35318,10 +34532,6 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) U
 // name.
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -35384,6 +34594,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) G
 	return
 }
 
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -35431,10 +34645,6 @@ func (r *SimulateAnAuthorizationOnACardParameters) MarshalJSON() (data []byte, e
 	return pjson.Marshal(r)
 }
 
-func (r SimulateAnAuthorizationOnACardParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAnAuthorizationOnACardParameters{Amount:%s CardID:%s DigitalWalletTokenID:%s}", core.FmtP(r.Amount), core.FmtP(r.CardID), core.FmtP(r.DigitalWalletTokenID))
-}
-
 // The authorization amount in cents.
 func (r *SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
@@ -35457,6 +34667,10 @@ func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (Di
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
+}
+
+func (r SimulateAnAuthorizationOnACardParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateAnAuthorizationOnACardParameters{Amount:%s CardID:%s DigitalWalletTokenID:%s}", core.FmtP(r.Amount), core.FmtP(r.CardID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 type SimulateSettlingACardAuthorizationParameters struct {
@@ -35486,10 +34700,6 @@ func (r *SimulateSettlingACardAuthorizationParameters) MarshalJSON() (data []byt
 	return pjson.Marshal(r)
 }
 
-func (r SimulateSettlingACardAuthorizationParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateSettlingACardAuthorizationParameters{CardID:%s PendingTransactionID:%s Amount:%s}", core.FmtP(r.CardID), core.FmtP(r.PendingTransactionID), core.FmtP(r.Amount))
-}
-
 // The identifier of the Card to create a settlement on.
 func (r *SimulateSettlingACardAuthorizationParameters) GetCardID() (CardID string) {
 	if r != nil && r.CardID != nil {
@@ -35516,7 +34726,10 @@ func (r *SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int64
 	return
 }
 
-//
+func (r SimulateSettlingACardAuthorizationParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateSettlingACardAuthorizationParameters{CardID:%s PendingTransactionID:%s Amount:%s}", core.FmtP(r.CardID), core.FmtP(r.PendingTransactionID), core.FmtP(r.Amount))
+}
+
 type InboundRealTimePaymentsTransferSimulationResult struct {
 	// If the Real Time Payments Transfer attempt succeeds, this will contain the
 	// resulting [Transaction](#transactions) object. The Transaction's `source` will
@@ -35546,10 +34759,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) UnmarshalJSON(data []b
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResult) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResult) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResult{Transaction:%s DeclinedTransaction:%s Type:%s}", r.Transaction, r.DeclinedTransaction, core.FmtP(r.Type))
 }
 
 // If the Real Time Payments Transfer attempt succeeds, this will contain the
@@ -35582,7 +34791,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) GetType() (Type Inboun
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResult) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResult{Transaction:%s DeclinedTransaction:%s Type:%s}", r.Transaction, r.DeclinedTransaction, core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -35631,10 +34843,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) UnmarshalJS
 // the top-level, and will overwrite known members of the same name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransaction) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Transaction belongs to.
@@ -35728,6 +34936,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) GetType() (
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransaction) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionCurrency string
 
 const (
@@ -35739,7 +34951,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -35866,10 +35077,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) Unmar
 // into the top-level, and will overwrite known members of the same name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSource) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 // The type of transaction that took place. We may add additional possible values
@@ -36185,6 +35392,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) GetWi
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSource) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory string
 
 const (
@@ -36225,7 +35436,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther                                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "other"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -36259,10 +35469,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccount
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -36315,6 +35521,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccount
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention{Amount:%s Currency:%s Description:%s DestinationAccountID:%s SourceAccountID:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Description), core.FmtP(r.DestinationAccountID), core.FmtP(r.SourceAccountID), core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -36326,7 +35536,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -36353,10 +35562,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
@@ -36374,7 +35579,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn{Amount:%s ReturnReasonCode:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnReasonCode))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -36401,10 +35609,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
@@ -36422,16 +35626,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHChec
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion{Amount:%s FileID:%s}", core.FmtP(r.Amount), core.FmtP(r.FileID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
+	Amount              *int64  `pjson:"amount"`
+	AccountNumber       *string `pjson:"account_number"`
+	RoutingNumber       *string `pjson:"routing_number"`
 	StatementDescriptor *string `pjson:"statement_descriptor"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -36453,10 +35657,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -36497,7 +35697,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s StatementDescriptor:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.StatementDescriptor), core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -36521,10 +35724,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the ACH Transfer that led to this Transaction.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -36533,7 +35732,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -36562,10 +35764,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
 }
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -36601,6 +35799,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn{CreatedAt:%s ReturnReasonCode:%s TransferID:%s TransactionID:%s}", core.FmtP(r.CreatedAt), core.FmtP(r.ReturnReasonCode), core.FmtP(r.TransferID), core.FmtP(r.TransactionID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -36629,7 +35831,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -36659,10 +35860,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
-}
-
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
@@ -36689,7 +35886,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance{AcceptedAt:%s CardDisputeID:%s TransactionID:%s}", core.FmtP(r.AcceptedAt), core.FmtP(r.CardDisputeID), core.FmtP(r.TransactionID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -36720,10 +35920,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
 }
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -36761,6 +35957,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund{Amount:%s Currency:%s CardSettlementTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CardSettlementTransactionID), core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency string
 
 const (
@@ -36778,7 +35978,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundTypeCardRefund InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType = "card_refund"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
@@ -36790,17 +35989,12 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	PresentmentAmount *int64 `pjson:"presentment_amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency *string `pjson:"presentment_currency"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantName *string `pjson:"merchant_name"`
-	//
+	PresentmentCurrency  *string `pjson:"presentment_currency"`
+	MerchantCity         *string `pjson:"merchant_city"`
+	MerchantCountry      *string `pjson:"merchant_country"`
+	MerchantName         *string `pjson:"merchant_name"`
 	MerchantCategoryCode *string `pjson:"merchant_category_code"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
+	MerchantState        *string `pjson:"merchant_state"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID *string `pjson:"pending_transaction_id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -36824,10 +36018,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
 }
 
 // The amount in the minor unit of the transaction's settlement currency. For
@@ -36917,6 +36107,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement{Amount:%s Currency:%s PresentmentAmount:%s PresentmentCurrency:%s MerchantCity:%s MerchantCountry:%s MerchantName:%s MerchantCategoryCode:%s MerchantState:%s PendingTransactionID:%s Type:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantName), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantState), core.FmtP(r.PendingTransactionID), core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency string
 
 const (
@@ -36934,7 +36128,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementTypeCardSettlement InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType = "card_settlement"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -36969,10 +36162,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
 }
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
@@ -37026,6 +36215,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -37037,7 +36230,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -37052,10 +36244,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	CheckDepositID *string `pjson:"check_deposit_id"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID *string `pjson:"transaction_id"`
-	//
-	ReturnReason *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
-	jsonFields   map[string]interface{}                                                                          `pjson:"-,extras"`
+	TransactionID *string                                                                                         `pjson:"transaction_id"`
+	ReturnReason  *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `pjson:"return_reason"`
+	jsonFields    map[string]interface{}                                                                          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -37073,10 +36264,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -37130,6 +36317,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn{Amount:%s ReturnedAt:%s Currency:%s CheckDepositID:%s TransactionID:%s ReturnReason:%s}", core.FmtP(r.Amount), core.FmtP(r.ReturnedAt), core.FmtP(r.Currency), core.FmtP(r.CheckDepositID), core.FmtP(r.TransactionID), core.FmtP(r.ReturnReason))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -37157,7 +36348,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 *string `pjson:"address_line1"`
@@ -37196,10 +36386,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
 }
 
 // The street address of the check's destination.
@@ -37275,6 +36461,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention{AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s Amount:%s Currency:%s RecipientName:%s TransferID:%s}", core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RecipientName), core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -37286,7 +36476,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
@@ -37312,10 +36501,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
-}
-
 // The identifier of the returned Check Transfer.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -37332,7 +36517,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID *string                `pjson:"transfer_id"`
@@ -37356,10 +36544,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 // The identifier of the Check Transfer that led to this Transaction.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
@@ -37368,7 +36552,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID *string `pjson:"transfer_id"`
@@ -37397,10 +36584,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
 }
 
 // The ID of the check transfer that was stopped.
@@ -37436,13 +36619,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest{TransferID:%s TransactionID:%s RequestedAt:%s Type:%s}", core.FmtP(r.TransferID), core.FmtP(r.TransactionID), core.FmtP(r.RequestedAt), core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -37472,10 +36658,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDispute
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
-}
-
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) GetAmount() (Amount int64) {
@@ -37502,6 +36684,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDispute
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution{Amount:%s Currency:%s DisputedTransactionID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.DisputedTransactionID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -37513,14 +36699,11 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BagID *string `pjson:"bag_id"`
-	//
+	Amount      *int64                 `pjson:"amount"`
+	BagID       *string                `pjson:"bag_id"`
 	DepositDate *string                `pjson:"deposit_date"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
@@ -37540,10 +36723,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrea
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -37569,28 +36748,23 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrea
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit{Amount:%s BagID:%s DepositDate:%s}", core.FmtP(r.Amount), core.FmtP(r.BagID), core.FmtP(r.DepositDate))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
-	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                             *int64                 `pjson:"amount"`
+	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
+	OriginatorCompanyDiscretionaryData *string                `pjson:"originator_company_discretionary_data"`
+	OriginatorCompanyEntryDescription  *string                `pjson:"originator_company_entry_description"`
+	OriginatorCompanyID                *string                `pjson:"originator_company_id"`
+	ReceiverIDNumber                   *string                `pjson:"receiver_id_number"`
+	ReceiverName                       *string                `pjson:"receiver_name"`
+	TraceNumber                        *string                `pjson:"trace_number"`
+	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -37608,10 +36782,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -37679,21 +36849,21 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyEntryDescription:%s OriginatorCompanyID:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `pjson:"currency"`
-	//
-	CheckNumber *string `pjson:"check_number"`
-	//
-	CheckFrontImageFileID *string `pjson:"check_front_image_file_id"`
-	//
-	CheckRearImageFileID *string                `pjson:"check_rear_image_file_id"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency              *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `pjson:"currency"`
+	CheckNumber           *string                                                                               `pjson:"check_number"`
+	CheckFrontImageFileID *string                                                                               `pjson:"check_front_image_file_id"`
+	CheckRearImageFileID  *string                                                                               `pjson:"check_rear_image_file_id"`
+	jsonFields            map[string]interface{}                                                                `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -37711,10 +36881,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -37756,6 +36922,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck{Amount:%s Currency:%s CheckNumber:%s CheckFrontImageFileID:%s CheckRearImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CheckNumber), core.FmtP(r.CheckFrontImageFileID), core.FmtP(r.CheckRearImageFileID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency string
 
 const (
@@ -37767,82 +36937,46 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -37860,10 +36994,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -38120,7 +37250,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -38158,10 +37291,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
@@ -38230,6 +37359,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation{Amount:%s Currency:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -38241,7 +37374,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -38281,10 +37413,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
 }
 
 // The amount that was reversed.
@@ -38367,34 +37495,25 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
+	Amount                             *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1            *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2            *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3            *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                    *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference               *string                `pjson:"beneficiary_reference"`
+	Description                        *string                `pjson:"description"`
+	InputMessageAccountabilityData     *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1             *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2             *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3             *string                `pjson:"originator_address_line3"`
+	OriginatorName                     *string                `pjson:"originator_name"`
 	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
 	jsonFields                         map[string]interface{} `pjson:"-,extras"`
 }
@@ -38414,10 +37533,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -38513,7 +37628,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount *int64 `pjson:"amount"`
@@ -38558,10 +37676,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
 }
 
 // The amount that was reversed.
@@ -38661,44 +37775,31 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal{Amount:%s Description:%s InputCycleDate:%s InputSequenceNumber:%s InputSource:%s InputMessageAccountabilityData:%s PreviousMessageInputMessageAccountabilityData:%s PreviousMessageInputCycleDate:%s PreviousMessageInputSequenceNumber:%s PreviousMessageInputSource:%s ReceiverFinancialInstitutionInformation:%s FinancialInstitutionToFinancialInstitutionInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Description), core.FmtP(r.InputCycleDate), core.FmtP(r.InputSequenceNumber), core.FmtP(r.InputSource), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputMessageAccountabilityData), core.FmtP(r.PreviousMessageInputCycleDate), core.FmtP(r.PreviousMessageInputSequenceNumber), core.FmtP(r.PreviousMessageInputSource), core.FmtP(r.ReceiverFinancialInstitutionInformation), core.FmtP(r.FinancialInstitutionToFinancialInstitutionInformation))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
-	//
-	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
-	//
-	BeneficiaryAddressLine3 *string `pjson:"beneficiary_address_line3"`
-	//
-	BeneficiaryName *string `pjson:"beneficiary_name"`
-	//
-	BeneficiaryReference *string `pjson:"beneficiary_reference"`
-	//
-	Description *string `pjson:"description"`
-	//
-	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
-	//
-	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
-	//
-	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
-	//
-	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
-	//
-	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
-	//
-	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
-	//
-	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
-	//
-	OriginatorToBeneficiaryInformation *string                `pjson:"originator_to_beneficiary_information"`
-	jsonFields                         map[string]interface{} `pjson:"-,extras"`
+	Amount                                  *int64                 `pjson:"amount"`
+	BeneficiaryAddressLine1                 *string                `pjson:"beneficiary_address_line1"`
+	BeneficiaryAddressLine2                 *string                `pjson:"beneficiary_address_line2"`
+	BeneficiaryAddressLine3                 *string                `pjson:"beneficiary_address_line3"`
+	BeneficiaryName                         *string                `pjson:"beneficiary_name"`
+	BeneficiaryReference                    *string                `pjson:"beneficiary_reference"`
+	Description                             *string                `pjson:"description"`
+	InputMessageAccountabilityData          *string                `pjson:"input_message_accountability_data"`
+	OriginatorAddressLine1                  *string                `pjson:"originator_address_line1"`
+	OriginatorAddressLine2                  *string                `pjson:"originator_address_line2"`
+	OriginatorAddressLine3                  *string                `pjson:"originator_address_line3"`
+	OriginatorName                          *string                `pjson:"originator_name"`
+	OriginatorToBeneficiaryInformationLine1 *string                `pjson:"originator_to_beneficiary_information_line1"`
+	OriginatorToBeneficiaryInformationLine2 *string                `pjson:"originator_to_beneficiary_information_line2"`
+	OriginatorToBeneficiaryInformationLine3 *string                `pjson:"originator_to_beneficiary_information_line3"`
+	OriginatorToBeneficiaryInformationLine4 *string                `pjson:"originator_to_beneficiary_information_line4"`
+	OriginatorToBeneficiaryInformation      *string                `pjson:"originator_to_beneficiary_information"`
+	jsonFields                              map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -38716,10 +37817,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -38843,17 +37940,19 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency `pjson:"currency"`
-	//
-	Reason     *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason `pjson:"reason"`
-	jsonFields map[string]interface{}                                                                `pjson:"-,extras"`
+	Currency   *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency `pjson:"currency"`
+	Reason     *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason   `pjson:"reason"`
+	jsonFields map[string]interface{}                                                                  `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -38871,10 +37970,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterna
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
 }
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
@@ -38902,6 +37997,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterna
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource{Amount:%s Currency:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency string
 
 const (
@@ -38926,27 +38025,20 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn  InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                                  `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                                  `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                                  `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                                  `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                                                  `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                                                  `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                                                   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -38964,10 +38056,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
@@ -39030,6 +38118,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -39041,27 +38133,20 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 	// currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                                      `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                                      `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                                      `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                                      `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                                                      `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                                                      `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                                                       `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -39079,10 +38164,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
@@ -39145,6 +38226,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRou
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -39156,7 +38241,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator *string                `pjson:"originator"`
@@ -39180,10 +38264,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleF
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
-}
-
 // Where the sample funds came from.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) GetOriginator() (Originator string) {
 	if r != nil && r.Originator != nil {
@@ -39192,19 +38272,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleF
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds{Originator:%s}", core.FmtP(r.Originator))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	AccountNumber *string `pjson:"account_number"`
-	//
-	RoutingNumber *string `pjson:"routing_number"`
-	//
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Amount             *int64                 `pjson:"amount"`
+	AccountNumber      *string                `pjson:"account_number"`
+	RoutingNumber      *string                `pjson:"routing_number"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -39222,10 +38301,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -39264,9 +38339,11 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -39288,10 +38365,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
@@ -39299,7 +38372,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDra
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection{TransferID:%s}", core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount *int64 `pjson:"amount"`
@@ -39308,10 +38384,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient *string `pjson:"message_to_recipient"`
-	//
-	TransferID *string                `pjson:"transfer_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	MessageToRecipient *string                `pjson:"message_to_recipient"`
+	TransferID         *string                `pjson:"transfer_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -39329,10 +38404,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
 }
 
 // The transfer amount in USD cents.
@@ -39374,9 +38445,11 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention{Amount:%s AccountNumber:%s RoutingNumber:%s MessageToRecipient:%s TransferID:%s}", core.FmtP(r.Amount), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.MessageToRecipient), core.FmtP(r.TransferID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
-	//
 	TransferID *string                `pjson:"transfer_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
@@ -39398,15 +38471,15 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 	return pjson.Marshal(r)
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
-}
-
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
 	if r != nil && r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
+}
+
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection{TransferID:%s}", core.FmtP(r.TransferID))
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionType string
@@ -39415,7 +38488,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionTypeTransaction InboundRealTimePaymentsTransferSimulationResultTransactionType = "transaction"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID *string `pjson:"account_id"`
@@ -39463,10 +38535,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) Unm
 // into the top-level, and will overwrite known members of the same name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
@@ -39559,6 +38627,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) Get
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction{AccountID:%s Amount:%s Currency:%s CreatedAt:%s Description:%s ID:%s RouteID:%s RouteType:%s Source:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.ID), core.FmtP(r.RouteID), core.FmtP(r.RouteType), r.Source, core.FmtP(r.Type))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency string
 
 const (
@@ -39570,7 +38642,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency = "USD"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -39613,10 +38684,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
 }
 
 // The type of decline that took place. We may add additional possible values for
@@ -39684,6 +38751,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource{Category:%s ACHDecline:%s CardDecline:%s CheckDecline:%s InboundRealTimePaymentsTransferDecline:%s InternationalACHDecline:%s CardRouteDecline:%s}", core.FmtP(r.Category), r.ACHDecline, r.CardDecline, r.CheckDecline, r.InboundRealTimePaymentsTransferDecline, r.InternationalACHDecline, r.CardRouteDecline)
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory string
 
 const (
@@ -39696,28 +38767,20 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther                                  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "other"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	OriginatorCompanyName *string `pjson:"originator_company_name"`
-	//
-	OriginatorCompanyDescriptiveDate *string `pjson:"originator_company_descriptive_date"`
-	//
+	Amount                             *int64  `pjson:"amount"`
+	OriginatorCompanyName              *string `pjson:"originator_company_name"`
+	OriginatorCompanyDescriptiveDate   *string `pjson:"originator_company_descriptive_date"`
 	OriginatorCompanyDiscretionaryData *string `pjson:"originator_company_discretionary_data"`
-	//
-	OriginatorCompanyID *string `pjson:"originator_company_id"`
+	OriginatorCompanyID                *string `pjson:"originator_company_id"`
 	// Why the ACH transfer was declined.
-	Reason *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
-	//
-	ReceiverIDNumber *string `pjson:"receiver_id_number"`
-	//
-	ReceiverName *string `pjson:"receiver_name"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Reason           *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `pjson:"reason"`
+	ReceiverIDNumber *string                                                                                   `pjson:"receiver_id_number"`
+	ReceiverName     *string                                                                                   `pjson:"receiver_name"`
+	TraceNumber      *string                                                                                   `pjson:"trace_number"`
+	jsonFields       map[string]interface{}                                                                    `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -39735,10 +38798,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -39807,6 +38866,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline{Amount:%s OriginatorCompanyName:%s OriginatorCompanyDescriptiveDate:%s OriginatorCompanyDiscretionaryData:%s OriginatorCompanyID:%s Reason:%s ReceiverIDNumber:%s ReceiverName:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.OriginatorCompanyName), core.FmtP(r.OriginatorCompanyDescriptiveDate), core.FmtP(r.OriginatorCompanyDiscretionaryData), core.FmtP(r.OriginatorCompanyID), core.FmtP(r.Reason), core.FmtP(r.ReceiverIDNumber), core.FmtP(r.ReceiverName), core.FmtP(r.TraceNumber))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -39823,7 +38886,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "originator_request"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -39874,10 +38936,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
@@ -39983,6 +39041,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
 
 const (
@@ -40023,12 +39085,10 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
+	Amount        *int64  `pjson:"amount"`
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
 	// Why the check was declined.
 	Reason     *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `pjson:"reason"`
@@ -40050,10 +39110,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -40080,6 +39136,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline{Amount:%s AuxiliaryOnUs:%s Reason:%s}", core.FmtP(r.Amount), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.Reason))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -40096,7 +39156,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonReturned              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "returned"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -40137,10 +39196,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -40218,6 +39273,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline{Amount:%s Currency:%s Reason:%s CreditorName:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s TransactionIdentification:%s RemittanceInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.CreditorName), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.TransactionIdentification), core.FmtP(r.RemittanceInformation))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -40239,82 +39298,46 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-//
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount *int64 `pjson:"amount"`
-	//
-	ForeignExchangeIndicator *string `pjson:"foreign_exchange_indicator"`
-	//
-	ForeignExchangeReferenceIndicator *string `pjson:"foreign_exchange_reference_indicator"`
-	//
-	ForeignExchangeReference *string `pjson:"foreign_exchange_reference"`
-	//
-	DestinationCountryCode *string `pjson:"destination_country_code"`
-	//
-	DestinationCurrencyCode *string `pjson:"destination_currency_code"`
-	//
-	ForeignPaymentAmount *int64 `pjson:"foreign_payment_amount"`
-	//
-	ForeignTraceNumber *string `pjson:"foreign_trace_number"`
-	//
-	InternationalTransactionTypeCode *string `pjson:"international_transaction_type_code"`
-	//
-	OriginatingCurrencyCode *string `pjson:"originating_currency_code"`
-	//
-	OriginatingDepositoryFinancialInstitutionName *string `pjson:"originating_depository_financial_institution_name"`
-	//
-	OriginatingDepositoryFinancialInstitutionIDQualifier *string `pjson:"originating_depository_financial_institution_id_qualifier"`
-	//
-	OriginatingDepositoryFinancialInstitutionID *string `pjson:"originating_depository_financial_institution_id"`
-	//
-	OriginatingDepositoryFinancialInstitutionBranchCountry *string `pjson:"originating_depository_financial_institution_branch_country"`
-	//
-	OriginatorCity *string `pjson:"originator_city"`
-	//
-	OriginatorCompanyEntryDescription *string `pjson:"originator_company_entry_description"`
-	//
-	OriginatorCountry *string `pjson:"originator_country"`
-	//
-	OriginatorIdentification *string `pjson:"originator_identification"`
-	//
-	OriginatorName *string `pjson:"originator_name"`
-	//
-	OriginatorPostalCode *string `pjson:"originator_postal_code"`
-	//
-	OriginatorStreetAddress *string `pjson:"originator_street_address"`
-	//
-	OriginatorStateOrProvince *string `pjson:"originator_state_or_province"`
-	//
-	PaymentRelatedInformation *string `pjson:"payment_related_information"`
-	//
-	PaymentRelatedInformation2 *string `pjson:"payment_related_information2"`
-	//
-	ReceiverIdentificationNumber *string `pjson:"receiver_identification_number"`
-	//
-	ReceiverStreetAddress *string `pjson:"receiver_street_address"`
-	//
-	ReceiverCity *string `pjson:"receiver_city"`
-	//
-	ReceiverStateOrProvince *string `pjson:"receiver_state_or_province"`
-	//
-	ReceiverCountry *string `pjson:"receiver_country"`
-	//
-	ReceiverPostalCode *string `pjson:"receiver_postal_code"`
-	//
-	ReceivingCompanyOrIndividualName *string `pjson:"receiving_company_or_individual_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionName *string `pjson:"receiving_depository_financial_institution_name"`
-	//
-	ReceivingDepositoryFinancialInstitutionIDQualifier *string `pjson:"receiving_depository_financial_institution_id_qualifier"`
-	//
-	ReceivingDepositoryFinancialInstitutionID *string `pjson:"receiving_depository_financial_institution_id"`
-	//
-	ReceivingDepositoryFinancialInstitutionCountry *string `pjson:"receiving_depository_financial_institution_country"`
-	//
-	TraceNumber *string                `pjson:"trace_number"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Amount                                                 *int64                 `pjson:"amount"`
+	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
+	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
+	ForeignExchangeReference                               *string                `pjson:"foreign_exchange_reference"`
+	DestinationCountryCode                                 *string                `pjson:"destination_country_code"`
+	DestinationCurrencyCode                                *string                `pjson:"destination_currency_code"`
+	ForeignPaymentAmount                                   *int64                 `pjson:"foreign_payment_amount"`
+	ForeignTraceNumber                                     *string                `pjson:"foreign_trace_number"`
+	InternationalTransactionTypeCode                       *string                `pjson:"international_transaction_type_code"`
+	OriginatingCurrencyCode                                *string                `pjson:"originating_currency_code"`
+	OriginatingDepositoryFinancialInstitutionName          *string                `pjson:"originating_depository_financial_institution_name"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   *string                `pjson:"originating_depository_financial_institution_id_qualifier"`
+	OriginatingDepositoryFinancialInstitutionID            *string                `pjson:"originating_depository_financial_institution_id"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry *string                `pjson:"originating_depository_financial_institution_branch_country"`
+	OriginatorCity                                         *string                `pjson:"originator_city"`
+	OriginatorCompanyEntryDescription                      *string                `pjson:"originator_company_entry_description"`
+	OriginatorCountry                                      *string                `pjson:"originator_country"`
+	OriginatorIdentification                               *string                `pjson:"originator_identification"`
+	OriginatorName                                         *string                `pjson:"originator_name"`
+	OriginatorPostalCode                                   *string                `pjson:"originator_postal_code"`
+	OriginatorStreetAddress                                *string                `pjson:"originator_street_address"`
+	OriginatorStateOrProvince                              *string                `pjson:"originator_state_or_province"`
+	PaymentRelatedInformation                              *string                `pjson:"payment_related_information"`
+	PaymentRelatedInformation2                             *string                `pjson:"payment_related_information2"`
+	ReceiverIdentificationNumber                           *string                `pjson:"receiver_identification_number"`
+	ReceiverStreetAddress                                  *string                `pjson:"receiver_street_address"`
+	ReceiverCity                                           *string                `pjson:"receiver_city"`
+	ReceiverStateOrProvince                                *string                `pjson:"receiver_state_or_province"`
+	ReceiverCountry                                        *string                `pjson:"receiver_country"`
+	ReceiverPostalCode                                     *string                `pjson:"receiver_postal_code"`
+	ReceivingCompanyOrIndividualName                       *string                `pjson:"receiving_company_or_individual_name"`
+	ReceivingDepositoryFinancialInstitutionName            *string                `pjson:"receiving_depository_financial_institution_name"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     *string                `pjson:"receiving_depository_financial_institution_id_qualifier"`
+	ReceivingDepositoryFinancialInstitutionID              *string                `pjson:"receiving_depository_financial_institution_id"`
+	ReceivingDepositoryFinancialInstitutionCountry         *string                `pjson:"receiving_depository_financial_institution_country"`
+	TraceNumber                                            *string                `pjson:"trace_number"`
+	jsonFields                                             map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -40332,10 +39355,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -40592,27 +39611,24 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-//
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline{Amount:%s ForeignExchangeIndicator:%s ForeignExchangeReferenceIndicator:%s ForeignExchangeReference:%s DestinationCountryCode:%s DestinationCurrencyCode:%s ForeignPaymentAmount:%s ForeignTraceNumber:%s InternationalTransactionTypeCode:%s OriginatingCurrencyCode:%s OriginatingDepositoryFinancialInstitutionName:%s OriginatingDepositoryFinancialInstitutionIDQualifier:%s OriginatingDepositoryFinancialInstitutionID:%s OriginatingDepositoryFinancialInstitutionBranchCountry:%s OriginatorCity:%s OriginatorCompanyEntryDescription:%s OriginatorCountry:%s OriginatorIdentification:%s OriginatorName:%s OriginatorPostalCode:%s OriginatorStreetAddress:%s OriginatorStateOrProvince:%s PaymentRelatedInformation:%s PaymentRelatedInformation2:%s ReceiverIdentificationNumber:%s ReceiverStreetAddress:%s ReceiverCity:%s ReceiverStateOrProvince:%s ReceiverCountry:%s ReceiverPostalCode:%s ReceivingCompanyOrIndividualName:%s ReceivingDepositoryFinancialInstitutionName:%s ReceivingDepositoryFinancialInstitutionIDQualifier:%s ReceivingDepositoryFinancialInstitutionID:%s ReceivingDepositoryFinancialInstitutionCountry:%s TraceNumber:%s}", core.FmtP(r.Amount), core.FmtP(r.ForeignExchangeIndicator), core.FmtP(r.ForeignExchangeReferenceIndicator), core.FmtP(r.ForeignExchangeReference), core.FmtP(r.DestinationCountryCode), core.FmtP(r.DestinationCurrencyCode), core.FmtP(r.ForeignPaymentAmount), core.FmtP(r.ForeignTraceNumber), core.FmtP(r.InternationalTransactionTypeCode), core.FmtP(r.OriginatingCurrencyCode), core.FmtP(r.OriginatingDepositoryFinancialInstitutionName), core.FmtP(r.OriginatingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.OriginatingDepositoryFinancialInstitutionID), core.FmtP(r.OriginatingDepositoryFinancialInstitutionBranchCountry), core.FmtP(r.OriginatorCity), core.FmtP(r.OriginatorCompanyEntryDescription), core.FmtP(r.OriginatorCountry), core.FmtP(r.OriginatorIdentification), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorPostalCode), core.FmtP(r.OriginatorStreetAddress), core.FmtP(r.OriginatorStateOrProvince), core.FmtP(r.PaymentRelatedInformation), core.FmtP(r.PaymentRelatedInformation2), core.FmtP(r.ReceiverIdentificationNumber), core.FmtP(r.ReceiverStreetAddress), core.FmtP(r.ReceiverCity), core.FmtP(r.ReceiverStateOrProvince), core.FmtP(r.ReceiverCountry), core.FmtP(r.ReceiverPostalCode), core.FmtP(r.ReceivingCompanyOrIndividualName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionName), core.FmtP(r.ReceivingDepositoryFinancialInstitutionIDQualifier), core.FmtP(r.ReceivingDepositoryFinancialInstitutionID), core.FmtP(r.ReceivingDepositoryFinancialInstitutionCountry), core.FmtP(r.TraceNumber))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
-	//
-	MerchantAcceptorID *string `pjson:"merchant_acceptor_id"`
-	//
-	MerchantCity *string `pjson:"merchant_city"`
-	//
-	MerchantCountry *string `pjson:"merchant_country"`
-	//
-	MerchantDescriptor *string `pjson:"merchant_descriptor"`
-	//
-	MerchantState *string `pjson:"merchant_state"`
-	//
-	MerchantCategoryCode *string                `pjson:"merchant_category_code"`
-	jsonFields           map[string]interface{} `pjson:"-,extras"`
+	Currency             *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `pjson:"currency"`
+	MerchantAcceptorID   *string                                                                                           `pjson:"merchant_acceptor_id"`
+	MerchantCity         *string                                                                                           `pjson:"merchant_city"`
+	MerchantCountry      *string                                                                                           `pjson:"merchant_country"`
+	MerchantDescriptor   *string                                                                                           `pjson:"merchant_descriptor"`
+	MerchantState        *string                                                                                           `pjson:"merchant_state"`
+	MerchantCategoryCode *string                                                                                           `pjson:"merchant_category_code"`
+	jsonFields           map[string]interface{}                                                                            `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -40630,10 +39646,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // name.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
-}
-
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
 }
 
 // The declined amount in the minor unit of the destination account currency. For
@@ -40696,6 +39708,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline{Amount:%s Currency:%s MerchantAcceptorID:%s MerchantCity:%s MerchantCountry:%s MerchantDescriptor:%s MerchantState:%s MerchantCategoryCode:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantState), core.FmtP(r.MerchantCategoryCode))
+}
+
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -40753,10 +39769,6 @@ func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) MarshalJSON()
 	return pjson.Marshal(r)
 }
 
-func (r SimulateARealTimePaymentsTransferToYourAccountParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateARealTimePaymentsTransferToYourAccountParameters{AccountNumberID:%s Amount:%s RequestForPaymentID:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s RemittanceInformation:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.RequestForPaymentID), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.RemittanceInformation))
-}
-
 // The identifier of the Account Number the inbound Real Time Payments Transfer is
 // for.
 func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetAccountNumberID() (AccountNumberID string) {
@@ -40812,4 +39824,8 @@ func (r *SimulateARealTimePaymentsTransferToYourAccountParameters) GetRemittance
 		RemittanceInformation = *r.RemittanceInformation
 	}
 	return
+}
+
+func (r SimulateARealTimePaymentsTransferToYourAccountParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateARealTimePaymentsTransferToYourAccountParameters{AccountNumberID:%s Amount:%s RequestForPaymentID:%s DebtorName:%s DebtorAccountNumber:%s DebtorRoutingNumber:%s RemittanceInformation:%s}", core.FmtP(r.AccountNumberID), core.FmtP(r.Amount), core.FmtP(r.RequestForPaymentID), core.FmtP(r.DebtorName), core.FmtP(r.DebtorAccountNumber), core.FmtP(r.DebtorRoutingNumber), core.FmtP(r.RemittanceInformation))
 }

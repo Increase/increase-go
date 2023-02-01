@@ -33,7 +33,7 @@ type PageInterface[Model any, Response PageResponseInterface[Model]] interface {
 	Index() int
 }
 
-func getInt(response *http.Response, key string, defaultValue int) int {
+func getInt(response *http.Response, key string, defaultValue int64) int64 {
 	if response == nil {
 		return defaultValue
 	}
@@ -44,7 +44,7 @@ func getInt(response *http.Response, key string, defaultValue int) int {
 	} else {
 		p := u.Query()
 		if rawInt, ok := p[key]; ok && len(rawInt) != 0 {
-			if i, err := strconv.Atoi(rawInt[0]); err == nil {
+			if i, err := strconv.ParseInt(rawInt[0], 10, 64); err == nil {
 				return i
 			}
 		}
@@ -65,7 +65,6 @@ type PageParams struct {
 	URL     string
 }
 
-//
 type PageResponse[Model interface{}] struct {
 	Data *[]Model `pjson:"data"`
 	// A pointer to a place in the list.
@@ -86,10 +85,6 @@ func (r *PageResponse[Model]) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r PageResponse[Model]) String() (result string) {
-	return fmt.Sprintf("&PageResponse[Model]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
 func (r *PageResponse[Model]) GetData() (Data []Model) {
 	if r != nil && r.Data != nil {
 		Data = *r.Data
@@ -103,6 +98,10 @@ func (r *PageResponse[Model]) GetNextCursor() (NextCursor string) {
 		NextCursor = *r.NextCursor
 	}
 	return
+}
+
+func (r PageResponse[Model]) String() (result string) {
+	return fmt.Sprintf("&PageResponse[Model]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
 var _ PageResponseInterface[interface{}] = (*PageResponse[interface{}])(nil)
