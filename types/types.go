@@ -7,6 +7,20 @@ import (
 	"increase/pagination"
 )
 
+type PointOfServiceEntryMode string
+
+const (
+	PointOfServiceEntryModeManual                     PointOfServiceEntryMode = "manual"
+	PointOfServiceEntryModeMagneticStripeNoCvv        PointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	PointOfServiceEntryModeOpticalCode                PointOfServiceEntryMode = "optical_code"
+	PointOfServiceEntryModeIntegratedCircuitCard      PointOfServiceEntryMode = "integrated_circuit_card"
+	PointOfServiceEntryModeContactless                PointOfServiceEntryMode = "contactless"
+	PointOfServiceEntryModeCredentialOnFile           PointOfServiceEntryMode = "credential_on_file"
+	PointOfServiceEntryModeMagneticStripe             PointOfServiceEntryMode = "magnetic_stripe"
+	PointOfServiceEntryModeContactlessMagneticStripe  PointOfServiceEntryMode = "contactless_magnetic_stripe"
+	PointOfServiceEntryModeIntegratedCircuitCardNoCvv PointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 type Account struct {
 	// The Account's balances in the minor unit of its currency. For dollars, for
 	// example, these values will represent cents.
@@ -920,9 +934,10 @@ type RealTimeDecisionCardAuthorization struct {
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *RealTimeDecisionCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *RealTimeDecisionCardAuthorizationNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *RealTimeDecisionCardAuthorizationNetworkDetails `pjson:"network_details"`
 	// Whether or not the authorization was approved.
 	Decision *RealTimeDecisionCardAuthorizationDecision `pjson:"decision"`
 	// The identifier of the Card that is being authorized.
@@ -1001,11 +1016,18 @@ func (r *RealTimeDecisionCardAuthorization) GetMerchantCountry() (MerchantCountr
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *RealTimeDecisionCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode RealTimeDecisionCardAuthorizationPointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *RealTimeDecisionCardAuthorization) GetNetwork() (Network RealTimeDecisionCardAuthorizationNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *RealTimeDecisionCardAuthorization) GetNetworkDetails() (NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -1072,22 +1094,82 @@ func (r *RealTimeDecisionCardAuthorization) GetSettlementCurrency() (SettlementC
 }
 
 func (r RealTimeDecisionCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecisionCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Decision:%s CardID:%s AccountID:%s PresentmentAmount:%s PresentmentCurrency:%s SettlementAmount:%s SettlementCurrency:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.AccountID), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.SettlementAmount), core.FmtP(r.SettlementCurrency))
+	return fmt.Sprintf("&RealTimeDecisionCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Decision:%s CardID:%s AccountID:%s PresentmentAmount:%s PresentmentCurrency:%s SettlementAmount:%s SettlementCurrency:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Decision), core.FmtP(r.CardID), core.FmtP(r.AccountID), core.FmtP(r.PresentmentAmount), core.FmtP(r.PresentmentCurrency), core.FmtP(r.SettlementAmount), core.FmtP(r.SettlementCurrency))
 }
 
-type RealTimeDecisionCardAuthorizationPointOfServiceEntryMode string
+type RealTimeDecisionCardAuthorizationNetwork string
 
 const (
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeManual                     RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "manual"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeOpticalCode                RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "optical_code"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeContactless                RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "contactless"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeCredentialOnFile           RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeMagneticStripe             RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	RealTimeDecisionCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	RealTimeDecisionCardAuthorizationNetworkVisa RealTimeDecisionCardAuthorizationNetwork = "visa"
 )
+
+type RealTimeDecisionCardAuthorizationNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *RealTimeDecisionCardAuthorizationNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                               `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimeDecisionCardAuthorizationNetworkDetails using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecisionCardAuthorizationNetworkDetails into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *RealTimeDecisionCardAuthorizationNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *RealTimeDecisionCardAuthorizationNetworkDetails) GetVisa() (Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecisionCardAuthorizationNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimeDecisionCardAuthorizationNetworkDetailsVisa using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes RealTimeDecisionCardAuthorizationNetworkDetailsVisa into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&RealTimeDecisionCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type RealTimeDecisionCardAuthorizationDecision string
 
@@ -8609,9 +8691,10 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *PendingTransactionSourceCardAuthorizationNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *PendingTransactionSourceCardAuthorizationNetworkDetails `pjson:"network_details"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -8683,11 +8766,18 @@ func (r *PendingTransactionSourceCardAuthorization) GetMerchantCountry() (Mercha
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *PendingTransactionSourceCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *PendingTransactionSourceCardAuthorization) GetNetwork() (Network PendingTransactionSourceCardAuthorizationNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *PendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -8729,22 +8819,82 @@ func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (D
 }
 
 func (r PendingTransactionSourceCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&PendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
+type PendingTransactionSourceCardAuthorizationNetwork string
 
 const (
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeManual                     PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "manual"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeOpticalCode                PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "optical_code"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactless                PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeCredentialOnFile           PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripe             PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	PendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	PendingTransactionSourceCardAuthorizationNetworkVisa PendingTransactionSourceCardAuthorizationNetwork = "visa"
 )
+
+type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCardAuthorizationNetworkDetails using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PendingTransactionSourceCardAuthorizationNetworkDetails
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCardAuthorizationNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionSourceCardAuthorizationNetworkDetailsVisa using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// PendingTransactionSourceCardAuthorizationNetworkDetailsVisa into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionSourceCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type PendingTransactionSourceCardAuthorizationCurrency string
 
@@ -9842,9 +9992,10 @@ type DeclinedTransactionSourceCardDecline struct {
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *DeclinedTransactionSourceCardDeclineNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *DeclinedTransactionSourceCardDeclineNetworkDetails `pjson:"network_details"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -9920,11 +10071,18 @@ func (r *DeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCou
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *DeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *DeclinedTransactionSourceCardDecline) GetNetwork() (Network DeclinedTransactionSourceCardDeclineNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *DeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails DeclinedTransactionSourceCardDeclineNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -9982,22 +10140,82 @@ func (r *DeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (Digita
 }
 
 func (r DeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&DeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+type DeclinedTransactionSourceCardDeclineNetwork string
 
 const (
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
-	DeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv DeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	DeclinedTransactionSourceCardDeclineNetworkVisa DeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
+
+type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceCardDeclineNetworkDetails using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceCardDeclineNetworkDetails into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r DeclinedTransactionSourceCardDeclineNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceCardDeclineNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionSourceCardDeclineNetworkDetailsVisa using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes DeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type DeclinedTransactionSourceCardDeclineCurrency string
 
@@ -14667,8 +14885,10 @@ type CheckTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
 	MailedAt *string `pjson:"mailed_at"`
-	// The descriptor that is printed on the check.
+	// The descriptor that will be printed on the memo field on the check.
 	Message *string `pjson:"message"`
+	// The descriptor that will be printed on the letter included with the check.
+	Note *string `pjson:"note"`
 	// The name that will be printed on the check.
 	RecipientName *string `pjson:"recipient_name"`
 	// The lifecycle status of the transfer.
@@ -14805,10 +15025,18 @@ func (r *CheckTransfer) GetMailedAt() (MailedAt string) {
 	return
 }
 
-// The descriptor that is printed on the check.
+// The descriptor that will be printed on the memo field on the check.
 func (r *CheckTransfer) GetMessage() (Message string) {
 	if r != nil && r.Message != nil {
 		Message = *r.Message
+	}
+	return
+}
+
+// The descriptor that will be printed on the letter included with the check.
+func (r *CheckTransfer) GetNote() (Note string) {
+	if r != nil && r.Note != nil {
+		Note = *r.Note
 	}
 	return
 }
@@ -14889,7 +15117,7 @@ func (r *CheckTransfer) GetType() (Type CheckTransferType) {
 }
 
 func (r CheckTransfer) String() (result string) {
-	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, core.FmtP(r.Type))
+	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s Note:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.Note), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, core.FmtP(r.Type))
 }
 
 type CheckTransferReturnAddress struct {
@@ -15188,8 +15416,10 @@ type CreateACheckTransferParameters struct {
 	ReturnAddress *CreateACheckTransferParametersReturnAddress `pjson:"return_address"`
 	// The transfer amount in cents.
 	Amount *int64 `pjson:"amount"`
-	// The descriptor that will be printed on the check.
+	// The descriptor that will be printed on the memo field on the check.
 	Message *string `pjson:"message"`
+	// The descriptor that will be printed on the letter included with the check.
+	Note *string `pjson:"note"`
 	// The name that will be printed on the check.
 	RecipientName *string `pjson:"recipient_name"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
@@ -15276,10 +15506,18 @@ func (r *CreateACheckTransferParameters) GetAmount() (Amount int64) {
 	return
 }
 
-// The descriptor that will be printed on the check.
+// The descriptor that will be printed on the memo field on the check.
 func (r *CreateACheckTransferParameters) GetMessage() (Message string) {
 	if r != nil && r.Message != nil {
 		Message = *r.Message
+	}
+	return
+}
+
+// The descriptor that will be printed on the letter included with the check.
+func (r *CreateACheckTransferParameters) GetNote() (Note string) {
+	if r != nil && r.Note != nil {
+		Note = *r.Note
 	}
 	return
 }
@@ -15301,7 +15539,7 @@ func (r *CreateACheckTransferParameters) GetRequireApproval() (RequireApproval b
 }
 
 func (r CreateACheckTransferParameters) String() (result string) {
-	return fmt.Sprintf("&CreateACheckTransferParameters{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s Message:%s RecipientName:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.Message), core.FmtP(r.RecipientName), core.FmtP(r.RequireApproval))
+	return fmt.Sprintf("&CreateACheckTransferParameters{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s Message:%s Note:%s RecipientName:%s RequireApproval:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.Message), core.FmtP(r.Note), core.FmtP(r.RecipientName), core.FmtP(r.RequireApproval))
 }
 
 type CreateACheckTransferParametersReturnAddress struct {
@@ -16111,6 +16349,7 @@ const (
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
 type EntityCorporationBeneficialOwnersProng string
@@ -16306,6 +16545,7 @@ const (
 	EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityNaturalPersonIdentificationMethodPassport                               EntityNaturalPersonIdentificationMethod = "passport"
 	EntityNaturalPersonIdentificationMethodDriversLicense                         EntityNaturalPersonIdentificationMethod = "drivers_license"
+	EntityNaturalPersonIdentificationMethodOther                                  EntityNaturalPersonIdentificationMethod = "other"
 )
 
 type EntityJoint struct {
@@ -16536,6 +16776,7 @@ const (
 	EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber EntityJointIndividualsIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityJointIndividualsIdentificationMethodPassport                               EntityJointIndividualsIdentificationMethod = "passport"
 	EntityJointIndividualsIdentificationMethodDriversLicense                         EntityJointIndividualsIdentificationMethod = "drivers_license"
+	EntityJointIndividualsIdentificationMethodOther                                  EntityJointIndividualsIdentificationMethod = "other"
 )
 
 type EntityTrust struct {
@@ -16957,6 +17198,7 @@ const (
 	EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustTrusteesIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityTrustTrusteesIndividualIdentificationMethodPassport                               EntityTrustTrusteesIndividualIdentificationMethod = "passport"
 	EntityTrustTrusteesIndividualIdentificationMethodDriversLicense                         EntityTrustTrusteesIndividualIdentificationMethod = "drivers_license"
+	EntityTrustTrusteesIndividualIdentificationMethodOther                                  EntityTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
 type EntityTrustGrantor struct {
@@ -17145,6 +17387,7 @@ const (
 	EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustGrantorIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityTrustGrantorIdentificationMethodPassport                               EntityTrustGrantorIdentificationMethod = "passport"
 	EntityTrustGrantorIdentificationMethodDriversLicense                         EntityTrustGrantorIdentificationMethod = "drivers_license"
+	EntityTrustGrantorIdentificationMethodOther                                  EntityTrustGrantorIdentificationMethod = "other"
 )
 
 type EntityType string
@@ -17200,7 +17443,9 @@ type CreateAnEntityParameters struct {
 	// `corporation`.
 	Corporation *CreateAnEntityParametersCorporation `pjson:"corporation"`
 	// Details of the natural person entity to create. Required if `structure` is equal
-	// to `natural_person`.
+	// to `natural_person`. Natural people entities should be submitted with
+	// `social_security_number` or `individual_taxpayer_identification_number`
+	// identification methods.
 	NaturalPerson *CreateAnEntityParametersNaturalPerson `pjson:"natural_person"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
@@ -17249,7 +17494,9 @@ func (r *CreateAnEntityParameters) GetCorporation() (Corporation CreateAnEntityP
 }
 
 // Details of the natural person entity to create. Required if `structure` is equal
-// to `natural_person`.
+// to `natural_person`. Natural people entities should be submitted with
+// `social_security_number` or `individual_taxpayer_identification_number`
+// identification methods.
 func (r *CreateAnEntityParameters) GetNaturalPerson() (NaturalPerson CreateAnEntityParametersNaturalPerson) {
 	if r != nil && r.NaturalPerson != nil {
 		NaturalPerson = *r.NaturalPerson
@@ -17532,9 +17779,10 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividual struct {
 	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
 	Address *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress `pjson:"address"`
-	// The identification method for an individual can only be a passport or driver's
-	// license if you've confirmed they do not have a US tax id (either a Social
-	// Security Number or Individual Taxpayer Identification Number).
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
 	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification `pjson:"identification"`
@@ -17580,9 +17828,10 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetAddre
 	return
 }
 
-// The identification method for an individual can only be a passport or driver's
-// license if you've confirmed they do not have a US tax id (either a Social
-// Security Number or Individual Taxpayer Identification Number).
+// The identification method for an individual can only be a passport, driver's
+// license, or other document if you've confirmed the individual does not have a US
+// tax id (either a Social Security Number or Individual Taxpayer Identification
+// Number).
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
 	if r != nil && r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
@@ -17690,7 +17939,10 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense `pjson:"drivers_license"`
-	jsonFields     map[string]interface{}                                                                     `pjson:"-,extras"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other      *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther `pjson:"other"`
+	jsonFields map[string]interface{}                                                            `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -17745,8 +17997,17 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 	return
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetOther() (Other CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) {
+	if r != nil && r.Other != nil {
+		Other = *r.Other
+	}
+	return
+}
+
 func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s Other:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense, r.Other)
 }
 
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -17756,6 +18017,7 @@ const (
 	CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
 	CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
+	CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
 type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport struct {
@@ -17868,6 +18130,73 @@ func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificat
 	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
 }
 
+type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country *string `pjson:"country"`
+	// A description of the document submitted.
+	Description *string `pjson:"description"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate *string `pjson:"expiration_date"`
+	// The identifier of the File containing the document.
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The two-character ISO 3166-1 code representing the country that issued the
+// document.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetCountry() (Country string) {
+	if r != nil && r.Country != nil {
+		Country = *r.Country
+	}
+	return
+}
+
+// A description of the document submitted.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The document's expiration date in YYYY-MM-DD format.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r != nil && r.ExpirationDate != nil {
+		ExpirationDate = *r.ExpirationDate
+	}
+	return
+}
+
+// The identifier of the File containing the document.
+func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther{Country:%s Description:%s ExpirationDate:%s FileID:%s}", core.FmtP(r.Country), core.FmtP(r.Description), core.FmtP(r.ExpirationDate), core.FmtP(r.FileID))
+}
+
 type CreateAnEntityParametersCorporationBeneficialOwnersProng string
 
 const (
@@ -17882,9 +18211,10 @@ type CreateAnEntityParametersNaturalPerson struct {
 	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
 	Address *CreateAnEntityParametersNaturalPersonAddress `pjson:"address"`
-	// The identification method for an individual can only be a passport or driver's
-	// license if you've confirmed they do not have a US tax id (either a Social
-	// Security Number or Individual Taxpayer Identification Number).
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
 	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification *CreateAnEntityParametersNaturalPersonIdentification `pjson:"identification"`
@@ -17929,9 +18259,10 @@ func (r *CreateAnEntityParametersNaturalPerson) GetAddress() (Address CreateAnEn
 	return
 }
 
-// The identification method for an individual can only be a passport or driver's
-// license if you've confirmed they do not have a US tax id (either a Social
-// Security Number or Individual Taxpayer Identification Number).
+// The identification method for an individual can only be a passport, driver's
+// license, or other document if you've confirmed the individual does not have a US
+// tax id (either a Social Security Number or Individual Taxpayer Identification
+// Number).
 func (r *CreateAnEntityParametersNaturalPerson) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
 	if r != nil && r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
@@ -18038,7 +18369,10 @@ type CreateAnEntityParametersNaturalPersonIdentification struct {
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense `pjson:"drivers_license"`
-	jsonFields     map[string]interface{}                                             `pjson:"-,extras"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other      *CreateAnEntityParametersNaturalPersonIdentificationOther `pjson:"other"`
+	jsonFields map[string]interface{}                                    `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -18091,8 +18425,17 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetDriversLicense(
 	return
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+func (r *CreateAnEntityParametersNaturalPersonIdentification) GetOther() (Other CreateAnEntityParametersNaturalPersonIdentificationOther) {
+	if r != nil && r.Other != nil {
+		Other = *r.Other
+	}
+	return
+}
+
 func (r CreateAnEntityParametersNaturalPersonIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s Other:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense, r.Other)
 }
 
 type CreateAnEntityParametersNaturalPersonIdentificationMethod string
@@ -18102,6 +18445,7 @@ const (
 	CreateAnEntityParametersNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber CreateAnEntityParametersNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
 	CreateAnEntityParametersNaturalPersonIdentificationMethodPassport                               CreateAnEntityParametersNaturalPersonIdentificationMethod = "passport"
 	CreateAnEntityParametersNaturalPersonIdentificationMethodDriversLicense                         CreateAnEntityParametersNaturalPersonIdentificationMethod = "drivers_license"
+	CreateAnEntityParametersNaturalPersonIdentificationMethodOther                                  CreateAnEntityParametersNaturalPersonIdentificationMethod = "other"
 )
 
 type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
@@ -18210,6 +18554,71 @@ func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) Strin
 	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
 }
 
+type CreateAnEntityParametersNaturalPersonIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country *string `pjson:"country"`
+	// A description of the document submitted.
+	Description *string `pjson:"description"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate *string `pjson:"expiration_date"`
+	// The identifier of the File containing the document.
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersNaturalPersonIdentificationOther using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersNaturalPersonIdentificationOther
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The two-character ISO 3166-1 code representing the country that issued the
+// document.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetCountry() (Country string) {
+	if r != nil && r.Country != nil {
+		Country = *r.Country
+	}
+	return
+}
+
+// A description of the document submitted.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The document's expiration date in YYYY-MM-DD format.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r != nil && r.ExpirationDate != nil {
+		ExpirationDate = *r.ExpirationDate
+	}
+	return
+}
+
+// The identifier of the File containing the document.
+func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersNaturalPersonIdentificationOther{Country:%s Description:%s ExpirationDate:%s FileID:%s}", core.FmtP(r.Country), core.FmtP(r.Description), core.FmtP(r.ExpirationDate), core.FmtP(r.FileID))
+}
+
 type CreateAnEntityParametersJoint struct {
 	// The name of the joint entity.
 	Name *string `pjson:"name"`
@@ -18259,9 +18668,10 @@ type CreateAnEntityParametersJointIndividuals struct {
 	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
 	Address *CreateAnEntityParametersJointIndividualsAddress `pjson:"address"`
-	// The identification method for an individual can only be a passport or driver's
-	// license if you've confirmed they do not have a US tax id (either a Social
-	// Security Number or Individual Taxpayer Identification Number).
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
 	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification *CreateAnEntityParametersJointIndividualsIdentification `pjson:"identification"`
@@ -18306,9 +18716,10 @@ func (r *CreateAnEntityParametersJointIndividuals) GetAddress() (Address CreateA
 	return
 }
 
-// The identification method for an individual can only be a passport or driver's
-// license if you've confirmed they do not have a US tax id (either a Social
-// Security Number or Individual Taxpayer Identification Number).
+// The identification method for an individual can only be a passport, driver's
+// license, or other document if you've confirmed the individual does not have a US
+// tax id (either a Social Security Number or Individual Taxpayer Identification
+// Number).
 func (r *CreateAnEntityParametersJointIndividuals) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
 	if r != nil && r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
@@ -18415,7 +18826,10 @@ type CreateAnEntityParametersJointIndividualsIdentification struct {
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense `pjson:"drivers_license"`
-	jsonFields     map[string]interface{}                                                `pjson:"-,extras"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other      *CreateAnEntityParametersJointIndividualsIdentificationOther `pjson:"other"`
+	jsonFields map[string]interface{}                                       `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -18468,8 +18882,17 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetDriversLicen
 	return
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+func (r *CreateAnEntityParametersJointIndividualsIdentification) GetOther() (Other CreateAnEntityParametersJointIndividualsIdentificationOther) {
+	if r != nil && r.Other != nil {
+		Other = *r.Other
+	}
+	return
+}
+
 func (r CreateAnEntityParametersJointIndividualsIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s Other:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense, r.Other)
 }
 
 type CreateAnEntityParametersJointIndividualsIdentificationMethod string
@@ -18479,6 +18902,7 @@ const (
 	CreateAnEntityParametersJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber CreateAnEntityParametersJointIndividualsIdentificationMethod = "individual_taxpayer_identification_number"
 	CreateAnEntityParametersJointIndividualsIdentificationMethodPassport                               CreateAnEntityParametersJointIndividualsIdentificationMethod = "passport"
 	CreateAnEntityParametersJointIndividualsIdentificationMethodDriversLicense                         CreateAnEntityParametersJointIndividualsIdentificationMethod = "drivers_license"
+	CreateAnEntityParametersJointIndividualsIdentificationMethodOther                                  CreateAnEntityParametersJointIndividualsIdentificationMethod = "other"
 )
 
 type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
@@ -18586,6 +19010,71 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) G
 
 func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) String() (result string) {
 	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
+type CreateAnEntityParametersJointIndividualsIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country *string `pjson:"country"`
+	// A description of the document submitted.
+	Description *string `pjson:"description"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate *string `pjson:"expiration_date"`
+	// The identifier of the File containing the document.
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersJointIndividualsIdentificationOther using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersJointIndividualsIdentificationOther into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The two-character ISO 3166-1 code representing the country that issued the
+// document.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetCountry() (Country string) {
+	if r != nil && r.Country != nil {
+		Country = *r.Country
+	}
+	return
+}
+
+// A description of the document submitted.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The document's expiration date in YYYY-MM-DD format.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r != nil && r.ExpirationDate != nil {
+		ExpirationDate = *r.ExpirationDate
+	}
+	return
+}
+
+// The identifier of the File containing the document.
+func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersJointIndividualsIdentificationOther{Country:%s Description:%s ExpirationDate:%s FileID:%s}", core.FmtP(r.Country), core.FmtP(r.Description), core.FmtP(r.ExpirationDate), core.FmtP(r.FileID))
 }
 
 type CreateAnEntityParametersTrust struct {
@@ -18836,9 +19325,10 @@ type CreateAnEntityParametersTrustTrusteesIndividual struct {
 	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
 	Address *CreateAnEntityParametersTrustTrusteesIndividualAddress `pjson:"address"`
-	// The identification method for an individual can only be a passport or driver's
-	// license if you've confirmed they do not have a US tax id (either a Social
-	// Security Number or Individual Taxpayer Identification Number).
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
 	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification *CreateAnEntityParametersTrustTrusteesIndividualIdentification `pjson:"identification"`
@@ -18884,9 +19374,10 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetAddress() (Address 
 	return
 }
 
-// The identification method for an individual can only be a passport or driver's
-// license if you've confirmed they do not have a US tax id (either a Social
-// Security Number or Individual Taxpayer Identification Number).
+// The identification method for an individual can only be a passport, driver's
+// license, or other document if you've confirmed the individual does not have a US
+// tax id (either a Social Security Number or Individual Taxpayer Identification
+// Number).
 func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
 	if r != nil && r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
@@ -18993,7 +19484,10 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentification struct {
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense `pjson:"drivers_license"`
-	jsonFields     map[string]interface{}                                                       `pjson:"-,extras"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other      *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther `pjson:"other"`
+	jsonFields map[string]interface{}                                              `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -19046,8 +19540,17 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetDrive
 	return
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetOther() (Other CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) {
+	if r != nil && r.Other != nil {
+		Other = *r.Other
+	}
+	return
+}
+
 func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s Other:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense, r.Other)
 }
 
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod string
@@ -19057,6 +19560,7 @@ const (
 	CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethodPassport                               CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod = "passport"
 	CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethodDriversLicense                         CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod = "drivers_license"
+	CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethodOther                                  CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
 type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struct {
@@ -19168,6 +19672,71 @@ func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLice
 	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
 }
 
+type CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country *string `pjson:"country"`
+	// A description of the document submitted.
+	Description *string `pjson:"description"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate *string `pjson:"expiration_date"`
+	// The identifier of the File containing the document.
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther using the
+// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther into an array
+// of bytes using the gjson library. Members of the `Extras` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The two-character ISO 3166-1 code representing the country that issued the
+// document.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetCountry() (Country string) {
+	if r != nil && r.Country != nil {
+		Country = *r.Country
+	}
+	return
+}
+
+// A description of the document submitted.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The document's expiration date in YYYY-MM-DD format.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r != nil && r.ExpirationDate != nil {
+		ExpirationDate = *r.ExpirationDate
+	}
+	return
+}
+
+// The identifier of the File containing the document.
+func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther{Country:%s Description:%s ExpirationDate:%s FileID:%s}", core.FmtP(r.Country), core.FmtP(r.Description), core.FmtP(r.ExpirationDate), core.FmtP(r.FileID))
+}
+
 type CreateAnEntityParametersTrustGrantor struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
@@ -19175,9 +19744,10 @@ type CreateAnEntityParametersTrustGrantor struct {
 	DateOfBirth *string `pjson:"date_of_birth"`
 	// The individual's address.
 	Address *CreateAnEntityParametersTrustGrantorAddress `pjson:"address"`
-	// The identification method for an individual can only be a passport or driver's
-	// license if you've confirmed they do not have a US tax id (either a Social
-	// Security Number or Individual Taxpayer Identification Number).
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
 	ConfirmedNoUsTaxID *bool `pjson:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification *CreateAnEntityParametersTrustGrantorIdentification `pjson:"identification"`
@@ -19222,9 +19792,10 @@ func (r *CreateAnEntityParametersTrustGrantor) GetAddress() (Address CreateAnEnt
 	return
 }
 
-// The identification method for an individual can only be a passport or driver's
-// license if you've confirmed they do not have a US tax id (either a Social
-// Security Number or Individual Taxpayer Identification Number).
+// The identification method for an individual can only be a passport, driver's
+// license, or other document if you've confirmed the individual does not have a US
+// tax id (either a Social Security Number or Individual Taxpayer Identification
+// Number).
 func (r *CreateAnEntityParametersTrustGrantor) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
 	if r != nil && r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
@@ -19330,7 +19901,10 @@ type CreateAnEntityParametersTrustGrantorIdentification struct {
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense `pjson:"drivers_license"`
-	jsonFields     map[string]interface{}                                            `pjson:"-,extras"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other      *CreateAnEntityParametersTrustGrantorIdentificationOther `pjson:"other"`
+	jsonFields map[string]interface{}                                   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -19383,8 +19957,17 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetDriversLicense()
 	return
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+func (r *CreateAnEntityParametersTrustGrantorIdentification) GetOther() (Other CreateAnEntityParametersTrustGrantorIdentificationOther) {
+	if r != nil && r.Other != nil {
+		Other = *r.Other
+	}
+	return
+}
+
 func (r CreateAnEntityParametersTrustGrantorIdentification) String() (result string) {
-	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense)
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentification{Method:%s Number:%s Passport:%s DriversLicense:%s Other:%s}", core.FmtP(r.Method), core.FmtP(r.Number), r.Passport, r.DriversLicense, r.Other)
 }
 
 type CreateAnEntityParametersTrustGrantorIdentificationMethod string
@@ -19394,6 +19977,7 @@ const (
 	CreateAnEntityParametersTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber CreateAnEntityParametersTrustGrantorIdentificationMethod = "individual_taxpayer_identification_number"
 	CreateAnEntityParametersTrustGrantorIdentificationMethodPassport                               CreateAnEntityParametersTrustGrantorIdentificationMethod = "passport"
 	CreateAnEntityParametersTrustGrantorIdentificationMethodDriversLicense                         CreateAnEntityParametersTrustGrantorIdentificationMethod = "drivers_license"
+	CreateAnEntityParametersTrustGrantorIdentificationMethodOther                                  CreateAnEntityParametersTrustGrantorIdentificationMethod = "other"
 )
 
 type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
@@ -19500,6 +20084,71 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetSt
 
 func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) String() (result string) {
 	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationDriversLicense{FileID:%s ExpirationDate:%s State:%s}", core.FmtP(r.FileID), core.FmtP(r.ExpirationDate), core.FmtP(r.State))
+}
+
+type CreateAnEntityParametersTrustGrantorIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country *string `pjson:"country"`
+	// A description of the document submitted.
+	Description *string `pjson:"description"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate *string `pjson:"expiration_date"`
+	// The identifier of the File containing the document.
+	FileID     *string                `pjson:"file_id"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CreateAnEntityParametersTrustGrantorIdentificationOther using the internal pjson
+// library. Unrecognized fields are stored in the `Extras` property.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CreateAnEntityParametersTrustGrantorIdentificationOther
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The two-character ISO 3166-1 code representing the country that issued the
+// document.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetCountry() (Country string) {
+	if r != nil && r.Country != nil {
+		Country = *r.Country
+	}
+	return
+}
+
+// A description of the document submitted.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetDescription() (Description string) {
+	if r != nil && r.Description != nil {
+		Description = *r.Description
+	}
+	return
+}
+
+// The document's expiration date in YYYY-MM-DD format.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r != nil && r.ExpirationDate != nil {
+		ExpirationDate = *r.ExpirationDate
+	}
+	return
+}
+
+// The identifier of the File containing the document.
+func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetFileID() (FileID string) {
+	if r != nil && r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) String() (result string) {
+	return fmt.Sprintf("&CreateAnEntityParametersTrustGrantorIdentificationOther{Country:%s Description:%s ExpirationDate:%s FileID:%s}", core.FmtP(r.Country), core.FmtP(r.Description), core.FmtP(r.ExpirationDate), core.FmtP(r.FileID))
 }
 
 type CreateAnEntityParametersRelationship string
@@ -27103,9 +27752,10 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `pjson:"network_details"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -27182,11 +27832,18 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetMerchantC
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetNetwork() (Network ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -27244,22 +27901,86 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) GetDigitalWa
 }
 
 func (r ACHTransferSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv ACHTransferSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
+
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                                       `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails using
+// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails into an
+// array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa into
+// an array of bytes using the gjson library. Members of the `Extras` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -32720,9 +33441,10 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails `pjson:"network_details"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -32796,11 +33518,18 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetPointOfServiceEntryMode() (PointOfServiceEntryMode CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetwork() (Network CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -32842,22 +33571,86 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 }
 
 func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorization{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode string
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork string
 
 const (
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeManual                     CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "manual"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripeNoCvv        CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeOpticalCode                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "optical_code"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCard      CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactless                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeCredentialOnFile           CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "credential_on_file"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeMagneticStripe             CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "magnetic_stripe"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeContactlessMagneticStripe  CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkVisa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork = "visa"
 )
+
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                                                  `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
 
@@ -33790,9 +34583,10 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `pjson:"network_details"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -33869,11 +34663,18 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMer
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetwork() (Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -33931,22 +34732,86 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDig
 }
 
 func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkVisa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
+
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                                             `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -38899,9 +39764,10 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantCity *string `pjson:"merchant_city"`
 	// The country the merchant resides in.
 	MerchantCountry *string `pjson:"merchant_country"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	// The payment network used to process this card authorization
+	Network *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork `pjson:"network"`
+	// Fields specific to the `network`
+	NetworkDetails *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails `pjson:"network_details"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount *int64 `pjson:"amount"`
@@ -38980,11 +39846,18 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return
 }
 
-// The method used to enter the cardholder's primary account number and card
-// expiration date
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetPointOfServiceEntryMode() (PointOfServiceEntryMode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
-		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+// The payment network used to process this card authorization
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetNetwork() (Network InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork) {
+	if r != nil && r.Network != nil {
+		Network = *r.Network
+	}
+	return
+}
+
+// Fields specific to the `network`
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) {
+	if r != nil && r.NetworkDetails != nil {
+		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
@@ -39042,22 +39915,86 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 }
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s PointOfServiceEntryMode:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.PointOfServiceEntryMode), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline{MerchantAcceptorID:%s MerchantDescriptor:%s MerchantCategoryCode:%s MerchantCity:%s MerchantCountry:%s Network:%s NetworkDetails:%s Amount:%s Currency:%s Reason:%s MerchantState:%s RealTimeDecisionID:%s DigitalWalletTokenID:%s}", core.FmtP(r.MerchantAcceptorID), core.FmtP(r.MerchantDescriptor), core.FmtP(r.MerchantCategoryCode), core.FmtP(r.MerchantCity), core.FmtP(r.MerchantCountry), core.FmtP(r.Network), r.NetworkDetails, core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.Reason), core.FmtP(r.MerchantState), core.FmtP(r.RealTimeDecisionID), core.FmtP(r.DigitalWalletTokenID))
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode string
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeManual                     InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "manual"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripeNoCvv        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeOpticalCode                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "optical_code"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCard      InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactless                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeCredentialOnFile           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "credential_on_file"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeMagneticStripe             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "magnetic_stripe"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeContactlessMagneticStripe  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "contactless_magnetic_stripe"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryModeIntegratedCircuitCardNoCvv InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclinePointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkVisa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
+
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa       *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `pjson:"visa"`
+	jsonFields map[string]interface{}                                                                                 `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Fields specific to the `visa` network
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
+	if r != nil && r.Visa != nil {
+		Visa = *r.Visa
+	}
+	return
+}
+
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails{Visa:%s}", r.Visa)
+}
+
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
+	jsonFields              map[string]interface{}   `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
+// into an array of bytes using the gjson library. Members of the `Extras` field
+// are serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r != nil && r.PointOfServiceEntryMode != nil {
+		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
+	}
+	return
+}
+
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+}
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency string
 
