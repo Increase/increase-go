@@ -13,7 +13,7 @@ func TestCheckDepositsReject(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.CheckDeposits.Simulations.Reject(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
+	_, err := c.Simulations.CheckDeposits.Reject(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
@@ -25,7 +25,7 @@ func TestCheckDepositsSubmit(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.CheckDeposits.Simulations.Submit(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
+	_, err := c.Simulations.CheckDeposits.Submit(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

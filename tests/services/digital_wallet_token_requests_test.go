@@ -14,7 +14,7 @@ func TestDigitalWalletTokenRequestsNew(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.DigitalWalletTokenRequests.Simulations.New(context.TODO(), &types.SimulateDigitalWalletProvisioningForACardParameters{CardID: increase.P("card_oubs0hwk5rn6knuecxg2")})
+	_, err := c.Simulations.DigitalWalletTokenRequests.New(context.TODO(), &types.SimulateDigitalWalletProvisioningForACardParameters{CardID: increase.P("card_oubs0hwk5rn6knuecxg2")})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}

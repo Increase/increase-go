@@ -14,7 +14,7 @@ func TestACHTransfersNewInboundWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ACHTransfers.Simulations.NewInbound(context.TODO(), &types.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: increase.P("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.P(1000)})
+	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &types.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: increase.P("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.P(1000)})
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
@@ -26,7 +26,7 @@ func TestACHTransfersReturnWithOptionalParams(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ACHTransfers.Simulations.Return(
+	_, err := c.Simulations.ACHTransfers.Return(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 		&types.ReturnASandboxACHTransferParameters{},
@@ -42,7 +42,7 @@ func TestACHTransfersSubmit(t *testing.T) {
 		APIKey:  "something1234",
 		BaseURL: "http://127.0.0.1:4010",
 	})
-	_, err := c.ACHTransfers.Simulations.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	_, err := c.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		t.Fatal("err should not be nil", err)
 	}
