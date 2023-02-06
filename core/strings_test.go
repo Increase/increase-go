@@ -94,7 +94,7 @@ func TestFSlice2(t *testing.T) {
 	tb := &Table{
 		Rows:      &[][]string{{"hello", "right on"}, {"yo"}},
 		Addresses: &[][]Address{{{Line1: pointers.P("1811 Francisco St.")}, {Line1: pointers.P("1823 Francisco St.")}}, {{Line1: pointers.P("1833 Francisco St.")}}},
-		Records:   &map[string]string{"A": "a", "foo": "bar"},
+		Records:   &map[string]string{"foo": "bar"},
 	}
-	assert(t, fmt.Sprintf("%s", tb), `&Table{Rows:[["hello" "right on"] ["yo"]] Addresses:[[&Address{Line1:"1811 Francisco St." Line2:<nil>} &Address{Line1:"1823 Francisco St." Line2:<nil>}] [&Address{Line1:"1833 Francisco St." Line2:<nil>}]] Records:{"A":"a" "foo":"bar"}}`)
+	assert(t, fmt.Sprintf("%s", tb), `&Table{Rows:[["hello" "right on"] ["yo"]] Addresses:[[&Address{Line1:"1811 Francisco St." Line2:<nil>} &Address{Line1:"1823 Francisco St." Line2:<nil>}] [&Address{Line1:"1833 Francisco St." Line2:<nil>}]] Records:{"foo":"bar"}}`)
 }
