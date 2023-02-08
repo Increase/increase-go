@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type OauthConnectionService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewOauthConnectionService(requester core.Requester) (r *OauthConnectionService) {
+func NewOauthConnectionService(opts ...options.RequestOption) (r *OauthConnectionService) {
 	r = &OauthConnectionService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve an OAuth Connection
-func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...*core.RequestOpts) (res *types.OauthConnection, err error) {
-	path := fmt.Sprintf("/oauth_connections/%s", oauth_connection_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...options.RequestOption) (res *types.OauthConnection, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("oauth_connections/%s", oauth_connection_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthConnectionListParams, opts ...*core.RequestOpts) (res *types.OauthConnectionsPage, err error) {
-	page := &types.OauthConnectionsPage{
+func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthConnectionListParams, opts ...options.RequestOption) (res *types.OauthConnectionsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("oauth_connections"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.OauthConnectionsPage{
 		Page: &pagination.Page[types.OauthConnection]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/oauth_connections",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

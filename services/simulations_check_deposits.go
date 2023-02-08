@@ -3,51 +3,54 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsCheckDepositService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsCheckDepositService(requester core.Requester) (r *SimulationsCheckDepositService) {
+func NewSimulationsCheckDepositService(opts ...options.RequestOption) (r *SimulationsCheckDepositService) {
 	r = &SimulationsCheckDepositService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Simulates the rejection of a [Check Deposit](#check-deposits) by Increase due to
 // factors like poor image quality. This Check Deposit must first have a `status`
 // of `pending`.
-func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	path := fmt.Sprintf("/simulations/check_deposits/%s/reject", check_deposit_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/reject", check_deposit_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Simulates the submission of a [Check Deposit](#check-deposits) to the Federal
 // Reserve. This Check Deposit must first have a `status` of `pending`.
-func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	path := fmt.Sprintf("/simulations/check_deposits/%s/submit", check_deposit_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/submit", check_deposit_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

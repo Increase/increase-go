@@ -2,27 +2,19 @@ package services
 
 import (
 	"context"
-	"increase/core"
+	"fmt"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsCardService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsCardService(requester core.Requester) (r *SimulationsCardService) {
+func NewSimulationsCardService(opts ...options.RequestOption) (r *SimulationsCardService) {
 	r = &SimulationsCardService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
@@ -33,13 +25,18 @@ func NewSimulationsCardService(requester core.Requester) (r *SimulationsCardServ
 // `card_decline`. You can pass either a Card id or a
 // [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
 // ways purchases can be made.
-func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.SimulateAnAuthorizationOnACardParameters, opts ...*core.RequestOpts) (res *types.CardAuthorizationSimulation, err error) {
-	path := "/simulations/card_authorizations"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.SimulateAnAuthorizationOnACardParameters, opts ...options.RequestOption) (res *types.CardAuthorizationSimulation, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/card_authorizations"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
@@ -49,13 +46,18 @@ func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.Simu
 // simulates that event, which may occur many days after the purchase in
 // production. The amount settled can be different from the amount originally
 // authorized, for example, when adding a tip to a restaurant bill.
-func (r *SimulationsCardService) Settlement(ctx context.Context, body *types.SimulateSettlingACardAuthorizationParameters, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
-	path := "/simulations/card_settlements"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *SimulationsCardService) Settlement(ctx context.Context, body *types.SimulateSettlingACardAuthorizationParameters, opts ...options.RequestOption) (res *types.Transaction, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/card_settlements"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

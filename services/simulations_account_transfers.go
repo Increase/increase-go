@@ -3,27 +3,18 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsAccountTransferService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsAccountTransferService(requester core.Requester) (r *SimulationsAccountTransferService) {
+func NewSimulationsAccountTransferService(opts ...options.RequestOption) (r *SimulationsAccountTransferService) {
 	r = &SimulationsAccountTransferService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
@@ -31,12 +22,18 @@ func NewSimulationsAccountTransferService(requester core.Requester) (r *Simulati
 // endpoint simulates the approval of an [Account Transfer](#account-transfers).
 // You can also approve sandbox Account Transfers in the dashboard. This transfer
 // must first have a `status` of `pending_approval`.
-func (r *SimulationsAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...*core.RequestOpts) (res *types.AccountTransfer, err error) {
-	path := fmt.Sprintf("/simulations/account_transfers/%s/complete", account_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *SimulationsAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...options.RequestOption) (res *types.AccountTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/account_transfers/%s/complete", account_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

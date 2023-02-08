@@ -3,88 +3,104 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type ACHTransferService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewACHTransferService(requester core.Requester) (r *ACHTransferService) {
+func NewACHTransferService(opts ...options.RequestOption) (r *ACHTransferService) {
 	r = &ACHTransferService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create an ACH Transfer
-func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	path := "/ach_transfers"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("ach_transfers"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve an ACH Transfer
-func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	path := fmt.Sprintf("/ach_transfers/%s", ach_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s", ach_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferListParams, opts ...*core.RequestOpts) (res *types.ACHTransfersPage, err error) {
-	page := &types.ACHTransfersPage{
+func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferListParams, opts ...options.RequestOption) (res *types.ACHTransfersPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("ach_transfers"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.ACHTransfersPage{
 		Page: &pagination.Page[types.ACHTransfer]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/ach_transfers",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }
 
 // Approve an ACH Transfer
-func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	path := fmt.Sprintf("/ach_transfers/%s/approve", ach_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Cancel a pending ACH Transfer
-func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...*core.RequestOpts) (res *types.ACHTransfer, err error) {
-	path := fmt.Sprintf("/ach_transfers/%s/cancel", ach_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

@@ -2,39 +2,36 @@ package services
 
 import (
 	"context"
-	"increase/core"
+	"fmt"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsDigitalWalletTokenRequestService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsDigitalWalletTokenRequestService(requester core.Requester) (r *SimulationsDigitalWalletTokenRequestService) {
+func NewSimulationsDigitalWalletTokenRequestService(opts ...options.RequestOption) (r *SimulationsDigitalWalletTokenRequestService) {
 	r = &SimulationsDigitalWalletTokenRequestService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Simulates a user attempting add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
-func (r *SimulationsDigitalWalletTokenRequestService) New(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...*core.RequestOpts) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
-	path := "/simulations/digital_wallet_token_requests"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *SimulationsDigitalWalletTokenRequestService) New(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...options.RequestOption) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/digital_wallet_token_requests"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

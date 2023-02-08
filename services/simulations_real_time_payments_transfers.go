@@ -2,39 +2,36 @@ package services
 
 import (
 	"context"
-	"increase/core"
+	"fmt"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsRealTimePaymentsTransferService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsRealTimePaymentsTransferService(requester core.Requester) (r *SimulationsRealTimePaymentsTransferService) {
+func NewSimulationsRealTimePaymentsTransferService(opts ...options.RequestOption) (r *SimulationsRealTimePaymentsTransferService) {
 	r = &SimulationsRealTimePaymentsTransferService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Simulates an inbound Real Time Payments transfer to your account. Real Time
 // Payments are a beta feature.
-func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...*core.RequestOpts) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
-	path := "/simulations/inbound_real_time_payments_transfers"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/inbound_real_time_payments_transfers"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

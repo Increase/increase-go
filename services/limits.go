@@ -3,78 +3,87 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type LimitService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewLimitService(requester core.Requester) (r *LimitService) {
+func NewLimitService(opts ...options.RequestOption) (r *LimitService) {
 	r = &LimitService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create a Limit
-func (r *LimitService) New(ctx context.Context, body *types.CreateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	path := "/limits"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *LimitService) New(ctx context.Context, body *types.CreateALimitParameters, opts ...options.RequestOption) (res *types.Limit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("limits"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a Limit
-func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	path := fmt.Sprintf("/limits/%s", limit_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...options.RequestOption) (res *types.Limit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("limits/%s", limit_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Update a Limit
-func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.UpdateALimitParameters, opts ...*core.RequestOpts) (res *types.Limit, err error) {
-	path := fmt.Sprintf("/limits/%s", limit_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *LimitService) Update(ctx context.Context, limit_id string, body *types.UpdateALimitParameters, opts ...options.RequestOption) (res *types.Limit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("limits/%s", limit_id))
+	if err != nil {
+		return
 	}
-	err = r.patch(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "PATCH", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Limits
-func (r *LimitService) List(ctx context.Context, query *types.LimitListParams, opts ...*core.RequestOpts) (res *types.LimitsPage, err error) {
-	page := &types.LimitsPage{
+func (r *LimitService) List(ctx context.Context, query *types.LimitListParams, opts ...options.RequestOption) (res *types.LimitsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("limits"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.LimitsPage{
 		Page: &pagination.Page[types.Limit]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/limits",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

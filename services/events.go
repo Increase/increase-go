@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type EventService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewEventService(requester core.Requester) (r *EventService) {
+func NewEventService(opts ...options.RequestOption) (r *EventService) {
 	r = &EventService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve an Event
-func (r *EventService) Get(ctx context.Context, event_id string, opts ...*core.RequestOpts) (res *types.Event, err error) {
-	path := fmt.Sprintf("/events/%s", event_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *EventService) Get(ctx context.Context, event_id string, opts ...options.RequestOption) (res *types.Event, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("events/%s", event_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query *types.EventListParams, opts ...*core.RequestOpts) (res *types.EventsPage, err error) {
-	page := &types.EventsPage{
+func (r *EventService) List(ctx context.Context, query *types.EventListParams, opts ...options.RequestOption) (res *types.EventsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("events"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.EventsPage{
 		Page: &pagination.Page[types.Event]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/events",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

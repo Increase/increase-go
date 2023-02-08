@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type DeclinedTransactionService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewDeclinedTransactionService(requester core.Requester) (r *DeclinedTransactionService) {
+func NewDeclinedTransactionService(opts ...options.RequestOption) (r *DeclinedTransactionService) {
 	r = &DeclinedTransactionService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve a Declined Transaction
-func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...*core.RequestOpts) (res *types.DeclinedTransaction, err error) {
-	path := fmt.Sprintf("/declined_transactions/%s", declined_transaction_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...options.RequestOption) (res *types.DeclinedTransaction, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("declined_transactions/%s", declined_transaction_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) List(ctx context.Context, query *types.DeclinedTransactionListParams, opts ...*core.RequestOpts) (res *types.DeclinedTransactionsPage, err error) {
-	page := &types.DeclinedTransactionsPage{
+func (r *DeclinedTransactionService) List(ctx context.Context, query *types.DeclinedTransactionListParams, opts ...options.RequestOption) (res *types.DeclinedTransactionsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("declined_transactions"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.DeclinedTransactionsPage{
 		Page: &pagination.Page[types.DeclinedTransaction]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/declined_transactions",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

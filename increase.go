@@ -1,25 +1,16 @@
 package increase
 
 import (
-	"context"
-	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/services"
 )
 
-type RequestOpts = core.RequestOpts
-
-func P[T ~bool | ~float32 | ~float64 | ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~string | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~complex64 | ~complex128](v T) *T {
+func P[T any](v T) *T {
 	return &v
 }
 
 type Increase struct {
-	*ClientOptions
-	get                  func(context.Context, string, *core.CoreRequest, interface{}) error
-	post                 func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch                func(context.Context, string, *core.CoreRequest, interface{}) error
-	put                  func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete               func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options              []options.RequestOption
 	Accounts             *services.AccountService
 	AccountNumbers       *services.AccountNumberService
 	RealTimeDecisions    *services.RealTimeDecisionService
@@ -51,89 +42,42 @@ type Increase struct {
 	Simulations          *services.SimulationService
 }
 
-func NewIncreaseWithOptions(p ClientOptions) (r *Increase) {
+func NewIncrease(opts ...options.RequestOption) (r *Increase) {
+	defaults := []options.RequestOption{}
+
+	opts = append(defaults, opts...)
+
 	r = &Increase{}
-	p.LoadDefaults()
-	r.ClientOptions = &p
 
-	if p.Requester == nil {
-		p.Requester = &core.CoreClient{}
-	}
-	r.Requester = p.Requester
-
-	if len(r.Requester.BaseURL) == 0 {
-		if len(r.BaseURL) != 0 {
-			r.Requester.BaseURL = r.BaseURL
-		} else {
-			r.Requester.BaseURL = "https://api.increase.com"
-		}
-	}
-
-	r.Requester.AuthHeaders = func() map[string]string {
-		return map[string]string{"Authorization": fmt.Sprintf("Bearer %s", r.APIKey)}
-	}()
-
-	r.Accounts = services.NewAccountService(r.Requester)
-
-	r.AccountNumbers = services.NewAccountNumberService(r.Requester)
-
-	r.RealTimeDecisions = services.NewRealTimeDecisionService(r.Requester)
-
-	r.Cards = services.NewCardService(r.Requester)
-
-	r.CardDisputes = services.NewCardDisputeService(r.Requester)
-
-	r.CardProfiles = services.NewCardProfileService(r.Requester)
-
-	r.ExternalAccounts = services.NewExternalAccountService(r.Requester)
-
-	r.DigitalWalletTokens = services.NewDigitalWalletTokenService(r.Requester)
-
-	r.Transactions = services.NewTransactionService(r.Requester)
-
-	r.PendingTransactions = services.NewPendingTransactionService(r.Requester)
-
-	r.DeclinedTransactions = services.NewDeclinedTransactionService(r.Requester)
-
-	r.Limits = services.NewLimitService(r.Requester)
-
-	r.AccountTransfers = services.NewAccountTransferService(r.Requester)
-
-	r.ACHTransfers = services.NewACHTransferService(r.Requester)
-
-	r.ACHPrenotifications = services.NewACHPrenotificationService(r.Requester)
-
-	r.Documents = services.NewDocumentService(r.Requester)
-
-	r.WireTransfers = services.NewWireTransferService(r.Requester)
-
-	r.CheckTransfers = services.NewCheckTransferService(r.Requester)
-
-	r.Entities = services.NewEntityService(r.Requester)
-
-	r.WireDrawdownRequests = services.NewWireDrawdownRequestService(r.Requester)
-
-	r.Events = services.NewEventService(r.Requester)
-
-	r.EventSubscriptions = services.NewEventSubscriptionService(r.Requester)
-
-	r.Files = services.NewFileService(r.Requester)
-
-	r.Groups = services.NewGroupService(r.Requester)
-
-	r.OauthConnections = services.NewOauthConnectionService(r.Requester)
-
-	r.CheckDeposits = services.NewCheckDepositService(r.Requester)
-
-	r.RoutingNumbers = services.NewRoutingNumberService(r.Requester)
-
-	r.AccountStatements = services.NewAccountStatementService(r.Requester)
-
-	r.Simulations = services.NewSimulationService(r.Requester)
+	r.Accounts = services.NewAccountService(opts...)
+	r.AccountNumbers = services.NewAccountNumberService(opts...)
+	r.RealTimeDecisions = services.NewRealTimeDecisionService(opts...)
+	r.Cards = services.NewCardService(opts...)
+	r.CardDisputes = services.NewCardDisputeService(opts...)
+	r.CardProfiles = services.NewCardProfileService(opts...)
+	r.ExternalAccounts = services.NewExternalAccountService(opts...)
+	r.DigitalWalletTokens = services.NewDigitalWalletTokenService(opts...)
+	r.Transactions = services.NewTransactionService(opts...)
+	r.PendingTransactions = services.NewPendingTransactionService(opts...)
+	r.DeclinedTransactions = services.NewDeclinedTransactionService(opts...)
+	r.Limits = services.NewLimitService(opts...)
+	r.AccountTransfers = services.NewAccountTransferService(opts...)
+	r.ACHTransfers = services.NewACHTransferService(opts...)
+	r.ACHPrenotifications = services.NewACHPrenotificationService(opts...)
+	r.Documents = services.NewDocumentService(opts...)
+	r.WireTransfers = services.NewWireTransferService(opts...)
+	r.CheckTransfers = services.NewCheckTransferService(opts...)
+	r.Entities = services.NewEntityService(opts...)
+	r.WireDrawdownRequests = services.NewWireDrawdownRequestService(opts...)
+	r.Events = services.NewEventService(opts...)
+	r.EventSubscriptions = services.NewEventSubscriptionService(opts...)
+	r.Files = services.NewFileService(opts...)
+	r.Groups = services.NewGroupService(opts...)
+	r.OauthConnections = services.NewOauthConnectionService(opts...)
+	r.CheckDeposits = services.NewCheckDepositService(opts...)
+	r.RoutingNumbers = services.NewRoutingNumberService(opts...)
+	r.AccountStatements = services.NewAccountStatementService(opts...)
+	r.Simulations = services.NewSimulationService(opts...)
 
 	return
-}
-
-func NewIncrease() *Increase {
-	return NewIncreaseWithOptions(ClientOptions{})
 }

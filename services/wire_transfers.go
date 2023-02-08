@@ -3,88 +3,104 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type WireTransferService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewWireTransferService(requester core.Requester) (r *WireTransferService) {
+func NewWireTransferService(opts ...options.RequestOption) (r *WireTransferService) {
 	r = &WireTransferService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create a Wire Transfer
-func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTransferParameters, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := "/wire_transfers"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTransferParameters, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("wire_transfers"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a Wire Transfer
-func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := fmt.Sprintf("/wire_transfers/%s", wire_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s", wire_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Wire Transfers
-func (r *WireTransferService) List(ctx context.Context, query *types.WireTransferListParams, opts ...*core.RequestOpts) (res *types.WireTransfersPage, err error) {
-	page := &types.WireTransfersPage{
+func (r *WireTransferService) List(ctx context.Context, query *types.WireTransferListParams, opts ...options.RequestOption) (res *types.WireTransfersPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("wire_transfers"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.WireTransfersPage{
 		Page: &pagination.Page[types.WireTransfer]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/wire_transfers",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }
 
 // Approve a Wire Transfer
-func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := fmt.Sprintf("/wire_transfers/%s/approve", wire_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Cancel a pending Wire Transfer
-func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := fmt.Sprintf("/wire_transfers/%s/cancel", wire_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
@@ -93,12 +109,18 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 // Reserve due to error conditions. This will also create a
 // [Transaction](#transaction) to account for the returned funds. This Wire
 // Transfer must first have a `status` of `complete`.'
-func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := fmt.Sprintf("/simulations/wire_transfers/%s/reverse", wire_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
@@ -106,12 +128,18 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 // Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
 // Reserve. This transfer must first have a `status` of `pending_approval` or
 // `pending_creating`.
-func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...*core.RequestOpts) (res *types.WireTransfer, err error) {
-	path := fmt.Sprintf("/simulations/wire_transfers/%s/submit", wire_transfer_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

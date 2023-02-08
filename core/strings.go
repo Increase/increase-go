@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// Returns the first string or *string in the argument that is valid and not an
+// empty string
 func CoalesceStrings[P ~string | ~*string](strings ...P) string {
 	for _, str := range strings {
 		if str, ok := any(str).(string); ok && len(str) != 0 {
@@ -22,7 +24,7 @@ type Primitive interface {
 	~bool | ~byte | ~float32 | ~float64 | ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~string | ~uint | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~complex64 | ~complex128
 }
 
-// Fast path for pretty printing primitives
+// Fast path for pretty printing pointer primitives
 func FmtP[T Primitive](v *T) string {
 	if v == nil {
 		return "<nil>"

@@ -3,78 +3,87 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type EventSubscriptionService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewEventSubscriptionService(requester core.Requester) (r *EventSubscriptionService) {
+func NewEventSubscriptionService(opts ...options.RequestOption) (r *EventSubscriptionService) {
 	r = &EventSubscriptionService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create an Event Subscription
-func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	path := "/event_subscriptions"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("event_subscriptions"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve an Event Subscription
-func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_id string, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	path := fmt.Sprintf("/event_subscriptions/%s", event_subscription_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_id string, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("event_subscriptions/%s", event_subscription_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Update an Event Subscription
-func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *types.UpdateAnEventSubscriptionParameters, opts ...*core.RequestOpts) (res *types.EventSubscription, err error) {
-	path := fmt.Sprintf("/event_subscriptions/%s", event_subscription_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *types.UpdateAnEventSubscriptionParameters, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("event_subscriptions/%s", event_subscription_id))
+	if err != nil {
+		return
 	}
-	err = r.patch(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "PATCH", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) List(ctx context.Context, query *types.EventSubscriptionListParams, opts ...*core.RequestOpts) (res *types.EventSubscriptionsPage, err error) {
-	page := &types.EventSubscriptionsPage{
+func (r *EventSubscriptionService) List(ctx context.Context, query *types.EventSubscriptionListParams, opts ...options.RequestOption) (res *types.EventSubscriptionsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("event_subscriptions"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.EventSubscriptionsPage{
 		Page: &pagination.Page[types.EventSubscription]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/event_subscriptions",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

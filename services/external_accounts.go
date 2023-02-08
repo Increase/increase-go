@@ -3,78 +3,87 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type ExternalAccountService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewExternalAccountService(requester core.Requester) (r *ExternalAccountService) {
+func NewExternalAccountService(opts ...options.RequestOption) (r *ExternalAccountService) {
 	r = &ExternalAccountService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create an External Account
-func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	path := "/external_accounts"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("external_accounts"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve an External Account
-func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	path := fmt.Sprintf("/external_accounts/%s", external_account_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("external_accounts/%s", external_account_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Update an External Account
-func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *types.UpdateAnExternalAccountParameters, opts ...*core.RequestOpts) (res *types.ExternalAccount, err error) {
-	path := fmt.Sprintf("/external_accounts/%s", external_account_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *types.UpdateAnExternalAccountParameters, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("external_accounts/%s", external_account_id))
+	if err != nil {
+		return
 	}
-	err = r.patch(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "PATCH", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List External Accounts
-func (r *ExternalAccountService) List(ctx context.Context, query *types.ExternalAccountListParams, opts ...*core.RequestOpts) (res *types.ExternalAccountsPage, err error) {
-	page := &types.ExternalAccountsPage{
+func (r *ExternalAccountService) List(ctx context.Context, query *types.ExternalAccountListParams, opts ...options.RequestOption) (res *types.ExternalAccountsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("external_accounts"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.ExternalAccountsPage{
 		Page: &pagination.Page[types.ExternalAccount]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/external_accounts",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

@@ -3,66 +3,70 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type CardDisputeService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewCardDisputeService(requester core.Requester) (r *CardDisputeService) {
+func NewCardDisputeService(opts ...options.RequestOption) (r *CardDisputeService) {
 	r = &CardDisputeService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create a Card Dispute
-func (r *CardDisputeService) New(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
-	path := "/card_disputes"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *CardDisputeService) New(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...options.RequestOption) (res *types.CardDispute, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("card_disputes"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a Card Dispute
-func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
-	path := fmt.Sprintf("/card_disputes/%s", card_dispute_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...options.RequestOption) (res *types.CardDispute, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("card_disputes/%s", card_dispute_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Card Disputes
-func (r *CardDisputeService) List(ctx context.Context, query *types.CardDisputeListParams, opts ...*core.RequestOpts) (res *types.CardDisputesPage, err error) {
-	page := &types.CardDisputesPage{
+func (r *CardDisputeService) List(ctx context.Context, query *types.CardDisputeListParams, opts ...options.RequestOption) (res *types.CardDisputesPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("card_disputes"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.CardDisputesPage{
 		Page: &pagination.Page[types.CardDispute]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/card_disputes",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

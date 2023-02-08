@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type PendingTransactionService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewPendingTransactionService(requester core.Requester) (r *PendingTransactionService) {
+func NewPendingTransactionService(opts ...options.RequestOption) (r *PendingTransactionService) {
 	r = &PendingTransactionService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve a Pending Transaction
-func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...*core.RequestOpts) (res *types.PendingTransaction, err error) {
-	path := fmt.Sprintf("/pending_transactions/%s", pending_transaction_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...options.RequestOption) (res *types.PendingTransaction, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("pending_transactions/%s", pending_transaction_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Pending Transactions
-func (r *PendingTransactionService) List(ctx context.Context, query *types.PendingTransactionListParams, opts ...*core.RequestOpts) (res *types.PendingTransactionsPage, err error) {
-	page := &types.PendingTransactionsPage{
+func (r *PendingTransactionService) List(ctx context.Context, query *types.PendingTransactionListParams, opts ...options.RequestOption) (res *types.PendingTransactionsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("pending_transactions"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.PendingTransactionsPage{
 		Page: &pagination.Page[types.PendingTransaction]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/pending_transactions",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

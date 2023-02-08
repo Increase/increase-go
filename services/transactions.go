@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type TransactionService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewTransactionService(requester core.Requester) (r *TransactionService) {
+func NewTransactionService(opts ...options.RequestOption) (r *TransactionService) {
 	r = &TransactionService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve a Transaction
-func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...*core.RequestOpts) (res *types.Transaction, err error) {
-	path := fmt.Sprintf("/transactions/%s", transaction_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...options.RequestOption) (res *types.Transaction, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("transactions/%s", transaction_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Transactions
-func (r *TransactionService) List(ctx context.Context, query *types.TransactionListParams, opts ...*core.RequestOpts) (res *types.TransactionsPage, err error) {
-	page := &types.TransactionsPage{
+func (r *TransactionService) List(ctx context.Context, query *types.TransactionListParams, opts ...options.RequestOption) (res *types.TransactionsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("transactions"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.TransactionsPage{
 		Page: &pagination.Page[types.Transaction]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/transactions",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

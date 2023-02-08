@@ -3,54 +3,53 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type DigitalWalletTokenService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewDigitalWalletTokenService(requester core.Requester) (r *DigitalWalletTokenService) {
+func NewDigitalWalletTokenService(opts ...options.RequestOption) (r *DigitalWalletTokenService) {
 	r = &DigitalWalletTokenService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Retrieve a Digital Wallet Token
-func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...*core.RequestOpts) (res *types.DigitalWalletToken, err error) {
-	path := fmt.Sprintf("/digital_wallet_tokens/%s", digital_wallet_token_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...options.RequestOption) (res *types.DigitalWalletToken, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.DigitalWalletTokenListParams, opts ...*core.RequestOpts) (res *types.DigitalWalletTokensPage, err error) {
-	page := &types.DigitalWalletTokensPage{
+func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.DigitalWalletTokenListParams, opts ...options.RequestOption) (res *types.DigitalWalletTokensPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("digital_wallet_tokens"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.DigitalWalletTokensPage{
 		Page: &pagination.Page[types.DigitalWalletToken]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/digital_wallet_tokens",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

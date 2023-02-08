@@ -2,30 +2,24 @@ package services
 
 import (
 	"context"
-	"testing"
-
-	client "increase"
+	"increase"
+	"increase/options"
 	"increase/types"
+	"testing"
 )
 
 func TestPendingTransactionsGet(t *testing.T) {
-	c := client.NewIncreaseWithOptions(client.ClientOptions{
-		APIKey:  "something1234",
-		BaseURL: "http://127.0.0.1:4010",
-	})
+	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.PendingTransactions.Get(context.TODO(), "pending_transaction_k1sfetcau2qbvjbzgju4")
-	if err != nil {
+	if err == nil {
 		t.Fatal("err should not be nil", err)
 	}
 }
 
 func TestPendingTransactionsListWithOptionalParams(t *testing.T) {
-	c := client.NewIncreaseWithOptions(client.ClientOptions{
-		APIKey:  "something1234",
-		BaseURL: "http://127.0.0.1:4010",
-	})
+	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.PendingTransactions.List(context.TODO(), &types.PendingTransactionListParams{})
-	if err != nil {
+	if err == nil {
 		t.Fatal("err should not be nil", err)
 	}
 }

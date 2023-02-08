@@ -3,68 +3,72 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type FileService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewFileService(requester core.Requester) (r *FileService) {
+func NewFileService(opts ...options.RequestOption) (r *FileService) {
 	r = &FileService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // To upload a file to Increase, you'll need to send a request of Content-Type
 // `multipart/form-data`. The request should contain the file you would like to
 // upload, as well as the parameters for creating a file.
-func (r *FileService) New(ctx context.Context, body *types.CreateAFileParameters, opts ...*core.RequestOpts) (res *types.File, err error) {
-	path := "/files"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *FileService) New(ctx context.Context, body *types.CreateAFileParameters, opts ...options.RequestOption) (res *types.File, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("files"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a File
-func (r *FileService) Get(ctx context.Context, file_id string, opts ...*core.RequestOpts) (res *types.File, err error) {
-	path := fmt.Sprintf("/files/%s", file_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *FileService) Get(ctx context.Context, file_id string, opts ...options.RequestOption) (res *types.File, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("files/%s", file_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Files
-func (r *FileService) List(ctx context.Context, query *types.FileListParams, opts ...*core.RequestOpts) (res *types.FilesPage, err error) {
-	page := &types.FilesPage{
+func (r *FileService) List(ctx context.Context, query *types.FileListParams, opts ...options.RequestOption) (res *types.FilesPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("files"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.FilesPage{
 		Page: &pagination.Page[types.File]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/files",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

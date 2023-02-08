@@ -2,37 +2,35 @@ package services
 
 import (
 	"context"
-	"increase/core"
+	"fmt"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type GroupService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewGroupService(requester core.Requester) (r *GroupService) {
+func NewGroupService(opts ...options.RequestOption) (r *GroupService) {
 	r = &GroupService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Returns details for the currently authenticated Group.
-func (r *GroupService) GetDetails(ctx context.Context, opts ...*core.RequestOpts) (res *types.Group, err error) {
-	path := "/groups/current"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *GroupService) GetDetails(ctx context.Context, opts ...options.RequestOption) (res *types.Group, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("groups/current"))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

@@ -3,66 +3,70 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type CheckDepositService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewCheckDepositService(requester core.Requester) (r *CheckDepositService) {
+func NewCheckDepositService(opts ...options.RequestOption) (r *CheckDepositService) {
 	r = &CheckDepositService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create a Check Deposit
-func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	path := "/check_deposits"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("check_deposits"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a Check Deposit
-func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...*core.RequestOpts) (res *types.CheckDeposit, err error) {
-	path := fmt.Sprintf("/check_deposits/%s", check_deposit_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("check_deposits/%s", check_deposit_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDepositListParams, opts ...*core.RequestOpts) (res *types.CheckDepositsPage, err error) {
-	page := &types.CheckDepositsPage{
+func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDepositListParams, opts ...options.RequestOption) (res *types.CheckDepositsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("check_deposits"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.CheckDepositsPage{
 		Page: &pagination.Page[types.CheckDeposit]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/check_deposits",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

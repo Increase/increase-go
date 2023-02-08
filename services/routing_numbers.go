@@ -2,28 +2,20 @@ package services
 
 import (
 	"context"
-	"increase/core"
+	"fmt"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type RoutingNumberService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewRoutingNumberService(requester core.Requester) (r *RoutingNumberService) {
+func NewRoutingNumberService(opts ...options.RequestOption) (r *RoutingNumberService) {
 	r = &RoutingNumberService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
@@ -31,17 +23,19 @@ func NewRoutingNumberService(requester core.Requester) (r *RoutingNumberService)
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNumberListParams, opts ...*core.RequestOpts) (res *types.RoutingNumbersPage, err error) {
-	page := &types.RoutingNumbersPage{
+func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNumberListParams, opts ...options.RequestOption) (res *types.RoutingNumbersPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("routing_numbers"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.RoutingNumbersPage{
 		Page: &pagination.Page[types.RoutingNumber]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/routing_numbers",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

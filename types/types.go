@@ -440,8 +440,8 @@ func (r *AccountsPage) Account() *Account {
 	return r.Current()
 }
 
-func (r *AccountsPage) GetNextPage() (*AccountsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *AccountsPage) NextPage() (*AccountsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &AccountsPage{page}, nil
@@ -780,8 +780,8 @@ func (r *AccountNumbersPage) AccountNumber() *AccountNumber {
 	return r.Current()
 }
 
-func (r *AccountNumbersPage) GetNextPage() (*AccountNumbersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *AccountNumbersPage) NextPage() (*AccountNumbersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &AccountNumbersPage{page}, nil
@@ -2612,8 +2612,8 @@ func (r *CardsPage) Card() *Card {
 	return r.Current()
 }
 
-func (r *CardsPage) GetNextPage() (*CardsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *CardsPage) NextPage() (*CardsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &CardsPage{page}, nil
@@ -3118,8 +3118,8 @@ func (r *CardDisputesPage) CardDispute() *CardDispute {
 	return r.Current()
 }
 
-func (r *CardDisputesPage) GetNextPage() (*CardDisputesPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *CardDisputesPage) NextPage() (*CardDisputesPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &CardDisputesPage{page}, nil
@@ -3725,8 +3725,8 @@ func (r *CardProfilesPage) CardProfile() *CardProfile {
 	return r.Current()
 }
 
-func (r *CardProfilesPage) GetNextPage() (*CardProfilesPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *CardProfilesPage) NextPage() (*CardProfilesPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &CardProfilesPage{page}, nil
@@ -4057,8 +4057,8 @@ func (r *ExternalAccountsPage) ExternalAccount() *ExternalAccount {
 	return r.Current()
 }
 
-func (r *ExternalAccountsPage) GetNextPage() (*ExternalAccountsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *ExternalAccountsPage) NextPage() (*ExternalAccountsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &ExternalAccountsPage{page}, nil
@@ -4354,8 +4354,8 @@ func (r *DigitalWalletTokensPage) DigitalWalletToken() *DigitalWalletToken {
 	return r.Current()
 }
 
-func (r *DigitalWalletTokensPage) GetNextPage() (*DigitalWalletTokensPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *DigitalWalletTokensPage) NextPage() (*DigitalWalletTokensPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &DigitalWalletTokensPage{page}, nil
@@ -8231,8 +8231,8 @@ func (r *TransactionsPage) Transaction() *Transaction {
 	return r.Current()
 }
 
-func (r *TransactionsPage) GetNextPage() (*TransactionsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *TransactionsPage) NextPage() (*TransactionsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &TransactionsPage{page}, nil
@@ -9581,8 +9581,8 @@ func (r *PendingTransactionsPage) PendingTransaction() *PendingTransaction {
 	return r.Current()
 }
 
-func (r *PendingTransactionsPage) GetNextPage() (*PendingTransactionsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *PendingTransactionsPage) NextPage() (*PendingTransactionsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &PendingTransactionsPage{page}, nil
@@ -11069,8 +11069,8 @@ func (r *DeclinedTransactionsPage) DeclinedTransaction() *DeclinedTransaction {
 	return r.Current()
 }
 
-func (r *DeclinedTransactionsPage) GetNextPage() (*DeclinedTransactionsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *DeclinedTransactionsPage) NextPage() (*DeclinedTransactionsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &DeclinedTransactionsPage{page}, nil
@@ -11454,8 +11454,8 @@ func (r *LimitsPage) Limit() *Limit {
 	return r.Current()
 }
 
-func (r *LimitsPage) GetNextPage() (*LimitsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *LimitsPage) NextPage() (*LimitsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &LimitsPage{page}, nil
@@ -12002,8 +12002,8 @@ func (r *AccountTransfersPage) AccountTransfer() *AccountTransfer {
 	return r.Current()
 }
 
-func (r *AccountTransfersPage) GetNextPage() (*AccountTransfersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *AccountTransfersPage) NextPage() (*AccountTransfersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &AccountTransfersPage{page}, nil
@@ -13065,8 +13065,8 @@ func (r *ACHTransfersPage) ACHTransfer() *ACHTransfer {
 	return r.Current()
 }
 
-func (r *ACHTransfersPage) GetNextPage() (*ACHTransfersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *ACHTransfersPage) NextPage() (*ACHTransfersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &ACHTransfersPage{page}, nil
@@ -13639,8 +13639,8 @@ func (r *ACHPrenotificationsPage) ACHPrenotification() *ACHPrenotification {
 	return r.Current()
 }
 
-func (r *ACHPrenotificationsPage) GetNextPage() (*ACHPrenotificationsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *ACHPrenotificationsPage) NextPage() (*ACHPrenotificationsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &ACHPrenotificationsPage{page}, nil
@@ -13972,8 +13972,8 @@ func (r *DocumentsPage) Document() *Document {
 	return r.Current()
 }
 
-func (r *DocumentsPage) GetNextPage() (*DocumentsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *DocumentsPage) NextPage() (*DocumentsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &DocumentsPage{page}, nil
@@ -14849,8 +14849,8 @@ func (r *WireTransfersPage) WireTransfer() *WireTransfer {
 	return r.Current()
 }
 
-func (r *WireTransfersPage) GetNextPage() (*WireTransfersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *WireTransfersPage) NextPage() (*WireTransfersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &WireTransfersPage{page}, nil
@@ -15805,8 +15805,8 @@ func (r *CheckTransfersPage) CheckTransfer() *CheckTransfer {
 	return r.Current()
 }
 
-func (r *CheckTransfersPage) GetNextPage() (*CheckTransfersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *CheckTransfersPage) NextPage() (*CheckTransfersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &CheckTransfersPage{page}, nil
@@ -20317,8 +20317,8 @@ func (r *EntitiesPage) Entity() *Entity {
 	return r.Current()
 }
 
-func (r *EntitiesPage) GetNextPage() (*EntitiesPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *EntitiesPage) NextPage() (*EntitiesPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &EntitiesPage{page}, nil
@@ -20761,8 +20761,8 @@ func (r *WireDrawdownRequestsPage) WireDrawdownRequest() *WireDrawdownRequest {
 	return r.Current()
 }
 
-func (r *WireDrawdownRequestsPage) GetNextPage() (*WireDrawdownRequestsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *WireDrawdownRequestsPage) NextPage() (*WireDrawdownRequestsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &WireDrawdownRequestsPage{page}, nil
@@ -21182,8 +21182,8 @@ func (r *EventsPage) Event() *Event {
 	return r.Current()
 }
 
-func (r *EventsPage) GetNextPage() (*EventsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *EventsPage) NextPage() (*EventsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &EventsPage{page}, nil
@@ -21590,8 +21590,8 @@ func (r *EventSubscriptionsPage) EventSubscription() *EventSubscription {
 	return r.Current()
 }
 
-func (r *EventSubscriptionsPage) GetNextPage() (*EventSubscriptionsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *EventSubscriptionsPage) NextPage() (*EventSubscriptionsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &EventSubscriptionsPage{page}, nil
@@ -22034,8 +22034,8 @@ func (r *FilesPage) File() *File {
 	return r.Current()
 }
 
-func (r *FilesPage) GetNextPage() (*FilesPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *FilesPage) NextPage() (*FilesPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &FilesPage{page}, nil
@@ -22318,8 +22318,8 @@ func (r *OauthConnectionsPage) OauthConnection() *OauthConnection {
 	return r.Current()
 }
 
-func (r *OauthConnectionsPage) GetNextPage() (*OauthConnectionsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *OauthConnectionsPage) NextPage() (*OauthConnectionsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &OauthConnectionsPage{page}, nil
@@ -23075,8 +23075,8 @@ func (r *CheckDepositsPage) CheckDeposit() *CheckDeposit {
 	return r.Current()
 }
 
-func (r *CheckDepositsPage) GetNextPage() (*CheckDepositsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *CheckDepositsPage) NextPage() (*CheckDepositsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &CheckDepositsPage{page}, nil
@@ -23296,8 +23296,8 @@ func (r *RoutingNumbersPage) RoutingNumber() *RoutingNumber {
 	return r.Current()
 }
 
-func (r *RoutingNumbersPage) GetNextPage() (*RoutingNumbersPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *RoutingNumbersPage) NextPage() (*RoutingNumbersPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &RoutingNumbersPage{page}, nil
@@ -23612,8 +23612,8 @@ func (r *AccountStatementsPage) AccountStatement() *AccountStatement {
 	return r.Current()
 }
 
-func (r *AccountStatementsPage) GetNextPage() (*AccountStatementsPage, error) {
-	if page, err := r.Page.GetNextPage(); err != nil {
+func (r *AccountStatementsPage) NextPage() (*AccountStatementsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
 		return nil, err
 	} else {
 		return &AccountStatementsPage{page}, nil

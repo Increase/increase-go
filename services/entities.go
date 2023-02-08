@@ -3,68 +3,72 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type EntityService struct {
-	Requester             core.Requester
-	get                   func(context.Context, string, *core.CoreRequest, interface{}) error
-	post                  func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch                 func(context.Context, string, *core.CoreRequest, interface{}) error
-	put                   func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete                func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options               []options.RequestOption
 	SupplementalDocuments *EntitiesSupplementalDocumentService
 }
 
-func NewEntityService(requester core.Requester) (r *EntityService) {
+func NewEntityService(opts ...options.RequestOption) (r *EntityService) {
 	r = &EntityService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
-	r.SupplementalDocuments = NewEntitiesSupplementalDocumentService(requester)
+	r.Options = opts
+	r.SupplementalDocuments = NewEntitiesSupplementalDocumentService(opts...)
 	return
 }
 
 // Create an Entity
-func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParameters, opts ...*core.RequestOpts) (res *types.Entity, err error) {
-	path := "/entities"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParameters, opts ...options.RequestOption) (res *types.Entity, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("entities"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve an Entity
-func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...*core.RequestOpts) (res *types.Entity, err error) {
-	path := fmt.Sprintf("/entities/%s", entity_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...options.RequestOption) (res *types.Entity, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("entities/%s", entity_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Entities
-func (r *EntityService) List(ctx context.Context, query *types.EntityListParams, opts ...*core.RequestOpts) (res *types.EntitiesPage, err error) {
-	page := &types.EntitiesPage{
+func (r *EntityService) List(ctx context.Context, query *types.EntityListParams, opts ...options.RequestOption) (res *types.EntitiesPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("entities"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.EntitiesPage{
 		Page: &pagination.Page[types.Entity]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/entities",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }

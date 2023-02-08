@@ -3,27 +3,18 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/types"
+	"net/url"
 )
 
 type SimulationsCardDisputeService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewSimulationsCardDisputeService(requester core.Requester) (r *SimulationsCardDisputeService) {
+func NewSimulationsCardDisputeService(opts ...options.RequestOption) (r *SimulationsCardDisputeService) {
 	r = &SimulationsCardDisputeService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
@@ -31,13 +22,18 @@ func NewSimulationsCardDisputeService(requester core.Requester) (r *SimulationsC
 // will be reviewed. Since no review happens in sandbox, this endpoint simulates
 // moving a Card Dispute into a rejected or accepted state. A Card Dispute can only
 // be actioned one time and must have a status of `pending_reviewing`.
-func (r *SimulationsCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *types.SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...*core.RequestOpts) (res *types.CardDispute, err error) {
-	path := fmt.Sprintf("/simulations/card_disputes/%s/action", card_dispute_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *SimulationsCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *types.SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...options.RequestOption) (res *types.CardDispute, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

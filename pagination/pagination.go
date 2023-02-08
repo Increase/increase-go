@@ -1,91 +1,53 @@
 package pagination
 
 import (
-	"context"
 	"fmt"
 	"increase/core"
+	"increase/options"
 	"net/http"
-	"net/url"
-	"strconv"
 
 	pjson "increase/core/pjson"
-
-	q "increase/core/query"
 )
 
-type PageResponseInterface[Model interface{}] interface {
-	GetItems() []Model
-	GetItem(index int) *Model
-	GetLength() int
-}
-
-type PageInterface[Model any, Response PageResponseInterface[Model]] interface {
-	// different per endpoint
-	GetResponse() Response
-	GetRawResponse() *http.Response
-	HasNextPage() bool
-	GetNextPageGeneric() (PageInterface[Model, Response], error)
-	GetNextPageParams() *PageParams
+type Paginated[T any] interface {
+	NextPageConfig() *options.RequestConfig
 	// shared
-	Current() *Model // and/or maybe have custom, eg. .Customer()?
+	GetResponse() PaginatedResponse[T]
+	GetRawResponse() *http.Response
+	Current() *T
+	HasNext() bool
 	Next() bool
 	Err() error
 	Index() int
 }
 
-func getInt(response *http.Response, key string, defaultValue int64) int64 {
-	if response == nil {
-		return defaultValue
-	}
-	if request := response.Request; request == nil {
-		return defaultValue
-	} else if u := request.URL; u == nil {
-		return defaultValue
-	} else {
-		p := u.Query()
-		if rawInt, ok := p[key]; ok && len(rawInt) != 0 {
-			if i, err := strconv.ParseInt(rawInt[0], 10, 64); err == nil {
-				return i
-			}
-		}
-	}
-	return defaultValue
+type PaginatedResponse[T any] interface {
+	GetItems() []T
+	GetItem(index int) *T
+	GetLength() int
 }
 
-type PageOptions struct {
-	RequestParams interface{}
-	Params        url.Values
-	Path          string
-	URL           string
-}
-
-type PageParams struct {
-	Params  url.Values
-	Headers map[string]string
-	URL     string
-}
-
-type PageResponse[Model interface{}] struct {
-	Data *[]Model `pjson:"data"`
+type PageResponse[T interface{}] struct {
+	Data *[]T `pjson:"data"`
 	// A pointer to a place in the list.
 	NextCursor *string                `pjson:"next_cursor"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into PageResponse[Model] using the
+// UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the
 // internal pjson library. Unrecognized fields are stored in the `Extras` property.
-func (r *PageResponse[Model]) UnmarshalJSON(data []byte) (err error) {
+func (r *PageResponse[T]) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes PageResponse[Model] into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
-func (r *PageResponse[Model]) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes PageResponse[T] into an array of bytes using the gjson
+// library. Members of the `Extras` field are serialized into the top-level, and
+// will overwrite known members of the same name.
+func (r *PageResponse[T]) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-func (r *PageResponse[Model]) GetData() (Data []Model) {
+func (r *PageResponse[T]) GetData() (Data []T) {
 	if r != nil && r.Data != nil {
 		Data = *r.Data
 	}
@@ -93,204 +55,149 @@ func (r *PageResponse[Model]) GetData() (Data []Model) {
 }
 
 // A pointer to a place in the list.
-func (r *PageResponse[Model]) GetNextCursor() (NextCursor string) {
+func (r *PageResponse[T]) GetNextCursor() (NextCursor string) {
 	if r != nil && r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return
 }
 
-func (r PageResponse[Model]) String() (result string) {
-	return fmt.Sprintf("&PageResponse[Model]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
+func (r PageResponse[T]) String() (result string) {
+	return fmt.Sprintf("&PageResponse[T]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
 }
 
-var _ PageResponseInterface[interface{}] = (*PageResponse[interface{}])(nil)
+var _ PaginatedResponse[interface{}] = (*PageResponse[interface{}])(nil)
 
-func (r *PageResponse[Model]) GetItems() []Model {
+func (r *PageResponse[T]) GetItems() []T {
 	return *r.Data
 }
 
-func (r *PageResponse[Model]) GetItem(index int) *Model {
+func (r *PageResponse[T]) GetItem(index int) *T {
 	return &r.GetItems()[index]
 }
 
-func (r *PageResponse[Model]) GetLength() int {
+func (r *PageResponse[T]) GetLength() int {
 	return len(r.GetItems())
 }
 
-type Page[Model interface{}] struct {
-	Options        PageOptions
-	Requester      core.Requester
-	Context        context.Context
-	requestOptions *core.RequestOpts
-	index          int
-	runningIndex   int
-	fired          bool
-	err            error
-	rawResponse    *http.Response
-	response       *PageResponse[Model]
+type Page[T interface{}] struct {
+	Config       options.RequestConfig
+	Options      []options.RequestOption
+	runningIndex int
+	index        int
+	err          error
+	current      *T
+	raw          *http.Response
+	res          *PageResponse[T]
 }
 
-var _ PageInterface[interface{}, *PageResponse[interface{}]] = (*Page[interface{}])(nil)
+var _ Paginated[interface{}] = (*Page[interface{}])(nil)
 
-func (r *Page[Model]) GetNextPageParams() *PageParams {
-	if r.response == nil {
+func (r *Page[T]) NextPageConfig() *options.RequestConfig {
+	if r.res == nil {
 		return nil
 	}
-	if cursor := *r.response.NextCursor; len(cursor) == 0 {
-		if r.fired {
-			return nil
-		} else {
-			return &PageParams{}
-		}
-	} else {
-		return &PageParams{
-			Params: url.Values{
-				"cursor": {cursor},
-			},
-		}
+	next := r.res.NextCursor
+	if next == nil && len(*next) > 0 {
+		return nil
 	}
+	cfg := r.Config.Clone(r.Config.Context)
+	cfg.Apply(options.WithQuery("cursor", *next))
+	return cfg
 }
 
-func (r *Page[Model]) GetResponse() *PageResponse[Model] {
-	return r.response
-}
+func (r *Page[T]) Fire() (err error) {
+	var res PageResponse[T]
+	var raw *http.Response
+	r.Config.ResponseInto = &raw
+	r.Config.ResponseBodyInto = &res
 
-func (r *Page[Model]) GetRawResponse() *http.Response {
-	return r.rawResponse
-}
-
-func (r *Page[Model]) GetResponseHeader(key string) string {
-	if response := r.rawResponse; response == nil {
-		return ""
-	} else if header := response.Header; header == nil {
-		return ""
-	} else if values, ok := header[key]; !ok || len(values) == 0 {
-		return ""
-	} else {
-		return values[0]
+	err = r.Config.Execute()
+	r.res = &res
+	r.raw = raw
+	if err != nil {
+		r.err = err
+		return err
 	}
+	return nil
 }
 
-func (r *Page[Model]) getPageItems() []Model {
-	return r.response.GetItems()
-}
-
-func (r *Page[Model]) paramsFromURL(str string) url.Values {
-	params := r.Options.Params
-	if params == nil {
-		params = url.Values{}
-	}
-	if u, err := url.Parse(str); err == nil {
-		for key, values := range u.Query() {
-			for _, value := range values {
-				params.Add(key, value)
-			}
-		}
-	}
-	return params
-}
-
-func (r *Page[Model]) infoToOptions(info *PageParams) core.RequestOpts {
-	var options core.RequestOpts
-	if r.requestOptions != nil {
-		options = *r.requestOptions
-	}
-	rawURL := core.CoalesceStrings(info.URL, r.Options.Path)
-	if len(rawURL) != 0 {
-		params := r.paramsFromURL(rawURL)
-		newURL, _ := url.Parse(rawURL)
-		query := core.MergeURLValues(newURL.Query(), params, q.Marshal(r.Options.RequestParams))
-		for k, vs := range info.Params {
-			query.Del(k)
-			for _, v := range vs {
-				query.Add(k, v)
-			}
-		}
-		newURL.RawQuery = query.Encode()
-		options.Headers = info.Headers
-		options.URL = newURL.String()
-	}
-	return options
-}
-
-func (r *Page[Model]) HasNextPage() bool {
-	if items := r.getPageItems(); len(items) == 0 {
-		return false
-	}
-	return r.GetNextPageParams() != nil
-}
-
-func (r *Page[Model]) getRawNextPage(response **http.Response) (res *PageResponse[Model], err error) {
-	if info := r.GetNextPageParams(); info == nil {
+// Attempts to read the next page. If there is no next page, it returns nil.
+// Otherwise, it returns a pointer to a _new_ page and leaves the current page
+// as-is.
+func (r *Page[T]) NextPage() (page *Page[T], err error) {
+	cfg := r.NextPageConfig()
+	if cfg == nil {
 		return nil, nil
-	} else {
-		opts := r.infoToOptions(info)
-		opts.ResponseInto = response
-		err = r.Requester.Request(r.Context, "", &core.CoreRequest{
-			Params: opts,
-		}, &res)
-		r.fired = true
 	}
-	return
-}
-
-func (r *Page[Model]) GetNextPage() (page *Page[Model], err error) {
-	var response *http.Response
-	rawPage, err := r.getRawNextPage(&response)
+	page = &Page[T]{
+		Config:       *cfg,
+		runningIndex: r.runningIndex,
+	}
+	err = page.Fire()
 	if err != nil {
 		return nil, err
 	}
-	newPage := &Page[Model]{
-		rawResponse:  response,
-		response:     rawPage,
-		runningIndex: r.runningIndex,
-		Options:      r.Options,
-		Requester:    r.Requester,
-		fired:        r.fired,
-		Context:      r.Context,
-	}
-	return newPage, nil
+	return page, nil
 }
 
-func (r *Page[Model]) GetNextPageGeneric() (PageInterface[Model, *PageResponse[Model]], error) {
-	return r.GetNextPage()
+// Current returns the element currently read. Calling Current before calling Next
+// is a programming error and will cause your program to crash.
+func (r *Page[T]) Current() *T {
+	// The index is subtracted by one to differentiate between 0 (unset) and 1 (first element)
+	// Calling Current before calling Next is a programming error
+	return r.current
 }
 
-func (r *Page[Model]) Next() bool {
-	if r.err != nil {
+// Attempts to read the next element, if successful returns true, false otherwise.
+// This function will cross page-boundaries and attempt to read more pages if it
+// can, changing the internal page value.
+func (r *Page[T]) Next() bool {
+	if !r.HasNext() {
 		return false
 	}
-	if r.index >= r.response.GetLength() {
-		if res, err := r.GetNextPage(); err != nil {
+	if r.index >= r.res.GetLength() {
+		page, err := r.NextPage()
+		if err != nil {
 			r.err = err
 			return false
-		} else if res == nil || res.response == nil {
-			return false
-		} else if res.response.GetLength() == 0 {
-			return false
-		} else {
-			*r = *res
-			return r.Next()
 		}
+		if page == nil {
+			return false
+		}
+		*r = *page
+		return r.Next()
 	}
+
+	r.current = r.res.GetItem(r.index)
 	r.runningIndex += 1
 	r.index += 1
 	return true
 }
 
-// Current returns the element corresponding to the current index. Calling Current
-// before calling Next is a programming error and will cause your program to crash.
-func (r *Page[Model]) Current() *Model {
-	// The index is subtracted by one to differentiate between 0 (unset) and 1 (first element)
-	// Calling Current before calling Next is a programming error
-	return r.response.GetItem(r.index - 1)
+func (r *Page[T]) HasNext() bool {
+	if r.err != nil || r.res.GetLength() == 0 {
+		return false
+	}
+	if r.index >= r.res.GetLength() {
+		return r.NextPageConfig() != nil
+	}
+	return true
 }
 
-func (r *Page[Model]) Err() error {
+func (r *Page[T]) Err() error {
 	return r.err
 }
 
-func (r *Page[Model]) Index() int {
+// Returns the cummulative index of the 'current' element. Zero-indexed.
+func (r *Page[T]) Index() int {
 	return r.runningIndex - 1
+}
+
+func (r *Page[T]) GetResponse() PaginatedResponse[T] {
+	return r.res
+}
+
+func (r *Page[T]) GetRawResponse() *http.Response {
+	return r.raw
 }

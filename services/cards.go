@@ -3,89 +3,104 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/core"
+	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"net/url"
 )
 
 type CardService struct {
-	Requester core.Requester
-	get       func(context.Context, string, *core.CoreRequest, interface{}) error
-	post      func(context.Context, string, *core.CoreRequest, interface{}) error
-	patch     func(context.Context, string, *core.CoreRequest, interface{}) error
-	put       func(context.Context, string, *core.CoreRequest, interface{}) error
-	delete    func(context.Context, string, *core.CoreRequest, interface{}) error
+	Options []options.RequestOption
 }
 
-func NewCardService(requester core.Requester) (r *CardService) {
+func NewCardService(opts ...options.RequestOption) (r *CardService) {
 	r = &CardService{}
-	r.Requester = requester
-	r.get = r.Requester.Get
-	r.post = r.Requester.Post
-	r.patch = r.Requester.Patch
-	r.put = r.Requester.Put
-	r.delete = r.Requester.Delete
+	r.Options = opts
 	return
 }
 
 // Create a Card
-func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters, opts ...*core.RequestOpts) (res *types.Card, err error) {
-	path := "/cards"
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("cards"))
+	if err != nil {
+		return
 	}
-	err = r.post(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Retrieve a Card
-func (r *CardService) Get(ctx context.Context, card_id string, opts ...*core.RequestOpts) (res *types.Card, err error) {
-	path := fmt.Sprintf("/cards/%s", card_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.Card, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("cards/%s", card_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // Update a Card
-func (r *CardService) Update(ctx context.Context, card_id string, body *types.UpdateACardParameters, opts ...*core.RequestOpts) (res *types.Card, err error) {
-	path := fmt.Sprintf("/cards/%s", card_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
-		Body:   body,
+func (r *CardService) Update(ctx context.Context, card_id string, body *types.UpdateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("cards/%s", card_id))
+	if err != nil {
+		return
 	}
-	err = r.patch(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "PATCH", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }
 
 // List Cards
-func (r *CardService) List(ctx context.Context, query *types.CardListParams, opts ...*core.RequestOpts) (res *types.CardsPage, err error) {
-	page := &types.CardsPage{
+func (r *CardService) List(ctx context.Context, query *types.CardListParams, opts ...options.RequestOption) (res *types.CardsPage, err error) {
+	u, err := url.Parse(fmt.Sprintf("cards"))
+	if err != nil {
+		return
+	}
+	opts = append(r.Options, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	res = &types.CardsPage{
 		Page: &pagination.Page[types.Card]{
-			Options: pagination.PageOptions{
-				RequestParams: query,
-				Path:          "/cards",
-			},
-			Requester: r.Requester,
-			Context:   ctx,
+			Config:  *cfg,
+			Options: opts,
 		},
 	}
-	res, err = page.GetNextPage()
+	err = res.Fire()
 	return
 }
 
 // Retrieve sensitive details for a Card
-func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...*core.RequestOpts) (res *types.CardDetails, err error) {
-	path := fmt.Sprintf("/cards/%s/details", card_id)
-	req := &core.CoreRequest{
-		Params: core.MergeRequestOpts(opts...),
+func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.CardDetails, err error) {
+	opts = append(r.Options, opts...)
+	u, err := url.Parse(fmt.Sprintf("cards/%s/details", card_id))
+	if err != nil {
+		return
 	}
-	err = r.get(ctx, path, req, &res)
+	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return
+	}
 
 	return
 }

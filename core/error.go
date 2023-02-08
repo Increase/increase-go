@@ -1,11 +1,12 @@
 package core
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
+	"net/url"
 )
 
 type RequestError struct {
@@ -21,16 +22,12 @@ func (e RequestError) StatusCode() int {
 	return -1
 }
 
-func (e RequestError) URL() string {
+func (e RequestError) URL() *url.URL {
 	req := e.Request
 	if req == nil {
-		return "<nil>"
+		return nil
 	}
-	url := req.URL
-	if url == nil {
-		return "<nil>"
-	}
-	return url.String()
+	return req.URL
 }
 
 func (e RequestError) Error() string {
@@ -46,7 +43,7 @@ type APIError interface {
 }
 
 type GenericAPIError struct {
-	request       *CoreRequest
+	request       *http.Request
 	response      *http.Response
 	status        int
 	errorBody     interface{}
@@ -92,23 +89,14 @@ func (e GenericAPIError) errorjSON() string {
 }
 
 func (e GenericAPIError) Method() string {
-	coreRequest := e.request
-	if coreRequest == nil {
+	if e.request == nil {
 		return "<nil>"
 	}
-	request := coreRequest.Request
-	if request == nil {
-		return "<nil>"
-	}
-	return request.Method
+	return e.request.Method
 }
 
 func (e GenericAPIError) URL() string {
-	coreReq := e.request
-	if coreReq == nil {
-		return "<nil>"
-	}
-	req := coreReq.Request
+	req := e.request
 	if req == nil {
 		return "<nil>"
 	}
@@ -132,7 +120,7 @@ type UnprocessableEntityError struct{ GenericAPIError }
 type RateLimitError struct{ GenericAPIError }
 type InternalServerError struct{ GenericAPIError }
 
-func NewAPIError(req *CoreRequest, res *http.Response, status int, error interface{}, message string, headers http.Header) APIError {
+func NewAPIError(req *http.Request, res *http.Response, status int, error interface{}, message string, headers http.Header) APIError {
 	err := GenericAPIError{req, res, status, error, nil, message, headers}
 
 	if status == 400 {
@@ -163,25 +151,15 @@ func NewAPIError(req *CoreRequest, res *http.Response, status int, error interfa
 	return err
 }
 
-func extractResponseText(res *http.Response) (string, error) {
-	buf := new(strings.Builder)
-	if _, err := io.Copy(buf, res.Body); err != nil {
-		return "", fmt.Errorf("error copying response body into string builder: %w", err)
-	}
-	return buf.String(), nil
-}
-
-func NewAPIErrorFromResponse(req *CoreRequest, res *http.Response) APIError {
+func NewAPIErrorFromResponse(req *http.Request, res *http.Response) APIError {
 	var errorJSON interface{}
-	var message string
+	message := ""
 
-	if text, err := extractResponseText(res); err == nil {
-		jsonDecoder := json.NewDecoder(strings.NewReader(text))
-		_ = jsonDecoder.Decode(&errorJSON)
-		if errorJSON != nil {
-			message = ""
-		} else {
-			message = text
+	errContent, err := io.ReadAll(res.Body)
+	if err == nil {
+		json.NewDecoder(bytes.NewReader(errContent)).Decode(&errorJSON)
+		if errorJSON == nil {
+			message = string(errContent)
 		}
 	}
 
