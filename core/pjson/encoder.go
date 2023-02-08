@@ -22,6 +22,7 @@ type structFieldEncoder struct {
 	parsedStructTag
 	stringifier
 	structFieldName string
+	index           int
 }
 
 const pjsonStructTag = "pjson"
@@ -104,7 +105,15 @@ func (s sortStructFields) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 func (s sortStructFields) Less(i, j int) bool {
-	return s[i].name > s[j].name
+	// Special case for the extras type parameter, makes more sense for those to
+	// be serialized at the end
+	if s[i].storeExtraProperties {
+		return false
+	}
+	if s[j].storeExtraProperties {
+		return true
+	}
+	return s[i].name < s[j].name
 }
 
 func (e *encoder) newArrayTypeEncoder(t reflect.Type) stringifier {
@@ -155,7 +164,7 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) stringifier {
 			continue
 		}
 
-		fieldEncoder := structFieldEncoder{parseStructTag(tag), e.typeEncoder(field.Type), field.Name}
+		fieldEncoder := structFieldEncoder{parseStructTag(tag), e.typeEncoder(field.Type), field.Name, i}
 
 		// We only want to support unexported fields if they're tagged with `extras` because
 		// that field shouldn't be part of the public API.
@@ -171,10 +180,10 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) stringifier {
 
 	return func(value reflect.Value) ([]byte, error) {
 		json := []byte("{}")
-		for i, field := range fieldEncoders {
+		for _, field := range fieldEncoders {
 			// Special cased handling for struct fields that are used to store unknown properties
 			if field.storeExtraProperties {
-				fieldValue := value.Field(i)
+				fieldValue := value.Field(field.index)
 				if fieldValue.Kind() == reflect.Pointer {
 					fieldValue = fieldValue.Elem()
 				}
@@ -193,7 +202,7 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) stringifier {
 			}
 
 			var key = field.name
-			var value, err = field.stringifier(value.Field(i))
+			var value, err = field.stringifier(value.Field(field.index))
 			if err != nil {
 				return nil, err
 			} else if value == nil {

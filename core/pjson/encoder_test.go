@@ -61,8 +61,8 @@ type RequiredProperties struct {
 }
 
 func TestStructRequiredProperties(t *testing.T) {
-	assertEncode(t, RequiredProperties{A: true, B: 1}, "{\"a\":true,\"B\":1}")
-	assertEncode(t, RequiredProperties{A: true}, "{\"a\":true,\"B\":null}")
+	assertEncode(t, RequiredProperties{A: true, B: 1}, "{\"B\":1,\"a\":true}")
+	assertEncode(t, RequiredProperties{A: true}, "{\"B\":null,\"a\":true}")
 	assertEncode(t, RequiredProperties{}, "{\"B\":null}")
 }
 
@@ -101,9 +101,11 @@ func TestPrivateJsonFields(t *testing.T) {
 
 type StructWithPointers struct {
 	A          *string                 `pjson:"a"`
+	B          *bool                   `pjson:"b"`
 	jsonFields *map[string]interface{} `pjson:"-,extras"`
 }
 
 func TestStructWithPointers(t *testing.T) {
 	assertEncode(t, StructWithPointers{A: pointers.P("Robert"), jsonFields: &map[string]interface{}{"foo": "bar"}}, "{\"a\":\"Robert\",\"foo\":\"bar\"}")
+	assertEncode(t, StructWithPointers{A: pointers.P("Robert"), B: pointers.P(false), jsonFields: &map[string]interface{}{"foo": "bar"}}, "{\"a\":\"Robert\",\"b\":false,\"foo\":\"bar\"}")
 }
