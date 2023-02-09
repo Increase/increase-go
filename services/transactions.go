@@ -21,12 +21,12 @@ func NewTransactionService(opts ...options.RequestOption) (r *TransactionService
 
 // Retrieve a Transaction
 func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...options.RequestOption) (res *types.Transaction, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("transactions/%s", transaction_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *TransactionService) List(ctx context.Context, query *types.TransactionL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.TransactionsPage{
 		Page: &pagination.Page[types.Transaction]{
 			Config:  *cfg,

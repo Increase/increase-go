@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -21,12 +23,14 @@ func NewCardDisputeService(opts ...options.RequestOption) (r *CardDisputeService
 
 // Create a Card Dispute
 func (r *CardDisputeService) New(ctx context.Context, body *types.CreateACardDisputeParameters, opts ...options.RequestOption) (res *types.CardDispute, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("card_disputes"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -38,12 +42,12 @@ func (r *CardDisputeService) New(ctx context.Context, body *types.CreateACardDis
 
 // Retrieve a Card Dispute
 func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...options.RequestOption) (res *types.CardDispute, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("card_disputes/%s", card_dispute_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -60,7 +64,7 @@ func (r *CardDisputeService) List(ctx context.Context, query *types.CardDisputeL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.CardDisputesPage{
 		Page: &pagination.Page[types.CardDispute]{
 			Config:  *cfg,

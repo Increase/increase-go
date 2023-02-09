@@ -21,12 +21,12 @@ func NewEventService(opts ...options.RequestOption) (r *EventService) {
 
 // Retrieve an Event
 func (r *EventService) Get(ctx context.Context, event_id string, opts ...options.RequestOption) (res *types.Event, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("events/%s", event_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *EventService) List(ctx context.Context, query *types.EventListParams, o
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.EventsPage{
 		Page: &pagination.Page[types.Event]{
 			Config:  *cfg,

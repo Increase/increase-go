@@ -21,12 +21,12 @@ func NewAccountStatementService(opts ...options.RequestOption) (r *AccountStatem
 
 // Retrieve an Account Statement
 func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...options.RequestOption) (res *types.AccountStatement, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("account_statements/%s", account_statement_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *AccountStatementService) List(ctx context.Context, query *types.Account
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.AccountStatementsPage{
 		Page: &pagination.Page[types.AccountStatement]{
 			Config:  *cfg,

@@ -21,12 +21,12 @@ func NewPendingTransactionService(opts ...options.RequestOption) (r *PendingTran
 
 // Retrieve a Pending Transaction
 func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...options.RequestOption) (res *types.PendingTransaction, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("pending_transactions/%s", pending_transaction_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *PendingTransactionService) List(ctx context.Context, query *types.Pendi
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.PendingTransactionsPage{
 		Page: &pagination.Page[types.PendingTransaction]{
 			Config:  *cfg,

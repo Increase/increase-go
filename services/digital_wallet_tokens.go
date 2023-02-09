@@ -21,12 +21,12 @@ func NewDigitalWalletTokenService(opts ...options.RequestOption) (r *DigitalWall
 
 // Retrieve a Digital Wallet Token
 func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...options.RequestOption) (res *types.DigitalWalletToken, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.Digit
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.DigitalWalletTokensPage{
 		Page: &pagination.Page[types.DigitalWalletToken]{
 			Config:  *cfg,

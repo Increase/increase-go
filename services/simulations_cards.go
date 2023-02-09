@@ -1,10 +1,12 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -26,12 +28,14 @@ func NewSimulationsCardService(opts ...options.RequestOption) (r *SimulationsCar
 // [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
 // ways purchases can be made.
 func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.SimulateAnAuthorizationOnACardParameters, opts ...options.RequestOption) (res *types.CardAuthorizationSimulation, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/card_authorizations"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,12 +51,14 @@ func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.Simu
 // production. The amount settled can be different from the amount originally
 // authorized, for example, when adding a tip to a restaurant bill.
 func (r *SimulationsCardService) Settlement(ctx context.Context, body *types.SimulateSettlingACardAuthorizationParameters, opts ...options.RequestOption) (res *types.Transaction, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/card_settlements"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

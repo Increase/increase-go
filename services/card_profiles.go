@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -21,12 +23,14 @@ func NewCardProfileService(opts ...options.RequestOption) (r *CardProfileService
 
 // Create a Card Profile
 func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardProfileParameters, opts ...options.RequestOption) (res *types.CardProfile, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("card_profiles"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -38,12 +42,12 @@ func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardPro
 
 // Retrieve a Card Profile
 func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...options.RequestOption) (res *types.CardProfile, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("card_profiles/%s", card_profile_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -60,7 +64,7 @@ func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.CardProfilesPage{
 		Page: &pagination.Page[types.CardProfile]{
 			Config:  *cfg,

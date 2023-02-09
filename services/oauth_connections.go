@@ -21,12 +21,12 @@ func NewOauthConnectionService(opts ...options.RequestOption) (r *OauthConnectio
 
 // Retrieve an OAuth Connection
 func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...options.RequestOption) (res *types.OauthConnection, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("oauth_connections/%s", oauth_connection_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthCon
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.OauthConnectionsPage{
 		Page: &pagination.Page[types.OauthConnection]{
 			Config:  *cfg,

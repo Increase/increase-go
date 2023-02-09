@@ -1,10 +1,12 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -20,12 +22,14 @@ func NewSimulationsDocumentService(opts ...options.RequestOption) (r *Simulation
 
 // Simulates an tax document being created for an account.
 func (r *SimulationsDocumentService) New(ctx context.Context, body *types.SimulateATaxDocumentBeingCreatedParameters, opts ...options.RequestOption) (res *types.Document, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/documents"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -21,12 +23,14 @@ func NewACHTransferService(opts ...options.RequestOption) (r *ACHTransferService
 
 // Create an ACH Transfer
 func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("ach_transfers"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -38,12 +42,12 @@ func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTra
 
 // Retrieve an ACH Transfer
 func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s", ach_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -60,7 +64,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.ACHTransfersPage{
 		Page: &pagination.Page[types.ACHTransfer]{
 			Config:  *cfg,
@@ -73,12 +77,12 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 
 // Approve an ACH Transfer
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -90,12 +94,12 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 
 // Cancel a pending ACH Transfer
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

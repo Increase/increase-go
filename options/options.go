@@ -61,7 +61,7 @@ func getPlatformProperties() map[string]string {
 	}
 }
 
-func NewRequestConfig(ctx context.Context, method string, u *url.URL, opts ...RequestOption) *RequestConfig {
+func NewRequestConfig(ctx context.Context, method string, u *url.URL, body io.ReadCloser, opts ...RequestOption) *RequestConfig {
 	host := ""
 	if u != nil {
 		host = u.Host
@@ -72,6 +72,7 @@ func NewRequestConfig(ctx context.Context, method string, u *url.URL, opts ...Re
 		Header: http.Header{
 			"User-Agent": []string{"SDK_PackageName/Go 0.0.0"},
 		},
+		Body:       body,
 		Proto:      "HTTP/1.1",
 		ProtoMajor: 1,
 		ProtoMinor: 1,

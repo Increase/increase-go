@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -21,12 +23,14 @@ func NewWireTransferService(opts ...options.RequestOption) (r *WireTransferServi
 
 // Create a Wire Transfer
 func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTransferParameters, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("wire_transfers"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -38,12 +42,12 @@ func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTr
 
 // Retrieve a Wire Transfer
 func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s", wire_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -60,7 +64,7 @@ func (r *WireTransferService) List(ctx context.Context, query *types.WireTransfe
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.WireTransfersPage{
 		Page: &pagination.Page[types.WireTransfer]{
 			Config:  *cfg,
@@ -73,12 +77,12 @@ func (r *WireTransferService) List(ctx context.Context, query *types.WireTransfe
 
 // Approve a Wire Transfer
 func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -90,12 +94,12 @@ func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id stri
 
 // Cancel a pending Wire Transfer
 func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -110,12 +114,12 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 // [Transaction](#transaction) to account for the returned funds. This Wire
 // Transfer must first have a `status` of `complete`.'
 func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -129,12 +133,12 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 // Reserve. This transfer must first have a `status` of `pending_approval` or
 // `pending_creating`.
 func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

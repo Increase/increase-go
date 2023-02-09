@@ -1,10 +1,12 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -25,12 +27,14 @@ func NewSimulationsACHTransferService(opts ...options.RequestOption) (r *Simulat
 // [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
 // depending on whether or not the transfer is allowed.
 func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *types.SimulateAnACHTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.ACHTransferSimulation, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/inbound_ach_transfers"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -44,12 +48,14 @@ func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *ty
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
 func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *types.ReturnASandboxACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -66,12 +72,12 @@ func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer
 // not submitted to the Federal Reserve, this endpoint allows you to skip that
 // delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationsACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

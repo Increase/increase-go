@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
+	"io"
 	"net/url"
 )
 
@@ -21,12 +23,14 @@ func NewAccountNumberService(opts ...options.RequestOption) (r *AccountNumberSer
 
 // Create an Account Number
 func (r *AccountNumberService) New(ctx context.Context, body *types.CreateAnAccountNumberParameters, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("account_numbers"))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -38,12 +42,12 @@ func (r *AccountNumberService) New(ctx context.Context, body *types.CreateAnAcco
 
 // Retrieve an Account Number
 func (r *AccountNumberService) Get(ctx context.Context, account_number_id string, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("account_numbers/%s", account_number_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -55,12 +59,14 @@ func (r *AccountNumberService) Get(ctx context.Context, account_number_id string
 
 // Update an Account Number
 func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *types.UpdateAnAccountNumberParameters, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
+	b, err := body.MarshalJSON()
+	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("account_numbers/%s", account_number_id))
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "PATCH", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -77,7 +83,7 @@ func (r *AccountNumberService) List(ctx context.Context, query *types.AccountNum
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, opts...)
+	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
 	res = &types.AccountNumbersPage{
 		Page: &pagination.Page[types.AccountNumber]{
 			Config:  *cfg,
