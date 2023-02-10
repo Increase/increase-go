@@ -3,19 +3,20 @@ package services
 import "increase/options"
 
 type SimulationService struct {
-	Options                    []options.RequestOption
-	AccountTransfers           *SimulationsAccountTransferService
-	AccountStatements          *SimulationsAccountStatementService
-	ACHTransfers               *SimulationsACHTransferService
-	CardDisputes               *SimulationsCardDisputeService
-	CardRefunds                *SimulationsCardRefundService
-	CheckTransfers             *SimulationsCheckTransferService
-	Documents                  *SimulationsDocumentService
-	DigitalWalletTokenRequests *SimulationsDigitalWalletTokenRequestService
-	CheckDeposits              *SimulationsCheckDepositService
-	WireTransfers              *SimulationsWireTransferService
-	Cards                      *SimulationsCardService
-	RealTimePaymentsTransfers  *SimulationsRealTimePaymentsTransferService
+	Options                     []options.RequestOption
+	AccountTransfers            *SimulationsAccountTransferService
+	AccountStatements           *SimulationsAccountStatementService
+	ACHTransfers                *SimulationsACHTransferService
+	CardDisputes                *SimulationsCardDisputeService
+	CardRefunds                 *SimulationsCardRefundService
+	CheckTransfers              *SimulationsCheckTransferService
+	Documents                   *SimulationsDocumentService
+	DigitalWalletTokenRequests  *SimulationsDigitalWalletTokenRequestService
+	CheckDeposits               *SimulationsCheckDepositService
+	InboundWireDrawdownRequests *SimulationsInboundWireDrawdownRequestService
+	WireTransfers               *SimulationsWireTransferService
+	Cards                       *SimulationsCardService
+	RealTimePaymentsTransfers   *SimulationsRealTimePaymentsTransferService
 }
 
 func NewSimulationService(opts ...options.RequestOption) (r *SimulationService) {
@@ -30,6 +31,7 @@ func NewSimulationService(opts ...options.RequestOption) (r *SimulationService) 
 	r.Documents = NewSimulationsDocumentService(opts...)
 	r.DigitalWalletTokenRequests = NewSimulationsDigitalWalletTokenRequestService(opts...)
 	r.CheckDeposits = NewSimulationsCheckDepositService(opts...)
+	r.InboundWireDrawdownRequests = NewSimulationsInboundWireDrawdownRequestService(opts...)
 	r.WireTransfers = NewSimulationsWireTransferService(opts...)
 	r.Cards = NewSimulationsCardService(opts...)
 	r.RealTimePaymentsTransfers = NewSimulationsRealTimePaymentsTransferService(opts...)

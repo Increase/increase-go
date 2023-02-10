@@ -10,36 +10,37 @@ func P[T any](v T) *T {
 }
 
 type Increase struct {
-	Options              []options.RequestOption
-	Accounts             *services.AccountService
-	AccountNumbers       *services.AccountNumberService
-	RealTimeDecisions    *services.RealTimeDecisionService
-	Cards                *services.CardService
-	CardDisputes         *services.CardDisputeService
-	CardProfiles         *services.CardProfileService
-	ExternalAccounts     *services.ExternalAccountService
-	DigitalWalletTokens  *services.DigitalWalletTokenService
-	Transactions         *services.TransactionService
-	PendingTransactions  *services.PendingTransactionService
-	DeclinedTransactions *services.DeclinedTransactionService
-	Limits               *services.LimitService
-	AccountTransfers     *services.AccountTransferService
-	ACHTransfers         *services.ACHTransferService
-	ACHPrenotifications  *services.ACHPrenotificationService
-	Documents            *services.DocumentService
-	WireTransfers        *services.WireTransferService
-	CheckTransfers       *services.CheckTransferService
-	Entities             *services.EntityService
-	WireDrawdownRequests *services.WireDrawdownRequestService
-	Events               *services.EventService
-	EventSubscriptions   *services.EventSubscriptionService
-	Files                *services.FileService
-	Groups               *services.GroupService
-	OauthConnections     *services.OauthConnectionService
-	CheckDeposits        *services.CheckDepositService
-	RoutingNumbers       *services.RoutingNumberService
-	AccountStatements    *services.AccountStatementService
-	Simulations          *services.SimulationService
+	Options                     []options.RequestOption
+	Accounts                    *services.AccountService
+	AccountNumbers              *services.AccountNumberService
+	RealTimeDecisions           *services.RealTimeDecisionService
+	Cards                       *services.CardService
+	CardDisputes                *services.CardDisputeService
+	CardProfiles                *services.CardProfileService
+	ExternalAccounts            *services.ExternalAccountService
+	DigitalWalletTokens         *services.DigitalWalletTokenService
+	Transactions                *services.TransactionService
+	PendingTransactions         *services.PendingTransactionService
+	DeclinedTransactions        *services.DeclinedTransactionService
+	Limits                      *services.LimitService
+	AccountTransfers            *services.AccountTransferService
+	ACHTransfers                *services.ACHTransferService
+	ACHPrenotifications         *services.ACHPrenotificationService
+	Documents                   *services.DocumentService
+	WireTransfers               *services.WireTransferService
+	CheckTransfers              *services.CheckTransferService
+	Entities                    *services.EntityService
+	InboundWireDrawdownRequests *services.InboundWireDrawdownRequestService
+	WireDrawdownRequests        *services.WireDrawdownRequestService
+	Events                      *services.EventService
+	EventSubscriptions          *services.EventSubscriptionService
+	Files                       *services.FileService
+	Groups                      *services.GroupService
+	OauthConnections            *services.OauthConnectionService
+	CheckDeposits               *services.CheckDepositService
+	RoutingNumbers              *services.RoutingNumberService
+	AccountStatements           *services.AccountStatementService
+	Simulations                 *services.SimulationService
 }
 
 func NewIncrease(opts ...options.RequestOption) (r *Increase) {
@@ -68,6 +69,7 @@ func NewIncrease(opts ...options.RequestOption) (r *Increase) {
 	r.WireTransfers = services.NewWireTransferService(opts...)
 	r.CheckTransfers = services.NewCheckTransferService(opts...)
 	r.Entities = services.NewEntityService(opts...)
+	r.InboundWireDrawdownRequests = services.NewInboundWireDrawdownRequestService(opts...)
 	r.WireDrawdownRequests = services.NewWireDrawdownRequestService(opts...)
 	r.Events = services.NewEventService(opts...)
 	r.EventSubscriptions = services.NewEventSubscriptionService(opts...)

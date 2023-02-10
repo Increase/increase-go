@@ -1137,6 +1137,10 @@ func (r RealTimeDecisionCardAuthorizationNetworkDetails) String() (result string
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -1158,6 +1162,16 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) MarshalJSON() (dat
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -1168,8 +1182,21 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetPointOfServiceE
 }
 
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&RealTimeDecisionCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&RealTimeDecisionCardAuthorizationNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type RealTimeDecisionCardAuthorizationDecision string
 
@@ -4987,6 +5014,7 @@ const (
 	TransactionSourceCategoryInboundWireDrawdownPayment                  TransactionSourceCategory = "inbound_wire_drawdown_payment"
 	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
 	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
+	TransactionSourceCategoryInternalGeneralLedgerTransaction            TransactionSourceCategory = "internal_general_ledger_transaction"
 	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
 	TransactionSourceCategoryCardRouteRefund                             TransactionSourceCategory = "card_route_refund"
 	TransactionSourceCategoryCardRouteSettlement                         TransactionSourceCategory = "card_route_settlement"
@@ -5676,8 +5704,11 @@ type TransactionSourceCheckDepositAcceptance struct {
 	// The routing number printed on the check.
 	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
+	// check number for business checks.
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
+	// The check serial number, if present, for consumer checks. For business checks,
+	// the serial number is usually in the `auxiliary_on_us` field.
+	SerialNumber *string `pjson:"serial_number"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID *string                `pjson:"check_deposit_id"`
 	jsonFields     map[string]interface{} `pjson:"-,extras"`
@@ -5732,10 +5763,19 @@ func (r *TransactionSourceCheckDepositAcceptance) GetRoutingNumber() (RoutingNum
 }
 
 // An additional line of metadata printed on the check. This typically includes the
-// check number.
+// check number for business checks.
 func (r *TransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
 	if r != nil && r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
+	}
+	return
+}
+
+// The check serial number, if present, for consumer checks. For business checks,
+// the serial number is usually in the `auxiliary_on_us` field.
+func (r *TransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r != nil && r.SerialNumber != nil {
+		SerialNumber = *r.SerialNumber
 	}
 	return
 }
@@ -5749,7 +5789,7 @@ func (r *TransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepo
 }
 
 func (r TransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+	return fmt.Sprintf("&TransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s SerialNumber:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.SerialNumber), core.FmtP(r.CheckDepositID))
 }
 
 type TransactionSourceCheckDepositAcceptanceCurrency string
@@ -7504,6 +7544,7 @@ const (
 type TransactionSourceInternalSourceReason string
 
 const (
+	TransactionSourceInternalSourceReasonBankMigration      TransactionSourceInternalSourceReason = "bank_migration"
 	TransactionSourceInternalSourceReasonCashback           TransactionSourceInternalSourceReason = "cashback"
 	TransactionSourceInternalSourceReasonEmpyrealAdjustment TransactionSourceInternalSourceReason = "empyreal_adjustment"
 	TransactionSourceInternalSourceReasonError              TransactionSourceInternalSourceReason = "error"
@@ -8170,6 +8211,7 @@ const (
 	TransactionsListParamsCategoryInInboundWireDrawdownPayment                  TransactionsListParamsCategoryIn = "inbound_wire_drawdown_payment"
 	TransactionsListParamsCategoryInInboundWireReversal                         TransactionsListParamsCategoryIn = "inbound_wire_reversal"
 	TransactionsListParamsCategoryInInboundWireTransfer                         TransactionsListParamsCategoryIn = "inbound_wire_transfer"
+	TransactionsListParamsCategoryInInternalGeneralLedgerTransaction            TransactionsListParamsCategoryIn = "internal_general_ledger_transaction"
 	TransactionsListParamsCategoryInInternalSource                              TransactionsListParamsCategoryIn = "internal_source"
 	TransactionsListParamsCategoryInCardRouteRefund                             TransactionsListParamsCategoryIn = "card_route_refund"
 	TransactionsListParamsCategoryInCardRouteSettlement                         TransactionsListParamsCategoryIn = "card_route_settlement"
@@ -8862,6 +8904,10 @@ func (r PendingTransactionSourceCardAuthorizationNetworkDetails) String() (resul
 }
 
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -8883,6 +8929,16 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) MarshalJSO
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -8893,8 +8949,21 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOf
 }
 
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&PendingTransactionSourceCardAuthorizationNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type PendingTransactionSourceCardAuthorizationCurrency string
 
@@ -8919,8 +8988,10 @@ type PendingTransactionSourceCheckDepositInstruction struct {
 	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileID *string                `pjson:"back_image_file_id"`
-	jsonFields      map[string]interface{} `pjson:"-,extras"`
+	BackImageFileID *string `pjson:"back_image_file_id"`
+	// The identifier of the Check Deposit.
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -8974,8 +9045,16 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (
 	return
 }
 
+// The identifier of the Check Deposit.
+func (r *PendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
+	}
+	return
+}
+
 func (r PendingTransactionSourceCheckDepositInstruction) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
+	return fmt.Sprintf("&PendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.CheckDepositID))
 }
 
 type PendingTransactionSourceCheckDepositInstructionCurrency string
@@ -10183,6 +10262,10 @@ func (r DeclinedTransactionSourceCardDeclineNetworkDetails) String() (result str
 }
 
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -10204,6 +10287,16 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) MarshalJSON() (
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -10214,8 +10307,21 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServi
 }
 
 func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&DeclinedTransactionSourceCardDeclineNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type DeclinedTransactionSourceCardDeclineCurrency string
 
@@ -20325,6 +20431,370 @@ func (r *EntitiesPage) NextPage() (*EntitiesPage, error) {
 	}
 }
 
+type InboundWireDrawdownRequest struct {
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_wire_drawdown_request`.
+	Type *InboundWireDrawdownRequestType `pjson:"type"`
+	// The Wire drawdown request identifier.
+	ID *string `pjson:"id"`
+	// The Account Number from which the recipient of this request is being requested
+	// to send funds.
+	RecipientAccountNumberID *string `pjson:"recipient_account_number_id"`
+	// The drawdown request's originator's account number.
+	OriginatorAccountNumber *string `pjson:"originator_account_number"`
+	// The drawdown request's originator's routing number.
+	OriginatorRoutingNumber *string `pjson:"originator_routing_number"`
+	// The drawdown request's beneficiary's account number.
+	BeneficiaryAccountNumber *string `pjson:"beneficiary_account_number"`
+	// The drawdown request's beneficiary's routing number.
+	BeneficiaryRoutingNumber *string `pjson:"beneficiary_routing_number"`
+	// The amount being requested in cents.
+	Amount *int64 `pjson:"amount"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
+	// requested. Will always be "USD".
+	Currency *string `pjson:"currency"`
+	// A message from the drawdown request's originator.
+	MessageToRecipient *string `pjson:"message_to_recipient"`
+	// Line 1 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
+	// Line 2 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
+	// Line 3 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
+	// Line 4 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
+	// The drawdown request's originator's name.
+	OriginatorName *string `pjson:"originator_name"`
+	// Line 1 of the drawdown request's originator's address.
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
+	// Line 2 of the drawdown request's originator's address.
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
+	// Line 3 of the drawdown request's originator's address.
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
+	// The drawdown request's beneficiary's name.
+	BeneficiaryName *string `pjson:"beneficiary_name"`
+	// Line 1 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
+	// Line 2 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
+	// Line 3 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine3 *string                `pjson:"beneficiary_address_line3"`
+	jsonFields              map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into InboundWireDrawdownRequest
+// using the internal pjson library. Unrecognized fields are stored in the `Extras`
+// property.
+func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes InboundWireDrawdownRequest into an array of bytes using
+// the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *InboundWireDrawdownRequest) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_wire_drawdown_request`.
+func (r *InboundWireDrawdownRequest) GetType() (Type InboundWireDrawdownRequestType) {
+	if r != nil && r.Type != nil {
+		Type = *r.Type
+	}
+	return
+}
+
+// The Wire drawdown request identifier.
+func (r *InboundWireDrawdownRequest) GetID() (ID string) {
+	if r != nil && r.ID != nil {
+		ID = *r.ID
+	}
+	return
+}
+
+// The Account Number from which the recipient of this request is being requested
+// to send funds.
+func (r *InboundWireDrawdownRequest) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
+	if r != nil && r.RecipientAccountNumberID != nil {
+		RecipientAccountNumberID = *r.RecipientAccountNumberID
+	}
+	return
+}
+
+// The drawdown request's originator's account number.
+func (r *InboundWireDrawdownRequest) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
+	if r != nil && r.OriginatorAccountNumber != nil {
+		OriginatorAccountNumber = *r.OriginatorAccountNumber
+	}
+	return
+}
+
+// The drawdown request's originator's routing number.
+func (r *InboundWireDrawdownRequest) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
+	if r != nil && r.OriginatorRoutingNumber != nil {
+		OriginatorRoutingNumber = *r.OriginatorRoutingNumber
+	}
+	return
+}
+
+// The drawdown request's beneficiary's account number.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
+	if r != nil && r.BeneficiaryAccountNumber != nil {
+		BeneficiaryAccountNumber = *r.BeneficiaryAccountNumber
+	}
+	return
+}
+
+// The drawdown request's beneficiary's routing number.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
+	if r != nil && r.BeneficiaryRoutingNumber != nil {
+		BeneficiaryRoutingNumber = *r.BeneficiaryRoutingNumber
+	}
+	return
+}
+
+// The amount being requested in cents.
+func (r *InboundWireDrawdownRequest) GetAmount() (Amount int64) {
+	if r != nil && r.Amount != nil {
+		Amount = *r.Amount
+	}
+	return
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
+// requested. Will always be "USD".
+func (r *InboundWireDrawdownRequest) GetCurrency() (Currency string) {
+	if r != nil && r.Currency != nil {
+		Currency = *r.Currency
+	}
+	return
+}
+
+// A message from the drawdown request's originator.
+func (r *InboundWireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
+	if r != nil && r.MessageToRecipient != nil {
+		MessageToRecipient = *r.MessageToRecipient
+	}
+	return
+}
+
+// Line 1 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine1 != nil {
+		OriginatorToBeneficiaryInformationLine1 = *r.OriginatorToBeneficiaryInformationLine1
+	}
+	return
+}
+
+// Line 2 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine2 != nil {
+		OriginatorToBeneficiaryInformationLine2 = *r.OriginatorToBeneficiaryInformationLine2
+	}
+	return
+}
+
+// Line 3 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine3 != nil {
+		OriginatorToBeneficiaryInformationLine3 = *r.OriginatorToBeneficiaryInformationLine3
+	}
+	return
+}
+
+// Line 4 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine4 != nil {
+		OriginatorToBeneficiaryInformationLine4 = *r.OriginatorToBeneficiaryInformationLine4
+	}
+	return
+}
+
+// The drawdown request's originator's name.
+func (r *InboundWireDrawdownRequest) GetOriginatorName() (OriginatorName string) {
+	if r != nil && r.OriginatorName != nil {
+		OriginatorName = *r.OriginatorName
+	}
+	return
+}
+
+// Line 1 of the drawdown request's originator's address.
+func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r != nil && r.OriginatorAddressLine1 != nil {
+		OriginatorAddressLine1 = *r.OriginatorAddressLine1
+	}
+	return
+}
+
+// Line 2 of the drawdown request's originator's address.
+func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r != nil && r.OriginatorAddressLine2 != nil {
+		OriginatorAddressLine2 = *r.OriginatorAddressLine2
+	}
+	return
+}
+
+// Line 3 of the drawdown request's originator's address.
+func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r != nil && r.OriginatorAddressLine3 != nil {
+		OriginatorAddressLine3 = *r.OriginatorAddressLine3
+	}
+	return
+}
+
+// The drawdown request's beneficiary's name.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryName() (BeneficiaryName string) {
+	if r != nil && r.BeneficiaryName != nil {
+		BeneficiaryName = *r.BeneficiaryName
+	}
+	return
+}
+
+// Line 1 of the drawdown request's beneficiary's address.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r != nil && r.BeneficiaryAddressLine1 != nil {
+		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
+	}
+	return
+}
+
+// Line 2 of the drawdown request's beneficiary's address.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r != nil && r.BeneficiaryAddressLine2 != nil {
+		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
+	}
+	return
+}
+
+// Line 3 of the drawdown request's beneficiary's address.
+func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r != nil && r.BeneficiaryAddressLine3 != nil {
+		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
+	}
+	return
+}
+
+func (r InboundWireDrawdownRequest) String() (result string) {
+	return fmt.Sprintf("&InboundWireDrawdownRequest{Type:%s ID:%s RecipientAccountNumberID:%s OriginatorAccountNumber:%s OriginatorRoutingNumber:%s BeneficiaryAccountNumber:%s BeneficiaryRoutingNumber:%s Amount:%s Currency:%s MessageToRecipient:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorName:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s}", core.FmtP(r.Type), core.FmtP(r.ID), core.FmtP(r.RecipientAccountNumberID), core.FmtP(r.OriginatorAccountNumber), core.FmtP(r.OriginatorRoutingNumber), core.FmtP(r.BeneficiaryAccountNumber), core.FmtP(r.BeneficiaryRoutingNumber), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MessageToRecipient), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3))
+}
+
+type InboundWireDrawdownRequestType string
+
+const (
+	InboundWireDrawdownRequestTypeInboundWireDrawdownRequest InboundWireDrawdownRequestType = "inbound_wire_drawdown_request"
+)
+
+type InboundWireDrawdownRequestListParams struct {
+	// Return the page of entries after this one.
+	Cursor *string `query:"cursor"`
+	// Limit the size of the list that is returned. The default (and maximum) is 100
+	// objects.
+	Limit      *int64                 `query:"limit"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundWireDrawdownRequestListParams using the internal pjson library.
+// Unrecognized fields are stored in the `Extras` property.
+func (r *InboundWireDrawdownRequestListParams) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes InboundWireDrawdownRequestListParams into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *InboundWireDrawdownRequestListParams) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Return the page of entries after this one.
+func (r *InboundWireDrawdownRequestListParams) GetCursor() (Cursor string) {
+	if r != nil && r.Cursor != nil {
+		Cursor = *r.Cursor
+	}
+	return
+}
+
+// Limit the size of the list that is returned. The default (and maximum) is 100
+// objects.
+func (r *InboundWireDrawdownRequestListParams) GetLimit() (Limit int64) {
+	if r != nil && r.Limit != nil {
+		Limit = *r.Limit
+	}
+	return
+}
+
+func (r InboundWireDrawdownRequestListParams) String() (result string) {
+	return fmt.Sprintf("&InboundWireDrawdownRequestListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+}
+
+type InboundWireDrawdownRequestList struct {
+	// The contents of the list.
+	Data *[]InboundWireDrawdownRequest `pjson:"data"`
+	// A pointer to a place in the list.
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundWireDrawdownRequestList using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *InboundWireDrawdownRequestList) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes InboundWireDrawdownRequestList into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *InboundWireDrawdownRequestList) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The contents of the list.
+func (r *InboundWireDrawdownRequestList) GetData() (Data []InboundWireDrawdownRequest) {
+	if r != nil && r.Data != nil {
+		Data = *r.Data
+	}
+	return
+}
+
+// A pointer to a place in the list.
+func (r *InboundWireDrawdownRequestList) GetNextCursor() (NextCursor string) {
+	if r != nil && r.NextCursor != nil {
+		NextCursor = *r.NextCursor
+	}
+	return
+}
+
+func (r InboundWireDrawdownRequestList) String() (result string) {
+	return fmt.Sprintf("&InboundWireDrawdownRequestList{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
+}
+
+type InboundWireDrawdownRequestsPage struct {
+	*pagination.Page[InboundWireDrawdownRequest]
+}
+
+func (r *InboundWireDrawdownRequestsPage) InboundWireDrawdownRequest() *InboundWireDrawdownRequest {
+	return r.Current()
+}
+
+func (r *InboundWireDrawdownRequestsPage) NextPage() (*InboundWireDrawdownRequestsPage, error) {
+	if page, err := r.Page.NextPage(); err != nil {
+		return nil, err
+	} else {
+		return &InboundWireDrawdownRequestsPage{page}, nil
+	}
+}
+
 type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
@@ -20886,6 +21356,7 @@ const (
 	EventCategoryFileCreated                                          EventCategory = "file.created"
 	EventCategoryGroupUpdated                                         EventCategory = "group.updated"
 	EventCategoryGroupHeartbeat                                       EventCategory = "group.heartbeat"
+	EventCategoryInboundWireDrawdownRequestCreated                    EventCategory = "inbound_wire_drawdown_request.created"
 	EventCategoryOauthConnectionCreated                               EventCategory = "oauth_connection.created"
 	EventCategoryOauthConnectionDeactivated                           EventCategory = "oauth_connection.deactivated"
 	EventCategoryPendingTransactionCreated                            EventCategory = "pending_transaction.created"
@@ -21115,6 +21586,7 @@ const (
 	EventsListParamsCategoryInFileCreated                                          EventsListParamsCategoryIn = "file.created"
 	EventsListParamsCategoryInGroupUpdated                                         EventsListParamsCategoryIn = "group.updated"
 	EventsListParamsCategoryInGroupHeartbeat                                       EventsListParamsCategoryIn = "group.heartbeat"
+	EventsListParamsCategoryInInboundWireDrawdownRequestCreated                    EventsListParamsCategoryIn = "inbound_wire_drawdown_request.created"
 	EventsListParamsCategoryInOauthConnectionCreated                               EventsListParamsCategoryIn = "oauth_connection.created"
 	EventsListParamsCategoryInOauthConnectionDeactivated                           EventsListParamsCategoryIn = "oauth_connection.deactivated"
 	EventsListParamsCategoryInPendingTransactionCreated                            EventsListParamsCategoryIn = "pending_transaction.created"
@@ -21326,6 +21798,7 @@ const (
 	EventSubscriptionSelectedEventCategoryFileCreated                                          EventSubscriptionSelectedEventCategory = "file.created"
 	EventSubscriptionSelectedEventCategoryGroupUpdated                                         EventSubscriptionSelectedEventCategory = "group.updated"
 	EventSubscriptionSelectedEventCategoryGroupHeartbeat                                       EventSubscriptionSelectedEventCategory = "group.heartbeat"
+	EventSubscriptionSelectedEventCategoryInboundWireDrawdownRequestCreated                    EventSubscriptionSelectedEventCategory = "inbound_wire_drawdown_request.created"
 	EventSubscriptionSelectedEventCategoryOauthConnectionCreated                               EventSubscriptionSelectedEventCategory = "oauth_connection.created"
 	EventSubscriptionSelectedEventCategoryOauthConnectionDeactivated                           EventSubscriptionSelectedEventCategory = "oauth_connection.deactivated"
 	EventSubscriptionSelectedEventCategoryPendingTransactionCreated                            EventSubscriptionSelectedEventCategory = "pending_transaction.created"
@@ -21438,6 +21911,7 @@ const (
 	CreateAnEventSubscriptionParametersSelectedEventCategoryFileCreated                                          CreateAnEventSubscriptionParametersSelectedEventCategory = "file.created"
 	CreateAnEventSubscriptionParametersSelectedEventCategoryGroupUpdated                                         CreateAnEventSubscriptionParametersSelectedEventCategory = "group.updated"
 	CreateAnEventSubscriptionParametersSelectedEventCategoryGroupHeartbeat                                       CreateAnEventSubscriptionParametersSelectedEventCategory = "group.heartbeat"
+	CreateAnEventSubscriptionParametersSelectedEventCategoryInboundWireDrawdownRequestCreated                    CreateAnEventSubscriptionParametersSelectedEventCategory = "inbound_wire_drawdown_request.created"
 	CreateAnEventSubscriptionParametersSelectedEventCategoryOauthConnectionCreated                               CreateAnEventSubscriptionParametersSelectedEventCategory = "oauth_connection.created"
 	CreateAnEventSubscriptionParametersSelectedEventCategoryOauthConnectionDeactivated                           CreateAnEventSubscriptionParametersSelectedEventCategory = "oauth_connection.deactivated"
 	CreateAnEventSubscriptionParametersSelectedEventCategoryPendingTransactionCreated                            CreateAnEventSubscriptionParametersSelectedEventCategory = "pending_transaction.created"
@@ -22521,8 +22995,11 @@ type CheckDepositDepositAcceptance struct {
 	// The routing number printed on the check.
 	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
+	// check number for business checks.
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
+	// The check serial number, if present, for consumer checks. For business checks,
+	// the serial number is usually in the `auxiliary_on_us` field.
+	SerialNumber *string `pjson:"serial_number"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID *string                `pjson:"check_deposit_id"`
 	jsonFields     map[string]interface{} `pjson:"-,extras"`
@@ -22577,10 +23054,19 @@ func (r *CheckDepositDepositAcceptance) GetRoutingNumber() (RoutingNumber string
 }
 
 // An additional line of metadata printed on the check. This typically includes the
-// check number.
+// check number for business checks.
 func (r *CheckDepositDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
 	if r != nil && r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
+	}
+	return
+}
+
+// The check serial number, if present, for consumer checks. For business checks,
+// the serial number is usually in the `auxiliary_on_us` field.
+func (r *CheckDepositDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r != nil && r.SerialNumber != nil {
+		SerialNumber = *r.SerialNumber
 	}
 	return
 }
@@ -22594,7 +23080,7 @@ func (r *CheckDepositDepositAcceptance) GetCheckDepositID() (CheckDepositID stri
 }
 
 func (r CheckDepositDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&CheckDepositDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+	return fmt.Sprintf("&CheckDepositDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s SerialNumber:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.SerialNumber), core.FmtP(r.CheckDepositID))
 }
 
 type CheckDepositDepositAcceptanceCurrency string
@@ -24342,6 +24828,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
 	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInternalGeneralLedgerTransaction            ACHTransferSimulationTransactionSourceCategory = "internal_general_ledger_transaction"
 	ACHTransferSimulationTransactionSourceCategoryInternalSource                              ACHTransferSimulationTransactionSourceCategory = "internal_source"
 	ACHTransferSimulationTransactionSourceCategoryCardRouteRefund                             ACHTransferSimulationTransactionSourceCategory = "card_route_refund"
 	ACHTransferSimulationTransactionSourceCategoryCardRouteSettlement                         ACHTransferSimulationTransactionSourceCategory = "card_route_settlement"
@@ -25040,8 +25527,11 @@ type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The routing number printed on the check.
 	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
+	// check number for business checks.
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
+	// The check serial number, if present, for consumer checks. For business checks,
+	// the serial number is usually in the `auxiliary_on_us` field.
+	SerialNumber *string `pjson:"serial_number"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID *string                `pjson:"check_deposit_id"`
 	jsonFields     map[string]interface{} `pjson:"-,extras"`
@@ -25097,10 +25587,19 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetRoutin
 }
 
 // An additional line of metadata printed on the check. This typically includes the
-// check number.
+// check number for business checks.
 func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
 	if r != nil && r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
+	}
+	return
+}
+
+// The check serial number, if present, for consumer checks. For business checks,
+// the serial number is usually in the `auxiliary_on_us` field.
+func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r != nil && r.SerialNumber != nil {
+		SerialNumber = *r.SerialNumber
 	}
 	return
 }
@@ -25114,7 +25613,7 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheckD
 }
 
 func (r ACHTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s SerialNumber:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.SerialNumber), core.FmtP(r.CheckDepositID))
 }
 
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
@@ -26887,6 +27386,7 @@ const (
 type ACHTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
+	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration      ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
 	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback           ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
 	ACHTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment ACHTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
 	ACHTransferSimulationTransactionSourceInternalSourceReasonError              ACHTransferSimulationTransactionSourceInternalSourceReason = "error"
@@ -27946,6 +28446,10 @@ func (r ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails)
 }
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -27969,6 +28473,16 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -27979,8 +28493,21 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
 }
 
 func (r ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -29034,6 +29561,241 @@ func (r SimulateDigitalWalletProvisioningForACardParameters) String() (result st
 	return fmt.Sprintf("&SimulateDigitalWalletProvisioningForACardParameters{CardID:%s}", core.FmtP(r.CardID))
 }
 
+type SimulateAnInboundWireDrawdownRequestBeingCreatedParameters struct {
+	// The Account Number to which the recipient of this request is being requested to
+	// send funds from.
+	RecipientAccountNumberID *string `pjson:"recipient_account_number_id"`
+	// The drawdown request's originator's account number.
+	OriginatorAccountNumber *string `pjson:"originator_account_number"`
+	// The drawdown request's originator's routing number.
+	OriginatorRoutingNumber *string `pjson:"originator_routing_number"`
+	// The drawdown request's beneficiary's account number.
+	BeneficiaryAccountNumber *string `pjson:"beneficiary_account_number"`
+	// The drawdown request's beneficiary's routing number.
+	BeneficiaryRoutingNumber *string `pjson:"beneficiary_routing_number"`
+	// The amount being requested in cents.
+	Amount *int64 `pjson:"amount"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
+	// requested. Will always be "USD".
+	Currency *string `pjson:"currency"`
+	// A message from the drawdown request's originator.
+	MessageToRecipient *string `pjson:"message_to_recipient"`
+	// Line 1 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine1 *string `pjson:"originator_to_beneficiary_information_line1"`
+	// Line 2 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine2 *string `pjson:"originator_to_beneficiary_information_line2"`
+	// Line 3 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine3 *string `pjson:"originator_to_beneficiary_information_line3"`
+	// Line 4 of the information conveyed from the originator of the message to the
+	// beneficiary.
+	OriginatorToBeneficiaryInformationLine4 *string `pjson:"originator_to_beneficiary_information_line4"`
+	// The drawdown request's originator's name.
+	OriginatorName *string `pjson:"originator_name"`
+	// Line 1 of the drawdown request's originator's address.
+	OriginatorAddressLine1 *string `pjson:"originator_address_line1"`
+	// Line 2 of the drawdown request's originator's address.
+	OriginatorAddressLine2 *string `pjson:"originator_address_line2"`
+	// Line 3 of the drawdown request's originator's address.
+	OriginatorAddressLine3 *string `pjson:"originator_address_line3"`
+	// The drawdown request's beneficiary's name.
+	BeneficiaryName *string `pjson:"beneficiary_name"`
+	// Line 1 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine1 *string `pjson:"beneficiary_address_line1"`
+	// Line 2 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine2 *string `pjson:"beneficiary_address_line2"`
+	// Line 3 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine3 *string                `pjson:"beneficiary_address_line3"`
+	jsonFields              map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// SimulateAnInboundWireDrawdownRequestBeingCreatedParameters using the internal
+// pjson library. Unrecognized fields are stored in the `Extras` property.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// SimulateAnInboundWireDrawdownRequestBeingCreatedParameters into an array of
+// bytes using the gjson library. Members of the `Extras` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The Account Number to which the recipient of this request is being requested to
+// send funds from.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
+	if r != nil && r.RecipientAccountNumberID != nil {
+		RecipientAccountNumberID = *r.RecipientAccountNumberID
+	}
+	return
+}
+
+// The drawdown request's originator's account number.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
+	if r != nil && r.OriginatorAccountNumber != nil {
+		OriginatorAccountNumber = *r.OriginatorAccountNumber
+	}
+	return
+}
+
+// The drawdown request's originator's routing number.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
+	if r != nil && r.OriginatorRoutingNumber != nil {
+		OriginatorRoutingNumber = *r.OriginatorRoutingNumber
+	}
+	return
+}
+
+// The drawdown request's beneficiary's account number.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
+	if r != nil && r.BeneficiaryAccountNumber != nil {
+		BeneficiaryAccountNumber = *r.BeneficiaryAccountNumber
+	}
+	return
+}
+
+// The drawdown request's beneficiary's routing number.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
+	if r != nil && r.BeneficiaryRoutingNumber != nil {
+		BeneficiaryRoutingNumber = *r.BeneficiaryRoutingNumber
+	}
+	return
+}
+
+// The amount being requested in cents.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetAmount() (Amount int64) {
+	if r != nil && r.Amount != nil {
+		Amount = *r.Amount
+	}
+	return
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
+// requested. Will always be "USD".
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetCurrency() (Currency string) {
+	if r != nil && r.Currency != nil {
+		Currency = *r.Currency
+	}
+	return
+}
+
+// A message from the drawdown request's originator.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetMessageToRecipient() (MessageToRecipient string) {
+	if r != nil && r.MessageToRecipient != nil {
+		MessageToRecipient = *r.MessageToRecipient
+	}
+	return
+}
+
+// Line 1 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine1 != nil {
+		OriginatorToBeneficiaryInformationLine1 = *r.OriginatorToBeneficiaryInformationLine1
+	}
+	return
+}
+
+// Line 2 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine2 != nil {
+		OriginatorToBeneficiaryInformationLine2 = *r.OriginatorToBeneficiaryInformationLine2
+	}
+	return
+}
+
+// Line 3 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine3 != nil {
+		OriginatorToBeneficiaryInformationLine3 = *r.OriginatorToBeneficiaryInformationLine3
+	}
+	return
+}
+
+// Line 4 of the information conveyed from the originator of the message to the
+// beneficiary.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
+	if r != nil && r.OriginatorToBeneficiaryInformationLine4 != nil {
+		OriginatorToBeneficiaryInformationLine4 = *r.OriginatorToBeneficiaryInformationLine4
+	}
+	return
+}
+
+// The drawdown request's originator's name.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorName() (OriginatorName string) {
+	if r != nil && r.OriginatorName != nil {
+		OriginatorName = *r.OriginatorName
+	}
+	return
+}
+
+// Line 1 of the drawdown request's originator's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r != nil && r.OriginatorAddressLine1 != nil {
+		OriginatorAddressLine1 = *r.OriginatorAddressLine1
+	}
+	return
+}
+
+// Line 2 of the drawdown request's originator's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r != nil && r.OriginatorAddressLine2 != nil {
+		OriginatorAddressLine2 = *r.OriginatorAddressLine2
+	}
+	return
+}
+
+// Line 3 of the drawdown request's originator's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r != nil && r.OriginatorAddressLine3 != nil {
+		OriginatorAddressLine3 = *r.OriginatorAddressLine3
+	}
+	return
+}
+
+// The drawdown request's beneficiary's name.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryName() (BeneficiaryName string) {
+	if r != nil && r.BeneficiaryName != nil {
+		BeneficiaryName = *r.BeneficiaryName
+	}
+	return
+}
+
+// Line 1 of the drawdown request's beneficiary's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r != nil && r.BeneficiaryAddressLine1 != nil {
+		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
+	}
+	return
+}
+
+// Line 2 of the drawdown request's beneficiary's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r != nil && r.BeneficiaryAddressLine2 != nil {
+		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
+	}
+	return
+}
+
+// Line 3 of the drawdown request's beneficiary's address.
+func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r != nil && r.BeneficiaryAddressLine3 != nil {
+		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
+	}
+	return
+}
+
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) String() (result string) {
+	return fmt.Sprintf("&SimulateAnInboundWireDrawdownRequestBeingCreatedParameters{RecipientAccountNumberID:%s OriginatorAccountNumber:%s OriginatorRoutingNumber:%s BeneficiaryAccountNumber:%s BeneficiaryRoutingNumber:%s Amount:%s Currency:%s MessageToRecipient:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorName:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s BeneficiaryName:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s}", core.FmtP(r.RecipientAccountNumberID), core.FmtP(r.OriginatorAccountNumber), core.FmtP(r.OriginatorRoutingNumber), core.FmtP(r.BeneficiaryAccountNumber), core.FmtP(r.BeneficiaryRoutingNumber), core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.MessageToRecipient), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3))
+}
+
 type WireTransferSimulation struct {
 	// If the Wire Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
@@ -29709,6 +30471,7 @@ const (
 	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	WireTransferSimulationTransactionSourceCategoryInboundWireReversal                         WireTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
 	WireTransferSimulationTransactionSourceCategoryInboundWireTransfer                         WireTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
+	WireTransferSimulationTransactionSourceCategoryInternalGeneralLedgerTransaction            WireTransferSimulationTransactionSourceCategory = "internal_general_ledger_transaction"
 	WireTransferSimulationTransactionSourceCategoryInternalSource                              WireTransferSimulationTransactionSourceCategory = "internal_source"
 	WireTransferSimulationTransactionSourceCategoryCardRouteRefund                             WireTransferSimulationTransactionSourceCategory = "card_route_refund"
 	WireTransferSimulationTransactionSourceCategoryCardRouteSettlement                         WireTransferSimulationTransactionSourceCategory = "card_route_settlement"
@@ -30407,8 +31170,11 @@ type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The routing number printed on the check.
 	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
+	// check number for business checks.
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
+	// The check serial number, if present, for consumer checks. For business checks,
+	// the serial number is usually in the `auxiliary_on_us` field.
+	SerialNumber *string `pjson:"serial_number"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID *string                `pjson:"check_deposit_id"`
 	jsonFields     map[string]interface{} `pjson:"-,extras"`
@@ -30464,10 +31230,19 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetRouti
 }
 
 // An additional line of metadata printed on the check. This typically includes the
-// check number.
+// check number for business checks.
 func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
 	if r != nil && r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
+	}
+	return
+}
+
+// The check serial number, if present, for consumer checks. For business checks,
+// the serial number is usually in the `auxiliary_on_us` field.
+func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r != nil && r.SerialNumber != nil {
+		SerialNumber = *r.SerialNumber
 	}
 	return
 }
@@ -30481,7 +31256,7 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) GetCheck
 }
 
 func (r WireTransferSimulationTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s SerialNumber:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.SerialNumber), core.FmtP(r.CheckDepositID))
 }
 
 type WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
@@ -32254,6 +33029,7 @@ const (
 type WireTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
+	WireTransferSimulationTransactionSourceInternalSourceReasonBankMigration      WireTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
 	WireTransferSimulationTransactionSourceInternalSourceReasonCashback           WireTransferSimulationTransactionSourceInternalSourceReason = "cashback"
 	WireTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment WireTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
 	WireTransferSimulationTransactionSourceInternalSourceReasonError              WireTransferSimulationTransactionSourceInternalSourceReason = "error"
@@ -33616,6 +34392,10 @@ func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetw
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -33639,6 +34419,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -33649,8 +34439,21 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 }
 
 func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
 
@@ -33675,8 +34478,10 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction 
 	FrontImageFileID *string `pjson:"front_image_file_id"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileID *string                `pjson:"back_image_file_id"`
-	jsonFields      map[string]interface{} `pjson:"-,extras"`
+	BackImageFileID *string `pjson:"back_image_file_id"`
+	// The identifier of the Check Deposit.
+	CheckDepositID *string                `pjson:"check_deposit_id"`
+	jsonFields     map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -33732,8 +34537,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 	return
 }
 
+// The identifier of the Check Deposit.
+func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
+	if r != nil && r.CheckDepositID != nil {
+		CheckDepositID = *r.CheckDepositID
+	}
+	return
+}
+
 func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID))
+	return fmt.Sprintf("&CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction{Amount:%s Currency:%s FrontImageFileID:%s BackImageFileID:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.FrontImageFileID), core.FmtP(r.BackImageFileID), core.FmtP(r.CheckDepositID))
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency string
@@ -34777,6 +35590,10 @@ func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDe
 }
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -34800,6 +35617,16 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -34810,8 +35637,21 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 }
 
 func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
@@ -36289,6 +37129,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalGeneralLedgerTransaction            InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_general_ledger_transaction"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource                              InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_source"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRouteRefund                             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_route_refund"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRouteSettlement                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_route_settlement"
@@ -37005,8 +37846,11 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	// The routing number printed on the check.
 	RoutingNumber *string `pjson:"routing_number"`
 	// An additional line of metadata printed on the check. This typically includes the
-	// check number.
+	// check number for business checks.
 	AuxiliaryOnUs *string `pjson:"auxiliary_on_us"`
+	// The check serial number, if present, for consumer checks. For business checks,
+	// the serial number is usually in the `auxiliary_on_us` field.
+	SerialNumber *string `pjson:"serial_number"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID *string                `pjson:"check_deposit_id"`
 	jsonFields     map[string]interface{} `pjson:"-,extras"`
@@ -37064,10 +37908,19 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 }
 
 // An additional line of metadata printed on the check. This typically includes the
-// check number.
+// check number for business checks.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
 	if r != nil && r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
+	}
+	return
+}
+
+// The check serial number, if present, for consumer checks. For business checks,
+// the serial number is usually in the `auxiliary_on_us` field.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r != nil && r.SerialNumber != nil {
+		SerialNumber = *r.SerialNumber
 	}
 	return
 }
@@ -37081,7 +37934,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 }
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.CheckDepositID))
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance{Amount:%s Currency:%s AccountNumber:%s RoutingNumber:%s AuxiliaryOnUs:%s SerialNumber:%s CheckDepositID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.AccountNumber), core.FmtP(r.RoutingNumber), core.FmtP(r.AuxiliaryOnUs), core.FmtP(r.SerialNumber), core.FmtP(r.CheckDepositID))
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
@@ -38880,6 +39733,7 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason string
 
 const (
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonBankMigration      InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonCashback           InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "cashback"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonError              InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "error"
@@ -39960,6 +40814,10 @@ func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource
 }
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `pjson:"electronic_commerce_indicator"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode *PointOfServiceEntryMode `pjson:"point_of_service_entry_mode"`
@@ -39983,6 +40841,16 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return pjson.Marshal(r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r != nil && r.ElectronicCommerceIndicator != nil {
+		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
+	}
+	return
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
@@ -39993,8 +40861,21 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 }
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{PointOfServiceEntryMode:%s}", core.FmtP(r.PointOfServiceEntryMode))
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa{ElectronicCommerceIndicator:%s PointOfServiceEntryMode:%s}", core.FmtP(r.ElectronicCommerceIndicator), core.FmtP(r.PointOfServiceEntryMode))
 }
+
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                    InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                 InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt_3dsCapableMerchant InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                      InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                     InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency string
 
