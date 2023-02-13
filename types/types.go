@@ -3768,6 +3768,8 @@ type ExternalAccount struct {
 	CreatedAt *string `pjson:"created_at"`
 	// The External Account's description for display purposes.
 	Description *string `pjson:"description"`
+	// The External Account's status.
+	Status *ExternalAccountStatus `pjson:"status"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// The destination account number.
@@ -3820,6 +3822,14 @@ func (r *ExternalAccount) GetDescription() (Description string) {
 	return
 }
 
+// The External Account's status.
+func (r *ExternalAccount) GetStatus() (Status ExternalAccountStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
+}
+
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
 func (r *ExternalAccount) GetRoutingNumber() (RoutingNumber string) {
 	if r != nil && r.RoutingNumber != nil {
@@ -3862,8 +3872,15 @@ func (r *ExternalAccount) GetType() (Type ExternalAccountType) {
 }
 
 func (r ExternalAccount) String() (result string) {
-	return fmt.Sprintf("&ExternalAccount{ID:%s CreatedAt:%s Description:%s RoutingNumber:%s AccountNumber:%s Funding:%s VerificationStatus:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.VerificationStatus), core.FmtP(r.Type))
+	return fmt.Sprintf("&ExternalAccount{ID:%s CreatedAt:%s Description:%s Status:%s RoutingNumber:%s AccountNumber:%s Funding:%s VerificationStatus:%s Type:%s}", core.FmtP(r.ID), core.FmtP(r.CreatedAt), core.FmtP(r.Description), core.FmtP(r.Status), core.FmtP(r.RoutingNumber), core.FmtP(r.AccountNumber), core.FmtP(r.Funding), core.FmtP(r.VerificationStatus), core.FmtP(r.Type))
 }
+
+type ExternalAccountStatus string
+
+const (
+	ExternalAccountStatusActive   ExternalAccountStatus = "active"
+	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
+)
 
 type ExternalAccountFunding string
 
@@ -3961,8 +3978,10 @@ const (
 
 type UpdateAnExternalAccountParameters struct {
 	// The description you choose to give the external account.
-	Description *string                `pjson:"description"`
-	jsonFields  map[string]interface{} `pjson:"-,extras"`
+	Description *string `pjson:"description"`
+	// The status of the External Account.
+	Status     *UpdateAnExternalAccountParametersStatus `pjson:"status"`
+	jsonFields map[string]interface{}                   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -3987,17 +4006,33 @@ func (r *UpdateAnExternalAccountParameters) GetDescription() (Description string
 	return
 }
 
-func (r UpdateAnExternalAccountParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnExternalAccountParameters{Description:%s}", core.FmtP(r.Description))
+// The status of the External Account.
+func (r *UpdateAnExternalAccountParameters) GetStatus() (Status UpdateAnExternalAccountParametersStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
+
+func (r UpdateAnExternalAccountParameters) String() (result string) {
+	return fmt.Sprintf("&UpdateAnExternalAccountParameters{Description:%s Status:%s}", core.FmtP(r.Description), core.FmtP(r.Status))
+}
+
+type UpdateAnExternalAccountParametersStatus string
+
+const (
+	UpdateAnExternalAccountParametersStatusActive   UpdateAnExternalAccountParametersStatus = "active"
+	UpdateAnExternalAccountParametersStatusArchived UpdateAnExternalAccountParametersStatus = "archived"
+)
 
 type ExternalAccountListParams struct {
 	// Return the page of entries after this one.
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                 `query:"limit"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	Limit      *int64                            `query:"limit"`
+	Status     *ExternalAccountsListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccountListParams
@@ -4031,9 +4066,57 @@ func (r *ExternalAccountListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r ExternalAccountListParams) String() (result string) {
-	return fmt.Sprintf("&ExternalAccountListParams{Cursor:%s Limit:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit))
+func (r *ExternalAccountListParams) GetStatus() (Status ExternalAccountsListParamsStatus) {
+	if r != nil && r.Status != nil {
+		Status = *r.Status
+	}
+	return
 }
+
+func (r ExternalAccountListParams) String() (result string) {
+	return fmt.Sprintf("&ExternalAccountListParams{Cursor:%s Limit:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.Status)
+}
+
+type ExternalAccountsListParamsStatus struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In         *[]ExternalAccountsListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}                `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ExternalAccountsListParamsStatus using the internal pjson library. Unrecognized
+// fields are stored in the `Extras` property.
+func (r *ExternalAccountsListParamsStatus) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ExternalAccountsListParamsStatus into an array of bytes
+// using the gjson library. Members of the `Extras` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ExternalAccountsListParamsStatus) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// Return results whose value is in the provided list. For GET requests, this
+// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+func (r *ExternalAccountsListParamsStatus) GetIn() (In []ExternalAccountsListParamsStatusIn) {
+	if r != nil && r.In != nil {
+		In = *r.In
+	}
+	return
+}
+
+func (r ExternalAccountsListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&ExternalAccountsListParamsStatus{In:%s}", core.Fmt(r.In))
+}
+
+type ExternalAccountsListParamsStatusIn string
+
+const (
+	ExternalAccountsListParamsStatusInActive   ExternalAccountsListParamsStatusIn = "active"
+	ExternalAccountsListParamsStatusInArchived ExternalAccountsListParamsStatusIn = "archived"
+)
 
 type ExternalAccountList struct {
 	// The contents of the list.
@@ -6306,8 +6389,8 @@ func (r TransactionSourceEmpyrealCashDeposit) String() (result string) {
 }
 
 type TransactionSourceInboundACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                             *int64                 `pjson:"amount"`
 	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
 	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
@@ -6334,8 +6417,8 @@ func (r *TransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *TransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -6404,8 +6487,8 @@ func (r TransactionSourceInboundACHTransfer) String() (result string) {
 }
 
 type TransactionSourceInboundCheck struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
@@ -6430,8 +6513,8 @@ func (r *TransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *TransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -6485,8 +6568,8 @@ const (
 )
 
 type TransactionSourceInboundInternationalACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                                                 *int64                 `pjson:"amount"`
 	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
 	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
@@ -6541,8 +6624,8 @@ func (r *TransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data [
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *TransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -26137,8 +26220,8 @@ func (r ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (res
 }
 
 type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                             *int64                 `pjson:"amount"`
 	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
 	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
@@ -26166,8 +26249,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON()
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -26236,8 +26319,8 @@ func (r ACHTransferSimulationTransactionSourceInboundACHTransfer) String() (resu
 }
 
 type ACHTransferSimulationTransactionSourceInboundCheck struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
@@ -26263,8 +26346,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (data
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *ACHTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -26318,8 +26401,8 @@ const (
 )
 
 type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                                                 *int64                 `pjson:"amount"`
 	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
 	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
@@ -26375,8 +26458,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -31780,8 +31863,8 @@ func (r WireTransferSimulationTransactionSourceEmpyrealCashDeposit) String() (re
 }
 
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                             *int64                 `pjson:"amount"`
 	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
 	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
@@ -31809,8 +31892,8 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) MarshalJSON(
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -31879,8 +31962,8 @@ func (r WireTransferSimulationTransactionSourceInboundACHTransfer) String() (res
 }
 
 type WireTransferSimulationTransactionSourceInboundCheck struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
@@ -31906,8 +31989,8 @@ func (r *WireTransferSimulationTransactionSourceInboundCheck) MarshalJSON() (dat
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *WireTransferSimulationTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -31961,8 +32044,8 @@ const (
 )
 
 type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                                                 *int64                 `pjson:"amount"`
 	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
 	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
@@ -32018,8 +32101,8 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -38471,8 +38554,8 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyreal
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                             *int64                 `pjson:"amount"`
 	OriginatorCompanyName              *string                `pjson:"originator_company_name"`
 	OriginatorCompanyDescriptiveDate   *string                `pjson:"originator_company_descriptive_date"`
@@ -38502,8 +38585,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -38572,8 +38655,8 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundA
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
@@ -38601,8 +38684,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
@@ -38656,8 +38739,8 @@ const (
 )
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The amount in the minor unit of the destination account currency. For dollars,
+	// for example, this is cents.
 	Amount                                                 *int64                 `pjson:"amount"`
 	ForeignExchangeIndicator                               *string                `pjson:"foreign_exchange_indicator"`
 	ForeignExchangeReferenceIndicator                      *string                `pjson:"foreign_exchange_reference_indicator"`
@@ -38714,8 +38797,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return pjson.Marshal(r)
 }
 
-// The declined amount in the minor unit of the destination account currency. For
-// dollars, for example, this is cents.
+// The amount in the minor unit of the destination account currency. For dollars,
+// for example, this is cents.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
 	if r != nil && r.Amount != nil {
 		Amount = *r.Amount
