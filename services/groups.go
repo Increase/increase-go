@@ -25,7 +25,10 @@ func (r *GroupService) GetDetails(ctx context.Context, opts ...options.RequestOp
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

@@ -26,7 +26,10 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transacti
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *DeclinedTransactionService) List(ctx context.Context, query *types.Decl
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.DeclinedTransactionsPage{
 		Page: &pagination.Page[types.DeclinedTransaction]{
 			Config:  *cfg,

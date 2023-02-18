@@ -30,7 +30,10 @@ func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.R
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -66,7 +72,10 @@ func (r *CardService) Update(ctx context.Context, card_id string, body *types.Up
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -83,7 +92,10 @@ func (r *CardService) List(ctx context.Context, query *types.CardListParams, opt
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.CardsPage{
 		Page: &pagination.Page[types.Card]{
 			Config:  *cfg,
@@ -101,7 +113,10 @@ func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, o
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

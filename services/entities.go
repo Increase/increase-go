@@ -32,7 +32,10 @@ func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParam
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -49,7 +52,10 @@ func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...optio
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -66,7 +72,10 @@ func (r *EntityService) List(ctx context.Context, query *types.EntityListParams,
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.EntitiesPage{
 		Page: &pagination.Page[types.Entity]{
 			Config:  *cfg,

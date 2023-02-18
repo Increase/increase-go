@@ -30,7 +30,10 @@ func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardPro
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, op
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -64,7 +70,10 @@ func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.CardProfilesPage{
 		Page: &pagination.Page[types.CardProfile]{
 			Config:  *cfg,

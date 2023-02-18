@@ -30,7 +30,10 @@ func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAn
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_i
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -66,7 +72,10 @@ func (r *EventSubscriptionService) Update(ctx context.Context, event_subscriptio
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -83,7 +92,10 @@ func (r *EventSubscriptionService) List(ctx context.Context, query *types.EventS
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.EventSubscriptionsPage{
 		Page: &pagination.Page[types.EventSubscription]{
 			Config:  *cfg,

@@ -26,7 +26,10 @@ func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wir
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *typ
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.InboundWireDrawdownRequestsPage{
 		Page: &pagination.Page[types.InboundWireDrawdownRequest]{
 			Config:  *cfg,

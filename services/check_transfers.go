@@ -30,7 +30,10 @@ func (r *CheckTransferService) New(ctx context.Context, body *types.CreateACheck
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -64,7 +70,10 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.CheckTrans
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.CheckTransfersPage{
 		Page: &pagination.Page[types.CheckTransfer]{
 			Config:  *cfg,
@@ -82,7 +91,10 @@ func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id st
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -99,7 +111,10 @@ func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id str
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -116,7 +131,10 @@ func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_i
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

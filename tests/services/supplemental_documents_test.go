@@ -15,7 +15,7 @@ func TestSupplementalDocumentsNew(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		&types.CreateASupplementalDocumentForAnEntityParameters{FileID: increase.P("file_makxrc67oh9l6sg7w9yc")},
 	)
-	if err == nil {
-		t.Fatal("err should not be nil", err)
+	if err != nil {
+		t.Fatal("err should be nil", err)
 	}
 }

@@ -28,7 +28,10 @@ func (r *SimulationsAccountTransferService) Complete(ctx context.Context, accoun
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

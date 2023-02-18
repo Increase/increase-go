@@ -26,7 +26,10 @@ func (r *EventService) Get(ctx context.Context, event_id string, opts ...options
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *EventService) List(ctx context.Context, query *types.EventListParams, o
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.EventsPage{
 		Page: &pagination.Page[types.Event]{
 			Config:  *cfg,

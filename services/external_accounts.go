@@ -30,7 +30,10 @@ func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnEx
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *ExternalAccountService) Get(ctx context.Context, external_account_id st
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -66,7 +72,10 @@ func (r *ExternalAccountService) Update(ctx context.Context, external_account_id
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -83,7 +92,10 @@ func (r *ExternalAccountService) List(ctx context.Context, query *types.External
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.ExternalAccountsPage{
 		Page: &pagination.Page[types.ExternalAccount]{
 			Config:  *cfg,

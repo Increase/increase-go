@@ -30,7 +30,10 @@ func (r *AccountTransferService) New(ctx context.Context, body *types.CreateAnAc
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id st
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -64,7 +70,10 @@ func (r *AccountTransferService) List(ctx context.Context, query *types.AccountT
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.AccountTransfersPage{
 		Page: &pagination.Page[types.AccountTransfer]{
 			Config:  *cfg,
@@ -82,7 +91,10 @@ func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_i
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -99,7 +111,10 @@ func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

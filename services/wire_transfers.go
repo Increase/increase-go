@@ -30,7 +30,10 @@ func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTr
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -47,7 +50,10 @@ func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, 
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -64,7 +70,10 @@ func (r *WireTransferService) List(ctx context.Context, query *types.WireTransfe
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.WireTransfersPage{
 		Page: &pagination.Page[types.WireTransfer]{
 			Config:  *cfg,
@@ -82,7 +91,10 @@ func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id stri
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -99,7 +111,10 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -119,7 +134,10 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -138,7 +156,10 @@ func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id strin
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {

@@ -61,22 +61,13 @@ func getPlatformProperties() map[string]string {
 	}
 }
 
-func NewRequestConfig(ctx context.Context, method string, u *url.URL, body io.ReadCloser, opts ...RequestOption) *RequestConfig {
-	host := ""
-	if u != nil {
-		host = u.Host
+func NewRequestConfig(ctx context.Context, method string, u *url.URL, body io.ReadCloser, opts ...RequestOption) (*RequestConfig, error) {
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), body)
+	if err != nil {
+		return nil, err
 	}
-	req := http.Request{
-		Method: method,
-		URL:    u,
-		Header: http.Header{
-			"User-Agent": []string{"SDK_PackageName/Go 0.0.0"},
-		},
-		Body:       body,
-		Proto:      "HTTP/1.1",
-		ProtoMajor: 1,
-		ProtoMinor: 1,
-		Host:       host,
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
 	}
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
@@ -84,11 +75,11 @@ func NewRequestConfig(ctx context.Context, method string, u *url.URL, body io.Re
 	cfg := RequestConfig{
 		MaxRetries: 0,
 		Context:    ctx,
-		Request:    &req,
+		Request:    req,
 		HTTPClient: http.DefaultClient,
 	}
 	cfg.Apply(opts...)
-	return &cfg
+	return &cfg, nil
 }
 
 type RequestConfig struct {
@@ -254,6 +245,7 @@ func WithResponseInto(dst **http.Response) RequestOption {
 func WithAPIKey(key string) RequestOption {
 	return func(r *RequestConfig) {
 		r.APIKey = key
+		r.Apply(WithHeader("Authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
 	}
 }
 

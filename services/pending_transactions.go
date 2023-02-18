@@ -26,7 +26,10 @@ func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *PendingTransactionService) List(ctx context.Context, query *types.Pendi
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.PendingTransactionsPage{
 		Page: &pagination.Page[types.PendingTransaction]{
 			Config:  *cfg,

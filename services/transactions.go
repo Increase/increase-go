@@ -26,7 +26,10 @@ func (r *TransactionService) Get(ctx context.Context, transaction_id string, opt
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *TransactionService) List(ctx context.Context, query *types.TransactionL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.TransactionsPage{
 		Page: &pagination.Page[types.Transaction]{
 			Config:  *cfg,

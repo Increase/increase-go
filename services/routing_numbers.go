@@ -29,7 +29,10 @@ func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNum
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.RoutingNumbersPage{
 		Page: &pagination.Page[types.RoutingNumber]{
 			Config:  *cfg,

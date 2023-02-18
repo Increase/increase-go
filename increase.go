@@ -3,6 +3,7 @@ package increase
 import (
 	"increase/options"
 	"increase/services"
+	"os"
 )
 
 func P[T any](v T) *T {
@@ -45,7 +46,12 @@ type Increase struct {
 
 func NewIncrease(opts ...options.RequestOption) (r *Increase) {
 	defaults := []options.RequestOption{}
-
+	if o, ok := os.LookupEnv("INCREASE_BASE_URL"); ok {
+		defaults = append(defaults, options.WithBaseURL(o))
+	}
+	if o, ok := os.LookupEnv("INCREASE_API_KEY"); ok {
+		defaults = append(defaults, options.WithAPIKey(o))
+	}
 	opts = append(defaults, opts...)
 
 	r = &Increase{}

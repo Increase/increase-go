@@ -26,7 +26,10 @@ func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id st
 	if err != nil {
 		return
 	}
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	cfg.ResponseBodyInto = &res
 	err = cfg.Execute()
 	if err != nil {
@@ -43,7 +46,10 @@ func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthCon
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	if err != nil {
+		return
+	}
 	res = &types.OauthConnectionsPage{
 		Page: &pagination.Page[types.OauthConnection]{
 			Config:  *cfg,

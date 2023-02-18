@@ -15,7 +15,7 @@ func TestCardDisputesActionWithOptionalParams(t *testing.T) {
 		"card_dispute_h9sc95nbl1cgltpp7men",
 		&types.SimulatesAdvancingTheStateOfACardDisputeParameters{Status: increase.P(types.SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted)},
 	)
-	if err == nil {
-		t.Fatal("err should not be nil", err)
+	if err != nil {
+		t.Fatal("err should be nil", err)
 	}
 }
