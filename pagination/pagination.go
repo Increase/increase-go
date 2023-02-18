@@ -3,10 +3,9 @@ package pagination
 import (
 	"fmt"
 	"increase/core"
+	"increase/core/pjson"
 	"increase/options"
 	"net/http"
-
-	pjson "increase/core/pjson"
 )
 
 type Paginated[T any] interface {
