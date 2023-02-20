@@ -84,7 +84,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 	return
 }
 
-// Approve an ACH Transfer
+// Approves an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id))
@@ -104,7 +104,7 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 	return
 }
 
-// Cancel a pending ACH Transfer
+// Cancels an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id))
