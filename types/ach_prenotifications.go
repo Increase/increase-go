@@ -42,14 +42,15 @@ type ACHPrenotification struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotification using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ACHPrenotification into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *ACHPrenotification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -190,14 +191,14 @@ type ACHPrenotificationPrenotificationReturn struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ACHPrenotificationPrenotificationReturn using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ACHPrenotificationPrenotificationReturn into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationPrenotificationReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -271,14 +272,14 @@ type CreateAnACHPrenotificationParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnACHPrenotificationParameters using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnACHPrenotificationParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnACHPrenotificationParameters into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnACHPrenotificationParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -412,14 +413,14 @@ type ACHPrenotificationListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotificationListParams
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *ACHPrenotificationListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ACHPrenotificationListParams into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -471,14 +472,14 @@ type ACHPrenotificationsListParamsCreatedAt struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ACHPrenotificationsListParamsCreatedAt using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ACHPrenotificationsListParamsCreatedAt into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -532,15 +533,15 @@ type ACHPrenotificationList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotificationList using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHPrenotificationList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ACHPrenotificationList into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

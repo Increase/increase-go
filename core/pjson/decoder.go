@@ -9,17 +9,55 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-type decoder struct {
-	decoderCache sync.Map // map[reflect.Type]decoderFunc
+var decoders sync.Map // map[reflect.Type]decoderFunc
+
+func Unmarshal(raw []byte, to any) error {
+	d := &decoder{}
+	value := reflect.ValueOf(to).Elem()
+	result := gjson.ParseBytes(raw)
+	if !value.IsValid() {
+		return fmt.Errorf("pjson: cannot marshal into invalid value")
+	}
+	return d.typeDecoder(value.Type())(result, value)
 }
+
+type decoder struct{}
 
 type decoderFunc func(node gjson.Result, value reflect.Value) error
 
-type structFieldDecoder struct {
-	parsedStructTag
-	decoderFunc
-	structFieldName string
-	fieldType       reflect.Type
+type decoderField struct {
+	tag parsedStructTag
+	fn  decoderFunc
+	idx []int
+}
+
+func (d *decoder) typeDecoder(t reflect.Type) decoderFunc {
+	if fi, ok := decoders.Load(t); ok {
+		return fi.(decoderFunc)
+	}
+
+	// To deal with recursive types, populate the map with an
+	// indirect func before we build it. This type waits on the
+	// real func (f) to be ready and then calls it. This indirect
+	// func is only used for recursive types.
+	var (
+		wg sync.WaitGroup
+		f  decoderFunc
+	)
+	wg.Add(1)
+	fi, loaded := decoders.LoadOrStore(t, decoderFunc(func(node gjson.Result, v reflect.Value) error {
+		wg.Wait()
+		return f(node, v)
+	}))
+	if loaded {
+		return fi.(decoderFunc)
+	}
+
+	// Compute the real decoder and replace the indirect func with it.
+	f = d.newTypeDecoder(t)
+	wg.Done()
+	decoders.Store(t, f)
+	return f
 }
 
 func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
@@ -30,7 +68,7 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 
 		return func(n gjson.Result, v reflect.Value) error {
 			if !v.IsValid() {
-				return fmt.Errorf("unexpected invalid reflection value %+#v", v)
+				return fmt.Errorf("pjson: unexpected invalid reflection value %+#v", v)
 			}
 
 			newValue := reflect.New(inner).Elem()
@@ -73,7 +111,7 @@ func (d *decoder) newMapDecoder(t reflect.Type) decoderFunc {
 			// always be primitive types so we don't need to decode it using the standard pattern
 			keyValue := reflect.ValueOf(key.Value())
 			if keyValue.Type() != keyType {
-				err = fmt.Errorf("expected key type %v but got %v", keyType, keyValue.Type())
+				err = fmt.Errorf("pjson: expected key type %v but got %v", keyType, keyValue.Type())
 				return false
 			}
 
@@ -90,7 +128,6 @@ func (d *decoder) newMapDecoder(t reflect.Type) decoderFunc {
 		if err != nil {
 			return err
 		}
-
 		value.Set(mapValue)
 		return nil
 	}
@@ -117,77 +154,56 @@ func (d *decoder) newArrayTypeDecoder(t reflect.Type) decoderFunc {
 
 func (d *decoder) newStructTypeDecoder(t reflect.Type) decoderFunc {
 	// map of json field name to struct field decoders
-	fieldDecoders := map[string]structFieldDecoder{}
+	decoderFields := map[string]decoderField{}
+	extraDecoder := (*decoderField)(nil)
 
-	var extraFieldsDecoder structFieldDecoder
-	var extraFieldsItemsDecoderFunc decoderFunc
-	var extraFieldsType reflect.Type
-	var extraFieldsItemsType reflect.Type
-
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		if field.Anonymous {
-			t := field.Type
-			if t.Kind() == reflect.Pointer {
-				t = t.Elem()
-			}
-			if !field.IsExported() && t.Kind() != reflect.Struct {
-				// Ignore embedded fields of unexported non-struct types.
+	// This helper allows us to recursively collect field encoders into a flat
+	// array. The parameter `index` keeps track of the access patterns necessary
+	// to get to some field.
+	var collectFieldDecoders func(r reflect.Type, index []int)
+	collectFieldDecoders = func(r reflect.Type, index []int) {
+		for i := 0; i < r.NumField(); i++ {
+			idx := append(index, i)
+			field := t.FieldByIndex(idx)
+			// If this is an embedded struct, traverse one level deeper to extract
+			// the fields and get their encoders as well.
+			if field.Anonymous {
+				collectFieldDecoders(field.Type, idx)
 				continue
 			}
-			// Do not ignore embedded fields of unexported struct types
-			// since they may have exported fields.
-		}
-
-		tag, ok := field.Tag.Lookup(pjsonStructTag)
-		if !ok {
-			continue
-		}
-
-		decoder := structFieldDecoder{parseStructTag(tag), d.typeDecoder(field.Type), field.Name, field.Type}
-
-		if decoder.storeExtraProperties {
-			if extraFieldsType != nil {
-				panic("Multiple struct fields encountered with the `extra` tag set. Only a single field can be tagged with `extra` at once.")
+			tag, ok := field.Tag.Lookup(pjsonStructTag)
+			if !ok {
+				continue
 			}
-
-			if field.Type.Kind() == reflect.Pointer {
-				extraFieldsType = field.Type.Elem()
-			} else {
-				extraFieldsType = field.Type
+			ptag := parseStructTag(tag)
+			// We only want to support unexported fields if they're tagged with
+			// `extras` because that field shouldn't be part of the public API. We
+			// also want to only keep the top level extras
+			if ptag.storeExtraProperties && len(index) == 0 {
+				extraDecoder = &decoderField{ptag, nil, idx}
+				continue
 			}
-
-			extraFieldsDecoder = decoder
-			extraFieldsItemsType = extraFieldsType.Elem()
-			extraFieldsItemsDecoderFunc = d.typeDecoder(extraFieldsItemsType)
-			continue
+			if ptag.storeExtraProperties || !field.IsExported() {
+				continue
+			}
+			decoderFields[ptag.name] = decoderField{ptag, d.typeDecoder(field.Type), idx}
 		}
-
-		// We only want to support unexported fields if they're tagged with `extras` because
-		// that field shouldn't be part of the public API.
-		if !field.IsExported() {
-			continue
-		}
-
-		fieldDecoders[decoder.name] = decoder
 	}
+	collectFieldDecoders(t, []int{})
 
 	return func(node gjson.Result, value reflect.Value) (err error) {
-		mapNode := node.Map()
-		extraFields := map[string]gjson.Result{}
+		extraFields := JSONExtras{}
 
-		for fieldName, itemNode := range mapNode {
-			decoder, ok := fieldDecoders[fieldName]
+		for fieldName, itemNode := range node.Map() {
+			df, ok := decoderFields[fieldName]
 			if !ok {
-				extraFields[fieldName] = itemNode
+				extraFields[fieldName] = itemNode.Value()
 				continue
 			}
-
-			if decoder.storeExtraProperties {
-				panic("Unexpected field decoder tagged with `extra`")
+			if df.tag.storeExtraProperties {
+				panic("unexpected field decoder tagged with `extra`")
 			}
-
-			err = decoder.decoderFunc(itemNode, value.FieldByName(decoder.structFieldName))
+			err = df.fn(itemNode, value.FieldByIndex(df.idx))
 			if err != nil {
 				return err
 			}
@@ -197,42 +213,12 @@ func (d *decoder) newStructTypeDecoder(t reflect.Type) decoderFunc {
 			return nil
 		}
 
-		mapValue := reflect.MakeMapWithSize(extraFieldsType, len(extraFields))
-
-		// TODO: don't re-implement the map decoder
-		for k, itemNode := range extraFields {
-			keyVal := reflect.ValueOf(k)
-
-			itemValue := reflect.New(extraFieldsItemsType).Elem()
-			err := extraFieldsItemsDecoderFunc(itemNode, itemValue)
-			if err != nil {
-				return err
-			}
-
-			mapValue.SetMapIndex(keyVal, itemValue)
-		}
-
-		// We need to setup a new value like this so that we can safely call `Addr()`
-		newValue := reflect.New(extraFieldsType).Elem()
-		newValue.Set(mapValue)
-
-		fieldValue := makeSetable(value.FieldByName(extraFieldsDecoder.structFieldName))
-		if fieldValue.Kind() == reflect.Pointer {
-			fieldValue.Set(newValue.Addr())
-		} else {
-			fieldValue.Set(newValue)
+		if extraDecoder != nil {
+			makeSetable(value.FieldByIndex(extraDecoder.idx)).Set(reflect.ValueOf(extraFields))
 		}
 
 		return nil
 	}
-}
-
-// Given a reflect.Value that points to an unexported struct field, returns a new reflect.Value
-// that will not panic when v.Set() is called.
-//
-// https://stackoverflow.com/questions/17981651/is-there-any-way-to-access-private-fields-of-a-struct-from-another-package#comment74658463_17982725
-func makeSetable(v reflect.Value) reflect.Value {
-	return reflect.NewAt(v.Type(), unsafe.Pointer(v.UnsafeAddr())).Elem()
 }
 
 func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
@@ -269,38 +255,10 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 	}
 }
 
-func (d *decoder) valueDecoder(v reflect.Value) decoderFunc {
-	if !v.IsValid() {
-		return func(node gjson.Result, value reflect.Value) error { return nil }
-	}
-	return d.typeDecoder(v.Type())
-}
-
-func (d *decoder) typeDecoder(t reflect.Type) decoderFunc {
-	if fi, ok := d.decoderCache.Load(t); ok {
-		return fi.(decoderFunc)
-	}
-
-	// To deal with recursive types, populate the map with an
-	// indirect func before we build it. This type waits on the
-	// real func (f) to be ready and then calls it. This indirect
-	// func is only used for recursive types.
-	var (
-		wg sync.WaitGroup
-		f  decoderFunc
-	)
-	wg.Add(1)
-	fi, loaded := d.decoderCache.LoadOrStore(t, decoderFunc(func(node gjson.Result, v reflect.Value) error {
-		wg.Wait()
-		return f(node, v)
-	}))
-	if loaded {
-		return fi.(decoderFunc)
-	}
-
-	// Compute the real decoder and replace the indirect func with it.
-	f = d.newTypeDecoder(t)
-	wg.Done()
-	d.decoderCache.Store(t, f)
-	return f
+// Given a reflect.Value that points to an unexported struct field, returns a new reflect.Value
+// that will not panic when v.Set() is called.
+//
+// https://stackoverflow.com/questions/17981651/is-there-any-way-to-access-private-fields-of-a-struct-from-another-package#comment74658463_17982725
+func makeSetable(v reflect.Value) reflect.Value {
+	return reflect.NewAt(v.Type(), unsafe.Pointer(v.UnsafeAddr())).Elem()
 }

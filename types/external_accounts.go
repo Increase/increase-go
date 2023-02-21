@@ -32,14 +32,15 @@ type ExternalAccount struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccount using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ExternalAccount into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *ExternalAccount) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -166,14 +167,14 @@ type CreateAnExternalAccountParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnExternalAccountParameters using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *CreateAnExternalAccountParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnExternalAccountParameters into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *CreateAnExternalAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -233,14 +234,14 @@ type UpdateAnExternalAccountParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // UpdateAnExternalAccountParameters using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *UpdateAnExternalAccountParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes UpdateAnExternalAccountParameters into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *UpdateAnExternalAccountParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -283,14 +284,14 @@ type ExternalAccountListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccountListParams
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *ExternalAccountListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ExternalAccountListParams into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *ExternalAccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -333,14 +334,14 @@ type ExternalAccountsListParamsStatus struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ExternalAccountsListParamsStatus using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *ExternalAccountsListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ExternalAccountsListParamsStatus into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *ExternalAccountsListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -374,14 +375,15 @@ type ExternalAccountList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccountList using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *ExternalAccountList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ExternalAccountList into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *ExternalAccountList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

@@ -30,13 +30,13 @@ type Limit struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into Limit using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Limit) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes Limit into an array of bytes using the gjson library.
-// Members of the `Extras` field are serialized into the top-level, and will
+// Members of the `jsonFields` field are serialized into the top-level, and will
 // overwrite known members of the same name.
 func (r *Limit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -165,15 +165,15 @@ type CreateALimitParameters struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into CreateALimitParameters using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CreateALimitParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateALimitParameters into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *CreateALimitParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -240,15 +240,15 @@ type UpdateALimitParameters struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into UpdateALimitParameters using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *UpdateALimitParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes UpdateALimitParameters into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *UpdateALimitParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -286,14 +286,15 @@ type LimitListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into LimitListParams using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *LimitListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes LimitListParams into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *LimitListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -344,13 +345,13 @@ type LimitList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into LimitList using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *LimitList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes LimitList into an array of bytes using the gjson library.
-// Members of the `Extras` field are serialized into the top-level, and will
+// Members of the `jsonFields` field are serialized into the top-level, and will
 // overwrite known members of the same name.
 func (r *LimitList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)

@@ -25,14 +25,15 @@ type RoutingNumber struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumber using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RoutingNumber into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *RoutingNumber) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -129,15 +130,15 @@ type RoutingNumberListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumberListParams using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *RoutingNumberListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RoutingNumberListParams into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *RoutingNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -180,14 +181,15 @@ type RoutingNumberList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumberList using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *RoutingNumberList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RoutingNumberList into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *RoutingNumberList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

@@ -24,14 +24,15 @@ type OauthConnection struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnection using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes OauthConnection into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *OauthConnection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -105,14 +106,14 @@ type OauthConnectionListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnectionListParams
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *OauthConnectionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes OauthConnectionListParams into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *OauthConnectionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -148,14 +149,15 @@ type OauthConnectionList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnectionList using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *OauthConnectionList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes OauthConnectionList into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *OauthConnectionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

@@ -34,14 +34,15 @@ type AccountStatement struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatement using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *AccountStatement) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes AccountStatement into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *AccountStatement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -145,14 +146,14 @@ type AccountStatementListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatementListParams
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *AccountStatementListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes AccountStatementListParams into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *AccountStatementListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -212,13 +213,13 @@ type AccountStatementsListParamsStatementPeriodStart struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // AccountStatementsListParamsStatementPeriodStart using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *AccountStatementsListParamsStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes AccountStatementsListParamsStatementPeriodStart into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *AccountStatementsListParamsStatementPeriodStart) MarshalJSON() (data []byte, err error) {
@@ -274,15 +275,15 @@ type AccountStatementList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatementList using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *AccountStatementList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes AccountStatementList into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *AccountStatementList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

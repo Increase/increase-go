@@ -35,13 +35,13 @@ type Entity struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into Entity using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes Entity into an array of bytes using the gjson library.
-// Members of the `Extras` field are serialized into the top-level, and will
+// Members of the `jsonFields` field are serialized into the top-level, and will
 // overwrite known members of the same name.
 func (r *Entity) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -162,14 +162,15 @@ type EntityCorporation struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporation using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporation into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityCorporation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -244,15 +245,15 @@ type EntityCorporationAddress struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporationAddress
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporationAddress into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *EntityCorporationAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -314,14 +315,14 @@ type EntityCorporationBeneficialOwners struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityCorporationBeneficialOwners using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporationBeneficialOwners into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *EntityCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -368,14 +369,15 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityCorporationBeneficialOwnersIndividual using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporationBeneficialOwnersIndividual into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *EntityCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -433,13 +435,13 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityCorporationBeneficialOwnersIndividualAddress using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporationBeneficialOwnersIndividualAddress into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
@@ -502,15 +504,15 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityCorporationBeneficialOwnersIndividualIdentification using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityCorporationBeneficialOwnersIndividualIdentification
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -566,14 +568,15 @@ type EntityNaturalPerson struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPerson using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityNaturalPerson into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *EntityNaturalPerson) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -630,14 +633,14 @@ type EntityNaturalPersonAddress struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPersonAddress
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityNaturalPersonAddress into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *EntityNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -699,14 +702,14 @@ type EntityNaturalPersonIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityNaturalPersonIdentification using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityNaturalPersonIdentification into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *EntityNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -751,14 +754,15 @@ type EntityJoint struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJoint using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityJoint into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityJoint) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -796,15 +800,15 @@ type EntityJointIndividuals struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividuals using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityJointIndividuals into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *EntityJointIndividuals) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -861,15 +865,15 @@ type EntityJointIndividualsAddress struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividualsAddress
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityJointIndividualsAddress into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *EntityJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -930,14 +934,14 @@ type EntityJointIndividualsIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityJointIndividualsIdentification using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityJointIndividualsIdentification into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *EntityJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -995,14 +999,15 @@ type EntityTrust struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrust using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrust into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityTrust) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1099,14 +1104,15 @@ type EntityTrustAddress struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustAddress using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustAddress into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityTrustAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1166,14 +1172,15 @@ type EntityTrustTrustees struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrustees using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustTrustees into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *EntityTrustTrustees) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1218,15 +1225,15 @@ type EntityTrustTrusteesIndividual struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrusteesIndividual
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustTrusteesIndividual into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *EntityTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1284,14 +1291,14 @@ type EntityTrustTrusteesIndividualAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityTrustTrusteesIndividualAddress using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustTrusteesIndividualAddress into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *EntityTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1352,14 +1359,15 @@ type EntityTrustTrusteesIndividualIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityTrustTrusteesIndividualIdentification using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustTrusteesIndividualIdentification into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *EntityTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1408,14 +1416,15 @@ type EntityTrustGrantor struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantor using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustGrantor into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1472,14 +1481,14 @@ type EntityTrustGrantorAddress struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantorAddress
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustGrantorAddress into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *EntityTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -1541,14 +1550,14 @@ type EntityTrustGrantorIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityTrustGrantorIdentification using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityTrustGrantorIdentification into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *EntityTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1605,14 +1614,14 @@ type EntitySupplementalDocuments struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntitySupplementalDocuments
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntitySupplementalDocuments into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *EntitySupplementalDocuments) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -1657,15 +1666,15 @@ type CreateAnEntityParameters struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into CreateAnEntityParameters
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParameters into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1773,14 +1782,14 @@ type CreateAnEntityParametersCorporation struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporation using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersCorporation) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersCorporation into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersCorporation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1856,14 +1865,15 @@ type CreateAnEntityParametersCorporationAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationAddress using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersCorporationAddress into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *CreateAnEntityParametersCorporationAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1925,13 +1935,13 @@ type CreateAnEntityParametersCorporationBeneficialOwners struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwners using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersCorporationBeneficialOwners into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
@@ -1985,15 +1995,15 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividual struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividual using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividual into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2062,14 +2072,15 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress struct
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
@@ -2141,15 +2152,15 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
@@ -2226,17 +2237,17 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2281,17 +2292,17 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2339,17 +2350,17 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2417,14 +2428,14 @@ type CreateAnEntityParametersNaturalPerson struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPerson using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersNaturalPerson) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersNaturalPerson into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersNaturalPerson) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2493,13 +2504,13 @@ type CreateAnEntityParametersNaturalPersonAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPersonAddress using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersNaturalPersonAddress into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
@@ -2571,13 +2582,13 @@ type CreateAnEntityParametersNaturalPersonIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPersonIdentification using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersNaturalPersonIdentification into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
@@ -2654,15 +2665,15 @@ type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPersonIdentificationPassport using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersNaturalPersonIdentificationPassport into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2707,15 +2718,17 @@ type CreateAnEntityParametersNaturalPersonIdentificationDriversLicense struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPersonIdentificationDriversLicense using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersNaturalPersonIdentificationDriversLicense into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2763,15 +2776,15 @@ type CreateAnEntityParametersNaturalPersonIdentificationOther struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersNaturalPersonIdentificationOther using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersNaturalPersonIdentificationOther
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2822,15 +2835,15 @@ type CreateAnEntityParametersJoint struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into CreateAnEntityParametersJoint
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersJoint) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersJoint into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJoint) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2874,14 +2887,14 @@ type CreateAnEntityParametersJointIndividuals struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividuals using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersJointIndividuals) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersJointIndividuals into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJointIndividuals) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2950,13 +2963,13 @@ type CreateAnEntityParametersJointIndividualsAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividualsAddress using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersJointIndividualsAddress into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
@@ -3028,15 +3041,15 @@ type CreateAnEntityParametersJointIndividualsIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividualsIdentification using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersJointIndividualsIdentification
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3111,15 +3124,16 @@ type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividualsIdentificationPassport using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersJointIndividualsIdentificationPassport into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3164,14 +3178,15 @@ type CreateAnEntityParametersJointIndividualsIdentificationDriversLicense struct
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividualsIdentificationDriversLicense using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersJointIndividualsIdentificationDriversLicense into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -3221,15 +3236,15 @@ type CreateAnEntityParametersJointIndividualsIdentificationOther struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersJointIndividualsIdentificationOther using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersJointIndividualsIdentificationOther into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3296,15 +3311,15 @@ type CreateAnEntityParametersTrust struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into CreateAnEntityParametersTrust
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersTrust) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrust into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrust) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3405,14 +3420,14 @@ type CreateAnEntityParametersTrustAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustAddress using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustAddress into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3473,14 +3488,14 @@ type CreateAnEntityParametersTrustTrustees struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrustees using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustTrustees) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustTrustees into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustTrustees) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3531,13 +3546,13 @@ type CreateAnEntityParametersTrustTrusteesIndividual struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividual using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustTrusteesIndividual into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
@@ -3608,15 +3623,15 @@ type CreateAnEntityParametersTrustTrusteesIndividualAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividualAddress using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustTrusteesIndividualAddress
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3686,15 +3701,15 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividualIdentification using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustTrusteesIndividualIdentification into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3769,14 +3784,15 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struc
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -3823,15 +3839,15 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -3881,15 +3897,17 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3950,14 +3968,14 @@ type CreateAnEntityParametersTrustGrantor struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantor using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustGrantor) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustGrantor into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4026,14 +4044,15 @@ type CreateAnEntityParametersTrustGrantorAddress struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantorAddress using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustGrantorAddress into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *CreateAnEntityParametersTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4103,13 +4122,13 @@ type CreateAnEntityParametersTrustGrantorIdentification struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantorIdentification using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustGrantorIdentification into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
@@ -4186,15 +4205,15 @@ type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantorIdentificationPassport using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustGrantorIdentificationPassport into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4239,15 +4258,17 @@ type CreateAnEntityParametersTrustGrantorIdentificationDriversLicense struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantorIdentificationDriversLicense using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // CreateAnEntityParametersTrustGrantorIdentificationDriversLicense into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4295,15 +4316,15 @@ type CreateAnEntityParametersTrustGrantorIdentificationOther struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersTrustGrantorIdentificationOther using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersTrustGrantorIdentificationOther
-// into an array of bytes using the gjson library. Members of the `Extras` field
-// are serialized into the top-level, and will overwrite known members of the same
-// name.
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
 func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4361,13 +4382,13 @@ type CreateAnEntityParametersSupplementalDocuments struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEntityParametersSupplementalDocuments using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEntityParametersSupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEntityParametersSupplementalDocuments into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *CreateAnEntityParametersSupplementalDocuments) MarshalJSON() (data []byte, err error) {
@@ -4396,14 +4417,15 @@ type EntityListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityListParams using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EntityListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityListParams into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -4438,14 +4460,14 @@ type EntityList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityList using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EntityList into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EntityList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

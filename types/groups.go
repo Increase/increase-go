@@ -23,13 +23,13 @@ type Group struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into Group using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Group) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes Group into an array of bytes using the gjson library.
-// Members of the `Extras` field are serialized into the top-level, and will
+// Members of the `jsonFields` field are serialized into the top-level, and will
 // overwrite known members of the same name.
 func (r *Group) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)

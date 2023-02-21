@@ -32,14 +32,15 @@ type RealTimeDecision struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into RealTimeDecision using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecision into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *RealTimeDecision) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -180,14 +181,14 @@ type RealTimeDecisionCardAuthorization struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // RealTimeDecisionCardAuthorization using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecisionCardAuthorization into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionCardAuthorization) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -329,13 +330,13 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // RealTimeDecisionCardAuthorizationNetworkDetails using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecisionCardAuthorizationNetworkDetails into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) MarshalJSON() (data []byte, err error) {
@@ -367,13 +368,13 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // RealTimeDecisionCardAuthorizationNetworkDetailsVisa using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecisionCardAuthorizationNetworkDetailsVisa into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
@@ -440,14 +441,14 @@ type RealTimeDecisionDigitalWalletToken struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // RealTimeDecisionDigitalWalletToken using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecisionDigitalWalletToken into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *RealTimeDecisionDigitalWalletToken) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -526,14 +527,15 @@ type RealTimeDecisionDigitalWalletAuthentication struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // RealTimeDecisionDigitalWalletAuthentication using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes RealTimeDecisionDigitalWalletAuthentication into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *RealTimeDecisionDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -641,14 +643,14 @@ type ActionARealTimeDecisionParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParameters using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ActionARealTimeDecisionParameters into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *ActionARealTimeDecisionParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -692,13 +694,13 @@ type ActionARealTimeDecisionParametersCardAuthorization struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParametersCardAuthorization using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParametersCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ActionARealTimeDecisionParametersCardAuthorization into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *ActionARealTimeDecisionParametersCardAuthorization) MarshalJSON() (data []byte, err error) {
@@ -736,13 +738,13 @@ type ActionARealTimeDecisionParametersDigitalWalletToken struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParametersDigitalWalletToken using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParametersDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes ActionARealTimeDecisionParametersDigitalWalletToken into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *ActionARealTimeDecisionParametersDigitalWalletToken) MarshalJSON() (data []byte, err error) {
@@ -785,15 +787,15 @@ type ActionARealTimeDecisionParametersDigitalWalletTokenApproval struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParametersDigitalWalletTokenApproval using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // ActionARealTimeDecisionParametersDigitalWalletTokenApproval into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -837,15 +839,15 @@ type ActionARealTimeDecisionParametersDigitalWalletTokenDecline struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParametersDigitalWalletTokenDecline using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // ActionARealTimeDecisionParametersDigitalWalletTokenDecline into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -871,15 +873,15 @@ type ActionARealTimeDecisionParametersDigitalWalletAuthentication struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // ActionARealTimeDecisionParametersDigitalWalletAuthentication using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // ActionARealTimeDecisionParametersDigitalWalletAuthentication into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

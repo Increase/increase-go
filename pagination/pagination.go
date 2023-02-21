@@ -34,14 +34,15 @@ type PageResponse[T interface{}] struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *PageResponse[T]) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes PageResponse[T] into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *PageResponse[T]) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

@@ -116,17 +116,28 @@ func TestPrimitivePointerStruct(t *testing.T) {
 }
 
 type StructWithExtraProperties struct {
-	A      bool                   `pjson:"a"`
-	Extras map[string]interface{} `pjson:"-,extras"`
+	A      bool       `pjson:"a"`
+	Extras JSONExtras `pjson:"-,extras"`
 }
 
 func TestStructExtraProperties(t *testing.T) {
-	assertDecode(t, []byte("{\"a\": true, \"foo\": true}"), StructWithExtraProperties{A: true, Extras: map[string]interface{}{"foo": true}})
-	assertDecode(t, []byte("{\"a\": true, \"foo\": true, \"bar\": \"value\"}"), StructWithExtraProperties{A: true, Extras: map[string]interface{}{"foo": true, "bar": "value"}})
+	obj1 := StructWithExtraProperties{
+		A:      true,
+		Extras: JSONExtras{"foo": true},
+	}
+	assertDecode(t, []byte("{\"a\": true, \"foo\": true}"), obj1)
+	obj2 := StructWithExtraProperties{
+		A: true,
+		Extras: JSONExtras{
+			"bar": "value",
+			"foo": true,
+		},
+	}
+	assertDecode(t, []byte("{\"a\": true, \"foo\": true, \"bar\": \"value\"}"), obj2)
 }
 
 func TestDecodeMap(t *testing.T) {
-	assertError[map[int]string](t, []byte("{\"foo\": \"bar\", \"baz\": \"hello\"}"), "expected key type int but got string")
+	assertError[map[int]string](t, []byte("{\"foo\": \"bar\", \"baz\": \"hello\"}"), "pjson: expected key type int but got string")
 	assertDecode(t, []byte("{\"foo\": \"bar\"}"), map[string]string{"foo": "bar"})
 }
 
@@ -145,15 +156,15 @@ func TestRecursiveStruct(t *testing.T) {
 }
 
 type StructWithPrivateExtrasField struct {
-	A          *int                    `pjson:"number"`
-	jsonFields *map[string]interface{} `pjson:"-,extras"`
+	A          *int       `pjson:"number"`
+	jsonFields JSONExtras `pjson:"-,extras"`
 }
 
 func TestPrivateExtrasField(t *testing.T) {
-	expect := StructWithPrivateExtrasField{A: pointers.P(100), jsonFields: &map[string]interface{}{"foo": true}}
+	expect := StructWithPrivateExtrasField{A: pointers.P(100), jsonFields: JSONExtras{"foo": true}}
 	assertDecode(t, []byte("{\"number\": 100, \"foo\": true}"), expect)
 
-	extras := *expect.jsonFields
+	extras := expect.jsonFields
 	if extras["foo"] != true {
 		t.Errorf("Expected extras[\"foo\"] to be true but got %v", extras["foo"])
 	}
@@ -162,4 +173,16 @@ func TestPrivateExtrasField(t *testing.T) {
 func TestStringCoercion(t *testing.T) {
 	assertDecode(t, []byte("65"), "65")
 	assertDecode(t, []byte("\"65\""), "65")
+}
+
+func TestStructWithEmbeddedDecode(t *testing.T) {
+	assertDecode(t, []byte(`{"number":32,"x1":"hi","number2":5,"x2":"yo"}`), StructWithEmbedded{
+		StructWithPrivateExtrasField: StructWithPrivateExtrasField{A: pointers.P(32)},
+
+		A: pointers.P(5),
+		jsonFields: JSONExtras{
+			"x1": "hi",
+			"x2": "yo",
+		},
+	})
 }

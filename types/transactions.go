@@ -43,14 +43,15 @@ type Transaction struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into Transaction using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes Transaction into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *Transaction) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -275,14 +276,15 @@ type TransactionSource struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionSource using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSource into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *TransactionSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -665,14 +667,15 @@ type TransactionSourceAccountTransferIntention struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceAccountTransferIntention using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceAccountTransferIntention into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *TransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -753,14 +756,15 @@ type TransactionSourceACHCheckConversionReturn struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceACHCheckConversionReturn using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceACHCheckConversionReturn into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *TransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -797,14 +801,14 @@ type TransactionSourceACHCheckConversion struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceACHCheckConversion using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceACHCheckConversion into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -844,14 +848,14 @@ type TransactionSourceACHTransferIntention struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceACHTransferIntention using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceACHTransferIntention into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -906,14 +910,14 @@ type TransactionSourceACHTransferRejection struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceACHTransferRejection using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceACHTransferRejection into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -945,14 +949,14 @@ type TransactionSourceACHTransferReturn struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceACHTransferReturn using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceACHTransferReturn into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1036,14 +1040,14 @@ type TransactionSourceCardDisputeAcceptance struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCardDisputeAcceptance using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCardDisputeAcceptance into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1094,14 +1098,14 @@ type TransactionSourceCardRefund struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionSourceCardRefund
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCardRefund into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -1190,14 +1194,14 @@ type TransactionSourceCardSettlement struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCardSettlement using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCardSettlement into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1334,14 +1338,14 @@ type TransactionSourceCheckDepositAcceptance struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckDepositAcceptance using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckDepositAcceptance into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1442,14 +1446,14 @@ type TransactionSourceCheckDepositReturn struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckDepositReturn using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckDepositReturn into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1561,14 +1565,14 @@ type TransactionSourceCheckTransferIntention struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckTransferIntention using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckTransferIntention into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1671,14 +1675,14 @@ type TransactionSourceCheckTransferReturn struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckTransferReturn using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckTransferReturn into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1711,14 +1715,14 @@ type TransactionSourceCheckTransferRejection struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckTransferRejection using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckTransferRejection into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1750,13 +1754,13 @@ type TransactionSourceCheckTransferStopPaymentRequest struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCheckTransferStopPaymentRequest using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCheckTransferStopPaymentRequest into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *TransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error) {
@@ -1820,14 +1824,14 @@ type TransactionSourceDisputeResolution struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceDisputeResolution using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceDisputeResolution into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceDisputeResolution) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1884,14 +1888,14 @@ type TransactionSourceEmpyrealCashDeposit struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceEmpyrealCashDeposit using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceEmpyrealCashDeposit into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -1940,14 +1944,14 @@ type TransactionSourceInboundACHTransfer struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundACHTransfer using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundACHTransfer into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2035,15 +2039,15 @@ type TransactionSourceInboundCheck struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionSourceInboundCheck
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundCheck into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2146,13 +2150,13 @@ type TransactionSourceInboundInternationalACHTransfer struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundInternationalACHTransfer using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundInternationalACHTransfer into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *TransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data []byte, err error) {
@@ -2441,15 +2445,15 @@ type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundRealTimePaymentsTransferConfirmation using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // TransactionSourceInboundRealTimePaymentsTransferConfirmation into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2561,13 +2565,13 @@ type TransactionSourceInboundWireDrawdownPaymentReversal struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundWireDrawdownPaymentReversal using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundWireDrawdownPaymentReversal into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *TransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (data []byte, err error) {
@@ -2679,14 +2683,15 @@ type TransactionSourceInboundWireDrawdownPayment struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundWireDrawdownPayment using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundWireDrawdownPayment into an array
-// of bytes using the gjson library. Members of the `Extras` field are serialized
-// into the top-level, and will overwrite known members of the same name.
+// of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
 func (r *TransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2819,14 +2824,14 @@ type TransactionSourceInboundWireReversal struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundWireReversal using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundWireReversal into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -2957,14 +2962,14 @@ type TransactionSourceInboundWireTransfer struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInboundWireTransfer using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInboundWireTransfer into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3107,14 +3112,14 @@ type TransactionSourceInternalSource struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceInternalSource using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceInternalSource into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceInternalSource) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3191,14 +3196,14 @@ type TransactionSourceCardRouteRefund struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCardRouteRefund using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCardRouteRefund into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3296,14 +3301,14 @@ type TransactionSourceCardRouteSettlement struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceCardRouteSettlement using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceCardRouteSettlement into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3390,14 +3395,14 @@ type TransactionSourceSampleFunds struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionSourceSampleFunds
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *TransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceSampleFunds into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -3427,13 +3432,13 @@ type TransactionSourceWireDrawdownPaymentIntention struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceWireDrawdownPaymentIntention using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceWireDrawdownPaymentIntention into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *TransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []byte, err error) {
@@ -3487,13 +3492,13 @@ type TransactionSourceWireDrawdownPaymentRejection struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceWireDrawdownPaymentRejection using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceWireDrawdownPaymentRejection into an
-// array of bytes using the gjson library. Members of the `Extras` field are
+// array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *TransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []byte, err error) {
@@ -3526,14 +3531,14 @@ type TransactionSourceWireTransferIntention struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceWireTransferIntention using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceWireTransferIntention into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3588,14 +3593,14 @@ type TransactionSourceWireTransferRejection struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionSourceWireTransferRejection using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *TransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionSourceWireTransferRejection into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *TransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3633,15 +3638,15 @@ type TransactionListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionListParams using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *TransactionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionListParams into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *TransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3715,14 +3720,14 @@ type TransactionsListParamsCreatedAt struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionsListParamsCreatedAt using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *TransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionsListParamsCreatedAt into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3776,14 +3781,14 @@ type TransactionsListParamsCategory struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // TransactionsListParamsCategory using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *TransactionsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionsListParamsCategory into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *TransactionsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -3851,14 +3856,15 @@ type TransactionList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionList using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *TransactionList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes TransactionList into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *TransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

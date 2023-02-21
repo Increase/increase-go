@@ -58,15 +58,15 @@ type SimulateAnInboundWireDrawdownRequestBeingCreatedParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // SimulateAnInboundWireDrawdownRequestBeingCreatedParameters using the internal
-// pjson library. Unrecognized fields are stored in the `Extras` property.
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes
 // SimulateAnInboundWireDrawdownRequestBeingCreatedParameters into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

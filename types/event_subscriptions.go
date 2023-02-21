@@ -28,14 +28,15 @@ type EventSubscription struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscription using the
-// internal pjson library. Unrecognized fields are stored in the `Extras` property.
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
 func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EventSubscription into an array of bytes using the gjson
-// library. Members of the `Extras` field are serialized into the top-level, and
-// will overwrite known members of the same name.
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
 func (r *EventSubscription) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -182,14 +183,14 @@ type CreateAnEventSubscriptionParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // CreateAnEventSubscriptionParameters using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *CreateAnEventSubscriptionParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes CreateAnEventSubscriptionParameters into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *CreateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -283,14 +284,14 @@ type UpdateAnEventSubscriptionParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // UpdateAnEventSubscriptionParameters using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *UpdateAnEventSubscriptionParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes UpdateAnEventSubscriptionParameters into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *UpdateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -325,14 +326,14 @@ type EventSubscriptionListParams struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscriptionListParams
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *EventSubscriptionListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EventSubscriptionListParams into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *EventSubscriptionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -368,15 +369,15 @@ type EventSubscriptionList struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscriptionList using
-// the internal pjson library. Unrecognized fields are stored in the `Extras`
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EventSubscriptionList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes EventSubscriptionList into an array of bytes using the
-// gjson library. Members of the `Extras` field are serialized into the top-level,
-// and will overwrite known members of the same name.
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
 func (r *EventSubscriptionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

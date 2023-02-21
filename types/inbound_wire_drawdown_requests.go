@@ -63,14 +63,14 @@ type InboundWireDrawdownRequest struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundWireDrawdownRequest
-// using the internal pjson library. Unrecognized fields are stored in the `Extras`
-// property.
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
 func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes InboundWireDrawdownRequest into an array of bytes using
-// the gjson library. Members of the `Extras` field are serialized into the
+// the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
 func (r *InboundWireDrawdownRequest) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
@@ -280,14 +280,14 @@ type InboundWireDrawdownRequestListParams struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // InboundWireDrawdownRequestListParams using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundWireDrawdownRequestListParams) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes InboundWireDrawdownRequestListParams into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *InboundWireDrawdownRequestListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -323,14 +323,14 @@ type InboundWireDrawdownRequestList struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // InboundWireDrawdownRequestList using the internal pjson library. Unrecognized
-// fields are stored in the `Extras` property.
+// fields are stored in the `jsonFields` property.
 func (r *InboundWireDrawdownRequestList) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes InboundWireDrawdownRequestList into an array of bytes
-// using the gjson library. Members of the `Extras` field are serialized into the
-// top-level, and will overwrite known members of the same name.
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
 func (r *InboundWireDrawdownRequestList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }

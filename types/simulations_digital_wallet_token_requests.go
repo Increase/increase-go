@@ -21,14 +21,14 @@ type DigitalWalletTokenRequestCreateResponse struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // DigitalWalletTokenRequestCreateResponse using the internal pjson library.
-// Unrecognized fields are stored in the `Extras` property.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes DigitalWalletTokenRequestCreateResponse into an array of
-// bytes using the gjson library. Members of the `Extras` field are serialized into
-// the top-level, and will overwrite known members of the same name.
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
 func (r *DigitalWalletTokenRequestCreateResponse) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
@@ -87,13 +87,13 @@ type SimulateDigitalWalletProvisioningForACardParameters struct {
 
 // UnmarshalJSON deserializes the provided bytes into
 // SimulateDigitalWalletProvisioningForACardParameters using the internal pjson
-// library. Unrecognized fields are stored in the `Extras` property.
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *SimulateDigitalWalletProvisioningForACardParameters) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
 // MarshalJSON serializes SimulateDigitalWalletProvisioningForACardParameters into
-// an array of bytes using the gjson library. Members of the `Extras` field are
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r *SimulateDigitalWalletProvisioningForACardParameters) MarshalJSON() (data []byte, err error) {
