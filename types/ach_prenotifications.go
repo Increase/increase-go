@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type ACHPrenotification struct {
@@ -426,6 +428,12 @@ func (r *ACHPrenotificationListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes ACHPrenotificationListParams into a url.Values of the query
+// parameters associated with this value
+func (r *ACHPrenotificationListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *ACHPrenotificationListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -482,6 +490,12 @@ func (r *ACHPrenotificationsListParamsCreatedAt) UnmarshalJSON(data []byte) (err
 // into the top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes ACHPrenotificationsListParamsCreatedAt into a url.Values of
+// the query parameters associated with this value
+func (r *ACHPrenotificationsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -544,6 +558,12 @@ func (r *ACHPrenotificationList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *ACHPrenotificationList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes ACHPrenotificationList into a url.Values of the query
+// parameters associated with this value
+func (r *ACHPrenotificationList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

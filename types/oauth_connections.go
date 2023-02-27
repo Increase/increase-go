@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type OauthConnection struct {
@@ -119,6 +121,12 @@ func (r *OauthConnectionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes OauthConnectionListParams into a url.Values of the query
+// parameters associated with this value
+func (r *OauthConnectionListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *OauthConnectionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -160,6 +168,12 @@ func (r *OauthConnectionList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *OauthConnectionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes OauthConnectionList into a url.Values of the query
+// parameters associated with this value
+func (r *OauthConnectionList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

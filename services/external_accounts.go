@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewExternalAccountService(opts ...options.RequestOption) (r *ExternalAccoun
 // Create an External Account
 func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnExternalAccountParameters, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("external_accounts"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *ExternalAccountService) New(ctx context.Context, body *types.CreateAnEx
 // Retrieve an External Account
 func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("external_accounts/%s", external_account_id))
 	if err != nil {
 		return
@@ -66,13 +63,11 @@ func (r *ExternalAccountService) Get(ctx context.Context, external_account_id st
 // Update an External Account
 func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *types.UpdateAnExternalAccountParameters, opts ...options.RequestOption) (res *types.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("external_accounts/%s", external_account_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -92,7 +87,7 @@ func (r *ExternalAccountService) List(ctx context.Context, query *types.External
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

@@ -22,6 +22,7 @@ func NewInboundWireDrawdownRequestService(opts ...options.RequestOption) (r *Inb
 // Retrieve an Inbound Wire Drawdown Request
 func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wire_drawdown_request_id string, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("inbound_wire_drawdown_requests/%s", inbound_wire_drawdown_request_id))
 	if err != nil {
 		return
@@ -46,7 +47,7 @@ func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *typ
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewACHPrenotificationService(opts ...options.RequestOption) (r *ACHPrenotif
 // Create an ACH Prenotification
 func (r *ACHPrenotificationService) New(ctx context.Context, body *types.CreateAnACHPrenotificationParameters, opts ...options.RequestOption) (res *types.ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("ach_prenotifications"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body *types.CreateA
 // Retrieve an ACH Prenotification
 func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification_id string, opts ...options.RequestOption) (res *types.ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_prenotifications/%s", ach_prenotification_id))
 	if err != nil {
 		return
@@ -70,7 +67,7 @@ func (r *ACHPrenotificationService) List(ctx context.Context, query *types.ACHPr
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

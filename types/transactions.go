@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Transaction struct {
@@ -3651,6 +3653,12 @@ func (r *TransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes TransactionListParams into a url.Values of the query
+// parameters associated with this value
+func (r *TransactionListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *TransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -3732,6 +3740,12 @@ func (r *TransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error)
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes TransactionsListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *TransactionsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *TransactionsListParamsCreatedAt) GetAfter() (After string) {
@@ -3791,6 +3805,12 @@ func (r *TransactionsListParamsCategory) UnmarshalJSON(data []byte) (err error) 
 // the top-level, and will overwrite known members of the same name.
 func (r *TransactionsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes TransactionsListParamsCategory into a url.Values of the
+// query parameters associated with this value
+func (r *TransactionsListParamsCategory) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -3867,6 +3887,12 @@ func (r *TransactionList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *TransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes TransactionList into a url.Values of the query parameters
+// associated with this value
+func (r *TransactionList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

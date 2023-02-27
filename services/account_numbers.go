@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewAccountNumberService(opts ...options.RequestOption) (r *AccountNumberSer
 // Create an Account Number
 func (r *AccountNumberService) New(ctx context.Context, body *types.CreateAnAccountNumberParameters, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("account_numbers"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *AccountNumberService) New(ctx context.Context, body *types.CreateAnAcco
 // Retrieve an Account Number
 func (r *AccountNumberService) Get(ctx context.Context, account_number_id string, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("account_numbers/%s", account_number_id))
 	if err != nil {
 		return
@@ -66,13 +63,11 @@ func (r *AccountNumberService) Get(ctx context.Context, account_number_id string
 // Update an Account Number
 func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *types.UpdateAnAccountNumberParameters, opts ...options.RequestOption) (res *types.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("account_numbers/%s", account_number_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -92,7 +87,7 @@ func (r *AccountNumberService) List(ctx context.Context, query *types.AccountNum
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

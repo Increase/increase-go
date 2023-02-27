@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewEventSubscriptionService(opts ...options.RequestOption) (r *EventSubscri
 // Create an Event Subscription
 func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAnEventSubscriptionParameters, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("event_subscriptions"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *EventSubscriptionService) New(ctx context.Context, body *types.CreateAn
 // Retrieve an Event Subscription
 func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_id string, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("event_subscriptions/%s", event_subscription_id))
 	if err != nil {
 		return
@@ -66,13 +63,11 @@ func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_i
 // Update an Event Subscription
 func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *types.UpdateAnEventSubscriptionParameters, opts ...options.RequestOption) (res *types.EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("event_subscriptions/%s", event_subscription_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -92,7 +87,7 @@ func (r *EventSubscriptionService) List(ctx context.Context, query *types.EventS
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewWireDrawdownRequestService(opts ...options.RequestOption) (r *WireDrawdo
 // Create a Wire Drawdown Request
 func (r *WireDrawdownRequestService) New(ctx context.Context, body *types.CreateAWireDrawdownRequestParameters, opts ...options.RequestOption) (res *types.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("wire_drawdown_requests"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *WireDrawdownRequestService) New(ctx context.Context, body *types.Create
 // Retrieve a Wire Drawdown Request
 func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...options.RequestOption) (res *types.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id))
 	if err != nil {
 		return
@@ -70,7 +67,7 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.Wire
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

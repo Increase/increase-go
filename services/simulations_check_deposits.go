@@ -23,6 +23,7 @@ func NewSimulationsCheckDepositService(opts ...options.RequestOption) (r *Simula
 // of `pending`.
 func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/reject", check_deposit_id))
 	if err != nil {
 		return
@@ -44,6 +45,7 @@ func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_depos
 // Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/submit", check_deposit_id))
 	if err != nil {
 		return

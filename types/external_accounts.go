@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type ExternalAccount struct {
@@ -297,6 +299,12 @@ func (r *ExternalAccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes ExternalAccountListParams into a url.Values of the query
+// parameters associated with this value
+func (r *ExternalAccountListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *ExternalAccountListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -346,6 +354,12 @@ func (r *ExternalAccountsListParamsStatus) MarshalJSON() (data []byte, err error
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes ExternalAccountsListParamsStatus into a url.Values of the
+// query parameters associated with this value
+func (r *ExternalAccountsListParamsStatus) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *ExternalAccountsListParamsStatus) GetIn() (In []ExternalAccountsListParamsStatusIn) {
@@ -386,6 +400,12 @@ func (r *ExternalAccountList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *ExternalAccountList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes ExternalAccountList into a url.Values of the query
+// parameters associated with this value
+func (r *ExternalAccountList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

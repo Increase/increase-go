@@ -22,6 +22,7 @@ func NewTransactionService(opts ...options.RequestOption) (r *TransactionService
 // Retrieve a Transaction
 func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...options.RequestOption) (res *types.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("transactions/%s", transaction_id))
 	if err != nil {
 		return
@@ -46,7 +47,7 @@ func (r *TransactionService) List(ctx context.Context, query *types.TransactionL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewCheckTransferService(opts ...options.RequestOption) (r *CheckTransferSer
 // Create a Check Transfer
 func (r *CheckTransferService) New(ctx context.Context, body *types.CreateACheckTransferParameters, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("check_transfers"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *CheckTransferService) New(ctx context.Context, body *types.CreateACheck
 // Retrieve a Check Transfer
 func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("check_transfers/%s", check_transfer_id))
 	if err != nil {
 		return
@@ -70,7 +67,7 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.CheckTrans
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}
@@ -87,6 +84,7 @@ func (r *CheckTransferService) List(ctx context.Context, query *types.CheckTrans
 // Approve a Check Transfer
 func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("check_transfers/%s/approve", check_transfer_id))
 	if err != nil {
 		return
@@ -107,6 +105,7 @@ func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id st
 // Cancel a pending Check Transfer
 func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("check_transfers/%s/cancel", check_transfer_id))
 	if err != nil {
 		return
@@ -127,6 +126,7 @@ func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id str
 // Request a stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("check_transfers/%s/stop_payment", check_transfer_id))
 	if err != nil {
 		return

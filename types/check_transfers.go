@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type CheckTransfer struct {
@@ -802,6 +804,12 @@ func (r *CheckTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CheckTransferListParams into a url.Values of the query
+// parameters associated with this value
+func (r *CheckTransferListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *CheckTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -868,6 +876,12 @@ func (r *CheckTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err erro
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CheckTransfersListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *CheckTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
@@ -928,6 +942,12 @@ func (r *CheckTransferList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CheckTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes CheckTransferList into a url.Values of the query parameters
+// associated with this value
+func (r *CheckTransferList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

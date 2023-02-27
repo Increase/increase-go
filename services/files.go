@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -26,13 +24,11 @@ func NewFileService(opts ...options.RequestOption) (r *FileService) {
 // upload, as well as the parameters for creating a file.
 func (r *FileService) New(ctx context.Context, body *types.CreateAFileParameters, opts ...options.RequestOption) (res *types.File, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("files"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -48,6 +44,7 @@ func (r *FileService) New(ctx context.Context, body *types.CreateAFileParameters
 // Retrieve a File
 func (r *FileService) Get(ctx context.Context, file_id string, opts ...options.RequestOption) (res *types.File, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("files/%s", file_id))
 	if err != nil {
 		return
@@ -72,7 +69,7 @@ func (r *FileService) List(ctx context.Context, query *types.FileListParams, opt
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

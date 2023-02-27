@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type RoutingNumber struct {
@@ -143,6 +145,12 @@ func (r *RoutingNumberListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes RoutingNumberListParams into a url.Values of the query
+// parameters associated with this value
+func (r *RoutingNumberListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *RoutingNumberListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -192,6 +200,12 @@ func (r *RoutingNumberList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *RoutingNumberList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes RoutingNumberList into a url.Values of the query parameters
+// associated with this value
+func (r *RoutingNumberList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

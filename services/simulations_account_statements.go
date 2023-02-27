@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewSimulationsAccountStatementService(opts ...options.RequestOption) (r *Si
 // account. In production, Account Statements are generated once per month.
 func (r *SimulationsAccountStatementService) New(ctx context.Context, body *types.SimulateAnAccountStatementBeingCreatedParameters, opts ...options.RequestOption) (res *types.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/account_statements"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

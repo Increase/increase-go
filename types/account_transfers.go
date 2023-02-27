@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type AccountTransfer struct {
@@ -393,6 +395,12 @@ func (r *AccountTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes AccountTransferListParams into a url.Values of the query
+// parameters associated with this value
+func (r *AccountTransferListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *AccountTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -459,6 +467,12 @@ func (r *AccountTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes AccountTransfersListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *AccountTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
@@ -519,6 +533,12 @@ func (r *AccountTransferList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *AccountTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes AccountTransferList into a url.Values of the query
+// parameters associated with this value
+func (r *AccountTransferList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

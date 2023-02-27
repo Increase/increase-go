@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type EventSubscription struct {
@@ -339,6 +341,12 @@ func (r *EventSubscriptionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes EventSubscriptionListParams into a url.Values of the query
+// parameters associated with this value
+func (r *EventSubscriptionListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *EventSubscriptionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -380,6 +388,12 @@ func (r *EventSubscriptionList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EventSubscriptionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes EventSubscriptionList into a url.Values of the query
+// parameters associated with this value
+func (r *EventSubscriptionList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

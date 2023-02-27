@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewSimulationsInboundWireDrawdownRequestService(opts ...options.RequestOpti
 // [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
 func (r *SimulationsInboundWireDrawdownRequestService) New(ctx context.Context, body *types.SimulateAnInboundWireDrawdownRequestBeingCreatedParameters, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/inbound_wire_drawdown_requests"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

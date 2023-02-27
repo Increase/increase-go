@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"increase/core"
+	"increase/core/query"
 	"io"
 	"log"
 	"net/http"
@@ -61,12 +62,24 @@ func getPlatformProperties() map[string]string {
 	}
 }
 
-func NewRequestConfig(ctx context.Context, method string, u *url.URL, body io.ReadCloser, opts ...RequestOption) (*RequestConfig, error) {
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), body)
+func NewRequestConfig(ctx context.Context, method string, u *url.URL, body interface{}, opts ...RequestOption) (*RequestConfig, error) {
+	var reader io.ReadCloser
+	if body, ok := body.(json.Marshaler); ok {
+		b, err := body.MarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		reader = io.NopCloser(bytes.NewBuffer(b))
+	}
+	if body, ok := body.(query.Queryer); ok {
+		u.RawQuery = body.URLQuery().Encode()
+	}
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), reader)
 	if err != nil {
 		return nil, err
 	}
-	if body != nil {
+	req.Header.Set("Accept", "application/json")
+	if reader != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
 	for k, v := range getPlatformProperties() {
@@ -131,6 +144,9 @@ func (cfg *RequestConfig) Execute() error {
 		switch dst := cfg.ResponseBodyInto.(type) {
 		case *string:
 			*dst = string(contents)
+		case **string:
+			tmp := string(contents)
+			*dst = &tmp
 		case *[]byte:
 			*dst = contents
 		default:
@@ -139,9 +155,6 @@ func (cfg *RequestConfig) Execute() error {
 		return nil
 	}
 
-	if cfg.ResponseBodyInto == nil {
-		return nil
-	}
 	err = json.NewDecoder(bytes.NewReader(contents)).Decode(cfg.ResponseBodyInto)
 	if err != nil {
 		err = fmt.Errorf("error parsing response json: %w", err)

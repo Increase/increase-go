@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type DeclinedTransaction struct {
@@ -1353,6 +1355,12 @@ func (r *DeclinedTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes DeclinedTransactionListParams into a url.Values of the query
+// parameters associated with this value
+func (r *DeclinedTransactionListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *DeclinedTransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -1427,6 +1435,12 @@ func (r *DeclinedTransactionsListParamsCreatedAt) MarshalJSON() (data []byte, er
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes DeclinedTransactionsListParamsCreatedAt into a url.Values of
+// the query parameters associated with this value
+func (r *DeclinedTransactionsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *DeclinedTransactionsListParamsCreatedAt) GetAfter() (After string) {
@@ -1487,6 +1501,12 @@ func (r *DeclinedTransactionList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *DeclinedTransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes DeclinedTransactionList into a url.Values of the query
+// parameters associated with this value
+func (r *DeclinedTransactionList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

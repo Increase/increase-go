@@ -9,7 +9,7 @@ import (
 )
 
 func TestSupplementalDocumentsNew(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Entities.SupplementalDocuments.New(
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",

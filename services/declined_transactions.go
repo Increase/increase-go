@@ -22,6 +22,7 @@ func NewDeclinedTransactionService(opts ...options.RequestOption) (r *DeclinedTr
 // Retrieve a Declined Transaction
 func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...options.RequestOption) (res *types.DeclinedTransaction, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("declined_transactions/%s", declined_transaction_id))
 	if err != nil {
 		return
@@ -46,7 +47,7 @@ func (r *DeclinedTransactionService) List(ctx context.Context, query *types.Decl
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

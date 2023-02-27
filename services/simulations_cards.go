@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -29,13 +27,11 @@ func NewSimulationsCardService(opts ...options.RequestOption) (r *SimulationsCar
 // ways purchases can be made.
 func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.SimulateAnAuthorizationOnACardParameters, opts ...options.RequestOption) (res *types.CardAuthorizationSimulation, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/card_authorizations"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -55,13 +51,11 @@ func (r *SimulationsCardService) Authorize(ctx context.Context, body *types.Simu
 // authorized, for example, when adding a tip to a restaurant bill.
 func (r *SimulationsCardService) Settlement(ctx context.Context, body *types.SimulateSettlingACardAuthorizationParameters, opts ...options.RequestOption) (res *types.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/card_settlements"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

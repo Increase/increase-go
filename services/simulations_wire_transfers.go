@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -23,13 +21,11 @@ func NewSimulationsWireTransferService(opts ...options.RequestOption) (r *Simula
 // Simulates an inbound Wire Transfer to your account.
 func (r *SimulationsWireTransferService) NewInbound(ctx context.Context, body *types.SimulateAWireTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.WireTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/inbound_wire_transfers"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

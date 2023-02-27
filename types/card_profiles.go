@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type CardProfile struct {
@@ -488,6 +490,12 @@ func (r *CardProfileListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardProfileListParams into a url.Values of the query
+// parameters associated with this value
+func (r *CardProfileListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *CardProfileListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -537,6 +545,12 @@ func (r *CardProfilesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardProfilesListParamsStatus into a url.Values of the query
+// parameters associated with this value
+func (r *CardProfilesListParamsStatus) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
@@ -579,6 +593,12 @@ func (r *CardProfileList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardProfileList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes CardProfileList into a url.Values of the query parameters
+// associated with this value
+func (r *CardProfileList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Document struct {
@@ -131,6 +133,12 @@ func (r *DocumentListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes DocumentListParams into a url.Values of the query parameters
+// associated with this value
+func (r *DocumentListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *DocumentListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -195,6 +203,12 @@ func (r *DocumentsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes DocumentsListParamsCategory into a url.Values of the query
+// parameters associated with this value
+func (r *DocumentsListParamsCategory) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
@@ -242,6 +256,12 @@ func (r *DocumentsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *DocumentsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes DocumentsListParamsCreatedAt into a url.Values of the query
+// parameters associated with this value
+func (r *DocumentsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -304,6 +324,12 @@ func (r *DocumentList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *DocumentList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes DocumentList into a url.Values of the query parameters
+// associated with this value
+func (r *DocumentList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

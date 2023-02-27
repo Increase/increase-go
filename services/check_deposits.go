@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewCheckDepositService(opts ...options.RequestOption) (r *CheckDepositServi
 // Create a Check Deposit
 func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("check_deposits"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckD
 // Retrieve a Check Deposit
 func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("check_deposits/%s", check_deposit_id))
 	if err != nil {
 		return
@@ -70,7 +67,7 @@ func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDeposi
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

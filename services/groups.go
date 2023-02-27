@@ -21,6 +21,7 @@ func NewGroupService(opts ...options.RequestOption) (r *GroupService) {
 // Returns details for the currently authenticated Group.
 func (r *GroupService) GetDetails(ctx context.Context, opts ...options.RequestOption) (res *types.Group, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("groups/current"))
 	if err != nil {
 		return

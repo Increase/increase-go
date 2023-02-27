@@ -90,7 +90,12 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 		return d.newMapDecoder(t)
 	case reflect.Interface:
 		return func(node gjson.Result, value reflect.Value) error {
-			value.Set(reflect.ValueOf(node.Value()))
+			if !value.IsValid() {
+				return fmt.Errorf("pjson: unexpected invalid value %+#v", value)
+			}
+			if node.Value() != nil {
+				value.Set(reflect.ValueOf(node.Value()))
+			}
 			return nil
 		}
 	default:

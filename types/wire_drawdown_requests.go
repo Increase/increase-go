@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type WireDrawdownRequest struct {
@@ -373,6 +375,12 @@ func (r *WireDrawdownRequestListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes WireDrawdownRequestListParams into a url.Values of the query
+// parameters associated with this value
+func (r *WireDrawdownRequestListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *WireDrawdownRequestListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -414,6 +422,12 @@ func (r *WireDrawdownRequestList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *WireDrawdownRequestList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes WireDrawdownRequestList into a url.Values of the query
+// parameters associated with this value
+func (r *WireDrawdownRequestList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

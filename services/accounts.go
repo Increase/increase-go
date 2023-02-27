@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewAccountService(opts ...options.RequestOption) (r *AccountService) {
 // Create an Account
 func (r *AccountService) New(ctx context.Context, body *types.CreateAnAccountParameters, opts ...options.RequestOption) (res *types.Account, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("accounts"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *AccountService) New(ctx context.Context, body *types.CreateAnAccountPar
 // Retrieve an Account
 func (r *AccountService) Get(ctx context.Context, account_id string, opts ...options.RequestOption) (res *types.Account, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("accounts/%s", account_id))
 	if err != nil {
 		return
@@ -66,13 +63,11 @@ func (r *AccountService) Get(ctx context.Context, account_id string, opts ...opt
 // Update an Account
 func (r *AccountService) Update(ctx context.Context, account_id string, body *types.UpdateAnAccountParameters, opts ...options.RequestOption) (res *types.Account, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("accounts/%s", account_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -92,7 +87,7 @@ func (r *AccountService) List(ctx context.Context, query *types.AccountListParam
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}
@@ -109,6 +104,7 @@ func (r *AccountService) List(ctx context.Context, query *types.AccountListParam
 // Close an Account
 func (r *AccountService) Close(ctx context.Context, account_id string, opts ...options.RequestOption) (res *types.Account, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("accounts/%s/close", account_id))
 	if err != nil {
 		return

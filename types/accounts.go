@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Account struct {
@@ -335,6 +337,12 @@ func (r *AccountListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes AccountListParams into a url.Values of the query parameters
+// associated with this value
+func (r *AccountListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *AccountListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -399,6 +407,12 @@ func (r *AccountList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *AccountList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes AccountList into a url.Values of the query parameters
+// associated with this value
+func (r *AccountList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

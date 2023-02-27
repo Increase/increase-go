@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type CheckDeposit struct {
@@ -614,6 +616,12 @@ func (r *CheckDepositListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CheckDepositListParams into a url.Values of the query
+// parameters associated with this value
+func (r *CheckDepositListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *CheckDepositListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -680,6 +688,12 @@ func (r *CheckDepositsListParamsCreatedAt) MarshalJSON() (data []byte, err error
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CheckDepositsListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *CheckDepositsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
@@ -740,6 +754,12 @@ func (r *CheckDepositList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CheckDepositList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes CheckDepositList into a url.Values of the query parameters
+// associated with this value
+func (r *CheckDepositList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

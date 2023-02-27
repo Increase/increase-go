@@ -22,6 +22,7 @@ func NewAccountStatementService(opts ...options.RequestOption) (r *AccountStatem
 // Retrieve an Account Statement
 func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...options.RequestOption) (res *types.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("account_statements/%s", account_statement_id))
 	if err != nil {
 		return
@@ -46,7 +47,7 @@ func (r *AccountStatementService) List(ctx context.Context, query *types.Account
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

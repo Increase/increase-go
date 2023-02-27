@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Event struct {
@@ -176,6 +178,12 @@ func (r *EventListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes EventListParams into a url.Values of the query parameters
+// associated with this value
+func (r *EventListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *EventListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -249,6 +257,12 @@ func (r *EventsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes EventsListParamsCreatedAt into a url.Values of the query
+// parameters associated with this value
+func (r *EventsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *EventsListParamsCreatedAt) GetAfter() (After string) {
@@ -308,6 +322,12 @@ func (r *EventsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *EventsListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes EventsListParamsCategory into a url.Values of the query
+// parameters associated with this value
+func (r *EventsListParamsCategory) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
@@ -393,6 +413,12 @@ func (r *EventList) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *EventList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes EventList into a url.Values of the query parameters
+// associated with this value
+func (r *EventList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

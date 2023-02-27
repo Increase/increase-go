@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type PendingTransaction struct {
@@ -1245,6 +1247,12 @@ func (r *PendingTransactionListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes PendingTransactionListParams into a url.Values of the query
+// parameters associated with this value
+func (r *PendingTransactionListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *PendingTransactionListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -1318,6 +1326,12 @@ func (r *PendingTransactionsListParamsStatus) MarshalJSON() (data []byte, err er
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes PendingTransactionsListParamsStatus into a url.Values of the
+// query parameters associated with this value
+func (r *PendingTransactionsListParamsStatus) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
@@ -1358,6 +1372,12 @@ func (r *PendingTransactionList) UnmarshalJSON(data []byte) (err error) {
 // top-level, and will overwrite known members of the same name.
 func (r *PendingTransactionList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes PendingTransactionList into a url.Values of the query
+// parameters associated with this value
+func (r *PendingTransactionList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

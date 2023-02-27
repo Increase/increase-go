@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -26,13 +24,11 @@ func NewSimulationsCardDisputeService(opts ...options.RequestOption) (r *Simulat
 // be actioned one time and must have a status of `pending_reviewing`.
 func (r *SimulationsCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *types.SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...options.RequestOption) (res *types.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

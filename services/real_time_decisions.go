@@ -1,12 +1,10 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -23,6 +21,7 @@ func NewRealTimeDecisionService(opts ...options.RequestOption) (r *RealTimeDecis
 // Retrieve a Real-Time Decision
 func (r *RealTimeDecisionService) Get(ctx context.Context, real_time_decision_id string, opts ...options.RequestOption) (res *types.RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("real_time_decisions/%s", real_time_decision_id))
 	if err != nil {
 		return
@@ -43,13 +42,11 @@ func (r *RealTimeDecisionService) Get(ctx context.Context, real_time_decision_id
 // Action a Real-Time Decision
 func (r *RealTimeDecisionService) Action(ctx context.Context, real_time_decision_id string, body *types.ActionARealTimeDecisionParameters, opts ...options.RequestOption) (res *types.RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("real_time_decisions/%s/action", real_time_decision_id))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type CardDispute struct {
@@ -310,6 +312,12 @@ func (r *CardDisputeListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardDisputeListParams into a url.Values of the query
+// parameters associated with this value
+func (r *CardDisputeListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *CardDisputeListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -375,6 +383,12 @@ func (r *CardDisputesListParamsCreatedAt) MarshalJSON() (data []byte, err error)
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardDisputesListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *CardDisputesListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *CardDisputesListParamsCreatedAt) GetAfter() (After string) {
@@ -436,6 +450,12 @@ func (r *CardDisputesListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardDisputesListParamsStatus into a url.Values of the query
+// parameters associated with this value
+func (r *CardDisputesListParamsStatus) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 func (r *CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
@@ -477,6 +497,12 @@ func (r *CardDisputeList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *CardDisputeList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes CardDisputeList into a url.Values of the query parameters
+// associated with this value
+func (r *CardDisputeList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

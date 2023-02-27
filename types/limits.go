@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Limit struct {
@@ -299,6 +301,12 @@ func (r *LimitListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes LimitListParams into a url.Values of the query parameters
+// associated with this value
+func (r *LimitListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *LimitListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -355,6 +363,12 @@ func (r *LimitList) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *LimitList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes LimitList into a url.Values of the query parameters
+// associated with this value
+func (r *LimitList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

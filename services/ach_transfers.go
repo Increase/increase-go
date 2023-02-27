@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"io"
 	"net/url"
 )
 
@@ -24,13 +22,11 @@ func NewACHTransferService(opts ...options.RequestOption) (r *ACHTransferService
 // Create an ACH Transfer
 func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	b, err := body.MarshalJSON()
-	content := io.NopCloser(bytes.NewBuffer(b))
 	u, err := url.Parse(fmt.Sprintf("ach_transfers"))
 	if err != nil {
 		return
 	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, content, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
 	if err != nil {
 		return
 	}
@@ -46,6 +42,7 @@ func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTra
 // Retrieve an ACH Transfer
 func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s", ach_transfer_id))
 	if err != nil {
 		return
@@ -70,7 +67,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}
@@ -87,6 +84,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 // Approves an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id))
 	if err != nil {
 		return
@@ -107,6 +105,7 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 // Cancels an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id))
 	if err != nil {
 		return

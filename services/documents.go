@@ -22,6 +22,7 @@ func NewDocumentService(opts ...options.RequestOption) (r *DocumentService) {
 // Retrieve a Document
 func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...options.RequestOption) (res *types.Document, err error) {
 	opts = append(r.Options[:], opts...)
+	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
 	u, err := url.Parse(fmt.Sprintf("documents/%s", document_id))
 	if err != nil {
 		return
@@ -46,7 +47,7 @@ func (r *DocumentService) List(ctx context.Context, query *types.DocumentListPar
 		return
 	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
+	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
 	if err != nil {
 		return
 	}

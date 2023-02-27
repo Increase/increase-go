@@ -9,15 +9,15 @@ import (
 )
 
 func TestAccountsNewWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), &types.CreateAnAccountParameters{Name: increase.P("New Account!")})
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Accounts.New(context.TODO(), &types.CreateAnAccountParameters{EntityID: increase.P("string"), InformationalEntityID: increase.P("string"), Name: increase.P("New Account!")})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}
 }
 
 func TestAccountsGet(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
 		t.Fatal("err should be nil", err)
@@ -25,11 +25,11 @@ func TestAccountsGet(t *testing.T) {
 }
 
 func TestAccountsUpdateWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Update(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
-		&types.UpdateAnAccountParameters{},
+		&types.UpdateAnAccountParameters{Name: increase.P("My renamed account")},
 	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
@@ -37,8 +37,8 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountsListWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &types.AccountListParams{})
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Accounts.List(context.TODO(), &types.AccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), EntityID: increase.P("string"), Status: increase.P(types.AccountsListParamsStatusOpen)})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}
@@ -46,7 +46,7 @@ func TestAccountsListWithOptionalParams(t *testing.T) {
 
 func TestAccountsClose(t *testing.T) {
 	t.Skip("Prism tests are broken")
-	c := increase.NewIncrease(options.WithAPIKey("something1234"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Close(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
 		t.Fatal("err should be nil", err)

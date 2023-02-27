@@ -31,3 +31,7 @@ func MarshalWithSettings(value interface{}, settings QuerySettings) (v url.Value
 func Marshal(value interface{}) url.Values {
 	return MarshalWithSettings(value, QuerySettings{})
 }
+
+type Queryer interface {
+	URLQuery() url.Values
+}

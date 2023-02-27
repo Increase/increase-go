@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type WireTransfer struct {
@@ -714,6 +716,12 @@ func (r *WireTransferListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes WireTransferListParams into a url.Values of the query
+// parameters associated with this value
+func (r *WireTransferListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *WireTransferListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -788,6 +796,12 @@ func (r *WireTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes WireTransfersListParamsCreatedAt into a url.Values of the
+// query parameters associated with this value
+func (r *WireTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *WireTransfersListParamsCreatedAt) GetAfter() (After string) {
@@ -848,6 +862,12 @@ func (r *WireTransferList) UnmarshalJSON(data []byte) (err error) {
 // and will overwrite known members of the same name.
 func (r *WireTransferList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes WireTransferList into a url.Values of the query parameters
+// associated with this value
+func (r *WireTransferList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.

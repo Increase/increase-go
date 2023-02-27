@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"increase/core"
 	"increase/core/pjson"
+	"increase/core/query"
 	"increase/pagination"
+	"net/url"
 )
 
 type Card struct {
@@ -810,6 +812,12 @@ func (r *CardListParams) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardListParams into a url.Values of the query parameters
+// associated with this value
+func (r *CardListParams) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return the page of entries after this one.
 func (r *CardListParams) GetCursor() (Cursor string) {
 	if r != nil && r.Cursor != nil {
@@ -876,6 +884,12 @@ func (r *CardsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
+// URLQuery serializes CardsListParamsCreatedAt into a url.Values of the query
+// parameters associated with this value
+func (r *CardsListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}
+
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
 func (r *CardsListParamsCreatedAt) GetAfter() (After string) {
@@ -935,6 +949,12 @@ func (r *CardList) UnmarshalJSON(data []byte) (err error) {
 // overwrite known members of the same name.
 func (r *CardList) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
+}
+
+// URLQuery serializes CardList into a url.Values of the query parameters
+// associated with this value
+func (r *CardList) URLQuery() (v url.Values) {
+	return query.Marshal(r)
 }
 
 // The contents of the list.
