@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsDocumentService struct {
@@ -21,19 +19,7 @@ func NewSimulationsDocumentService(opts ...options.RequestOption) (r *Simulation
 // Simulates an tax document being created for an account.
 func (r *SimulationsDocumentService) New(ctx context.Context, body *types.SimulateATaxDocumentBeingCreatedParameters, opts ...options.RequestOption) (res *types.Document, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/documents"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/documents"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

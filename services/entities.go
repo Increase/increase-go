@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type EntityService struct {
@@ -24,52 +23,24 @@ func NewEntityService(opts ...options.RequestOption) (r *EntityService) {
 // Create an Entity
 func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParameters, opts ...options.RequestOption) (res *types.Entity, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("entities"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "entities"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve an Entity
 func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...options.RequestOption) (res *types.Entity, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("entities/%s", entity_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("entities/%s", entity_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Entities
 func (r *EntityService) List(ctx context.Context, query *types.EntityListParams, opts ...options.RequestOption) (res *types.EntitiesPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("entities"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "entities"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -79,6 +50,5 @@ func (r *EntityService) List(ctx context.Context, query *types.EntityListParams,
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

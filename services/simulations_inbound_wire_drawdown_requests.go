@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsInboundWireDrawdownRequestService struct {
@@ -22,19 +20,7 @@ func NewSimulationsInboundWireDrawdownRequestService(opts ...options.RequestOpti
 // [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
 func (r *SimulationsInboundWireDrawdownRequestService) New(ctx context.Context, body *types.SimulateAnInboundWireDrawdownRequestBeingCreatedParameters, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/inbound_wire_drawdown_requests"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/inbound_wire_drawdown_requests"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

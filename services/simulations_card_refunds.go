@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsCardRefundService struct {
@@ -22,19 +20,7 @@ func NewSimulationsCardRefundService(opts ...options.RequestOption) (r *Simulati
 // transaction is refunded.
 func (r *SimulationsCardRefundService) New(ctx context.Context, body *types.SimulateARefundOnACardParameters, opts ...options.RequestOption) (res *types.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/card_refunds"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/card_refunds"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

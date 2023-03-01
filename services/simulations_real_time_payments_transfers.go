@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsRealTimePaymentsTransferService struct {
@@ -22,19 +20,7 @@ func NewSimulationsRealTimePaymentsTransferService(opts ...options.RequestOption
 // Payments are a beta feature.
 func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/inbound_real_time_payments_transfers"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/inbound_real_time_payments_transfers"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

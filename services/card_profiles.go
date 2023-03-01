@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type CardProfileService struct {
@@ -22,52 +21,24 @@ func NewCardProfileService(opts ...options.RequestOption) (r *CardProfileService
 // Create a Card Profile
 func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardProfileParameters, opts ...options.RequestOption) (res *types.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("card_profiles"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "card_profiles"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Card Profile
 func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...options.RequestOption) (res *types.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("card_profiles/%s", card_profile_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("card_profiles/%s", card_profile_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Card Profiles
 func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileListParams, opts ...options.RequestOption) (res *types.CardProfilesPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("card_profiles"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "card_profiles"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -77,6 +48,5 @@ func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileL
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

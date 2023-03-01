@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsCardDisputeService struct {
@@ -24,19 +23,7 @@ func NewSimulationsCardDisputeService(opts ...options.RequestOption) (r *Simulat
 // be actioned one time and must have a status of `pending_reviewing`.
 func (r *SimulationsCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *types.SimulatesAdvancingTheStateOfACardDisputeParameters, opts ...options.RequestOption) (res *types.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

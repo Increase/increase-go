@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type OauthConnectionService struct {
@@ -22,32 +21,16 @@ func NewOauthConnectionService(opts ...options.RequestOption) (r *OauthConnectio
 // Retrieve an OAuth Connection
 func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...options.RequestOption) (res *types.OauthConnection, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("oauth_connections/%s", oauth_connection_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("oauth_connections/%s", oauth_connection_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List OAuth Connections
 func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthConnectionListParams, opts ...options.RequestOption) (res *types.OauthConnectionsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("oauth_connections"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "oauth_connections"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *OauthConnectionService) List(ctx context.Context, query *types.OauthCon
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

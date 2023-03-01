@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type CheckDepositService struct {
@@ -22,52 +21,24 @@ func NewCheckDepositService(opts ...options.RequestOption) (r *CheckDepositServi
 // Create a Check Deposit
 func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("check_deposits"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "check_deposits"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Check Deposit
 func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("check_deposits/%s", check_deposit_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("check_deposits/%s", check_deposit_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Check Deposits
 func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDepositListParams, opts ...options.RequestOption) (res *types.CheckDepositsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("check_deposits"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "check_deposits"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -77,6 +48,5 @@ func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDeposi
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

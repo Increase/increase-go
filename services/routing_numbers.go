@@ -2,11 +2,9 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type RoutingNumberService struct {
@@ -24,12 +22,9 @@ func NewRoutingNumberService(opts ...options.RequestOption) (r *RoutingNumberSer
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
 func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNumberListParams, opts ...options.RequestOption) (res *types.RoutingNumbersPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("routing_numbers"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "routing_numbers"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -39,6 +34,5 @@ func (r *RoutingNumberService) List(ctx context.Context, query *types.RoutingNum
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

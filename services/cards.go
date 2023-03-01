@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type CardService struct {
@@ -22,72 +21,32 @@ func NewCardService(opts ...options.RequestOption) (r *CardService) {
 // Create a Card
 func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("cards"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "cards"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Card
 func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.Card, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("cards/%s", card_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("cards/%s", card_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // Update a Card
 func (r *CardService) Update(ctx context.Context, card_id string, body *types.UpdateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("cards/%s", card_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "PATCH", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("cards/%s", card_id)
+	err = options.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
 	return
 }
 
 // List Cards
 func (r *CardService) List(ctx context.Context, query *types.CardListParams, opts ...options.RequestOption) (res *types.CardsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("cards"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "cards"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -97,27 +56,13 @@ func (r *CardService) List(ctx context.Context, query *types.CardListParams, opt
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }
 
 // Retrieve sensitive details for a Card
 func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("cards/%s/details", card_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("cards/%s/details", card_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }

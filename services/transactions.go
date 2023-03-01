@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type TransactionService struct {
@@ -22,32 +21,16 @@ func NewTransactionService(opts ...options.RequestOption) (r *TransactionService
 // Retrieve a Transaction
 func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...options.RequestOption) (res *types.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("transactions/%s", transaction_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("transactions/%s", transaction_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Transactions
 func (r *TransactionService) List(ctx context.Context, query *types.TransactionListParams, opts ...options.RequestOption) (res *types.TransactionsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("transactions"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "transactions"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *TransactionService) List(ctx context.Context, query *types.TransactionL
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

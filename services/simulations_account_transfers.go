@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsAccountTransferService struct {
@@ -24,20 +23,7 @@ func NewSimulationsAccountTransferService(opts ...options.RequestOption) (r *Sim
 // must first have a `status` of `pending_approval`.
 func (r *SimulationsAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...options.RequestOption) (res *types.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/account_transfers/%s/complete", account_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/account_transfers/%s/complete", account_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }

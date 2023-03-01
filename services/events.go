@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type EventService struct {
@@ -22,32 +21,16 @@ func NewEventService(opts ...options.RequestOption) (r *EventService) {
 // Retrieve an Event
 func (r *EventService) Get(ctx context.Context, event_id string, opts ...options.RequestOption) (res *types.Event, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("events/%s", event_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("events/%s", event_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Events
 func (r *EventService) List(ctx context.Context, query *types.EventListParams, opts ...options.RequestOption) (res *types.EventsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("events"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "events"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *EventService) List(ctx context.Context, query *types.EventListParams, o
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

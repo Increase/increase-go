@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type DigitalWalletTokenService struct {
@@ -22,32 +21,16 @@ func NewDigitalWalletTokenService(opts ...options.RequestOption) (r *DigitalWall
 // Retrieve a Digital Wallet Token
 func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...options.RequestOption) (res *types.DigitalWalletToken, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Digital Wallet Tokens
 func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.DigitalWalletTokenListParams, opts ...options.RequestOption) (res *types.DigitalWalletTokensPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("digital_wallet_tokens"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "digital_wallet_tokens"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query *types.Digit
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

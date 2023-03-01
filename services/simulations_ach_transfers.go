@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsACHTransferService struct {
@@ -26,20 +25,8 @@ func NewSimulationsACHTransferService(opts ...options.RequestOption) (r *Simulat
 // depending on whether or not the transfer is allowed.
 func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *types.SimulateAnACHTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.ACHTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/inbound_ach_transfers"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/inbound_ach_transfers"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
@@ -48,20 +35,8 @@ func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *ty
 // the returned funds. This transfer must first have a `status` of `submitted`.
 func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *types.ReturnASandboxACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
@@ -73,20 +48,7 @@ func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer
 // delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationsACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }

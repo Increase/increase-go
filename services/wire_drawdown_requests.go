@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type WireDrawdownRequestService struct {
@@ -22,52 +21,24 @@ func NewWireDrawdownRequestService(opts ...options.RequestOption) (r *WireDrawdo
 // Create a Wire Drawdown Request
 func (r *WireDrawdownRequestService) New(ctx context.Context, body *types.CreateAWireDrawdownRequestParameters, opts ...options.RequestOption) (res *types.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_drawdown_requests"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "wire_drawdown_requests"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Wire Drawdown Request
 func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...options.RequestOption) (res *types.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Wire Drawdown Requests
 func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.WireDrawdownRequestListParams, opts ...options.RequestOption) (res *types.WireDrawdownRequestsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("wire_drawdown_requests"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "wire_drawdown_requests"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -77,6 +48,5 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *types.Wire
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

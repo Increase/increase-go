@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type AccountStatementService struct {
@@ -22,32 +21,16 @@ func NewAccountStatementService(opts ...options.RequestOption) (r *AccountStatem
 // Retrieve an Account Statement
 func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...options.RequestOption) (res *types.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("account_statements/%s", account_statement_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("account_statements/%s", account_statement_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Account Statements
 func (r *AccountStatementService) List(ctx context.Context, query *types.AccountStatementListParams, opts ...options.RequestOption) (res *types.AccountStatementsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("account_statements"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "account_statements"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *AccountStatementService) List(ctx context.Context, query *types.Account
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

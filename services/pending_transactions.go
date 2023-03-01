@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type PendingTransactionService struct {
@@ -22,32 +21,16 @@ func NewPendingTransactionService(opts ...options.RequestOption) (r *PendingTran
 // Retrieve a Pending Transaction
 func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...options.RequestOption) (res *types.PendingTransaction, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("pending_transactions/%s", pending_transaction_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("pending_transactions/%s", pending_transaction_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Pending Transactions
 func (r *PendingTransactionService) List(ctx context.Context, query *types.PendingTransactionListParams, opts ...options.RequestOption) (res *types.PendingTransactionsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("pending_transactions"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "pending_transactions"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *PendingTransactionService) List(ctx context.Context, query *types.Pendi
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

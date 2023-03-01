@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsCheckDepositService struct {
@@ -23,21 +22,8 @@ func NewSimulationsCheckDepositService(opts ...options.RequestOption) (r *Simula
 // of `pending`.
 func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/reject", check_deposit_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/check_deposits/%s/reject", check_deposit_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
@@ -45,20 +31,7 @@ func (r *SimulationsCheckDepositService) Reject(ctx context.Context, check_depos
 // Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationsCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/check_deposits/%s/submit", check_deposit_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/check_deposits/%s/submit", check_deposit_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }

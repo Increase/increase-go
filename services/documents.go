@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type DocumentService struct {
@@ -22,32 +21,16 @@ func NewDocumentService(opts ...options.RequestOption) (r *DocumentService) {
 // Retrieve a Document
 func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...options.RequestOption) (res *types.Document, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("documents/%s", document_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("documents/%s", document_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Documents
 func (r *DocumentService) List(ctx context.Context, query *types.DocumentListParams, opts ...options.RequestOption) (res *types.DocumentsPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("documents"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "documents"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -57,6 +40,5 @@ func (r *DocumentService) List(ctx context.Context, query *types.DocumentListPar
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }

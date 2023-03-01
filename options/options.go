@@ -62,26 +62,28 @@ func getPlatformProperties() map[string]string {
 	}
 }
 
-func NewRequestConfig(ctx context.Context, method string, u *url.URL, body interface{}, opts ...RequestOption) (*RequestConfig, error) {
+func NewRequestConfig(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) (*RequestConfig, error) {
 	var reader io.ReadCloser
 	if body, ok := body.(json.Marshaler); ok {
 		b, err := body.MarshalJSON()
 		if err != nil {
 			return nil, err
 		}
-		reader = io.NopCloser(bytes.NewBuffer(b))
+		if len(b) != 0 {
+			reader = io.NopCloser(bytes.NewBuffer(b))
+		}
 	}
 	if body, ok := body.(query.Queryer); ok {
-		u.RawQuery = body.URLQuery().Encode()
+		u = u + "?" + body.URLQuery().Encode()
 	}
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), reader)
+	req, err := http.NewRequestWithContext(ctx, method, u, reader)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Accept", "application/json")
 	if reader != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
+	req.Header.Set("Accept", "application/json")
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
 	}
@@ -91,8 +93,17 @@ func NewRequestConfig(ctx context.Context, method string, u *url.URL, body inter
 		Request:    req,
 		HTTPClient: http.DefaultClient,
 	}
+	cfg.ResponseBodyInto = dst
 	cfg.Apply(opts...)
 	return &cfg, nil
+}
+
+func ExecuteNewRequest(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) error {
+	cfg, err := NewRequestConfig(ctx, method, u, body, dst, opts...)
+	if err != nil {
+		return err
+	}
+	return cfg.Execute()
 }
 
 type RequestConfig struct {

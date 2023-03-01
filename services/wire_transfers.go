@@ -6,7 +6,6 @@ import (
 	"increase/options"
 	"increase/pagination"
 	"increase/types"
-	"net/url"
 )
 
 type WireTransferService struct {
@@ -22,52 +21,24 @@ func NewWireTransferService(opts ...options.RequestOption) (r *WireTransferServi
 // Create a Wire Transfer
 func (r *WireTransferService) New(ctx context.Context, body *types.CreateAWireTransferParameters, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_transfers"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "wire_transfers"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Wire Transfer
 func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s", wire_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("wire_transfers/%s", wire_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Wire Transfers
 func (r *WireTransferService) List(ctx context.Context, query *types.WireTransferListParams, opts ...options.RequestOption) (res *types.WireTransfersPage, err error) {
-	u, err := url.Parse(fmt.Sprintf("wire_transfers"))
-	if err != nil {
-		return
-	}
 	opts = append(r.Options, opts...)
-	cfg, err := options.NewRequestConfig(ctx, "GET", u, query, opts...)
+	path := "wire_transfers"
+	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
@@ -77,49 +48,22 @@ func (r *WireTransferService) List(ctx context.Context, query *types.WireTransfe
 			Options: opts,
 		},
 	}
-	err = res.Fire()
-	return
+	return res, res.Fire()
 }
 
 // Approve a Wire Transfer
 func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
 // Cancel a pending Wire Transfer
 func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
@@ -129,21 +73,8 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 // Transfer must first have a `status` of `complete`.'
 func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
@@ -152,20 +83,7 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 // `pending_creating`.
 func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...options.RequestOption) (res *types.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]options.RequestOption{options.WithHeader("Content-Type", "")}, opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, nil, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }

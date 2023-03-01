@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"increase/options"
 	"increase/types"
-	"net/url"
 )
 
 type SimulationsDigitalWalletTokenRequestService struct {
@@ -22,19 +20,7 @@ func NewSimulationsDigitalWalletTokenRequestService(opts ...options.RequestOptio
 // Apple Pay.
 func (r *SimulationsDigitalWalletTokenRequestService) New(ctx context.Context, body *types.SimulateDigitalWalletProvisioningForACardParameters, opts ...options.RequestOption) (res *types.DigitalWalletTokenRequestCreateResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	u, err := url.Parse(fmt.Sprintf("simulations/digital_wallet_token_requests"))
-	if err != nil {
-		return
-	}
-	cfg, err := options.NewRequestConfig(ctx, "POST", u, body, opts...)
-	if err != nil {
-		return
-	}
-	cfg.ResponseBodyInto = &res
-	err = cfg.Execute()
-	if err != nil {
-		return
-	}
-
+	path := "simulations/digital_wallet_token_requests"
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
