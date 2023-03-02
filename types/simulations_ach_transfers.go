@@ -307,6 +307,9 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
 	InboundWireTransfer *ACHTransferSimulationTransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
+	// A Interest Payment object. This field will be present in the JSON response if
+	// and only if `category` is equal to `interest_payment`.
+	InterestPayment *ACHTransferSimulationTransactionSourceInterestPayment `pjson:"interest_payment"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
 	InternalSource *ACHTransferSimulationTransactionSourceInternalSource `pjson:"internal_source"`
@@ -589,6 +592,15 @@ func (r *ACHTransferSimulationTransactionSource) GetInboundWireTransfer() (Inbou
 	return
 }
 
+// A Interest Payment object. This field will be present in the JSON response if
+// and only if `category` is equal to `interest_payment`.
+func (r *ACHTransferSimulationTransactionSource) GetInterestPayment() (InterestPayment ACHTransferSimulationTransactionSourceInterestPayment) {
+	if r != nil && r.InterestPayment != nil {
+		InterestPayment = *r.InterestPayment
+	}
+	return
+}
+
 // A Internal Source object. This field will be present in the JSON response if and
 // only if `category` is equal to `internal_source`.
 func (r *ACHTransferSimulationTransactionSource) GetInternalSource() (InternalSource ACHTransferSimulationTransactionSourceInternalSource) {
@@ -664,7 +676,7 @@ func (r *ACHTransferSimulationTransactionSource) GetWireTransferRejection() (Wir
 }
 
 func (r ACHTransferSimulationTransactionSource) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InterestPayment:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InterestPayment, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 type ACHTransferSimulationTransactionSourceCategory string
@@ -688,6 +700,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryDisputeResolution                           ACHTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	ACHTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         ACHTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
 	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer                          ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
 	ACHTransferSimulationTransactionSourceCategoryInboundCheck                                ACHTransferSimulationTransactionSourceCategory = "inbound_check"
 	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer             ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
 	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
@@ -695,6 +708,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
 	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInterestPayment                             ACHTransferSimulationTransactionSourceCategory = "interest_payment"
 	ACHTransferSimulationTransactionSourceCategoryInternalGeneralLedgerTransaction            ACHTransferSimulationTransactionSourceCategory = "internal_general_ledger_transaction"
 	ACHTransferSimulationTransactionSourceCategoryInternalSource                              ACHTransferSimulationTransactionSourceCategory = "internal_source"
 	ACHTransferSimulationTransactionSourceCategoryCardRouteRefund                             ACHTransferSimulationTransactionSourceCategory = "card_route_refund"
@@ -3189,6 +3203,94 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) GetOriginato
 func (r ACHTransferSimulationTransactionSourceInboundWireTransfer) String() (result string) {
 	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
+
+type ACHTransferSimulationTransactionSourceInterestPayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount *int64 `pjson:"amount"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency *ACHTransferSimulationTransactionSourceInterestPaymentCurrency `pjson:"currency"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart *string `pjson:"period_start"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd *string `pjson:"period_end"`
+	// The account on which the interest was accrued.
+	AccruedOnAccountID *string                `pjson:"accrued_on_account_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceInterestPayment using the internal pjson
+// library. Unrecognized fields are stored in the `jsonFields` property.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes ACHTransferSimulationTransactionSourceInterestPayment
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The amount in the minor unit of the transaction's currency. For dollars, for
+// example, this is cents.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) GetAmount() (Amount int64) {
+	if r != nil && r.Amount != nil {
+		Amount = *r.Amount
+	}
+	return
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) GetCurrency() (Currency ACHTransferSimulationTransactionSourceInterestPaymentCurrency) {
+	if r != nil && r.Currency != nil {
+		Currency = *r.Currency
+	}
+	return
+}
+
+// The start of the period for which this transaction paid interest.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
+	if r != nil && r.PeriodStart != nil {
+		PeriodStart = *r.PeriodStart
+	}
+	return
+}
+
+// The end of the period for which this transaction paid interest.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
+	if r != nil && r.PeriodEnd != nil {
+		PeriodEnd = *r.PeriodEnd
+	}
+	return
+}
+
+// The account on which the interest was accrued.
+func (r *ACHTransferSimulationTransactionSourceInterestPayment) GetAccruedOnAccountID() (AccruedOnAccountID string) {
+	if r != nil && r.AccruedOnAccountID != nil {
+		AccruedOnAccountID = *r.AccruedOnAccountID
+	}
+	return
+}
+
+func (r ACHTransferSimulationTransactionSourceInterestPayment) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceInterestPayment{Amount:%s Currency:%s PeriodStart:%s PeriodEnd:%s AccruedOnAccountID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PeriodStart), core.FmtP(r.PeriodEnd), core.FmtP(r.AccruedOnAccountID))
+}
+
+type ACHTransferSimulationTransactionSourceInterestPaymentCurrency string
+
+const (
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyCad ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "CAD"
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyChf ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "CHF"
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyEur ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "EUR"
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyGbp ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "GBP"
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyJpy ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "JPY"
+	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyUsd ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "USD"
+)
 
 type ACHTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for

@@ -311,6 +311,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
 	InboundWireTransfer *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer `pjson:"inbound_wire_transfer"`
+	// A Interest Payment object. This field will be present in the JSON response if
+	// and only if `category` is equal to `interest_payment`.
+	InterestPayment *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment `pjson:"interest_payment"`
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
 	InternalSource *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource `pjson:"internal_source"`
@@ -596,6 +599,15 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) GetIn
 	return
 }
 
+// A Interest Payment object. This field will be present in the JSON response if
+// and only if `category` is equal to `interest_payment`.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) GetInterestPayment() (InterestPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) {
+	if r != nil && r.InterestPayment != nil {
+		InterestPayment = *r.InterestPayment
+	}
+	return
+}
+
 // A Internal Source object. This field will be present in the JSON response if and
 // only if `category` is equal to `internal_source`.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) GetInternalSource() (InternalSource InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) {
@@ -671,7 +683,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) GetWi
 }
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSource) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSource{Category:%s AccountTransferIntention:%s ACHCheckConversionReturn:%s ACHCheckConversion:%s ACHTransferIntention:%s ACHTransferRejection:%s ACHTransferReturn:%s CardDisputeAcceptance:%s CardRefund:%s CardSettlement:%s CheckDepositAcceptance:%s CheckDepositReturn:%s CheckTransferIntention:%s CheckTransferReturn:%s CheckTransferRejection:%s CheckTransferStopPaymentRequest:%s DisputeResolution:%s EmpyrealCashDeposit:%s InboundACHTransfer:%s InboundCheck:%s InboundInternationalACHTransfer:%s InboundRealTimePaymentsTransferConfirmation:%s InboundWireDrawdownPaymentReversal:%s InboundWireDrawdownPayment:%s InboundWireReversal:%s InboundWireTransfer:%s InterestPayment:%s InternalSource:%s CardRouteRefund:%s CardRouteSettlement:%s SampleFunds:%s WireDrawdownPaymentIntention:%s WireDrawdownPaymentRejection:%s WireTransferIntention:%s WireTransferRejection:%s}", core.FmtP(r.Category), r.AccountTransferIntention, r.ACHCheckConversionReturn, r.ACHCheckConversion, r.ACHTransferIntention, r.ACHTransferRejection, r.ACHTransferReturn, r.CardDisputeAcceptance, r.CardRefund, r.CardSettlement, r.CheckDepositAcceptance, r.CheckDepositReturn, r.CheckTransferIntention, r.CheckTransferReturn, r.CheckTransferRejection, r.CheckTransferStopPaymentRequest, r.DisputeResolution, r.EmpyrealCashDeposit, r.InboundACHTransfer, r.InboundCheck, r.InboundInternationalACHTransfer, r.InboundRealTimePaymentsTransferConfirmation, r.InboundWireDrawdownPaymentReversal, r.InboundWireDrawdownPayment, r.InboundWireReversal, r.InboundWireTransfer, r.InterestPayment, r.InternalSource, r.CardRouteRefund, r.CardRouteSettlement, r.SampleFunds, r.WireDrawdownPaymentIntention, r.WireDrawdownPaymentRejection, r.WireTransferIntention, r.WireTransferRejection)
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory string
@@ -695,6 +707,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryDisputeResolution                           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "dispute_resolution"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer                          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheck                                InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_check"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
@@ -702,6 +715,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment                             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "interest_payment"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalGeneralLedgerTransaction            InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_general_ledger_transaction"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource                              InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_source"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRouteRefund                             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_route_refund"
@@ -3234,6 +3248,96 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) String() (result string) {
 	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer{Amount:%s BeneficiaryAddressLine1:%s BeneficiaryAddressLine2:%s BeneficiaryAddressLine3:%s BeneficiaryName:%s BeneficiaryReference:%s Description:%s InputMessageAccountabilityData:%s OriginatorAddressLine1:%s OriginatorAddressLine2:%s OriginatorAddressLine3:%s OriginatorName:%s OriginatorToBeneficiaryInformationLine1:%s OriginatorToBeneficiaryInformationLine2:%s OriginatorToBeneficiaryInformationLine3:%s OriginatorToBeneficiaryInformationLine4:%s OriginatorToBeneficiaryInformation:%s}", core.FmtP(r.Amount), core.FmtP(r.BeneficiaryAddressLine1), core.FmtP(r.BeneficiaryAddressLine2), core.FmtP(r.BeneficiaryAddressLine3), core.FmtP(r.BeneficiaryName), core.FmtP(r.BeneficiaryReference), core.FmtP(r.Description), core.FmtP(r.InputMessageAccountabilityData), core.FmtP(r.OriginatorAddressLine1), core.FmtP(r.OriginatorAddressLine2), core.FmtP(r.OriginatorAddressLine3), core.FmtP(r.OriginatorName), core.FmtP(r.OriginatorToBeneficiaryInformationLine1), core.FmtP(r.OriginatorToBeneficiaryInformationLine2), core.FmtP(r.OriginatorToBeneficiaryInformationLine3), core.FmtP(r.OriginatorToBeneficiaryInformationLine4), core.FmtP(r.OriginatorToBeneficiaryInformation))
 }
+
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount *int64 `pjson:"amount"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency `pjson:"currency"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart *string `pjson:"period_start"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd *string `pjson:"period_end"`
+	// The account on which the interest was accrued.
+	AccruedOnAccountID *string                `pjson:"accrued_on_account_id"`
+	jsonFields         map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes
+// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment
+// into an array of bytes using the gjson library. Members of the `jsonFields`
+// field are serialized into the top-level, and will overwrite known members of the
+// same name.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The amount in the minor unit of the transaction's currency. For dollars, for
+// example, this is cents.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetAmount() (Amount int64) {
+	if r != nil && r.Amount != nil {
+		Amount = *r.Amount
+	}
+	return
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetCurrency() (Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency) {
+	if r != nil && r.Currency != nil {
+		Currency = *r.Currency
+	}
+	return
+}
+
+// The start of the period for which this transaction paid interest.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
+	if r != nil && r.PeriodStart != nil {
+		PeriodStart = *r.PeriodStart
+	}
+	return
+}
+
+// The end of the period for which this transaction paid interest.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
+	if r != nil && r.PeriodEnd != nil {
+		PeriodEnd = *r.PeriodEnd
+	}
+	return
+}
+
+// The account on which the interest was accrued.
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetAccruedOnAccountID() (AccruedOnAccountID string) {
+	if r != nil && r.AccruedOnAccountID != nil {
+		AccruedOnAccountID = *r.AccruedOnAccountID
+	}
+	return
+}
+
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment{Amount:%s Currency:%s PeriodStart:%s PeriodEnd:%s AccruedOnAccountID:%s}", core.FmtP(r.Amount), core.FmtP(r.Currency), core.FmtP(r.PeriodStart), core.FmtP(r.PeriodEnd), core.FmtP(r.AccruedOnAccountID))
+}
+
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "CAD"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "CHF"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "EUR"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "GBP"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "JPY"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "USD"
+)
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
