@@ -45,32 +45,32 @@ func (r *InboundACHTransferReturn) MarshalJSON() (data []byte, err error) {
 }
 
 // The ID of the Inbound ACH Transfer Return.
-func (r *InboundACHTransferReturn) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r InboundACHTransferReturn) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The ID for the Transaction that is being returned.
-func (r *InboundACHTransferReturn) GetInboundACHTransferTransactionID() (InboundACHTransferTransactionID string) {
-	if r != nil && r.InboundACHTransferTransactionID != nil {
+func (r InboundACHTransferReturn) GetInboundACHTransferTransactionID() (InboundACHTransferTransactionID string) {
+	if r.InboundACHTransferTransactionID != nil {
 		InboundACHTransferTransactionID = *r.InboundACHTransferTransactionID
 	}
 	return
 }
 
 // The ID for the transaction refunding the transfer.
-func (r *InboundACHTransferReturn) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r InboundACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
 // The lifecycle status of the transfer.
-func (r *InboundACHTransferReturn) GetStatus() (Status InboundACHTransferReturnStatus) {
-	if r != nil && r.Status != nil {
+func (r InboundACHTransferReturn) GetStatus() (Status InboundACHTransferReturnStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -78,16 +78,16 @@ func (r *InboundACHTransferReturn) GetStatus() (Status InboundACHTransferReturnS
 
 // The reason why this transfer will be returned. This is sent to the initiating
 // bank.
-func (r *InboundACHTransferReturn) GetReason() (Reason InboundACHTransferReturnReason) {
-	if r != nil && r.Reason != nil {
+func (r InboundACHTransferReturn) GetReason() (Reason InboundACHTransferReturnReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
 }
 
 // After the return is submitted to FedACH, this will contain supplemental details.
-func (r *InboundACHTransferReturn) GetSubmission() (Submission InboundACHTransferReturnSubmission) {
-	if r != nil && r.Submission != nil {
+func (r InboundACHTransferReturn) GetSubmission() (Submission InboundACHTransferReturnSubmission) {
+	if r.Submission != nil {
 		Submission = *r.Submission
 	}
 	return
@@ -95,8 +95,8 @@ func (r *InboundACHTransferReturn) GetSubmission() (Submission InboundACHTransfe
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_ach_transfer_return`.
-func (r *InboundACHTransferReturn) GetType() (Type InboundACHTransferReturnType) {
-	if r != nil && r.Type != nil {
+func (r InboundACHTransferReturn) GetType() (Type InboundACHTransferReturnType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -149,16 +149,16 @@ func (r *InboundACHTransferReturnSubmission) MarshalJSON() (data []byte, err err
 }
 
 // The trace number for the submission.
-func (r *InboundACHTransferReturnSubmission) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r InboundACHTransferReturnSubmission) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
 }
 
 // When the ACH transfer return was sent to FedACH.
-func (r *InboundACHTransferReturnSubmission) GetSubmittedAt() (SubmittedAt string) {
-	if r != nil && r.SubmittedAt != nil {
+func (r InboundACHTransferReturnSubmission) GetSubmittedAt() (SubmittedAt string) {
+	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
@@ -200,8 +200,8 @@ func (r *CreateAnACHReturnParameters) MarshalJSON() (data []byte, err error) {
 
 // The transaction identifier of the Inbound ACH Transfer to return to the
 // originating financial institution.
-func (r *CreateAnACHReturnParameters) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CreateAnACHReturnParameters) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -209,8 +209,8 @@ func (r *CreateAnACHReturnParameters) GetTransactionID() (TransactionID string) 
 
 // The reason why this transfer will be returned. The most usual return codes are
 // `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
-func (r *CreateAnACHReturnParameters) GetReason() (Reason CreateAnACHReturnParametersReason) {
-	if r != nil && r.Reason != nil {
+func (r CreateAnACHReturnParameters) GetReason() (Reason CreateAnACHReturnParametersReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
@@ -263,8 +263,8 @@ func (r *InboundACHTransferReturnListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *InboundACHTransferReturnListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r InboundACHTransferReturnListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -272,8 +272,8 @@ func (r *InboundACHTransferReturnListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *InboundACHTransferReturnListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r InboundACHTransferReturnListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -312,16 +312,16 @@ func (r *InboundACHTransferReturnList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *InboundACHTransferReturnList) GetData() (Data []InboundACHTransferReturn) {
-	if r != nil && r.Data != nil {
+func (r InboundACHTransferReturnList) GetData() (Data []InboundACHTransferReturn) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *InboundACHTransferReturnList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r InboundACHTransferReturnList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

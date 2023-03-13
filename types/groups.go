@@ -37,16 +37,16 @@ func (r *Group) MarshalJSON() (data []byte, err error) {
 }
 
 // If the Group is activated or not.
-func (r *Group) GetActivationStatus() (ActivationStatus GroupActivationStatus) {
-	if r != nil && r.ActivationStatus != nil {
+func (r Group) GetActivationStatus() (ActivationStatus GroupActivationStatus) {
+	if r.ActivationStatus != nil {
 		ActivationStatus = *r.ActivationStatus
 	}
 	return
 }
 
 // If the Group is allowed to create ACH debits.
-func (r *Group) GetACHDebitStatus() (ACHDebitStatus GroupACHDebitStatus) {
-	if r != nil && r.ACHDebitStatus != nil {
+func (r Group) GetACHDebitStatus() (ACHDebitStatus GroupACHDebitStatus) {
+	if r.ACHDebitStatus != nil {
 		ACHDebitStatus = *r.ACHDebitStatus
 	}
 	return
@@ -54,16 +54,16 @@ func (r *Group) GetACHDebitStatus() (ACHDebitStatus GroupACHDebitStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 // was created.
-func (r *Group) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Group) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The Group identifier.
-func (r *Group) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Group) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -71,8 +71,8 @@ func (r *Group) GetID() (ID string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `group`.
-func (r *Group) GetType() (Type GroupType) {
-	if r != nil && r.Type != nil {
+func (r Group) GetType() (Type GroupType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return

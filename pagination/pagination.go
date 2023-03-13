@@ -27,61 +27,7 @@ type PaginatedResponse[T any] interface {
 	GetLength() int
 }
 
-type PageResponse[T interface{}] struct {
-	Data *[]T `pjson:"data"`
-	// A pointer to a place in the list.
-	NextCursor *string                `pjson:"next_cursor"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
-}
-
-// UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *PageResponse[T]) UnmarshalJSON(data []byte) (err error) {
-	return pjson.Unmarshal(data, r)
-}
-
-// MarshalJSON serializes PageResponse[T] into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
-func (r *PageResponse[T]) MarshalJSON() (data []byte, err error) {
-	return pjson.Marshal(r)
-}
-
-func (r *PageResponse[T]) GetData() (Data []T) {
-	if r != nil && r.Data != nil {
-		Data = *r.Data
-	}
-	return
-}
-
-// A pointer to a place in the list.
-func (r *PageResponse[T]) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
-		NextCursor = *r.NextCursor
-	}
-	return
-}
-
-func (r PageResponse[T]) String() (result string) {
-	return fmt.Sprintf("&PageResponse[T]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
-}
-
-var _ PaginatedResponse[interface{}] = (*PageResponse[interface{}])(nil)
-
-func (r *PageResponse[T]) GetItems() []T {
-	return *r.Data
-}
-
-func (r *PageResponse[T]) GetItem(index int) *T {
-	return &r.GetItems()[index]
-}
-
-func (r *PageResponse[T]) GetLength() int {
-	return len(r.GetItems())
-}
-
-type Page[T interface{}] struct {
+type Page[T any] struct {
 	Config       options.RequestConfig
 	Options      []options.RequestOption
 	runningIndex int
@@ -91,8 +37,6 @@ type Page[T interface{}] struct {
 	raw          *http.Response
 	res          *PageResponse[T]
 }
-
-var _ Paginated[interface{}] = (*Page[interface{}])(nil)
 
 func (r *Page[T]) NextPageConfig() *options.RequestConfig {
 	if r.res == nil {
@@ -201,4 +145,58 @@ func (r *Page[T]) GetResponse() PaginatedResponse[T] {
 
 func (r *Page[T]) GetRawResponse() *http.Response {
 	return r.raw
+}
+
+type PageResponse[T any] struct {
+	Data *[]T `pjson:"data"`
+	// A pointer to a place in the list.
+	NextCursor *string                `pjson:"next_cursor"`
+	jsonFields map[string]interface{} `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *PageResponse[T]) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes PageResponse[T] into an array of bytes using the gjson
+// library. Members of the `jsonFields` field are serialized into the top-level,
+// and will overwrite known members of the same name.
+func (r *PageResponse[T]) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+func (r PageResponse[T]) GetData() (Data []T) {
+	if r.Data != nil {
+		Data = *r.Data
+	}
+	return
+}
+
+// A pointer to a place in the list.
+func (r PageResponse[T]) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
+		NextCursor = *r.NextCursor
+	}
+	return
+}
+
+func (r PageResponse[T]) String() (result string) {
+	return fmt.Sprintf("&PageResponse[T]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
+}
+
+var _ PaginatedResponse[any] = (*PageResponse[any])(nil)
+
+func (r *PageResponse[T]) GetItems() []T {
+	return *r.Data
+}
+
+func (r *PageResponse[T]) GetItem(index int) *T {
+	return &r.GetItems()[index]
+}
+
+func (r *PageResponse[T]) GetLength() int {
+	return len(r.GetItems())
 }

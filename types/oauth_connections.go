@@ -41,8 +41,8 @@ func (r *OauthConnection) MarshalJSON() (data []byte, err error) {
 }
 
 // The OAuth Connection's identifier.
-func (r *OauthConnection) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r OauthConnection) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -50,24 +50,24 @@ func (r *OauthConnection) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 // Connection was created.
-func (r *OauthConnection) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r OauthConnection) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The identifier of the Group that has authorized your OAuth application.
-func (r *OauthConnection) GetGroupID() (GroupID string) {
-	if r != nil && r.GroupID != nil {
+func (r OauthConnection) GetGroupID() (GroupID string) {
+	if r.GroupID != nil {
 		GroupID = *r.GroupID
 	}
 	return
 }
 
 // Whether the connection is active.
-func (r *OauthConnection) GetStatus() (Status OauthConnectionStatus) {
-	if r != nil && r.Status != nil {
+func (r OauthConnection) GetStatus() (Status OauthConnectionStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -75,8 +75,8 @@ func (r *OauthConnection) GetStatus() (Status OauthConnectionStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `oauth_connection`.
-func (r *OauthConnection) GetType() (Type OauthConnectionType) {
-	if r != nil && r.Type != nil {
+func (r OauthConnection) GetType() (Type OauthConnectionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -129,8 +129,8 @@ func (r *OauthConnectionListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *OauthConnectionListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r OauthConnectionListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -138,8 +138,8 @@ func (r *OauthConnectionListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *OauthConnectionListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r OauthConnectionListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -178,16 +178,16 @@ func (r *OauthConnectionList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *OauthConnectionList) GetData() (Data []OauthConnection) {
-	if r != nil && r.Data != nil {
+func (r OauthConnectionList) GetData() (Data []OauthConnection) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *OauthConnectionList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r OauthConnectionList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

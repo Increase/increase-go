@@ -51,16 +51,16 @@ func (r *AccountStatement) MarshalJSON() (data []byte, err error) {
 }
 
 // The Account Statement identifier.
-func (r *AccountStatement) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r AccountStatement) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the Account this Account Statement belongs to.
-func (r *AccountStatement) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountStatement) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -68,16 +68,16 @@ func (r *AccountStatement) GetAccountID() (AccountID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // Statement was created.
-func (r *AccountStatement) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r AccountStatement) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The identifier of the File containing a PDF of the statement.
-func (r *AccountStatement) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r AccountStatement) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -85,8 +85,8 @@ func (r *AccountStatement) GetFileID() (FileID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 // start of the period the Account Statement covers.
-func (r *AccountStatement) GetStatementPeriodStart() (StatementPeriodStart string) {
-	if r != nil && r.StatementPeriodStart != nil {
+func (r AccountStatement) GetStatementPeriodStart() (StatementPeriodStart string) {
+	if r.StatementPeriodStart != nil {
 		StatementPeriodStart = *r.StatementPeriodStart
 	}
 	return
@@ -94,24 +94,24 @@ func (r *AccountStatement) GetStatementPeriodStart() (StatementPeriodStart strin
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 // of the period the Account Statement covers.
-func (r *AccountStatement) GetStatementPeriodEnd() (StatementPeriodEnd string) {
-	if r != nil && r.StatementPeriodEnd != nil {
+func (r AccountStatement) GetStatementPeriodEnd() (StatementPeriodEnd string) {
+	if r.StatementPeriodEnd != nil {
 		StatementPeriodEnd = *r.StatementPeriodEnd
 	}
 	return
 }
 
 // The Account's balance at the start of its statement period.
-func (r *AccountStatement) GetStartingBalance() (StartingBalance int64) {
-	if r != nil && r.StartingBalance != nil {
+func (r AccountStatement) GetStartingBalance() (StartingBalance int64) {
+	if r.StartingBalance != nil {
 		StartingBalance = *r.StartingBalance
 	}
 	return
 }
 
 // The Account's balance at the start of its statement period.
-func (r *AccountStatement) GetEndingBalance() (EndingBalance int64) {
-	if r != nil && r.EndingBalance != nil {
+func (r AccountStatement) GetEndingBalance() (EndingBalance int64) {
+	if r.EndingBalance != nil {
 		EndingBalance = *r.EndingBalance
 	}
 	return
@@ -119,8 +119,8 @@ func (r *AccountStatement) GetEndingBalance() (EndingBalance int64) {
 
 // A constant representing the object's type. For this resource it will always be
 // `account_statement`.
-func (r *AccountStatement) GetType() (Type AccountStatementType) {
-	if r != nil && r.Type != nil {
+func (r AccountStatement) GetType() (Type AccountStatementType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -169,8 +169,8 @@ func (r *AccountStatementListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *AccountStatementListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r AccountStatementListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -178,23 +178,23 @@ func (r *AccountStatementListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *AccountStatementListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r AccountStatementListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Account Statements to those belonging to the specified Account.
-func (r *AccountStatementListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountStatementListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodStart AccountStatementsListParamsStatementPeriodStart) {
-	if r != nil && r.StatementPeriodStart != nil {
+func (r AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodStart AccountStatementsListParamsStatementPeriodStart) {
+	if r.StatementPeriodStart != nil {
 		StatementPeriodStart = *r.StatementPeriodStart
 	}
 	return
@@ -243,8 +243,8 @@ func (r *AccountStatementsListParamsStatementPeriodStart) URLQuery() (v url.Valu
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *AccountStatementsListParamsStatementPeriodStart) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r AccountStatementsListParamsStatementPeriodStart) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -252,8 +252,8 @@ func (r *AccountStatementsListParamsStatementPeriodStart) GetAfter() (After stri
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -261,8 +261,8 @@ func (r *AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before st
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -270,8 +270,8 @@ func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAf
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *AccountStatementsListParamsStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r AccountStatementsListParamsStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -310,16 +310,16 @@ func (r *AccountStatementList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *AccountStatementList) GetData() (Data []AccountStatement) {
-	if r != nil && r.Data != nil {
+func (r AccountStatementList) GetData() (Data []AccountStatement) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *AccountStatementList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r AccountStatementList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

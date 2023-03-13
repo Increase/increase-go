@@ -29,8 +29,8 @@ func (r *SimulateATaxDocumentBeingCreatedParameters) MarshalJSON() (data []byte,
 }
 
 // The identifier of the Account the tax document is for.
-func (r *SimulateATaxDocumentBeingCreatedParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r SimulateATaxDocumentBeingCreatedParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return

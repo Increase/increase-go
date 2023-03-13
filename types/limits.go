@@ -46,8 +46,8 @@ func (r *Limit) MarshalJSON() (data []byte, err error) {
 }
 
 // The Limit identifier.
-func (r *Limit) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Limit) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -55,40 +55,40 @@ func (r *Limit) GetID() (ID string) {
 
 // The interval for the metric. This is required if `metric` is `count` or
 // `volume`.
-func (r *Limit) GetInterval() (Interval LimitInterval) {
-	if r != nil && r.Interval != nil {
+func (r Limit) GetInterval() (Interval LimitInterval) {
+	if r.Interval != nil {
 		Interval = *r.Interval
 	}
 	return
 }
 
 // The metric for the Limit.
-func (r *Limit) GetMetric() (Metric LimitMetric) {
-	if r != nil && r.Metric != nil {
+func (r Limit) GetMetric() (Metric LimitMetric) {
+	if r.Metric != nil {
 		Metric = *r.Metric
 	}
 	return
 }
 
 // The identifier of the Account Number, Account, or Card the Limit applies to.
-func (r *Limit) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
+func (r Limit) GetModelID() (ModelID string) {
+	if r.ModelID != nil {
 		ModelID = *r.ModelID
 	}
 	return
 }
 
 // The type of the model you wish to associate the Limit with.
-func (r *Limit) GetModelType() (ModelType LimitModelType) {
-	if r != nil && r.ModelType != nil {
+func (r Limit) GetModelType() (ModelType LimitModelType) {
+	if r.ModelType != nil {
 		ModelType = *r.ModelType
 	}
 	return
 }
 
 // The current status of the Limit.
-func (r *Limit) GetStatus() (Status LimitStatus) {
-	if r != nil && r.Status != nil {
+func (r Limit) GetStatus() (Status LimitStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -96,16 +96,16 @@ func (r *Limit) GetStatus() (Status LimitStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `limit`.
-func (r *Limit) GetType() (Type LimitType) {
-	if r != nil && r.Type != nil {
+func (r Limit) GetType() (Type LimitType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
 }
 
 // The value to evaluate the Limit against.
-func (r *Limit) GetValue() (Value int64) {
-	if r != nil && r.Value != nil {
+func (r Limit) GetValue() (Value int64) {
+	if r.Value != nil {
 		Value = *r.Value
 	}
 	return
@@ -182,16 +182,16 @@ func (r *CreateALimitParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The metric for the limit.
-func (r *CreateALimitParameters) GetMetric() (Metric CreateALimitParametersMetric) {
-	if r != nil && r.Metric != nil {
+func (r CreateALimitParameters) GetMetric() (Metric CreateALimitParametersMetric) {
+	if r.Metric != nil {
 		Metric = *r.Metric
 	}
 	return
 }
 
 // The interval for the metric. Required if `metric` is `count` or `volume`.
-func (r *CreateALimitParameters) GetInterval() (Interval CreateALimitParametersInterval) {
-	if r != nil && r.Interval != nil {
+func (r CreateALimitParameters) GetInterval() (Interval CreateALimitParametersInterval) {
+	if r.Interval != nil {
 		Interval = *r.Interval
 	}
 	return
@@ -199,16 +199,16 @@ func (r *CreateALimitParameters) GetInterval() (Interval CreateALimitParametersI
 
 // The identifier of the Account or Account Number you wish to associate the limit
 // with.
-func (r *CreateALimitParameters) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
+func (r CreateALimitParameters) GetModelID() (ModelID string) {
+	if r.ModelID != nil {
 		ModelID = *r.ModelID
 	}
 	return
 }
 
 // The value to test the limit against.
-func (r *CreateALimitParameters) GetValue() (Value int64) {
-	if r != nil && r.Value != nil {
+func (r CreateALimitParameters) GetValue() (Value int64) {
+	if r.Value != nil {
 		Value = *r.Value
 	}
 	return
@@ -257,8 +257,8 @@ func (r *UpdateALimitParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The status to update the limit with.
-func (r *UpdateALimitParameters) GetStatus() (Status UpdateALimitParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r UpdateALimitParameters) GetStatus() (Status UpdateALimitParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -309,8 +309,8 @@ func (r *LimitListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *LimitListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r LimitListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -318,24 +318,24 @@ func (r *LimitListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *LimitListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r LimitListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // The model to retrieve limits for.
-func (r *LimitListParams) GetModelID() (ModelID string) {
-	if r != nil && r.ModelID != nil {
+func (r LimitListParams) GetModelID() (ModelID string) {
+	if r.ModelID != nil {
 		ModelID = *r.ModelID
 	}
 	return
 }
 
 // The status to retrieve limits for.
-func (r *LimitListParams) GetStatus() (Status string) {
-	if r != nil && r.Status != nil {
+func (r LimitListParams) GetStatus() (Status string) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -373,16 +373,16 @@ func (r *LimitList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *LimitList) GetData() (Data []Limit) {
-	if r != nil && r.Data != nil {
+func (r LimitList) GetData() (Data []Limit) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *LimitList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r LimitList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

@@ -62,8 +62,8 @@ func (r *PendingTransaction) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the account this Pending Transaction belongs to.
-func (r *PendingTransaction) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r PendingTransaction) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -71,8 +71,8 @@ func (r *PendingTransaction) GetAccountID() (AccountID string) {
 
 // The Pending Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransaction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransaction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -81,8 +81,8 @@ func (r *PendingTransaction) GetAmount() (Amount int64) {
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
 // Transcation's Account.
-func (r *PendingTransaction) GetCurrency() (Currency PendingTransactionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransaction) GetCurrency() (Currency PendingTransactionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -90,8 +90,8 @@ func (r *PendingTransaction) GetCurrency() (Currency PendingTransactionCurrency)
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 // Transaction occured.
-func (r *PendingTransaction) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r PendingTransaction) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -100,16 +100,16 @@ func (r *PendingTransaction) GetCreatedAt() (CreatedAt string) {
 // For a Pending Transaction related to a transfer, this is the description you
 // provide. For a Pending Transaction related to a payment, this is the description
 // the vendor provides.
-func (r *PendingTransaction) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r PendingTransaction) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Pending Transaction identifier.
-func (r *PendingTransaction) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r PendingTransaction) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -117,16 +117,16 @@ func (r *PendingTransaction) GetID() (ID string) {
 
 // The identifier for the route this Pending Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *PendingTransaction) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r PendingTransaction) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
 // The type of the route this Pending Transaction came through.
-func (r *PendingTransaction) GetRouteType() (RouteType string) {
-	if r != nil && r.RouteType != nil {
+func (r PendingTransaction) GetRouteType() (RouteType string) {
+	if r.RouteType != nil {
 		RouteType = *r.RouteType
 	}
 	return
@@ -135,8 +135,8 @@ func (r *PendingTransaction) GetRouteType() (RouteType string) {
 // This is an object giving more details on the network-level event that caused the
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
-func (r *PendingTransaction) GetSource() (Source PendingTransactionSource) {
-	if r != nil && r.Source != nil {
+func (r PendingTransaction) GetSource() (Source PendingTransactionSource) {
+	if r.Source != nil {
 		Source = *r.Source
 	}
 	return
@@ -144,8 +144,8 @@ func (r *PendingTransaction) GetSource() (Source PendingTransactionSource) {
 
 // Whether the Pending Transaction has been confirmed and has an associated
 // Transaction.
-func (r *PendingTransaction) GetStatus() (Status PendingTransactionStatus) {
-	if r != nil && r.Status != nil {
+func (r PendingTransaction) GetStatus() (Status PendingTransactionStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -153,8 +153,8 @@ func (r *PendingTransaction) GetStatus() (Status PendingTransactionStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `pending_transaction`.
-func (r *PendingTransaction) GetType() (Type PendingTransactionType) {
-	if r != nil && r.Type != nil {
+func (r PendingTransaction) GetType() (Type PendingTransactionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -228,8 +228,8 @@ func (r *PendingTransactionSource) MarshalJSON() (data []byte, err error) {
 // The type of transaction that took place. We may add additional possible values
 // for this enum over time; your application should be able to handle such
 // additions gracefully.
-func (r *PendingTransactionSource) GetCategory() (Category PendingTransactionSourceCategory) {
-	if r != nil && r.Category != nil {
+func (r PendingTransactionSource) GetCategory() (Category PendingTransactionSourceCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -237,8 +237,8 @@ func (r *PendingTransactionSource) GetCategory() (Category PendingTransactionSou
 
 // A Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
-func (r *PendingTransactionSource) GetAccountTransferInstruction() (AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction) {
-	if r != nil && r.AccountTransferInstruction != nil {
+func (r PendingTransactionSource) GetAccountTransferInstruction() (AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction) {
+	if r.AccountTransferInstruction != nil {
 		AccountTransferInstruction = *r.AccountTransferInstruction
 	}
 	return
@@ -246,8 +246,8 @@ func (r *PendingTransactionSource) GetAccountTransferInstruction() (AccountTrans
 
 // A ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
-func (r *PendingTransactionSource) GetACHTransferInstruction() (ACHTransferInstruction PendingTransactionSourceACHTransferInstruction) {
-	if r != nil && r.ACHTransferInstruction != nil {
+func (r PendingTransactionSource) GetACHTransferInstruction() (ACHTransferInstruction PendingTransactionSourceACHTransferInstruction) {
+	if r.ACHTransferInstruction != nil {
 		ACHTransferInstruction = *r.ACHTransferInstruction
 	}
 	return
@@ -255,8 +255,8 @@ func (r *PendingTransactionSource) GetACHTransferInstruction() (ACHTransferInstr
 
 // A Card Authorization object. This field will be present in the JSON response if
 // and only if `category` is equal to `card_authorization`.
-func (r *PendingTransactionSource) GetCardAuthorization() (CardAuthorization PendingTransactionSourceCardAuthorization) {
-	if r != nil && r.CardAuthorization != nil {
+func (r PendingTransactionSource) GetCardAuthorization() (CardAuthorization PendingTransactionSourceCardAuthorization) {
+	if r.CardAuthorization != nil {
 		CardAuthorization = *r.CardAuthorization
 	}
 	return
@@ -264,8 +264,8 @@ func (r *PendingTransactionSource) GetCardAuthorization() (CardAuthorization Pen
 
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
-func (r *PendingTransactionSource) GetCheckDepositInstruction() (CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction) {
-	if r != nil && r.CheckDepositInstruction != nil {
+func (r PendingTransactionSource) GetCheckDepositInstruction() (CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction) {
+	if r.CheckDepositInstruction != nil {
 		CheckDepositInstruction = *r.CheckDepositInstruction
 	}
 	return
@@ -273,8 +273,8 @@ func (r *PendingTransactionSource) GetCheckDepositInstruction() (CheckDepositIns
 
 // A Check Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_instruction`.
-func (r *PendingTransactionSource) GetCheckTransferInstruction() (CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction) {
-	if r != nil && r.CheckTransferInstruction != nil {
+func (r PendingTransactionSource) GetCheckTransferInstruction() (CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction) {
+	if r.CheckTransferInstruction != nil {
 		CheckTransferInstruction = *r.CheckTransferInstruction
 	}
 	return
@@ -282,8 +282,8 @@ func (r *PendingTransactionSource) GetCheckTransferInstruction() (CheckTransferI
 
 // A Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
-func (r *PendingTransactionSource) GetInboundFundsHold() (InboundFundsHold PendingTransactionSourceInboundFundsHold) {
-	if r != nil && r.InboundFundsHold != nil {
+func (r PendingTransactionSource) GetInboundFundsHold() (InboundFundsHold PendingTransactionSourceInboundFundsHold) {
+	if r.InboundFundsHold != nil {
 		InboundFundsHold = *r.InboundFundsHold
 	}
 	return
@@ -291,8 +291,8 @@ func (r *PendingTransactionSource) GetInboundFundsHold() (InboundFundsHold Pendi
 
 // A Deprecated Card Authorization object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_route_authorization`.
-func (r *PendingTransactionSource) GetCardRouteAuthorization() (CardRouteAuthorization PendingTransactionSourceCardRouteAuthorization) {
-	if r != nil && r.CardRouteAuthorization != nil {
+func (r PendingTransactionSource) GetCardRouteAuthorization() (CardRouteAuthorization PendingTransactionSourceCardRouteAuthorization) {
+	if r.CardRouteAuthorization != nil {
 		CardRouteAuthorization = *r.CardRouteAuthorization
 	}
 	return
@@ -301,8 +301,8 @@ func (r *PendingTransactionSource) GetCardRouteAuthorization() (CardRouteAuthori
 // A Wire Drawdown Payment Instruction object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `wire_drawdown_payment_instruction`.
-func (r *PendingTransactionSource) GetWireDrawdownPaymentInstruction() (WireDrawdownPaymentInstruction PendingTransactionSourceWireDrawdownPaymentInstruction) {
-	if r != nil && r.WireDrawdownPaymentInstruction != nil {
+func (r PendingTransactionSource) GetWireDrawdownPaymentInstruction() (WireDrawdownPaymentInstruction PendingTransactionSourceWireDrawdownPaymentInstruction) {
+	if r.WireDrawdownPaymentInstruction != nil {
 		WireDrawdownPaymentInstruction = *r.WireDrawdownPaymentInstruction
 	}
 	return
@@ -310,8 +310,8 @@ func (r *PendingTransactionSource) GetWireDrawdownPaymentInstruction() (WireDraw
 
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
-func (r *PendingTransactionSource) GetWireTransferInstruction() (WireTransferInstruction PendingTransactionSourceWireTransferInstruction) {
-	if r != nil && r.WireTransferInstruction != nil {
+func (r PendingTransactionSource) GetWireTransferInstruction() (WireTransferInstruction PendingTransactionSourceWireTransferInstruction) {
+	if r.WireTransferInstruction != nil {
 		WireTransferInstruction = *r.WireTransferInstruction
 	}
 	return
@@ -366,8 +366,8 @@ func (r *PendingTransactionSourceAccountTransferInstruction) MarshalJSON() (data
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -375,16 +375,16 @@ func (r *PendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *PendingTransactionSourceAccountTransferInstruction) GetCurrency() (Currency PendingTransactionSourceAccountTransferInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceAccountTransferInstruction) GetCurrency() (Currency PendingTransactionSourceAccountTransferInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r PendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -431,16 +431,16 @@ func (r *PendingTransactionSourceACHTransferInstruction) MarshalJSON() (data []b
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The identifier of the ACH Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r PendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -499,16 +499,16 @@ func (r *PendingTransactionSourceCardAuthorization) MarshalJSON() (data []byte, 
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
 // is transacting with.
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r PendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
 // The merchant descriptor of the merchant the card is transacting with.
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r PendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
@@ -516,40 +516,40 @@ func (r *PendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (Mer
 
 // The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 // card is transacting with.
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r PendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
 // The city the merchant resides in.
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r PendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
 // The country the merchant resides in.
-func (r *PendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r PendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
 // The payment network used to process this card authorization
-func (r *PendingTransactionSourceCardAuthorization) GetNetwork() (Network PendingTransactionSourceCardAuthorizationNetwork) {
-	if r != nil && r.Network != nil {
+func (r PendingTransactionSourceCardAuthorization) GetNetwork() (Network PendingTransactionSourceCardAuthorizationNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // Fields specific to the `network`
-func (r *PendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails) {
-	if r != nil && r.NetworkDetails != nil {
+func (r PendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails) {
+	if r.NetworkDetails != nil {
 		NetworkDetails = *r.NetworkDetails
 	}
 	return
@@ -557,8 +557,8 @@ func (r *PendingTransactionSourceCardAuthorization) GetNetworkDetails() (Network
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -566,8 +566,8 @@ func (r *PendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *PendingTransactionSourceCardAuthorization) GetCurrency() (Currency PendingTransactionSourceCardAuthorizationCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceCardAuthorization) GetCurrency() (Currency PendingTransactionSourceCardAuthorizationCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -575,8 +575,8 @@ func (r *PendingTransactionSourceCardAuthorization) GetCurrency() (Currency Pend
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *PendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
-	if r != nil && r.RealTimeDecisionID != nil {
+func (r PendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r.RealTimeDecisionID != nil {
 		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
@@ -584,8 +584,8 @@ func (r *PendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (Rea
 
 // If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 // purchase), the identifier of the token that was used.
-func (r *PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
-	if r != nil && r.DigitalWalletTokenID != nil {
+func (r PendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r.DigitalWalletTokenID != nil {
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
@@ -623,8 +623,8 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) MarshalJSON() 
 }
 
 // Fields specific to the `visa` network
-func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
-	if r != nil && r.Visa != nil {
+func (r PendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
+	if r.Visa != nil {
 		Visa = *r.Visa
 	}
 	return
@@ -663,8 +663,8 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) MarshalJSO
 // For electronic commerce transactions, this identifies the level of security used
 // in obtaining the customer's payment credential. For mail or telephone order
 // transactions, identifies the type of mail or telephone order.
-func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
-	if r != nil && r.ElectronicCommerceIndicator != nil {
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r.ElectronicCommerceIndicator != nil {
 		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
 	}
 	return
@@ -672,8 +672,8 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectro
 
 // The method used to enter the cardholder's primary account number and card
 // expiration date
-func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r.PointOfServiceEntryMode != nil {
 		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
 	}
 	return
@@ -742,8 +742,8 @@ func (r *PendingTransactionSourceCheckDepositInstruction) MarshalJSON() (data []
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -751,8 +751,8 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount in
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currency PendingTransactionSourceCheckDepositInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currency PendingTransactionSourceCheckDepositInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -760,8 +760,8 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currenc
 
 // The identifier of the File containing the image of the front of the check that
 // was deposited.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
-	if r != nil && r.FrontImageFileID != nil {
+func (r PendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
+	if r.FrontImageFileID != nil {
 		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
@@ -769,16 +769,16 @@ func (r *PendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() 
 
 // The identifier of the File containing the image of the back of the check that
 // was deposited.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
-	if r != nil && r.BackImageFileID != nil {
+func (r PendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
+	if r.BackImageFileID != nil {
 		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
 
 // The identifier of the Check Deposit.
-func (r *PendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r PendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -828,8 +828,8 @@ func (r *PendingTransactionSourceCheckTransferInstruction) MarshalJSON() (data [
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -837,16 +837,16 @@ func (r *PendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount i
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
-func (r *PendingTransactionSourceCheckTransferInstruction) GetCurrency() (Currency PendingTransactionSourceCheckTransferInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceCheckTransferInstruction) GetCurrency() (Currency PendingTransactionSourceCheckTransferInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Check Transfer that led to this Pending Transaction.
-func (r *PendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r PendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -902,8 +902,8 @@ func (r *PendingTransactionSourceInboundFundsHold) MarshalJSON() (data []byte, e
 
 // The held amount in the minor unit of the account's currency. For dollars, for
 // example, this is cents.
-func (r *PendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -911,8 +911,8 @@ func (r *PendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 // currency.
-func (r *PendingTransactionSourceInboundFundsHold) GetCurrency() (Currency PendingTransactionSourceInboundFundsHoldCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetCurrency() (Currency PendingTransactionSourceInboundFundsHoldCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -920,32 +920,32 @@ func (r *PendingTransactionSourceInboundFundsHold) GetCurrency() (Currency Pendi
 
 // When the hold will be released automatically. Certain conditions may cause it to
 // be released before this time.
-func (r *PendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
-	if r != nil && r.AutomaticallyReleasesAt != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
+	if r.AutomaticallyReleasesAt != nil {
 		AutomaticallyReleasesAt = *r.AutomaticallyReleasesAt
 	}
 	return
 }
 
 // When the hold was released (if it has been released).
-func (r *PendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
-	if r != nil && r.ReleasedAt != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
+	if r.ReleasedAt != nil {
 		ReleasedAt = *r.ReleasedAt
 	}
 	return
 }
 
 // The status of the hold.
-func (r *PendingTransactionSourceInboundFundsHold) GetStatus() (Status PendingTransactionSourceInboundFundsHoldStatus) {
-	if r != nil && r.Status != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetStatus() (Status PendingTransactionSourceInboundFundsHoldStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The ID of the Transaction for which funds were held.
-func (r *PendingTransactionSourceInboundFundsHold) GetHeldTransactionID() (HeldTransactionID string) {
-	if r != nil && r.HeldTransactionID != nil {
+func (r PendingTransactionSourceInboundFundsHold) GetHeldTransactionID() (HeldTransactionID string) {
+	if r.HeldTransactionID != nil {
 		HeldTransactionID = *r.HeldTransactionID
 	}
 	return
@@ -1006,8 +1006,8 @@ func (r *PendingTransactionSourceCardRouteAuthorization) MarshalJSON() (data []b
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1015,50 +1015,50 @@ func (r *PendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *PendingTransactionSourceCardRouteAuthorization) GetCurrency() (Currency PendingTransactionSourceCardRouteAuthorizationCurrency) {
-	if r != nil && r.Currency != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetCurrency() (Currency PendingTransactionSourceCardRouteAuthorizationCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
-func (r *PendingTransactionSourceCardRouteAuthorization) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r PendingTransactionSourceCardRouteAuthorization) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
@@ -1106,29 +1106,29 @@ func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) MarshalJSON() (
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r PendingTransactionSourceWireDrawdownPaymentInstruction) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r PendingTransactionSourceWireDrawdownPaymentInstruction) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r PendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
@@ -1166,36 +1166,36 @@ func (r *PendingTransactionSourceWireTransferInstruction) MarshalJSON() (data []
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *PendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r PendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireTransferInstruction) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r PendingTransactionSourceWireTransferInstruction) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireTransferInstruction) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r PendingTransactionSourceWireTransferInstruction) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireTransferInstruction) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r PendingTransactionSourceWireTransferInstruction) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
-func (r *PendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r PendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -1255,8 +1255,8 @@ func (r *PendingTransactionListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *PendingTransactionListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r PendingTransactionListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -1264,39 +1264,39 @@ func (r *PendingTransactionListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *PendingTransactionListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r PendingTransactionListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter pending transactions to those belonging to the specified Account.
-func (r *PendingTransactionListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r PendingTransactionListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter pending transactions to those belonging to the specified Route.
-func (r *PendingTransactionListParams) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r PendingTransactionListParams) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
 // Filter pending transactions to those caused by the specified source.
-func (r *PendingTransactionListParams) GetSourceID() (SourceID string) {
-	if r != nil && r.SourceID != nil {
+func (r PendingTransactionListParams) GetSourceID() (SourceID string) {
+	if r.SourceID != nil {
 		SourceID = *r.SourceID
 	}
 	return
 }
 
-func (r *PendingTransactionListParams) GetStatus() (Status PendingTransactionsListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r PendingTransactionListParams) GetStatus() (Status PendingTransactionsListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -1335,8 +1335,8 @@ func (r *PendingTransactionsListParamsStatus) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
-	if r != nil && r.In != nil {
+func (r PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -1382,16 +1382,16 @@ func (r *PendingTransactionList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *PendingTransactionList) GetData() (Data []PendingTransaction) {
-	if r != nil && r.Data != nil {
+func (r PendingTransactionList) GetData() (Data []PendingTransaction) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *PendingTransactionList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r PendingTransactionList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

@@ -36,8 +36,8 @@ func (r *DigitalWalletTokenRequestCreateResponse) MarshalJSON() (data []byte, er
 
 // If the simulated tokenization attempt was declined, this field contains details
 // as to why.
-func (r *DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineReason DigitalWalletTokenRequestCreateResponseDeclineReason) {
-	if r != nil && r.DeclineReason != nil {
+func (r DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineReason DigitalWalletTokenRequestCreateResponseDeclineReason) {
+	if r.DeclineReason != nil {
 		DeclineReason = *r.DeclineReason
 	}
 	return
@@ -45,8 +45,8 @@ func (r *DigitalWalletTokenRequestCreateResponse) GetDeclineReason() (DeclineRea
 
 // If the simulated tokenization attempt was accepted, this field contains the id
 // of the Digital Wallet Token that was created.
-func (r *DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
-	if r != nil && r.DigitalWalletTokenID != nil {
+func (r DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r.DigitalWalletTokenID != nil {
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
@@ -54,8 +54,8 @@ func (r *DigitalWalletTokenRequestCreateResponse) GetDigitalWalletTokenID() (Dig
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_digital_wallet_token_request_simulation_result`.
-func (r *DigitalWalletTokenRequestCreateResponse) GetType() (Type DigitalWalletTokenRequestCreateResponseType) {
-	if r != nil && r.Type != nil {
+func (r DigitalWalletTokenRequestCreateResponse) GetType() (Type DigitalWalletTokenRequestCreateResponseType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -102,8 +102,8 @@ func (r *SimulateDigitalWalletProvisioningForACardParameters) MarshalJSON() (dat
 }
 
 // The identifier of the Card to be authorized.
-func (r *SimulateDigitalWalletProvisioningForACardParameters) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r SimulateDigitalWalletProvisioningForACardParameters) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return

@@ -29,8 +29,8 @@ func (r *SimulateAnAccountStatementBeingCreatedParameters) MarshalJSON() (data [
 }
 
 // The identifier of the Account the statement is for.
-func (r *SimulateAnAccountStatementBeingCreatedParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r SimulateAnAccountStatementBeingCreatedParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return

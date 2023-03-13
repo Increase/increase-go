@@ -60,8 +60,8 @@ func (r *Transaction) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the Account the Transaction belongs to.
-func (r *Transaction) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r Transaction) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -69,8 +69,8 @@ func (r *Transaction) GetAccountID() (AccountID string) {
 
 // The Transaction amount in the minor unit of its currency. For dollars, for
 // example, this is cents.
-func (r *Transaction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r Transaction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -79,8 +79,8 @@ func (r *Transaction) GetAmount() (Amount int64) {
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // Transaction's currency. This will match the currency on the Transcation's
 // Account.
-func (r *Transaction) GetCurrency() (Currency TransactionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r Transaction) GetCurrency() (Currency TransactionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -88,8 +88,8 @@ func (r *Transaction) GetCurrency() (Currency TransactionCurrency) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r *Transaction) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Transaction) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -98,16 +98,16 @@ func (r *Transaction) GetCreatedAt() (CreatedAt string) {
 // For a Transaction related to a transfer, this is the description you provide.
 // For a Transaction related to a payment, this is the description the vendor
 // provides.
-func (r *Transaction) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r Transaction) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Transaction identifier.
-func (r *Transaction) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Transaction) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -115,16 +115,16 @@ func (r *Transaction) GetID() (ID string) {
 
 // The identifier for the route this Transaction came through. Routes are things
 // like cards and ACH details.
-func (r *Transaction) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r Transaction) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
 // The type of the route this Transaction came through.
-func (r *Transaction) GetRouteType() (RouteType string) {
-	if r != nil && r.RouteType != nil {
+func (r Transaction) GetRouteType() (RouteType string) {
+	if r.RouteType != nil {
 		RouteType = *r.RouteType
 	}
 	return
@@ -134,8 +134,8 @@ func (r *Transaction) GetRouteType() (RouteType string) {
 // Transaction. Note that for backwards compatibility reasons, additional
 // undocumented keys may appear in this object. These should be treated as
 // deprecated and will be removed in the future.
-func (r *Transaction) GetSource() (Source TransactionSource) {
-	if r != nil && r.Source != nil {
+func (r Transaction) GetSource() (Source TransactionSource) {
+	if r.Source != nil {
 		Source = *r.Source
 	}
 	return
@@ -143,8 +143,8 @@ func (r *Transaction) GetSource() (Source TransactionSource) {
 
 // A constant representing the object's type. For this resource it will always be
 // `transaction`.
-func (r *Transaction) GetType() (Type TransactionType) {
-	if r != nil && r.Type != nil {
+func (r Transaction) GetType() (Type TransactionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -298,8 +298,8 @@ func (r *TransactionSource) MarshalJSON() (data []byte, err error) {
 // The type of transaction that took place. We may add additional possible values
 // for this enum over time; your application should be able to handle such
 // additions gracefully.
-func (r *TransactionSource) GetCategory() (Category TransactionSourceCategory) {
-	if r != nil && r.Category != nil {
+func (r TransactionSource) GetCategory() (Category TransactionSourceCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -307,8 +307,8 @@ func (r *TransactionSource) GetCategory() (Category TransactionSourceCategory) {
 
 // A Account Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_intention`.
-func (r *TransactionSource) GetAccountTransferIntention() (AccountTransferIntention TransactionSourceAccountTransferIntention) {
-	if r != nil && r.AccountTransferIntention != nil {
+func (r TransactionSource) GetAccountTransferIntention() (AccountTransferIntention TransactionSourceAccountTransferIntention) {
+	if r.AccountTransferIntention != nil {
 		AccountTransferIntention = *r.AccountTransferIntention
 	}
 	return
@@ -316,8 +316,8 @@ func (r *TransactionSource) GetAccountTransferIntention() (AccountTransferIntent
 
 // A ACH Check Conversion Return object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_check_conversion_return`.
-func (r *TransactionSource) GetACHCheckConversionReturn() (ACHCheckConversionReturn TransactionSourceACHCheckConversionReturn) {
-	if r != nil && r.ACHCheckConversionReturn != nil {
+func (r TransactionSource) GetACHCheckConversionReturn() (ACHCheckConversionReturn TransactionSourceACHCheckConversionReturn) {
+	if r.ACHCheckConversionReturn != nil {
 		ACHCheckConversionReturn = *r.ACHCheckConversionReturn
 	}
 	return
@@ -325,8 +325,8 @@ func (r *TransactionSource) GetACHCheckConversionReturn() (ACHCheckConversionRet
 
 // A ACH Check Conversion object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_check_conversion`.
-func (r *TransactionSource) GetACHCheckConversion() (ACHCheckConversion TransactionSourceACHCheckConversion) {
-	if r != nil && r.ACHCheckConversion != nil {
+func (r TransactionSource) GetACHCheckConversion() (ACHCheckConversion TransactionSourceACHCheckConversion) {
+	if r.ACHCheckConversion != nil {
 		ACHCheckConversion = *r.ACHCheckConversion
 	}
 	return
@@ -334,8 +334,8 @@ func (r *TransactionSource) GetACHCheckConversion() (ACHCheckConversion Transact
 
 // A ACH Transfer Intention object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_intention`.
-func (r *TransactionSource) GetACHTransferIntention() (ACHTransferIntention TransactionSourceACHTransferIntention) {
-	if r != nil && r.ACHTransferIntention != nil {
+func (r TransactionSource) GetACHTransferIntention() (ACHTransferIntention TransactionSourceACHTransferIntention) {
+	if r.ACHTransferIntention != nil {
 		ACHTransferIntention = *r.ACHTransferIntention
 	}
 	return
@@ -343,8 +343,8 @@ func (r *TransactionSource) GetACHTransferIntention() (ACHTransferIntention Tran
 
 // A ACH Transfer Rejection object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_rejection`.
-func (r *TransactionSource) GetACHTransferRejection() (ACHTransferRejection TransactionSourceACHTransferRejection) {
-	if r != nil && r.ACHTransferRejection != nil {
+func (r TransactionSource) GetACHTransferRejection() (ACHTransferRejection TransactionSourceACHTransferRejection) {
+	if r.ACHTransferRejection != nil {
 		ACHTransferRejection = *r.ACHTransferRejection
 	}
 	return
@@ -352,8 +352,8 @@ func (r *TransactionSource) GetACHTransferRejection() (ACHTransferRejection Tran
 
 // A ACH Transfer Return object. This field will be present in the JSON response if
 // and only if `category` is equal to `ach_transfer_return`.
-func (r *TransactionSource) GetACHTransferReturn() (ACHTransferReturn TransactionSourceACHTransferReturn) {
-	if r != nil && r.ACHTransferReturn != nil {
+func (r TransactionSource) GetACHTransferReturn() (ACHTransferReturn TransactionSourceACHTransferReturn) {
+	if r.ACHTransferReturn != nil {
 		ACHTransferReturn = *r.ACHTransferReturn
 	}
 	return
@@ -361,8 +361,8 @@ func (r *TransactionSource) GetACHTransferReturn() (ACHTransferReturn Transactio
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_dispute_acceptance`.
-func (r *TransactionSource) GetCardDisputeAcceptance() (CardDisputeAcceptance TransactionSourceCardDisputeAcceptance) {
-	if r != nil && r.CardDisputeAcceptance != nil {
+func (r TransactionSource) GetCardDisputeAcceptance() (CardDisputeAcceptance TransactionSourceCardDisputeAcceptance) {
+	if r.CardDisputeAcceptance != nil {
 		CardDisputeAcceptance = *r.CardDisputeAcceptance
 	}
 	return
@@ -370,8 +370,8 @@ func (r *TransactionSource) GetCardDisputeAcceptance() (CardDisputeAcceptance Tr
 
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`.
-func (r *TransactionSource) GetCardRefund() (CardRefund TransactionSourceCardRefund) {
-	if r != nil && r.CardRefund != nil {
+func (r TransactionSource) GetCardRefund() (CardRefund TransactionSourceCardRefund) {
+	if r.CardRefund != nil {
 		CardRefund = *r.CardRefund
 	}
 	return
@@ -379,8 +379,8 @@ func (r *TransactionSource) GetCardRefund() (CardRefund TransactionSourceCardRef
 
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
-func (r *TransactionSource) GetCardSettlement() (CardSettlement TransactionSourceCardSettlement) {
-	if r != nil && r.CardSettlement != nil {
+func (r TransactionSource) GetCardSettlement() (CardSettlement TransactionSourceCardSettlement) {
+	if r.CardSettlement != nil {
 		CardSettlement = *r.CardSettlement
 	}
 	return
@@ -388,8 +388,8 @@ func (r *TransactionSource) GetCardSettlement() (CardSettlement TransactionSourc
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_acceptance`.
-func (r *TransactionSource) GetCheckDepositAcceptance() (CheckDepositAcceptance TransactionSourceCheckDepositAcceptance) {
-	if r != nil && r.CheckDepositAcceptance != nil {
+func (r TransactionSource) GetCheckDepositAcceptance() (CheckDepositAcceptance TransactionSourceCheckDepositAcceptance) {
+	if r.CheckDepositAcceptance != nil {
 		CheckDepositAcceptance = *r.CheckDepositAcceptance
 	}
 	return
@@ -397,8 +397,8 @@ func (r *TransactionSource) GetCheckDepositAcceptance() (CheckDepositAcceptance 
 
 // A Check Deposit Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_deposit_return`.
-func (r *TransactionSource) GetCheckDepositReturn() (CheckDepositReturn TransactionSourceCheckDepositReturn) {
-	if r != nil && r.CheckDepositReturn != nil {
+func (r TransactionSource) GetCheckDepositReturn() (CheckDepositReturn TransactionSourceCheckDepositReturn) {
+	if r.CheckDepositReturn != nil {
 		CheckDepositReturn = *r.CheckDepositReturn
 	}
 	return
@@ -406,8 +406,8 @@ func (r *TransactionSource) GetCheckDepositReturn() (CheckDepositReturn Transact
 
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
-func (r *TransactionSource) GetCheckTransferIntention() (CheckTransferIntention TransactionSourceCheckTransferIntention) {
-	if r != nil && r.CheckTransferIntention != nil {
+func (r TransactionSource) GetCheckTransferIntention() (CheckTransferIntention TransactionSourceCheckTransferIntention) {
+	if r.CheckTransferIntention != nil {
 		CheckTransferIntention = *r.CheckTransferIntention
 	}
 	return
@@ -415,8 +415,8 @@ func (r *TransactionSource) GetCheckTransferIntention() (CheckTransferIntention 
 
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
-func (r *TransactionSource) GetCheckTransferReturn() (CheckTransferReturn TransactionSourceCheckTransferReturn) {
-	if r != nil && r.CheckTransferReturn != nil {
+func (r TransactionSource) GetCheckTransferReturn() (CheckTransferReturn TransactionSourceCheckTransferReturn) {
+	if r.CheckTransferReturn != nil {
 		CheckTransferReturn = *r.CheckTransferReturn
 	}
 	return
@@ -424,8 +424,8 @@ func (r *TransactionSource) GetCheckTransferReturn() (CheckTransferReturn Transa
 
 // A Check Transfer Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_rejection`.
-func (r *TransactionSource) GetCheckTransferRejection() (CheckTransferRejection TransactionSourceCheckTransferRejection) {
-	if r != nil && r.CheckTransferRejection != nil {
+func (r TransactionSource) GetCheckTransferRejection() (CheckTransferRejection TransactionSourceCheckTransferRejection) {
+	if r.CheckTransferRejection != nil {
 		CheckTransferRejection = *r.CheckTransferRejection
 	}
 	return
@@ -434,8 +434,8 @@ func (r *TransactionSource) GetCheckTransferRejection() (CheckTransferRejection 
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
-func (r *TransactionSource) GetCheckTransferStopPaymentRequest() (CheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequest) {
-	if r != nil && r.CheckTransferStopPaymentRequest != nil {
+func (r TransactionSource) GetCheckTransferStopPaymentRequest() (CheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequest) {
+	if r.CheckTransferStopPaymentRequest != nil {
 		CheckTransferStopPaymentRequest = *r.CheckTransferStopPaymentRequest
 	}
 	return
@@ -443,8 +443,8 @@ func (r *TransactionSource) GetCheckTransferStopPaymentRequest() (CheckTransferS
 
 // A Dispute Resolution object. This field will be present in the JSON response if
 // and only if `category` is equal to `dispute_resolution`.
-func (r *TransactionSource) GetDisputeResolution() (DisputeResolution TransactionSourceDisputeResolution) {
-	if r != nil && r.DisputeResolution != nil {
+func (r TransactionSource) GetDisputeResolution() (DisputeResolution TransactionSourceDisputeResolution) {
+	if r.DisputeResolution != nil {
 		DisputeResolution = *r.DisputeResolution
 	}
 	return
@@ -452,8 +452,8 @@ func (r *TransactionSource) GetDisputeResolution() (DisputeResolution Transactio
 
 // A Empyreal Cash Deposit object. This field will be present in the JSON response
 // if and only if `category` is equal to `empyreal_cash_deposit`.
-func (r *TransactionSource) GetEmpyrealCashDeposit() (EmpyrealCashDeposit TransactionSourceEmpyrealCashDeposit) {
-	if r != nil && r.EmpyrealCashDeposit != nil {
+func (r TransactionSource) GetEmpyrealCashDeposit() (EmpyrealCashDeposit TransactionSourceEmpyrealCashDeposit) {
+	if r.EmpyrealCashDeposit != nil {
 		EmpyrealCashDeposit = *r.EmpyrealCashDeposit
 	}
 	return
@@ -461,8 +461,8 @@ func (r *TransactionSource) GetEmpyrealCashDeposit() (EmpyrealCashDeposit Transa
 
 // A Inbound ACH Transfer object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_ach_transfer`.
-func (r *TransactionSource) GetInboundACHTransfer() (InboundACHTransfer TransactionSourceInboundACHTransfer) {
-	if r != nil && r.InboundACHTransfer != nil {
+func (r TransactionSource) GetInboundACHTransfer() (InboundACHTransfer TransactionSourceInboundACHTransfer) {
+	if r.InboundACHTransfer != nil {
 		InboundACHTransfer = *r.InboundACHTransfer
 	}
 	return
@@ -470,8 +470,8 @@ func (r *TransactionSource) GetInboundACHTransfer() (InboundACHTransfer Transact
 
 // A Inbound Check object. This field will be present in the JSON response if and
 // only if `category` is equal to `inbound_check`.
-func (r *TransactionSource) GetInboundCheck() (InboundCheck TransactionSourceInboundCheck) {
-	if r != nil && r.InboundCheck != nil {
+func (r TransactionSource) GetInboundCheck() (InboundCheck TransactionSourceInboundCheck) {
+	if r.InboundCheck != nil {
 		InboundCheck = *r.InboundCheck
 	}
 	return
@@ -480,8 +480,8 @@ func (r *TransactionSource) GetInboundCheck() (InboundCheck TransactionSourceInb
 // A Inbound International ACH Transfer object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `inbound_international_ach_transfer`.
-func (r *TransactionSource) GetInboundInternationalACHTransfer() (InboundInternationalACHTransfer TransactionSourceInboundInternationalACHTransfer) {
-	if r != nil && r.InboundInternationalACHTransfer != nil {
+func (r TransactionSource) GetInboundInternationalACHTransfer() (InboundInternationalACHTransfer TransactionSourceInboundInternationalACHTransfer) {
+	if r.InboundInternationalACHTransfer != nil {
 		InboundInternationalACHTransfer = *r.InboundInternationalACHTransfer
 	}
 	return
@@ -490,8 +490,8 @@ func (r *TransactionSource) GetInboundInternationalACHTransfer() (InboundInterna
 // A Inbound Real Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
-func (r *TransactionSource) GetInboundRealTimePaymentsTransferConfirmation() (InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation) {
-	if r != nil && r.InboundRealTimePaymentsTransferConfirmation != nil {
+func (r TransactionSource) GetInboundRealTimePaymentsTransferConfirmation() (InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation) {
+	if r.InboundRealTimePaymentsTransferConfirmation != nil {
 		InboundRealTimePaymentsTransferConfirmation = *r.InboundRealTimePaymentsTransferConfirmation
 	}
 	return
@@ -500,8 +500,8 @@ func (r *TransactionSource) GetInboundRealTimePaymentsTransferConfirmation() (In
 // A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
-func (r *TransactionSource) GetInboundWireDrawdownPaymentReversal() (InboundWireDrawdownPaymentReversal TransactionSourceInboundWireDrawdownPaymentReversal) {
-	if r != nil && r.InboundWireDrawdownPaymentReversal != nil {
+func (r TransactionSource) GetInboundWireDrawdownPaymentReversal() (InboundWireDrawdownPaymentReversal TransactionSourceInboundWireDrawdownPaymentReversal) {
+	if r.InboundWireDrawdownPaymentReversal != nil {
 		InboundWireDrawdownPaymentReversal = *r.InboundWireDrawdownPaymentReversal
 	}
 	return
@@ -509,8 +509,8 @@ func (r *TransactionSource) GetInboundWireDrawdownPaymentReversal() (InboundWire
 
 // A Inbound Wire Drawdown Payment object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-func (r *TransactionSource) GetInboundWireDrawdownPayment() (InboundWireDrawdownPayment TransactionSourceInboundWireDrawdownPayment) {
-	if r != nil && r.InboundWireDrawdownPayment != nil {
+func (r TransactionSource) GetInboundWireDrawdownPayment() (InboundWireDrawdownPayment TransactionSourceInboundWireDrawdownPayment) {
+	if r.InboundWireDrawdownPayment != nil {
 		InboundWireDrawdownPayment = *r.InboundWireDrawdownPayment
 	}
 	return
@@ -518,8 +518,8 @@ func (r *TransactionSource) GetInboundWireDrawdownPayment() (InboundWireDrawdown
 
 // A Inbound Wire Reversal object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_reversal`.
-func (r *TransactionSource) GetInboundWireReversal() (InboundWireReversal TransactionSourceInboundWireReversal) {
-	if r != nil && r.InboundWireReversal != nil {
+func (r TransactionSource) GetInboundWireReversal() (InboundWireReversal TransactionSourceInboundWireReversal) {
+	if r.InboundWireReversal != nil {
 		InboundWireReversal = *r.InboundWireReversal
 	}
 	return
@@ -527,8 +527,8 @@ func (r *TransactionSource) GetInboundWireReversal() (InboundWireReversal Transa
 
 // A Inbound Wire Transfer object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_transfer`.
-func (r *TransactionSource) GetInboundWireTransfer() (InboundWireTransfer TransactionSourceInboundWireTransfer) {
-	if r != nil && r.InboundWireTransfer != nil {
+func (r TransactionSource) GetInboundWireTransfer() (InboundWireTransfer TransactionSourceInboundWireTransfer) {
+	if r.InboundWireTransfer != nil {
 		InboundWireTransfer = *r.InboundWireTransfer
 	}
 	return
@@ -536,8 +536,8 @@ func (r *TransactionSource) GetInboundWireTransfer() (InboundWireTransfer Transa
 
 // A Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
-func (r *TransactionSource) GetInterestPayment() (InterestPayment TransactionSourceInterestPayment) {
-	if r != nil && r.InterestPayment != nil {
+func (r TransactionSource) GetInterestPayment() (InterestPayment TransactionSourceInterestPayment) {
+	if r.InterestPayment != nil {
 		InterestPayment = *r.InterestPayment
 	}
 	return
@@ -545,8 +545,8 @@ func (r *TransactionSource) GetInterestPayment() (InterestPayment TransactionSou
 
 // A Internal Source object. This field will be present in the JSON response if and
 // only if `category` is equal to `internal_source`.
-func (r *TransactionSource) GetInternalSource() (InternalSource TransactionSourceInternalSource) {
-	if r != nil && r.InternalSource != nil {
+func (r TransactionSource) GetInternalSource() (InternalSource TransactionSourceInternalSource) {
+	if r.InternalSource != nil {
 		InternalSource = *r.InternalSource
 	}
 	return
@@ -554,8 +554,8 @@ func (r *TransactionSource) GetInternalSource() (InternalSource TransactionSourc
 
 // A Deprecated Card Refund object. This field will be present in the JSON response
 // if and only if `category` is equal to `card_route_refund`.
-func (r *TransactionSource) GetCardRouteRefund() (CardRouteRefund TransactionSourceCardRouteRefund) {
-	if r != nil && r.CardRouteRefund != nil {
+func (r TransactionSource) GetCardRouteRefund() (CardRouteRefund TransactionSourceCardRouteRefund) {
+	if r.CardRouteRefund != nil {
 		CardRouteRefund = *r.CardRouteRefund
 	}
 	return
@@ -563,8 +563,8 @@ func (r *TransactionSource) GetCardRouteRefund() (CardRouteRefund TransactionSou
 
 // A Deprecated Card Settlement object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_route_settlement`.
-func (r *TransactionSource) GetCardRouteSettlement() (CardRouteSettlement TransactionSourceCardRouteSettlement) {
-	if r != nil && r.CardRouteSettlement != nil {
+func (r TransactionSource) GetCardRouteSettlement() (CardRouteSettlement TransactionSourceCardRouteSettlement) {
+	if r.CardRouteSettlement != nil {
 		CardRouteSettlement = *r.CardRouteSettlement
 	}
 	return
@@ -572,8 +572,8 @@ func (r *TransactionSource) GetCardRouteSettlement() (CardRouteSettlement Transa
 
 // A Sample Funds object. This field will be present in the JSON response if and
 // only if `category` is equal to `sample_funds`.
-func (r *TransactionSource) GetSampleFunds() (SampleFunds TransactionSourceSampleFunds) {
-	if r != nil && r.SampleFunds != nil {
+func (r TransactionSource) GetSampleFunds() (SampleFunds TransactionSourceSampleFunds) {
+	if r.SampleFunds != nil {
 		SampleFunds = *r.SampleFunds
 	}
 	return
@@ -582,8 +582,8 @@ func (r *TransactionSource) GetSampleFunds() (SampleFunds TransactionSourceSampl
 // A Wire Drawdown Payment Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to
 // `wire_drawdown_payment_intention`.
-func (r *TransactionSource) GetWireDrawdownPaymentIntention() (WireDrawdownPaymentIntention TransactionSourceWireDrawdownPaymentIntention) {
-	if r != nil && r.WireDrawdownPaymentIntention != nil {
+func (r TransactionSource) GetWireDrawdownPaymentIntention() (WireDrawdownPaymentIntention TransactionSourceWireDrawdownPaymentIntention) {
+	if r.WireDrawdownPaymentIntention != nil {
 		WireDrawdownPaymentIntention = *r.WireDrawdownPaymentIntention
 	}
 	return
@@ -592,8 +592,8 @@ func (r *TransactionSource) GetWireDrawdownPaymentIntention() (WireDrawdownPayme
 // A Wire Drawdown Payment Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to
 // `wire_drawdown_payment_rejection`.
-func (r *TransactionSource) GetWireDrawdownPaymentRejection() (WireDrawdownPaymentRejection TransactionSourceWireDrawdownPaymentRejection) {
-	if r != nil && r.WireDrawdownPaymentRejection != nil {
+func (r TransactionSource) GetWireDrawdownPaymentRejection() (WireDrawdownPaymentRejection TransactionSourceWireDrawdownPaymentRejection) {
+	if r.WireDrawdownPaymentRejection != nil {
 		WireDrawdownPaymentRejection = *r.WireDrawdownPaymentRejection
 	}
 	return
@@ -601,8 +601,8 @@ func (r *TransactionSource) GetWireDrawdownPaymentRejection() (WireDrawdownPayme
 
 // A Wire Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_intention`.
-func (r *TransactionSource) GetWireTransferIntention() (WireTransferIntention TransactionSourceWireTransferIntention) {
-	if r != nil && r.WireTransferIntention != nil {
+func (r TransactionSource) GetWireTransferIntention() (WireTransferIntention TransactionSourceWireTransferIntention) {
+	if r.WireTransferIntention != nil {
 		WireTransferIntention = *r.WireTransferIntention
 	}
 	return
@@ -610,8 +610,8 @@ func (r *TransactionSource) GetWireTransferIntention() (WireTransferIntention Tr
 
 // A Wire Transfer Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_rejection`.
-func (r *TransactionSource) GetWireTransferRejection() (WireTransferRejection TransactionSourceWireTransferRejection) {
-	if r != nil && r.WireTransferRejection != nil {
+func (r TransactionSource) GetWireTransferRejection() (WireTransferRejection TransactionSourceWireTransferRejection) {
+	if r.WireTransferRejection != nil {
 		WireTransferRejection = *r.WireTransferRejection
 	}
 	return
@@ -699,8 +699,8 @@ func (r *TransactionSourceAccountTransferIntention) MarshalJSON() (data []byte, 
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -708,40 +708,40 @@ func (r *TransactionSourceAccountTransferIntention) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *TransactionSourceAccountTransferIntention) GetCurrency() (Currency TransactionSourceAccountTransferIntentionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceAccountTransferIntention) GetCurrency() (Currency TransactionSourceAccountTransferIntentionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The description you chose to give the transfer.
-func (r *TransactionSourceAccountTransferIntention) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r TransactionSourceAccountTransferIntention) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The identifier of the Account to where the Account Transfer was sent.
-func (r *TransactionSourceAccountTransferIntention) GetDestinationAccountID() (DestinationAccountID string) {
-	if r != nil && r.DestinationAccountID != nil {
+func (r TransactionSourceAccountTransferIntention) GetDestinationAccountID() (DestinationAccountID string) {
+	if r.DestinationAccountID != nil {
 		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The identifier of the Account from where the Account Transfer was sent.
-func (r *TransactionSourceAccountTransferIntention) GetSourceAccountID() (SourceAccountID string) {
-	if r != nil && r.SourceAccountID != nil {
+func (r TransactionSourceAccountTransferIntention) GetSourceAccountID() (SourceAccountID string) {
+	if r.SourceAccountID != nil {
 		SourceAccountID = *r.SourceAccountID
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *TransactionSourceAccountTransferIntention) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceAccountTransferIntention) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -788,16 +788,16 @@ func (r *TransactionSourceACHCheckConversionReturn) MarshalJSON() (data []byte, 
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceACHCheckConversionReturn) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // Why the transfer was returned.
-func (r *TransactionSourceACHCheckConversionReturn) GetReturnReasonCode() (ReturnReasonCode string) {
-	if r != nil && r.ReturnReasonCode != nil {
+func (r TransactionSourceACHCheckConversionReturn) GetReturnReasonCode() (ReturnReasonCode string) {
+	if r.ReturnReasonCode != nil {
 		ReturnReasonCode = *r.ReturnReasonCode
 	}
 	return
@@ -832,16 +832,16 @@ func (r *TransactionSourceACHCheckConversion) MarshalJSON() (data []byte, err er
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceACHCheckConversion) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The identifier of the File containing an image of the returned check.
-func (r *TransactionSourceACHCheckConversion) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r TransactionSourceACHCheckConversion) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -879,37 +879,37 @@ func (r *TransactionSourceACHTransferIntention) MarshalJSON() (data []byte, err 
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceACHTransferIntention) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceACHTransferIntention) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r TransactionSourceACHTransferIntention) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *TransactionSourceACHTransferIntention) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r TransactionSourceACHTransferIntention) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *TransactionSourceACHTransferIntention) GetStatementDescriptor() (StatementDescriptor string) {
-	if r != nil && r.StatementDescriptor != nil {
+func (r TransactionSourceACHTransferIntention) GetStatementDescriptor() (StatementDescriptor string) {
+	if r.StatementDescriptor != nil {
 		StatementDescriptor = *r.StatementDescriptor
 	}
 	return
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *TransactionSourceACHTransferIntention) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceACHTransferIntention) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -940,8 +940,8 @@ func (r *TransactionSourceACHTransferRejection) MarshalJSON() (data []byte, err 
 }
 
 // The identifier of the ACH Transfer that led to this Transaction.
-func (r *TransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceACHTransferRejection) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -980,32 +980,32 @@ func (r *TransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err err
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *TransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r TransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // Why the ACH Transfer was returned.
-func (r *TransactionSourceACHTransferReturn) GetReturnReasonCode() (ReturnReasonCode TransactionSourceACHTransferReturnReturnReasonCode) {
-	if r != nil && r.ReturnReasonCode != nil {
+func (r TransactionSourceACHTransferReturn) GetReturnReasonCode() (ReturnReasonCode TransactionSourceACHTransferReturnReturnReasonCode) {
+	if r.ReturnReasonCode != nil {
 		ReturnReasonCode = *r.ReturnReasonCode
 	}
 	return
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *TransactionSourceACHTransferReturn) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceACHTransferReturn) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *TransactionSourceACHTransferReturn) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r TransactionSourceACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -1071,16 +1071,16 @@ func (r *TransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
-func (r *TransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
-	if r != nil && r.AcceptedAt != nil {
+func (r TransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
+	if r.AcceptedAt != nil {
 		AcceptedAt = *r.AcceptedAt
 	}
 	return
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *TransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
-	if r != nil && r.CardDisputeID != nil {
+func (r TransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r.CardDisputeID != nil {
 		CardDisputeID = *r.CardDisputeID
 	}
 	return
@@ -1088,8 +1088,8 @@ func (r *TransactionSourceCardDisputeAcceptance) GetCardDisputeID() (CardDispute
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *TransactionSourceCardDisputeAcceptance) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r TransactionSourceCardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -1130,8 +1130,8 @@ func (r *TransactionSourceCardRefund) MarshalJSON() (data []byte, err error) {
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceCardRefund) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCardRefund) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1139,16 +1139,16 @@ func (r *TransactionSourceCardRefund) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *TransactionSourceCardRefund) GetCurrency() (Currency TransactionSourceCardRefundCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCardRefund) GetCurrency() (Currency TransactionSourceCardRefundCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier for the Transaction this refunds, if any.
-func (r *TransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSettlementTransactionID string) {
-	if r != nil && r.CardSettlementTransactionID != nil {
+func (r TransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSettlementTransactionID string) {
+	if r.CardSettlementTransactionID != nil {
 		CardSettlementTransactionID = *r.CardSettlementTransactionID
 	}
 	return
@@ -1156,8 +1156,8 @@ func (r *TransactionSourceCardRefund) GetCardSettlementTransactionID() (CardSett
 
 // A constant representing the object's type. For this resource it will always be
 // `card_refund`.
-func (r *TransactionSourceCardRefund) GetType() (Type TransactionSourceCardRefundType) {
-	if r != nil && r.Type != nil {
+func (r TransactionSourceCardRefund) GetType() (Type TransactionSourceCardRefundType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -1225,8 +1225,8 @@ func (r *TransactionSourceCardSettlement) MarshalJSON() (data []byte, err error)
 
 // The amount in the minor unit of the transaction's settlement currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceCardSettlement) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCardSettlement) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1234,16 +1234,16 @@ func (r *TransactionSourceCardSettlement) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's settlement currency.
-func (r *TransactionSourceCardSettlement) GetCurrency() (Currency TransactionSourceCardSettlementCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCardSettlement) GetCurrency() (Currency TransactionSourceCardSettlementCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The amount in the minor unit of the transaction's presentment currency.
-func (r *TransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
-	if r != nil && r.PresentmentAmount != nil {
+func (r TransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmount int64) {
+	if r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
 	return
@@ -1251,51 +1251,51 @@ func (r *TransactionSourceCardSettlement) GetPresentmentAmount() (PresentmentAmo
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's presentment currency.
-func (r *TransactionSourceCardSettlement) GetPresentmentCurrency() (PresentmentCurrency string) {
-	if r != nil && r.PresentmentCurrency != nil {
+func (r TransactionSourceCardSettlement) GetPresentmentCurrency() (PresentmentCurrency string) {
+	if r.PresentmentCurrency != nil {
 		PresentmentCurrency = *r.PresentmentCurrency
 	}
 	return
 }
 
-func (r *TransactionSourceCardSettlement) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r TransactionSourceCardSettlement) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *TransactionSourceCardSettlement) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r TransactionSourceCardSettlement) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *TransactionSourceCardSettlement) GetMerchantName() (MerchantName string) {
-	if r != nil && r.MerchantName != nil {
+func (r TransactionSourceCardSettlement) GetMerchantName() (MerchantName string) {
+	if r.MerchantName != nil {
 		MerchantName = *r.MerchantName
 	}
 	return
 }
 
-func (r *TransactionSourceCardSettlement) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r TransactionSourceCardSettlement) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
-func (r *TransactionSourceCardSettlement) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r TransactionSourceCardSettlement) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
 }
 
 // The identifier of the Pending Transaction associated with this Transaction.
-func (r *TransactionSourceCardSettlement) GetPendingTransactionID() (PendingTransactionID string) {
-	if r != nil && r.PendingTransactionID != nil {
+func (r TransactionSourceCardSettlement) GetPendingTransactionID() (PendingTransactionID string) {
+	if r.PendingTransactionID != nil {
 		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
@@ -1303,8 +1303,8 @@ func (r *TransactionSourceCardSettlement) GetPendingTransactionID() (PendingTran
 
 // A constant representing the object's type. For this resource it will always be
 // `card_settlement`.
-func (r *TransactionSourceCardSettlement) GetType() (Type TransactionSourceCardSettlementType) {
-	if r != nil && r.Type != nil {
+func (r TransactionSourceCardSettlement) GetType() (Type TransactionSourceCardSettlementType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -1369,8 +1369,8 @@ func (r *TransactionSourceCheckDepositAcceptance) MarshalJSON() (data []byte, er
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *TransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1378,24 +1378,24 @@ func (r *TransactionSourceCheckDepositAcceptance) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *TransactionSourceCheckDepositAcceptance) GetCurrency() (Currency TransactionSourceCheckDepositAcceptanceCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetCurrency() (Currency TransactionSourceCheckDepositAcceptanceCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The account number printed on the check.
-func (r *TransactionSourceCheckDepositAcceptance) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The routing number printed on the check.
-func (r *TransactionSourceCheckDepositAcceptance) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -1403,8 +1403,8 @@ func (r *TransactionSourceCheckDepositAcceptance) GetRoutingNumber() (RoutingNum
 
 // An additional line of metadata printed on the check. This typically includes the
 // check number for business checks.
-func (r *TransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
-	if r != nil && r.AuxiliaryOnUs != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
+	if r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
 	}
 	return
@@ -1412,16 +1412,16 @@ func (r *TransactionSourceCheckDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryO
 
 // The check serial number, if present, for consumer checks. For business checks,
 // the serial number is usually in the `auxiliary_on_us` field.
-func (r *TransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
-	if r != nil && r.SerialNumber != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r.SerialNumber != nil {
 		SerialNumber = *r.SerialNumber
 	}
 	return
 }
 
 // The ID of the Check Deposit that was accepted.
-func (r *TransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r TransactionSourceCheckDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -1477,8 +1477,8 @@ func (r *TransactionSourceCheckDepositReturn) MarshalJSON() (data []byte, err er
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1486,8 +1486,8 @@ func (r *TransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was returned.
-func (r *TransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt string) {
-	if r != nil && r.ReturnedAt != nil {
+func (r TransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt string) {
+	if r.ReturnedAt != nil {
 		ReturnedAt = *r.ReturnedAt
 	}
 	return
@@ -1495,16 +1495,16 @@ func (r *TransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt string
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *TransactionSourceCheckDepositReturn) GetCurrency() (Currency TransactionSourceCheckDepositReturnCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCheckDepositReturn) GetCurrency() (Currency TransactionSourceCheckDepositReturnCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *TransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r TransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -1512,15 +1512,15 @@ func (r *TransactionSourceCheckDepositReturn) GetCheckDepositID() (CheckDepositI
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *TransactionSourceCheckDepositReturn) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r TransactionSourceCheckDepositReturn) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
-func (r *TransactionSourceCheckDepositReturn) GetReturnReason() (ReturnReason TransactionSourceCheckDepositReturnReturnReason) {
-	if r != nil && r.ReturnReason != nil {
+func (r TransactionSourceCheckDepositReturn) GetReturnReason() (ReturnReason TransactionSourceCheckDepositReturnReturnReason) {
+	if r.ReturnReason != nil {
 		ReturnReason = *r.ReturnReason
 	}
 	return
@@ -1595,48 +1595,48 @@ func (r *TransactionSourceCheckTransferIntention) MarshalJSON() (data []byte, er
 }
 
 // The street address of the check's destination.
-func (r *TransactionSourceCheckTransferIntention) GetAddressLine1() (AddressLine1 string) {
-	if r != nil && r.AddressLine1 != nil {
+func (r TransactionSourceCheckTransferIntention) GetAddressLine1() (AddressLine1 string) {
+	if r.AddressLine1 != nil {
 		AddressLine1 = *r.AddressLine1
 	}
 	return
 }
 
 // The second line of the address of the check's destination.
-func (r *TransactionSourceCheckTransferIntention) GetAddressLine2() (AddressLine2 string) {
-	if r != nil && r.AddressLine2 != nil {
+func (r TransactionSourceCheckTransferIntention) GetAddressLine2() (AddressLine2 string) {
+	if r.AddressLine2 != nil {
 		AddressLine2 = *r.AddressLine2
 	}
 	return
 }
 
 // The city of the check's destination.
-func (r *TransactionSourceCheckTransferIntention) GetAddressCity() (AddressCity string) {
-	if r != nil && r.AddressCity != nil {
+func (r TransactionSourceCheckTransferIntention) GetAddressCity() (AddressCity string) {
+	if r.AddressCity != nil {
 		AddressCity = *r.AddressCity
 	}
 	return
 }
 
 // The state of the check's destination.
-func (r *TransactionSourceCheckTransferIntention) GetAddressState() (AddressState string) {
-	if r != nil && r.AddressState != nil {
+func (r TransactionSourceCheckTransferIntention) GetAddressState() (AddressState string) {
+	if r.AddressState != nil {
 		AddressState = *r.AddressState
 	}
 	return
 }
 
 // The postal code of the check's destination.
-func (r *TransactionSourceCheckTransferIntention) GetAddressZip() (AddressZip string) {
-	if r != nil && r.AddressZip != nil {
+func (r TransactionSourceCheckTransferIntention) GetAddressZip() (AddressZip string) {
+	if r.AddressZip != nil {
 		AddressZip = *r.AddressZip
 	}
 	return
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1644,24 +1644,24 @@ func (r *TransactionSourceCheckTransferIntention) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
-func (r *TransactionSourceCheckTransferIntention) GetCurrency() (Currency TransactionSourceCheckTransferIntentionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCheckTransferIntention) GetCurrency() (Currency TransactionSourceCheckTransferIntentionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The name that will be printed on the check.
-func (r *TransactionSourceCheckTransferIntention) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
+func (r TransactionSourceCheckTransferIntention) GetRecipientName() (RecipientName string) {
+	if r.RecipientName != nil {
 		RecipientName = *r.RecipientName
 	}
 	return
 }
 
 // The identifier of the Check Transfer with which this is associated.
-func (r *TransactionSourceCheckTransferIntention) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceCheckTransferIntention) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -1705,16 +1705,16 @@ func (r *TransactionSourceCheckTransferReturn) MarshalJSON() (data []byte, err e
 }
 
 // The identifier of the returned Check Transfer.
-func (r *TransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceCheckTransferReturn) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
 }
 
 // If available, a document with additional information about the return.
-func (r *TransactionSourceCheckTransferReturn) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r TransactionSourceCheckTransferReturn) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -1745,8 +1745,8 @@ func (r *TransactionSourceCheckTransferRejection) MarshalJSON() (data []byte, er
 }
 
 // The identifier of the Check Transfer that led to this Transaction.
-func (r *TransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceCheckTransferRejection) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -1785,24 +1785,24 @@ func (r *TransactionSourceCheckTransferStopPaymentRequest) MarshalJSON() (data [
 }
 
 // The ID of the check transfer that was stopped.
-func (r *TransactionSourceCheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceCheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *TransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r TransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
 // The time the stop-payment was requested.
-func (r *TransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
-	if r != nil && r.RequestedAt != nil {
+func (r TransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
+	if r.RequestedAt != nil {
 		RequestedAt = *r.RequestedAt
 	}
 	return
@@ -1810,8 +1810,8 @@ func (r *TransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (Req
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
-func (r *TransactionSourceCheckTransferStopPaymentRequest) GetType() (Type TransactionSourceCheckTransferStopPaymentRequestType) {
-	if r != nil && r.Type != nil {
+func (r TransactionSourceCheckTransferStopPaymentRequest) GetType() (Type TransactionSourceCheckTransferStopPaymentRequestType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -1855,8 +1855,8 @@ func (r *TransactionSourceDisputeResolution) MarshalJSON() (data []byte, err err
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceDisputeResolution) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceDisputeResolution) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1864,16 +1864,16 @@ func (r *TransactionSourceDisputeResolution) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *TransactionSourceDisputeResolution) GetCurrency() (Currency TransactionSourceDisputeResolutionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceDisputeResolution) GetCurrency() (Currency TransactionSourceDisputeResolutionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *TransactionSourceDisputeResolution) GetDisputedTransactionID() (DisputedTransactionID string) {
-	if r != nil && r.DisputedTransactionID != nil {
+func (r TransactionSourceDisputeResolution) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r.DisputedTransactionID != nil {
 		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
@@ -1919,22 +1919,22 @@ func (r *TransactionSourceEmpyrealCashDeposit) MarshalJSON() (data []byte, err e
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceEmpyrealCashDeposit) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
-	if r != nil && r.BagID != nil {
+func (r TransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
+	if r.BagID != nil {
 		BagID = *r.BagID
 	}
 	return
 }
 
-func (r *TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate string) {
-	if r != nil && r.DepositDate != nil {
+func (r TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate string) {
+	if r.DepositDate != nil {
 		DepositDate = *r.DepositDate
 	}
 	return
@@ -1975,64 +1975,64 @@ func (r *TransactionSourceInboundACHTransfer) MarshalJSON() (data []byte, err er
 
 // The amount in the minor unit of the destination account currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundACHTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetOriginatorCompanyName() (OriginatorCompanyName string) {
-	if r != nil && r.OriginatorCompanyName != nil {
+func (r TransactionSourceInboundACHTransfer) GetOriginatorCompanyName() (OriginatorCompanyName string) {
+	if r.OriginatorCompanyName != nil {
 		OriginatorCompanyName = *r.OriginatorCompanyName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetOriginatorCompanyDescriptiveDate() (OriginatorCompanyDescriptiveDate string) {
-	if r != nil && r.OriginatorCompanyDescriptiveDate != nil {
+func (r TransactionSourceInboundACHTransfer) GetOriginatorCompanyDescriptiveDate() (OriginatorCompanyDescriptiveDate string) {
+	if r.OriginatorCompanyDescriptiveDate != nil {
 		OriginatorCompanyDescriptiveDate = *r.OriginatorCompanyDescriptiveDate
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetOriginatorCompanyDiscretionaryData() (OriginatorCompanyDiscretionaryData string) {
-	if r != nil && r.OriginatorCompanyDiscretionaryData != nil {
+func (r TransactionSourceInboundACHTransfer) GetOriginatorCompanyDiscretionaryData() (OriginatorCompanyDiscretionaryData string) {
+	if r.OriginatorCompanyDiscretionaryData != nil {
 		OriginatorCompanyDiscretionaryData = *r.OriginatorCompanyDiscretionaryData
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
-	if r != nil && r.OriginatorCompanyEntryDescription != nil {
+func (r TransactionSourceInboundACHTransfer) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
+	if r.OriginatorCompanyEntryDescription != nil {
 		OriginatorCompanyEntryDescription = *r.OriginatorCompanyEntryDescription
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetOriginatorCompanyID() (OriginatorCompanyID string) {
-	if r != nil && r.OriginatorCompanyID != nil {
+func (r TransactionSourceInboundACHTransfer) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r.OriginatorCompanyID != nil {
 		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetReceiverIDNumber() (ReceiverIDNumber string) {
-	if r != nil && r.ReceiverIDNumber != nil {
+func (r TransactionSourceInboundACHTransfer) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r.ReceiverIDNumber != nil {
 		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetReceiverName() (ReceiverName string) {
-	if r != nil && r.ReceiverName != nil {
+func (r TransactionSourceInboundACHTransfer) GetReceiverName() (ReceiverName string) {
+	if r.ReceiverName != nil {
 		ReceiverName = *r.ReceiverName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundACHTransfer) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r TransactionSourceInboundACHTransfer) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
@@ -2071,8 +2071,8 @@ func (r *TransactionSourceInboundCheck) MarshalJSON() (data []byte, err error) {
 
 // The amount in the minor unit of the destination account currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceInboundCheck) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundCheck) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -2080,29 +2080,29 @@ func (r *TransactionSourceInboundCheck) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *TransactionSourceInboundCheck) GetCurrency() (Currency TransactionSourceInboundCheckCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceInboundCheck) GetCurrency() (Currency TransactionSourceInboundCheckCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *TransactionSourceInboundCheck) GetCheckNumber() (CheckNumber string) {
-	if r != nil && r.CheckNumber != nil {
+func (r TransactionSourceInboundCheck) GetCheckNumber() (CheckNumber string) {
+	if r.CheckNumber != nil {
 		CheckNumber = *r.CheckNumber
 	}
 	return
 }
 
-func (r *TransactionSourceInboundCheck) GetCheckFrontImageFileID() (CheckFrontImageFileID string) {
-	if r != nil && r.CheckFrontImageFileID != nil {
+func (r TransactionSourceInboundCheck) GetCheckFrontImageFileID() (CheckFrontImageFileID string) {
+	if r.CheckFrontImageFileID != nil {
 		CheckFrontImageFileID = *r.CheckFrontImageFileID
 	}
 	return
 }
 
-func (r *TransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImageFileID string) {
-	if r != nil && r.CheckRearImageFileID != nil {
+func (r TransactionSourceInboundCheck) GetCheckRearImageFileID() (CheckRearImageFileID string) {
+	if r.CheckRearImageFileID != nil {
 		CheckRearImageFileID = *r.CheckRearImageFileID
 	}
 	return
@@ -2182,253 +2182,253 @@ func (r *TransactionSourceInboundInternationalACHTransfer) MarshalJSON() (data [
 
 // The amount in the minor unit of the destination account currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeIndicator() (ForeignExchangeIndicator string) {
-	if r != nil && r.ForeignExchangeIndicator != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeIndicator() (ForeignExchangeIndicator string) {
+	if r.ForeignExchangeIndicator != nil {
 		ForeignExchangeIndicator = *r.ForeignExchangeIndicator
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeReferenceIndicator() (ForeignExchangeReferenceIndicator string) {
-	if r != nil && r.ForeignExchangeReferenceIndicator != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeReferenceIndicator() (ForeignExchangeReferenceIndicator string) {
+	if r.ForeignExchangeReferenceIndicator != nil {
 		ForeignExchangeReferenceIndicator = *r.ForeignExchangeReferenceIndicator
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeReference() (ForeignExchangeReference string) {
-	if r != nil && r.ForeignExchangeReference != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetForeignExchangeReference() (ForeignExchangeReference string) {
+	if r.ForeignExchangeReference != nil {
 		ForeignExchangeReference = *r.ForeignExchangeReference
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetDestinationCountryCode() (DestinationCountryCode string) {
-	if r != nil && r.DestinationCountryCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetDestinationCountryCode() (DestinationCountryCode string) {
+	if r.DestinationCountryCode != nil {
 		DestinationCountryCode = *r.DestinationCountryCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetDestinationCurrencyCode() (DestinationCurrencyCode string) {
-	if r != nil && r.DestinationCurrencyCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetDestinationCurrencyCode() (DestinationCurrencyCode string) {
+	if r.DestinationCurrencyCode != nil {
 		DestinationCurrencyCode = *r.DestinationCurrencyCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
-	if r != nil && r.ForeignPaymentAmount != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
+	if r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetForeignTraceNumber() (ForeignTraceNumber string) {
-	if r != nil && r.ForeignTraceNumber != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetForeignTraceNumber() (ForeignTraceNumber string) {
+	if r.ForeignTraceNumber != nil {
 		ForeignTraceNumber = *r.ForeignTraceNumber
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetInternationalTransactionTypeCode() (InternationalTransactionTypeCode string) {
-	if r != nil && r.InternationalTransactionTypeCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetInternationalTransactionTypeCode() (InternationalTransactionTypeCode string) {
+	if r.InternationalTransactionTypeCode != nil {
 		InternationalTransactionTypeCode = *r.InternationalTransactionTypeCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatingCurrencyCode() (OriginatingCurrencyCode string) {
-	if r != nil && r.OriginatingCurrencyCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatingCurrencyCode() (OriginatingCurrencyCode string) {
+	if r.OriginatingCurrencyCode != nil {
 		OriginatingCurrencyCode = *r.OriginatingCurrencyCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionName() (OriginatingDepositoryFinancialInstitutionName string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionName != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionName() (OriginatingDepositoryFinancialInstitutionName string) {
+	if r.OriginatingDepositoryFinancialInstitutionName != nil {
 		OriginatingDepositoryFinancialInstitutionName = *r.OriginatingDepositoryFinancialInstitutionName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
 		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r.OriginatingDepositoryFinancialInstitutionID != nil {
 		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionBranchCountry() (OriginatingDepositoryFinancialInstitutionBranchCountry string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionBranchCountry != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatingDepositoryFinancialInstitutionBranchCountry() (OriginatingDepositoryFinancialInstitutionBranchCountry string) {
+	if r.OriginatingDepositoryFinancialInstitutionBranchCountry != nil {
 		OriginatingDepositoryFinancialInstitutionBranchCountry = *r.OriginatingDepositoryFinancialInstitutionBranchCountry
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorCity() (OriginatorCity string) {
-	if r != nil && r.OriginatorCity != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorCity() (OriginatorCity string) {
+	if r.OriginatorCity != nil {
 		OriginatorCity = *r.OriginatorCity
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
-	if r != nil && r.OriginatorCompanyEntryDescription != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
+	if r.OriginatorCompanyEntryDescription != nil {
 		OriginatorCompanyEntryDescription = *r.OriginatorCompanyEntryDescription
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorCountry() (OriginatorCountry string) {
-	if r != nil && r.OriginatorCountry != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorCountry() (OriginatorCountry string) {
+	if r.OriginatorCountry != nil {
 		OriginatorCountry = *r.OriginatorCountry
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorIdentification() (OriginatorIdentification string) {
-	if r != nil && r.OriginatorIdentification != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorIdentification() (OriginatorIdentification string) {
+	if r.OriginatorIdentification != nil {
 		OriginatorIdentification = *r.OriginatorIdentification
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorPostalCode() (OriginatorPostalCode string) {
-	if r != nil && r.OriginatorPostalCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorPostalCode() (OriginatorPostalCode string) {
+	if r.OriginatorPostalCode != nil {
 		OriginatorPostalCode = *r.OriginatorPostalCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorStreetAddress() (OriginatorStreetAddress string) {
-	if r != nil && r.OriginatorStreetAddress != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorStreetAddress() (OriginatorStreetAddress string) {
+	if r.OriginatorStreetAddress != nil {
 		OriginatorStreetAddress = *r.OriginatorStreetAddress
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetOriginatorStateOrProvince() (OriginatorStateOrProvince string) {
-	if r != nil && r.OriginatorStateOrProvince != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetOriginatorStateOrProvince() (OriginatorStateOrProvince string) {
+	if r.OriginatorStateOrProvince != nil {
 		OriginatorStateOrProvince = *r.OriginatorStateOrProvince
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetPaymentRelatedInformation() (PaymentRelatedInformation string) {
-	if r != nil && r.PaymentRelatedInformation != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetPaymentRelatedInformation() (PaymentRelatedInformation string) {
+	if r.PaymentRelatedInformation != nil {
 		PaymentRelatedInformation = *r.PaymentRelatedInformation
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetPaymentRelatedInformation2() (PaymentRelatedInformation2 string) {
-	if r != nil && r.PaymentRelatedInformation2 != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetPaymentRelatedInformation2() (PaymentRelatedInformation2 string) {
+	if r.PaymentRelatedInformation2 != nil {
 		PaymentRelatedInformation2 = *r.PaymentRelatedInformation2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverIdentificationNumber() (ReceiverIdentificationNumber string) {
-	if r != nil && r.ReceiverIdentificationNumber != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverIdentificationNumber() (ReceiverIdentificationNumber string) {
+	if r.ReceiverIdentificationNumber != nil {
 		ReceiverIdentificationNumber = *r.ReceiverIdentificationNumber
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverStreetAddress() (ReceiverStreetAddress string) {
-	if r != nil && r.ReceiverStreetAddress != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverStreetAddress() (ReceiverStreetAddress string) {
+	if r.ReceiverStreetAddress != nil {
 		ReceiverStreetAddress = *r.ReceiverStreetAddress
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverCity() (ReceiverCity string) {
-	if r != nil && r.ReceiverCity != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverCity() (ReceiverCity string) {
+	if r.ReceiverCity != nil {
 		ReceiverCity = *r.ReceiverCity
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverStateOrProvince() (ReceiverStateOrProvince string) {
-	if r != nil && r.ReceiverStateOrProvince != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverStateOrProvince() (ReceiverStateOrProvince string) {
+	if r.ReceiverStateOrProvince != nil {
 		ReceiverStateOrProvince = *r.ReceiverStateOrProvince
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverCountry() (ReceiverCountry string) {
-	if r != nil && r.ReceiverCountry != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverCountry() (ReceiverCountry string) {
+	if r.ReceiverCountry != nil {
 		ReceiverCountry = *r.ReceiverCountry
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceiverPostalCode() (ReceiverPostalCode string) {
-	if r != nil && r.ReceiverPostalCode != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceiverPostalCode() (ReceiverPostalCode string) {
+	if r.ReceiverPostalCode != nil {
 		ReceiverPostalCode = *r.ReceiverPostalCode
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceivingCompanyOrIndividualName() (ReceivingCompanyOrIndividualName string) {
-	if r != nil && r.ReceivingCompanyOrIndividualName != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceivingCompanyOrIndividualName() (ReceivingCompanyOrIndividualName string) {
+	if r.ReceivingCompanyOrIndividualName != nil {
 		ReceivingCompanyOrIndividualName = *r.ReceivingCompanyOrIndividualName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionName() (ReceivingDepositoryFinancialInstitutionName string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionName != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionName() (ReceivingDepositoryFinancialInstitutionName string) {
+	if r.ReceivingDepositoryFinancialInstitutionName != nil {
 		ReceivingDepositoryFinancialInstitutionName = *r.ReceivingDepositoryFinancialInstitutionName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
 		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r.ReceivingDepositoryFinancialInstitutionID != nil {
 		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionCountry() (ReceivingDepositoryFinancialInstitutionCountry string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionCountry != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetReceivingDepositoryFinancialInstitutionCountry() (ReceivingDepositoryFinancialInstitutionCountry string) {
+	if r.ReceivingDepositoryFinancialInstitutionCountry != nil {
 		ReceivingDepositoryFinancialInstitutionCountry = *r.ReceivingDepositoryFinancialInstitutionCountry
 	}
 	return
 }
 
-func (r *TransactionSourceInboundInternationalACHTransfer) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r TransactionSourceInboundInternationalACHTransfer) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
@@ -2477,8 +2477,8 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) MarshalJS
 
 // The amount in the minor unit of the transfer's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -2486,56 +2486,56 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetAmount
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 // currency. This will always be "USD" for a Real Time Payments transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetCurrency() (Currency TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetCurrency() (Currency TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The name the sender of the transfer specified as the recipient of the transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetCreditorName() (CreditorName string) {
-	if r != nil && r.CreditorName != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetCreditorName() (CreditorName string) {
+	if r.CreditorName != nil {
 		CreditorName = *r.CreditorName
 	}
 	return
 }
 
 // The name provided by the sender of the transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorName() (DebtorName string) {
-	if r != nil && r.DebtorName != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorName() (DebtorName string) {
+	if r.DebtorName != nil {
 		DebtorName = *r.DebtorName
 	}
 	return
 }
 
 // The account number of the account that sent the transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorAccountNumber() (DebtorAccountNumber string) {
-	if r != nil && r.DebtorAccountNumber != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorAccountNumber() (DebtorAccountNumber string) {
+	if r.DebtorAccountNumber != nil {
 		DebtorAccountNumber = *r.DebtorAccountNumber
 	}
 	return
 }
 
 // The routing number of the account that sent the transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorRoutingNumber() (DebtorRoutingNumber string) {
-	if r != nil && r.DebtorRoutingNumber != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetDebtorRoutingNumber() (DebtorRoutingNumber string) {
+	if r.DebtorRoutingNumber != nil {
 		DebtorRoutingNumber = *r.DebtorRoutingNumber
 	}
 	return
 }
 
 // The Real Time Payments network identification of the transfer
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetTransactionIdentification() (TransactionIdentification string) {
-	if r != nil && r.TransactionIdentification != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetTransactionIdentification() (TransactionIdentification string) {
+	if r.TransactionIdentification != nil {
 		TransactionIdentification = *r.TransactionIdentification
 	}
 	return
 }
 
 // Additional information included with the transfer.
-func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetRemittanceInformation() (RemittanceInformation string) {
-	if r != nil && r.RemittanceInformation != nil {
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmation) GetRemittanceInformation() (RemittanceInformation string) {
+	if r.RemittanceInformation != nil {
 		RemittanceInformation = *r.RemittanceInformation
 	}
 	return
@@ -2596,80 +2596,80 @@ func (r *TransactionSourceInboundWireDrawdownPaymentReversal) MarshalJSON() (dat
 }
 
 // The amount that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The description on the reversal message from Fedwire.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate string) {
-	if r != nil && r.InputCycleDate != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate string) {
+	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
-	if r != nil && r.InputSequenceNumber != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
+	if r.InputSequenceNumber != nil {
 		InputSequenceNumber = *r.InputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetInputSource() (InputSource string) {
-	if r != nil && r.InputSource != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputSource() (InputSource string) {
+	if r.InputSource != nil {
 		InputSource = *r.InputSource
 	}
 	return
 }
 
 // The Fedwire transaction identifier.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire transaction identifier for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
-	if r != nil && r.PreviousMessageInputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
+	if r.PreviousMessageInputMessageAccountabilityData != nil {
 		PreviousMessageInputMessageAccountabilityData = *r.PreviousMessageInputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
-	if r != nil && r.PreviousMessageInputCycleDate != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
-	if r != nil && r.PreviousMessageInputSequenceNumber != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
+	if r.PreviousMessageInputSequenceNumber != nil {
 		PreviousMessageInputSequenceNumber = *r.PreviousMessageInputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
-	if r != nil && r.PreviousMessageInputSource != nil {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
+	if r.PreviousMessageInputSource != nil {
 		PreviousMessageInputSource = *r.PreviousMessageInputSource
 	}
 	return
@@ -2715,92 +2715,92 @@ func (r *TransactionSourceInboundWireDrawdownPayment) MarshalJSON() (data []byte
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryReference() (BeneficiaryReference string) {
-	if r != nil && r.BeneficiaryReference != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetBeneficiaryReference() (BeneficiaryReference string) {
+	if r.BeneficiaryReference != nil {
 		BeneficiaryReference = *r.BeneficiaryReference
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
-	if r != nil && r.OriginatorAddressLine1 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r.OriginatorAddressLine1 != nil {
 		OriginatorAddressLine1 = *r.OriginatorAddressLine1
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
-	if r != nil && r.OriginatorAddressLine2 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r.OriginatorAddressLine2 != nil {
 		OriginatorAddressLine2 = *r.OriginatorAddressLine2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
-	if r != nil && r.OriginatorAddressLine3 != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r.OriginatorAddressLine3 != nil {
 		OriginatorAddressLine3 = *r.OriginatorAddressLine3
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireDrawdownPayment) GetOriginatorToBeneficiaryInformation() (OriginatorToBeneficiaryInformation string) {
-	if r != nil && r.OriginatorToBeneficiaryInformation != nil {
+func (r TransactionSourceInboundWireDrawdownPayment) GetOriginatorToBeneficiaryInformation() (OriginatorToBeneficiaryInformation string) {
+	if r.OriginatorToBeneficiaryInformation != nil {
 		OriginatorToBeneficiaryInformation = *r.OriginatorToBeneficiaryInformation
 	}
 	return
@@ -2854,80 +2854,80 @@ func (r *TransactionSourceInboundWireReversal) MarshalJSON() (data []byte, err e
 }
 
 // The amount that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundWireReversal) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The description on the reversal message from Fedwire.
-func (r *TransactionSourceInboundWireReversal) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r TransactionSourceInboundWireReversal) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r *TransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate string) {
-	if r != nil && r.InputCycleDate != nil {
+func (r TransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate string) {
+	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number.
-func (r *TransactionSourceInboundWireReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
-	if r != nil && r.InputSequenceNumber != nil {
+func (r TransactionSourceInboundWireReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
+	if r.InputSequenceNumber != nil {
 		InputSequenceNumber = *r.InputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier.
-func (r *TransactionSourceInboundWireReversal) GetInputSource() (InputSource string) {
-	if r != nil && r.InputSource != nil {
+func (r TransactionSourceInboundWireReversal) GetInputSource() (InputSource string) {
+	if r.InputSource != nil {
 		InputSource = *r.InputSource
 	}
 	return
 }
 
 // The Fedwire transaction identifier.
-func (r *TransactionSourceInboundWireReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire transaction identifier for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
-	if r != nil && r.PreviousMessageInputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
+	if r.PreviousMessageInputMessageAccountabilityData != nil {
 		PreviousMessageInputMessageAccountabilityData = *r.PreviousMessageInputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
-	if r != nil && r.PreviousMessageInputCycleDate != nil {
+func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
-	if r != nil && r.PreviousMessageInputSequenceNumber != nil {
+func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
+	if r.PreviousMessageInputSequenceNumber != nil {
 		PreviousMessageInputSequenceNumber = *r.PreviousMessageInputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier for the wire transfer that was reversed.
-func (r *TransactionSourceInboundWireReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
-	if r != nil && r.PreviousMessageInputSource != nil {
+func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
+	if r.PreviousMessageInputSource != nil {
 		PreviousMessageInputSource = *r.PreviousMessageInputSource
 	}
 	return
@@ -2935,16 +2935,16 @@ func (r *TransactionSourceInboundWireReversal) GetPreviousMessageInputSource() (
 
 // Information included in the wire reversal for the receiving financial
 // institution.
-func (r *TransactionSourceInboundWireReversal) GetReceiverFinancialInstitutionInformation() (ReceiverFinancialInstitutionInformation string) {
-	if r != nil && r.ReceiverFinancialInstitutionInformation != nil {
+func (r TransactionSourceInboundWireReversal) GetReceiverFinancialInstitutionInformation() (ReceiverFinancialInstitutionInformation string) {
+	if r.ReceiverFinancialInstitutionInformation != nil {
 		ReceiverFinancialInstitutionInformation = *r.ReceiverFinancialInstitutionInformation
 	}
 	return
 }
 
 // Additional financial institution information included in the wire reversal.
-func (r *TransactionSourceInboundWireReversal) GetFinancialInstitutionToFinancialInstitutionInformation() (FinancialInstitutionToFinancialInstitutionInformation string) {
-	if r != nil && r.FinancialInstitutionToFinancialInstitutionInformation != nil {
+func (r TransactionSourceInboundWireReversal) GetFinancialInstitutionToFinancialInstitutionInformation() (FinancialInstitutionToFinancialInstitutionInformation string) {
+	if r.FinancialInstitutionToFinancialInstitutionInformation != nil {
 		FinancialInstitutionToFinancialInstitutionInformation = *r.FinancialInstitutionToFinancialInstitutionInformation
 	}
 	return
@@ -2993,120 +2993,120 @@ func (r *TransactionSourceInboundWireTransfer) MarshalJSON() (data []byte, err e
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInboundWireTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r TransactionSourceInboundWireTransfer) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r TransactionSourceInboundWireTransfer) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetBeneficiaryReference() (BeneficiaryReference string) {
-	if r != nil && r.BeneficiaryReference != nil {
+func (r TransactionSourceInboundWireTransfer) GetBeneficiaryReference() (BeneficiaryReference string) {
+	if r.BeneficiaryReference != nil {
 		BeneficiaryReference = *r.BeneficiaryReference
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r TransactionSourceInboundWireTransfer) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r TransactionSourceInboundWireTransfer) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
-	if r != nil && r.OriginatorAddressLine1 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r.OriginatorAddressLine1 != nil {
 		OriginatorAddressLine1 = *r.OriginatorAddressLine1
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
-	if r != nil && r.OriginatorAddressLine2 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r.OriginatorAddressLine2 != nil {
 		OriginatorAddressLine2 = *r.OriginatorAddressLine2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
-	if r != nil && r.OriginatorAddressLine3 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r.OriginatorAddressLine3 != nil {
 		OriginatorAddressLine3 = *r.OriginatorAddressLine3
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine1 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
+	if r.OriginatorToBeneficiaryInformationLine1 != nil {
 		OriginatorToBeneficiaryInformationLine1 = *r.OriginatorToBeneficiaryInformationLine1
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine2 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
+	if r.OriginatorToBeneficiaryInformationLine2 != nil {
 		OriginatorToBeneficiaryInformationLine2 = *r.OriginatorToBeneficiaryInformationLine2
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine3 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
+	if r.OriginatorToBeneficiaryInformationLine3 != nil {
 		OriginatorToBeneficiaryInformationLine3 = *r.OriginatorToBeneficiaryInformationLine3
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine4 != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
+	if r.OriginatorToBeneficiaryInformationLine4 != nil {
 		OriginatorToBeneficiaryInformationLine4 = *r.OriginatorToBeneficiaryInformationLine4
 	}
 	return
 }
 
-func (r *TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformation() (OriginatorToBeneficiaryInformation string) {
-	if r != nil && r.OriginatorToBeneficiaryInformation != nil {
+func (r TransactionSourceInboundWireTransfer) GetOriginatorToBeneficiaryInformation() (OriginatorToBeneficiaryInformation string) {
+	if r.OriginatorToBeneficiaryInformation != nil {
 		OriginatorToBeneficiaryInformation = *r.OriginatorToBeneficiaryInformation
 	}
 	return
@@ -3148,8 +3148,8 @@ func (r *TransactionSourceInterestPayment) MarshalJSON() (data []byte, err error
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInterestPayment) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInterestPayment) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -3157,32 +3157,32 @@ func (r *TransactionSourceInterestPayment) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 // currency.
-func (r *TransactionSourceInterestPayment) GetCurrency() (Currency TransactionSourceInterestPaymentCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceInterestPayment) GetCurrency() (Currency TransactionSourceInterestPaymentCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The start of the period for which this transaction paid interest.
-func (r *TransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
-	if r != nil && r.PeriodStart != nil {
+func (r TransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
+	if r.PeriodStart != nil {
 		PeriodStart = *r.PeriodStart
 	}
 	return
 }
 
 // The end of the period for which this transaction paid interest.
-func (r *TransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
-	if r != nil && r.PeriodEnd != nil {
+func (r TransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
+	if r.PeriodEnd != nil {
 		PeriodEnd = *r.PeriodEnd
 	}
 	return
 }
 
 // The account on which the interest was accrued.
-func (r *TransactionSourceInterestPayment) GetAccruedOnAccountID() (AccruedOnAccountID string) {
-	if r != nil && r.AccruedOnAccountID != nil {
+func (r TransactionSourceInterestPayment) GetAccruedOnAccountID() (AccruedOnAccountID string) {
+	if r.AccruedOnAccountID != nil {
 		AccruedOnAccountID = *r.AccruedOnAccountID
 	}
 	return
@@ -3230,8 +3230,8 @@ func (r *TransactionSourceInternalSource) MarshalJSON() (data []byte, err error)
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceInternalSource) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceInternalSource) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -3239,15 +3239,15 @@ func (r *TransactionSourceInternalSource) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 // currency.
-func (r *TransactionSourceInternalSource) GetCurrency() (Currency TransactionSourceInternalSourceCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceInternalSource) GetCurrency() (Currency TransactionSourceInternalSourceCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *TransactionSourceInternalSource) GetReason() (Reason TransactionSourceInternalSourceReason) {
-	if r != nil && r.Reason != nil {
+func (r TransactionSourceInternalSource) GetReason() (Reason TransactionSourceInternalSourceReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
@@ -3314,8 +3314,8 @@ func (r *TransactionSourceCardRouteRefund) MarshalJSON() (data []byte, err error
 
 // The refunded amount in the minor unit of the refunded currency. For dollars, for
 // example, this is cents.
-func (r *TransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -3323,50 +3323,50 @@ func (r *TransactionSourceCardRouteRefund) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
 // currency.
-func (r *TransactionSourceCardRouteRefund) GetCurrency() (Currency TransactionSourceCardRouteRefundCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCardRouteRefund) GetCurrency() (Currency TransactionSourceCardRouteRefundCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteRefund) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r TransactionSourceCardRouteRefund) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
@@ -3419,8 +3419,8 @@ func (r *TransactionSourceCardRouteSettlement) MarshalJSON() (data []byte, err e
 
 // The settled amount in the minor unit of the settlement currency. For dollars,
 // for example, this is cents.
-func (r *TransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -3428,50 +3428,50 @@ func (r *TransactionSourceCardRouteSettlement) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
 // currency.
-func (r *TransactionSourceCardRouteSettlement) GetCurrency() (Currency TransactionSourceCardRouteSettlementCurrency) {
-	if r != nil && r.Currency != nil {
+func (r TransactionSourceCardRouteSettlement) GetCurrency() (Currency TransactionSourceCardRouteSettlementCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
 }
 
-func (r *TransactionSourceCardRouteSettlement) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r TransactionSourceCardRouteSettlement) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
@@ -3513,8 +3513,8 @@ func (r *TransactionSourceSampleFunds) MarshalJSON() (data []byte, err error) {
 }
 
 // Where the sample funds came from.
-func (r *TransactionSourceSampleFunds) GetOriginator() (Originator string) {
-	if r != nil && r.Originator != nil {
+func (r TransactionSourceSampleFunds) GetOriginator() (Originator string) {
+	if r.Originator != nil {
 		Originator = *r.Originator
 	}
 	return
@@ -3550,36 +3550,36 @@ func (r *TransactionSourceWireDrawdownPaymentIntention) MarshalJSON() (data []by
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceWireDrawdownPaymentIntention) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r TransactionSourceWireDrawdownPaymentIntention) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r TransactionSourceWireDrawdownPaymentIntention) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r TransactionSourceWireDrawdownPaymentIntention) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
-func (r *TransactionSourceWireDrawdownPaymentIntention) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceWireDrawdownPaymentIntention) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -3609,8 +3609,8 @@ func (r *TransactionSourceWireDrawdownPaymentRejection) MarshalJSON() (data []by
 	return pjson.Marshal(r)
 }
 
-func (r *TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceWireDrawdownPaymentRejection) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -3648,39 +3648,39 @@ func (r *TransactionSourceWireTransferIntention) MarshalJSON() (data []byte, err
 }
 
 // The transfer amount in USD cents.
-func (r *TransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r TransactionSourceWireTransferIntention) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The destination account number.
-func (r *TransactionSourceWireTransferIntention) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r TransactionSourceWireTransferIntention) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *TransactionSourceWireTransferIntention) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r TransactionSourceWireTransferIntention) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The message that will show on the recipient's bank statement.
-func (r *TransactionSourceWireTransferIntention) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r TransactionSourceWireTransferIntention) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
-func (r *TransactionSourceWireTransferIntention) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceWireTransferIntention) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -3709,8 +3709,8 @@ func (r *TransactionSourceWireTransferRejection) MarshalJSON() (data []byte, err
 	return pjson.Marshal(r)
 }
 
-func (r *TransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r TransactionSourceWireTransferRejection) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -3762,8 +3762,8 @@ func (r *TransactionListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *TransactionListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r TransactionListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -3771,38 +3771,38 @@ func (r *TransactionListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *TransactionListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r TransactionListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Transactions for those belonging to the specified Account.
-func (r *TransactionListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r TransactionListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter Transactions for those belonging to the specified route.
-func (r *TransactionListParams) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r TransactionListParams) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
-func (r *TransactionListParams) GetCreatedAt() (CreatedAt TransactionsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r TransactionListParams) GetCreatedAt() (CreatedAt TransactionsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *TransactionListParams) GetCategory() (Category TransactionsListParamsCategory) {
-	if r != nil && r.Category != nil {
+func (r TransactionListParams) GetCategory() (Category TransactionsListParamsCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -3850,8 +3850,8 @@ func (r *TransactionsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *TransactionsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r TransactionsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -3859,8 +3859,8 @@ func (r *TransactionsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *TransactionsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r TransactionsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -3868,8 +3868,8 @@ func (r *TransactionsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -3877,8 +3877,8 @@ func (r *TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *TransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r TransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -3917,8 +3917,8 @@ func (r *TransactionsListParamsCategory) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCategoryIn) {
-	if r != nil && r.In != nil {
+func (r TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCategoryIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -4000,16 +4000,16 @@ func (r *TransactionList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *TransactionList) GetData() (Data []Transaction) {
-	if r != nil && r.Data != nil {
+func (r TransactionList) GetData() (Data []Transaction) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *TransactionList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r TransactionList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

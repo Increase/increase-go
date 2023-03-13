@@ -42,16 +42,16 @@ func (r *Document) MarshalJSON() (data []byte, err error) {
 }
 
 // The Document identifier.
-func (r *Document) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Document) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The type of document.
-func (r *Document) GetCategory() (Category DocumentCategory) {
-	if r != nil && r.Category != nil {
+func (r Document) GetCategory() (Category DocumentCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -59,24 +59,24 @@ func (r *Document) GetCategory() (Category DocumentCategory) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 // Document was created.
-func (r *Document) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Document) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The identifier of the Entity the document was generated for.
-func (r *Document) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
+func (r Document) GetEntityID() (EntityID string) {
+	if r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
 }
 
 // The identifier of the File containing the Document's contents.
-func (r *Document) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r Document) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -84,8 +84,8 @@ func (r *Document) GetFileID() (FileID string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `document`.
-func (r *Document) GetType() (Type DocumentType) {
-	if r != nil && r.Type != nil {
+func (r Document) GetType() (Type DocumentType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -141,8 +141,8 @@ func (r *DocumentListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *DocumentListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r DocumentListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -150,30 +150,30 @@ func (r *DocumentListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *DocumentListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r DocumentListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Documents to ones belonging to the specified Entity.
-func (r *DocumentListParams) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
+func (r DocumentListParams) GetEntityID() (EntityID string) {
+	if r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
 }
 
-func (r *DocumentListParams) GetCategory() (Category DocumentsListParamsCategory) {
-	if r != nil && r.Category != nil {
+func (r DocumentListParams) GetCategory() (Category DocumentsListParamsCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
-func (r *DocumentListParams) GetCreatedAt() (CreatedAt DocumentsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r DocumentListParams) GetCreatedAt() (CreatedAt DocumentsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -212,8 +212,8 @@ func (r *DocumentsListParamsCategory) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
-	if r != nil && r.In != nil {
+func (r DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -267,8 +267,8 @@ func (r *DocumentsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *DocumentsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r DocumentsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -276,8 +276,8 @@ func (r *DocumentsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *DocumentsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r DocumentsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -285,8 +285,8 @@ func (r *DocumentsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -294,8 +294,8 @@ func (r *DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *DocumentsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r DocumentsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -334,16 +334,16 @@ func (r *DocumentList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *DocumentList) GetData() (Data []Document) {
-	if r != nil && r.Data != nil {
+func (r DocumentList) GetData() (Data []Document) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *DocumentList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r DocumentList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

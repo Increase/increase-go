@@ -43,16 +43,16 @@ func (r *DigitalWalletToken) MarshalJSON() (data []byte, err error) {
 }
 
 // The Digital Wallet Token identifier.
-func (r *DigitalWalletToken) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r DigitalWalletToken) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the Card this Digital Wallet Token belongs to.
-func (r *DigitalWalletToken) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r DigitalWalletToken) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
@@ -60,24 +60,24 @@ func (r *DigitalWalletToken) GetCardID() (CardID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card was created.
-func (r *DigitalWalletToken) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r DigitalWalletToken) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // This indicates if payments can be made with the Digital Wallet Token.
-func (r *DigitalWalletToken) GetStatus() (Status DigitalWalletTokenStatus) {
-	if r != nil && r.Status != nil {
+func (r DigitalWalletToken) GetStatus() (Status DigitalWalletTokenStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The digital wallet app being used.
-func (r *DigitalWalletToken) GetTokenRequestor() (TokenRequestor DigitalWalletTokenTokenRequestor) {
-	if r != nil && r.TokenRequestor != nil {
+func (r DigitalWalletToken) GetTokenRequestor() (TokenRequestor DigitalWalletTokenTokenRequestor) {
+	if r.TokenRequestor != nil {
 		TokenRequestor = *r.TokenRequestor
 	}
 	return
@@ -85,8 +85,8 @@ func (r *DigitalWalletToken) GetTokenRequestor() (TokenRequestor DigitalWalletTo
 
 // A constant representing the object's type. For this resource it will always be
 // `digital_wallet_token`.
-func (r *DigitalWalletToken) GetType() (Type DigitalWalletTokenType) {
-	if r != nil && r.Type != nil {
+func (r DigitalWalletToken) GetType() (Type DigitalWalletTokenType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -151,8 +151,8 @@ func (r *DigitalWalletTokenListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *DigitalWalletTokenListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r DigitalWalletTokenListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -160,23 +160,23 @@ func (r *DigitalWalletTokenListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *DigitalWalletTokenListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r DigitalWalletTokenListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Digital Wallet Tokens to ones belonging to the specified Card.
-func (r *DigitalWalletTokenListParams) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r DigitalWalletTokenListParams) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
-func (r *DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTokensListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTokensListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -224,8 +224,8 @@ func (r *DigitalWalletTokensListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -233,8 +233,8 @@ func (r *DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -242,8 +242,8 @@ func (r *DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -251,8 +251,8 @@ func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter strin
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *DigitalWalletTokensListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r DigitalWalletTokensListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -291,16 +291,16 @@ func (r *DigitalWalletTokenList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *DigitalWalletTokenList) GetData() (Data []DigitalWalletToken) {
-	if r != nil && r.Data != nil {
+func (r DigitalWalletTokenList) GetData() (Data []DigitalWalletToken) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *DigitalWalletTokenList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r DigitalWalletTokenList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

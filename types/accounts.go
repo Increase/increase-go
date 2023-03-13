@@ -58,8 +58,8 @@ func (r *Account) MarshalJSON() (data []byte, err error) {
 
 // The Account's balances in the minor unit of its currency. For dollars, for
 // example, these values will represent cents.
-func (r *Account) GetBalances() (Balances AccountBalances) {
-	if r != nil && r.Balances != nil {
+func (r Account) GetBalances() (Balances AccountBalances) {
+	if r.Balances != nil {
 		Balances = *r.Balances
 	}
 	return
@@ -67,8 +67,8 @@ func (r *Account) GetBalances() (Balances AccountBalances) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // was created.
-func (r *Account) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Account) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -76,16 +76,16 @@ func (r *Account) GetCreatedAt() (CreatedAt string) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 // currency.
-func (r *Account) GetCurrency() (Currency AccountCurrency) {
-	if r != nil && r.Currency != nil {
+func (r Account) GetCurrency() (Currency AccountCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier for the Entity the Account belongs to.
-func (r *Account) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
+func (r Account) GetEntityID() (EntityID string) {
+	if r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
@@ -93,16 +93,16 @@ func (r *Account) GetEntityID() (EntityID string) {
 
 // The identifier of an Entity that, while not owning the Account, is associated
 // with its activity.
-func (r *Account) GetInformationalEntityID() (InformationalEntityID string) {
-	if r != nil && r.InformationalEntityID != nil {
+func (r Account) GetInformationalEntityID() (InformationalEntityID string) {
+	if r.InformationalEntityID != nil {
 		InformationalEntityID = *r.InformationalEntityID
 	}
 	return
 }
 
 // The Account identifier.
-func (r *Account) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Account) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -110,8 +110,8 @@ func (r *Account) GetID() (ID string) {
 
 // The interest accrued but not yet paid, expressed as a string containing a
 // floating-point value.
-func (r *Account) GetInterestAccrued() (InterestAccrued string) {
-	if r != nil && r.InterestAccrued != nil {
+func (r Account) GetInterestAccrued() (InterestAccrued string) {
+	if r.InterestAccrued != nil {
 		InterestAccrued = *r.InterestAccrued
 	}
 	return
@@ -119,24 +119,24 @@ func (r *Account) GetInterestAccrued() (InterestAccrued string) {
 
 // The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 // interest was accrued.
-func (r *Account) GetInterestAccruedAt() (InterestAccruedAt string) {
-	if r != nil && r.InterestAccruedAt != nil {
+func (r Account) GetInterestAccruedAt() (InterestAccruedAt string) {
+	if r.InterestAccruedAt != nil {
 		InterestAccruedAt = *r.InterestAccruedAt
 	}
 	return
 }
 
 // The name you choose for the Account.
-func (r *Account) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r Account) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The status of the Account.
-func (r *Account) GetStatus() (Status AccountStatus) {
-	if r != nil && r.Status != nil {
+func (r Account) GetStatus() (Status AccountStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -144,8 +144,8 @@ func (r *Account) GetStatus() (Status AccountStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `account`.
-func (r *Account) GetType() (Type AccountType) {
-	if r != nil && r.Type != nil {
+func (r Account) GetType() (Type AccountType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -181,8 +181,8 @@ func (r *AccountBalances) MarshalJSON() (data []byte, err error) {
 
 // The Account's current balance, representing the sum of all posted Transactions
 // on the Account.
-func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int64) {
-	if r != nil && r.CurrentBalance != nil {
+func (r AccountBalances) GetCurrentBalance() (CurrentBalance int64) {
+	if r.CurrentBalance != nil {
 		CurrentBalance = *r.CurrentBalance
 	}
 	return
@@ -190,8 +190,8 @@ func (r *AccountBalances) GetCurrentBalance() (CurrentBalance int64) {
 
 // The Account's available balance, representing the current balance less any open
 // Pending Transactions on the Account.
-func (r *AccountBalances) GetAvailableBalance() (AvailableBalance int64) {
-	if r != nil && r.AvailableBalance != nil {
+func (r AccountBalances) GetAvailableBalance() (AvailableBalance int64) {
+	if r.AvailableBalance != nil {
 		AvailableBalance = *r.AvailableBalance
 	}
 	return
@@ -251,8 +251,8 @@ func (r *CreateAnAccountParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the Entity that will own the Account.
-func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
+func (r CreateAnAccountParameters) GetEntityID() (EntityID string) {
+	if r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
@@ -260,16 +260,16 @@ func (r *CreateAnAccountParameters) GetEntityID() (EntityID string) {
 
 // The identifier of an Entity that, while not owning the Account, is associated
 // with its activity. Its relationship to your group must be `informational`.
-func (r *CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
-	if r != nil && r.InformationalEntityID != nil {
+func (r CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
+	if r.InformationalEntityID != nil {
 		InformationalEntityID = *r.InformationalEntityID
 	}
 	return
 }
 
 // The name you choose for the Account.
-func (r *CreateAnAccountParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnAccountParameters) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
@@ -300,8 +300,8 @@ func (r *UpdateAnAccountParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The new name of the Account.
-func (r *UpdateAnAccountParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r UpdateAnAccountParameters) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
@@ -345,8 +345,8 @@ func (r *AccountListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *AccountListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r AccountListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -354,24 +354,24 @@ func (r *AccountListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *AccountListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r AccountListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Accounts for those belonging to the specified Entity.
-func (r *AccountListParams) GetEntityID() (EntityID string) {
-	if r != nil && r.EntityID != nil {
+func (r AccountListParams) GetEntityID() (EntityID string) {
+	if r.EntityID != nil {
 		EntityID = *r.EntityID
 	}
 	return
 }
 
 // Filter Accounts for those with the specified status.
-func (r *AccountListParams) GetStatus() (Status AccountsListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r AccountListParams) GetStatus() (Status AccountsListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -417,16 +417,16 @@ func (r *AccountList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *AccountList) GetData() (Data []Account) {
-	if r != nil && r.Data != nil {
+func (r AccountList) GetData() (Data []Account) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *AccountList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r AccountList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

@@ -44,8 +44,8 @@ func (r *CardProfile) MarshalJSON() (data []byte, err error) {
 }
 
 // The Card Profile identifier.
-func (r *CardProfile) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CardProfile) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -53,24 +53,24 @@ func (r *CardProfile) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was created.
-func (r *CardProfile) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardProfile) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The status of the Card Profile.
-func (r *CardProfile) GetStatus() (Status CardProfileStatus) {
-	if r != nil && r.Status != nil {
+func (r CardProfile) GetStatus() (Status CardProfileStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // A description you can use to identify the Card Profile.
-func (r *CardProfile) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CardProfile) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
@@ -78,8 +78,8 @@ func (r *CardProfile) GetDescription() (Description string) {
 
 // How Cards should appear in digital wallets such as Apple Pay. Different wallets
 // will use these values to render card artwork appropriately for their app.
-func (r *CardProfile) GetDigitalWallets() (DigitalWallets CardProfileDigitalWallets) {
-	if r != nil && r.DigitalWallets != nil {
+func (r CardProfile) GetDigitalWallets() (DigitalWallets CardProfileDigitalWallets) {
+	if r.DigitalWallets != nil {
 		DigitalWallets = *r.DigitalWallets
 	}
 	return
@@ -87,8 +87,8 @@ func (r *CardProfile) GetDigitalWallets() (DigitalWallets CardProfileDigitalWall
 
 // A constant representing the object's type. For this resource it will always be
 // `card_profile`.
-func (r *CardProfile) GetType() (Type CardProfileType) {
-	if r != nil && r.Type != nil {
+func (r CardProfile) GetType() (Type CardProfileType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -142,64 +142,64 @@ func (r *CardProfileDigitalWallets) MarshalJSON() (data []byte, err error) {
 }
 
 // The Card's text color, specified as an RGB triple.
-func (r *CardProfileDigitalWallets) GetTextColor() (TextColor CardProfileDigitalWalletsTextColor) {
-	if r != nil && r.TextColor != nil {
+func (r CardProfileDigitalWallets) GetTextColor() (TextColor CardProfileDigitalWalletsTextColor) {
+	if r.TextColor != nil {
 		TextColor = *r.TextColor
 	}
 	return
 }
 
 // A user-facing description for whoever is issuing the card.
-func (r *CardProfileDigitalWallets) GetIssuerName() (IssuerName string) {
-	if r != nil && r.IssuerName != nil {
+func (r CardProfileDigitalWallets) GetIssuerName() (IssuerName string) {
+	if r.IssuerName != nil {
 		IssuerName = *r.IssuerName
 	}
 	return
 }
 
 // A user-facing description for the card itself.
-func (r *CardProfileDigitalWallets) GetCardDescription() (CardDescription string) {
-	if r != nil && r.CardDescription != nil {
+func (r CardProfileDigitalWallets) GetCardDescription() (CardDescription string) {
+	if r.CardDescription != nil {
 		CardDescription = *r.CardDescription
 	}
 	return
 }
 
 // A website the user can visit to view and receive support for their card.
-func (r *CardProfileDigitalWallets) GetContactWebsite() (ContactWebsite string) {
-	if r != nil && r.ContactWebsite != nil {
+func (r CardProfileDigitalWallets) GetContactWebsite() (ContactWebsite string) {
+	if r.ContactWebsite != nil {
 		ContactWebsite = *r.ContactWebsite
 	}
 	return
 }
 
 // An email address the user can contact to receive support for their card.
-func (r *CardProfileDigitalWallets) GetContactEmail() (ContactEmail string) {
-	if r != nil && r.ContactEmail != nil {
+func (r CardProfileDigitalWallets) GetContactEmail() (ContactEmail string) {
+	if r.ContactEmail != nil {
 		ContactEmail = *r.ContactEmail
 	}
 	return
 }
 
 // A phone number the user can contact to receive support for their card.
-func (r *CardProfileDigitalWallets) GetContactPhone() (ContactPhone string) {
-	if r != nil && r.ContactPhone != nil {
+func (r CardProfileDigitalWallets) GetContactPhone() (ContactPhone string) {
+	if r.ContactPhone != nil {
 		ContactPhone = *r.ContactPhone
 	}
 	return
 }
 
 // The identifier of the File containing the card's front image.
-func (r *CardProfileDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
-	if r != nil && r.BackgroundImageFileID != nil {
+func (r CardProfileDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
+	if r.BackgroundImageFileID != nil {
 		BackgroundImageFileID = *r.BackgroundImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the card's icon image.
-func (r *CardProfileDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
-	if r != nil && r.AppIconFileID != nil {
+func (r CardProfileDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
+	if r.AppIconFileID != nil {
 		AppIconFileID = *r.AppIconFileID
 	}
 	return
@@ -234,24 +234,24 @@ func (r *CardProfileDigitalWalletsTextColor) MarshalJSON() (data []byte, err err
 }
 
 // The value of the red channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetRed() (Red int64) {
-	if r != nil && r.Red != nil {
+func (r CardProfileDigitalWalletsTextColor) GetRed() (Red int64) {
+	if r.Red != nil {
 		Red = *r.Red
 	}
 	return
 }
 
 // The value of the green channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetGreen() (Green int64) {
-	if r != nil && r.Green != nil {
+func (r CardProfileDigitalWalletsTextColor) GetGreen() (Green int64) {
+	if r.Green != nil {
 		Green = *r.Green
 	}
 	return
 }
 
 // The value of the blue channel in the RGB color.
-func (r *CardProfileDigitalWalletsTextColor) GetBlue() (Blue int64) {
-	if r != nil && r.Blue != nil {
+func (r CardProfileDigitalWalletsTextColor) GetBlue() (Blue int64) {
+	if r.Blue != nil {
 		Blue = *r.Blue
 	}
 	return
@@ -291,8 +291,8 @@ func (r *CreateACardProfileParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // A description you can use to identify the Card Profile.
-func (r *CreateACardProfileParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateACardProfileParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
@@ -300,8 +300,8 @@ func (r *CreateACardProfileParameters) GetDescription() (Description string) {
 
 // How Cards should appear in digital wallets such as Apple Pay. Different wallets
 // will use these values to render card artwork appropriately for their app.
-func (r *CreateACardProfileParameters) GetDigitalWallets() (DigitalWallets CreateACardProfileParametersDigitalWallets) {
-	if r != nil && r.DigitalWallets != nil {
+func (r CreateACardProfileParameters) GetDigitalWallets() (DigitalWallets CreateACardProfileParametersDigitalWallets) {
+	if r.DigitalWallets != nil {
 		DigitalWallets = *r.DigitalWallets
 	}
 	return
@@ -347,64 +347,64 @@ func (r *CreateACardProfileParametersDigitalWallets) MarshalJSON() (data []byte,
 }
 
 // The Card's text color, specified as an RGB triple. The default is white.
-func (r *CreateACardProfileParametersDigitalWallets) GetTextColor() (TextColor CreateACardProfileParametersDigitalWalletsTextColor) {
-	if r != nil && r.TextColor != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetTextColor() (TextColor CreateACardProfileParametersDigitalWalletsTextColor) {
+	if r.TextColor != nil {
 		TextColor = *r.TextColor
 	}
 	return
 }
 
 // A user-facing description for whoever is issuing the card.
-func (r *CreateACardProfileParametersDigitalWallets) GetIssuerName() (IssuerName string) {
-	if r != nil && r.IssuerName != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetIssuerName() (IssuerName string) {
+	if r.IssuerName != nil {
 		IssuerName = *r.IssuerName
 	}
 	return
 }
 
 // A user-facing description for the card itself.
-func (r *CreateACardProfileParametersDigitalWallets) GetCardDescription() (CardDescription string) {
-	if r != nil && r.CardDescription != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetCardDescription() (CardDescription string) {
+	if r.CardDescription != nil {
 		CardDescription = *r.CardDescription
 	}
 	return
 }
 
 // A website the user can visit to view and receive support for their card.
-func (r *CreateACardProfileParametersDigitalWallets) GetContactWebsite() (ContactWebsite string) {
-	if r != nil && r.ContactWebsite != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetContactWebsite() (ContactWebsite string) {
+	if r.ContactWebsite != nil {
 		ContactWebsite = *r.ContactWebsite
 	}
 	return
 }
 
 // An email address the user can contact to receive support for their card.
-func (r *CreateACardProfileParametersDigitalWallets) GetContactEmail() (ContactEmail string) {
-	if r != nil && r.ContactEmail != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetContactEmail() (ContactEmail string) {
+	if r.ContactEmail != nil {
 		ContactEmail = *r.ContactEmail
 	}
 	return
 }
 
 // A phone number the user can contact to receive support for their card.
-func (r *CreateACardProfileParametersDigitalWallets) GetContactPhone() (ContactPhone string) {
-	if r != nil && r.ContactPhone != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetContactPhone() (ContactPhone string) {
+	if r.ContactPhone != nil {
 		ContactPhone = *r.ContactPhone
 	}
 	return
 }
 
 // The identifier of the File containing the card's front image.
-func (r *CreateACardProfileParametersDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
-	if r != nil && r.BackgroundImageFileID != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetBackgroundImageFileID() (BackgroundImageFileID string) {
+	if r.BackgroundImageFileID != nil {
 		BackgroundImageFileID = *r.BackgroundImageFileID
 	}
 	return
 }
 
 // The identifier of the File containing the card's icon image.
-func (r *CreateACardProfileParametersDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
-	if r != nil && r.AppIconFileID != nil {
+func (r CreateACardProfileParametersDigitalWallets) GetAppIconFileID() (AppIconFileID string) {
+	if r.AppIconFileID != nil {
 		AppIconFileID = *r.AppIconFileID
 	}
 	return
@@ -440,24 +440,24 @@ func (r *CreateACardProfileParametersDigitalWalletsTextColor) MarshalJSON() (dat
 }
 
 // The value of the red channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetRed() (Red int64) {
-	if r != nil && r.Red != nil {
+func (r CreateACardProfileParametersDigitalWalletsTextColor) GetRed() (Red int64) {
+	if r.Red != nil {
 		Red = *r.Red
 	}
 	return
 }
 
 // The value of the green channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetGreen() (Green int64) {
-	if r != nil && r.Green != nil {
+func (r CreateACardProfileParametersDigitalWalletsTextColor) GetGreen() (Green int64) {
+	if r.Green != nil {
 		Green = *r.Green
 	}
 	return
 }
 
 // The value of the blue channel in the RGB color.
-func (r *CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue int64) {
-	if r != nil && r.Blue != nil {
+func (r CreateACardProfileParametersDigitalWalletsTextColor) GetBlue() (Blue int64) {
+	if r.Blue != nil {
 		Blue = *r.Blue
 	}
 	return
@@ -498,8 +498,8 @@ func (r *CardProfileListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *CardProfileListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r CardProfileListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -507,15 +507,15 @@ func (r *CardProfileListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *CardProfileListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r CardProfileListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *CardProfileListParams) GetStatus() (Status CardProfilesListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r CardProfileListParams) GetStatus() (Status CardProfilesListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -554,8 +554,8 @@ func (r *CardProfilesListParamsStatus) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
-	if r != nil && r.In != nil {
+func (r CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -603,16 +603,16 @@ func (r *CardProfileList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *CardProfileList) GetData() (Data []CardProfile) {
-	if r != nil && r.Data != nil {
+func (r CardProfileList) GetData() (Data []CardProfile) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *CardProfileList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r CardProfileList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

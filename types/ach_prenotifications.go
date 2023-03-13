@@ -59,88 +59,88 @@ func (r *ACHPrenotification) MarshalJSON() (data []byte, err error) {
 }
 
 // The ACH Prenotification's identifier.
-func (r *ACHPrenotification) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r ACHPrenotification) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The destination account number.
-func (r *ACHPrenotification) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r ACHPrenotification) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // Additional information for the recipient.
-func (r *ACHPrenotification) GetAddendum() (Addendum string) {
-	if r != nil && r.Addendum != nil {
+func (r ACHPrenotification) GetAddendum() (Addendum string) {
+	if r.Addendum != nil {
 		Addendum = *r.Addendum
 	}
 	return
 }
 
 // The description of the date of the notification.
-func (r *ACHPrenotification) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
-	if r != nil && r.CompanyDescriptiveDate != nil {
+func (r ACHPrenotification) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r.CompanyDescriptiveDate != nil {
 		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
 	}
 	return
 }
 
 // Optional data associated with the notification.
-func (r *ACHPrenotification) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
-	if r != nil && r.CompanyDiscretionaryData != nil {
+func (r ACHPrenotification) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r.CompanyDiscretionaryData != nil {
 		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
 	}
 	return
 }
 
 // The description of the notification.
-func (r *ACHPrenotification) GetCompanyEntryDescription() (CompanyEntryDescription string) {
-	if r != nil && r.CompanyEntryDescription != nil {
+func (r ACHPrenotification) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r.CompanyEntryDescription != nil {
 		CompanyEntryDescription = *r.CompanyEntryDescription
 	}
 	return
 }
 
 // The name by which you know the company.
-func (r *ACHPrenotification) GetCompanyName() (CompanyName string) {
-	if r != nil && r.CompanyName != nil {
+func (r ACHPrenotification) GetCompanyName() (CompanyName string) {
+	if r.CompanyName != nil {
 		CompanyName = *r.CompanyName
 	}
 	return
 }
 
 // If the notification is for a future credit or debit.
-func (r *ACHPrenotification) GetCreditDebitIndicator() (CreditDebitIndicator ACHPrenotificationCreditDebitIndicator) {
-	if r != nil && r.CreditDebitIndicator != nil {
+func (r ACHPrenotification) GetCreditDebitIndicator() (CreditDebitIndicator ACHPrenotificationCreditDebitIndicator) {
+	if r.CreditDebitIndicator != nil {
 		CreditDebitIndicator = *r.CreditDebitIndicator
 	}
 	return
 }
 
 // The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r *ACHPrenotification) GetEffectiveDate() (EffectiveDate string) {
-	if r != nil && r.EffectiveDate != nil {
+func (r ACHPrenotification) GetEffectiveDate() (EffectiveDate string) {
+	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *ACHPrenotification) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r ACHPrenotification) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // If your prenotification is returned, this will contain details of the return.
-func (r *ACHPrenotification) GetPrenotificationReturn() (PrenotificationReturn ACHPrenotificationPrenotificationReturn) {
-	if r != nil && r.PrenotificationReturn != nil {
+func (r ACHPrenotification) GetPrenotificationReturn() (PrenotificationReturn ACHPrenotificationPrenotificationReturn) {
+	if r.PrenotificationReturn != nil {
 		PrenotificationReturn = *r.PrenotificationReturn
 	}
 	return
@@ -148,16 +148,16 @@ func (r *ACHPrenotification) GetPrenotificationReturn() (PrenotificationReturn A
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the prenotification was created.
-func (r *ACHPrenotification) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHPrenotification) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The lifecycle status of the ACH Prenotification.
-func (r *ACHPrenotification) GetStatus() (Status ACHPrenotificationStatus) {
-	if r != nil && r.Status != nil {
+func (r ACHPrenotification) GetStatus() (Status ACHPrenotificationStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -165,8 +165,8 @@ func (r *ACHPrenotification) GetStatus() (Status ACHPrenotificationStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `ach_prenotification`.
-func (r *ACHPrenotification) GetType() (Type ACHPrenotificationType) {
-	if r != nil && r.Type != nil {
+func (r ACHPrenotification) GetType() (Type ACHPrenotificationType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -208,16 +208,16 @@ func (r *ACHPrenotificationPrenotificationReturn) MarshalJSON() (data []byte, er
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Prenotification was returned.
-func (r *ACHPrenotificationPrenotificationReturn) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHPrenotificationPrenotificationReturn) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // Why the Prenotification was returned.
-func (r *ACHPrenotificationPrenotificationReturn) GetReturnReasonCode() (ReturnReasonCode string) {
-	if r != nil && r.ReturnReasonCode != nil {
+func (r ACHPrenotificationPrenotificationReturn) GetReturnReasonCode() (ReturnReasonCode string) {
+	if r.ReturnReasonCode != nil {
 		ReturnReasonCode = *r.ReturnReasonCode
 	}
 	return
@@ -288,56 +288,56 @@ func (r *CreateAnACHPrenotificationParameters) MarshalJSON() (data []byte, err e
 }
 
 // The account number for the destination account.
-func (r *CreateAnACHPrenotificationParameters) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CreateAnACHPrenotificationParameters) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // Additional information that will be sent to the recipient.
-func (r *CreateAnACHPrenotificationParameters) GetAddendum() (Addendum string) {
-	if r != nil && r.Addendum != nil {
+func (r CreateAnACHPrenotificationParameters) GetAddendum() (Addendum string) {
+	if r.Addendum != nil {
 		Addendum = *r.Addendum
 	}
 	return
 }
 
 // The description of the date of the transfer.
-func (r *CreateAnACHPrenotificationParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
-	if r != nil && r.CompanyDescriptiveDate != nil {
+func (r CreateAnACHPrenotificationParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r.CompanyDescriptiveDate != nil {
 		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
 	}
 	return
 }
 
 // The data you choose to associate with the transfer.
-func (r *CreateAnACHPrenotificationParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
-	if r != nil && r.CompanyDiscretionaryData != nil {
+func (r CreateAnACHPrenotificationParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r.CompanyDiscretionaryData != nil {
 		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
 	}
 	return
 }
 
 // The description of the transfer you wish to be shown to the recipient.
-func (r *CreateAnACHPrenotificationParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
-	if r != nil && r.CompanyEntryDescription != nil {
+func (r CreateAnACHPrenotificationParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r.CompanyEntryDescription != nil {
 		CompanyEntryDescription = *r.CompanyEntryDescription
 	}
 	return
 }
 
 // The name by which the recipient knows you.
-func (r *CreateAnACHPrenotificationParameters) GetCompanyName() (CompanyName string) {
-	if r != nil && r.CompanyName != nil {
+func (r CreateAnACHPrenotificationParameters) GetCompanyName() (CompanyName string) {
+	if r.CompanyName != nil {
 		CompanyName = *r.CompanyName
 	}
 	return
 }
 
 // Whether the Prenotification is for a future debit or credit.
-func (r *CreateAnACHPrenotificationParameters) GetCreditDebitIndicator() (CreditDebitIndicator CreateAnACHPrenotificationParametersCreditDebitIndicator) {
-	if r != nil && r.CreditDebitIndicator != nil {
+func (r CreateAnACHPrenotificationParameters) GetCreditDebitIndicator() (CreditDebitIndicator CreateAnACHPrenotificationParametersCreditDebitIndicator) {
+	if r.CreditDebitIndicator != nil {
 		CreditDebitIndicator = *r.CreditDebitIndicator
 	}
 	return
@@ -345,16 +345,16 @@ func (r *CreateAnACHPrenotificationParameters) GetCreditDebitIndicator() (Credit
 
 // The transfer effective date in
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r *CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate string) {
-	if r != nil && r.EffectiveDate != nil {
+func (r CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate string) {
+	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
 	return
 }
 
 // Your identifer for the transfer recipient.
-func (r *CreateAnACHPrenotificationParameters) GetIndividualID() (IndividualID string) {
-	if r != nil && r.IndividualID != nil {
+func (r CreateAnACHPrenotificationParameters) GetIndividualID() (IndividualID string) {
+	if r.IndividualID != nil {
 		IndividualID = *r.IndividualID
 	}
 	return
@@ -362,8 +362,8 @@ func (r *CreateAnACHPrenotificationParameters) GetIndividualID() (IndividualID s
 
 // The name of the transfer recipient. This value is information and not verified
 // by the recipient's bank.
-func (r *CreateAnACHPrenotificationParameters) GetIndividualName() (IndividualName string) {
-	if r != nil && r.IndividualName != nil {
+func (r CreateAnACHPrenotificationParameters) GetIndividualName() (IndividualName string) {
+	if r.IndividualName != nil {
 		IndividualName = *r.IndividualName
 	}
 	return
@@ -371,16 +371,16 @@ func (r *CreateAnACHPrenotificationParameters) GetIndividualName() (IndividualNa
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 // destination account.
-func (r *CreateAnACHPrenotificationParameters) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CreateAnACHPrenotificationParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The Standard Entry Class (SEC) code to use for the ACH Prenotification.
-func (r *CreateAnACHPrenotificationParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHPrenotificationParametersStandardEntryClassCode) {
-	if r != nil && r.StandardEntryClassCode != nil {
+func (r CreateAnACHPrenotificationParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHPrenotificationParametersStandardEntryClassCode) {
+	if r.StandardEntryClassCode != nil {
 		StandardEntryClassCode = *r.StandardEntryClassCode
 	}
 	return
@@ -436,8 +436,8 @@ func (r *ACHPrenotificationListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *ACHPrenotificationListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r ACHPrenotificationListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -445,15 +445,15 @@ func (r *ACHPrenotificationListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ACHPrenotificationListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r ACHPrenotificationListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificationsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificationsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -501,8 +501,8 @@ func (r *ACHPrenotificationsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -510,8 +510,8 @@ func (r *ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -519,8 +519,8 @@ func (r *ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -528,8 +528,8 @@ func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter strin
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ACHPrenotificationsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r ACHPrenotificationsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -568,16 +568,16 @@ func (r *ACHPrenotificationList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *ACHPrenotificationList) GetData() (Data []ACHPrenotification) {
-	if r != nil && r.Data != nil {
+func (r ACHPrenotificationList) GetData() (Data []ACHPrenotification) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *ACHPrenotificationList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r ACHPrenotificationList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

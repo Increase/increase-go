@@ -47,24 +47,24 @@ func (r *AccountNumber) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the account this Account Number belongs to.
-func (r *AccountNumber) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountNumber) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The account number.
-func (r *AccountNumber) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r AccountNumber) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The Account Number identifier.
-func (r *AccountNumber) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r AccountNumber) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -72,32 +72,32 @@ func (r *AccountNumber) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // Number was created.
-func (r *AccountNumber) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r AccountNumber) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The name you choose for the Account Number.
-func (r *AccountNumber) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r AccountNumber) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *AccountNumber) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r AccountNumber) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // This indicates if payments can be made to the Account Number.
-func (r *AccountNumber) GetStatus() (Status AccountNumberStatus) {
-	if r != nil && r.Status != nil {
+func (r AccountNumber) GetStatus() (Status AccountNumberStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -105,8 +105,8 @@ func (r *AccountNumber) GetStatus() (Status AccountNumberStatus) {
 
 // A constant representing the object's type. For this resource it will always be
 // `account_number`.
-func (r *AccountNumber) GetType() (Type AccountNumberType) {
-	if r != nil && r.Type != nil {
+func (r AccountNumber) GetType() (Type AccountNumberType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -153,16 +153,16 @@ func (r *CreateAnAccountNumberParameters) MarshalJSON() (data []byte, err error)
 }
 
 // The Account the Account Number should belong to.
-func (r *CreateAnAccountNumberParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateAnAccountNumberParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The name you choose for the Account Number.
-func (r *CreateAnAccountNumberParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnAccountNumberParameters) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
@@ -195,16 +195,16 @@ func (r *UpdateAnAccountNumberParameters) MarshalJSON() (data []byte, err error)
 }
 
 // The name you choose for the Account Number.
-func (r *UpdateAnAccountNumberParameters) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r UpdateAnAccountNumberParameters) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // This indicates if transfers can be made to the Account Number.
-func (r *UpdateAnAccountNumberParameters) GetStatus() (Status UpdateAnAccountNumberParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r UpdateAnAccountNumberParameters) GetStatus() (Status UpdateAnAccountNumberParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -256,8 +256,8 @@ func (r *AccountNumberListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *AccountNumberListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r AccountNumberListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -265,24 +265,24 @@ func (r *AccountNumberListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *AccountNumberListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r AccountNumberListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // The status to retrieve Account Numbers for.
-func (r *AccountNumberListParams) GetStatus() (Status AccountNumbersListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r AccountNumberListParams) GetStatus() (Status AccountNumbersListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // Filter Account Numbers to those belonging to the specified Account.
-func (r *AccountNumberListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountNumberListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -329,16 +329,16 @@ func (r *AccountNumberList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *AccountNumberList) GetData() (Data []AccountNumber) {
-	if r != nil && r.Data != nil {
+func (r AccountNumberList) GetData() (Data []AccountNumber) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *AccountNumberList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r AccountNumberList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

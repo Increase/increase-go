@@ -47,8 +47,8 @@ func (r *RealTimeDecision) MarshalJSON() (data []byte, err error) {
 }
 
 // The Real-Time Decision identifier.
-func (r *RealTimeDecision) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r RealTimeDecision) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -56,8 +56,8 @@ func (r *RealTimeDecision) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Real-Time Decision was created.
-func (r *RealTimeDecision) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r RealTimeDecision) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -65,48 +65,48 @@ func (r *RealTimeDecision) GetCreatedAt() (CreatedAt string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // your application can no longer respond to the Real-Time Decision.
-func (r *RealTimeDecision) GetTimeoutAt() (TimeoutAt string) {
-	if r != nil && r.TimeoutAt != nil {
+func (r RealTimeDecision) GetTimeoutAt() (TimeoutAt string) {
+	if r.TimeoutAt != nil {
 		TimeoutAt = *r.TimeoutAt
 	}
 	return
 }
 
 // The status of the Real-Time Decision.
-func (r *RealTimeDecision) GetStatus() (Status RealTimeDecisionStatus) {
-	if r != nil && r.Status != nil {
+func (r RealTimeDecision) GetStatus() (Status RealTimeDecisionStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The category of the Real-Time Decision.
-func (r *RealTimeDecision) GetCategory() (Category RealTimeDecisionCategory) {
-	if r != nil && r.Category != nil {
+func (r RealTimeDecision) GetCategory() (Category RealTimeDecisionCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
 // Fields related to a card authorization.
-func (r *RealTimeDecision) GetCardAuthorization() (CardAuthorization RealTimeDecisionCardAuthorization) {
-	if r != nil && r.CardAuthorization != nil {
+func (r RealTimeDecision) GetCardAuthorization() (CardAuthorization RealTimeDecisionCardAuthorization) {
+	if r.CardAuthorization != nil {
 		CardAuthorization = *r.CardAuthorization
 	}
 	return
 }
 
 // Fields related to a digital wallet token provisioning attempt.
-func (r *RealTimeDecision) GetDigitalWalletToken() (DigitalWalletToken RealTimeDecisionDigitalWalletToken) {
-	if r != nil && r.DigitalWalletToken != nil {
+func (r RealTimeDecision) GetDigitalWalletToken() (DigitalWalletToken RealTimeDecisionDigitalWalletToken) {
+	if r.DigitalWalletToken != nil {
 		DigitalWalletToken = *r.DigitalWalletToken
 	}
 	return
 }
 
 // Fields related to a digital wallet authentication attempt.
-func (r *RealTimeDecision) GetDigitalWalletAuthentication() (DigitalWalletAuthentication RealTimeDecisionDigitalWalletAuthentication) {
-	if r != nil && r.DigitalWalletAuthentication != nil {
+func (r RealTimeDecision) GetDigitalWalletAuthentication() (DigitalWalletAuthentication RealTimeDecisionDigitalWalletAuthentication) {
+	if r.DigitalWalletAuthentication != nil {
 		DigitalWalletAuthentication = *r.DigitalWalletAuthentication
 	}
 	return
@@ -114,8 +114,8 @@ func (r *RealTimeDecision) GetDigitalWalletAuthentication() (DigitalWalletAuthen
 
 // A constant representing the object's type. For this resource it will always be
 // `real_time_decision`.
-func (r *RealTimeDecision) GetType() (Type RealTimeDecisionType) {
-	if r != nil && r.Type != nil {
+func (r RealTimeDecision) GetType() (Type RealTimeDecisionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -196,16 +196,16 @@ func (r *RealTimeDecisionCardAuthorization) MarshalJSON() (data []byte, err erro
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
 // is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r RealTimeDecisionCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
 // The merchant descriptor of the merchant the card is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
@@ -213,64 +213,64 @@ func (r *RealTimeDecisionCardAuthorization) GetMerchantDescriptor() (MerchantDes
 
 // The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 // card is transacting with.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r RealTimeDecisionCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
 // The city the merchant resides in.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r RealTimeDecisionCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
 // The country the merchant resides in.
-func (r *RealTimeDecisionCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r RealTimeDecisionCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
 // The payment network used to process this card authorization
-func (r *RealTimeDecisionCardAuthorization) GetNetwork() (Network RealTimeDecisionCardAuthorizationNetwork) {
-	if r != nil && r.Network != nil {
+func (r RealTimeDecisionCardAuthorization) GetNetwork() (Network RealTimeDecisionCardAuthorizationNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // Fields specific to the `network`
-func (r *RealTimeDecisionCardAuthorization) GetNetworkDetails() (NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails) {
-	if r != nil && r.NetworkDetails != nil {
+func (r RealTimeDecisionCardAuthorization) GetNetworkDetails() (NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails) {
+	if r.NetworkDetails != nil {
 		NetworkDetails = *r.NetworkDetails
 	}
 	return
 }
 
 // Whether or not the authorization was approved.
-func (r *RealTimeDecisionCardAuthorization) GetDecision() (Decision RealTimeDecisionCardAuthorizationDecision) {
-	if r != nil && r.Decision != nil {
+func (r RealTimeDecisionCardAuthorization) GetDecision() (Decision RealTimeDecisionCardAuthorizationDecision) {
+	if r.Decision != nil {
 		Decision = *r.Decision
 	}
 	return
 }
 
 // The identifier of the Card that is being authorized.
-func (r *RealTimeDecisionCardAuthorization) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r RealTimeDecisionCardAuthorization) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
 // The identifier of the Account the authorization will debit.
-func (r *RealTimeDecisionCardAuthorization) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r RealTimeDecisionCardAuthorization) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -279,8 +279,8 @@ func (r *RealTimeDecisionCardAuthorization) GetAccountID() (AccountID string) {
 // The amount of the attempted authorization in the currency the card user sees at
 // the time of purchase, in the minor unit of that currency. For dollars, for
 // example, this is cents.
-func (r *RealTimeDecisionCardAuthorization) GetPresentmentAmount() (PresentmentAmount int64) {
-	if r != nil && r.PresentmentAmount != nil {
+func (r RealTimeDecisionCardAuthorization) GetPresentmentAmount() (PresentmentAmount int64) {
+	if r.PresentmentAmount != nil {
 		PresentmentAmount = *r.PresentmentAmount
 	}
 	return
@@ -288,8 +288,8 @@ func (r *RealTimeDecisionCardAuthorization) GetPresentmentAmount() (PresentmentA
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 // user sees at the time of purchase.
-func (r *RealTimeDecisionCardAuthorization) GetPresentmentCurrency() (PresentmentCurrency string) {
-	if r != nil && r.PresentmentCurrency != nil {
+func (r RealTimeDecisionCardAuthorization) GetPresentmentCurrency() (PresentmentCurrency string) {
+	if r.PresentmentCurrency != nil {
 		PresentmentCurrency = *r.PresentmentCurrency
 	}
 	return
@@ -297,8 +297,8 @@ func (r *RealTimeDecisionCardAuthorization) GetPresentmentCurrency() (Presentmen
 
 // The amount of the attempted authorization in the currency it will be settled in.
 // This currency is the same as that of the Account the card belongs to.
-func (r *RealTimeDecisionCardAuthorization) GetSettlementAmount() (SettlementAmount int64) {
-	if r != nil && r.SettlementAmount != nil {
+func (r RealTimeDecisionCardAuthorization) GetSettlementAmount() (SettlementAmount int64) {
+	if r.SettlementAmount != nil {
 		SettlementAmount = *r.SettlementAmount
 	}
 	return
@@ -306,8 +306,8 @@ func (r *RealTimeDecisionCardAuthorization) GetSettlementAmount() (SettlementAmo
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 // transaction will be settled in.
-func (r *RealTimeDecisionCardAuthorization) GetSettlementCurrency() (SettlementCurrency string) {
-	if r != nil && r.SettlementCurrency != nil {
+func (r RealTimeDecisionCardAuthorization) GetSettlementCurrency() (SettlementCurrency string) {
+	if r.SettlementCurrency != nil {
 		SettlementCurrency = *r.SettlementCurrency
 	}
 	return
@@ -345,8 +345,8 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetails) MarshalJSON() (data []
 }
 
 // Fields specific to the `visa` network
-func (r *RealTimeDecisionCardAuthorizationNetworkDetails) GetVisa() (Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa) {
-	if r != nil && r.Visa != nil {
+func (r RealTimeDecisionCardAuthorizationNetworkDetails) GetVisa() (Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa) {
+	if r.Visa != nil {
 		Visa = *r.Visa
 	}
 	return
@@ -385,8 +385,8 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) MarshalJSON() (dat
 // For electronic commerce transactions, this identifies the level of security used
 // in obtaining the customer's payment credential. For mail or telephone order
 // transactions, identifies the type of mail or telephone order.
-func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
-	if r != nil && r.ElectronicCommerceIndicator != nil {
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r.ElectronicCommerceIndicator != nil {
 		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
 	}
 	return
@@ -394,8 +394,8 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetElectronicComme
 
 // The method used to enter the cardholder's primary account number and card
 // expiration date
-func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r.PointOfServiceEntryMode != nil {
 		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
 	}
 	return
@@ -456,24 +456,24 @@ func (r *RealTimeDecisionDigitalWalletToken) MarshalJSON() (data []byte, err err
 
 // Whether or not the provisioning request was approved. This will be null until
 // the real time decision is responded to.
-func (r *RealTimeDecisionDigitalWalletToken) GetDecision() (Decision RealTimeDecisionDigitalWalletTokenDecision) {
-	if r != nil && r.Decision != nil {
+func (r RealTimeDecisionDigitalWalletToken) GetDecision() (Decision RealTimeDecisionDigitalWalletTokenDecision) {
+	if r.Decision != nil {
 		Decision = *r.Decision
 	}
 	return
 }
 
 // The identifier of the Card that is being tokenized.
-func (r *RealTimeDecisionDigitalWalletToken) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r RealTimeDecisionDigitalWalletToken) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
 // The digital wallet app being used.
-func (r *RealTimeDecisionDigitalWalletToken) GetDigitalWallet() (DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet) {
-	if r != nil && r.DigitalWallet != nil {
+func (r RealTimeDecisionDigitalWalletToken) GetDigitalWallet() (DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet) {
+	if r.DigitalWallet != nil {
 		DigitalWallet = *r.DigitalWallet
 	}
 	return
@@ -482,8 +482,8 @@ func (r *RealTimeDecisionDigitalWalletToken) GetDigitalWallet() (DigitalWallet R
 // The identifier of the Card Profile that was set via the real time decision. This
 // will be null until the real time decision is responded to or if the real time
 // decision did not set a card profile.
-func (r *RealTimeDecisionDigitalWalletToken) GetCardProfileID() (CardProfileID string) {
-	if r != nil && r.CardProfileID != nil {
+func (r RealTimeDecisionDigitalWalletToken) GetCardProfileID() (CardProfileID string) {
+	if r.CardProfileID != nil {
 		CardProfileID = *r.CardProfileID
 	}
 	return
@@ -542,40 +542,40 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) MarshalJSON() (data []byte
 }
 
 // Whether your application successfully delivered the one-time passcode.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetResult() (Result RealTimeDecisionDigitalWalletAuthenticationResult) {
-	if r != nil && r.Result != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetResult() (Result RealTimeDecisionDigitalWalletAuthenticationResult) {
+	if r.Result != nil {
 		Result = *r.Result
 	}
 	return
 }
 
 // The identifier of the Card that is being tokenized.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
 // The digital wallet app being used.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetDigitalWallet() (DigitalWallet RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) {
-	if r != nil && r.DigitalWallet != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetDigitalWallet() (DigitalWallet RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) {
+	if r.DigitalWallet != nil {
 		DigitalWallet = *r.DigitalWallet
 	}
 	return
 }
 
 // The channel to send the card user their one-time passcode.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetChannel() (Channel RealTimeDecisionDigitalWalletAuthenticationChannel) {
-	if r != nil && r.Channel != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetChannel() (Channel RealTimeDecisionDigitalWalletAuthenticationChannel) {
+	if r.Channel != nil {
 		Channel = *r.Channel
 	}
 	return
 }
 
 // The one-time passcode to send the card user.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetOneTimePasscode() (OneTimePasscode string) {
-	if r != nil && r.OneTimePasscode != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetOneTimePasscode() (OneTimePasscode string) {
+	if r.OneTimePasscode != nil {
 		OneTimePasscode = *r.OneTimePasscode
 	}
 	return
@@ -583,16 +583,16 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) GetOneTimePasscode() (OneT
 
 // The phone number to send the one-time passcode to if `channel` is equal to
 // `sms`.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetPhone() (Phone string) {
-	if r != nil && r.Phone != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetPhone() (Phone string) {
+	if r.Phone != nil {
 		Phone = *r.Phone
 	}
 	return
 }
 
 // The email to send the one-time passcode to if `channel` is equal to `email`.
-func (r *RealTimeDecisionDigitalWalletAuthentication) GetEmail() (Email string) {
-	if r != nil && r.Email != nil {
+func (r RealTimeDecisionDigitalWalletAuthentication) GetEmail() (Email string) {
+	if r.Email != nil {
 		Email = *r.Email
 	}
 	return
@@ -658,8 +658,8 @@ func (r *ActionARealTimeDecisionParameters) MarshalJSON() (data []byte, err erro
 
 // If the Real-Time Decision relates to a card authorization attempt, this object
 // contains your response to the authorization.
-func (r *ActionARealTimeDecisionParameters) GetCardAuthorization() (CardAuthorization ActionARealTimeDecisionParametersCardAuthorization) {
-	if r != nil && r.CardAuthorization != nil {
+func (r ActionARealTimeDecisionParameters) GetCardAuthorization() (CardAuthorization ActionARealTimeDecisionParametersCardAuthorization) {
+	if r.CardAuthorization != nil {
 		CardAuthorization = *r.CardAuthorization
 	}
 	return
@@ -667,8 +667,8 @@ func (r *ActionARealTimeDecisionParameters) GetCardAuthorization() (CardAuthoriz
 
 // If the Real-Time Decision relates to a digital wallet token provisioning
 // attempt, this object contains your response to the attempt.
-func (r *ActionARealTimeDecisionParameters) GetDigitalWalletToken() (DigitalWalletToken ActionARealTimeDecisionParametersDigitalWalletToken) {
-	if r != nil && r.DigitalWalletToken != nil {
+func (r ActionARealTimeDecisionParameters) GetDigitalWalletToken() (DigitalWalletToken ActionARealTimeDecisionParametersDigitalWalletToken) {
+	if r.DigitalWalletToken != nil {
 		DigitalWalletToken = *r.DigitalWalletToken
 	}
 	return
@@ -676,8 +676,8 @@ func (r *ActionARealTimeDecisionParameters) GetDigitalWalletToken() (DigitalWall
 
 // If the Real-Time Decision relates to a digital wallet authentication attempt,
 // this object contains your response to the authentication.
-func (r *ActionARealTimeDecisionParameters) GetDigitalWalletAuthentication() (DigitalWalletAuthentication ActionARealTimeDecisionParametersDigitalWalletAuthentication) {
-	if r != nil && r.DigitalWalletAuthentication != nil {
+func (r ActionARealTimeDecisionParameters) GetDigitalWalletAuthentication() (DigitalWalletAuthentication ActionARealTimeDecisionParametersDigitalWalletAuthentication) {
+	if r.DigitalWalletAuthentication != nil {
 		DigitalWalletAuthentication = *r.DigitalWalletAuthentication
 	}
 	return
@@ -709,8 +709,8 @@ func (r *ActionARealTimeDecisionParametersCardAuthorization) MarshalJSON() (data
 }
 
 // Whether the card authorization should be approved or declined.
-func (r *ActionARealTimeDecisionParametersCardAuthorization) GetDecision() (Decision ActionARealTimeDecisionParametersCardAuthorizationDecision) {
-	if r != nil && r.Decision != nil {
+func (r ActionARealTimeDecisionParametersCardAuthorization) GetDecision() (Decision ActionARealTimeDecisionParametersCardAuthorizationDecision) {
+	if r.Decision != nil {
 		Decision = *r.Decision
 	}
 	return
@@ -754,8 +754,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) MarshalJSON() (dat
 
 // If your application approves the provisioning attempt, this contains metadata
 // about the digital wallet token that will be generated.
-func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetApproval() (Approval ActionARealTimeDecisionParametersDigitalWalletTokenApproval) {
-	if r != nil && r.Approval != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletToken) GetApproval() (Approval ActionARealTimeDecisionParametersDigitalWalletTokenApproval) {
+	if r.Approval != nil {
 		Approval = *r.Approval
 	}
 	return
@@ -763,8 +763,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetApproval() (App
 
 // If your application declines the provisioning attempt, this contains details
 // about the decline.
-func (r *ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decline ActionARealTimeDecisionParametersDigitalWalletTokenDecline) {
-	if r != nil && r.Decline != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletToken) GetDecline() (Decline ActionARealTimeDecisionParametersDigitalWalletTokenDecline) {
+	if r.Decline != nil {
 		Decline = *r.Decline
 	}
 	return
@@ -802,8 +802,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) MarshalJSO
 }
 
 // The identifier of the Card Profile to assign to the Digital Wallet token.
-func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetCardProfileID() (CardProfileID string) {
-	if r != nil && r.CardProfileID != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetCardProfileID() (CardProfileID string) {
+	if r.CardProfileID != nil {
 		CardProfileID = *r.CardProfileID
 	}
 	return
@@ -811,8 +811,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetCardPro
 
 // A phone number that can be used to verify the cardholder via one-time passcode
 // over SMS.
-func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetPhone() (Phone string) {
-	if r != nil && r.Phone != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetPhone() (Phone string) {
+	if r.Phone != nil {
 		Phone = *r.Phone
 	}
 	return
@@ -820,8 +820,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetPhone()
 
 // An email address that can be used to verify the cardholder via one-time
 // passcode.
-func (r *ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetEmail() (Email string) {
-	if r != nil && r.Email != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenApproval) GetEmail() (Email string) {
+	if r.Email != nil {
 		Email = *r.Email
 	}
 	return
@@ -855,8 +855,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) MarshalJSON
 
 // Why the tokenization attempt was declined. This is for logging purposes only and
 // is not displayed to the end-user.
-func (r *ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason() (Reason string) {
-	if r != nil && r.Reason != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletTokenDecline) GetReason() (Reason string) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
@@ -888,8 +888,8 @@ func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) MarshalJS
 }
 
 // Whether your application was able to deliver the one-time passcode.
-func (r *ActionARealTimeDecisionParametersDigitalWalletAuthentication) GetResult() (Result ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult) {
-	if r != nil && r.Result != nil {
+func (r ActionARealTimeDecisionParametersDigitalWalletAuthentication) GetResult() (Result ActionARealTimeDecisionParametersDigitalWalletAuthenticationResult) {
+	if r.Result != nil {
 		Result = *r.Result
 	}
 	return

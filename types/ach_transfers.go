@@ -95,24 +95,24 @@ func (r *ACHTransfer) MarshalJSON() (data []byte, err error) {
 }
 
 // The Account to which the transfer belongs.
-func (r *ACHTransfer) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r ACHTransfer) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The destination account number.
-func (r *ACHTransfer) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r ACHTransfer) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // Additional information that will be sent to the recipient.
-func (r *ACHTransfer) GetAddendum() (Addendum string) {
-	if r != nil && r.Addendum != nil {
+func (r ACHTransfer) GetAddendum() (Addendum string) {
+	if r.Addendum != nil {
 		Addendum = *r.Addendum
 	}
 	return
@@ -121,8 +121,8 @@ func (r *ACHTransfer) GetAddendum() (Addendum string) {
 // The transfer amount in USD cents. A positive amount indicates a credit transfer
 // pushing funds to the receiving account. A negative amount indicates a debit
 // transfer pulling funds from the receiving account.
-func (r *ACHTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r ACHTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -130,8 +130,8 @@ func (r *ACHTransfer) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 // currency. For ACH transfers this is always equal to `usd`.
-func (r *ACHTransfer) GetCurrency() (Currency ACHTransferCurrency) {
-	if r != nil && r.Currency != nil {
+func (r ACHTransfer) GetCurrency() (Currency ACHTransferCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -139,8 +139,8 @@ func (r *ACHTransfer) GetCurrency() (Currency ACHTransferCurrency) {
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
-func (r *ACHTransfer) GetApproval() (Approval ACHTransferApproval) {
-	if r != nil && r.Approval != nil {
+func (r ACHTransfer) GetApproval() (Approval ACHTransferApproval) {
+	if r.Approval != nil {
 		Approval = *r.Approval
 	}
 	return
@@ -148,8 +148,8 @@ func (r *ACHTransfer) GetApproval() (Approval ACHTransferApproval) {
 
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
-func (r *ACHTransfer) GetCancellation() (Cancellation ACHTransferCancellation) {
-	if r != nil && r.Cancellation != nil {
+func (r ACHTransfer) GetCancellation() (Cancellation ACHTransferCancellation) {
+	if r.Cancellation != nil {
 		Cancellation = *r.Cancellation
 	}
 	return
@@ -157,32 +157,32 @@ func (r *ACHTransfer) GetCancellation() (Cancellation ACHTransferCancellation) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *ACHTransfer) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHTransfer) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The identifier of the External Account the transfer was made to, if any.
-func (r *ACHTransfer) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r ACHTransfer) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
 // The ACH transfer's identifier.
-func (r *ACHTransfer) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r ACHTransfer) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The transfer's network.
-func (r *ACHTransfer) GetNetwork() (Network ACHTransferNetwork) {
-	if r != nil && r.Network != nil {
+func (r ACHTransfer) GetNetwork() (Network ACHTransferNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
@@ -190,40 +190,40 @@ func (r *ACHTransfer) GetNetwork() (Network ACHTransferNetwork) {
 
 // If the receiving bank accepts the transfer but notifies that future transfers
 // should use different details, this will contain those details.
-func (r *ACHTransfer) GetNotificationOfChange() (NotificationOfChange ACHTransferNotificationOfChange) {
-	if r != nil && r.NotificationOfChange != nil {
+func (r ACHTransfer) GetNotificationOfChange() (NotificationOfChange ACHTransferNotificationOfChange) {
+	if r.NotificationOfChange != nil {
 		NotificationOfChange = *r.NotificationOfChange
 	}
 	return
 }
 
 // If your transfer is returned, this will contain details of the return.
-func (r *ACHTransfer) GetReturn() (Return ACHTransferReturn) {
-	if r != nil && r.Return != nil {
+func (r ACHTransfer) GetReturn() (Return ACHTransferReturn) {
+	if r.Return != nil {
 		Return = *r.Return
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *ACHTransfer) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r ACHTransfer) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The descriptor that will show on the recipient's bank statement.
-func (r *ACHTransfer) GetStatementDescriptor() (StatementDescriptor string) {
-	if r != nil && r.StatementDescriptor != nil {
+func (r ACHTransfer) GetStatementDescriptor() (StatementDescriptor string) {
+	if r.StatementDescriptor != nil {
 		StatementDescriptor = *r.StatementDescriptor
 	}
 	return
 }
 
 // The lifecycle status of the transfer.
-func (r *ACHTransfer) GetStatus() (Status ACHTransferStatus) {
-	if r != nil && r.Status != nil {
+func (r ACHTransfer) GetStatus() (Status ACHTransferStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -231,72 +231,72 @@ func (r *ACHTransfer) GetStatus() (Status ACHTransferStatus) {
 
 // After the transfer is submitted to FedACH, this will contain supplemental
 // details.
-func (r *ACHTransfer) GetSubmission() (Submission ACHTransferSubmission) {
-	if r != nil && r.Submission != nil {
+func (r ACHTransfer) GetSubmission() (Submission ACHTransferSubmission) {
+	if r.Submission != nil {
 		Submission = *r.Submission
 	}
 	return
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *ACHTransfer) GetTemplateID() (TemplateID string) {
-	if r != nil && r.TemplateID != nil {
+func (r ACHTransfer) GetTemplateID() (TemplateID string) {
+	if r.TemplateID != nil {
 		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *ACHTransfer) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r ACHTransfer) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
 // The description of the date of the transfer.
-func (r *ACHTransfer) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
-	if r != nil && r.CompanyDescriptiveDate != nil {
+func (r ACHTransfer) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r.CompanyDescriptiveDate != nil {
 		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
 	}
 	return
 }
 
 // The data you chose to associate with the transfer.
-func (r *ACHTransfer) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
-	if r != nil && r.CompanyDiscretionaryData != nil {
+func (r ACHTransfer) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r.CompanyDiscretionaryData != nil {
 		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
 	}
 	return
 }
 
 // The description of the transfer you set to be shown to the recipient.
-func (r *ACHTransfer) GetCompanyEntryDescription() (CompanyEntryDescription string) {
-	if r != nil && r.CompanyEntryDescription != nil {
+func (r ACHTransfer) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r.CompanyEntryDescription != nil {
 		CompanyEntryDescription = *r.CompanyEntryDescription
 	}
 	return
 }
 
 // The name by which the recipient knows you.
-func (r *ACHTransfer) GetCompanyName() (CompanyName string) {
-	if r != nil && r.CompanyName != nil {
+func (r ACHTransfer) GetCompanyName() (CompanyName string) {
+	if r.CompanyName != nil {
 		CompanyName = *r.CompanyName
 	}
 	return
 }
 
 // The type of the account to which the transfer will be sent.
-func (r *ACHTransfer) GetFunding() (Funding ACHTransferFunding) {
-	if r != nil && r.Funding != nil {
+func (r ACHTransfer) GetFunding() (Funding ACHTransferFunding) {
+	if r.Funding != nil {
 		Funding = *r.Funding
 	}
 	return
 }
 
 // Your identifer for the transfer recipient.
-func (r *ACHTransfer) GetIndividualID() (IndividualID string) {
-	if r != nil && r.IndividualID != nil {
+func (r ACHTransfer) GetIndividualID() (IndividualID string) {
+	if r.IndividualID != nil {
 		IndividualID = *r.IndividualID
 	}
 	return
@@ -304,16 +304,16 @@ func (r *ACHTransfer) GetIndividualID() (IndividualID string) {
 
 // The name of the transfer recipient. This value is information and not verified
 // by the recipient's bank.
-func (r *ACHTransfer) GetIndividualName() (IndividualName string) {
-	if r != nil && r.IndividualName != nil {
+func (r ACHTransfer) GetIndividualName() (IndividualName string) {
+	if r.IndividualName != nil {
 		IndividualName = *r.IndividualName
 	}
 	return
 }
 
 // The Standard Entry Class (SEC) code to use for the transfer.
-func (r *ACHTransfer) GetStandardEntryClassCode() (StandardEntryClassCode ACHTransferStandardEntryClassCode) {
-	if r != nil && r.StandardEntryClassCode != nil {
+func (r ACHTransfer) GetStandardEntryClassCode() (StandardEntryClassCode ACHTransferStandardEntryClassCode) {
+	if r.StandardEntryClassCode != nil {
 		StandardEntryClassCode = *r.StandardEntryClassCode
 	}
 	return
@@ -321,8 +321,8 @@ func (r *ACHTransfer) GetStandardEntryClassCode() (StandardEntryClassCode ACHTra
 
 // A constant representing the object's type. For this resource it will always be
 // `ach_transfer`.
-func (r *ACHTransfer) GetType() (Type ACHTransferType) {
-	if r != nil && r.Type != nil {
+func (r ACHTransfer) GetType() (Type ACHTransferType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -366,8 +366,8 @@ func (r *ACHTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r *ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
-	if r != nil && r.ApprovedAt != nil {
+func (r ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
+	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
 	return
@@ -400,8 +400,8 @@ func (r *ACHTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r *ACHTransferCancellation) GetCanceledAt() (CanceledAt string) {
-	if r != nil && r.CanceledAt != nil {
+func (r ACHTransferCancellation) GetCanceledAt() (CanceledAt string) {
+	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
 	return
@@ -444,24 +444,24 @@ func (r *ACHTransferNotificationOfChange) MarshalJSON() (data []byte, err error)
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the notification occurred.
-func (r *ACHTransferNotificationOfChange) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHTransferNotificationOfChange) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The type of change that occurred.
-func (r *ACHTransferNotificationOfChange) GetChangeCode() (ChangeCode string) {
-	if r != nil && r.ChangeCode != nil {
+func (r ACHTransferNotificationOfChange) GetChangeCode() (ChangeCode string) {
+	if r.ChangeCode != nil {
 		ChangeCode = *r.ChangeCode
 	}
 	return
 }
 
 // The corrected data.
-func (r *ACHTransferNotificationOfChange) GetCorrectedData() (CorrectedData string) {
-	if r != nil && r.CorrectedData != nil {
+func (r ACHTransferNotificationOfChange) GetCorrectedData() (CorrectedData string) {
+	if r.CorrectedData != nil {
 		CorrectedData = *r.CorrectedData
 	}
 	return
@@ -500,32 +500,32 @@ func (r *ACHTransferReturn) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *ACHTransferReturn) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHTransferReturn) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // Why the ACH Transfer was returned.
-func (r *ACHTransferReturn) GetReturnReasonCode() (ReturnReasonCode ACHTransferReturnReturnReasonCode) {
-	if r != nil && r.ReturnReasonCode != nil {
+func (r ACHTransferReturn) GetReturnReasonCode() (ReturnReasonCode ACHTransferReturnReturnReasonCode) {
+	if r.ReturnReasonCode != nil {
 		ReturnReasonCode = *r.ReturnReasonCode
 	}
 	return
 }
 
 // The identifier of the ACH Transfer associated with this return.
-func (r *ACHTransferReturn) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r ACHTransferReturn) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The identifier of the Tranasaction associated with this return.
-func (r *ACHTransferReturn) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r ACHTransferReturn) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -598,16 +598,16 @@ func (r *ACHTransferSubmission) MarshalJSON() (data []byte, err error) {
 }
 
 // The trace number for the submission.
-func (r *ACHTransferSubmission) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r ACHTransferSubmission) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
 }
 
 // When the ACH transfer was sent to FedACH.
-func (r *ACHTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
-	if r != nil && r.SubmittedAt != nil {
+func (r ACHTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
+	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
@@ -707,16 +707,16 @@ func (r *CreateAnACHTransferParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The Increase identifier for the account that will send the transfer.
-func (r *CreateAnACHTransferParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateAnACHTransferParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The account number for the destination account.
-func (r *CreateAnACHTransferParameters) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CreateAnACHTransferParameters) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
@@ -724,8 +724,8 @@ func (r *CreateAnACHTransferParameters) GetAccountNumber() (AccountNumber string
 
 // Additional information that will be sent to the recipient. This is included in
 // the transfer data sent to the receiving bank.
-func (r *CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
-	if r != nil && r.Addendum != nil {
+func (r CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
+	if r.Addendum != nil {
 		Addendum = *r.Addendum
 	}
 	return
@@ -734,8 +734,8 @@ func (r *CreateAnACHTransferParameters) GetAddendum() (Addendum string) {
 // The transfer amount in cents. A positive amount originates a credit transfer
 // pushing funds to the receiving account. A negative amount originates a debit
 // transfer pulling funds from the receiving account.
-func (r *CreateAnACHTransferParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateAnACHTransferParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -743,8 +743,8 @@ func (r *CreateAnACHTransferParameters) GetAmount() (Amount int64) {
 
 // The description of the date of the transfer, usually in the format `YYYYMMDD`.
 // This is included in the transfer data sent to the receiving bank.
-func (r *CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
-	if r != nil && r.CompanyDescriptiveDate != nil {
+func (r CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDescriptiveDate string) {
+	if r.CompanyDescriptiveDate != nil {
 		CompanyDescriptiveDate = *r.CompanyDescriptiveDate
 	}
 	return
@@ -752,8 +752,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyDescriptiveDate() (CompanyDesc
 
 // The data you choose to associate with the transfer. This is included in the
 // transfer data sent to the receiving bank.
-func (r *CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
-	if r != nil && r.CompanyDiscretionaryData != nil {
+func (r CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDiscretionaryData string) {
+	if r.CompanyDiscretionaryData != nil {
 		CompanyDiscretionaryData = *r.CompanyDiscretionaryData
 	}
 	return
@@ -761,8 +761,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyDiscretionaryData() (CompanyDi
 
 // A description of the transfer. This is included in the transfer data sent to the
 // receiving bank.
-func (r *CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
-	if r != nil && r.CompanyEntryDescription != nil {
+func (r CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEntryDescription string) {
+	if r.CompanyEntryDescription != nil {
 		CompanyEntryDescription = *r.CompanyEntryDescription
 	}
 	return
@@ -770,8 +770,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyEntryDescription() (CompanyEnt
 
 // The name by which the recipient knows you. This is included in the transfer data
 // sent to the receiving bank.
-func (r *CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
-	if r != nil && r.CompanyName != nil {
+func (r CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
+	if r.CompanyName != nil {
 		CompanyName = *r.CompanyName
 	}
 	return
@@ -779,8 +779,8 @@ func (r *CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
 
 // The transfer effective date in
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r *CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string) {
-	if r != nil && r.EffectiveDate != nil {
+func (r CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string) {
+	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
 	return
@@ -788,24 +788,24 @@ func (r *CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string
 
 // The ID of an External Account to initiate a transfer to. If this parameter is
 // provided, `account_number`, `routing_number`, and `funding` must be absent.
-func (r *CreateAnACHTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r CreateAnACHTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
 // The type of the account to which the transfer will be sent.
-func (r *CreateAnACHTransferParameters) GetFunding() (Funding CreateAnACHTransferParametersFunding) {
-	if r != nil && r.Funding != nil {
+func (r CreateAnACHTransferParameters) GetFunding() (Funding CreateAnACHTransferParametersFunding) {
+	if r.Funding != nil {
 		Funding = *r.Funding
 	}
 	return
 }
 
 // Your identifer for the transfer recipient.
-func (r *CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) {
-	if r != nil && r.IndividualID != nil {
+func (r CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) {
+	if r.IndividualID != nil {
 		IndividualID = *r.IndividualID
 	}
 	return
@@ -813,16 +813,16 @@ func (r *CreateAnACHTransferParameters) GetIndividualID() (IndividualID string) 
 
 // The name of the transfer recipient. This value is informational and not verified
 // by the recipient's bank.
-func (r *CreateAnACHTransferParameters) GetIndividualName() (IndividualName string) {
-	if r != nil && r.IndividualName != nil {
+func (r CreateAnACHTransferParameters) GetIndividualName() (IndividualName string) {
+	if r.IndividualName != nil {
 		IndividualName = *r.IndividualName
 	}
 	return
 }
 
 // Whether the transfer requires explicit approval via the dashboard or API.
-func (r *CreateAnACHTransferParameters) GetRequireApproval() (RequireApproval bool) {
-	if r != nil && r.RequireApproval != nil {
+func (r CreateAnACHTransferParameters) GetRequireApproval() (RequireApproval bool) {
+	if r.RequireApproval != nil {
 		RequireApproval = *r.RequireApproval
 	}
 	return
@@ -830,16 +830,16 @@ func (r *CreateAnACHTransferParameters) GetRequireApproval() (RequireApproval bo
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 // destination account.
-func (r *CreateAnACHTransferParameters) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CreateAnACHTransferParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The Standard Entry Class (SEC) code to use for the transfer.
-func (r *CreateAnACHTransferParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHTransferParametersStandardEntryClassCode) {
-	if r != nil && r.StandardEntryClassCode != nil {
+func (r CreateAnACHTransferParameters) GetStandardEntryClassCode() (StandardEntryClassCode CreateAnACHTransferParametersStandardEntryClassCode) {
+	if r.StandardEntryClassCode != nil {
 		StandardEntryClassCode = *r.StandardEntryClassCode
 	}
 	return
@@ -851,8 +851,8 @@ func (r *CreateAnACHTransferParameters) GetStandardEntryClassCode() (StandardEnt
 // `statement_descriptor` will be sent in those fields to the receiving bank to
 // help the customer recognize the transfer. You are highly encouraged to pass
 // `individual_name` and `company_name` instead of relying on this fallback.
-func (r *CreateAnACHTransferParameters) GetStatementDescriptor() (StatementDescriptor string) {
-	if r != nil && r.StatementDescriptor != nil {
+func (r CreateAnACHTransferParameters) GetStatementDescriptor() (StatementDescriptor string) {
+	if r.StatementDescriptor != nil {
 		StatementDescriptor = *r.StatementDescriptor
 	}
 	return
@@ -912,8 +912,8 @@ func (r *ACHTransferListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *ACHTransferListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r ACHTransferListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -921,31 +921,31 @@ func (r *ACHTransferListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ACHTransferListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r ACHTransferListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter ACH Transfers to those that originated from the specified Account.
-func (r *ACHTransferListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r ACHTransferListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter ACH Transfers to those made to the specified External Account.
-func (r *ACHTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r ACHTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
-func (r *ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransfersListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransfersListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -993,8 +993,8 @@ func (r *ACHTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -1002,8 +1002,8 @@ func (r *ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -1011,8 +1011,8 @@ func (r *ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -1020,8 +1020,8 @@ func (r *ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *ACHTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r ACHTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -1060,16 +1060,16 @@ func (r *ACHTransferList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *ACHTransferList) GetData() (Data []ACHTransfer) {
-	if r != nil && r.Data != nil {
+func (r ACHTransferList) GetData() (Data []ACHTransfer) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *ACHTransferList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r ACHTransferList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

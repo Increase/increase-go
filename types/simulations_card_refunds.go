@@ -30,8 +30,8 @@ func (r *SimulateARefundOnACardParameters) MarshalJSON() (data []byte, err error
 
 // The identifier for the Transaction to refund. The Transaction's source must have
 // a category of card_settlement.
-func (r *SimulateARefundOnACardParameters) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r SimulateARefundOnACardParameters) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return

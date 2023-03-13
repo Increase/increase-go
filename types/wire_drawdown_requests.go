@@ -65,16 +65,16 @@ func (r *WireDrawdownRequest) MarshalJSON() (data []byte, err error) {
 
 // A constant representing the object's type. For this resource it will always be
 // `wire_drawdown_request`.
-func (r *WireDrawdownRequest) GetType() (Type WireDrawdownRequestType) {
-	if r != nil && r.Type != nil {
+func (r WireDrawdownRequest) GetType() (Type WireDrawdownRequestType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
 }
 
 // The Wire drawdown request identifier.
-func (r *WireDrawdownRequest) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r WireDrawdownRequest) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -82,32 +82,32 @@ func (r *WireDrawdownRequest) GetID() (ID string) {
 
 // The Account Number to which the recipient of this request is being requested to
 // send funds.
-func (r *WireDrawdownRequest) GetAccountNumberID() (AccountNumberID string) {
-	if r != nil && r.AccountNumberID != nil {
+func (r WireDrawdownRequest) GetAccountNumberID() (AccountNumberID string) {
+	if r.AccountNumberID != nil {
 		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }
 
 // The drawdown request's recipient's account number.
-func (r *WireDrawdownRequest) GetRecipientAccountNumber() (RecipientAccountNumber string) {
-	if r != nil && r.RecipientAccountNumber != nil {
+func (r WireDrawdownRequest) GetRecipientAccountNumber() (RecipientAccountNumber string) {
+	if r.RecipientAccountNumber != nil {
 		RecipientAccountNumber = *r.RecipientAccountNumber
 	}
 	return
 }
 
 // The drawdown request's recipient's routing number.
-func (r *WireDrawdownRequest) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
-	if r != nil && r.RecipientRoutingNumber != nil {
+func (r WireDrawdownRequest) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
+	if r.RecipientRoutingNumber != nil {
 		RecipientRoutingNumber = *r.RecipientRoutingNumber
 	}
 	return
 }
 
 // The amount being requested in cents.
-func (r *WireDrawdownRequest) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r WireDrawdownRequest) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -115,48 +115,48 @@ func (r *WireDrawdownRequest) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 // requested. Will always be "USD".
-func (r *WireDrawdownRequest) GetCurrency() (Currency string) {
-	if r != nil && r.Currency != nil {
+func (r WireDrawdownRequest) GetCurrency() (Currency string) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The message the recipient will see as part of the drawdown request.
-func (r *WireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r WireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
 // The drawdown request's recipient's name.
-func (r *WireDrawdownRequest) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
+func (r WireDrawdownRequest) GetRecipientName() (RecipientName string) {
+	if r.RecipientName != nil {
 		RecipientName = *r.RecipientName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's recipient's address.
-func (r *WireDrawdownRequest) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
-	if r != nil && r.RecipientAddressLine1 != nil {
+func (r WireDrawdownRequest) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
+	if r.RecipientAddressLine1 != nil {
 		RecipientAddressLine1 = *r.RecipientAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's recipient's address.
-func (r *WireDrawdownRequest) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
-	if r != nil && r.RecipientAddressLine2 != nil {
+func (r WireDrawdownRequest) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
+	if r.RecipientAddressLine2 != nil {
 		RecipientAddressLine2 = *r.RecipientAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's recipient's address.
-func (r *WireDrawdownRequest) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
-	if r != nil && r.RecipientAddressLine3 != nil {
+func (r WireDrawdownRequest) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
+	if r.RecipientAddressLine3 != nil {
 		RecipientAddressLine3 = *r.RecipientAddressLine3
 	}
 	return
@@ -164,8 +164,8 @@ func (r *WireDrawdownRequest) GetRecipientAddressLine3() (RecipientAddressLine3 
 
 // After the drawdown request is submitted to Fedwire, this will contain
 // supplemental details.
-func (r *WireDrawdownRequest) GetSubmission() (Submission WireDrawdownRequestSubmission) {
-	if r != nil && r.Submission != nil {
+func (r WireDrawdownRequest) GetSubmission() (Submission WireDrawdownRequestSubmission) {
+	if r.Submission != nil {
 		Submission = *r.Submission
 	}
 	return
@@ -173,16 +173,16 @@ func (r *WireDrawdownRequest) GetSubmission() (Submission WireDrawdownRequestSub
 
 // If the recipient fulfills the drawdown request by sending funds, then this will
 // be the identifier of the corresponding Transaction.
-func (r *WireDrawdownRequest) GetFulfillmentTransactionID() (FulfillmentTransactionID string) {
-	if r != nil && r.FulfillmentTransactionID != nil {
+func (r WireDrawdownRequest) GetFulfillmentTransactionID() (FulfillmentTransactionID string) {
+	if r.FulfillmentTransactionID != nil {
 		FulfillmentTransactionID = *r.FulfillmentTransactionID
 	}
 	return
 }
 
 // The lifecycle status of the drawdown request.
-func (r *WireDrawdownRequest) GetStatus() (Status WireDrawdownRequestStatus) {
-	if r != nil && r.Status != nil {
+func (r WireDrawdownRequest) GetStatus() (Status WireDrawdownRequestStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -221,8 +221,8 @@ func (r *WireDrawdownRequestSubmission) MarshalJSON() (data []byte, err error) {
 
 // The input message accountability data (IMAD) uniquely identifying the submission
 // with Fedwire.
-func (r *WireDrawdownRequestSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r WireDrawdownRequestSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
@@ -278,72 +278,72 @@ func (r *CreateAWireDrawdownRequestParameters) MarshalJSON() (data []byte, err e
 }
 
 // The Account Number to which the recipient should send funds.
-func (r *CreateAWireDrawdownRequestParameters) GetAccountNumberID() (AccountNumberID string) {
-	if r != nil && r.AccountNumberID != nil {
+func (r CreateAWireDrawdownRequestParameters) GetAccountNumberID() (AccountNumberID string) {
+	if r.AccountNumberID != nil {
 		AccountNumberID = *r.AccountNumberID
 	}
 	return
 }
 
 // The amount requested from the recipient, in cents.
-func (r *CreateAWireDrawdownRequestParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateAWireDrawdownRequestParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // A message the recipient will see as part of the request.
-func (r *CreateAWireDrawdownRequestParameters) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r CreateAWireDrawdownRequestParameters) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
 // The drawdown request's recipient's account number.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAccountNumber() (RecipientAccountNumber string) {
-	if r != nil && r.RecipientAccountNumber != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientAccountNumber() (RecipientAccountNumber string) {
+	if r.RecipientAccountNumber != nil {
 		RecipientAccountNumber = *r.RecipientAccountNumber
 	}
 	return
 }
 
 // The drawdown request's recipient's routing number.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
-	if r != nil && r.RecipientRoutingNumber != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientRoutingNumber() (RecipientRoutingNumber string) {
+	if r.RecipientRoutingNumber != nil {
 		RecipientRoutingNumber = *r.RecipientRoutingNumber
 	}
 	return
 }
 
 // The drawdown request's recipient's name.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientName() (RecipientName string) {
+	if r.RecipientName != nil {
 		RecipientName = *r.RecipientName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
-	if r != nil && r.RecipientAddressLine1 != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientAddressLine1() (RecipientAddressLine1 string) {
+	if r.RecipientAddressLine1 != nil {
 		RecipientAddressLine1 = *r.RecipientAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
-	if r != nil && r.RecipientAddressLine2 != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientAddressLine2() (RecipientAddressLine2 string) {
+	if r.RecipientAddressLine2 != nil {
 		RecipientAddressLine2 = *r.RecipientAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's recipient's address.
-func (r *CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
-	if r != nil && r.RecipientAddressLine3 != nil {
+func (r CreateAWireDrawdownRequestParameters) GetRecipientAddressLine3() (RecipientAddressLine3 string) {
+	if r.RecipientAddressLine3 != nil {
 		RecipientAddressLine3 = *r.RecipientAddressLine3
 	}
 	return
@@ -383,8 +383,8 @@ func (r *WireDrawdownRequestListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *WireDrawdownRequestListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r WireDrawdownRequestListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -392,8 +392,8 @@ func (r *WireDrawdownRequestListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *WireDrawdownRequestListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r WireDrawdownRequestListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -432,16 +432,16 @@ func (r *WireDrawdownRequestList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *WireDrawdownRequestList) GetData() (Data []WireDrawdownRequest) {
-	if r != nil && r.Data != nil {
+func (r WireDrawdownRequestList) GetData() (Data []WireDrawdownRequest) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *WireDrawdownRequestList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r WireDrawdownRequestList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

@@ -39,8 +39,8 @@ func (r *CardAuthorizationSimulation) MarshalJSON() (data []byte, err error) {
 // If the authorization attempt succeeds, this will contain the resulting Pending
 // Transaction object. The Pending Transaction's `source` will be of
 // `category: card_authorization`.
-func (r *CardAuthorizationSimulation) GetPendingTransaction() (PendingTransaction CardAuthorizationSimulationPendingTransaction) {
-	if r != nil && r.PendingTransaction != nil {
+func (r CardAuthorizationSimulation) GetPendingTransaction() (PendingTransaction CardAuthorizationSimulationPendingTransaction) {
+	if r.PendingTransaction != nil {
 		PendingTransaction = *r.PendingTransaction
 	}
 	return
@@ -49,8 +49,8 @@ func (r *CardAuthorizationSimulation) GetPendingTransaction() (PendingTransactio
 // If the authorization attempt fails, this will contain the resulting
 // [Declined Transaction](#declined-transactions) object. The Declined
 // Transaction's `source` will be of `category: card_decline`.
-func (r *CardAuthorizationSimulation) GetDeclinedTransaction() (DeclinedTransaction CardAuthorizationSimulationDeclinedTransaction) {
-	if r != nil && r.DeclinedTransaction != nil {
+func (r CardAuthorizationSimulation) GetDeclinedTransaction() (DeclinedTransaction CardAuthorizationSimulationDeclinedTransaction) {
+	if r.DeclinedTransaction != nil {
 		DeclinedTransaction = *r.DeclinedTransaction
 	}
 	return
@@ -58,8 +58,8 @@ func (r *CardAuthorizationSimulation) GetDeclinedTransaction() (DeclinedTransact
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_card_authorization_simulation_result`.
-func (r *CardAuthorizationSimulation) GetType() (Type CardAuthorizationSimulationType) {
-	if r != nil && r.Type != nil {
+func (r CardAuthorizationSimulation) GetType() (Type CardAuthorizationSimulationType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -122,8 +122,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) MarshalJSON() (data []by
 }
 
 // The identifier for the account this Pending Transaction belongs to.
-func (r *CardAuthorizationSimulationPendingTransaction) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -131,8 +131,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetAccountID() (AccountI
 
 // The Pending Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransaction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -141,8 +141,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetAmount() (Amount int6
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
 // Transcation's Account.
-func (r *CardAuthorizationSimulationPendingTransaction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -150,8 +150,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetCurrency() (Currency 
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 // Transaction occured.
-func (r *CardAuthorizationSimulationPendingTransaction) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -160,16 +160,16 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetCreatedAt() (CreatedA
 // For a Pending Transaction related to a transfer, this is the description you
 // provide. For a Pending Transaction related to a payment, this is the description
 // the vendor provides.
-func (r *CardAuthorizationSimulationPendingTransaction) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Pending Transaction identifier.
-func (r *CardAuthorizationSimulationPendingTransaction) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -177,16 +177,16 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetID() (ID string) {
 
 // The identifier for the route this Pending Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *CardAuthorizationSimulationPendingTransaction) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
 // The type of the route this Pending Transaction came through.
-func (r *CardAuthorizationSimulationPendingTransaction) GetRouteType() (RouteType string) {
-	if r != nil && r.RouteType != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetRouteType() (RouteType string) {
+	if r.RouteType != nil {
 		RouteType = *r.RouteType
 	}
 	return
@@ -195,8 +195,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetRouteType() (RouteTyp
 // This is an object giving more details on the network-level event that caused the
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
-func (r *CardAuthorizationSimulationPendingTransaction) GetSource() (Source CardAuthorizationSimulationPendingTransactionSource) {
-	if r != nil && r.Source != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetSource() (Source CardAuthorizationSimulationPendingTransactionSource) {
+	if r.Source != nil {
 		Source = *r.Source
 	}
 	return
@@ -204,8 +204,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetSource() (Source Card
 
 // Whether the Pending Transaction has been confirmed and has an associated
 // Transaction.
-func (r *CardAuthorizationSimulationPendingTransaction) GetStatus() (Status CardAuthorizationSimulationPendingTransactionStatus) {
-	if r != nil && r.Status != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetStatus() (Status CardAuthorizationSimulationPendingTransactionStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -213,8 +213,8 @@ func (r *CardAuthorizationSimulationPendingTransaction) GetStatus() (Status Card
 
 // A constant representing the object's type. For this resource it will always be
 // `pending_transaction`.
-func (r *CardAuthorizationSimulationPendingTransaction) GetType() (Type CardAuthorizationSimulationPendingTransactionType) {
-	if r != nil && r.Type != nil {
+func (r CardAuthorizationSimulationPendingTransaction) GetType() (Type CardAuthorizationSimulationPendingTransactionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -289,8 +289,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) MarshalJSON() (dat
 // The type of transaction that took place. We may add additional possible values
 // for this enum over time; your application should be able to handle such
 // additions gracefully.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetCategory() (Category CardAuthorizationSimulationPendingTransactionSourceCategory) {
-	if r != nil && r.Category != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetCategory() (Category CardAuthorizationSimulationPendingTransactionSourceCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -298,8 +298,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetCategory() (Cat
 
 // A Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetAccountTransferInstruction() (AccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) {
-	if r != nil && r.AccountTransferInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetAccountTransferInstruction() (AccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) {
+	if r.AccountTransferInstruction != nil {
 		AccountTransferInstruction = *r.AccountTransferInstruction
 	}
 	return
@@ -307,8 +307,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetAccountTransfer
 
 // A ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetACHTransferInstruction() (ACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) {
-	if r != nil && r.ACHTransferInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetACHTransferInstruction() (ACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) {
+	if r.ACHTransferInstruction != nil {
 		ACHTransferInstruction = *r.ACHTransferInstruction
 	}
 	return
@@ -316,8 +316,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetACHTransferInst
 
 // A Card Authorization object. This field will be present in the JSON response if
 // and only if `category` is equal to `card_authorization`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetCardAuthorization() (CardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) {
-	if r != nil && r.CardAuthorization != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetCardAuthorization() (CardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) {
+	if r.CardAuthorization != nil {
 		CardAuthorization = *r.CardAuthorization
 	}
 	return
@@ -325,8 +325,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetCardAuthorizati
 
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetCheckDepositInstruction() (CheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) {
-	if r != nil && r.CheckDepositInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetCheckDepositInstruction() (CheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) {
+	if r.CheckDepositInstruction != nil {
 		CheckDepositInstruction = *r.CheckDepositInstruction
 	}
 	return
@@ -334,8 +334,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetCheckDepositIns
 
 // A Check Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetCheckTransferInstruction() (CheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) {
-	if r != nil && r.CheckTransferInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetCheckTransferInstruction() (CheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) {
+	if r.CheckTransferInstruction != nil {
 		CheckTransferInstruction = *r.CheckTransferInstruction
 	}
 	return
@@ -343,8 +343,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetCheckTransferIn
 
 // A Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetInboundFundsHold() (InboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) {
-	if r != nil && r.InboundFundsHold != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetInboundFundsHold() (InboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) {
+	if r.InboundFundsHold != nil {
 		InboundFundsHold = *r.InboundFundsHold
 	}
 	return
@@ -352,8 +352,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetInboundFundsHol
 
 // A Deprecated Card Authorization object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_route_authorization`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetCardRouteAuthorization() (CardRouteAuthorization CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) {
-	if r != nil && r.CardRouteAuthorization != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetCardRouteAuthorization() (CardRouteAuthorization CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) {
+	if r.CardRouteAuthorization != nil {
 		CardRouteAuthorization = *r.CardRouteAuthorization
 	}
 	return
@@ -362,8 +362,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetCardRouteAuthor
 // A Wire Drawdown Payment Instruction object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `wire_drawdown_payment_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetWireDrawdownPaymentInstruction() (WireDrawdownPaymentInstruction CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) {
-	if r != nil && r.WireDrawdownPaymentInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetWireDrawdownPaymentInstruction() (WireDrawdownPaymentInstruction CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) {
+	if r.WireDrawdownPaymentInstruction != nil {
 		WireDrawdownPaymentInstruction = *r.WireDrawdownPaymentInstruction
 	}
 	return
@@ -371,8 +371,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) GetWireDrawdownPay
 
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
-func (r *CardAuthorizationSimulationPendingTransactionSource) GetWireTransferInstruction() (WireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) {
-	if r != nil && r.WireTransferInstruction != nil {
+func (r CardAuthorizationSimulationPendingTransactionSource) GetWireTransferInstruction() (WireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) {
+	if r.WireTransferInstruction != nil {
 		WireTransferInstruction = *r.WireTransferInstruction
 	}
 	return
@@ -429,8 +429,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -438,16 +438,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Account Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -496,16 +496,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The identifier of the ACH Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -566,16 +566,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) M
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
 // is transacting with.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
 // The merchant descriptor of the merchant the card is transacting with.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
@@ -583,40 +583,40 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 // card is transacting with.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
 // The city the merchant resides in.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
 // The country the merchant resides in.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
 // The payment network used to process this card authorization
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetwork() (Network CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork) {
-	if r != nil && r.Network != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetwork() (Network CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // Fields specific to the `network`
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) {
-	if r != nil && r.NetworkDetails != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) {
+	if r.NetworkDetails != nil {
 		NetworkDetails = *r.NetworkDetails
 	}
 	return
@@ -624,8 +624,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -633,8 +633,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -642,8 +642,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
-	if r != nil && r.RealTimeDecisionID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r.RealTimeDecisionID != nil {
 		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
@@ -651,8 +651,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) G
 
 // If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 // purchase), the identifier of the token that was used.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
-	if r != nil && r.DigitalWalletTokenID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r.DigitalWalletTokenID != nil {
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
@@ -692,8 +692,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 }
 
 // Fields specific to the `visa` network
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
-	if r != nil && r.Visa != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) {
+	if r.Visa != nil {
 		Visa = *r.Visa
 	}
 	return
@@ -734,8 +734,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 // For electronic commerce transactions, this identifies the level of security used
 // in obtaining the customer's payment credential. For mail or telephone order
 // transactions, identifies the type of mail or telephone order.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
-	if r != nil && r.ElectronicCommerceIndicator != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r.ElectronicCommerceIndicator != nil {
 		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
 	}
 	return
@@ -743,8 +743,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 
 // The method used to enter the cardholder's primary account number and card
 // expiration date
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r.PointOfServiceEntryMode != nil {
 		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
 	}
 	return
@@ -815,8 +815,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -824,8 +824,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -833,8 +833,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 
 // The identifier of the File containing the image of the front of the check that
 // was deposited.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
-	if r != nil && r.FrontImageFileID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetFrontImageFileID() (FrontImageFileID string) {
+	if r.FrontImageFileID != nil {
 		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
@@ -842,16 +842,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 
 // The identifier of the File containing the image of the back of the check that
 // was deposited.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
-	if r != nil && r.BackImageFileID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetBackImageFileID() (BackImageFileID string) {
+	if r.BackImageFileID != nil {
 		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
 
 // The identifier of the Check Deposit.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -903,8 +903,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -912,16 +912,16 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Check Transfer that led to this Pending Transaction.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -980,8 +980,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Ma
 
 // The held amount in the minor unit of the account's currency. For dollars, for
 // example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -989,8 +989,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Ge
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 // currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -998,32 +998,32 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Ge
 
 // When the hold will be released automatically. Certain conditions may cause it to
 // be released before this time.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
-	if r != nil && r.AutomaticallyReleasesAt != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
+	if r.AutomaticallyReleasesAt != nil {
 		AutomaticallyReleasesAt = *r.AutomaticallyReleasesAt
 	}
 	return
 }
 
 // When the hold was released (if it has been released).
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
-	if r != nil && r.ReleasedAt != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
+	if r.ReleasedAt != nil {
 		ReleasedAt = *r.ReleasedAt
 	}
 	return
 }
 
 // The status of the hold.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetStatus() (Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus) {
-	if r != nil && r.Status != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetStatus() (Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The ID of the Transaction for which funds were held.
-func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetHeldTransactionID() (HeldTransactionID string) {
-	if r != nil && r.HeldTransactionID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetHeldTransactionID() (HeldTransactionID string) {
+	if r.HeldTransactionID != nil {
 		HeldTransactionID = *r.HeldTransactionID
 	}
 	return
@@ -1086,8 +1086,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1095,50 +1095,50 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetCurrency() (Currency CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
@@ -1188,29 +1188,29 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentI
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
@@ -1250,36 +1250,36 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 
 // The pending amount in the minor unit of the transaction's currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
@@ -1352,8 +1352,8 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) MarshalJSON() (data []b
 }
 
 // The identifier for the Account the Declined Transaction belongs to.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -1361,8 +1361,8 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetAccountID() (Account
 
 // The Declined Transaction amount in the minor unit of its currency. For dollars,
 // for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1371,8 +1371,8 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetAmount() (Amount int
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
 // Transcation's Account.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
@@ -1380,24 +1380,24 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetCurrency() (Currency
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // This is the description the vendor provides.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Declined Transaction identifier.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -1405,16 +1405,16 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetID() (ID string) {
 
 // The identifier for the route this Declined Transaction came through. Routes are
 // things like cards and ACH details.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetRouteID() (RouteID string) {
-	if r != nil && r.RouteID != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetRouteID() (RouteID string) {
+	if r.RouteID != nil {
 		RouteID = *r.RouteID
 	}
 	return
 }
 
 // The type of the route this Declined Transaction came through.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetRouteType() (RouteType string) {
-	if r != nil && r.RouteType != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetRouteType() (RouteType string) {
+	if r.RouteType != nil {
 		RouteType = *r.RouteType
 	}
 	return
@@ -1425,8 +1425,8 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetRouteType() (RouteTy
 // merchant's industry and location. Note that for backwards compatibility reasons,
 // additional undocumented keys may appear in this object. These should be treated
 // as deprecated and will be removed in the future.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetSource() (Source CardAuthorizationSimulationDeclinedTransactionSource) {
-	if r != nil && r.Source != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetSource() (Source CardAuthorizationSimulationDeclinedTransactionSource) {
+	if r.Source != nil {
 		Source = *r.Source
 	}
 	return
@@ -1434,8 +1434,8 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) GetSource() (Source Car
 
 // A constant representing the object's type. For this resource it will always be
 // `declined_transaction`.
-func (r *CardAuthorizationSimulationDeclinedTransaction) GetType() (Type CardAuthorizationSimulationDeclinedTransactionType) {
-	if r != nil && r.Type != nil {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetType() (Type CardAuthorizationSimulationDeclinedTransactionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -1501,8 +1501,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) MarshalJSON() (da
 // The type of decline that took place. We may add additional possible values for
 // this enum over time; your application should be able to handle such additions
 // gracefully.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCategory() (Category CardAuthorizationSimulationDeclinedTransactionSourceCategory) {
-	if r != nil && r.Category != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetCategory() (Category CardAuthorizationSimulationDeclinedTransactionSourceCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -1510,8 +1510,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCategory() (Ca
 
 // A ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetACHDecline() (ACHDecline CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) {
-	if r != nil && r.ACHDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetACHDecline() (ACHDecline CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) {
+	if r.ACHDecline != nil {
 		ACHDecline = *r.ACHDecline
 	}
 	return
@@ -1519,8 +1519,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetACHDecline() (
 
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCardDecline() (CardDecline CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) {
-	if r != nil && r.CardDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetCardDecline() (CardDecline CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) {
+	if r.CardDecline != nil {
 		CardDecline = *r.CardDecline
 	}
 	return
@@ -1528,8 +1528,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCardDecline() 
 
 // A Check Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `check_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCheckDecline() (CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) {
-	if r != nil && r.CheckDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetCheckDecline() (CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) {
+	if r.CheckDecline != nil {
 		CheckDecline = *r.CheckDecline
 	}
 	return
@@ -1538,8 +1538,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCheckDecline()
 // A Inbound Real Time Payments Transfer Decline object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetInboundRealTimePaymentsTransferDecline() (InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) {
-	if r != nil && r.InboundRealTimePaymentsTransferDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetInboundRealTimePaymentsTransferDecline() (InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) {
+	if r.InboundRealTimePaymentsTransferDecline != nil {
 		InboundRealTimePaymentsTransferDecline = *r.InboundRealTimePaymentsTransferDecline
 	}
 	return
@@ -1547,8 +1547,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetInboundRealTim
 
 // A International ACH Decline object. This field will be present in the JSON
 // response if and only if `category` is equal to `international_ach_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetInternationalACHDecline() (InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) {
-	if r != nil && r.InternationalACHDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetInternationalACHDecline() (InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) {
+	if r.InternationalACHDecline != nil {
 		InternationalACHDecline = *r.InternationalACHDecline
 	}
 	return
@@ -1556,8 +1556,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetInternationalA
 
 // A Deprecated Card Decline object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_route_decline`.
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) GetCardRouteDecline() (CardRouteDecline CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) {
-	if r != nil && r.CardRouteDecline != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSource) GetCardRouteDecline() (CardRouteDecline CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) {
+	if r.CardRouteDecline != nil {
 		CardRouteDecline = *r.CardRouteDecline
 	}
 	return
@@ -1613,65 +1613,65 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) Marshal
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyName() (OriginatorCompanyName string) {
-	if r != nil && r.OriginatorCompanyName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyName() (OriginatorCompanyName string) {
+	if r.OriginatorCompanyName != nil {
 		OriginatorCompanyName = *r.OriginatorCompanyName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyDescriptiveDate() (OriginatorCompanyDescriptiveDate string) {
-	if r != nil && r.OriginatorCompanyDescriptiveDate != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyDescriptiveDate() (OriginatorCompanyDescriptiveDate string) {
+	if r.OriginatorCompanyDescriptiveDate != nil {
 		OriginatorCompanyDescriptiveDate = *r.OriginatorCompanyDescriptiveDate
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyDiscretionaryData() (OriginatorCompanyDiscretionaryData string) {
-	if r != nil && r.OriginatorCompanyDiscretionaryData != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyDiscretionaryData() (OriginatorCompanyDiscretionaryData string) {
+	if r.OriginatorCompanyDiscretionaryData != nil {
 		OriginatorCompanyDiscretionaryData = *r.OriginatorCompanyDiscretionaryData
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
-	if r != nil && r.OriginatorCompanyID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetOriginatorCompanyID() (OriginatorCompanyID string) {
+	if r.OriginatorCompanyID != nil {
 		OriginatorCompanyID = *r.OriginatorCompanyID
 	}
 	return
 }
 
 // Why the ACH transfer was declined.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason) {
-	if r != nil && r.Reason != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
-	if r != nil && r.ReceiverIDNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverIDNumber() (ReceiverIDNumber string) {
+	if r.ReceiverIDNumber != nil {
 		ReceiverIDNumber = *r.ReceiverIDNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverName() (ReceiverName string) {
-	if r != nil && r.ReceiverName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetReceiverName() (ReceiverName string) {
+	if r.ReceiverName != nil {
 		ReceiverName = *r.ReceiverName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
@@ -1751,16 +1751,16 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Marsha
 
 // The merchant identifier (commonly abbreviated as MID) of the merchant the card
 // is transacting with.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
 // The merchant descriptor of the merchant the card is transacting with.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
@@ -1768,40 +1768,40 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMer
 
 // The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 // card is transacting with.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
 }
 
 // The city the merchant resides in.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
 // The country the merchant resides in.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
 // The payment network used to process this card authorization
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetwork() (Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork) {
-	if r != nil && r.Network != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetwork() (Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // Fields specific to the `network`
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) {
-	if r != nil && r.NetworkDetails != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNetworkDetails() (NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) {
+	if r.NetworkDetails != nil {
 		NetworkDetails = *r.NetworkDetails
 	}
 	return
@@ -1809,8 +1809,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetNet
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -1818,24 +1818,24 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetAmo
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // Why the transaction was declined.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason) {
-	if r != nil && r.Reason != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
 }
 
 // The state the merchant resides in.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
@@ -1843,8 +1843,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetMer
 
 // The identifier of the Real-Time Decision sent to approve or decline this
 // transaction.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
-	if r != nil && r.RealTimeDecisionID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRealTimeDecisionID() (RealTimeDecisionID string) {
+	if r.RealTimeDecisionID != nil {
 		RealTimeDecisionID = *r.RealTimeDecisionID
 	}
 	return
@@ -1852,8 +1852,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetRea
 
 // If the authorization was attempted using a Digital Wallet Token (such as an
 // Apple Pay purchase), the identifier of the token that was used.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
-	if r != nil && r.DigitalWalletTokenID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r.DigitalWalletTokenID != nil {
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
@@ -1893,8 +1893,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 }
 
 // Fields specific to the `visa` network
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
-	if r != nil && r.Visa != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) GetVisa() (Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) {
+	if r.Visa != nil {
 		Visa = *r.Visa
 	}
 	return
@@ -1935,8 +1935,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 // For electronic commerce transactions, this identifies the level of security used
 // in obtaining the customer's payment credential. For mail or telephone order
 // transactions, identifies the type of mail or telephone order.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
-	if r != nil && r.ElectronicCommerceIndicator != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetElectronicCommerceIndicator() (ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) {
+	if r.ElectronicCommerceIndicator != nil {
 		ElectronicCommerceIndicator = *r.ElectronicCommerceIndicator
 	}
 	return
@@ -1944,8 +1944,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 
 // The method used to enter the cardholder's primary account number and card
 // expiration date
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
-	if r != nil && r.PointOfServiceEntryMode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) GetPointOfServiceEntryMode() (PointOfServiceEntryMode PointOfServiceEntryMode) {
+	if r.PointOfServiceEntryMode != nil {
 		PointOfServiceEntryMode = *r.PointOfServiceEntryMode
 	}
 	return
@@ -2023,23 +2023,23 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) Marsh
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
-	if r != nil && r.AuxiliaryOnUs != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
+	if r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
 	}
 	return
 }
 
 // Why the check was declined.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason) {
-	if r != nil && r.Reason != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
@@ -2109,8 +2109,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -2119,64 +2119,64 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 // transfer's currency. This will always be "USD" for a Real Time Payments
 // transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // Why the transfer was declined.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason) {
-	if r != nil && r.Reason != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetReason() (Reason CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
 }
 
 // The name the sender of the transfer specified as the recipient of the transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetCreditorName() (CreditorName string) {
-	if r != nil && r.CreditorName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetCreditorName() (CreditorName string) {
+	if r.CreditorName != nil {
 		CreditorName = *r.CreditorName
 	}
 	return
 }
 
 // The name provided by the sender of the transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorName() (DebtorName string) {
-	if r != nil && r.DebtorName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorName() (DebtorName string) {
+	if r.DebtorName != nil {
 		DebtorName = *r.DebtorName
 	}
 	return
 }
 
 // The account number of the account that sent the transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorAccountNumber() (DebtorAccountNumber string) {
-	if r != nil && r.DebtorAccountNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorAccountNumber() (DebtorAccountNumber string) {
+	if r.DebtorAccountNumber != nil {
 		DebtorAccountNumber = *r.DebtorAccountNumber
 	}
 	return
 }
 
 // The routing number of the account that sent the transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorRoutingNumber() (DebtorRoutingNumber string) {
-	if r != nil && r.DebtorRoutingNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetDebtorRoutingNumber() (DebtorRoutingNumber string) {
+	if r.DebtorRoutingNumber != nil {
 		DebtorRoutingNumber = *r.DebtorRoutingNumber
 	}
 	return
 }
 
 // The Real Time Payments network identification of the declined transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetTransactionIdentification() (TransactionIdentification string) {
-	if r != nil && r.TransactionIdentification != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetTransactionIdentification() (TransactionIdentification string) {
+	if r.TransactionIdentification != nil {
 		TransactionIdentification = *r.TransactionIdentification
 	}
 	return
 }
 
 // Additional information included with the transfer.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetRemittanceInformation() (RemittanceInformation string) {
-	if r != nil && r.RemittanceInformation != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) GetRemittanceInformation() (RemittanceInformation string) {
+	if r.RemittanceInformation != nil {
 		RemittanceInformation = *r.RemittanceInformation
 	}
 	return
@@ -2268,253 +2268,253 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeIndicator() (ForeignExchangeIndicator string) {
-	if r != nil && r.ForeignExchangeIndicator != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeIndicator() (ForeignExchangeIndicator string) {
+	if r.ForeignExchangeIndicator != nil {
 		ForeignExchangeIndicator = *r.ForeignExchangeIndicator
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeReferenceIndicator() (ForeignExchangeReferenceIndicator string) {
-	if r != nil && r.ForeignExchangeReferenceIndicator != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeReferenceIndicator() (ForeignExchangeReferenceIndicator string) {
+	if r.ForeignExchangeReferenceIndicator != nil {
 		ForeignExchangeReferenceIndicator = *r.ForeignExchangeReferenceIndicator
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeReference() (ForeignExchangeReference string) {
-	if r != nil && r.ForeignExchangeReference != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignExchangeReference() (ForeignExchangeReference string) {
+	if r.ForeignExchangeReference != nil {
 		ForeignExchangeReference = *r.ForeignExchangeReference
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetDestinationCountryCode() (DestinationCountryCode string) {
-	if r != nil && r.DestinationCountryCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetDestinationCountryCode() (DestinationCountryCode string) {
+	if r.DestinationCountryCode != nil {
 		DestinationCountryCode = *r.DestinationCountryCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetDestinationCurrencyCode() (DestinationCurrencyCode string) {
-	if r != nil && r.DestinationCurrencyCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetDestinationCurrencyCode() (DestinationCurrencyCode string) {
+	if r.DestinationCurrencyCode != nil {
 		DestinationCurrencyCode = *r.DestinationCurrencyCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
-	if r != nil && r.ForeignPaymentAmount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignPaymentAmount() (ForeignPaymentAmount int64) {
+	if r.ForeignPaymentAmount != nil {
 		ForeignPaymentAmount = *r.ForeignPaymentAmount
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignTraceNumber() (ForeignTraceNumber string) {
-	if r != nil && r.ForeignTraceNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetForeignTraceNumber() (ForeignTraceNumber string) {
+	if r.ForeignTraceNumber != nil {
 		ForeignTraceNumber = *r.ForeignTraceNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetInternationalTransactionTypeCode() (InternationalTransactionTypeCode string) {
-	if r != nil && r.InternationalTransactionTypeCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetInternationalTransactionTypeCode() (InternationalTransactionTypeCode string) {
+	if r.InternationalTransactionTypeCode != nil {
 		InternationalTransactionTypeCode = *r.InternationalTransactionTypeCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingCurrencyCode() (OriginatingCurrencyCode string) {
-	if r != nil && r.OriginatingCurrencyCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingCurrencyCode() (OriginatingCurrencyCode string) {
+	if r.OriginatingCurrencyCode != nil {
 		OriginatingCurrencyCode = *r.OriginatingCurrencyCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionName() (OriginatingDepositoryFinancialInstitutionName string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionName() (OriginatingDepositoryFinancialInstitutionName string) {
+	if r.OriginatingDepositoryFinancialInstitutionName != nil {
 		OriginatingDepositoryFinancialInstitutionName = *r.OriginatingDepositoryFinancialInstitutionName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionIDQualifier() (OriginatingDepositoryFinancialInstitutionIDQualifier string) {
+	if r.OriginatingDepositoryFinancialInstitutionIDQualifier != nil {
 		OriginatingDepositoryFinancialInstitutionIDQualifier = *r.OriginatingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionID() (OriginatingDepositoryFinancialInstitutionID string) {
+	if r.OriginatingDepositoryFinancialInstitutionID != nil {
 		OriginatingDepositoryFinancialInstitutionID = *r.OriginatingDepositoryFinancialInstitutionID
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionBranchCountry() (OriginatingDepositoryFinancialInstitutionBranchCountry string) {
-	if r != nil && r.OriginatingDepositoryFinancialInstitutionBranchCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatingDepositoryFinancialInstitutionBranchCountry() (OriginatingDepositoryFinancialInstitutionBranchCountry string) {
+	if r.OriginatingDepositoryFinancialInstitutionBranchCountry != nil {
 		OriginatingDepositoryFinancialInstitutionBranchCountry = *r.OriginatingDepositoryFinancialInstitutionBranchCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCity() (OriginatorCity string) {
-	if r != nil && r.OriginatorCity != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCity() (OriginatorCity string) {
+	if r.OriginatorCity != nil {
 		OriginatorCity = *r.OriginatorCity
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
-	if r != nil && r.OriginatorCompanyEntryDescription != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCompanyEntryDescription() (OriginatorCompanyEntryDescription string) {
+	if r.OriginatorCompanyEntryDescription != nil {
 		OriginatorCompanyEntryDescription = *r.OriginatorCompanyEntryDescription
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCountry() (OriginatorCountry string) {
-	if r != nil && r.OriginatorCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorCountry() (OriginatorCountry string) {
+	if r.OriginatorCountry != nil {
 		OriginatorCountry = *r.OriginatorCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorIdentification() (OriginatorIdentification string) {
-	if r != nil && r.OriginatorIdentification != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorIdentification() (OriginatorIdentification string) {
+	if r.OriginatorIdentification != nil {
 		OriginatorIdentification = *r.OriginatorIdentification
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorPostalCode() (OriginatorPostalCode string) {
-	if r != nil && r.OriginatorPostalCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorPostalCode() (OriginatorPostalCode string) {
+	if r.OriginatorPostalCode != nil {
 		OriginatorPostalCode = *r.OriginatorPostalCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorStreetAddress() (OriginatorStreetAddress string) {
-	if r != nil && r.OriginatorStreetAddress != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorStreetAddress() (OriginatorStreetAddress string) {
+	if r.OriginatorStreetAddress != nil {
 		OriginatorStreetAddress = *r.OriginatorStreetAddress
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorStateOrProvince() (OriginatorStateOrProvince string) {
-	if r != nil && r.OriginatorStateOrProvince != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetOriginatorStateOrProvince() (OriginatorStateOrProvince string) {
+	if r.OriginatorStateOrProvince != nil {
 		OriginatorStateOrProvince = *r.OriginatorStateOrProvince
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetPaymentRelatedInformation() (PaymentRelatedInformation string) {
-	if r != nil && r.PaymentRelatedInformation != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetPaymentRelatedInformation() (PaymentRelatedInformation string) {
+	if r.PaymentRelatedInformation != nil {
 		PaymentRelatedInformation = *r.PaymentRelatedInformation
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetPaymentRelatedInformation2() (PaymentRelatedInformation2 string) {
-	if r != nil && r.PaymentRelatedInformation2 != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetPaymentRelatedInformation2() (PaymentRelatedInformation2 string) {
+	if r.PaymentRelatedInformation2 != nil {
 		PaymentRelatedInformation2 = *r.PaymentRelatedInformation2
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverIdentificationNumber() (ReceiverIdentificationNumber string) {
-	if r != nil && r.ReceiverIdentificationNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverIdentificationNumber() (ReceiverIdentificationNumber string) {
+	if r.ReceiverIdentificationNumber != nil {
 		ReceiverIdentificationNumber = *r.ReceiverIdentificationNumber
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverStreetAddress() (ReceiverStreetAddress string) {
-	if r != nil && r.ReceiverStreetAddress != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverStreetAddress() (ReceiverStreetAddress string) {
+	if r.ReceiverStreetAddress != nil {
 		ReceiverStreetAddress = *r.ReceiverStreetAddress
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverCity() (ReceiverCity string) {
-	if r != nil && r.ReceiverCity != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverCity() (ReceiverCity string) {
+	if r.ReceiverCity != nil {
 		ReceiverCity = *r.ReceiverCity
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverStateOrProvince() (ReceiverStateOrProvince string) {
-	if r != nil && r.ReceiverStateOrProvince != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverStateOrProvince() (ReceiverStateOrProvince string) {
+	if r.ReceiverStateOrProvince != nil {
 		ReceiverStateOrProvince = *r.ReceiverStateOrProvince
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverCountry() (ReceiverCountry string) {
-	if r != nil && r.ReceiverCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverCountry() (ReceiverCountry string) {
+	if r.ReceiverCountry != nil {
 		ReceiverCountry = *r.ReceiverCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverPostalCode() (ReceiverPostalCode string) {
-	if r != nil && r.ReceiverPostalCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceiverPostalCode() (ReceiverPostalCode string) {
+	if r.ReceiverPostalCode != nil {
 		ReceiverPostalCode = *r.ReceiverPostalCode
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingCompanyOrIndividualName() (ReceivingCompanyOrIndividualName string) {
-	if r != nil && r.ReceivingCompanyOrIndividualName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingCompanyOrIndividualName() (ReceivingCompanyOrIndividualName string) {
+	if r.ReceivingCompanyOrIndividualName != nil {
 		ReceivingCompanyOrIndividualName = *r.ReceivingCompanyOrIndividualName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionName() (ReceivingDepositoryFinancialInstitutionName string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionName != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionName() (ReceivingDepositoryFinancialInstitutionName string) {
+	if r.ReceivingDepositoryFinancialInstitutionName != nil {
 		ReceivingDepositoryFinancialInstitutionName = *r.ReceivingDepositoryFinancialInstitutionName
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionIDQualifier() (ReceivingDepositoryFinancialInstitutionIDQualifier string) {
+	if r.ReceivingDepositoryFinancialInstitutionIDQualifier != nil {
 		ReceivingDepositoryFinancialInstitutionIDQualifier = *r.ReceivingDepositoryFinancialInstitutionIDQualifier
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionID() (ReceivingDepositoryFinancialInstitutionID string) {
+	if r.ReceivingDepositoryFinancialInstitutionID != nil {
 		ReceivingDepositoryFinancialInstitutionID = *r.ReceivingDepositoryFinancialInstitutionID
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionCountry() (ReceivingDepositoryFinancialInstitutionCountry string) {
-	if r != nil && r.ReceivingDepositoryFinancialInstitutionCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetReceivingDepositoryFinancialInstitutionCountry() (ReceivingDepositoryFinancialInstitutionCountry string) {
+	if r.ReceivingDepositoryFinancialInstitutionCountry != nil {
 		ReceivingDepositoryFinancialInstitutionCountry = *r.ReceivingDepositoryFinancialInstitutionCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetTraceNumber() (TraceNumber string) {
-	if r != nil && r.TraceNumber != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) GetTraceNumber() (TraceNumber string) {
+	if r.TraceNumber != nil {
 		TraceNumber = *r.TraceNumber
 	}
 	return
@@ -2559,8 +2559,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) M
 
 // The declined amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -2568,50 +2568,50 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) G
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetCurrency() (Currency CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
-	if r != nil && r.MerchantAcceptorID != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantAcceptorID() (MerchantAcceptorID string) {
+	if r.MerchantAcceptorID != nil {
 		MerchantAcceptorID = *r.MerchantAcceptorID
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCity() (MerchantCity string) {
-	if r != nil && r.MerchantCity != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCity() (MerchantCity string) {
+	if r.MerchantCity != nil {
 		MerchantCity = *r.MerchantCity
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCountry() (MerchantCountry string) {
-	if r != nil && r.MerchantCountry != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCountry() (MerchantCountry string) {
+	if r.MerchantCountry != nil {
 		MerchantCountry = *r.MerchantCountry
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
-	if r != nil && r.MerchantDescriptor != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantDescriptor() (MerchantDescriptor string) {
+	if r.MerchantDescriptor != nil {
 		MerchantDescriptor = *r.MerchantDescriptor
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantState() (MerchantState string) {
-	if r != nil && r.MerchantState != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantState() (MerchantState string) {
+	if r.MerchantState != nil {
 		MerchantState = *r.MerchantState
 	}
 	return
 }
 
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
-	if r != nil && r.MerchantCategoryCode != nil {
+func (r CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) GetMerchantCategoryCode() (MerchantCategoryCode string) {
+	if r.MerchantCategoryCode != nil {
 		MerchantCategoryCode = *r.MerchantCategoryCode
 	}
 	return
@@ -2669,24 +2669,24 @@ func (r *SimulateAnAuthorizationOnACardParameters) MarshalJSON() (data []byte, e
 }
 
 // The authorization amount in cents.
-func (r *SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r SimulateAnAuthorizationOnACardParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The identifier of the Card to be authorized.
-func (r *SimulateAnAuthorizationOnACardParameters) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r SimulateAnAuthorizationOnACardParameters) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
 // The identifier of the Digital Wallet Token to be authorized.
-func (r *SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
-	if r != nil && r.DigitalWalletTokenID != nil {
+func (r SimulateAnAuthorizationOnACardParameters) GetDigitalWalletTokenID() (DigitalWalletTokenID string) {
+	if r.DigitalWalletTokenID != nil {
 		DigitalWalletTokenID = *r.DigitalWalletTokenID
 	}
 	return
@@ -2724,8 +2724,8 @@ func (r *SimulateSettlingACardAuthorizationParameters) MarshalJSON() (data []byt
 }
 
 // The identifier of the Card to create a settlement on.
-func (r *SimulateSettlingACardAuthorizationParameters) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r SimulateSettlingACardAuthorizationParameters) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
@@ -2733,8 +2733,8 @@ func (r *SimulateSettlingACardAuthorizationParameters) GetCardID() (CardID strin
 
 // The identifier of the Pending Transaction for the Card Authorization you wish to
 // settle.
-func (r *SimulateSettlingACardAuthorizationParameters) GetPendingTransactionID() (PendingTransactionID string) {
-	if r != nil && r.PendingTransactionID != nil {
+func (r SimulateSettlingACardAuthorizationParameters) GetPendingTransactionID() (PendingTransactionID string) {
+	if r.PendingTransactionID != nil {
 		PendingTransactionID = *r.PendingTransactionID
 	}
 	return
@@ -2742,8 +2742,8 @@ func (r *SimulateSettlingACardAuthorizationParameters) GetPendingTransactionID()
 
 // The amount to be settled. This defaults to the amount of the Pending Transaction
 // being settled.
-func (r *SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r SimulateSettlingACardAuthorizationParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return

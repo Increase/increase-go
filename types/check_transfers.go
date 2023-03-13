@@ -81,64 +81,64 @@ func (r *CheckTransfer) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier of the Account from which funds will be transferred.
-func (r *CheckTransfer) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CheckTransfer) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The street address of the check's destination.
-func (r *CheckTransfer) GetAddressLine1() (AddressLine1 string) {
-	if r != nil && r.AddressLine1 != nil {
+func (r CheckTransfer) GetAddressLine1() (AddressLine1 string) {
+	if r.AddressLine1 != nil {
 		AddressLine1 = *r.AddressLine1
 	}
 	return
 }
 
 // The second line of the address of the check's destination.
-func (r *CheckTransfer) GetAddressLine2() (AddressLine2 string) {
-	if r != nil && r.AddressLine2 != nil {
+func (r CheckTransfer) GetAddressLine2() (AddressLine2 string) {
+	if r.AddressLine2 != nil {
 		AddressLine2 = *r.AddressLine2
 	}
 	return
 }
 
 // The city of the check's destination.
-func (r *CheckTransfer) GetAddressCity() (AddressCity string) {
-	if r != nil && r.AddressCity != nil {
+func (r CheckTransfer) GetAddressCity() (AddressCity string) {
+	if r.AddressCity != nil {
 		AddressCity = *r.AddressCity
 	}
 	return
 }
 
 // The state of the check's destination.
-func (r *CheckTransfer) GetAddressState() (AddressState string) {
-	if r != nil && r.AddressState != nil {
+func (r CheckTransfer) GetAddressState() (AddressState string) {
+	if r.AddressState != nil {
 		AddressState = *r.AddressState
 	}
 	return
 }
 
 // The postal code of the check's destination.
-func (r *CheckTransfer) GetAddressZip() (AddressZip string) {
-	if r != nil && r.AddressZip != nil {
+func (r CheckTransfer) GetAddressZip() (AddressZip string) {
+	if r.AddressZip != nil {
 		AddressZip = *r.AddressZip
 	}
 	return
 }
 
 // The return address to be printed on the check.
-func (r *CheckTransfer) GetReturnAddress() (ReturnAddress CheckTransferReturnAddress) {
-	if r != nil && r.ReturnAddress != nil {
+func (r CheckTransfer) GetReturnAddress() (ReturnAddress CheckTransferReturnAddress) {
+	if r.ReturnAddress != nil {
 		ReturnAddress = *r.ReturnAddress
 	}
 	return
 }
 
 // The transfer amount in USD cents.
-func (r *CheckTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CheckTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -146,8 +146,8 @@ func (r *CheckTransfer) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *CheckTransfer) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CheckTransfer) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -155,16 +155,16 @@ func (r *CheckTransfer) GetCreatedAt() (CreatedAt string) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
-func (r *CheckTransfer) GetCurrency() (Currency CheckTransferCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CheckTransfer) GetCurrency() (Currency CheckTransferCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The Check transfer's identifier.
-func (r *CheckTransfer) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CheckTransfer) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -172,40 +172,40 @@ func (r *CheckTransfer) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check was mailed.
-func (r *CheckTransfer) GetMailedAt() (MailedAt string) {
-	if r != nil && r.MailedAt != nil {
+func (r CheckTransfer) GetMailedAt() (MailedAt string) {
+	if r.MailedAt != nil {
 		MailedAt = *r.MailedAt
 	}
 	return
 }
 
 // The descriptor that will be printed on the memo field on the check.
-func (r *CheckTransfer) GetMessage() (Message string) {
-	if r != nil && r.Message != nil {
+func (r CheckTransfer) GetMessage() (Message string) {
+	if r.Message != nil {
 		Message = *r.Message
 	}
 	return
 }
 
 // The descriptor that will be printed on the letter included with the check.
-func (r *CheckTransfer) GetNote() (Note string) {
-	if r != nil && r.Note != nil {
+func (r CheckTransfer) GetNote() (Note string) {
+	if r.Note != nil {
 		Note = *r.Note
 	}
 	return
 }
 
 // The name that will be printed on the check.
-func (r *CheckTransfer) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
+func (r CheckTransfer) GetRecipientName() (RecipientName string) {
+	if r.RecipientName != nil {
 		RecipientName = *r.RecipientName
 	}
 	return
 }
 
 // The lifecycle status of the transfer.
-func (r *CheckTransfer) GetStatus() (Status CheckTransferStatus) {
-	if r != nil && r.Status != nil {
+func (r CheckTransfer) GetStatus() (Status CheckTransferStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -213,32 +213,32 @@ func (r *CheckTransfer) GetStatus() (Status CheckTransferStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check was submitted.
-func (r *CheckTransfer) GetSubmittedAt() (SubmittedAt string) {
-	if r != nil && r.SubmittedAt != nil {
+func (r CheckTransfer) GetSubmittedAt() (SubmittedAt string) {
+	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
 }
 
 // After the transfer is submitted, this will contain supplemental details.
-func (r *CheckTransfer) GetSubmission() (Submission CheckTransferSubmission) {
-	if r != nil && r.Submission != nil {
+func (r CheckTransfer) GetSubmission() (Submission CheckTransferSubmission) {
+	if r.Submission != nil {
 		Submission = *r.Submission
 	}
 	return
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *CheckTransfer) GetTemplateID() (TemplateID string) {
-	if r != nil && r.TemplateID != nil {
+func (r CheckTransfer) GetTemplateID() (TemplateID string) {
+	if r.TemplateID != nil {
 		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction caused by the transfer.
-func (r *CheckTransfer) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CheckTransfer) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -246,16 +246,16 @@ func (r *CheckTransfer) GetTransactionID() (TransactionID string) {
 
 // After a stop-payment is requested on the check, this will contain supplemental
 // details.
-func (r *CheckTransfer) GetStopPaymentRequest() (StopPaymentRequest CheckTransferStopPaymentRequest) {
-	if r != nil && r.StopPaymentRequest != nil {
+func (r CheckTransfer) GetStopPaymentRequest() (StopPaymentRequest CheckTransferStopPaymentRequest) {
+	if r.StopPaymentRequest != nil {
 		StopPaymentRequest = *r.StopPaymentRequest
 	}
 	return
 }
 
 // After a check transfer is deposited, this will contain supplemental details.
-func (r *CheckTransfer) GetDeposit() (Deposit CheckTransferDeposit) {
-	if r != nil && r.Deposit != nil {
+func (r CheckTransfer) GetDeposit() (Deposit CheckTransferDeposit) {
+	if r.Deposit != nil {
 		Deposit = *r.Deposit
 	}
 	return
@@ -263,8 +263,8 @@ func (r *CheckTransfer) GetDeposit() (Deposit CheckTransferDeposit) {
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer`.
-func (r *CheckTransfer) GetType() (Type CheckTransferType) {
-	if r != nil && r.Type != nil {
+func (r CheckTransfer) GetType() (Type CheckTransferType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -305,48 +305,48 @@ func (r *CheckTransferReturnAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The name of the address.
-func (r *CheckTransferReturnAddress) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CheckTransferReturnAddress) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The first line of the address.
-func (r *CheckTransferReturnAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CheckTransferReturnAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *CheckTransferReturnAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CheckTransferReturnAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CheckTransferReturnAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CheckTransferReturnAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
 }
 
 // The US state of the address.
-func (r *CheckTransferReturnAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CheckTransferReturnAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The postal code of the address.
-func (r *CheckTransferReturnAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CheckTransferReturnAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -405,8 +405,8 @@ func (r *CheckTransferSubmission) MarshalJSON() (data []byte, err error) {
 }
 
 // The identitying number of the check.
-func (r *CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
-	if r != nil && r.CheckNumber != nil {
+func (r CheckTransferSubmission) GetCheckNumber() (CheckNumber string) {
+	if r.CheckNumber != nil {
 		CheckNumber = *r.CheckNumber
 	}
 	return
@@ -444,24 +444,24 @@ func (r *CheckTransferStopPaymentRequest) MarshalJSON() (data []byte, err error)
 }
 
 // The ID of the check transfer that was stopped.
-func (r *CheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
-	if r != nil && r.TransferID != nil {
+func (r CheckTransferStopPaymentRequest) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
 		TransferID = *r.TransferID
 	}
 	return
 }
 
 // The transaction ID of the corresponding credit transaction.
-func (r *CheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CheckTransferStopPaymentRequest) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
 // The time the stop-payment was requested.
-func (r *CheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
-	if r != nil && r.RequestedAt != nil {
+func (r CheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
+	if r.RequestedAt != nil {
 		RequestedAt = *r.RequestedAt
 	}
 	return
@@ -469,8 +469,8 @@ func (r *CheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) 
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
-func (r *CheckTransferStopPaymentRequest) GetType() (Type CheckTransferStopPaymentRequestType) {
-	if r != nil && r.Type != nil {
+func (r CheckTransferStopPaymentRequest) GetType() (Type CheckTransferStopPaymentRequestType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -512,16 +512,16 @@ func (r *CheckTransferDeposit) MarshalJSON() (data []byte, err error) {
 }
 
 // The ID for the File containing the image of the front of the check.
-func (r *CheckTransferDeposit) GetFrontImageFileID() (FrontImageFileID string) {
-	if r != nil && r.FrontImageFileID != nil {
+func (r CheckTransferDeposit) GetFrontImageFileID() (FrontImageFileID string) {
+	if r.FrontImageFileID != nil {
 		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The ID for the File containing the image of the rear of the check.
-func (r *CheckTransferDeposit) GetBackImageFileID() (BackImageFileID string) {
-	if r != nil && r.BackImageFileID != nil {
+func (r CheckTransferDeposit) GetBackImageFileID() (BackImageFileID string) {
+	if r.BackImageFileID != nil {
 		BackImageFileID = *r.BackImageFileID
 	}
 	return
@@ -529,8 +529,8 @@ func (r *CheckTransferDeposit) GetBackImageFileID() (BackImageFileID string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_deposit`.
-func (r *CheckTransferDeposit) GetType() (Type CheckTransferDepositType) {
-	if r != nil && r.Type != nil {
+func (r CheckTransferDeposit) GetType() (Type CheckTransferDepositType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -596,48 +596,48 @@ func (r *CreateACheckTransferParameters) MarshalJSON() (data []byte, err error) 
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateACheckTransferParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateACheckTransferParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The street address of the check's destination.
-func (r *CreateACheckTransferParameters) GetAddressLine1() (AddressLine1 string) {
-	if r != nil && r.AddressLine1 != nil {
+func (r CreateACheckTransferParameters) GetAddressLine1() (AddressLine1 string) {
+	if r.AddressLine1 != nil {
 		AddressLine1 = *r.AddressLine1
 	}
 	return
 }
 
 // The second line of the address of the check's destination.
-func (r *CreateACheckTransferParameters) GetAddressLine2() (AddressLine2 string) {
-	if r != nil && r.AddressLine2 != nil {
+func (r CreateACheckTransferParameters) GetAddressLine2() (AddressLine2 string) {
+	if r.AddressLine2 != nil {
 		AddressLine2 = *r.AddressLine2
 	}
 	return
 }
 
 // The city of the check's destination.
-func (r *CreateACheckTransferParameters) GetAddressCity() (AddressCity string) {
-	if r != nil && r.AddressCity != nil {
+func (r CreateACheckTransferParameters) GetAddressCity() (AddressCity string) {
+	if r.AddressCity != nil {
 		AddressCity = *r.AddressCity
 	}
 	return
 }
 
 // The state of the check's destination.
-func (r *CreateACheckTransferParameters) GetAddressState() (AddressState string) {
-	if r != nil && r.AddressState != nil {
+func (r CreateACheckTransferParameters) GetAddressState() (AddressState string) {
+	if r.AddressState != nil {
 		AddressState = *r.AddressState
 	}
 	return
 }
 
 // The postal code of the check's destination.
-func (r *CreateACheckTransferParameters) GetAddressZip() (AddressZip string) {
-	if r != nil && r.AddressZip != nil {
+func (r CreateACheckTransferParameters) GetAddressZip() (AddressZip string) {
+	if r.AddressZip != nil {
 		AddressZip = *r.AddressZip
 	}
 	return
@@ -645,48 +645,48 @@ func (r *CreateACheckTransferParameters) GetAddressZip() (AddressZip string) {
 
 // The return address to be printed on the check. If omitted this will default to
 // the address of the Entity of the Account used to make the Check Transfer.
-func (r *CreateACheckTransferParameters) GetReturnAddress() (ReturnAddress CreateACheckTransferParametersReturnAddress) {
-	if r != nil && r.ReturnAddress != nil {
+func (r CreateACheckTransferParameters) GetReturnAddress() (ReturnAddress CreateACheckTransferParametersReturnAddress) {
+	if r.ReturnAddress != nil {
 		ReturnAddress = *r.ReturnAddress
 	}
 	return
 }
 
 // The transfer amount in cents.
-func (r *CreateACheckTransferParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateACheckTransferParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The descriptor that will be printed on the memo field on the check.
-func (r *CreateACheckTransferParameters) GetMessage() (Message string) {
-	if r != nil && r.Message != nil {
+func (r CreateACheckTransferParameters) GetMessage() (Message string) {
+	if r.Message != nil {
 		Message = *r.Message
 	}
 	return
 }
 
 // The descriptor that will be printed on the letter included with the check.
-func (r *CreateACheckTransferParameters) GetNote() (Note string) {
-	if r != nil && r.Note != nil {
+func (r CreateACheckTransferParameters) GetNote() (Note string) {
+	if r.Note != nil {
 		Note = *r.Note
 	}
 	return
 }
 
 // The name that will be printed on the check.
-func (r *CreateACheckTransferParameters) GetRecipientName() (RecipientName string) {
-	if r != nil && r.RecipientName != nil {
+func (r CreateACheckTransferParameters) GetRecipientName() (RecipientName string) {
+	if r.RecipientName != nil {
 		RecipientName = *r.RecipientName
 	}
 	return
 }
 
 // Whether the transfer requires explicit approval via the dashboard or API.
-func (r *CreateACheckTransferParameters) GetRequireApproval() (RequireApproval bool) {
-	if r != nil && r.RequireApproval != nil {
+func (r CreateACheckTransferParameters) GetRequireApproval() (RequireApproval bool) {
+	if r.RequireApproval != nil {
 		RequireApproval = *r.RequireApproval
 	}
 	return
@@ -728,48 +728,48 @@ func (r *CreateACheckTransferParametersReturnAddress) MarshalJSON() (data []byte
 }
 
 // The name of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The first line of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
 }
 
 // The US state of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The postal code of the return address.
-func (r *CreateACheckTransferParametersReturnAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateACheckTransferParametersReturnAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -812,8 +812,8 @@ func (r *CheckTransferListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *CheckTransferListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r CheckTransferListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -821,23 +821,23 @@ func (r *CheckTransferListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *CheckTransferListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r CheckTransferListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Check Transfers to those that originated from the specified Account.
-func (r *CheckTransferListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CheckTransferListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransfersListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransfersListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -885,8 +885,8 @@ func (r *CheckTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -894,8 +894,8 @@ func (r *CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -903,8 +903,8 @@ func (r *CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -912,8 +912,8 @@ func (r *CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CheckTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r CheckTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -952,16 +952,16 @@ func (r *CheckTransferList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *CheckTransferList) GetData() (Data []CheckTransfer) {
-	if r != nil && r.Data != nil {
+func (r CheckTransferList) GetData() (Data []CheckTransfer) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *CheckTransferList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r CheckTransferList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

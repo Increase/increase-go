@@ -45,24 +45,24 @@ func (r *EventSubscription) MarshalJSON() (data []byte, err error) {
 }
 
 // The event subscription identifier.
-func (r *EventSubscription) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r EventSubscription) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The time the event subscription was created.
-func (r *EventSubscription) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r EventSubscription) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // This indicates if we'll send notifications to this subscription.
-func (r *EventSubscription) GetStatus() (Status EventSubscriptionStatus) {
-	if r != nil && r.Status != nil {
+func (r EventSubscription) GetStatus() (Status EventSubscriptionStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -70,24 +70,24 @@ func (r *EventSubscription) GetStatus() (Status EventSubscriptionStatus) {
 
 // If specified, this subscription will only receive webhooks for Events with the
 // specified `category`.
-func (r *EventSubscription) GetSelectedEventCategory() (SelectedEventCategory EventSubscriptionSelectedEventCategory) {
-	if r != nil && r.SelectedEventCategory != nil {
+func (r EventSubscription) GetSelectedEventCategory() (SelectedEventCategory EventSubscriptionSelectedEventCategory) {
+	if r.SelectedEventCategory != nil {
 		SelectedEventCategory = *r.SelectedEventCategory
 	}
 	return
 }
 
 // The webhook url where we'll send notifications.
-func (r *EventSubscription) GetURL() (URL string) {
-	if r != nil && r.URL != nil {
+func (r EventSubscription) GetURL() (URL string) {
+	if r.URL != nil {
 		URL = *r.URL
 	}
 	return
 }
 
 // The key that will be used to sign webhooks.
-func (r *EventSubscription) GetSharedSecret() (SharedSecret string) {
-	if r != nil && r.SharedSecret != nil {
+func (r EventSubscription) GetSharedSecret() (SharedSecret string) {
+	if r.SharedSecret != nil {
 		SharedSecret = *r.SharedSecret
 	}
 	return
@@ -95,8 +95,8 @@ func (r *EventSubscription) GetSharedSecret() (SharedSecret string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `event_subscription`.
-func (r *EventSubscription) GetType() (Type EventSubscriptionType) {
-	if r != nil && r.Type != nil {
+func (r EventSubscription) GetType() (Type EventSubscriptionType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -201,8 +201,8 @@ func (r *CreateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err er
 }
 
 // The URL you'd like us to send webhooks to.
-func (r *CreateAnEventSubscriptionParameters) GetURL() (URL string) {
-	if r != nil && r.URL != nil {
+func (r CreateAnEventSubscriptionParameters) GetURL() (URL string) {
+	if r.URL != nil {
 		URL = *r.URL
 	}
 	return
@@ -210,8 +210,8 @@ func (r *CreateAnEventSubscriptionParameters) GetURL() (URL string) {
 
 // The key that will be used to sign webhooks. If no value is passed, a random
 // string will be used as default.
-func (r *CreateAnEventSubscriptionParameters) GetSharedSecret() (SharedSecret string) {
-	if r != nil && r.SharedSecret != nil {
+func (r CreateAnEventSubscriptionParameters) GetSharedSecret() (SharedSecret string) {
+	if r.SharedSecret != nil {
 		SharedSecret = *r.SharedSecret
 	}
 	return
@@ -219,8 +219,8 @@ func (r *CreateAnEventSubscriptionParameters) GetSharedSecret() (SharedSecret st
 
 // If specified, this subscription will only receive webhooks for Events with the
 // specified `category`.
-func (r *CreateAnEventSubscriptionParameters) GetSelectedEventCategory() (SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory) {
-	if r != nil && r.SelectedEventCategory != nil {
+func (r CreateAnEventSubscriptionParameters) GetSelectedEventCategory() (SelectedEventCategory CreateAnEventSubscriptionParametersSelectedEventCategory) {
+	if r.SelectedEventCategory != nil {
 		SelectedEventCategory = *r.SelectedEventCategory
 	}
 	return
@@ -304,8 +304,8 @@ func (r *UpdateAnEventSubscriptionParameters) MarshalJSON() (data []byte, err er
 }
 
 // The status to update the Event Subscription with.
-func (r *UpdateAnEventSubscriptionParameters) GetStatus() (Status UpdateAnEventSubscriptionParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r UpdateAnEventSubscriptionParameters) GetStatus() (Status UpdateAnEventSubscriptionParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -353,8 +353,8 @@ func (r *EventSubscriptionListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *EventSubscriptionListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r EventSubscriptionListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -362,8 +362,8 @@ func (r *EventSubscriptionListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *EventSubscriptionListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r EventSubscriptionListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -402,16 +402,16 @@ func (r *EventSubscriptionList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *EventSubscriptionList) GetData() (Data []EventSubscription) {
-	if r != nil && r.Data != nil {
+func (r EventSubscriptionList) GetData() (Data []EventSubscription) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *EventSubscriptionList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r EventSubscriptionList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

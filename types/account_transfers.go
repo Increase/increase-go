@@ -65,8 +65,8 @@ func (r *AccountTransfer) MarshalJSON() (data []byte, err error) {
 }
 
 // The account transfer's identifier.
-func (r *AccountTransfer) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r AccountTransfer) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -74,16 +74,16 @@ func (r *AccountTransfer) GetID() (ID string) {
 
 // The transfer amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *AccountTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r AccountTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The Account to which the transfer belongs.
-func (r *AccountTransfer) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountTransfer) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -91,24 +91,24 @@ func (r *AccountTransfer) GetAccountID() (AccountID string) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
-func (r *AccountTransfer) GetCurrency() (Currency AccountTransferCurrency) {
-	if r != nil && r.Currency != nil {
+func (r AccountTransfer) GetCurrency() (Currency AccountTransferCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The destination account's identifier.
-func (r *AccountTransfer) GetDestinationAccountID() (DestinationAccountID string) {
-	if r != nil && r.DestinationAccountID != nil {
+func (r AccountTransfer) GetDestinationAccountID() (DestinationAccountID string) {
+	if r.DestinationAccountID != nil {
 		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // The ID for the transaction receiving the transfer.
-func (r *AccountTransfer) GetDestinationTransactionID() (DestinationTransactionID string) {
-	if r != nil && r.DestinationTransactionID != nil {
+func (r AccountTransfer) GetDestinationTransactionID() (DestinationTransactionID string) {
+	if r.DestinationTransactionID != nil {
 		DestinationTransactionID = *r.DestinationTransactionID
 	}
 	return
@@ -116,48 +116,48 @@ func (r *AccountTransfer) GetDestinationTransactionID() (DestinationTransactionI
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *AccountTransfer) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r AccountTransfer) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The description that will show on the transactions.
-func (r *AccountTransfer) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r AccountTransfer) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The transfer's network.
-func (r *AccountTransfer) GetNetwork() (Network AccountTransferNetwork) {
-	if r != nil && r.Network != nil {
+func (r AccountTransfer) GetNetwork() (Network AccountTransferNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // The lifecycle status of the transfer.
-func (r *AccountTransfer) GetStatus() (Status AccountTransferStatus) {
-	if r != nil && r.Status != nil {
+func (r AccountTransfer) GetStatus() (Status AccountTransferStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *AccountTransfer) GetTemplateID() (TemplateID string) {
-	if r != nil && r.TemplateID != nil {
+func (r AccountTransfer) GetTemplateID() (TemplateID string) {
+	if r.TemplateID != nil {
 		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *AccountTransfer) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r AccountTransfer) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -165,8 +165,8 @@ func (r *AccountTransfer) GetTransactionID() (TransactionID string) {
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
-func (r *AccountTransfer) GetApproval() (Approval AccountTransferApproval) {
-	if r != nil && r.Approval != nil {
+func (r AccountTransfer) GetApproval() (Approval AccountTransferApproval) {
+	if r.Approval != nil {
 		Approval = *r.Approval
 	}
 	return
@@ -174,8 +174,8 @@ func (r *AccountTransfer) GetApproval() (Approval AccountTransferApproval) {
 
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
-func (r *AccountTransfer) GetCancellation() (Cancellation AccountTransferCancellation) {
-	if r != nil && r.Cancellation != nil {
+func (r AccountTransfer) GetCancellation() (Cancellation AccountTransferCancellation) {
+	if r.Cancellation != nil {
 		Cancellation = *r.Cancellation
 	}
 	return
@@ -183,8 +183,8 @@ func (r *AccountTransfer) GetCancellation() (Cancellation AccountTransferCancell
 
 // A constant representing the object's type. For this resource it will always be
 // `account_transfer`.
-func (r *AccountTransfer) GetType() (Type AccountTransferType) {
-	if r != nil && r.Type != nil {
+func (r AccountTransfer) GetType() (Type AccountTransferType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -245,8 +245,8 @@ func (r *AccountTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r *AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
-	if r != nil && r.ApprovedAt != nil {
+func (r AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
+	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
 	return
@@ -279,8 +279,8 @@ func (r *AccountTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r *AccountTransferCancellation) GetCanceledAt() (CanceledAt string) {
-	if r != nil && r.CanceledAt != nil {
+func (r AccountTransferCancellation) GetCanceledAt() (CanceledAt string) {
+	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
 	return
@@ -326,8 +326,8 @@ func (r *CreateAnAccountTransferParameters) MarshalJSON() (data []byte, err erro
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateAnAccountTransferParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateAnAccountTransferParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -335,32 +335,32 @@ func (r *CreateAnAccountTransferParameters) GetAccountID() (AccountID string) {
 
 // The transfer amount in the minor unit of the account currency. For dollars, for
 // example, this is cents.
-func (r *CreateAnAccountTransferParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateAnAccountTransferParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The description you choose to give the transfer.
-func (r *CreateAnAccountTransferParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnAccountTransferParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The identifier for the account that will receive the transfer.
-func (r *CreateAnAccountTransferParameters) GetDestinationAccountID() (DestinationAccountID string) {
-	if r != nil && r.DestinationAccountID != nil {
+func (r CreateAnAccountTransferParameters) GetDestinationAccountID() (DestinationAccountID string) {
+	if r.DestinationAccountID != nil {
 		DestinationAccountID = *r.DestinationAccountID
 	}
 	return
 }
 
 // Whether the transfer requires explicit approval via the dashboard or API.
-func (r *CreateAnAccountTransferParameters) GetRequireApproval() (RequireApproval bool) {
-	if r != nil && r.RequireApproval != nil {
+func (r CreateAnAccountTransferParameters) GetRequireApproval() (RequireApproval bool) {
+	if r.RequireApproval != nil {
 		RequireApproval = *r.RequireApproval
 	}
 	return
@@ -403,8 +403,8 @@ func (r *AccountTransferListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *AccountTransferListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r AccountTransferListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -412,23 +412,23 @@ func (r *AccountTransferListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *AccountTransferListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r AccountTransferListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Account Transfers to those that originated from the specified Account.
-func (r *AccountTransferListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r AccountTransferListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransfersListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransfersListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -476,8 +476,8 @@ func (r *AccountTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -485,8 +485,8 @@ func (r *AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -494,8 +494,8 @@ func (r *AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -503,8 +503,8 @@ func (r *AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) 
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *AccountTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r AccountTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -543,16 +543,16 @@ func (r *AccountTransferList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *AccountTransferList) GetData() (Data []AccountTransfer) {
-	if r != nil && r.Data != nil {
+func (r AccountTransferList) GetData() (Data []AccountTransfer) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *AccountTransferList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r AccountTransferList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

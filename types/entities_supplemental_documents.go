@@ -29,8 +29,8 @@ func (r *CreateASupplementalDocumentForAnEntityParameters) MarshalJSON() (data [
 }
 
 // The identifier of the File containing the document.
-func (r *CreateASupplementalDocumentForAnEntityParameters) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateASupplementalDocumentForAnEntityParameters) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return

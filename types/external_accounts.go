@@ -49,8 +49,8 @@ func (r *ExternalAccount) MarshalJSON() (data []byte, err error) {
 }
 
 // The External Account's identifier.
-func (r *ExternalAccount) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r ExternalAccount) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -58,56 +58,56 @@ func (r *ExternalAccount) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the External Account was created.
-func (r *ExternalAccount) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r ExternalAccount) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The External Account's description for display purposes.
-func (r *ExternalAccount) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r ExternalAccount) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The External Account's status.
-func (r *ExternalAccount) GetStatus() (Status ExternalAccountStatus) {
-	if r != nil && r.Status != nil {
+func (r ExternalAccount) GetStatus() (Status ExternalAccountStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *ExternalAccount) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r ExternalAccount) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The destination account number.
-func (r *ExternalAccount) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r ExternalAccount) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The type of the account to which the transfer will be sent.
-func (r *ExternalAccount) GetFunding() (Funding ExternalAccountFunding) {
-	if r != nil && r.Funding != nil {
+func (r ExternalAccount) GetFunding() (Funding ExternalAccountFunding) {
+	if r.Funding != nil {
 		Funding = *r.Funding
 	}
 	return
 }
 
 // If you have verified ownership of the External Account.
-func (r *ExternalAccount) GetVerificationStatus() (VerificationStatus ExternalAccountVerificationStatus) {
-	if r != nil && r.VerificationStatus != nil {
+func (r ExternalAccount) GetVerificationStatus() (VerificationStatus ExternalAccountVerificationStatus) {
+	if r.VerificationStatus != nil {
 		VerificationStatus = *r.VerificationStatus
 	}
 	return
@@ -115,8 +115,8 @@ func (r *ExternalAccount) GetVerificationStatus() (VerificationStatus ExternalAc
 
 // A constant representing the object's type. For this resource it will always be
 // `external_account`.
-func (r *ExternalAccount) GetType() (Type ExternalAccountType) {
-	if r != nil && r.Type != nil {
+func (r ExternalAccount) GetType() (Type ExternalAccountType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -184,32 +184,32 @@ func (r *CreateAnExternalAccountParameters) MarshalJSON() (data []byte, err erro
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 // destination account.
-func (r *CreateAnExternalAccountParameters) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CreateAnExternalAccountParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
 }
 
 // The account number for the destination account.
-func (r *CreateAnExternalAccountParameters) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CreateAnExternalAccountParameters) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The type of the destination account. Defaults to `checking`.
-func (r *CreateAnExternalAccountParameters) GetFunding() (Funding CreateAnExternalAccountParametersFunding) {
-	if r != nil && r.Funding != nil {
+func (r CreateAnExternalAccountParameters) GetFunding() (Funding CreateAnExternalAccountParametersFunding) {
+	if r.Funding != nil {
 		Funding = *r.Funding
 	}
 	return
 }
 
 // The name you choose for the Account.
-func (r *CreateAnExternalAccountParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnExternalAccountParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
@@ -250,16 +250,16 @@ func (r *UpdateAnExternalAccountParameters) MarshalJSON() (data []byte, err erro
 }
 
 // The description you choose to give the external account.
-func (r *UpdateAnExternalAccountParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r UpdateAnExternalAccountParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The status of the External Account.
-func (r *UpdateAnExternalAccountParameters) GetStatus() (Status UpdateAnExternalAccountParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r UpdateAnExternalAccountParameters) GetStatus() (Status UpdateAnExternalAccountParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -307,8 +307,8 @@ func (r *ExternalAccountListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *ExternalAccountListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r ExternalAccountListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -316,15 +316,15 @@ func (r *ExternalAccountListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *ExternalAccountListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r ExternalAccountListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *ExternalAccountListParams) GetStatus() (Status ExternalAccountsListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r ExternalAccountListParams) GetStatus() (Status ExternalAccountsListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -363,8 +363,8 @@ func (r *ExternalAccountsListParamsStatus) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *ExternalAccountsListParamsStatus) GetIn() (In []ExternalAccountsListParamsStatusIn) {
-	if r != nil && r.In != nil {
+func (r ExternalAccountsListParamsStatus) GetIn() (In []ExternalAccountsListParamsStatusIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -410,16 +410,16 @@ func (r *ExternalAccountList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *ExternalAccountList) GetData() (Data []ExternalAccount) {
-	if r != nil && r.Data != nil {
+func (r ExternalAccountList) GetData() (Data []ExternalAccount) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *ExternalAccountList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r ExternalAccountList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

@@ -42,16 +42,16 @@ func (r *Event) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier of the object that generated this Event.
-func (r *Event) GetAssociatedObjectID() (AssociatedObjectID string) {
-	if r != nil && r.AssociatedObjectID != nil {
+func (r Event) GetAssociatedObjectID() (AssociatedObjectID string) {
+	if r.AssociatedObjectID != nil {
 		AssociatedObjectID = *r.AssociatedObjectID
 	}
 	return
 }
 
 // The type of the object that generated this Event.
-func (r *Event) GetAssociatedObjectType() (AssociatedObjectType string) {
-	if r != nil && r.AssociatedObjectType != nil {
+func (r Event) GetAssociatedObjectType() (AssociatedObjectType string) {
+	if r.AssociatedObjectType != nil {
 		AssociatedObjectType = *r.AssociatedObjectType
 	}
 	return
@@ -59,24 +59,24 @@ func (r *Event) GetAssociatedObjectType() (AssociatedObjectType string) {
 
 // The category of the Event. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
-func (r *Event) GetCategory() (Category EventCategory) {
-	if r != nil && r.Category != nil {
+func (r Event) GetCategory() (Category EventCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
 // The time the Event was created.
-func (r *Event) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Event) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The Event identifier.
-func (r *Event) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Event) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -84,8 +84,8 @@ func (r *Event) GetID() (ID string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `event`.
-func (r *Event) GetType() (Type EventType) {
-	if r != nil && r.Type != nil {
+func (r Event) GetType() (Type EventType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -188,8 +188,8 @@ func (r *EventListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *EventListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r EventListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -197,30 +197,30 @@ func (r *EventListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *EventListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r EventListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Events to those belonging to the object with the provided identifier.
-func (r *EventListParams) GetAssociatedObjectID() (AssociatedObjectID string) {
-	if r != nil && r.AssociatedObjectID != nil {
+func (r EventListParams) GetAssociatedObjectID() (AssociatedObjectID string) {
+	if r.AssociatedObjectID != nil {
 		AssociatedObjectID = *r.AssociatedObjectID
 	}
 	return
 }
 
-func (r *EventListParams) GetCreatedAt() (CreatedAt EventsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r EventListParams) GetCreatedAt() (CreatedAt EventsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *EventListParams) GetCategory() (Category EventsListParamsCategory) {
-	if r != nil && r.Category != nil {
+func (r EventListParams) GetCategory() (Category EventsListParamsCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -268,8 +268,8 @@ func (r *EventsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *EventsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r EventsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -277,8 +277,8 @@ func (r *EventsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *EventsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r EventsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -286,8 +286,8 @@ func (r *EventsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -295,8 +295,8 @@ func (r *EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *EventsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r EventsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -335,8 +335,8 @@ func (r *EventsListParamsCategory) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
-	if r != nil && r.In != nil {
+func (r EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -427,16 +427,16 @@ func (r *EventList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *EventList) GetData() (Data []Event) {
-	if r != nil && r.Data != nil {
+func (r EventList) GetData() (Data []Event) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *EventList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r EventList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

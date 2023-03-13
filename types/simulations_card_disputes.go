@@ -31,16 +31,16 @@ func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) MarshalJSON() (data
 }
 
 // The status to move the dispute to.
-func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) GetStatus() (Status SimulatesAdvancingTheStateOfACardDisputeParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r SimulatesAdvancingTheStateOfACardDisputeParameters) GetStatus() (Status SimulatesAdvancingTheStateOfACardDisputeParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // Why the dispute was rejected. Not required for accepting disputes.
-func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
+func (r SimulatesAdvancingTheStateOfACardDisputeParameters) GetExplanation() (Explanation string) {
+	if r.Explanation != nil {
 		Explanation = *r.Explanation
 	}
 	return

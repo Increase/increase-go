@@ -61,8 +61,8 @@ func (r *CheckDeposit) MarshalJSON() (data []byte, err error) {
 }
 
 // The deposit's identifier.
-func (r *CheckDeposit) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CheckDeposit) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -70,8 +70,8 @@ func (r *CheckDeposit) GetID() (ID string) {
 
 // The deposited amount in the minor unit of the destination account currency. For
 // dollars, for example, this is cents.
-func (r *CheckDeposit) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CheckDeposit) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -79,56 +79,56 @@ func (r *CheckDeposit) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *CheckDeposit) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CheckDeposit) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-func (r *CheckDeposit) GetCurrency() (Currency CheckDepositCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CheckDeposit) GetCurrency() (Currency CheckDepositCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The status of the Check Deposit.
-func (r *CheckDeposit) GetStatus() (Status CheckDepositStatus) {
-	if r != nil && r.Status != nil {
+func (r CheckDeposit) GetStatus() (Status CheckDepositStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The Account the check was deposited into.
-func (r *CheckDeposit) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CheckDeposit) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The ID for the File containing the image of the front of the check.
-func (r *CheckDeposit) GetFrontImageFileID() (FrontImageFileID string) {
-	if r != nil && r.FrontImageFileID != nil {
+func (r CheckDeposit) GetFrontImageFileID() (FrontImageFileID string) {
+	if r.FrontImageFileID != nil {
 		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The ID for the File containing the image of the back of the check.
-func (r *CheckDeposit) GetBackImageFileID() (BackImageFileID string) {
-	if r != nil && r.BackImageFileID != nil {
+func (r CheckDeposit) GetBackImageFileID() (BackImageFileID string) {
+	if r.BackImageFileID != nil {
 		BackImageFileID = *r.BackImageFileID
 	}
 	return
 }
 
 // The ID for the Transaction created by the deposit.
-func (r *CheckDeposit) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CheckDeposit) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -136,8 +136,8 @@ func (r *CheckDeposit) GetTransactionID() (TransactionID string) {
 
 // If your deposit is successfully parsed and accepted by Increase, this will
 // contain details of the parsed check.
-func (r *CheckDeposit) GetDepositAcceptance() (DepositAcceptance CheckDepositDepositAcceptance) {
-	if r != nil && r.DepositAcceptance != nil {
+func (r CheckDeposit) GetDepositAcceptance() (DepositAcceptance CheckDepositDepositAcceptance) {
+	if r.DepositAcceptance != nil {
 		DepositAcceptance = *r.DepositAcceptance
 	}
 	return
@@ -145,8 +145,8 @@ func (r *CheckDeposit) GetDepositAcceptance() (DepositAcceptance CheckDepositDep
 
 // If your deposit is rejected by Increase, this will contain details as to why it
 // was rejected.
-func (r *CheckDeposit) GetDepositRejection() (DepositRejection CheckDepositDepositRejection) {
-	if r != nil && r.DepositRejection != nil {
+func (r CheckDeposit) GetDepositRejection() (DepositRejection CheckDepositDepositRejection) {
+	if r.DepositRejection != nil {
 		DepositRejection = *r.DepositRejection
 	}
 	return
@@ -154,8 +154,8 @@ func (r *CheckDeposit) GetDepositRejection() (DepositRejection CheckDepositDepos
 
 // If your deposit is returned, this will contain details as to why it was
 // returned.
-func (r *CheckDeposit) GetDepositReturn() (DepositReturn CheckDepositDepositReturn) {
-	if r != nil && r.DepositReturn != nil {
+func (r CheckDeposit) GetDepositReturn() (DepositReturn CheckDepositDepositReturn) {
+	if r.DepositReturn != nil {
 		DepositReturn = *r.DepositReturn
 	}
 	return
@@ -163,8 +163,8 @@ func (r *CheckDeposit) GetDepositReturn() (DepositReturn CheckDepositDepositRetu
 
 // A constant representing the object's type. For this resource it will always be
 // `check_deposit`.
-func (r *CheckDeposit) GetType() (Type CheckDepositType) {
-	if r != nil && r.Type != nil {
+func (r CheckDeposit) GetType() (Type CheckDepositType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -232,8 +232,8 @@ func (r *CheckDepositDepositAcceptance) MarshalJSON() (data []byte, err error) {
 
 // The amount to be deposited in the minor unit of the transaction's currency. For
 // dollars, for example, this is cents.
-func (r *CheckDepositDepositAcceptance) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CheckDepositDepositAcceptance) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -241,24 +241,24 @@ func (r *CheckDepositDepositAcceptance) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *CheckDepositDepositAcceptance) GetCurrency() (Currency CheckDepositDepositAcceptanceCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CheckDepositDepositAcceptance) GetCurrency() (Currency CheckDepositDepositAcceptanceCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The account number printed on the check.
-func (r *CheckDepositDepositAcceptance) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CheckDepositDepositAcceptance) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The routing number printed on the check.
-func (r *CheckDepositDepositAcceptance) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CheckDepositDepositAcceptance) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -266,8 +266,8 @@ func (r *CheckDepositDepositAcceptance) GetRoutingNumber() (RoutingNumber string
 
 // An additional line of metadata printed on the check. This typically includes the
 // check number for business checks.
-func (r *CheckDepositDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
-	if r != nil && r.AuxiliaryOnUs != nil {
+func (r CheckDepositDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string) {
+	if r.AuxiliaryOnUs != nil {
 		AuxiliaryOnUs = *r.AuxiliaryOnUs
 	}
 	return
@@ -275,16 +275,16 @@ func (r *CheckDepositDepositAcceptance) GetAuxiliaryOnUs() (AuxiliaryOnUs string
 
 // The check serial number, if present, for consumer checks. For business checks,
 // the serial number is usually in the `auxiliary_on_us` field.
-func (r *CheckDepositDepositAcceptance) GetSerialNumber() (SerialNumber string) {
-	if r != nil && r.SerialNumber != nil {
+func (r CheckDepositDepositAcceptance) GetSerialNumber() (SerialNumber string) {
+	if r.SerialNumber != nil {
 		SerialNumber = *r.SerialNumber
 	}
 	return
 }
 
 // The ID of the Check Deposit that was accepted.
-func (r *CheckDepositDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r CheckDepositDepositAcceptance) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -336,8 +336,8 @@ func (r *CheckDepositDepositRejection) MarshalJSON() (data []byte, err error) {
 
 // The rejected amount in the minor unit of check's currency. For dollars, for
 // example, this is cents.
-func (r *CheckDepositDepositRejection) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CheckDepositDepositRejection) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -345,16 +345,16 @@ func (r *CheckDepositDepositRejection) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
-func (r *CheckDepositDepositRejection) GetCurrency() (Currency CheckDepositDepositRejectionCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CheckDepositDepositRejection) GetCurrency() (Currency CheckDepositDepositRejectionCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // Why the check deposit was rejected.
-func (r *CheckDepositDepositRejection) GetReason() (Reason CheckDepositDepositRejectionReason) {
-	if r != nil && r.Reason != nil {
+func (r CheckDepositDepositRejection) GetReason() (Reason CheckDepositDepositRejectionReason) {
+	if r.Reason != nil {
 		Reason = *r.Reason
 	}
 	return
@@ -362,8 +362,8 @@ func (r *CheckDepositDepositRejection) GetReason() (Reason CheckDepositDepositRe
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was rejected.
-func (r *CheckDepositDepositRejection) GetRejectedAt() (RejectedAt string) {
-	if r != nil && r.RejectedAt != nil {
+func (r CheckDepositDepositRejection) GetRejectedAt() (RejectedAt string) {
+	if r.RejectedAt != nil {
 		RejectedAt = *r.RejectedAt
 	}
 	return
@@ -431,8 +431,8 @@ func (r *CheckDepositDepositReturn) MarshalJSON() (data []byte, err error) {
 
 // The amount in the minor unit of the transaction's currency. For dollars, for
 // example, this is cents.
-func (r *CheckDepositDepositReturn) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CheckDepositDepositReturn) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -440,8 +440,8 @@ func (r *CheckDepositDepositReturn) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was returned.
-func (r *CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt string) {
-	if r != nil && r.ReturnedAt != nil {
+func (r CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt string) {
+	if r.ReturnedAt != nil {
 		ReturnedAt = *r.ReturnedAt
 	}
 	return
@@ -449,16 +449,16 @@ func (r *CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt string) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
-func (r *CheckDepositDepositReturn) GetCurrency() (Currency CheckDepositDepositReturnCurrency) {
-	if r != nil && r.Currency != nil {
+func (r CheckDepositDepositReturn) GetCurrency() (Currency CheckDepositDepositReturnCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The identifier of the Check Deposit that was returned.
-func (r *CheckDepositDepositReturn) GetCheckDepositID() (CheckDepositID string) {
-	if r != nil && r.CheckDepositID != nil {
+func (r CheckDepositDepositReturn) GetCheckDepositID() (CheckDepositID string) {
+	if r.CheckDepositID != nil {
 		CheckDepositID = *r.CheckDepositID
 	}
 	return
@@ -466,15 +466,15 @@ func (r *CheckDepositDepositReturn) GetCheckDepositID() (CheckDepositID string) 
 
 // The identifier of the transaction that reversed the original check deposit
 // transaction.
-func (r *CheckDepositDepositReturn) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CheckDepositDepositReturn) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
 }
 
-func (r *CheckDepositDepositReturn) GetReturnReason() (ReturnReason CheckDepositDepositReturnReturnReason) {
-	if r != nil && r.ReturnReason != nil {
+func (r CheckDepositDepositReturn) GetReturnReason() (ReturnReason CheckDepositDepositReturnReturnReason) {
+	if r.ReturnReason != nil {
 		ReturnReason = *r.ReturnReason
 	}
 	return
@@ -547,8 +547,8 @@ func (r *CreateACheckDepositParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the Account to deposit the check in.
-func (r *CreateACheckDepositParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateACheckDepositParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -556,32 +556,32 @@ func (r *CreateACheckDepositParameters) GetAccountID() (AccountID string) {
 
 // The deposit amount in the minor unit of the account currency. For dollars, for
 // example, this is cents.
-func (r *CreateACheckDepositParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateACheckDepositParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The currency to use for the deposit.
-func (r *CreateACheckDepositParameters) GetCurrency() (Currency string) {
-	if r != nil && r.Currency != nil {
+func (r CreateACheckDepositParameters) GetCurrency() (Currency string) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The File containing the check's front image.
-func (r *CreateACheckDepositParameters) GetFrontImageFileID() (FrontImageFileID string) {
-	if r != nil && r.FrontImageFileID != nil {
+func (r CreateACheckDepositParameters) GetFrontImageFileID() (FrontImageFileID string) {
+	if r.FrontImageFileID != nil {
 		FrontImageFileID = *r.FrontImageFileID
 	}
 	return
 }
 
 // The File containing the check's back image.
-func (r *CreateACheckDepositParameters) GetBackImageFileID() (BackImageFileID string) {
-	if r != nil && r.BackImageFileID != nil {
+func (r CreateACheckDepositParameters) GetBackImageFileID() (BackImageFileID string) {
+	if r.BackImageFileID != nil {
 		BackImageFileID = *r.BackImageFileID
 	}
 	return
@@ -624,8 +624,8 @@ func (r *CheckDepositListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *CheckDepositListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r CheckDepositListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -633,23 +633,23 @@ func (r *CheckDepositListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *CheckDepositListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r CheckDepositListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Check Deposits to those belonging to the specified Account.
-func (r *CheckDepositListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CheckDepositListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -697,8 +697,8 @@ func (r *CheckDepositsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -706,8 +706,8 @@ func (r *CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -715,8 +715,8 @@ func (r *CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -724,8 +724,8 @@ func (r *CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CheckDepositsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r CheckDepositsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -764,16 +764,16 @@ func (r *CheckDepositList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *CheckDepositList) GetData() (Data []CheckDeposit) {
-	if r != nil && r.Data != nil {
+func (r CheckDepositList) GetData() (Data []CheckDeposit) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *CheckDepositList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r CheckDepositList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

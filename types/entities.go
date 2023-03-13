@@ -51,16 +51,16 @@ func (r *Entity) MarshalJSON() (data []byte, err error) {
 }
 
 // The entity's identifier.
-func (r *Entity) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Entity) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The entity's legal structure.
-func (r *Entity) GetStructure() (Structure EntityStructure) {
-	if r != nil && r.Structure != nil {
+func (r Entity) GetStructure() (Structure EntityStructure) {
+	if r.Structure != nil {
 		Structure = *r.Structure
 	}
 	return
@@ -68,8 +68,8 @@ func (r *Entity) GetStructure() (Structure EntityStructure) {
 
 // Details of the corporation entity. Will be present if `structure` is equal to
 // `corporation`.
-func (r *Entity) GetCorporation() (Corporation EntityCorporation) {
-	if r != nil && r.Corporation != nil {
+func (r Entity) GetCorporation() (Corporation EntityCorporation) {
+	if r.Corporation != nil {
 		Corporation = *r.Corporation
 	}
 	return
@@ -77,24 +77,24 @@ func (r *Entity) GetCorporation() (Corporation EntityCorporation) {
 
 // Details of the natural person entity. Will be present if `structure` is equal to
 // `natural_person`.
-func (r *Entity) GetNaturalPerson() (NaturalPerson EntityNaturalPerson) {
-	if r != nil && r.NaturalPerson != nil {
+func (r Entity) GetNaturalPerson() (NaturalPerson EntityNaturalPerson) {
+	if r.NaturalPerson != nil {
 		NaturalPerson = *r.NaturalPerson
 	}
 	return
 }
 
 // Details of the joint entity. Will be present if `structure` is equal to `joint`.
-func (r *Entity) GetJoint() (Joint EntityJoint) {
-	if r != nil && r.Joint != nil {
+func (r Entity) GetJoint() (Joint EntityJoint) {
+	if r.Joint != nil {
 		Joint = *r.Joint
 	}
 	return
 }
 
 // Details of the trust entity. Will be present if `structure` is equal to `trust`.
-func (r *Entity) GetTrust() (Trust EntityTrust) {
-	if r != nil && r.Trust != nil {
+func (r Entity) GetTrust() (Trust EntityTrust) {
+	if r.Trust != nil {
 		Trust = *r.Trust
 	}
 	return
@@ -102,32 +102,32 @@ func (r *Entity) GetTrust() (Trust EntityTrust) {
 
 // A constant representing the object's type. For this resource it will always be
 // `entity`.
-func (r *Entity) GetType() (Type EntityType) {
-	if r != nil && r.Type != nil {
+func (r Entity) GetType() (Type EntityType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
 }
 
 // The entity's description for display purposes.
-func (r *Entity) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r Entity) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The relationship between your group and the entity.
-func (r *Entity) GetRelationship() (Relationship EntityRelationship) {
-	if r != nil && r.Relationship != nil {
+func (r Entity) GetRelationship() (Relationship EntityRelationship) {
+	if r.Relationship != nil {
 		Relationship = *r.Relationship
 	}
 	return
 }
 
 // Additional documentation associated with the entity.
-func (r *Entity) GetSupplementalDocuments() (SupplementalDocuments []EntitySupplementalDocuments) {
-	if r != nil && r.SupplementalDocuments != nil {
+func (r Entity) GetSupplementalDocuments() (SupplementalDocuments []EntitySupplementalDocuments) {
+	if r.SupplementalDocuments != nil {
 		SupplementalDocuments = *r.SupplementalDocuments
 	}
 	return
@@ -179,24 +179,24 @@ func (r *EntityCorporation) MarshalJSON() (data []byte, err error) {
 }
 
 // The legal name of the corporation.
-func (r *EntityCorporation) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityCorporation) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The website of the corporation.
-func (r *EntityCorporation) GetWebsite() (Website string) {
-	if r != nil && r.Website != nil {
+func (r EntityCorporation) GetWebsite() (Website string) {
+	if r.Website != nil {
 		Website = *r.Website
 	}
 	return
 }
 
 // The Employer Identification Number (EIN) for the corporation.
-func (r *EntityCorporation) GetTaxIdentifier() (TaxIdentifier string) {
-	if r != nil && r.TaxIdentifier != nil {
+func (r EntityCorporation) GetTaxIdentifier() (TaxIdentifier string) {
+	if r.TaxIdentifier != nil {
 		TaxIdentifier = *r.TaxIdentifier
 	}
 	return
@@ -204,16 +204,16 @@ func (r *EntityCorporation) GetTaxIdentifier() (TaxIdentifier string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the
 // corporation's state of incorporation.
-func (r *EntityCorporation) GetIncorporationState() (IncorporationState string) {
-	if r != nil && r.IncorporationState != nil {
+func (r EntityCorporation) GetIncorporationState() (IncorporationState string) {
+	if r.IncorporationState != nil {
 		IncorporationState = *r.IncorporationState
 	}
 	return
 }
 
 // The corporation's address.
-func (r *EntityCorporation) GetAddress() (Address EntityCorporationAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityCorporation) GetAddress() (Address EntityCorporationAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -221,8 +221,8 @@ func (r *EntityCorporation) GetAddress() (Address EntityCorporationAddress) {
 
 // The identifying details of anyone controlling or owning 25% or more of the
 // corporation.
-func (r *EntityCorporation) GetBeneficialOwners() (BeneficialOwners []EntityCorporationBeneficialOwners) {
-	if r != nil && r.BeneficialOwners != nil {
+func (r EntityCorporation) GetBeneficialOwners() (BeneficialOwners []EntityCorporationBeneficialOwners) {
+	if r.BeneficialOwners != nil {
 		BeneficialOwners = *r.BeneficialOwners
 	}
 	return
@@ -262,24 +262,24 @@ func (r *EntityCorporationAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the address.
-func (r *EntityCorporationAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityCorporationAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityCorporationAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityCorporationAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityCorporationAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityCorporationAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -287,16 +287,16 @@ func (r *EntityCorporationAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityCorporationAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityCorporationAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityCorporationAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityCorporationAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -331,24 +331,24 @@ func (r *EntityCorporationBeneficialOwners) MarshalJSON() (data []byte, err erro
 }
 
 // Personal details for the beneficial owner.
-func (r *EntityCorporationBeneficialOwners) GetIndividual() (Individual EntityCorporationBeneficialOwnersIndividual) {
-	if r != nil && r.Individual != nil {
+func (r EntityCorporationBeneficialOwners) GetIndividual() (Individual EntityCorporationBeneficialOwnersIndividual) {
+	if r.Individual != nil {
 		Individual = *r.Individual
 	}
 	return
 }
 
 // This person's role or title within the entity.
-func (r *EntityCorporationBeneficialOwners) GetCompanyTitle() (CompanyTitle string) {
-	if r != nil && r.CompanyTitle != nil {
+func (r EntityCorporationBeneficialOwners) GetCompanyTitle() (CompanyTitle string) {
+	if r.CompanyTitle != nil {
 		CompanyTitle = *r.CompanyTitle
 	}
 	return
 }
 
 // Why this person is considered a beneficial owner of the entity.
-func (r *EntityCorporationBeneficialOwners) GetProng() (Prong EntityCorporationBeneficialOwnersProng) {
-	if r != nil && r.Prong != nil {
+func (r EntityCorporationBeneficialOwners) GetProng() (Prong EntityCorporationBeneficialOwnersProng) {
+	if r.Prong != nil {
 		Prong = *r.Prong
 	}
 	return
@@ -386,32 +386,32 @@ func (r *EntityCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte
 }
 
 // The person's legal name.
-func (r *EntityCorporationBeneficialOwnersIndividual) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityCorporationBeneficialOwnersIndividual) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *EntityCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r EntityCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The person's address.
-func (r *EntityCorporationBeneficialOwnersIndividual) GetAddress() (Address EntityCorporationBeneficialOwnersIndividualAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityCorporationBeneficialOwnersIndividual) GetAddress() (Address EntityCorporationBeneficialOwnersIndividualAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *EntityCorporationBeneficialOwnersIndividual) GetIdentification() (Identification EntityCorporationBeneficialOwnersIndividualIdentification) {
-	if r != nil && r.Identification != nil {
+func (r EntityCorporationBeneficialOwnersIndividual) GetIdentification() (Identification EntityCorporationBeneficialOwnersIndividualIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -452,24 +452,24 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data
 }
 
 // The first line of the address.
-func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityCorporationBeneficialOwnersIndividualAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityCorporationBeneficialOwnersIndividualAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityCorporationBeneficialOwnersIndividualAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -477,16 +477,16 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetCity() (City str
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityCorporationBeneficialOwnersIndividualAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -521,8 +521,8 @@ func (r *EntityCorporationBeneficialOwnersIndividualIdentification) MarshalJSON(
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *EntityCorporationBeneficialOwnersIndividualIdentification) GetMethod() (Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r EntityCorporationBeneficialOwnersIndividualIdentification) GetMethod() (Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -530,8 +530,8 @@ func (r *EntityCorporationBeneficialOwnersIndividualIdentification) GetMethod() 
 
 // The last 4 digits of the identification number that can be used to verify the
 // individual's identity.
-func (r *EntityCorporationBeneficialOwnersIndividualIdentification) GetNumberLast4() (NumberLast4 string) {
-	if r != nil && r.NumberLast4 != nil {
+func (r EntityCorporationBeneficialOwnersIndividualIdentification) GetNumberLast4() (NumberLast4 string) {
+	if r.NumberLast4 != nil {
 		NumberLast4 = *r.NumberLast4
 	}
 	return
@@ -585,32 +585,32 @@ func (r *EntityNaturalPerson) MarshalJSON() (data []byte, err error) {
 }
 
 // The person's legal name.
-func (r *EntityNaturalPerson) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityNaturalPerson) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *EntityNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r EntityNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The person's address.
-func (r *EntityNaturalPerson) GetAddress() (Address EntityNaturalPersonAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityNaturalPerson) GetAddress() (Address EntityNaturalPersonAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *EntityNaturalPerson) GetIdentification() (Identification EntityNaturalPersonIdentification) {
-	if r != nil && r.Identification != nil {
+func (r EntityNaturalPerson) GetIdentification() (Identification EntityNaturalPersonIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -650,24 +650,24 @@ func (r *EntityNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the address.
-func (r *EntityNaturalPersonAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityNaturalPersonAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityNaturalPersonAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityNaturalPersonAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityNaturalPersonAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityNaturalPersonAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -675,16 +675,16 @@ func (r *EntityNaturalPersonAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityNaturalPersonAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityNaturalPersonAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityNaturalPersonAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityNaturalPersonAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -718,8 +718,8 @@ func (r *EntityNaturalPersonIdentification) MarshalJSON() (data []byte, err erro
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *EntityNaturalPersonIdentification) GetMethod() (Method EntityNaturalPersonIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r EntityNaturalPersonIdentification) GetMethod() (Method EntityNaturalPersonIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -727,8 +727,8 @@ func (r *EntityNaturalPersonIdentification) GetMethod() (Method EntityNaturalPer
 
 // The last 4 digits of the identification number that can be used to verify the
 // individual's identity.
-func (r *EntityNaturalPersonIdentification) GetNumberLast4() (NumberLast4 string) {
-	if r != nil && r.NumberLast4 != nil {
+func (r EntityNaturalPersonIdentification) GetNumberLast4() (NumberLast4 string) {
+	if r.NumberLast4 != nil {
 		NumberLast4 = *r.NumberLast4
 	}
 	return
@@ -771,16 +771,16 @@ func (r *EntityJoint) MarshalJSON() (data []byte, err error) {
 }
 
 // The entity's name.
-func (r *EntityJoint) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityJoint) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The two individuals that share control of the entity.
-func (r *EntityJoint) GetIndividuals() (Individuals []EntityJointIndividuals) {
-	if r != nil && r.Individuals != nil {
+func (r EntityJoint) GetIndividuals() (Individuals []EntityJointIndividuals) {
+	if r.Individuals != nil {
 		Individuals = *r.Individuals
 	}
 	return
@@ -817,32 +817,32 @@ func (r *EntityJointIndividuals) MarshalJSON() (data []byte, err error) {
 }
 
 // The person's legal name.
-func (r *EntityJointIndividuals) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityJointIndividuals) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *EntityJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r EntityJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The person's address.
-func (r *EntityJointIndividuals) GetAddress() (Address EntityJointIndividualsAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityJointIndividuals) GetAddress() (Address EntityJointIndividualsAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *EntityJointIndividuals) GetIdentification() (Identification EntityJointIndividualsIdentification) {
-	if r != nil && r.Identification != nil {
+func (r EntityJointIndividuals) GetIdentification() (Identification EntityJointIndividualsIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -882,24 +882,24 @@ func (r *EntityJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the address.
-func (r *EntityJointIndividualsAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityJointIndividualsAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityJointIndividualsAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityJointIndividualsAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityJointIndividualsAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityJointIndividualsAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -907,16 +907,16 @@ func (r *EntityJointIndividualsAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityJointIndividualsAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityJointIndividualsAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityJointIndividualsAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityJointIndividualsAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -950,8 +950,8 @@ func (r *EntityJointIndividualsIdentification) MarshalJSON() (data []byte, err e
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *EntityJointIndividualsIdentification) GetMethod() (Method EntityJointIndividualsIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r EntityJointIndividualsIdentification) GetMethod() (Method EntityJointIndividualsIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -959,8 +959,8 @@ func (r *EntityJointIndividualsIdentification) GetMethod() (Method EntityJointIn
 
 // The last 4 digits of the identification number that can be used to verify the
 // individual's identity.
-func (r *EntityJointIndividualsIdentification) GetNumberLast4() (NumberLast4 string) {
-	if r != nil && r.NumberLast4 != nil {
+func (r EntityJointIndividualsIdentification) GetNumberLast4() (NumberLast4 string) {
+	if r.NumberLast4 != nil {
 		NumberLast4 = *r.NumberLast4
 	}
 	return
@@ -1016,24 +1016,24 @@ func (r *EntityTrust) MarshalJSON() (data []byte, err error) {
 }
 
 // The trust's name
-func (r *EntityTrust) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityTrust) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // Whether the trust is `revocable` or `irrevocable`.
-func (r *EntityTrust) GetCategory() (Category EntityTrustCategory) {
-	if r != nil && r.Category != nil {
+func (r EntityTrust) GetCategory() (Category EntityTrustCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
 // The trust's address.
-func (r *EntityTrust) GetAddress() (Address EntityTrustAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityTrust) GetAddress() (Address EntityTrustAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -1041,40 +1041,40 @@ func (r *EntityTrust) GetAddress() (Address EntityTrustAddress) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state in
 // which the trust was formed.
-func (r *EntityTrust) GetFormationState() (FormationState string) {
-	if r != nil && r.FormationState != nil {
+func (r EntityTrust) GetFormationState() (FormationState string) {
+	if r.FormationState != nil {
 		FormationState = *r.FormationState
 	}
 	return
 }
 
 // The Employer Identification Number (EIN) of the trust itself.
-func (r *EntityTrust) GetTaxIdentifier() (TaxIdentifier string) {
-	if r != nil && r.TaxIdentifier != nil {
+func (r EntityTrust) GetTaxIdentifier() (TaxIdentifier string) {
+	if r.TaxIdentifier != nil {
 		TaxIdentifier = *r.TaxIdentifier
 	}
 	return
 }
 
 // The trustees of the trust.
-func (r *EntityTrust) GetTrustees() (Trustees []EntityTrustTrustees) {
-	if r != nil && r.Trustees != nil {
+func (r EntityTrust) GetTrustees() (Trustees []EntityTrustTrustees) {
+	if r.Trustees != nil {
 		Trustees = *r.Trustees
 	}
 	return
 }
 
 // The grantor of the trust. Will be present if the `category` is `revocable`.
-func (r *EntityTrust) GetGrantor() (Grantor EntityTrustGrantor) {
-	if r != nil && r.Grantor != nil {
+func (r EntityTrust) GetGrantor() (Grantor EntityTrustGrantor) {
+	if r.Grantor != nil {
 		Grantor = *r.Grantor
 	}
 	return
 }
 
 // The ID for the File containing the formation document of the trust.
-func (r *EntityTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
-	if r != nil && r.FormationDocumentFileID != nil {
+func (r EntityTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
+	if r.FormationDocumentFileID != nil {
 		FormationDocumentFileID = *r.FormationDocumentFileID
 	}
 	return
@@ -1121,24 +1121,24 @@ func (r *EntityTrustAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the address.
-func (r *EntityTrustAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityTrustAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityTrustAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityTrustAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityTrustAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityTrustAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -1146,16 +1146,16 @@ func (r *EntityTrustAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityTrustAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityTrustAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityTrustAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityTrustAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -1189,8 +1189,8 @@ func (r *EntityTrustTrustees) MarshalJSON() (data []byte, err error) {
 }
 
 // The structure of the trustee. Will always be equal to `individual`.
-func (r *EntityTrustTrustees) GetStructure() (Structure EntityTrustTrusteesStructure) {
-	if r != nil && r.Structure != nil {
+func (r EntityTrustTrustees) GetStructure() (Structure EntityTrustTrusteesStructure) {
+	if r.Structure != nil {
 		Structure = *r.Structure
 	}
 	return
@@ -1198,8 +1198,8 @@ func (r *EntityTrustTrustees) GetStructure() (Structure EntityTrustTrusteesStruc
 
 // The individual trustee of the trust. Will be present if the trustee's
 // `structure` is equal to `individual`.
-func (r *EntityTrustTrustees) GetIndividual() (Individual EntityTrustTrusteesIndividual) {
-	if r != nil && r.Individual != nil {
+func (r EntityTrustTrustees) GetIndividual() (Individual EntityTrustTrusteesIndividual) {
+	if r.Individual != nil {
 		Individual = *r.Individual
 	}
 	return
@@ -1242,32 +1242,32 @@ func (r *EntityTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
 }
 
 // The person's legal name.
-func (r *EntityTrustTrusteesIndividual) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityTrustTrusteesIndividual) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *EntityTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r EntityTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The person's address.
-func (r *EntityTrustTrusteesIndividual) GetAddress() (Address EntityTrustTrusteesIndividualAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityTrustTrusteesIndividual) GetAddress() (Address EntityTrustTrusteesIndividualAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *EntityTrustTrusteesIndividual) GetIdentification() (Identification EntityTrustTrusteesIndividualIdentification) {
-	if r != nil && r.Identification != nil {
+func (r EntityTrustTrusteesIndividual) GetIdentification() (Identification EntityTrustTrusteesIndividualIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -1307,24 +1307,24 @@ func (r *EntityTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err e
 }
 
 // The first line of the address.
-func (r *EntityTrustTrusteesIndividualAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityTrustTrusteesIndividualAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityTrustTrusteesIndividualAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityTrustTrusteesIndividualAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityTrustTrusteesIndividualAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityTrustTrusteesIndividualAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -1332,16 +1332,16 @@ func (r *EntityTrustTrusteesIndividualAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityTrustTrusteesIndividualAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityTrustTrusteesIndividualAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityTrustTrusteesIndividualAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityTrustTrusteesIndividualAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -1376,8 +1376,8 @@ func (r *EntityTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *EntityTrustTrusteesIndividualIdentification) GetMethod() (Method EntityTrustTrusteesIndividualIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r EntityTrustTrusteesIndividualIdentification) GetMethod() (Method EntityTrustTrusteesIndividualIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -1385,8 +1385,8 @@ func (r *EntityTrustTrusteesIndividualIdentification) GetMethod() (Method Entity
 
 // The last 4 digits of the identification number that can be used to verify the
 // individual's identity.
-func (r *EntityTrustTrusteesIndividualIdentification) GetNumberLast4() (NumberLast4 string) {
-	if r != nil && r.NumberLast4 != nil {
+func (r EntityTrustTrusteesIndividualIdentification) GetNumberLast4() (NumberLast4 string) {
+	if r.NumberLast4 != nil {
 		NumberLast4 = *r.NumberLast4
 	}
 	return
@@ -1433,32 +1433,32 @@ func (r *EntityTrustGrantor) MarshalJSON() (data []byte, err error) {
 }
 
 // The person's legal name.
-func (r *EntityTrustGrantor) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r EntityTrustGrantor) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *EntityTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r EntityTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The person's address.
-func (r *EntityTrustGrantor) GetAddress() (Address EntityTrustGrantorAddress) {
-	if r != nil && r.Address != nil {
+func (r EntityTrustGrantor) GetAddress() (Address EntityTrustGrantorAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *EntityTrustGrantor) GetIdentification() (Identification EntityTrustGrantorIdentification) {
-	if r != nil && r.Identification != nil {
+func (r EntityTrustGrantor) GetIdentification() (Identification EntityTrustGrantorIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -1498,24 +1498,24 @@ func (r *EntityTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the address.
-func (r *EntityTrustGrantorAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r EntityTrustGrantorAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address.
-func (r *EntityTrustGrantorAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r EntityTrustGrantorAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *EntityTrustGrantorAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r EntityTrustGrantorAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -1523,16 +1523,16 @@ func (r *EntityTrustGrantorAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *EntityTrustGrantorAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r EntityTrustGrantorAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *EntityTrustGrantorAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r EntityTrustGrantorAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -1566,8 +1566,8 @@ func (r *EntityTrustGrantorIdentification) MarshalJSON() (data []byte, err error
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *EntityTrustGrantorIdentification) GetMethod() (Method EntityTrustGrantorIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r EntityTrustGrantorIdentification) GetMethod() (Method EntityTrustGrantorIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -1575,8 +1575,8 @@ func (r *EntityTrustGrantorIdentification) GetMethod() (Method EntityTrustGranto
 
 // The last 4 digits of the identification number that can be used to verify the
 // individual's identity.
-func (r *EntityTrustGrantorIdentification) GetNumberLast4() (NumberLast4 string) {
-	if r != nil && r.NumberLast4 != nil {
+func (r EntityTrustGrantorIdentification) GetNumberLast4() (NumberLast4 string) {
+	if r.NumberLast4 != nil {
 		NumberLast4 = *r.NumberLast4
 	}
 	return
@@ -1631,8 +1631,8 @@ func (r *EntitySupplementalDocuments) MarshalJSON() (data []byte, err error) {
 }
 
 // The File containing the document.
-func (r *EntitySupplementalDocuments) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r EntitySupplementalDocuments) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -1683,8 +1683,8 @@ func (r *CreateAnEntityParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The type of Entity to create.
-func (r *CreateAnEntityParameters) GetStructure() (Structure CreateAnEntityParametersStructure) {
-	if r != nil && r.Structure != nil {
+func (r CreateAnEntityParameters) GetStructure() (Structure CreateAnEntityParametersStructure) {
+	if r.Structure != nil {
 		Structure = *r.Structure
 	}
 	return
@@ -1692,8 +1692,8 @@ func (r *CreateAnEntityParameters) GetStructure() (Structure CreateAnEntityParam
 
 // Details of the corporation entity to create. Required if `structure` is equal to
 // `corporation`.
-func (r *CreateAnEntityParameters) GetCorporation() (Corporation CreateAnEntityParametersCorporation) {
-	if r != nil && r.Corporation != nil {
+func (r CreateAnEntityParameters) GetCorporation() (Corporation CreateAnEntityParametersCorporation) {
+	if r.Corporation != nil {
 		Corporation = *r.Corporation
 	}
 	return
@@ -1703,8 +1703,8 @@ func (r *CreateAnEntityParameters) GetCorporation() (Corporation CreateAnEntityP
 // to `natural_person`. Natural people entities should be submitted with
 // `social_security_number` or `individual_taxpayer_identification_number`
 // identification methods.
-func (r *CreateAnEntityParameters) GetNaturalPerson() (NaturalPerson CreateAnEntityParametersNaturalPerson) {
-	if r != nil && r.NaturalPerson != nil {
+func (r CreateAnEntityParameters) GetNaturalPerson() (NaturalPerson CreateAnEntityParametersNaturalPerson) {
+	if r.NaturalPerson != nil {
 		NaturalPerson = *r.NaturalPerson
 	}
 	return
@@ -1712,8 +1712,8 @@ func (r *CreateAnEntityParameters) GetNaturalPerson() (NaturalPerson CreateAnEnt
 
 // Details of the joint entity to create. Required if `structure` is equal to
 // `joint`.
-func (r *CreateAnEntityParameters) GetJoint() (Joint CreateAnEntityParametersJoint) {
-	if r != nil && r.Joint != nil {
+func (r CreateAnEntityParameters) GetJoint() (Joint CreateAnEntityParametersJoint) {
+	if r.Joint != nil {
 		Joint = *r.Joint
 	}
 	return
@@ -1721,32 +1721,32 @@ func (r *CreateAnEntityParameters) GetJoint() (Joint CreateAnEntityParametersJoi
 
 // Details of the trust entity to create. Required if `structure` is equal to
 // `trust`.
-func (r *CreateAnEntityParameters) GetTrust() (Trust CreateAnEntityParametersTrust) {
-	if r != nil && r.Trust != nil {
+func (r CreateAnEntityParameters) GetTrust() (Trust CreateAnEntityParametersTrust) {
+	if r.Trust != nil {
 		Trust = *r.Trust
 	}
 	return
 }
 
 // The description you choose to give the entity.
-func (r *CreateAnEntityParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The relationship between your group and the entity.
-func (r *CreateAnEntityParameters) GetRelationship() (Relationship CreateAnEntityParametersRelationship) {
-	if r != nil && r.Relationship != nil {
+func (r CreateAnEntityParameters) GetRelationship() (Relationship CreateAnEntityParametersRelationship) {
+	if r.Relationship != nil {
 		Relationship = *r.Relationship
 	}
 	return
 }
 
 // Additional documentation associated with the entity.
-func (r *CreateAnEntityParameters) GetSupplementalDocuments() (SupplementalDocuments []CreateAnEntityParametersSupplementalDocuments) {
-	if r != nil && r.SupplementalDocuments != nil {
+func (r CreateAnEntityParameters) GetSupplementalDocuments() (SupplementalDocuments []CreateAnEntityParametersSupplementalDocuments) {
+	if r.SupplementalDocuments != nil {
 		SupplementalDocuments = *r.SupplementalDocuments
 	}
 	return
@@ -1798,24 +1798,24 @@ func (r *CreateAnEntityParametersCorporation) MarshalJSON() (data []byte, err er
 }
 
 // The legal name of the corporation.
-func (r *CreateAnEntityParametersCorporation) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersCorporation) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The website of the corporation.
-func (r *CreateAnEntityParametersCorporation) GetWebsite() (Website string) {
-	if r != nil && r.Website != nil {
+func (r CreateAnEntityParametersCorporation) GetWebsite() (Website string) {
+	if r.Website != nil {
 		Website = *r.Website
 	}
 	return
 }
 
 // The Employer Identification Number (EIN) for the corporation.
-func (r *CreateAnEntityParametersCorporation) GetTaxIdentifier() (TaxIdentifier string) {
-	if r != nil && r.TaxIdentifier != nil {
+func (r CreateAnEntityParametersCorporation) GetTaxIdentifier() (TaxIdentifier string) {
+	if r.TaxIdentifier != nil {
 		TaxIdentifier = *r.TaxIdentifier
 	}
 	return
@@ -1823,16 +1823,16 @@ func (r *CreateAnEntityParametersCorporation) GetTaxIdentifier() (TaxIdentifier 
 
 // The two-letter United States Postal Service (USPS) abbreviation for the
 // corporation's state of incorporation.
-func (r *CreateAnEntityParametersCorporation) GetIncorporationState() (IncorporationState string) {
-	if r != nil && r.IncorporationState != nil {
+func (r CreateAnEntityParametersCorporation) GetIncorporationState() (IncorporationState string) {
+	if r.IncorporationState != nil {
 		IncorporationState = *r.IncorporationState
 	}
 	return
 }
 
 // The corporation's address.
-func (r *CreateAnEntityParametersCorporation) GetAddress() (Address CreateAnEntityParametersCorporationAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersCorporation) GetAddress() (Address CreateAnEntityParametersCorporationAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -1840,8 +1840,8 @@ func (r *CreateAnEntityParametersCorporation) GetAddress() (Address CreateAnEnti
 
 // The identifying details of anyone controlling or owning 25% or more of the
 // corporation.
-func (r *CreateAnEntityParametersCorporation) GetBeneficialOwners() (BeneficialOwners []CreateAnEntityParametersCorporationBeneficialOwners) {
-	if r != nil && r.BeneficialOwners != nil {
+func (r CreateAnEntityParametersCorporation) GetBeneficialOwners() (BeneficialOwners []CreateAnEntityParametersCorporationBeneficialOwners) {
+	if r.BeneficialOwners != nil {
 		BeneficialOwners = *r.BeneficialOwners
 	}
 	return
@@ -1882,24 +1882,24 @@ func (r *CreateAnEntityParametersCorporationAddress) MarshalJSON() (data []byte,
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersCorporationAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersCorporationAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersCorporationAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersCorporationAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersCorporationAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersCorporationAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -1907,16 +1907,16 @@ func (r *CreateAnEntityParametersCorporationAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersCorporationAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersCorporationAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersCorporationAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersCorporationAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -1952,24 +1952,24 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwners) MarshalJSON() (dat
 }
 
 // Personal details for the beneficial owner.
-func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetIndividual() (Individual CreateAnEntityParametersCorporationBeneficialOwnersIndividual) {
-	if r != nil && r.Individual != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwners) GetIndividual() (Individual CreateAnEntityParametersCorporationBeneficialOwnersIndividual) {
+	if r.Individual != nil {
 		Individual = *r.Individual
 	}
 	return
 }
 
 // This person's role or title within the entity.
-func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetCompanyTitle() (CompanyTitle string) {
-	if r != nil && r.CompanyTitle != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwners) GetCompanyTitle() (CompanyTitle string) {
+	if r.CompanyTitle != nil {
 		CompanyTitle = *r.CompanyTitle
 	}
 	return
 }
 
 // Why this person is considered a beneficial owner of the entity.
-func (r *CreateAnEntityParametersCorporationBeneficialOwners) GetProng() (Prong CreateAnEntityParametersCorporationBeneficialOwnersProng) {
-	if r != nil && r.Prong != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwners) GetProng() (Prong CreateAnEntityParametersCorporationBeneficialOwnersProng) {
+	if r.Prong != nil {
 		Prong = *r.Prong
 	}
 	return
@@ -2012,24 +2012,24 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) MarshalJ
 }
 
 // The person's legal name.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The individual's address.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetAddress() (Address CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetAddress() (Address CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -2039,16 +2039,16 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetAddre
 // license, or other document if you've confirmed the individual does not have a US
 // tax id (either a Social Security Number or Individual Taxpayer Identification
 // Number).
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
-	if r != nil && r.ConfirmedNoUsTaxID != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
+	if r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetIdentification() (Identification CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) {
-	if r != nil && r.Identification != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetIdentification() (Identification CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -2091,24 +2091,24 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) M
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -2116,16 +2116,16 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) G
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -2171,8 +2171,8 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetMethod() (Method CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetMethod() (Method CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -2180,8 +2180,8 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 
 // An identification number that can be used to verify the individual's identity,
 // such as a social security number.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetNumber() (Number string) {
-	if r != nil && r.Number != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetNumber() (Number string) {
+	if r.Number != nil {
 		Number = *r.Number
 	}
 	return
@@ -2189,8 +2189,8 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) {
-	if r != nil && r.Passport != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) {
+	if r.Passport != nil {
 		Passport = *r.Passport
 	}
 	return
@@ -2198,8 +2198,8 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) {
-	if r != nil && r.DriversLicense != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) {
+	if r.DriversLicense != nil {
 		DriversLicense = *r.DriversLicense
 	}
 	return
@@ -2207,8 +2207,8 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 
 // Information about the identification document provided. Required if `method` is
 // equal to `other`.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetOther() (Other CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) {
-	if r != nil && r.Other != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification) GetOther() (Other CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) {
+	if r.Other != nil {
 		Other = *r.Other
 	}
 	return
@@ -2256,24 +2256,24 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The country that issued the passport.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
@@ -2311,24 +2311,24 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 }
 
 // The identifier of the File containing the driver's license.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The state that issued the provided driver's license.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
@@ -2370,32 +2370,32 @@ func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentifica
 
 // The two-character ISO 3166-1 code representing the country that issued the
 // document.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
 }
 
 // A description of the document submitted.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -2444,24 +2444,24 @@ func (r *CreateAnEntityParametersNaturalPerson) MarshalJSON() (data []byte, err 
 }
 
 // The person's legal name.
-func (r *CreateAnEntityParametersNaturalPerson) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersNaturalPerson) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r CreateAnEntityParametersNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The individual's address.
-func (r *CreateAnEntityParametersNaturalPerson) GetAddress() (Address CreateAnEntityParametersNaturalPersonAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersNaturalPerson) GetAddress() (Address CreateAnEntityParametersNaturalPersonAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -2471,16 +2471,16 @@ func (r *CreateAnEntityParametersNaturalPerson) GetAddress() (Address CreateAnEn
 // license, or other document if you've confirmed the individual does not have a US
 // tax id (either a Social Security Number or Individual Taxpayer Identification
 // Number).
-func (r *CreateAnEntityParametersNaturalPerson) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
-	if r != nil && r.ConfirmedNoUsTaxID != nil {
+func (r CreateAnEntityParametersNaturalPerson) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
+	if r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *CreateAnEntityParametersNaturalPerson) GetIdentification() (Identification CreateAnEntityParametersNaturalPersonIdentification) {
-	if r != nil && r.Identification != nil {
+func (r CreateAnEntityParametersNaturalPerson) GetIdentification() (Identification CreateAnEntityParametersNaturalPersonIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -2521,24 +2521,24 @@ func (r *CreateAnEntityParametersNaturalPersonAddress) MarshalJSON() (data []byt
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersNaturalPersonAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersNaturalPersonAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersNaturalPersonAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersNaturalPersonAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersNaturalPersonAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersNaturalPersonAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -2546,16 +2546,16 @@ func (r *CreateAnEntityParametersNaturalPersonAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersNaturalPersonAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersNaturalPersonAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersNaturalPersonAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersNaturalPersonAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -2599,8 +2599,8 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) MarshalJSON() (dat
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *CreateAnEntityParametersNaturalPersonIdentification) GetMethod() (Method CreateAnEntityParametersNaturalPersonIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentification) GetMethod() (Method CreateAnEntityParametersNaturalPersonIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -2608,8 +2608,8 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetMethod() (Metho
 
 // An identification number that can be used to verify the individual's identity,
 // such as a social security number.
-func (r *CreateAnEntityParametersNaturalPersonIdentification) GetNumber() (Number string) {
-	if r != nil && r.Number != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentification) GetNumber() (Number string) {
+	if r.Number != nil {
 		Number = *r.Number
 	}
 	return
@@ -2617,8 +2617,8 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetNumber() (Numbe
 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
-func (r *CreateAnEntityParametersNaturalPersonIdentification) GetPassport() (Passport CreateAnEntityParametersNaturalPersonIdentificationPassport) {
-	if r != nil && r.Passport != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentification) GetPassport() (Passport CreateAnEntityParametersNaturalPersonIdentificationPassport) {
+	if r.Passport != nil {
 		Passport = *r.Passport
 	}
 	return
@@ -2626,8 +2626,8 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetPassport() (Pas
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
-func (r *CreateAnEntityParametersNaturalPersonIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) {
-	if r != nil && r.DriversLicense != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) {
+	if r.DriversLicense != nil {
 		DriversLicense = *r.DriversLicense
 	}
 	return
@@ -2635,8 +2635,8 @@ func (r *CreateAnEntityParametersNaturalPersonIdentification) GetDriversLicense(
 
 // Information about the identification document provided. Required if `method` is
 // equal to `other`.
-func (r *CreateAnEntityParametersNaturalPersonIdentification) GetOther() (Other CreateAnEntityParametersNaturalPersonIdentificationOther) {
-	if r != nil && r.Other != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentification) GetOther() (Other CreateAnEntityParametersNaturalPersonIdentificationOther) {
+	if r.Other != nil {
 		Other = *r.Other
 	}
 	return
@@ -2682,24 +2682,24 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) MarshalJSO
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The country that issued the passport.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationPassport) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
@@ -2737,24 +2737,24 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) Mars
 }
 
 // The identifier of the File containing the driver's license.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The state that issued the provided driver's license.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
@@ -2794,32 +2794,32 @@ func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) MarshalJSON()
 
 // The two-character ISO 3166-1 code representing the country that issued the
 // document.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
 }
 
 // A description of the document submitted.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersNaturalPersonIdentificationOther) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -2852,16 +2852,16 @@ func (r *CreateAnEntityParametersJoint) MarshalJSON() (data []byte, err error) {
 }
 
 // The name of the joint entity.
-func (r *CreateAnEntityParametersJoint) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersJoint) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The two individuals that share control of the entity.
-func (r *CreateAnEntityParametersJoint) GetIndividuals() (Individuals []CreateAnEntityParametersJointIndividuals) {
-	if r != nil && r.Individuals != nil {
+func (r CreateAnEntityParametersJoint) GetIndividuals() (Individuals []CreateAnEntityParametersJointIndividuals) {
+	if r.Individuals != nil {
 		Individuals = *r.Individuals
 	}
 	return
@@ -2903,24 +2903,24 @@ func (r *CreateAnEntityParametersJointIndividuals) MarshalJSON() (data []byte, e
 }
 
 // The person's legal name.
-func (r *CreateAnEntityParametersJointIndividuals) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersJointIndividuals) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r CreateAnEntityParametersJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The individual's address.
-func (r *CreateAnEntityParametersJointIndividuals) GetAddress() (Address CreateAnEntityParametersJointIndividualsAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersJointIndividuals) GetAddress() (Address CreateAnEntityParametersJointIndividualsAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -2930,16 +2930,16 @@ func (r *CreateAnEntityParametersJointIndividuals) GetAddress() (Address CreateA
 // license, or other document if you've confirmed the individual does not have a US
 // tax id (either a Social Security Number or Individual Taxpayer Identification
 // Number).
-func (r *CreateAnEntityParametersJointIndividuals) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
-	if r != nil && r.ConfirmedNoUsTaxID != nil {
+func (r CreateAnEntityParametersJointIndividuals) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
+	if r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *CreateAnEntityParametersJointIndividuals) GetIdentification() (Identification CreateAnEntityParametersJointIndividualsIdentification) {
-	if r != nil && r.Identification != nil {
+func (r CreateAnEntityParametersJointIndividuals) GetIdentification() (Identification CreateAnEntityParametersJointIndividualsIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -2980,24 +2980,24 @@ func (r *CreateAnEntityParametersJointIndividualsAddress) MarshalJSON() (data []
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersJointIndividualsAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersJointIndividualsAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersJointIndividualsAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersJointIndividualsAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersJointIndividualsAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersJointIndividualsAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -3005,16 +3005,16 @@ func (r *CreateAnEntityParametersJointIndividualsAddress) GetCity() (City string
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersJointIndividualsAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersJointIndividualsAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersJointIndividualsAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersJointIndividualsAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -3058,8 +3058,8 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) MarshalJSON() (
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *CreateAnEntityParametersJointIndividualsIdentification) GetMethod() (Method CreateAnEntityParametersJointIndividualsIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentification) GetMethod() (Method CreateAnEntityParametersJointIndividualsIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -3067,8 +3067,8 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetMethod() (Me
 
 // An identification number that can be used to verify the individual's identity,
 // such as a social security number.
-func (r *CreateAnEntityParametersJointIndividualsIdentification) GetNumber() (Number string) {
-	if r != nil && r.Number != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentification) GetNumber() (Number string) {
+	if r.Number != nil {
 		Number = *r.Number
 	}
 	return
@@ -3076,8 +3076,8 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetNumber() (Nu
 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
-func (r *CreateAnEntityParametersJointIndividualsIdentification) GetPassport() (Passport CreateAnEntityParametersJointIndividualsIdentificationPassport) {
-	if r != nil && r.Passport != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentification) GetPassport() (Passport CreateAnEntityParametersJointIndividualsIdentificationPassport) {
+	if r.Passport != nil {
 		Passport = *r.Passport
 	}
 	return
@@ -3085,8 +3085,8 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetPassport() (
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
-func (r *CreateAnEntityParametersJointIndividualsIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) {
-	if r != nil && r.DriversLicense != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) {
+	if r.DriversLicense != nil {
 		DriversLicense = *r.DriversLicense
 	}
 	return
@@ -3094,8 +3094,8 @@ func (r *CreateAnEntityParametersJointIndividualsIdentification) GetDriversLicen
 
 // Information about the identification document provided. Required if `method` is
 // equal to `other`.
-func (r *CreateAnEntityParametersJointIndividualsIdentification) GetOther() (Other CreateAnEntityParametersJointIndividualsIdentificationOther) {
-	if r != nil && r.Other != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentification) GetOther() (Other CreateAnEntityParametersJointIndividualsIdentificationOther) {
+	if r.Other != nil {
 		Other = *r.Other
 	}
 	return
@@ -3142,24 +3142,24 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) Marshal
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The country that issued the passport.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationPassport) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
@@ -3197,24 +3197,24 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) M
 }
 
 // The identifier of the File containing the driver's license.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The state that issued the provided driver's license.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
@@ -3254,32 +3254,32 @@ func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) MarshalJSO
 
 // The two-character ISO 3166-1 code representing the country that issued the
 // document.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
 }
 
 // A description of the document submitted.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersJointIndividualsIdentificationOther) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -3328,8 +3328,8 @@ func (r *CreateAnEntityParametersTrust) MarshalJSON() (data []byte, err error) {
 }
 
 // The legal name of the trust.
-func (r *CreateAnEntityParametersTrust) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersTrust) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
@@ -3338,8 +3338,8 @@ func (r *CreateAnEntityParametersTrust) GetName() (Name string) {
 // Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
 // their own Employer Identification Number. Revocable trusts require information
 // about the individual `grantor` who created the trust.
-func (r *CreateAnEntityParametersTrust) GetCategory() (Category CreateAnEntityParametersTrustCategory) {
-	if r != nil && r.Category != nil {
+func (r CreateAnEntityParametersTrust) GetCategory() (Category CreateAnEntityParametersTrustCategory) {
+	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
@@ -3347,8 +3347,8 @@ func (r *CreateAnEntityParametersTrust) GetCategory() (Category CreateAnEntityPa
 
 // The Employer Identification Number (EIN) for the trust. Required if `category`
 // is equal to `irrevocable`.
-func (r *CreateAnEntityParametersTrust) GetTaxIdentifier() (TaxIdentifier string) {
-	if r != nil && r.TaxIdentifier != nil {
+func (r CreateAnEntityParametersTrust) GetTaxIdentifier() (TaxIdentifier string) {
+	if r.TaxIdentifier != nil {
 		TaxIdentifier = *r.TaxIdentifier
 	}
 	return
@@ -3356,40 +3356,40 @@ func (r *CreateAnEntityParametersTrust) GetTaxIdentifier() (TaxIdentifier string
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state in
 // which the trust was formed.
-func (r *CreateAnEntityParametersTrust) GetFormationState() (FormationState string) {
-	if r != nil && r.FormationState != nil {
+func (r CreateAnEntityParametersTrust) GetFormationState() (FormationState string) {
+	if r.FormationState != nil {
 		FormationState = *r.FormationState
 	}
 	return
 }
 
 // The trust's address.
-func (r *CreateAnEntityParametersTrust) GetAddress() (Address CreateAnEntityParametersTrustAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersTrust) GetAddress() (Address CreateAnEntityParametersTrustAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
 }
 
 // The identifier of the File containing the formation document of the trust.
-func (r *CreateAnEntityParametersTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
-	if r != nil && r.FormationDocumentFileID != nil {
+func (r CreateAnEntityParametersTrust) GetFormationDocumentFileID() (FormationDocumentFileID string) {
+	if r.FormationDocumentFileID != nil {
 		FormationDocumentFileID = *r.FormationDocumentFileID
 	}
 	return
 }
 
 // The trustees of the trust.
-func (r *CreateAnEntityParametersTrust) GetTrustees() (Trustees []CreateAnEntityParametersTrustTrustees) {
-	if r != nil && r.Trustees != nil {
+func (r CreateAnEntityParametersTrust) GetTrustees() (Trustees []CreateAnEntityParametersTrustTrustees) {
+	if r.Trustees != nil {
 		Trustees = *r.Trustees
 	}
 	return
 }
 
 // The grantor of the trust. Required if `category` is equal to `revocable`.
-func (r *CreateAnEntityParametersTrust) GetGrantor() (Grantor CreateAnEntityParametersTrustGrantor) {
-	if r != nil && r.Grantor != nil {
+func (r CreateAnEntityParametersTrust) GetGrantor() (Grantor CreateAnEntityParametersTrustGrantor) {
+	if r.Grantor != nil {
 		Grantor = *r.Grantor
 	}
 	return
@@ -3436,24 +3436,24 @@ func (r *CreateAnEntityParametersTrustAddress) MarshalJSON() (data []byte, err e
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersTrustAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersTrustAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersTrustAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersTrustAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersTrustAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersTrustAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -3461,16 +3461,16 @@ func (r *CreateAnEntityParametersTrustAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersTrustAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersTrustAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersTrustAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersTrustAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -3504,8 +3504,8 @@ func (r *CreateAnEntityParametersTrustTrustees) MarshalJSON() (data []byte, err 
 }
 
 // The structure of the trustee.
-func (r *CreateAnEntityParametersTrustTrustees) GetStructure() (Structure CreateAnEntityParametersTrustTrusteesStructure) {
-	if r != nil && r.Structure != nil {
+func (r CreateAnEntityParametersTrustTrustees) GetStructure() (Structure CreateAnEntityParametersTrustTrusteesStructure) {
+	if r.Structure != nil {
 		Structure = *r.Structure
 	}
 	return
@@ -3513,8 +3513,8 @@ func (r *CreateAnEntityParametersTrustTrustees) GetStructure() (Structure Create
 
 // Details of the individual trustee. Required when the trustee `structure` is
 // equal to `individual`.
-func (r *CreateAnEntityParametersTrustTrustees) GetIndividual() (Individual CreateAnEntityParametersTrustTrusteesIndividual) {
-	if r != nil && r.Individual != nil {
+func (r CreateAnEntityParametersTrustTrustees) GetIndividual() (Individual CreateAnEntityParametersTrustTrusteesIndividual) {
+	if r.Individual != nil {
 		Individual = *r.Individual
 	}
 	return
@@ -3563,24 +3563,24 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) MarshalJSON() (data []
 }
 
 // The person's legal name.
-func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The individual's address.
-func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetAddress() (Address CreateAnEntityParametersTrustTrusteesIndividualAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetAddress() (Address CreateAnEntityParametersTrustTrusteesIndividualAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -3590,16 +3590,16 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetAddress() (Address 
 // license, or other document if you've confirmed the individual does not have a US
 // tax id (either a Social Security Number or Individual Taxpayer Identification
 // Number).
-func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
-	if r != nil && r.ConfirmedNoUsTaxID != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
+	if r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *CreateAnEntityParametersTrustTrusteesIndividual) GetIdentification() (Identification CreateAnEntityParametersTrustTrusteesIndividualIdentification) {
-	if r != nil && r.Identification != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetIdentification() (Identification CreateAnEntityParametersTrustTrusteesIndividualIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -3640,24 +3640,24 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) MarshalJSON() (
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -3665,16 +3665,16 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetCity() (City
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -3718,8 +3718,8 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) MarshalJ
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetMethod() (Method CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetMethod() (Method CreateAnEntityParametersTrustTrusteesIndividualIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -3727,8 +3727,8 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetMetho
 
 // An identification number that can be used to verify the individual's identity,
 // such as a social security number.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetNumber() (Number string) {
-	if r != nil && r.Number != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetNumber() (Number string) {
+	if r.Number != nil {
 		Number = *r.Number
 	}
 	return
@@ -3736,8 +3736,8 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetNumbe
 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) {
-	if r != nil && r.Passport != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetPassport() (Passport CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) {
+	if r.Passport != nil {
 		Passport = *r.Passport
 	}
 	return
@@ -3745,8 +3745,8 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetPassp
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) {
-	if r != nil && r.DriversLicense != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) {
+	if r.DriversLicense != nil {
 		DriversLicense = *r.DriversLicense
 	}
 	return
@@ -3754,8 +3754,8 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetDrive
 
 // Information about the identification document provided. Required if `method` is
 // equal to `other`.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetOther() (Other CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) {
-	if r != nil && r.Other != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentification) GetOther() (Other CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) {
+	if r.Other != nil {
 		Other = *r.Other
 	}
 	return
@@ -3803,24 +3803,24 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) 
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The country that issued the passport.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
@@ -3858,24 +3858,24 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLic
 }
 
 // The identifier of the File containing the driver's license.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The state that issued the provided driver's license.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
@@ -3917,32 +3917,32 @@ func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) Mar
 
 // The two-character ISO 3166-1 code representing the country that issued the
 // document.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
 }
 
 // A description of the document submitted.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -3984,24 +3984,24 @@ func (r *CreateAnEntityParametersTrustGrantor) MarshalJSON() (data []byte, err e
 }
 
 // The person's legal name.
-func (r *CreateAnEntityParametersTrustGrantor) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r CreateAnEntityParametersTrustGrantor) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
-	if r != nil && r.DateOfBirth != nil {
+func (r CreateAnEntityParametersTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
+	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
 	return
 }
 
 // The individual's address.
-func (r *CreateAnEntityParametersTrustGrantor) GetAddress() (Address CreateAnEntityParametersTrustGrantorAddress) {
-	if r != nil && r.Address != nil {
+func (r CreateAnEntityParametersTrustGrantor) GetAddress() (Address CreateAnEntityParametersTrustGrantorAddress) {
+	if r.Address != nil {
 		Address = *r.Address
 	}
 	return
@@ -4011,16 +4011,16 @@ func (r *CreateAnEntityParametersTrustGrantor) GetAddress() (Address CreateAnEnt
 // license, or other document if you've confirmed the individual does not have a US
 // tax id (either a Social Security Number or Individual Taxpayer Identification
 // Number).
-func (r *CreateAnEntityParametersTrustGrantor) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
-	if r != nil && r.ConfirmedNoUsTaxID != nil {
+func (r CreateAnEntityParametersTrustGrantor) GetConfirmedNoUsTaxID() (ConfirmedNoUsTaxID bool) {
+	if r.ConfirmedNoUsTaxID != nil {
 		ConfirmedNoUsTaxID = *r.ConfirmedNoUsTaxID
 	}
 	return
 }
 
 // A means of verifying the person's identity.
-func (r *CreateAnEntityParametersTrustGrantor) GetIdentification() (Identification CreateAnEntityParametersTrustGrantorIdentification) {
-	if r != nil && r.Identification != nil {
+func (r CreateAnEntityParametersTrustGrantor) GetIdentification() (Identification CreateAnEntityParametersTrustGrantorIdentification) {
+	if r.Identification != nil {
 		Identification = *r.Identification
 	}
 	return
@@ -4061,24 +4061,24 @@ func (r *CreateAnEntityParametersTrustGrantorAddress) MarshalJSON() (data []byte
 }
 
 // The first line of the address. This is usually the street number and street.
-func (r *CreateAnEntityParametersTrustGrantorAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateAnEntityParametersTrustGrantorAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the address. This might be the floor or room number.
-func (r *CreateAnEntityParametersTrustGrantorAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateAnEntityParametersTrustGrantorAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the address.
-func (r *CreateAnEntityParametersTrustGrantorAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateAnEntityParametersTrustGrantorAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
@@ -4086,16 +4086,16 @@ func (r *CreateAnEntityParametersTrustGrantorAddress) GetCity() (City string) {
 
 // The two-letter United States Postal Service (USPS) abbreviation for the state of
 // the address.
-func (r *CreateAnEntityParametersTrustGrantorAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersTrustGrantorAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The ZIP code of the address.
-func (r *CreateAnEntityParametersTrustGrantorAddress) GetZip() (Zip string) {
-	if r != nil && r.Zip != nil {
+func (r CreateAnEntityParametersTrustGrantorAddress) GetZip() (Zip string) {
+	if r.Zip != nil {
 		Zip = *r.Zip
 	}
 	return
@@ -4139,8 +4139,8 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) MarshalJSON() (data
 }
 
 // A method that can be used to verify the individual's identity.
-func (r *CreateAnEntityParametersTrustGrantorIdentification) GetMethod() (Method CreateAnEntityParametersTrustGrantorIdentificationMethod) {
-	if r != nil && r.Method != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentification) GetMethod() (Method CreateAnEntityParametersTrustGrantorIdentificationMethod) {
+	if r.Method != nil {
 		Method = *r.Method
 	}
 	return
@@ -4148,8 +4148,8 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetMethod() (Method
 
 // An identification number that can be used to verify the individual's identity,
 // such as a social security number.
-func (r *CreateAnEntityParametersTrustGrantorIdentification) GetNumber() (Number string) {
-	if r != nil && r.Number != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentification) GetNumber() (Number string) {
+	if r.Number != nil {
 		Number = *r.Number
 	}
 	return
@@ -4157,8 +4157,8 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetNumber() (Number
 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
-func (r *CreateAnEntityParametersTrustGrantorIdentification) GetPassport() (Passport CreateAnEntityParametersTrustGrantorIdentificationPassport) {
-	if r != nil && r.Passport != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentification) GetPassport() (Passport CreateAnEntityParametersTrustGrantorIdentificationPassport) {
+	if r.Passport != nil {
 		Passport = *r.Passport
 	}
 	return
@@ -4166,8 +4166,8 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetPassport() (Pass
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
-func (r *CreateAnEntityParametersTrustGrantorIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) {
-	if r != nil && r.DriversLicense != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentification) GetDriversLicense() (DriversLicense CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) {
+	if r.DriversLicense != nil {
 		DriversLicense = *r.DriversLicense
 	}
 	return
@@ -4175,8 +4175,8 @@ func (r *CreateAnEntityParametersTrustGrantorIdentification) GetDriversLicense()
 
 // Information about the identification document provided. Required if `method` is
 // equal to `other`.
-func (r *CreateAnEntityParametersTrustGrantorIdentification) GetOther() (Other CreateAnEntityParametersTrustGrantorIdentificationOther) {
-	if r != nil && r.Other != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentification) GetOther() (Other CreateAnEntityParametersTrustGrantorIdentificationOther) {
+	if r.Other != nil {
 		Other = *r.Other
 	}
 	return
@@ -4222,24 +4222,24 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) MarshalJSON
 }
 
 // The identifier of the File containing the passport.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The country that issued the passport.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationPassport) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
@@ -4277,24 +4277,24 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) Marsh
 }
 
 // The identifier of the File containing the driver's license.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The state that issued the provided driver's license.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
@@ -4334,32 +4334,32 @@ func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) MarshalJSON() 
 
 // The two-character ISO 3166-1 code representing the country that issued the
 // document.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetCountry() (Country string) {
-	if r != nil && r.Country != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetCountry() (Country string) {
+	if r.Country != nil {
 		Country = *r.Country
 	}
 	return
 }
 
 // A description of the document submitted.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetExpirationDate() (ExpirationDate string) {
-	if r != nil && r.ExpirationDate != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
 	return
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersTrustGrantorIdentificationOther) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -4399,8 +4399,8 @@ func (r *CreateAnEntityParametersSupplementalDocuments) MarshalJSON() (data []by
 }
 
 // The identifier of the File containing the document.
-func (r *CreateAnEntityParametersSupplementalDocuments) GetFileID() (FileID string) {
-	if r != nil && r.FileID != nil {
+func (r CreateAnEntityParametersSupplementalDocuments) GetFileID() (FileID string) {
+	if r.FileID != nil {
 		FileID = *r.FileID
 	}
 	return
@@ -4440,8 +4440,8 @@ func (r *EntityListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *EntityListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r EntityListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -4449,8 +4449,8 @@ func (r *EntityListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *EntityListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r EntityListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -4488,16 +4488,16 @@ func (r *EntityList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *EntityList) GetData() (Data []Entity) {
-	if r != nil && r.Data != nil {
+func (r EntityList) GetData() (Data []Entity) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *EntityList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r EntityList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

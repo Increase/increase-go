@@ -42,16 +42,16 @@ func (r *RoutingNumber) MarshalJSON() (data []byte, err error) {
 }
 
 // The name of the financial institution belonging to a routing number.
-func (r *RoutingNumber) GetName() (Name string) {
-	if r != nil && r.Name != nil {
+func (r RoutingNumber) GetName() (Name string) {
+	if r.Name != nil {
 		Name = *r.Name
 	}
 	return
 }
 
 // The nine digit routing number identifier.
-func (r *RoutingNumber) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r RoutingNumber) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -59,32 +59,32 @@ func (r *RoutingNumber) GetRoutingNumber() (RoutingNumber string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `routing_number`.
-func (r *RoutingNumber) GetType() (Type RoutingNumberType) {
-	if r != nil && r.Type != nil {
+func (r RoutingNumber) GetType() (Type RoutingNumberType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
 }
 
 // This routing number's support for ACH Transfers.
-func (r *RoutingNumber) GetACHTransfers() (ACHTransfers RoutingNumberACHTransfers) {
-	if r != nil && r.ACHTransfers != nil {
+func (r RoutingNumber) GetACHTransfers() (ACHTransfers RoutingNumberACHTransfers) {
+	if r.ACHTransfers != nil {
 		ACHTransfers = *r.ACHTransfers
 	}
 	return
 }
 
 // This routing number's support for Real Time Payments Transfers.
-func (r *RoutingNumber) GetRealTimePaymentsTransfers() (RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers) {
-	if r != nil && r.RealTimePaymentsTransfers != nil {
+func (r RoutingNumber) GetRealTimePaymentsTransfers() (RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers) {
+	if r.RealTimePaymentsTransfers != nil {
 		RealTimePaymentsTransfers = *r.RealTimePaymentsTransfers
 	}
 	return
 }
 
 // This routing number's support for Wire Transfers.
-func (r *RoutingNumber) GetWireTransfers() (WireTransfers RoutingNumberWireTransfers) {
-	if r != nil && r.WireTransfers != nil {
+func (r RoutingNumber) GetWireTransfers() (WireTransfers RoutingNumberWireTransfers) {
+	if r.WireTransfers != nil {
 		WireTransfers = *r.WireTransfers
 	}
 	return
@@ -153,8 +153,8 @@ func (r *RoutingNumberListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *RoutingNumberListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r RoutingNumberListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -162,16 +162,16 @@ func (r *RoutingNumberListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *RoutingNumberListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r RoutingNumberListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter financial institutions by routing number.
-func (r *RoutingNumberListParams) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r RoutingNumberListParams) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -210,16 +210,16 @@ func (r *RoutingNumberList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *RoutingNumberList) GetData() (Data []RoutingNumber) {
-	if r != nil && r.Data != nil {
+func (r RoutingNumberList) GetData() (Data []RoutingNumber) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *RoutingNumberList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r RoutingNumberList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

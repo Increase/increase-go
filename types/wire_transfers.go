@@ -79,24 +79,24 @@ func (r *WireTransfer) MarshalJSON() (data []byte, err error) {
 }
 
 // The wire transfer's identifier.
-func (r *WireTransfer) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r WireTransfer) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The message that will show on the recipient's bank statement.
-func (r *WireTransfer) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r WireTransfer) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
 // The transfer amount in USD cents.
-func (r *WireTransfer) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r WireTransfer) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -104,72 +104,72 @@ func (r *WireTransfer) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 // currency. For wire transfers this is always equal to `usd`.
-func (r *WireTransfer) GetCurrency() (Currency WireTransferCurrency) {
-	if r != nil && r.Currency != nil {
+func (r WireTransfer) GetCurrency() (Currency WireTransferCurrency) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // The destination account number.
-func (r *WireTransfer) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r WireTransfer) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
 }
 
 // The beneficiary's name.
-func (r *WireTransfer) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r WireTransfer) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
 // The beneficiary's address line 1.
-func (r *WireTransfer) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r WireTransfer) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
 // The beneficiary's address line 2.
-func (r *WireTransfer) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r WireTransfer) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
 // The beneficiary's address line 3.
-func (r *WireTransfer) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r WireTransfer) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return
 }
 
 // The Account to which the transfer belongs.
-func (r *WireTransfer) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r WireTransfer) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The identifier of the External Account the transfer was made to, if any.
-func (r *WireTransfer) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r WireTransfer) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN).
-func (r *WireTransfer) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r WireTransfer) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -177,8 +177,8 @@ func (r *WireTransfer) GetRoutingNumber() (RoutingNumber string) {
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
-func (r *WireTransfer) GetApproval() (Approval WireTransferApproval) {
-	if r != nil && r.Approval != nil {
+func (r WireTransfer) GetApproval() (Approval WireTransferApproval) {
+	if r.Approval != nil {
 		Approval = *r.Approval
 	}
 	return
@@ -186,16 +186,16 @@ func (r *WireTransfer) GetApproval() (Approval WireTransferApproval) {
 
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
-func (r *WireTransfer) GetCancellation() (Cancellation WireTransferCancellation) {
-	if r != nil && r.Cancellation != nil {
+func (r WireTransfer) GetCancellation() (Cancellation WireTransferCancellation) {
+	if r.Cancellation != nil {
 		Cancellation = *r.Cancellation
 	}
 	return
 }
 
 // If your transfer is reversed, this will contain details of the reversal.
-func (r *WireTransfer) GetReversal() (Reversal WireTransferReversal) {
-	if r != nil && r.Reversal != nil {
+func (r WireTransfer) GetReversal() (Reversal WireTransferReversal) {
+	if r.Reversal != nil {
 		Reversal = *r.Reversal
 	}
 	return
@@ -203,24 +203,24 @@ func (r *WireTransfer) GetReversal() (Reversal WireTransferReversal) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r *WireTransfer) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r WireTransfer) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The transfer's network.
-func (r *WireTransfer) GetNetwork() (Network WireTransferNetwork) {
-	if r != nil && r.Network != nil {
+func (r WireTransfer) GetNetwork() (Network WireTransferNetwork) {
+	if r.Network != nil {
 		Network = *r.Network
 	}
 	return
 }
 
 // The lifecycle status of the transfer.
-func (r *WireTransfer) GetStatus() (Status WireTransferStatus) {
-	if r != nil && r.Status != nil {
+func (r WireTransfer) GetStatus() (Status WireTransferStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -228,24 +228,24 @@ func (r *WireTransfer) GetStatus() (Status WireTransferStatus) {
 
 // After the transfer is submitted to Fedwire, this will contain supplemental
 // details.
-func (r *WireTransfer) GetSubmission() (Submission WireTransferSubmission) {
-	if r != nil && r.Submission != nil {
+func (r WireTransfer) GetSubmission() (Submission WireTransferSubmission) {
+	if r.Submission != nil {
 		Submission = *r.Submission
 	}
 	return
 }
 
 // If the transfer was created from a template, this will be the template's ID.
-func (r *WireTransfer) GetTemplateID() (TemplateID string) {
-	if r != nil && r.TemplateID != nil {
+func (r WireTransfer) GetTemplateID() (TemplateID string) {
+	if r.TemplateID != nil {
 		TemplateID = *r.TemplateID
 	}
 	return
 }
 
 // The ID for the transaction funding the transfer.
-func (r *WireTransfer) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r WireTransfer) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -253,8 +253,8 @@ func (r *WireTransfer) GetTransactionID() (TransactionID string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `wire_transfer`.
-func (r *WireTransfer) GetType() (Type WireTransferType) {
-	if r != nil && r.Type != nil {
+func (r WireTransfer) GetType() (Type WireTransferType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -298,8 +298,8 @@ func (r *WireTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r *WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
-	if r != nil && r.ApprovedAt != nil {
+func (r WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
+	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
 	return
@@ -332,8 +332,8 @@ func (r *WireTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r *WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
-	if r != nil && r.CanceledAt != nil {
+func (r WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
+	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
 	return
@@ -387,80 +387,80 @@ func (r *WireTransferReversal) MarshalJSON() (data []byte, err error) {
 }
 
 // The amount that was reversed.
-func (r *WireTransferReversal) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r WireTransferReversal) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The description on the reversal message from Fedwire.
-func (r *WireTransferReversal) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r WireTransferReversal) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r *WireTransferReversal) GetInputCycleDate() (InputCycleDate string) {
-	if r != nil && r.InputCycleDate != nil {
+func (r WireTransferReversal) GetInputCycleDate() (InputCycleDate string) {
+	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number.
-func (r *WireTransferReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
-	if r != nil && r.InputSequenceNumber != nil {
+func (r WireTransferReversal) GetInputSequenceNumber() (InputSequenceNumber string) {
+	if r.InputSequenceNumber != nil {
 		InputSequenceNumber = *r.InputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier.
-func (r *WireTransferReversal) GetInputSource() (InputSource string) {
-	if r != nil && r.InputSource != nil {
+func (r WireTransferReversal) GetInputSource() (InputSource string) {
+	if r.InputSource != nil {
 		InputSource = *r.InputSource
 	}
 	return
 }
 
 // The Fedwire transaction identifier.
-func (r *WireTransferReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r WireTransferReversal) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire transaction identifier for the wire transfer that was reversed.
-func (r *WireTransferReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
-	if r != nil && r.PreviousMessageInputMessageAccountabilityData != nil {
+func (r WireTransferReversal) GetPreviousMessageInputMessageAccountabilityData() (PreviousMessageInputMessageAccountabilityData string) {
+	if r.PreviousMessageInputMessageAccountabilityData != nil {
 		PreviousMessageInputMessageAccountabilityData = *r.PreviousMessageInputMessageAccountabilityData
 	}
 	return
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r *WireTransferReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
-	if r != nil && r.PreviousMessageInputCycleDate != nil {
+func (r WireTransferReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
 	return
 }
 
 // The Fedwire sequence number for the wire transfer that was reversed.
-func (r *WireTransferReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
-	if r != nil && r.PreviousMessageInputSequenceNumber != nil {
+func (r WireTransferReversal) GetPreviousMessageInputSequenceNumber() (PreviousMessageInputSequenceNumber string) {
+	if r.PreviousMessageInputSequenceNumber != nil {
 		PreviousMessageInputSequenceNumber = *r.PreviousMessageInputSequenceNumber
 	}
 	return
 }
 
 // The Fedwire input source identifier for the wire transfer that was reversed.
-func (r *WireTransferReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
-	if r != nil && r.PreviousMessageInputSource != nil {
+func (r WireTransferReversal) GetPreviousMessageInputSource() (PreviousMessageInputSource string) {
+	if r.PreviousMessageInputSource != nil {
 		PreviousMessageInputSource = *r.PreviousMessageInputSource
 	}
 	return
@@ -468,16 +468,16 @@ func (r *WireTransferReversal) GetPreviousMessageInputSource() (PreviousMessageI
 
 // Information included in the wire reversal for the receiving financial
 // institution.
-func (r *WireTransferReversal) GetReceiverFinancialInstitutionInformation() (ReceiverFinancialInstitutionInformation string) {
-	if r != nil && r.ReceiverFinancialInstitutionInformation != nil {
+func (r WireTransferReversal) GetReceiverFinancialInstitutionInformation() (ReceiverFinancialInstitutionInformation string) {
+	if r.ReceiverFinancialInstitutionInformation != nil {
 		ReceiverFinancialInstitutionInformation = *r.ReceiverFinancialInstitutionInformation
 	}
 	return
 }
 
 // Additional financial institution information included in the wire reversal.
-func (r *WireTransferReversal) GetFinancialInstitutionToFinancialInstitutionInformation() (FinancialInstitutionToFinancialInstitutionInformation string) {
-	if r != nil && r.FinancialInstitutionToFinancialInstitutionInformation != nil {
+func (r WireTransferReversal) GetFinancialInstitutionToFinancialInstitutionInformation() (FinancialInstitutionToFinancialInstitutionInformation string) {
+	if r.FinancialInstitutionToFinancialInstitutionInformation != nil {
 		FinancialInstitutionToFinancialInstitutionInformation = *r.FinancialInstitutionToFinancialInstitutionInformation
 	}
 	return
@@ -528,16 +528,16 @@ func (r *WireTransferSubmission) MarshalJSON() (data []byte, err error) {
 }
 
 // The accountability data for the submission.
-func (r *WireTransferSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
-	if r != nil && r.InputMessageAccountabilityData != nil {
+func (r WireTransferSubmission) GetInputMessageAccountabilityData() (InputMessageAccountabilityData string) {
+	if r.InputMessageAccountabilityData != nil {
 		InputMessageAccountabilityData = *r.InputMessageAccountabilityData
 	}
 	return
 }
 
 // When this wire transfer was submitted to Fedwire.
-func (r *WireTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
-	if r != nil && r.SubmittedAt != nil {
+func (r WireTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
+	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
 	return
@@ -596,16 +596,16 @@ func (r *CreateAWireTransferParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the account that will send the transfer.
-func (r *CreateAWireTransferParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateAWireTransferParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The account number for the destination account.
-func (r *CreateAWireTransferParameters) GetAccountNumber() (AccountNumber string) {
-	if r != nil && r.AccountNumber != nil {
+func (r CreateAWireTransferParameters) GetAccountNumber() (AccountNumber string) {
+	if r.AccountNumber != nil {
 		AccountNumber = *r.AccountNumber
 	}
 	return
@@ -613,8 +613,8 @@ func (r *CreateAWireTransferParameters) GetAccountNumber() (AccountNumber string
 
 // The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 // destination account.
-func (r *CreateAWireTransferParameters) GetRoutingNumber() (RoutingNumber string) {
-	if r != nil && r.RoutingNumber != nil {
+func (r CreateAWireTransferParameters) GetRoutingNumber() (RoutingNumber string) {
+	if r.RoutingNumber != nil {
 		RoutingNumber = *r.RoutingNumber
 	}
 	return
@@ -622,64 +622,64 @@ func (r *CreateAWireTransferParameters) GetRoutingNumber() (RoutingNumber string
 
 // The ID of an External Account to initiate a transfer to. If this parameter is
 // provided, `account_number` and `routing_number` must be absent.
-func (r *CreateAWireTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r CreateAWireTransferParameters) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
 // The transfer amount in cents.
-func (r *CreateAWireTransferParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r CreateAWireTransferParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
 }
 
 // The message that will show on the recipient's bank statement.
-func (r *CreateAWireTransferParameters) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r CreateAWireTransferParameters) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
 }
 
 // The beneficiary's name.
-func (r *CreateAWireTransferParameters) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r CreateAWireTransferParameters) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
 // The beneficiary's address line 1.
-func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r CreateAWireTransferParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
 // The beneficiary's address line 2.
-func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r CreateAWireTransferParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
 // The beneficiary's address line 3.
-func (r *CreateAWireTransferParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r CreateAWireTransferParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return
 }
 
 // Whether the transfer requires explicit approval via the dashboard or API.
-func (r *CreateAWireTransferParameters) GetRequireApproval() (RequireApproval bool) {
-	if r != nil && r.RequireApproval != nil {
+func (r CreateAWireTransferParameters) GetRequireApproval() (RequireApproval bool) {
+	if r.RequireApproval != nil {
 		RequireApproval = *r.RequireApproval
 	}
 	return
@@ -724,8 +724,8 @@ func (r *WireTransferListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *WireTransferListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r WireTransferListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -733,31 +733,31 @@ func (r *WireTransferListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *WireTransferListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r WireTransferListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Wire Transfers to those belonging to the specified Account.
-func (r *WireTransferListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r WireTransferListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // Filter Wire Transfers to those made to the specified External Account.
-func (r *WireTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
-	if r != nil && r.ExternalAccountID != nil {
+func (r WireTransferListParams) GetExternalAccountID() (ExternalAccountID string) {
+	if r.ExternalAccountID != nil {
 		ExternalAccountID = *r.ExternalAccountID
 	}
 	return
 }
 
-func (r *WireTransferListParams) GetCreatedAt() (CreatedAt WireTransfersListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r WireTransferListParams) GetCreatedAt() (CreatedAt WireTransfersListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -805,8 +805,8 @@ func (r *WireTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *WireTransfersListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r WireTransfersListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -814,8 +814,8 @@ func (r *WireTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -823,8 +823,8 @@ func (r *WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -832,8 +832,8 @@ func (r *WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *WireTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r WireTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -872,16 +872,16 @@ func (r *WireTransferList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *WireTransferList) GetData() (Data []WireTransfer) {
-	if r != nil && r.Data != nil {
+func (r WireTransferList) GetData() (Data []WireTransfer) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *WireTransferList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r WireTransferList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

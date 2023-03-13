@@ -49,24 +49,24 @@ func (r *CardDispute) MarshalJSON() (data []byte, err error) {
 }
 
 // The Card Dispute identifier.
-func (r *CardDispute) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r CardDispute) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // Why you disputed the Transaction in question.
-func (r *CardDispute) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
+func (r CardDispute) GetExplanation() (Explanation string) {
+	if r.Explanation != nil {
 		Explanation = *r.Explanation
 	}
 	return
 }
 
 // The results of the Dispute investigation.
-func (r *CardDispute) GetStatus() (Status CardDisputeStatus) {
-	if r != nil && r.Status != nil {
+func (r CardDispute) GetStatus() (Status CardDisputeStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -74,16 +74,16 @@ func (r *CardDispute) GetStatus() (Status CardDisputeStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was created.
-func (r *CardDispute) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardDispute) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The identifier of the Transaction that was disputed.
-func (r *CardDispute) GetDisputedTransactionID() (DisputedTransactionID string) {
-	if r != nil && r.DisputedTransactionID != nil {
+func (r CardDispute) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r.DisputedTransactionID != nil {
 		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
@@ -91,8 +91,8 @@ func (r *CardDispute) GetDisputedTransactionID() (DisputedTransactionID string) 
 
 // If the Card Dispute's status is `accepted`, this will contain details of the
 // successful dispute.
-func (r *CardDispute) GetAcceptance() (Acceptance CardDisputeAcceptance) {
-	if r != nil && r.Acceptance != nil {
+func (r CardDispute) GetAcceptance() (Acceptance CardDisputeAcceptance) {
+	if r.Acceptance != nil {
 		Acceptance = *r.Acceptance
 	}
 	return
@@ -100,8 +100,8 @@ func (r *CardDispute) GetAcceptance() (Acceptance CardDisputeAcceptance) {
 
 // If the Card Dispute's status is `rejected`, this will contain details of the
 // unsuccessful dispute.
-func (r *CardDispute) GetRejection() (Rejection CardDisputeRejection) {
-	if r != nil && r.Rejection != nil {
+func (r CardDispute) GetRejection() (Rejection CardDisputeRejection) {
+	if r.Rejection != nil {
 		Rejection = *r.Rejection
 	}
 	return
@@ -109,8 +109,8 @@ func (r *CardDispute) GetRejection() (Rejection CardDisputeRejection) {
 
 // A constant representing the object's type. For this resource it will always be
 // `card_dispute`.
-func (r *CardDispute) GetType() (Type CardDisputeType) {
-	if r != nil && r.Type != nil {
+func (r CardDispute) GetType() (Type CardDisputeType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -156,16 +156,16 @@ func (r *CardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
-func (r *CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
-	if r != nil && r.AcceptedAt != nil {
+func (r CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
+	if r.AcceptedAt != nil {
 		AcceptedAt = *r.AcceptedAt
 	}
 	return
 }
 
 // The identifier of the Card Dispute that was accepted.
-func (r *CardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
-	if r != nil && r.CardDisputeID != nil {
+func (r CardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
+	if r.CardDisputeID != nil {
 		CardDisputeID = *r.CardDisputeID
 	}
 	return
@@ -173,8 +173,8 @@ func (r *CardDisputeAcceptance) GetCardDisputeID() (CardDisputeID string) {
 
 // The identifier of the Transaction that was created to return the disputed funds
 // to your account.
-func (r *CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
-	if r != nil && r.TransactionID != nil {
+func (r CardDisputeAcceptance) GetTransactionID() (TransactionID string) {
+	if r.TransactionID != nil {
 		TransactionID = *r.TransactionID
 	}
 	return
@@ -210,8 +210,8 @@ func (r *CardDisputeRejection) MarshalJSON() (data []byte, err error) {
 }
 
 // Why the Card Dispute was rejected.
-func (r *CardDisputeRejection) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
+func (r CardDisputeRejection) GetExplanation() (Explanation string) {
+	if r.Explanation != nil {
 		Explanation = *r.Explanation
 	}
 	return
@@ -219,16 +219,16 @@ func (r *CardDisputeRejection) GetExplanation() (Explanation string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was rejected.
-func (r *CardDisputeRejection) GetRejectedAt() (RejectedAt string) {
-	if r != nil && r.RejectedAt != nil {
+func (r CardDisputeRejection) GetRejectedAt() (RejectedAt string) {
+	if r.RejectedAt != nil {
 		RejectedAt = *r.RejectedAt
 	}
 	return
 }
 
 // The identifier of the Card Dispute that was rejected.
-func (r *CardDisputeRejection) GetCardDisputeID() (CardDisputeID string) {
-	if r != nil && r.CardDisputeID != nil {
+func (r CardDisputeRejection) GetCardDisputeID() (CardDisputeID string) {
+	if r.CardDisputeID != nil {
 		CardDisputeID = *r.CardDisputeID
 	}
 	return
@@ -269,16 +269,16 @@ func (r *CreateACardDisputeParameters) MarshalJSON() (data []byte, err error) {
 
 // The Transaction you wish to dispute. This Transaction must have a `source_type`
 // of `card_settlement`.
-func (r *CreateACardDisputeParameters) GetDisputedTransactionID() (DisputedTransactionID string) {
-	if r != nil && r.DisputedTransactionID != nil {
+func (r CreateACardDisputeParameters) GetDisputedTransactionID() (DisputedTransactionID string) {
+	if r.DisputedTransactionID != nil {
 		DisputedTransactionID = *r.DisputedTransactionID
 	}
 	return
 }
 
 // Why you are disputing this Transaction.
-func (r *CreateACardDisputeParameters) GetExplanation() (Explanation string) {
-	if r != nil && r.Explanation != nil {
+func (r CreateACardDisputeParameters) GetExplanation() (Explanation string) {
+	if r.Explanation != nil {
 		Explanation = *r.Explanation
 	}
 	return
@@ -320,8 +320,8 @@ func (r *CardDisputeListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *CardDisputeListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r CardDisputeListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -329,22 +329,22 @@ func (r *CardDisputeListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *CardDisputeListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r CardDisputeListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
-func (r *CardDisputeListParams) GetCreatedAt() (CreatedAt CardDisputesListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardDisputeListParams) GetCreatedAt() (CreatedAt CardDisputesListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r *CardDisputeListParams) GetStatus() (Status CardDisputesListParamsStatus) {
-	if r != nil && r.Status != nil {
+func (r CardDisputeListParams) GetStatus() (Status CardDisputesListParamsStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
@@ -392,8 +392,8 @@ func (r *CardDisputesListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CardDisputesListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r CardDisputesListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -401,8 +401,8 @@ func (r *CardDisputesListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -410,8 +410,8 @@ func (r *CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -419,8 +419,8 @@ func (r *CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CardDisputesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r CardDisputesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -459,8 +459,8 @@ func (r *CardDisputesListParamsStatus) URLQuery() (v url.Values) {
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r *CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
-	if r != nil && r.In != nil {
+func (r CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
+	if r.In != nil {
 		In = *r.In
 	}
 	return
@@ -507,16 +507,16 @@ func (r *CardDisputeList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *CardDisputeList) GetData() (Data []CardDispute) {
-	if r != nil && r.Data != nil {
+func (r CardDisputeList) GetData() (Data []CardDispute) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *CardDisputeList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r CardDisputeList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

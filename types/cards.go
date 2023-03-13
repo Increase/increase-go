@@ -54,16 +54,16 @@ func (r *Card) MarshalJSON() (data []byte, err error) {
 }
 
 // The card identifier.
-func (r *Card) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r Card) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
 }
 
 // The identifier for the account this card belongs to.
-func (r *Card) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r Card) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
@@ -71,56 +71,56 @@ func (r *Card) GetAccountID() (AccountID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card was created.
-func (r *Card) GetCreatedAt() (CreatedAt string) {
-	if r != nil && r.CreatedAt != nil {
+func (r Card) GetCreatedAt() (CreatedAt string) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
 // The card's description for display purposes.
-func (r *Card) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r Card) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The last 4 digits of the Card's Primary Account Number.
-func (r *Card) GetLast4() (Last4 string) {
-	if r != nil && r.Last4 != nil {
+func (r Card) GetLast4() (Last4 string) {
+	if r.Last4 != nil {
 		Last4 = *r.Last4
 	}
 	return
 }
 
 // The month the card expires in M format (e.g., August is 8).
-func (r *Card) GetExpirationMonth() (ExpirationMonth int64) {
-	if r != nil && r.ExpirationMonth != nil {
+func (r Card) GetExpirationMonth() (ExpirationMonth int64) {
+	if r.ExpirationMonth != nil {
 		ExpirationMonth = *r.ExpirationMonth
 	}
 	return
 }
 
 // The year the card expires in YYYY format (e.g., 2025).
-func (r *Card) GetExpirationYear() (ExpirationYear int64) {
-	if r != nil && r.ExpirationYear != nil {
+func (r Card) GetExpirationYear() (ExpirationYear int64) {
+	if r.ExpirationYear != nil {
 		ExpirationYear = *r.ExpirationYear
 	}
 	return
 }
 
 // This indicates if payments can be made with the card.
-func (r *Card) GetStatus() (Status CardStatus) {
-	if r != nil && r.Status != nil {
+func (r Card) GetStatus() (Status CardStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The Card's billing address.
-func (r *Card) GetBillingAddress() (BillingAddress CardBillingAddress) {
-	if r != nil && r.BillingAddress != nil {
+func (r Card) GetBillingAddress() (BillingAddress CardBillingAddress) {
+	if r.BillingAddress != nil {
 		BillingAddress = *r.BillingAddress
 	}
 	return
@@ -129,8 +129,8 @@ func (r *Card) GetBillingAddress() (BillingAddress CardBillingAddress) {
 // The contact information used in the two-factor steps for digital wallet card
 // creation. At least one field must be present to complete the digital wallet
 // steps.
-func (r *Card) GetDigitalWallet() (DigitalWallet CardDigitalWallet) {
-	if r != nil && r.DigitalWallet != nil {
+func (r Card) GetDigitalWallet() (DigitalWallet CardDigitalWallet) {
+	if r.DigitalWallet != nil {
 		DigitalWallet = *r.DigitalWallet
 	}
 	return
@@ -138,8 +138,8 @@ func (r *Card) GetDigitalWallet() (DigitalWallet CardDigitalWallet) {
 
 // A constant representing the object's type. For this resource it will always be
 // `card`.
-func (r *Card) GetType() (Type CardType) {
-	if r != nil && r.Type != nil {
+func (r Card) GetType() (Type CardType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -186,40 +186,40 @@ func (r *CardBillingAddress) MarshalJSON() (data []byte, err error) {
 }
 
 // The first line of the billing address.
-func (r *CardBillingAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CardBillingAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the billing address.
-func (r *CardBillingAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CardBillingAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the billing address.
-func (r *CardBillingAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CardBillingAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
 }
 
 // The US state of the billing address.
-func (r *CardBillingAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CardBillingAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The postal code of the billing address.
-func (r *CardBillingAddress) GetPostalCode() (PostalCode string) {
-	if r != nil && r.PostalCode != nil {
+func (r CardBillingAddress) GetPostalCode() (PostalCode string) {
+	if r.PostalCode != nil {
 		PostalCode = *r.PostalCode
 	}
 	return
@@ -258,8 +258,8 @@ func (r *CardDigitalWallet) MarshalJSON() (data []byte, err error) {
 
 // An email address that can be used to verify the cardholder via one-time passcode
 // over email.
-func (r *CardDigitalWallet) GetEmail() (Email string) {
-	if r != nil && r.Email != nil {
+func (r CardDigitalWallet) GetEmail() (Email string) {
+	if r.Email != nil {
 		Email = *r.Email
 	}
 	return
@@ -267,8 +267,8 @@ func (r *CardDigitalWallet) GetEmail() (Email string) {
 
 // A phone number that can be used to verify the cardholder via one-time passcode
 // over SMS.
-func (r *CardDigitalWallet) GetPhone() (Phone string) {
-	if r != nil && r.Phone != nil {
+func (r CardDigitalWallet) GetPhone() (Phone string) {
+	if r.Phone != nil {
 		Phone = *r.Phone
 	}
 	return
@@ -276,8 +276,8 @@ func (r *CardDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *CardDigitalWallet) GetCardProfileID() (CardProfileID string) {
-	if r != nil && r.CardProfileID != nil {
+func (r CardDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r.CardProfileID != nil {
 		CardProfileID = *r.CardProfileID
 	}
 	return
@@ -327,32 +327,32 @@ func (r *CardDetails) MarshalJSON() (data []byte, err error) {
 }
 
 // The identifier for the Card for which sensitive details have been returned.
-func (r *CardDetails) GetCardID() (CardID string) {
-	if r != nil && r.CardID != nil {
+func (r CardDetails) GetCardID() (CardID string) {
+	if r.CardID != nil {
 		CardID = *r.CardID
 	}
 	return
 }
 
 // The card number.
-func (r *CardDetails) GetPrimaryAccountNumber() (PrimaryAccountNumber string) {
-	if r != nil && r.PrimaryAccountNumber != nil {
+func (r CardDetails) GetPrimaryAccountNumber() (PrimaryAccountNumber string) {
+	if r.PrimaryAccountNumber != nil {
 		PrimaryAccountNumber = *r.PrimaryAccountNumber
 	}
 	return
 }
 
 // The month the card expires in M format (e.g., August is 8).
-func (r *CardDetails) GetExpirationMonth() (ExpirationMonth int64) {
-	if r != nil && r.ExpirationMonth != nil {
+func (r CardDetails) GetExpirationMonth() (ExpirationMonth int64) {
+	if r.ExpirationMonth != nil {
 		ExpirationMonth = *r.ExpirationMonth
 	}
 	return
 }
 
 // The year the card expires in YYYY format (e.g., 2025).
-func (r *CardDetails) GetExpirationYear() (ExpirationYear int64) {
-	if r != nil && r.ExpirationYear != nil {
+func (r CardDetails) GetExpirationYear() (ExpirationYear int64) {
+	if r.ExpirationYear != nil {
 		ExpirationYear = *r.ExpirationYear
 	}
 	return
@@ -361,8 +361,8 @@ func (r *CardDetails) GetExpirationYear() (ExpirationYear int64) {
 // The three-digit verification code for the card. It's also known as the Card
 // Verification Code (CVC), the Card Verification Value (CVV), or the Card
 // Identification (CID).
-func (r *CardDetails) GetVerificationCode() (VerificationCode string) {
-	if r != nil && r.VerificationCode != nil {
+func (r CardDetails) GetVerificationCode() (VerificationCode string) {
+	if r.VerificationCode != nil {
 		VerificationCode = *r.VerificationCode
 	}
 	return
@@ -370,8 +370,8 @@ func (r *CardDetails) GetVerificationCode() (VerificationCode string) {
 
 // A constant representing the object's type. For this resource it will always be
 // `card_details`.
-func (r *CardDetails) GetType() (Type CardDetailsType) {
-	if r != nil && r.Type != nil {
+func (r CardDetails) GetType() (Type CardDetailsType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
@@ -416,24 +416,24 @@ func (r *CreateACardParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The Account the card should belong to.
-func (r *CreateACardParameters) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CreateACardParameters) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
 // The description you choose to give the card.
-func (r *CreateACardParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r CreateACardParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The card's billing address.
-func (r *CreateACardParameters) GetBillingAddress() (BillingAddress CreateACardParametersBillingAddress) {
-	if r != nil && r.BillingAddress != nil {
+func (r CreateACardParameters) GetBillingAddress() (BillingAddress CreateACardParametersBillingAddress) {
+	if r.BillingAddress != nil {
 		BillingAddress = *r.BillingAddress
 	}
 	return
@@ -442,8 +442,8 @@ func (r *CreateACardParameters) GetBillingAddress() (BillingAddress CreateACardP
 // The contact information used in the two-factor steps for digital wallet card
 // creation. At least one field must be present to complete the digital wallet
 // steps.
-func (r *CreateACardParameters) GetDigitalWallet() (DigitalWallet CreateACardParametersDigitalWallet) {
-	if r != nil && r.DigitalWallet != nil {
+func (r CreateACardParameters) GetDigitalWallet() (DigitalWallet CreateACardParametersDigitalWallet) {
+	if r.DigitalWallet != nil {
 		DigitalWallet = *r.DigitalWallet
 	}
 	return
@@ -482,40 +482,40 @@ func (r *CreateACardParametersBillingAddress) MarshalJSON() (data []byte, err er
 }
 
 // The first line of the billing address.
-func (r *CreateACardParametersBillingAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r CreateACardParametersBillingAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the billing address.
-func (r *CreateACardParametersBillingAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r CreateACardParametersBillingAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the billing address.
-func (r *CreateACardParametersBillingAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r CreateACardParametersBillingAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
 }
 
 // The US state of the billing address.
-func (r *CreateACardParametersBillingAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r CreateACardParametersBillingAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The postal code of the billing address.
-func (r *CreateACardParametersBillingAddress) GetPostalCode() (PostalCode string) {
-	if r != nil && r.PostalCode != nil {
+func (r CreateACardParametersBillingAddress) GetPostalCode() (PostalCode string) {
+	if r.PostalCode != nil {
 		PostalCode = *r.PostalCode
 	}
 	return
@@ -554,8 +554,8 @@ func (r *CreateACardParametersDigitalWallet) MarshalJSON() (data []byte, err err
 
 // An email address that can be used to verify the cardholder via one-time passcode
 // over email.
-func (r *CreateACardParametersDigitalWallet) GetEmail() (Email string) {
-	if r != nil && r.Email != nil {
+func (r CreateACardParametersDigitalWallet) GetEmail() (Email string) {
+	if r.Email != nil {
 		Email = *r.Email
 	}
 	return
@@ -563,8 +563,8 @@ func (r *CreateACardParametersDigitalWallet) GetEmail() (Email string) {
 
 // A phone number that can be used to verify the cardholder via one-time passcode
 // over SMS.
-func (r *CreateACardParametersDigitalWallet) GetPhone() (Phone string) {
-	if r != nil && r.Phone != nil {
+func (r CreateACardParametersDigitalWallet) GetPhone() (Phone string) {
+	if r.Phone != nil {
 		Phone = *r.Phone
 	}
 	return
@@ -572,8 +572,8 @@ func (r *CreateACardParametersDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
-	if r != nil && r.CardProfileID != nil {
+func (r CreateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r.CardProfileID != nil {
 		CardProfileID = *r.CardProfileID
 	}
 	return
@@ -612,24 +612,24 @@ func (r *UpdateACardParameters) MarshalJSON() (data []byte, err error) {
 }
 
 // The description you choose to give the card.
-func (r *UpdateACardParameters) GetDescription() (Description string) {
-	if r != nil && r.Description != nil {
+func (r UpdateACardParameters) GetDescription() (Description string) {
+	if r.Description != nil {
 		Description = *r.Description
 	}
 	return
 }
 
 // The status to update the Card with.
-func (r *UpdateACardParameters) GetStatus() (Status UpdateACardParametersStatus) {
-	if r != nil && r.Status != nil {
+func (r UpdateACardParameters) GetStatus() (Status UpdateACardParametersStatus) {
+	if r.Status != nil {
 		Status = *r.Status
 	}
 	return
 }
 
 // The card's updated billing address.
-func (r *UpdateACardParameters) GetBillingAddress() (BillingAddress UpdateACardParametersBillingAddress) {
-	if r != nil && r.BillingAddress != nil {
+func (r UpdateACardParameters) GetBillingAddress() (BillingAddress UpdateACardParametersBillingAddress) {
+	if r.BillingAddress != nil {
 		BillingAddress = *r.BillingAddress
 	}
 	return
@@ -638,8 +638,8 @@ func (r *UpdateACardParameters) GetBillingAddress() (BillingAddress UpdateACardP
 // The contact information used in the two-factor steps for digital wallet card
 // creation. At least one field must be present to complete the digital wallet
 // steps.
-func (r *UpdateACardParameters) GetDigitalWallet() (DigitalWallet UpdateACardParametersDigitalWallet) {
-	if r != nil && r.DigitalWallet != nil {
+func (r UpdateACardParameters) GetDigitalWallet() (DigitalWallet UpdateACardParametersDigitalWallet) {
+	if r.DigitalWallet != nil {
 		DigitalWallet = *r.DigitalWallet
 	}
 	return
@@ -686,40 +686,40 @@ func (r *UpdateACardParametersBillingAddress) MarshalJSON() (data []byte, err er
 }
 
 // The first line of the billing address.
-func (r *UpdateACardParametersBillingAddress) GetLine1() (Line1 string) {
-	if r != nil && r.Line1 != nil {
+func (r UpdateACardParametersBillingAddress) GetLine1() (Line1 string) {
+	if r.Line1 != nil {
 		Line1 = *r.Line1
 	}
 	return
 }
 
 // The second line of the billing address.
-func (r *UpdateACardParametersBillingAddress) GetLine2() (Line2 string) {
-	if r != nil && r.Line2 != nil {
+func (r UpdateACardParametersBillingAddress) GetLine2() (Line2 string) {
+	if r.Line2 != nil {
 		Line2 = *r.Line2
 	}
 	return
 }
 
 // The city of the billing address.
-func (r *UpdateACardParametersBillingAddress) GetCity() (City string) {
-	if r != nil && r.City != nil {
+func (r UpdateACardParametersBillingAddress) GetCity() (City string) {
+	if r.City != nil {
 		City = *r.City
 	}
 	return
 }
 
 // The US state of the billing address.
-func (r *UpdateACardParametersBillingAddress) GetState() (State string) {
-	if r != nil && r.State != nil {
+func (r UpdateACardParametersBillingAddress) GetState() (State string) {
+	if r.State != nil {
 		State = *r.State
 	}
 	return
 }
 
 // The postal code of the billing address.
-func (r *UpdateACardParametersBillingAddress) GetPostalCode() (PostalCode string) {
-	if r != nil && r.PostalCode != nil {
+func (r UpdateACardParametersBillingAddress) GetPostalCode() (PostalCode string) {
+	if r.PostalCode != nil {
 		PostalCode = *r.PostalCode
 	}
 	return
@@ -758,8 +758,8 @@ func (r *UpdateACardParametersDigitalWallet) MarshalJSON() (data []byte, err err
 
 // An email address that can be used to verify the cardholder via one-time passcode
 // over email.
-func (r *UpdateACardParametersDigitalWallet) GetEmail() (Email string) {
-	if r != nil && r.Email != nil {
+func (r UpdateACardParametersDigitalWallet) GetEmail() (Email string) {
+	if r.Email != nil {
 		Email = *r.Email
 	}
 	return
@@ -767,8 +767,8 @@ func (r *UpdateACardParametersDigitalWallet) GetEmail() (Email string) {
 
 // A phone number that can be used to verify the cardholder via one-time passcode
 // over SMS.
-func (r *UpdateACardParametersDigitalWallet) GetPhone() (Phone string) {
-	if r != nil && r.Phone != nil {
+func (r UpdateACardParametersDigitalWallet) GetPhone() (Phone string) {
+	if r.Phone != nil {
 		Phone = *r.Phone
 	}
 	return
@@ -776,8 +776,8 @@ func (r *UpdateACardParametersDigitalWallet) GetPhone() (Phone string) {
 
 // The card profile assigned to this digital card. Card profiles may also be
 // assigned at the program level.
-func (r *UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
-	if r != nil && r.CardProfileID != nil {
+func (r UpdateACardParametersDigitalWallet) GetCardProfileID() (CardProfileID string) {
+	if r.CardProfileID != nil {
 		CardProfileID = *r.CardProfileID
 	}
 	return
@@ -820,8 +820,8 @@ func (r *CardListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *CardListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r CardListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -829,23 +829,23 @@ func (r *CardListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *CardListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r CardListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
 }
 
 // Filter Cards to ones belonging to the specified Account.
-func (r *CardListParams) GetAccountID() (AccountID string) {
-	if r != nil && r.AccountID != nil {
+func (r CardListParams) GetAccountID() (AccountID string) {
+	if r.AccountID != nil {
 		AccountID = *r.AccountID
 	}
 	return
 }
 
-func (r *CardListParams) GetCreatedAt() (CreatedAt CardsListParamsCreatedAt) {
-	if r != nil && r.CreatedAt != nil {
+func (r CardListParams) GetCreatedAt() (CreatedAt CardsListParamsCreatedAt) {
+	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
@@ -893,8 +893,8 @@ func (r *CardsListParamsCreatedAt) URLQuery() (v url.Values) {
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CardsListParamsCreatedAt) GetAfter() (After string) {
-	if r != nil && r.After != nil {
+func (r CardsListParamsCreatedAt) GetAfter() (After string) {
+	if r.After != nil {
 		After = *r.After
 	}
 	return
@@ -902,8 +902,8 @@ func (r *CardsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r *CardsListParamsCreatedAt) GetBefore() (Before string) {
-	if r != nil && r.Before != nil {
+func (r CardsListParamsCreatedAt) GetBefore() (Before string) {
+	if r.Before != nil {
 		Before = *r.Before
 	}
 	return
@@ -911,8 +911,8 @@ func (r *CardsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
-	if r != nil && r.OnOrAfter != nil {
+func (r CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
 	return
@@ -920,8 +920,8 @@ func (r *CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r *CardsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
-	if r != nil && r.OnOrBefore != nil {
+func (r CardsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
@@ -959,16 +959,16 @@ func (r *CardList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *CardList) GetData() (Data []Card) {
-	if r != nil && r.Data != nil {
+func (r CardList) GetData() (Data []Card) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *CardList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r CardList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return

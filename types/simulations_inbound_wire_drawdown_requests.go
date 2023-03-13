@@ -74,48 +74,48 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) MarshalJSON
 
 // The Account Number to which the recipient of this request is being requested to
 // send funds from.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
-	if r != nil && r.RecipientAccountNumberID != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
+	if r.RecipientAccountNumberID != nil {
 		RecipientAccountNumberID = *r.RecipientAccountNumberID
 	}
 	return
 }
 
 // The drawdown request's originator's account number.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
-	if r != nil && r.OriginatorAccountNumber != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
+	if r.OriginatorAccountNumber != nil {
 		OriginatorAccountNumber = *r.OriginatorAccountNumber
 	}
 	return
 }
 
 // The drawdown request's originator's routing number.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
-	if r != nil && r.OriginatorRoutingNumber != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
+	if r.OriginatorRoutingNumber != nil {
 		OriginatorRoutingNumber = *r.OriginatorRoutingNumber
 	}
 	return
 }
 
 // The drawdown request's beneficiary's account number.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
-	if r != nil && r.BeneficiaryAccountNumber != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
+	if r.BeneficiaryAccountNumber != nil {
 		BeneficiaryAccountNumber = *r.BeneficiaryAccountNumber
 	}
 	return
 }
 
 // The drawdown request's beneficiary's routing number.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
-	if r != nil && r.BeneficiaryRoutingNumber != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
+	if r.BeneficiaryRoutingNumber != nil {
 		BeneficiaryRoutingNumber = *r.BeneficiaryRoutingNumber
 	}
 	return
 }
 
 // The amount being requested in cents.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -123,16 +123,16 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetAmount()
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 // requested. Will always be "USD".
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetCurrency() (Currency string) {
-	if r != nil && r.Currency != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetCurrency() (Currency string) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // A message from the drawdown request's originator.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
@@ -140,8 +140,8 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetMessageT
 
 // Line 1 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine1 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
+	if r.OriginatorToBeneficiaryInformationLine1 != nil {
 		OriginatorToBeneficiaryInformationLine1 = *r.OriginatorToBeneficiaryInformationLine1
 	}
 	return
@@ -149,8 +149,8 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginat
 
 // Line 2 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine2 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
+	if r.OriginatorToBeneficiaryInformationLine2 != nil {
 		OriginatorToBeneficiaryInformationLine2 = *r.OriginatorToBeneficiaryInformationLine2
 	}
 	return
@@ -158,8 +158,8 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginat
 
 // Line 3 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine3 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
+	if r.OriginatorToBeneficiaryInformationLine3 != nil {
 		OriginatorToBeneficiaryInformationLine3 = *r.OriginatorToBeneficiaryInformationLine3
 	}
 	return
@@ -167,72 +167,72 @@ func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginat
 
 // Line 4 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine4 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
+	if r.OriginatorToBeneficiaryInformationLine4 != nil {
 		OriginatorToBeneficiaryInformationLine4 = *r.OriginatorToBeneficiaryInformationLine4
 	}
 	return
 }
 
 // The drawdown request's originator's name.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's originator's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
-	if r != nil && r.OriginatorAddressLine1 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r.OriginatorAddressLine1 != nil {
 		OriginatorAddressLine1 = *r.OriginatorAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's originator's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
-	if r != nil && r.OriginatorAddressLine2 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r.OriginatorAddressLine2 != nil {
 		OriginatorAddressLine2 = *r.OriginatorAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's originator's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
-	if r != nil && r.OriginatorAddressLine3 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r.OriginatorAddressLine3 != nil {
 		OriginatorAddressLine3 = *r.OriginatorAddressLine3
 	}
 	return
 }
 
 // The drawdown request's beneficiary's name.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's beneficiary's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's beneficiary's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's beneficiary's address.
-func (r *SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r SimulateAnInboundWireDrawdownRequestBeingCreatedParameters) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return

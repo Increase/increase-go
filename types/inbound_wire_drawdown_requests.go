@@ -81,16 +81,16 @@ func (r *InboundWireDrawdownRequest) MarshalJSON() (data []byte, err error) {
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_wire_drawdown_request`.
-func (r *InboundWireDrawdownRequest) GetType() (Type InboundWireDrawdownRequestType) {
-	if r != nil && r.Type != nil {
+func (r InboundWireDrawdownRequest) GetType() (Type InboundWireDrawdownRequestType) {
+	if r.Type != nil {
 		Type = *r.Type
 	}
 	return
 }
 
 // The Wire drawdown request identifier.
-func (r *InboundWireDrawdownRequest) GetID() (ID string) {
-	if r != nil && r.ID != nil {
+func (r InboundWireDrawdownRequest) GetID() (ID string) {
+	if r.ID != nil {
 		ID = *r.ID
 	}
 	return
@@ -98,48 +98,48 @@ func (r *InboundWireDrawdownRequest) GetID() (ID string) {
 
 // The Account Number from which the recipient of this request is being requested
 // to send funds.
-func (r *InboundWireDrawdownRequest) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
-	if r != nil && r.RecipientAccountNumberID != nil {
+func (r InboundWireDrawdownRequest) GetRecipientAccountNumberID() (RecipientAccountNumberID string) {
+	if r.RecipientAccountNumberID != nil {
 		RecipientAccountNumberID = *r.RecipientAccountNumberID
 	}
 	return
 }
 
 // The drawdown request's originator's account number.
-func (r *InboundWireDrawdownRequest) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
-	if r != nil && r.OriginatorAccountNumber != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorAccountNumber() (OriginatorAccountNumber string) {
+	if r.OriginatorAccountNumber != nil {
 		OriginatorAccountNumber = *r.OriginatorAccountNumber
 	}
 	return
 }
 
 // The drawdown request's originator's routing number.
-func (r *InboundWireDrawdownRequest) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
-	if r != nil && r.OriginatorRoutingNumber != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorRoutingNumber() (OriginatorRoutingNumber string) {
+	if r.OriginatorRoutingNumber != nil {
 		OriginatorRoutingNumber = *r.OriginatorRoutingNumber
 	}
 	return
 }
 
 // The drawdown request's beneficiary's account number.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
-	if r != nil && r.BeneficiaryAccountNumber != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryAccountNumber() (BeneficiaryAccountNumber string) {
+	if r.BeneficiaryAccountNumber != nil {
 		BeneficiaryAccountNumber = *r.BeneficiaryAccountNumber
 	}
 	return
 }
 
 // The drawdown request's beneficiary's routing number.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
-	if r != nil && r.BeneficiaryRoutingNumber != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryRoutingNumber() (BeneficiaryRoutingNumber string) {
+	if r.BeneficiaryRoutingNumber != nil {
 		BeneficiaryRoutingNumber = *r.BeneficiaryRoutingNumber
 	}
 	return
 }
 
 // The amount being requested in cents.
-func (r *InboundWireDrawdownRequest) GetAmount() (Amount int64) {
-	if r != nil && r.Amount != nil {
+func (r InboundWireDrawdownRequest) GetAmount() (Amount int64) {
+	if r.Amount != nil {
 		Amount = *r.Amount
 	}
 	return
@@ -147,16 +147,16 @@ func (r *InboundWireDrawdownRequest) GetAmount() (Amount int64) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 // requested. Will always be "USD".
-func (r *InboundWireDrawdownRequest) GetCurrency() (Currency string) {
-	if r != nil && r.Currency != nil {
+func (r InboundWireDrawdownRequest) GetCurrency() (Currency string) {
+	if r.Currency != nil {
 		Currency = *r.Currency
 	}
 	return
 }
 
 // A message from the drawdown request's originator.
-func (r *InboundWireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
-	if r != nil && r.MessageToRecipient != nil {
+func (r InboundWireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient string) {
+	if r.MessageToRecipient != nil {
 		MessageToRecipient = *r.MessageToRecipient
 	}
 	return
@@ -164,8 +164,8 @@ func (r *InboundWireDrawdownRequest) GetMessageToRecipient() (MessageToRecipient
 
 // Line 1 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine1 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine1() (OriginatorToBeneficiaryInformationLine1 string) {
+	if r.OriginatorToBeneficiaryInformationLine1 != nil {
 		OriginatorToBeneficiaryInformationLine1 = *r.OriginatorToBeneficiaryInformationLine1
 	}
 	return
@@ -173,8 +173,8 @@ func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine1(
 
 // Line 2 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine2 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine2() (OriginatorToBeneficiaryInformationLine2 string) {
+	if r.OriginatorToBeneficiaryInformationLine2 != nil {
 		OriginatorToBeneficiaryInformationLine2 = *r.OriginatorToBeneficiaryInformationLine2
 	}
 	return
@@ -182,8 +182,8 @@ func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine2(
 
 // Line 3 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine3 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine3() (OriginatorToBeneficiaryInformationLine3 string) {
+	if r.OriginatorToBeneficiaryInformationLine3 != nil {
 		OriginatorToBeneficiaryInformationLine3 = *r.OriginatorToBeneficiaryInformationLine3
 	}
 	return
@@ -191,72 +191,72 @@ func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine3(
 
 // Line 4 of the information conveyed from the originator of the message to the
 // beneficiary.
-func (r *InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
-	if r != nil && r.OriginatorToBeneficiaryInformationLine4 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorToBeneficiaryInformationLine4() (OriginatorToBeneficiaryInformationLine4 string) {
+	if r.OriginatorToBeneficiaryInformationLine4 != nil {
 		OriginatorToBeneficiaryInformationLine4 = *r.OriginatorToBeneficiaryInformationLine4
 	}
 	return
 }
 
 // The drawdown request's originator's name.
-func (r *InboundWireDrawdownRequest) GetOriginatorName() (OriginatorName string) {
-	if r != nil && r.OriginatorName != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorName() (OriginatorName string) {
+	if r.OriginatorName != nil {
 		OriginatorName = *r.OriginatorName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's originator's address.
-func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
-	if r != nil && r.OriginatorAddressLine1 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorAddressLine1() (OriginatorAddressLine1 string) {
+	if r.OriginatorAddressLine1 != nil {
 		OriginatorAddressLine1 = *r.OriginatorAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's originator's address.
-func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
-	if r != nil && r.OriginatorAddressLine2 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorAddressLine2() (OriginatorAddressLine2 string) {
+	if r.OriginatorAddressLine2 != nil {
 		OriginatorAddressLine2 = *r.OriginatorAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's originator's address.
-func (r *InboundWireDrawdownRequest) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
-	if r != nil && r.OriginatorAddressLine3 != nil {
+func (r InboundWireDrawdownRequest) GetOriginatorAddressLine3() (OriginatorAddressLine3 string) {
+	if r.OriginatorAddressLine3 != nil {
 		OriginatorAddressLine3 = *r.OriginatorAddressLine3
 	}
 	return
 }
 
 // The drawdown request's beneficiary's name.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryName() (BeneficiaryName string) {
-	if r != nil && r.BeneficiaryName != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryName() (BeneficiaryName string) {
+	if r.BeneficiaryName != nil {
 		BeneficiaryName = *r.BeneficiaryName
 	}
 	return
 }
 
 // Line 1 of the drawdown request's beneficiary's address.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
-	if r != nil && r.BeneficiaryAddressLine1 != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryAddressLine1() (BeneficiaryAddressLine1 string) {
+	if r.BeneficiaryAddressLine1 != nil {
 		BeneficiaryAddressLine1 = *r.BeneficiaryAddressLine1
 	}
 	return
 }
 
 // Line 2 of the drawdown request's beneficiary's address.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
-	if r != nil && r.BeneficiaryAddressLine2 != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryAddressLine2() (BeneficiaryAddressLine2 string) {
+	if r.BeneficiaryAddressLine2 != nil {
 		BeneficiaryAddressLine2 = *r.BeneficiaryAddressLine2
 	}
 	return
 }
 
 // Line 3 of the drawdown request's beneficiary's address.
-func (r *InboundWireDrawdownRequest) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
-	if r != nil && r.BeneficiaryAddressLine3 != nil {
+func (r InboundWireDrawdownRequest) GetBeneficiaryAddressLine3() (BeneficiaryAddressLine3 string) {
+	if r.BeneficiaryAddressLine3 != nil {
 		BeneficiaryAddressLine3 = *r.BeneficiaryAddressLine3
 	}
 	return
@@ -302,8 +302,8 @@ func (r *InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
 }
 
 // Return the page of entries after this one.
-func (r *InboundWireDrawdownRequestListParams) GetCursor() (Cursor string) {
-	if r != nil && r.Cursor != nil {
+func (r InboundWireDrawdownRequestListParams) GetCursor() (Cursor string) {
+	if r.Cursor != nil {
 		Cursor = *r.Cursor
 	}
 	return
@@ -311,8 +311,8 @@ func (r *InboundWireDrawdownRequestListParams) GetCursor() (Cursor string) {
 
 // Limit the size of the list that is returned. The default (and maximum) is 100
 // objects.
-func (r *InboundWireDrawdownRequestListParams) GetLimit() (Limit int64) {
-	if r != nil && r.Limit != nil {
+func (r InboundWireDrawdownRequestListParams) GetLimit() (Limit int64) {
+	if r.Limit != nil {
 		Limit = *r.Limit
 	}
 	return
@@ -351,16 +351,16 @@ func (r *InboundWireDrawdownRequestList) URLQuery() (v url.Values) {
 }
 
 // The contents of the list.
-func (r *InboundWireDrawdownRequestList) GetData() (Data []InboundWireDrawdownRequest) {
-	if r != nil && r.Data != nil {
+func (r InboundWireDrawdownRequestList) GetData() (Data []InboundWireDrawdownRequest) {
+	if r.Data != nil {
 		Data = *r.Data
 	}
 	return
 }
 
 // A pointer to a place in the list.
-func (r *InboundWireDrawdownRequestList) GetNextCursor() (NextCursor string) {
-	if r != nil && r.NextCursor != nil {
+func (r InboundWireDrawdownRequestList) GetNextCursor() (NextCursor string) {
+	if r.NextCursor != nil {
 		NextCursor = *r.NextCursor
 	}
 	return
