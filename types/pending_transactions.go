@@ -2,11 +2,12 @@ package types
 
 import (
 	"fmt"
-	"increase/core"
-	"increase/core/pjson"
-	"increase/core/query"
-	"increase/pagination"
 	"net/url"
+
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/pjson"
+	"github.com/increase/increase-go/core/query"
+	"github.com/increase/increase-go/pagination"
 )
 
 type PendingTransaction struct {

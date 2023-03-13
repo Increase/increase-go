@@ -2,10 +2,11 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
-	"increase/types"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 func TestCardRefundsNew(t *testing.T) {

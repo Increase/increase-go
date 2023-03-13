@@ -2,15 +2,19 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
-	"increase/types"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 func TestOauthConnectionsGet(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.OauthConnections.Get(context.TODO(), "connection_dauknoksyr4wilz4e6my")
+	_, err := c.OauthConnections.Get(
+		context.TODO(),
+		"connection_dauknoksyr4wilz4e6my",
+	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

@@ -2,9 +2,10 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
 )
 
 func TestGroupsGetDetails(t *testing.T) {

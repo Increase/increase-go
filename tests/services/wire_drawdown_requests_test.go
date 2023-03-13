@@ -2,10 +2,11 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
-	"increase/types"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 func TestWireDrawdownRequestsNewWithOptionalParams(t *testing.T) {
@@ -19,7 +20,10 @@ func TestWireDrawdownRequestsNewWithOptionalParams(t *testing.T) {
 
 func TestWireDrawdownRequestsGet(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
+	_, err := c.WireDrawdownRequests.Get(
+		context.TODO(),
+		"wire_drawdown_request_q6lmocus3glo0lr2bfv3",
+	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

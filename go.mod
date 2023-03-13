@@ -1,4 +1,4 @@
-module increase
+module github.com/increase/increase-go
 
 go 1.19
 

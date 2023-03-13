@@ -1,9 +1,10 @@
 package pjson
 
 import (
-	"increase/core/pointers"
 	"reflect"
 	"testing"
+
+	"github.com/increase/increase-go/core/pointers"
 )
 
 func assertDecode[P any](t *testing.T, raw []byte, expectation P) {

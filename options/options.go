@@ -5,14 +5,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"increase/core"
-	"increase/core/query"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
 	"runtime"
 	"strings"
+
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/query"
 )
 
 func getNormalizedOS() string {

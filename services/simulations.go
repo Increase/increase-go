@@ -1,6 +1,8 @@
 package services
 
-import "increase/options"
+import (
+	"github.com/increase/increase-go/options"
+)
 
 type SimulationService struct {
 	Options                     []options.RequestOption

@@ -2,8 +2,9 @@ package types
 
 import (
 	"fmt"
-	"increase/core"
-	"increase/core/pjson"
+
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/pjson"
 )
 
 type Group struct {

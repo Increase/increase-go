@@ -1,11 +1,14 @@
 package increase
 
 import (
-	"increase/options"
-	"increase/services"
 	"os"
+
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/services"
 )
 
+// P returns a pointer to the value of the argument, which is useful for constructing
+// primitive literals that are pointers.
 func P[T any](v T) *T {
 	return &v
 }
@@ -45,6 +48,10 @@ type Increase struct {
 	Simulations                 *services.SimulationService
 }
 
+// NewIncrease generates a new client with the default options read from the
+// environment ("INCREASE_API_KEY"). The options passed in as arguments are applied
+// after these default arguments, and all options will be passed down to the
+// services and requests that this client makes.
 func NewIncrease(opts ...options.RequestOption) (r *Increase) {
 	defaults := []options.RequestOption{options.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("INCREASE_API_KEY"); ok {
@@ -52,7 +59,7 @@ func NewIncrease(opts ...options.RequestOption) (r *Increase) {
 	}
 	opts = append(defaults, opts...)
 
-	r = &Increase{}
+	r = &Increase{Options: opts}
 
 	r.Accounts = services.NewAccountService(opts...)
 	r.AccountNumbers = services.NewAccountNumberService(opts...)

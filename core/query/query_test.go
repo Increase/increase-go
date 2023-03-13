@@ -1,9 +1,10 @@
 package query
 
 import (
-	"increase/core/pointers"
 	"net/url"
 	"testing"
+
+	"github.com/increase/increase-go/core/pointers"
 )
 
 type EmptyTestC struct {

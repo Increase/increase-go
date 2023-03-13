@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/options"
-	"increase/pagination"
-	"increase/types"
+
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/pagination"
+	"github.com/increase/increase-go/types"
 )
 
 type InboundWireDrawdownRequestService struct {

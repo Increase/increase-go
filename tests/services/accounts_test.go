@@ -2,10 +2,11 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
-	"increase/types"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 func TestAccountsNewWithOptionalParams(t *testing.T) {
@@ -18,7 +19,10 @@ func TestAccountsNewWithOptionalParams(t *testing.T) {
 
 func TestAccountsGet(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
+	_, err := c.Accounts.Get(
+		context.TODO(),
+		"account_in71c4amph0vgo2qllky",
+	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}
@@ -47,7 +51,10 @@ func TestAccountsListWithOptionalParams(t *testing.T) {
 func TestAccountsClose(t *testing.T) {
 	t.Skip("Prism tests are broken")
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.Close(context.TODO(), "account_in71c4amph0vgo2qllky")
+	_, err := c.Accounts.Close(
+		context.TODO(),
+		"account_in71c4amph0vgo2qllky",
+	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

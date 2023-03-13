@@ -2,10 +2,11 @@ package pagination
 
 import (
 	"fmt"
-	"increase/core"
-	"increase/core/pjson"
-	"increase/options"
 	"net/http"
+
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/pjson"
+	"github.com/increase/increase-go/options"
 )
 
 type Paginated[T any] interface {

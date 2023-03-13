@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"increase/core/pointers"
+	"github.com/increase/increase-go/core/pointers"
 )
 
 func serialize(v interface{}) (string, error) {

@@ -2,8 +2,9 @@ package services
 
 import (
 	"context"
-	"increase/options"
-	"increase/types"
+
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 type SimulationsCardRefundService struct {

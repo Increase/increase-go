@@ -3,8 +3,9 @@ package services
 import (
 	"context"
 	"fmt"
-	"increase/options"
-	"increase/types"
+
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 type EntitiesSupplementalDocumentService struct {

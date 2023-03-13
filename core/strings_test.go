@@ -2,9 +2,10 @@ package core_test
 
 import (
 	"fmt"
-	"increase/core"
-	"increase/core/pointers"
 	"testing"
+
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/pointers"
 )
 
 func assert(t *testing.T, got, expected string) {

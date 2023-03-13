@@ -2,10 +2,11 @@ package services
 
 import (
 	"context"
-	"increase"
-	"increase/options"
-	"increase/types"
 	"testing"
+
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/types"
 )
 
 func TestACHTransfersNewInboundWithOptionalParams(t *testing.T) {
@@ -32,7 +33,10 @@ func TestACHTransfersReturnWithOptionalParams(t *testing.T) {
 func TestACHTransfersSubmit(t *testing.T) {
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	_, err := c.Simulations.ACHTransfers.Submit(
+		context.TODO(),
+		"ach_transfer_uoxatyh3lt5evrsdvo7q",
+	)
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}
