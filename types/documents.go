@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -17,7 +18,7 @@ type Document struct {
 	Category *DocumentCategory `pjson:"category"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Document was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Entity the document was generated for.
 	EntityID *string `pjson:"entity_id"`
 	// The identifier of the File containing the Document's contents.
@@ -59,7 +60,7 @@ func (r Document) GetCategory() (Category DocumentCategory) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 // Document was created.
-func (r Document) GetCreatedAt() (CreatedAt string) {
+func (r Document) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -114,10 +115,10 @@ type DocumentListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Documents to ones belonging to the specified Entity.
-	EntityID   *string                       `query:"entity_id"`
-	Category   *DocumentsListParamsCategory  `query:"category"`
-	CreatedAt  *DocumentsListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}        `pjson:"-,extras"`
+	EntityID   *string                      `query:"entity_id"`
+	Category   *DocumentListParamsCategory  `query:"category"`
+	CreatedAt  *DocumentListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into DocumentListParams using the
@@ -165,14 +166,14 @@ func (r DocumentListParams) GetEntityID() (EntityID string) {
 	return
 }
 
-func (r DocumentListParams) GetCategory() (Category DocumentsListParamsCategory) {
+func (r DocumentListParams) GetCategory() (Category DocumentListParamsCategory) {
 	if r.Category != nil {
 		Category = *r.Category
 	}
 	return
 }
 
-func (r DocumentListParams) GetCreatedAt() (CreatedAt DocumentsListParamsCreatedAt) {
+func (r DocumentListParams) GetCreatedAt() (CreatedAt DocumentListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -183,91 +184,91 @@ func (r DocumentListParams) String() (result string) {
 	return fmt.Sprintf("&DocumentListParams{Cursor:%s Limit:%s EntityID:%s Category:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), r.Category, r.CreatedAt)
 }
 
-type DocumentsListParamsCategory struct {
+type DocumentListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]DocumentsListParamsCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	In         *[]DocumentListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into DocumentsListParamsCategory
+// UnmarshalJSON deserializes the provided bytes into DocumentListParamsCategory
 // using the internal pjson library. Unrecognized fields are stored in the
 // `jsonFields` property.
-func (r *DocumentsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
+func (r *DocumentListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes DocumentsListParamsCategory into an array of bytes using
+// MarshalJSON serializes DocumentListParamsCategory into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *DocumentsListParamsCategory) MarshalJSON() (data []byte, err error) {
+func (r *DocumentListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes DocumentsListParamsCategory into a url.Values of the query
+// URLQuery serializes DocumentListParamsCategory into a url.Values of the query
 // parameters associated with this value
-func (r *DocumentsListParamsCategory) URLQuery() (v url.Values) {
+func (r *DocumentListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r DocumentsListParamsCategory) GetIn() (In []DocumentsListParamsCategoryIn) {
+func (r DocumentListParamsCategory) GetIn() (In []DocumentListParamsCategoryIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r DocumentsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&DocumentsListParamsCategory{In:%s}", core.Fmt(r.In))
+func (r DocumentListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&DocumentListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
-type DocumentsListParamsCategoryIn string
+type DocumentListParamsCategoryIn string
 
 const (
-	DocumentsListParamsCategoryInForm_1099Int DocumentsListParamsCategoryIn = "form_1099_int"
+	DocumentListParamsCategoryInForm_1099Int DocumentListParamsCategoryIn = "form_1099_int"
 )
 
-type DocumentsListParamsCreatedAt struct {
+type DocumentListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into DocumentsListParamsCreatedAt
+// UnmarshalJSON deserializes the provided bytes into DocumentListParamsCreatedAt
 // using the internal pjson library. Unrecognized fields are stored in the
 // `jsonFields` property.
-func (r *DocumentsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DocumentListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes DocumentsListParamsCreatedAt into an array of bytes using
+// MarshalJSON serializes DocumentListParamsCreatedAt into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *DocumentsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DocumentListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes DocumentsListParamsCreatedAt into a url.Values of the query
+// URLQuery serializes DocumentListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *DocumentsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DocumentsListParamsCreatedAt) GetAfter() (After string) {
+func (r DocumentListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -276,7 +277,7 @@ func (r DocumentsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DocumentsListParamsCreatedAt) GetBefore() (Before string) {
+func (r DocumentListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -285,7 +286,7 @@ func (r DocumentsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r DocumentListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -294,15 +295,15 @@ func (r DocumentsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DocumentsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r DocumentListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r DocumentsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DocumentsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r DocumentListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DocumentListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type DocumentList struct {

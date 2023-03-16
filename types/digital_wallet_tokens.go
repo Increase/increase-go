@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -17,7 +18,7 @@ type DigitalWalletToken struct {
 	CardID *string `pjson:"card_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// This indicates if payments can be made with the Digital Wallet Token.
 	Status *DigitalWalletTokenStatus `pjson:"status"`
 	// The digital wallet app being used.
@@ -60,7 +61,7 @@ func (r DigitalWalletToken) GetCardID() (CardID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card was created.
-func (r DigitalWalletToken) GetCreatedAt() (CreatedAt string) {
+func (r DigitalWalletToken) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -125,9 +126,9 @@ type DigitalWalletTokenListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID     *string                                 `query:"card_id"`
-	CreatedAt  *DigitalWalletTokensListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+	CardID     *string                                `query:"card_id"`
+	CreatedAt  *DigitalWalletTokenListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into DigitalWalletTokenListParams
@@ -175,7 +176,7 @@ func (r DigitalWalletTokenListParams) GetCardID() (CardID string) {
 	return
 }
 
-func (r DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTokensListParamsCreatedAt) {
+func (r DigitalWalletTokenListParams) GetCreatedAt() (CreatedAt DigitalWalletTokenListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -186,45 +187,45 @@ func (r DigitalWalletTokenListParams) String() (result string) {
 	return fmt.Sprintf("&DigitalWalletTokenListParams{Cursor:%s Limit:%s CardID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.CardID), r.CreatedAt)
 }
 
-type DigitalWalletTokensListParamsCreatedAt struct {
+type DigitalWalletTokenListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// DigitalWalletTokensListParamsCreatedAt using the internal pjson library.
+// DigitalWalletTokenListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `jsonFields` property.
-func (r *DigitalWalletTokensListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DigitalWalletTokenListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes DigitalWalletTokensListParamsCreatedAt into an array of
+// MarshalJSON serializes DigitalWalletTokenListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `jsonFields` field are serialized
 // into the top-level, and will overwrite known members of the same name.
-func (r *DigitalWalletTokensListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DigitalWalletTokenListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes DigitalWalletTokensListParamsCreatedAt into a url.Values of
+// URLQuery serializes DigitalWalletTokenListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *DigitalWalletTokensListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
+func (r DigitalWalletTokenListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -233,7 +234,7 @@ func (r DigitalWalletTokensListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
+func (r DigitalWalletTokenListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -242,7 +243,7 @@ func (r DigitalWalletTokensListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r DigitalWalletTokenListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -251,15 +252,15 @@ func (r DigitalWalletTokensListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DigitalWalletTokensListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r DigitalWalletTokenListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r DigitalWalletTokensListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DigitalWalletTokensListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r DigitalWalletTokenListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DigitalWalletTokenListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type DigitalWalletTokenList struct {

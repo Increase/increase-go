@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -27,7 +28,7 @@ type AccountTransfer struct {
 	DestinationTransactionID *string `pjson:"destination_transaction_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The description that will show on the transactions.
 	Description *string `pjson:"description"`
 	// The transfer's network.
@@ -116,7 +117,7 @@ func (r AccountTransfer) GetDestinationTransactionID() (DestinationTransactionID
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r AccountTransfer) GetCreatedAt() (CreatedAt string) {
+func (r AccountTransfer) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -225,7 +226,7 @@ const (
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string                `pjson:"approved_at"`
+	ApprovedAt *time.Time             `pjson:"approved_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -245,7 +246,7 @@ func (r *AccountTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r AccountTransferApproval) GetApprovedAt() (ApprovedAt string) {
+func (r AccountTransferApproval) GetApprovedAt() (ApprovedAt time.Time) {
 	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
@@ -259,7 +260,7 @@ func (r AccountTransferApproval) String() (result string) {
 type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string                `pjson:"canceled_at"`
+	CanceledAt *time.Time             `pjson:"canceled_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -279,7 +280,7 @@ func (r *AccountTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r AccountTransferCancellation) GetCanceledAt() (CanceledAt string) {
+func (r AccountTransferCancellation) GetCanceledAt() (CanceledAt time.Time) {
 	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
@@ -377,9 +378,9 @@ type AccountTransferListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Account Transfers to those that originated from the specified Account.
-	AccountID  *string                              `query:"account_id"`
-	CreatedAt  *AccountTransfersListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}               `pjson:"-,extras"`
+	AccountID  *string                             `query:"account_id"`
+	CreatedAt  *AccountTransferListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}              `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferListParams
@@ -427,7 +428,7 @@ func (r AccountTransferListParams) GetAccountID() (AccountID string) {
 	return
 }
 
-func (r AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransfersListParamsCreatedAt) {
+func (r AccountTransferListParams) GetCreatedAt() (CreatedAt AccountTransferListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -438,45 +439,45 @@ func (r AccountTransferListParams) String() (result string) {
 	return fmt.Sprintf("&AccountTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
-type AccountTransfersListParamsCreatedAt struct {
+type AccountTransferListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// AccountTransfersListParamsCreatedAt using the internal pjson library.
+// AccountTransferListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `jsonFields` property.
-func (r *AccountTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountTransferListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes AccountTransfersListParamsCreatedAt into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
-func (r *AccountTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes AccountTransferListParamsCreatedAt into an array of bytes
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *AccountTransferListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes AccountTransfersListParamsCreatedAt into a url.Values of the
+// URLQuery serializes AccountTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *AccountTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *AccountTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
+func (r AccountTransferListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -485,7 +486,7 @@ func (r AccountTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
+func (r AccountTransferListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -494,7 +495,7 @@ func (r AccountTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r AccountTransferListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -503,15 +504,15 @@ func (r AccountTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r AccountTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r AccountTransferListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r AccountTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&AccountTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r AccountTransferListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&AccountTransferListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type AccountTransferList struct {

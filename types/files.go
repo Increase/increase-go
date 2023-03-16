@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -12,7 +13,7 @@ import (
 
 type File struct {
 	// The time the File was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The File's identifier.
 	ID *string `pjson:"id"`
 	// What the File will be used for. We may add additional possible values for this
@@ -48,7 +49,7 @@ func (r *File) MarshalJSON() (data []byte, err error) {
 }
 
 // The time the File was created.
-func (r File) GetCreatedAt() (CreatedAt string) {
+func (r File) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -223,10 +224,10 @@ type FileListParams struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                    `query:"limit"`
-	CreatedAt  *FilesListParamsCreatedAt `query:"created_at"`
-	Purpose    *FilesListParamsPurpose   `query:"purpose"`
-	jsonFields map[string]interface{}    `pjson:"-,extras"`
+	Limit      *int64                   `query:"limit"`
+	CreatedAt  *FileListParamsCreatedAt `query:"created_at"`
+	Purpose    *FileListParamsPurpose   `query:"purpose"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into FileListParams using the
@@ -266,14 +267,14 @@ func (r FileListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r FileListParams) GetCreatedAt() (CreatedAt FilesListParamsCreatedAt) {
+func (r FileListParams) GetCreatedAt() (CreatedAt FileListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r FileListParams) GetPurpose() (Purpose FilesListParamsPurpose) {
+func (r FileListParams) GetPurpose() (Purpose FileListParamsPurpose) {
 	if r.Purpose != nil {
 		Purpose = *r.Purpose
 	}
@@ -284,45 +285,45 @@ func (r FileListParams) String() (result string) {
 	return fmt.Sprintf("&FileListParams{Cursor:%s Limit:%s CreatedAt:%s Purpose:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Purpose)
 }
 
-type FilesListParamsCreatedAt struct {
+type FileListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into FilesListParamsCreatedAt
-// using the internal pjson library. Unrecognized fields are stored in the
-// `jsonFields` property.
-func (r *FilesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into FileListParamsCreatedAt using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *FileListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes FilesListParamsCreatedAt into an array of bytes using the
+// MarshalJSON serializes FileListParamsCreatedAt into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *FilesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *FileListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes FilesListParamsCreatedAt into a url.Values of the query
+// URLQuery serializes FileListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *FilesListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *FileListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r FilesListParamsCreatedAt) GetAfter() (After string) {
+func (r FileListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -331,7 +332,7 @@ func (r FilesListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r FilesListParamsCreatedAt) GetBefore() (Before string) {
+func (r FileListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -340,7 +341,7 @@ func (r FilesListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r FilesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r FileListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -349,71 +350,71 @@ func (r FilesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r FilesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r FileListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r FilesListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&FilesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r FileListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&FileListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
-type FilesListParamsPurpose struct {
+type FileListParamsPurpose struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]FilesListParamsPurposeIn `pjson:"in"`
-	jsonFields map[string]interface{}      `pjson:"-,extras"`
+	In         *[]FileListParamsPurposeIn `pjson:"in"`
+	jsonFields map[string]interface{}     `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into FilesListParamsPurpose using
+// UnmarshalJSON deserializes the provided bytes into FileListParamsPurpose using
 // the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
-func (r *FilesListParamsPurpose) UnmarshalJSON(data []byte) (err error) {
+func (r *FileListParamsPurpose) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes FilesListParamsPurpose into an array of bytes using the
+// MarshalJSON serializes FileListParamsPurpose into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *FilesListParamsPurpose) MarshalJSON() (data []byte, err error) {
+func (r *FileListParamsPurpose) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes FilesListParamsPurpose into a url.Values of the query
+// URLQuery serializes FileListParamsPurpose into a url.Values of the query
 // parameters associated with this value
-func (r *FilesListParamsPurpose) URLQuery() (v url.Values) {
+func (r *FileListParamsPurpose) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r FilesListParamsPurpose) GetIn() (In []FilesListParamsPurposeIn) {
+func (r FileListParamsPurpose) GetIn() (In []FileListParamsPurposeIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r FilesListParamsPurpose) String() (result string) {
-	return fmt.Sprintf("&FilesListParamsPurpose{In:%s}", core.Fmt(r.In))
+func (r FileListParamsPurpose) String() (result string) {
+	return fmt.Sprintf("&FileListParamsPurpose{In:%s}", core.Fmt(r.In))
 }
 
-type FilesListParamsPurposeIn string
+type FileListParamsPurposeIn string
 
 const (
-	FilesListParamsPurposeInCheckImageFront            FilesListParamsPurposeIn = "check_image_front"
-	FilesListParamsPurposeInCheckImageBack             FilesListParamsPurposeIn = "check_image_back"
-	FilesListParamsPurposeInForm_1099Int               FilesListParamsPurposeIn = "form_1099_int"
-	FilesListParamsPurposeInFormSs_4                   FilesListParamsPurposeIn = "form_ss_4"
-	FilesListParamsPurposeInIdentityDocument           FilesListParamsPurposeIn = "identity_document"
-	FilesListParamsPurposeInIncreaseStatement          FilesListParamsPurposeIn = "increase_statement"
-	FilesListParamsPurposeInOther                      FilesListParamsPurposeIn = "other"
-	FilesListParamsPurposeInTrustFormationDocument     FilesListParamsPurposeIn = "trust_formation_document"
-	FilesListParamsPurposeInDigitalWalletArtwork       FilesListParamsPurposeIn = "digital_wallet_artwork"
-	FilesListParamsPurposeInDigitalWalletAppIcon       FilesListParamsPurposeIn = "digital_wallet_app_icon"
-	FilesListParamsPurposeInEntitySupplementalDocument FilesListParamsPurposeIn = "entity_supplemental_document"
+	FileListParamsPurposeInCheckImageFront            FileListParamsPurposeIn = "check_image_front"
+	FileListParamsPurposeInCheckImageBack             FileListParamsPurposeIn = "check_image_back"
+	FileListParamsPurposeInForm_1099Int               FileListParamsPurposeIn = "form_1099_int"
+	FileListParamsPurposeInFormSs_4                   FileListParamsPurposeIn = "form_ss_4"
+	FileListParamsPurposeInIdentityDocument           FileListParamsPurposeIn = "identity_document"
+	FileListParamsPurposeInIncreaseStatement          FileListParamsPurposeIn = "increase_statement"
+	FileListParamsPurposeInOther                      FileListParamsPurposeIn = "other"
+	FileListParamsPurposeInTrustFormationDocument     FileListParamsPurposeIn = "trust_formation_document"
+	FileListParamsPurposeInDigitalWalletArtwork       FileListParamsPurposeIn = "digital_wallet_artwork"
+	FileListParamsPurposeInDigitalWalletAppIcon       FileListParamsPurposeIn = "digital_wallet_app_icon"
+	FileListParamsPurposeInEntitySupplementalDocument FileListParamsPurposeIn = "entity_supplemental_document"
 )
 
 type FileList struct {

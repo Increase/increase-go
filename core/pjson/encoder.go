@@ -7,14 +7,15 @@ import (
 	"sort"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/tidwall/sjson"
 )
 
-var encoders sync.Map // map[reflect.Type]encoderFunc
+var encoders sync.Map // map[encoderEntry]encoderFunc
 
 func Marshal(value interface{}) ([]byte, error) {
-	e := &encoder{}
+	e := &encoder{dateFormat: time.RFC3339}
 	val := reflect.ValueOf(value)
 	if !val.IsValid() {
 		return nil, nil
@@ -24,7 +25,9 @@ func Marshal(value interface{}) ([]byte, error) {
 	return enc(val)
 }
 
-type encoder struct{}
+type encoder struct {
+	dateFormat string
+}
 
 type encoderFunc func(value reflect.Value) ([]byte, error)
 
@@ -34,8 +37,18 @@ type encoderField struct {
 	idx []int
 }
 
+type encoderEntry struct {
+	reflect.Type
+	dateFormat string
+}
+
 func (e *encoder) typeEncoder(t reflect.Type) encoderFunc {
-	if fi, ok := encoders.Load(t); ok {
+	entry := encoderEntry{
+		Type:       t,
+		dateFormat: e.dateFormat,
+	}
+
+	if fi, ok := encoders.Load(entry); ok {
 		return fi.(encoderFunc)
 	}
 
@@ -48,7 +61,7 @@ func (e *encoder) typeEncoder(t reflect.Type) encoderFunc {
 		f  encoderFunc
 	)
 	wg.Add(1)
-	fi, loaded := encoders.LoadOrStore(t, encoderFunc(func(v reflect.Value) ([]byte, error) {
+	fi, loaded := encoders.LoadOrStore(entry, encoderFunc(func(v reflect.Value) ([]byte, error) {
 		wg.Wait()
 		return f(v)
 	}))
@@ -59,7 +72,7 @@ func (e *encoder) typeEncoder(t reflect.Type) encoderFunc {
 	// Compute the real encoder and replace the indirect func with it.
 	f = e.newTypeEncoder(t)
 	wg.Done()
-	encoders.Store(t, f)
+	encoders.Store(entry, f)
 	return f
 }
 
@@ -76,6 +89,9 @@ func (e *encoder) newTypeEncoder(t reflect.Type) encoderFunc {
 			return innerEncoder(v.Elem())
 		}
 	case reflect.Struct:
+		if t == reflect.TypeOf(time.Time{}) {
+			return e.newTimeTypeEncoder(t)
+		}
 		return e.newStructTypeEncoder(t)
 	case reflect.Array:
 		fallthrough
@@ -177,18 +193,24 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) encoderFunc {
 				collectFieldEncoders(field.Type, idx)
 				continue
 			}
-			tag, ok := field.Tag.Lookup(pjsonStructTag)
+			ptag, ok := parseStructTag(field)
 			if !ok {
 				continue
 			}
-			ptag := parseStructTag(tag)
 
 			// We only want to support unexported fields if they're tagged with `extras` because
 			// that field shouldn't be part of the public API.
 			if !field.IsExported() && !ptag.storeExtraProperties {
 				continue
 			}
+
+			oldFormat := e.dateFormat
+			format, ok := parseFormatStructTag(field)
+			if ok {
+				e.dateFormat = format
+			}
 			encoderFields = append(encoderFields, encoderField{ptag, e.typeEncoder(field.Type), idx})
+			e.dateFormat = oldFormat
 		}
 	}
 	collectFieldEncoders(t, []int{})
@@ -237,6 +259,13 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) encoderFunc {
 		}
 
 		return
+	}
+}
+
+func (e *encoder) newTimeTypeEncoder(t reflect.Type) encoderFunc {
+	format := e.dateFormat
+	return func(value reflect.Value) (json []byte, err error) {
+		return []byte(`"` + value.Interface().(time.Time).Format(format) + `"`), nil
 	}
 }
 

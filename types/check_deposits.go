@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -18,7 +19,7 @@ type CheckDeposit struct {
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
 	Currency *CheckDepositCurrency `pjson:"currency"`
 	// The status of the Check Deposit.
@@ -79,7 +80,7 @@ func (r CheckDeposit) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r CheckDeposit) GetCreatedAt() (CreatedAt string) {
+func (r CheckDeposit) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -316,7 +317,7 @@ type CheckDepositDepositRejection struct {
 	Reason *CheckDepositDepositRejectionReason `pjson:"reason"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt *string                `pjson:"rejected_at"`
+	RejectedAt *time.Time             `pjson:"rejected_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -362,7 +363,7 @@ func (r CheckDepositDepositRejection) GetReason() (Reason CheckDepositDepositRej
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was rejected.
-func (r CheckDepositDepositRejection) GetRejectedAt() (RejectedAt string) {
+func (r CheckDepositDepositRejection) GetRejectedAt() (RejectedAt time.Time) {
 	if r.RejectedAt != nil {
 		RejectedAt = *r.RejectedAt
 	}
@@ -402,7 +403,7 @@ type CheckDepositDepositReturn struct {
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `pjson:"returned_at"`
+	ReturnedAt *time.Time `pjson:"returned_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency *CheckDepositDepositReturnCurrency `pjson:"currency"`
@@ -440,7 +441,7 @@ func (r CheckDepositDepositReturn) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was returned.
-func (r CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt string) {
+func (r CheckDepositDepositReturn) GetReturnedAt() (ReturnedAt time.Time) {
 	if r.ReturnedAt != nil {
 		ReturnedAt = *r.ReturnedAt
 	}
@@ -598,9 +599,9 @@ type CheckDepositListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Check Deposits to those belonging to the specified Account.
-	AccountID  *string                           `query:"account_id"`
-	CreatedAt  *CheckDepositsListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}            `pjson:"-,extras"`
+	AccountID  *string                          `query:"account_id"`
+	CreatedAt  *CheckDepositListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositListParams using
@@ -648,7 +649,7 @@ func (r CheckDepositListParams) GetAccountID() (AccountID string) {
 	return
 }
 
-func (r CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositsListParamsCreatedAt) {
+func (r CheckDepositListParams) GetCreatedAt() (CreatedAt CheckDepositListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -659,45 +660,45 @@ func (r CheckDepositListParams) String() (result string) {
 	return fmt.Sprintf("&CheckDepositListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
-type CheckDepositsListParamsCreatedAt struct {
+type CheckDepositListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// CheckDepositsListParamsCreatedAt using the internal pjson library. Unrecognized
+// CheckDepositListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *CheckDepositsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckDepositListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CheckDepositsListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes CheckDepositListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *CheckDepositsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CheckDepositListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CheckDepositsListParamsCreatedAt into a url.Values of the
+// URLQuery serializes CheckDepositListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CheckDepositsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *CheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
+func (r CheckDepositListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -706,7 +707,7 @@ func (r CheckDepositsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
+func (r CheckDepositListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -715,7 +716,7 @@ func (r CheckDepositsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r CheckDepositListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -724,15 +725,15 @@ func (r CheckDepositsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CheckDepositsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r CheckDepositListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r CheckDepositsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CheckDepositsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r CheckDepositListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CheckDepositListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type CheckDepositList struct {

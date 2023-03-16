@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -22,7 +23,7 @@ type PendingTransaction struct {
 	Currency *PendingTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
@@ -90,7 +91,7 @@ func (r PendingTransaction) GetCurrency() (Currency PendingTransactionCurrency) 
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 // Transaction occured.
-func (r PendingTransaction) GetCreatedAt() (CreatedAt string) {
+func (r PendingTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -876,9 +877,9 @@ type PendingTransactionSourceInboundFundsHold struct {
 	Currency *PendingTransactionSourceInboundFundsHoldCurrency `pjson:"currency"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt *string `pjson:"automatically_releases_at"`
+	AutomaticallyReleasesAt *time.Time `pjson:"automatically_releases_at" format:"2006-01-02T15:04:05Z07:00"`
 	// When the hold was released (if it has been released).
-	ReleasedAt *string `pjson:"released_at"`
+	ReleasedAt *time.Time `pjson:"released_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The status of the hold.
 	Status *PendingTransactionSourceInboundFundsHoldStatus `pjson:"status"`
 	// The ID of the Transaction for which funds were held.
@@ -920,7 +921,7 @@ func (r PendingTransactionSourceInboundFundsHold) GetCurrency() (Currency Pendin
 
 // When the hold will be released automatically. Certain conditions may cause it to
 // be released before this time.
-func (r PendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
+func (r PendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt time.Time) {
 	if r.AutomaticallyReleasesAt != nil {
 		AutomaticallyReleasesAt = *r.AutomaticallyReleasesAt
 	}
@@ -928,7 +929,7 @@ func (r PendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (
 }
 
 // When the hold was released (if it has been released).
-func (r PendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
+func (r PendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt time.Time) {
 	if r.ReleasedAt != nil {
 		ReleasedAt = *r.ReleasedAt
 	}
@@ -1229,9 +1230,9 @@ type PendingTransactionListParams struct {
 	// Filter pending transactions to those belonging to the specified Route.
 	RouteID *string `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceID   *string                              `query:"source_id"`
-	Status     *PendingTransactionsListParamsStatus `query:"status"`
-	jsonFields map[string]interface{}               `pjson:"-,extras"`
+	SourceID   *string                             `query:"source_id"`
+	Status     *PendingTransactionListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}              `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into PendingTransactionListParams
@@ -1295,7 +1296,7 @@ func (r PendingTransactionListParams) GetSourceID() (SourceID string) {
 	return
 }
 
-func (r PendingTransactionListParams) GetStatus() (Status PendingTransactionsListParamsStatus) {
+func (r PendingTransactionListParams) GetStatus() (Status PendingTransactionListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -1306,51 +1307,51 @@ func (r PendingTransactionListParams) String() (result string) {
 	return fmt.Sprintf("&PendingTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s SourceID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), core.FmtP(r.SourceID), r.Status)
 }
 
-type PendingTransactionsListParamsStatus struct {
+type PendingTransactionListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]PendingTransactionsListParamsStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}                   `pjson:"-,extras"`
+	In         *[]PendingTransactionListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// PendingTransactionsListParamsStatus using the internal pjson library.
+// PendingTransactionListParamsStatus using the internal pjson library.
 // Unrecognized fields are stored in the `jsonFields` property.
-func (r *PendingTransactionsListParamsStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *PendingTransactionListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes PendingTransactionsListParamsStatus into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
-func (r *PendingTransactionsListParamsStatus) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes PendingTransactionListParamsStatus into an array of bytes
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r *PendingTransactionListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes PendingTransactionsListParamsStatus into a url.Values of the
+// URLQuery serializes PendingTransactionListParamsStatus into a url.Values of the
 // query parameters associated with this value
-func (r *PendingTransactionsListParamsStatus) URLQuery() (v url.Values) {
+func (r *PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r PendingTransactionsListParamsStatus) GetIn() (In []PendingTransactionsListParamsStatusIn) {
+func (r PendingTransactionListParamsStatus) GetIn() (In []PendingTransactionListParamsStatusIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r PendingTransactionsListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&PendingTransactionsListParamsStatus{In:%s}", core.Fmt(r.In))
+func (r PendingTransactionListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&PendingTransactionListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
-type PendingTransactionsListParamsStatusIn string
+type PendingTransactionListParamsStatusIn string
 
 const (
-	PendingTransactionsListParamsStatusInPending  PendingTransactionsListParamsStatusIn = "pending"
-	PendingTransactionsListParamsStatusInComplete PendingTransactionsListParamsStatusIn = "complete"
+	PendingTransactionListParamsStatusInPending  PendingTransactionListParamsStatusIn = "pending"
+	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )
 
 type PendingTransactionList struct {

@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -14,7 +15,7 @@ type EventSubscription struct {
 	// The event subscription identifier.
 	ID *string `pjson:"id"`
 	// The time the event subscription was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// This indicates if we'll send notifications to this subscription.
 	Status *EventSubscriptionStatus `pjson:"status"`
 	// If specified, this subscription will only receive webhooks for Events with the
@@ -53,7 +54,7 @@ func (r EventSubscription) GetID() (ID string) {
 }
 
 // The time the event subscription was created.
-func (r EventSubscription) GetCreatedAt() (CreatedAt string) {
+func (r EventSubscription) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}

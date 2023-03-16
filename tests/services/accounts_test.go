@@ -42,7 +42,7 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 
 func TestAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &types.AccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), EntityID: increase.P("string"), Status: increase.P(types.AccountsListParamsStatusOpen)})
+	_, err := c.Accounts.List(context.TODO(), &types.AccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), EntityID: increase.P("string"), Status: increase.P(types.AccountListParamsStatusOpen)})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 )
 
 // Returns the first string or *string in the argument that is valid and not an
@@ -21,7 +22,7 @@ func CoalesceStrings[P ~string | ~*string](strings ...P) string {
 }
 
 type Primitive interface {
-	~bool | ~byte | ~float32 | ~float64 | ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~string | ~uint | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~complex64 | ~complex128
+	~bool | ~byte | ~float32 | ~float64 | ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~string | ~uint | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~complex64 | ~complex128 | time.Time
 }
 
 // Fast path for pretty printing pointer primitives

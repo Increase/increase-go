@@ -1,8 +1,10 @@
 package pjson
 
 import (
+	"fmt"
 	"math"
 	"testing"
+	"time"
 
 	"github.com/increase/increase-go/core/pointers"
 )
@@ -26,7 +28,7 @@ func assertEncode(t *testing.T, v interface{}, expectation string) {
 
 // TODO: test extreme values
 
-func TestPrimitiveTypes(t *testing.T) {
+func TestEncodePrimitives(t *testing.T) {
 	assertEncode(t, true, "true")
 	assertEncode(t, false, "false")
 	assertEncode(t, nil, "")
@@ -47,11 +49,32 @@ func TestPrimitiveTypes(t *testing.T) {
 	assertEncode(t, pointers.P(float64(1.34)), "1.34")
 }
 
+func TestEncodeDatetime(t *testing.T) {
+	for _, timeString := range []string{"2007-03-01T13:00:00Z"} {
+		t.Run(fmt.Sprintf("%s", timeString), func(t *testing.T) {
+			et, err := time.Parse(time.RFC3339, timeString)
+			if err != nil {
+				t.Fatalf("%v\n", err)
+			}
+			assertEncode(t, et, "\""+timeString+"\"")
+			assertEncode(t, &et, "\""+timeString+"\"")
+		})
+	}
+}
+
+func TestEncodeDatetimeStruct(t *testing.T) {
+	dt := DateTimeStruct{
+		Date:     time.Date(2006, time.January, 2, 0, 0, 0, 0, time.UTC),
+		DateTime: time.Date(2006, time.January, 2, 15, 4, 5, 0, time.UTC),
+	}
+	assertEncode(t, dt, `{"date":"2006-01-02","date-time":"2006-01-02T15:04:05Z"}`)
+}
+
 type BasicStruct struct {
 	A interface{} `pjson:"a"`
 }
 
-func TestBasicStruct(t *testing.T) {
+func TestEncodeStruct(t *testing.T) {
 	assertEncode(t, BasicStruct{A: true}, "{\"a\":true}")
 	assertEncode(t, BasicStruct{}, "{}")
 	assertEncode(t, BasicStruct{A: pointers.P("foo")}, "{\"a\":\"foo\"}")
@@ -63,13 +86,13 @@ type RequiredProperties struct {
 	B interface{} `pjson:"B,required"`
 }
 
-func TestStructRequiredProperties(t *testing.T) {
+func TestEncodeStructRequiredProperties(t *testing.T) {
 	assertEncode(t, RequiredProperties{A: true, B: 1}, "{\"B\":1,\"a\":true}")
 	assertEncode(t, RequiredProperties{A: true}, "{\"B\":null,\"a\":true}")
 	assertEncode(t, RequiredProperties{}, "{\"B\":null}")
 }
 
-func TestArray(t *testing.T) {
+func TestEncodeArray(t *testing.T) {
 	assertEncode(t, []int{1, 2}, "[1,2]")
 	assertEncode(t, []bool{false, true, false}, "[false,true,false]")
 	assertEncode(t, []BasicStruct{{A: false}}, "[{\"a\":false}]")
@@ -77,7 +100,7 @@ func TestArray(t *testing.T) {
 	assertEncode(t, &[]BasicStruct{{A: false}}, "[{\"a\":false}]")
 }
 
-func TestMap(t *testing.T) {
+func TestEncodeMap(t *testing.T) {
 	assertEncode(t, map[string]interface{}{"hello": "world", "goodbye": true}, "{\"hello\":\"world\",\"goodbye\":true}")
 	assertEncode(t, map[bool]interface{}{true: "value"}, "{\"true\":\"value\"}")
 }
@@ -87,7 +110,7 @@ type StructWithExtras struct {
 	ExtraProperties JSONExtras  `pjson:"-,extras"`
 }
 
-func TestExtras(t *testing.T) {
+func TestEncodeExtras(t *testing.T) {
 	obj1 := StructWithExtras{A: true, ExtraProperties: JSONExtras{"foo": "bar"}}
 	assertEncode(t, obj1, "{\"a\":true,\"foo\":\"bar\"}")
 
@@ -103,7 +126,7 @@ type StructWithPrivateJsonFields struct {
 	jsonFields JSONExtras  `pjson:"-,extras"`
 }
 
-func TestPrivateJsonFields(t *testing.T) {
+func TestEncodePrivateJsonFields(t *testing.T) {
 	obj := StructWithPrivateJsonFields{A: true, jsonFields: JSONExtras{"foo": "bar"}}
 	assertEncode(t, obj, "{\"a\":true,\"foo\":\"bar\"}")
 }
@@ -114,7 +137,7 @@ type StructWithPointers struct {
 	jsonFields JSONExtras `pjson:"-,extras"`
 }
 
-func TestStructWithPointers(t *testing.T) {
+func TestEncodeStructWithPointers(t *testing.T) {
 	assertEncode(t, StructWithPointers{A: pointers.P("Robert"), jsonFields: JSONExtras{"foo": "bar"}}, "{\"a\":\"Robert\",\"foo\":\"bar\"}")
 	assertEncode(t, StructWithPointers{A: pointers.P("Robert"), B: pointers.P(false), jsonFields: JSONExtras{"foo": "bar"}}, "{\"a\":\"Robert\",\"b\":false,\"foo\":\"bar\"}")
 }
@@ -125,7 +148,7 @@ type StructWithEmbedded struct {
 	jsonFields JSONExtras `pjson:"-,extras"`
 }
 
-func TestStructWithEmbedded(t *testing.T) {
+func TestEncodeStructWithEmbedded(t *testing.T) {
 	assertEncode(t, StructWithEmbedded{
 		StructWithPrivateExtrasField: StructWithPrivateExtrasField{
 			A:          pointers.P(32),

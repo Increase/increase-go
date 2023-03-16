@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -15,7 +16,7 @@ type CardProfile struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The status of the Card Profile.
 	Status *CardProfileStatus `pjson:"status"`
 	// A description you can use to identify the Card Profile.
@@ -53,7 +54,7 @@ func (r CardProfile) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was created.
-func (r CardProfile) GetCreatedAt() (CreatedAt string) {
+func (r CardProfile) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -472,9 +473,9 @@ type CardProfileListParams struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                        `query:"limit"`
-	Status     *CardProfilesListParamsStatus `query:"status"`
-	jsonFields map[string]interface{}        `pjson:"-,extras"`
+	Limit      *int64                       `query:"limit"`
+	Status     *CardProfileListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfileListParams using
@@ -514,7 +515,7 @@ func (r CardProfileListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r CardProfileListParams) GetStatus() (Status CardProfilesListParamsStatus) {
+func (r CardProfileListParams) GetStatus() (Status CardProfileListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -525,53 +526,53 @@ func (r CardProfileListParams) String() (result string) {
 	return fmt.Sprintf("&CardProfileListParams{Cursor:%s Limit:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.Status)
 }
 
-type CardProfilesListParamsStatus struct {
+type CardProfileListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]CardProfilesListParamsStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}            `pjson:"-,extras"`
+	In         *[]CardProfileListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardProfilesListParamsStatus
+// UnmarshalJSON deserializes the provided bytes into CardProfileListParamsStatus
 // using the internal pjson library. Unrecognized fields are stored in the
 // `jsonFields` property.
-func (r *CardProfilesListParamsStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *CardProfileListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CardProfilesListParamsStatus into an array of bytes using
+// MarshalJSON serializes CardProfileListParamsStatus into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardProfilesListParamsStatus) MarshalJSON() (data []byte, err error) {
+func (r *CardProfileListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CardProfilesListParamsStatus into a url.Values of the query
+// URLQuery serializes CardProfileListParamsStatus into a url.Values of the query
 // parameters associated with this value
-func (r *CardProfilesListParamsStatus) URLQuery() (v url.Values) {
+func (r *CardProfileListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r CardProfilesListParamsStatus) GetIn() (In []CardProfilesListParamsStatusIn) {
+func (r CardProfileListParamsStatus) GetIn() (In []CardProfileListParamsStatusIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r CardProfilesListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&CardProfilesListParamsStatus{In:%s}", core.Fmt(r.In))
+func (r CardProfileListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&CardProfileListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
-type CardProfilesListParamsStatusIn string
+type CardProfileListParamsStatusIn string
 
 const (
-	CardProfilesListParamsStatusInPending  CardProfilesListParamsStatusIn = "pending"
-	CardProfilesListParamsStatusInRejected CardProfilesListParamsStatusIn = "rejected"
-	CardProfilesListParamsStatusInActive   CardProfilesListParamsStatusIn = "active"
-	CardProfilesListParamsStatusInArchived CardProfilesListParamsStatusIn = "archived"
+	CardProfileListParamsStatusInPending  CardProfileListParamsStatusIn = "pending"
+	CardProfileListParamsStatusInRejected CardProfileListParamsStatusIn = "rejected"
+	CardProfileListParamsStatusInActive   CardProfileListParamsStatusIn = "active"
+	CardProfileListParamsStatusInArchived CardProfileListParamsStatusIn = "archived"
 )
 
 type CardProfileList struct {

@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -28,14 +29,14 @@ type ACHPrenotification struct {
 	// If the notification is for a future credit or debit.
 	CreditDebitIndicator *ACHPrenotificationCreditDebitIndicator `pjson:"credit_debit_indicator"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `pjson:"effective_date"`
+	EffectiveDate *time.Time `pjson:"effective_date" format:"2006-01-02T15:04:05Z07:00"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber *string `pjson:"routing_number"`
 	// If your prenotification is returned, this will contain details of the return.
 	PrenotificationReturn *ACHPrenotificationPrenotificationReturn `pjson:"prenotification_return"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the prenotification was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The lifecycle status of the ACH Prenotification.
 	Status *ACHPrenotificationStatus `pjson:"status"`
 	// A constant representing the object's type. For this resource it will always be
@@ -123,7 +124,7 @@ func (r ACHPrenotification) GetCreditDebitIndicator() (CreditDebitIndicator ACHP
 }
 
 // The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r ACHPrenotification) GetEffectiveDate() (EffectiveDate string) {
+func (r ACHPrenotification) GetEffectiveDate() (EffectiveDate time.Time) {
 	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
@@ -148,7 +149,7 @@ func (r ACHPrenotification) GetPrenotificationReturn() (PrenotificationReturn AC
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the prenotification was created.
-func (r ACHPrenotification) GetCreatedAt() (CreatedAt string) {
+func (r ACHPrenotification) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -186,7 +187,7 @@ const (
 type ACHPrenotificationPrenotificationReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Prenotification was returned.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// Why the Prenotification was returned.
 	ReturnReasonCode *string                `pjson:"return_reason_code"`
 	jsonFields       map[string]interface{} `pjson:"-,extras"`
@@ -208,7 +209,7 @@ func (r *ACHPrenotificationPrenotificationReturn) MarshalJSON() (data []byte, er
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Prenotification was returned.
-func (r ACHPrenotificationPrenotificationReturn) GetCreatedAt() (CreatedAt string) {
+func (r ACHPrenotificationPrenotificationReturn) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -259,7 +260,7 @@ type CreateAnACHPrenotificationParameters struct {
 	CreditDebitIndicator *CreateAnACHPrenotificationParametersCreditDebitIndicator `pjson:"credit_debit_indicator"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `pjson:"effective_date"`
+	EffectiveDate *time.Time `pjson:"effective_date" format:"2006-01-02"`
 	// Your identifer for the transfer recipient.
 	IndividualID *string `pjson:"individual_id"`
 	// The name of the transfer recipient. This value is information and not verified
@@ -345,7 +346,7 @@ func (r CreateAnACHPrenotificationParameters) GetCreditDebitIndicator() (CreditD
 
 // The transfer effective date in
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate string) {
+func (r CreateAnACHPrenotificationParameters) GetEffectiveDate() (EffectiveDate time.Time) {
 	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
@@ -410,9 +411,9 @@ type ACHPrenotificationListParams struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                                  `query:"limit"`
-	CreatedAt  *ACHPrenotificationsListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                  `pjson:"-,extras"`
+	Limit      *int64                                 `query:"limit"`
+	CreatedAt  *ACHPrenotificationListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                 `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotificationListParams
@@ -452,7 +453,7 @@ func (r ACHPrenotificationListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificationsListParamsCreatedAt) {
+func (r ACHPrenotificationListParams) GetCreatedAt() (CreatedAt ACHPrenotificationListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -463,45 +464,45 @@ func (r ACHPrenotificationListParams) String() (result string) {
 	return fmt.Sprintf("&ACHPrenotificationListParams{Cursor:%s Limit:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt)
 }
 
-type ACHPrenotificationsListParamsCreatedAt struct {
+type ACHPrenotificationListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHPrenotificationsListParamsCreatedAt using the internal pjson library.
+// ACHPrenotificationListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `jsonFields` property.
-func (r *ACHPrenotificationsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHPrenotificationListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ACHPrenotificationsListParamsCreatedAt into an array of
+// MarshalJSON serializes ACHPrenotificationListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `jsonFields` field are serialized
 // into the top-level, and will overwrite known members of the same name.
-func (r *ACHPrenotificationsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *ACHPrenotificationListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes ACHPrenotificationsListParamsCreatedAt into a url.Values of
+// URLQuery serializes ACHPrenotificationListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *ACHPrenotificationsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
+func (r ACHPrenotificationListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -510,7 +511,7 @@ func (r ACHPrenotificationsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
+func (r ACHPrenotificationListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -519,7 +520,7 @@ func (r ACHPrenotificationsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r ACHPrenotificationListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -528,15 +529,15 @@ func (r ACHPrenotificationsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r ACHPrenotificationsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r ACHPrenotificationListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r ACHPrenotificationsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&ACHPrenotificationsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r ACHPrenotificationListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&ACHPrenotificationListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type ACHPrenotificationList struct {

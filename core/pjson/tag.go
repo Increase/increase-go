@@ -1,10 +1,12 @@
 package pjson
 
 import (
+	"reflect"
 	"strings"
 )
 
 const pjsonStructTag = "pjson"
+const formatStructTag = "format"
 
 type parsedStructTag struct {
 	name                 string
@@ -12,7 +14,11 @@ type parsedStructTag struct {
 	storeExtraProperties bool
 }
 
-func parseStructTag(raw string) (tag parsedStructTag) {
+func parseStructTag(field reflect.StructField) (tag parsedStructTag, ok bool) {
+	raw, ok := field.Tag.Lookup(pjsonStructTag)
+	if !ok {
+		return
+	}
 	parts := strings.Split(raw, ",")
 	if len(parts) > 0 {
 		tag.name = parts[0]
@@ -27,5 +33,10 @@ func parseStructTag(raw string) (tag parsedStructTag) {
 		}
 		parts = parts[1:]
 	}
+	return
+}
+
+func parseFormatStructTag(field reflect.StructField) (format string, ok bool) {
+	format, ok = field.Tag.Lookup(formatStructTag)
 	return
 }

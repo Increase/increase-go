@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -130,7 +131,7 @@ type InboundACHTransferReturnSubmission struct {
 	// The trace number for the submission.
 	TraceNumber *string `pjson:"trace_number"`
 	// When the ACH transfer return was sent to FedACH.
-	SubmittedAt *string                `pjson:"submitted_at"`
+	SubmittedAt *time.Time             `pjson:"submitted_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -157,7 +158,7 @@ func (r InboundACHTransferReturnSubmission) GetTraceNumber() (TraceNumber string
 }
 
 // When the ACH transfer return was sent to FedACH.
-func (r InboundACHTransferReturnSubmission) GetSubmittedAt() (SubmittedAt string) {
+func (r InboundACHTransferReturnSubmission) GetSubmittedAt() (SubmittedAt time.Time) {
 	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}

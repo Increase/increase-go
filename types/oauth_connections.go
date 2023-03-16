@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -15,7 +16,7 @@ type OauthConnection struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Group that has authorized your OAuth application.
 	GroupID *string `pjson:"group_id"`
 	// Whether the connection is active.
@@ -50,7 +51,7 @@ func (r OauthConnection) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 // Connection was created.
-func (r OauthConnection) GetCreatedAt() (CreatedAt string) {
+func (r OauthConnection) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}

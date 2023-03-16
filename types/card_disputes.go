@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -19,7 +20,7 @@ type CardDispute struct {
 	Status *CardDisputeStatus `pjson:"status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Transaction that was disputed.
 	DisputedTransactionID *string `pjson:"disputed_transaction_id"`
 	// If the Card Dispute's status is `accepted`, this will contain details of the
@@ -74,7 +75,7 @@ func (r CardDispute) GetStatus() (Status CardDisputeStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was created.
-func (r CardDispute) GetCreatedAt() (CreatedAt string) {
+func (r CardDispute) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -131,7 +132,7 @@ const (
 type CardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `pjson:"accepted_at"`
+	AcceptedAt *time.Time `pjson:"accepted_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Card Dispute that was accepted.
 	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
@@ -156,7 +157,7 @@ func (r *CardDisputeAcceptance) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
-func (r CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
+func (r CardDisputeAcceptance) GetAcceptedAt() (AcceptedAt time.Time) {
 	if r.AcceptedAt != nil {
 		AcceptedAt = *r.AcceptedAt
 	}
@@ -189,7 +190,7 @@ type CardDisputeRejection struct {
 	Explanation *string `pjson:"explanation"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was rejected.
-	RejectedAt *string `pjson:"rejected_at"`
+	RejectedAt *time.Time `pjson:"rejected_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Card Dispute that was rejected.
 	CardDisputeID *string                `pjson:"card_dispute_id"`
 	jsonFields    map[string]interface{} `pjson:"-,extras"`
@@ -219,7 +220,7 @@ func (r CardDisputeRejection) GetExplanation() (Explanation string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was rejected.
-func (r CardDisputeRejection) GetRejectedAt() (RejectedAt string) {
+func (r CardDisputeRejection) GetRejectedAt() (RejectedAt time.Time) {
 	if r.RejectedAt != nil {
 		RejectedAt = *r.RejectedAt
 	}
@@ -293,10 +294,10 @@ type CardDisputeListParams struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                           `query:"limit"`
-	CreatedAt  *CardDisputesListParamsCreatedAt `query:"created_at"`
-	Status     *CardDisputesListParamsStatus    `query:"status"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	Limit      *int64                          `query:"limit"`
+	CreatedAt  *CardDisputeListParamsCreatedAt `query:"created_at"`
+	Status     *CardDisputeListParamsStatus    `query:"status"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeListParams using
@@ -336,14 +337,14 @@ func (r CardDisputeListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r CardDisputeListParams) GetCreatedAt() (CreatedAt CardDisputesListParamsCreatedAt) {
+func (r CardDisputeListParams) GetCreatedAt() (CreatedAt CardDisputeListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r CardDisputeListParams) GetStatus() (Status CardDisputesListParamsStatus) {
+func (r CardDisputeListParams) GetStatus() (Status CardDisputeListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -354,45 +355,45 @@ func (r CardDisputeListParams) String() (result string) {
 	return fmt.Sprintf("&CardDisputeListParams{Cursor:%s Limit:%s CreatedAt:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.CreatedAt, r.Status)
 }
 
-type CardDisputesListParamsCreatedAt struct {
+type CardDisputeListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// CardDisputesListParamsCreatedAt using the internal pjson library. Unrecognized
+// CardDisputeListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *CardDisputesListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CardDisputeListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CardDisputesListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes CardDisputeListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *CardDisputesListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CardDisputeListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CardDisputesListParamsCreatedAt into a url.Values of the
+// URLQuery serializes CardDisputeListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CardDisputesListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *CardDisputeListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CardDisputesListParamsCreatedAt) GetAfter() (After string) {
+func (r CardDisputeListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -401,7 +402,7 @@ func (r CardDisputesListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
+func (r CardDisputeListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -410,7 +411,7 @@ func (r CardDisputesListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r CardDisputeListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -419,63 +420,63 @@ func (r CardDisputesListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CardDisputesListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r CardDisputeListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r CardDisputesListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CardDisputesListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r CardDisputeListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CardDisputeListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
-type CardDisputesListParamsStatus struct {
+type CardDisputeListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]CardDisputesListParamsStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}            `pjson:"-,extras"`
+	In         *[]CardDisputeListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDisputesListParamsStatus
+// UnmarshalJSON deserializes the provided bytes into CardDisputeListParamsStatus
 // using the internal pjson library. Unrecognized fields are stored in the
 // `jsonFields` property.
-func (r *CardDisputesListParamsStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *CardDisputeListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CardDisputesListParamsStatus into an array of bytes using
+// MarshalJSON serializes CardDisputeListParamsStatus into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardDisputesListParamsStatus) MarshalJSON() (data []byte, err error) {
+func (r *CardDisputeListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CardDisputesListParamsStatus into a url.Values of the query
+// URLQuery serializes CardDisputeListParamsStatus into a url.Values of the query
 // parameters associated with this value
-func (r *CardDisputesListParamsStatus) URLQuery() (v url.Values) {
+func (r *CardDisputeListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r CardDisputesListParamsStatus) GetIn() (In []CardDisputesListParamsStatusIn) {
+func (r CardDisputeListParamsStatus) GetIn() (In []CardDisputeListParamsStatusIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r CardDisputesListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&CardDisputesListParamsStatus{In:%s}", core.Fmt(r.In))
+func (r CardDisputeListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&CardDisputeListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
-type CardDisputesListParamsStatusIn string
+type CardDisputeListParamsStatusIn string
 
 const (
-	CardDisputesListParamsStatusInPendingReviewing CardDisputesListParamsStatusIn = "pending_reviewing"
-	CardDisputesListParamsStatusInAccepted         CardDisputesListParamsStatusIn = "accepted"
-	CardDisputesListParamsStatusInRejected         CardDisputesListParamsStatusIn = "rejected"
+	CardDisputeListParamsStatusInPendingReviewing CardDisputeListParamsStatusIn = "pending_reviewing"
+	CardDisputeListParamsStatusInAccepted         CardDisputeListParamsStatusIn = "accepted"
+	CardDisputeListParamsStatusInRejected         CardDisputeListParamsStatusIn = "rejected"
 )
 
 type CardDisputeList struct {

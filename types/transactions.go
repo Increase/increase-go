@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -22,7 +23,7 @@ type Transaction struct {
 	Currency *TransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
@@ -88,7 +89,7 @@ func (r Transaction) GetCurrency() (Currency TransactionCurrency) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r Transaction) GetCreatedAt() (CreatedAt string) {
+func (r Transaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -954,7 +955,7 @@ func (r TransactionSourceACHTransferRejection) String() (result string) {
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *TransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
@@ -980,7 +981,7 @@ func (r *TransactionSourceACHTransferReturn) MarshalJSON() (data []byte, err err
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r TransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt string) {
+func (r TransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -1046,7 +1047,7 @@ const (
 type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `pjson:"accepted_at"`
+	AcceptedAt *time.Time `pjson:"accepted_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Card Dispute that was accepted.
 	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
@@ -1071,7 +1072,7 @@ func (r *TransactionSourceCardDisputeAcceptance) MarshalJSON() (data []byte, err
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
-func (r TransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
+func (r TransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt time.Time) {
 	if r.AcceptedAt != nil {
 		AcceptedAt = *r.AcceptedAt
 	}
@@ -1448,7 +1449,7 @@ type TransactionSourceCheckDepositReturn struct {
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `pjson:"returned_at"`
+	ReturnedAt *time.Time `pjson:"returned_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency *TransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
@@ -1486,7 +1487,7 @@ func (r TransactionSourceCheckDepositReturn) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was returned.
-func (r TransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt string) {
+func (r TransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt time.Time) {
 	if r.ReturnedAt != nil {
 		ReturnedAt = *r.ReturnedAt
 	}
@@ -1762,7 +1763,7 @@ type TransactionSourceCheckTransferStopPaymentRequest struct {
 	// The transaction ID of the corresponding credit transaction.
 	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `pjson:"requested_at"`
+	RequestedAt *time.Time `pjson:"requested_at" format:"2006-01-02T15:04:05Z07:00"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type       *TransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
@@ -1801,7 +1802,7 @@ func (r TransactionSourceCheckTransferStopPaymentRequest) GetTransactionID() (Tr
 }
 
 // The time the stop-payment was requested.
-func (r TransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
+func (r TransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt time.Time) {
 	if r.RequestedAt != nil {
 		RequestedAt = *r.RequestedAt
 	}
@@ -1899,7 +1900,7 @@ type TransactionSourceEmpyrealCashDeposit struct {
 	// example, this is cents.
 	Amount      *int64                 `pjson:"amount"`
 	BagID       *string                `pjson:"bag_id"`
-	DepositDate *string                `pjson:"deposit_date"`
+	DepositDate *time.Time             `pjson:"deposit_date" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -1933,7 +1934,7 @@ func (r TransactionSourceEmpyrealCashDeposit) GetBagID() (BagID string) {
 	return
 }
 
-func (r TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate string) {
+func (r TransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate time.Time) {
 	if r.DepositDate != nil {
 		DepositDate = *r.DepositDate
 	}
@@ -2562,7 +2563,7 @@ type TransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The description on the reversal message from Fedwire.
 	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `pjson:"input_cycle_date"`
+	InputCycleDate *time.Time `pjson:"input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number.
 	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
@@ -2572,7 +2573,7 @@ type TransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *time.Time `pjson:"previous_message_input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -2612,7 +2613,7 @@ func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetDescription() (D
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate string) {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate time.Time) {
 	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
@@ -2652,7 +2653,7 @@ func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageI
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+func (r TransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate time.Time) {
 	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
@@ -2816,7 +2817,7 @@ type TransactionSourceInboundWireReversal struct {
 	// The description on the reversal message from Fedwire.
 	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `pjson:"input_cycle_date"`
+	InputCycleDate *time.Time `pjson:"input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number.
 	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
@@ -2826,7 +2827,7 @@ type TransactionSourceInboundWireReversal struct {
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *time.Time `pjson:"previous_message_input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -2870,7 +2871,7 @@ func (r TransactionSourceInboundWireReversal) GetDescription() (Description stri
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r TransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate string) {
+func (r TransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate time.Time) {
 	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
@@ -2910,7 +2911,7 @@ func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputMessageAcco
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+func (r TransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate time.Time) {
 	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
@@ -3124,9 +3125,9 @@ type TransactionSourceInterestPayment struct {
 	// currency.
 	Currency *TransactionSourceInterestPaymentCurrency `pjson:"currency"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart *string `pjson:"period_start"`
+	PeriodStart *time.Time `pjson:"period_start" format:"2006-01-02T15:04:05Z07:00"`
 	// The end of the period for which this transaction paid interest.
-	PeriodEnd *string `pjson:"period_end"`
+	PeriodEnd *time.Time `pjson:"period_end" format:"2006-01-02T15:04:05Z07:00"`
 	// The account on which the interest was accrued.
 	AccruedOnAccountID *string                `pjson:"accrued_on_account_id"`
 	jsonFields         map[string]interface{} `pjson:"-,extras"`
@@ -3165,7 +3166,7 @@ func (r TransactionSourceInterestPayment) GetCurrency() (Currency TransactionSou
 }
 
 // The start of the period for which this transaction paid interest.
-func (r TransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
+func (r TransactionSourceInterestPayment) GetPeriodStart() (PeriodStart time.Time) {
 	if r.PeriodStart != nil {
 		PeriodStart = *r.PeriodStart
 	}
@@ -3173,7 +3174,7 @@ func (r TransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) 
 }
 
 // The end of the period for which this transaction paid interest.
-func (r TransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
+func (r TransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd time.Time) {
 	if r.PeriodEnd != nil {
 		PeriodEnd = *r.PeriodEnd
 	}
@@ -3735,10 +3736,10 @@ type TransactionListParams struct {
 	// Filter Transactions for those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route.
-	RouteID    *string                          `query:"route_id"`
-	CreatedAt  *TransactionsListParamsCreatedAt `query:"created_at"`
-	Category   *TransactionsListParamsCategory  `query:"category"`
-	jsonFields map[string]interface{}           `pjson:"-,extras"`
+	RouteID    *string                         `query:"route_id"`
+	CreatedAt  *TransactionListParamsCreatedAt `query:"created_at"`
+	Category   *TransactionListParamsCategory  `query:"category"`
+	jsonFields map[string]interface{}          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into TransactionListParams using
@@ -3794,14 +3795,14 @@ func (r TransactionListParams) GetRouteID() (RouteID string) {
 	return
 }
 
-func (r TransactionListParams) GetCreatedAt() (CreatedAt TransactionsListParamsCreatedAt) {
+func (r TransactionListParams) GetCreatedAt() (CreatedAt TransactionListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r TransactionListParams) GetCategory() (Category TransactionsListParamsCategory) {
+func (r TransactionListParams) GetCategory() (Category TransactionListParamsCategory) {
 	if r.Category != nil {
 		Category = *r.Category
 	}
@@ -3812,45 +3813,45 @@ func (r TransactionListParams) String() (result string) {
 	return fmt.Sprintf("&TransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt, r.Category)
 }
 
-type TransactionsListParamsCreatedAt struct {
+type TransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// TransactionsListParamsCreatedAt using the internal pjson library. Unrecognized
+// TransactionListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *TransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *TransactionListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes TransactionsListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes TransactionListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *TransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *TransactionListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes TransactionsListParamsCreatedAt into a url.Values of the
+// URLQuery serializes TransactionListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *TransactionsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r TransactionsListParamsCreatedAt) GetAfter() (After string) {
+func (r TransactionListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -3859,7 +3860,7 @@ func (r TransactionsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r TransactionsListParamsCreatedAt) GetBefore() (Before string) {
+func (r TransactionListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -3868,7 +3869,7 @@ func (r TransactionsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r TransactionListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -3877,98 +3878,98 @@ func (r TransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r TransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r TransactionListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r TransactionsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&TransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r TransactionListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&TransactionListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
-type TransactionsListParamsCategory struct {
+type TransactionListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]TransactionsListParamsCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}              `pjson:"-,extras"`
+	In         *[]TransactionListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}             `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// TransactionsListParamsCategory using the internal pjson library. Unrecognized
-// fields are stored in the `jsonFields` property.
-func (r *TransactionsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into TransactionListParamsCategory
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *TransactionListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes TransactionsListParamsCategory into an array of bytes
+// MarshalJSON serializes TransactionListParamsCategory into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *TransactionsListParamsCategory) MarshalJSON() (data []byte, err error) {
+func (r *TransactionListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes TransactionsListParamsCategory into a url.Values of the
-// query parameters associated with this value
-func (r *TransactionsListParamsCategory) URLQuery() (v url.Values) {
+// URLQuery serializes TransactionListParamsCategory into a url.Values of the query
+// parameters associated with this value
+func (r *TransactionListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r TransactionsListParamsCategory) GetIn() (In []TransactionsListParamsCategoryIn) {
+func (r TransactionListParamsCategory) GetIn() (In []TransactionListParamsCategoryIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r TransactionsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&TransactionsListParamsCategory{In:%s}", core.Fmt(r.In))
+func (r TransactionListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&TransactionListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
-type TransactionsListParamsCategoryIn string
+type TransactionListParamsCategoryIn string
 
 const (
-	TransactionsListParamsCategoryInAccountTransferIntention                    TransactionsListParamsCategoryIn = "account_transfer_intention"
-	TransactionsListParamsCategoryInACHCheckConversionReturn                    TransactionsListParamsCategoryIn = "ach_check_conversion_return"
-	TransactionsListParamsCategoryInACHCheckConversion                          TransactionsListParamsCategoryIn = "ach_check_conversion"
-	TransactionsListParamsCategoryInACHTransferIntention                        TransactionsListParamsCategoryIn = "ach_transfer_intention"
-	TransactionsListParamsCategoryInACHTransferRejection                        TransactionsListParamsCategoryIn = "ach_transfer_rejection"
-	TransactionsListParamsCategoryInACHTransferReturn                           TransactionsListParamsCategoryIn = "ach_transfer_return"
-	TransactionsListParamsCategoryInCardDisputeAcceptance                       TransactionsListParamsCategoryIn = "card_dispute_acceptance"
-	TransactionsListParamsCategoryInCardRefund                                  TransactionsListParamsCategoryIn = "card_refund"
-	TransactionsListParamsCategoryInCardSettlement                              TransactionsListParamsCategoryIn = "card_settlement"
-	TransactionsListParamsCategoryInCheckDepositAcceptance                      TransactionsListParamsCategoryIn = "check_deposit_acceptance"
-	TransactionsListParamsCategoryInCheckDepositReturn                          TransactionsListParamsCategoryIn = "check_deposit_return"
-	TransactionsListParamsCategoryInCheckTransferIntention                      TransactionsListParamsCategoryIn = "check_transfer_intention"
-	TransactionsListParamsCategoryInCheckTransferReturn                         TransactionsListParamsCategoryIn = "check_transfer_return"
-	TransactionsListParamsCategoryInCheckTransferRejection                      TransactionsListParamsCategoryIn = "check_transfer_rejection"
-	TransactionsListParamsCategoryInCheckTransferStopPaymentRequest             TransactionsListParamsCategoryIn = "check_transfer_stop_payment_request"
-	TransactionsListParamsCategoryInDisputeResolution                           TransactionsListParamsCategoryIn = "dispute_resolution"
-	TransactionsListParamsCategoryInEmpyrealCashDeposit                         TransactionsListParamsCategoryIn = "empyreal_cash_deposit"
-	TransactionsListParamsCategoryInInboundACHTransfer                          TransactionsListParamsCategoryIn = "inbound_ach_transfer"
-	TransactionsListParamsCategoryInInboundACHTransferReturnIntention           TransactionsListParamsCategoryIn = "inbound_ach_transfer_return_intention"
-	TransactionsListParamsCategoryInInboundCheck                                TransactionsListParamsCategoryIn = "inbound_check"
-	TransactionsListParamsCategoryInInboundInternationalACHTransfer             TransactionsListParamsCategoryIn = "inbound_international_ach_transfer"
-	TransactionsListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionsListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	TransactionsListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionsListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
-	TransactionsListParamsCategoryInInboundWireDrawdownPayment                  TransactionsListParamsCategoryIn = "inbound_wire_drawdown_payment"
-	TransactionsListParamsCategoryInInboundWireReversal                         TransactionsListParamsCategoryIn = "inbound_wire_reversal"
-	TransactionsListParamsCategoryInInboundWireTransfer                         TransactionsListParamsCategoryIn = "inbound_wire_transfer"
-	TransactionsListParamsCategoryInInterestPayment                             TransactionsListParamsCategoryIn = "interest_payment"
-	TransactionsListParamsCategoryInInternalGeneralLedgerTransaction            TransactionsListParamsCategoryIn = "internal_general_ledger_transaction"
-	TransactionsListParamsCategoryInInternalSource                              TransactionsListParamsCategoryIn = "internal_source"
-	TransactionsListParamsCategoryInCardRouteRefund                             TransactionsListParamsCategoryIn = "card_route_refund"
-	TransactionsListParamsCategoryInCardRouteSettlement                         TransactionsListParamsCategoryIn = "card_route_settlement"
-	TransactionsListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionsListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
-	TransactionsListParamsCategoryInSampleFunds                                 TransactionsListParamsCategoryIn = "sample_funds"
-	TransactionsListParamsCategoryInWireDrawdownPaymentIntention                TransactionsListParamsCategoryIn = "wire_drawdown_payment_intention"
-	TransactionsListParamsCategoryInWireDrawdownPaymentRejection                TransactionsListParamsCategoryIn = "wire_drawdown_payment_rejection"
-	TransactionsListParamsCategoryInWireTransferIntention                       TransactionsListParamsCategoryIn = "wire_transfer_intention"
-	TransactionsListParamsCategoryInWireTransferRejection                       TransactionsListParamsCategoryIn = "wire_transfer_rejection"
-	TransactionsListParamsCategoryInOther                                       TransactionsListParamsCategoryIn = "other"
+	TransactionListParamsCategoryInAccountTransferIntention                    TransactionListParamsCategoryIn = "account_transfer_intention"
+	TransactionListParamsCategoryInACHCheckConversionReturn                    TransactionListParamsCategoryIn = "ach_check_conversion_return"
+	TransactionListParamsCategoryInACHCheckConversion                          TransactionListParamsCategoryIn = "ach_check_conversion"
+	TransactionListParamsCategoryInACHTransferIntention                        TransactionListParamsCategoryIn = "ach_transfer_intention"
+	TransactionListParamsCategoryInACHTransferRejection                        TransactionListParamsCategoryIn = "ach_transfer_rejection"
+	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
+	TransactionListParamsCategoryInCardDisputeAcceptance                       TransactionListParamsCategoryIn = "card_dispute_acceptance"
+	TransactionListParamsCategoryInCardRefund                                  TransactionListParamsCategoryIn = "card_refund"
+	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
+	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
+	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
+	TransactionListParamsCategoryInCheckTransferIntention                      TransactionListParamsCategoryIn = "check_transfer_intention"
+	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
+	TransactionListParamsCategoryInCheckTransferRejection                      TransactionListParamsCategoryIn = "check_transfer_rejection"
+	TransactionListParamsCategoryInCheckTransferStopPaymentRequest             TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
+	TransactionListParamsCategoryInDisputeResolution                           TransactionListParamsCategoryIn = "dispute_resolution"
+	TransactionListParamsCategoryInEmpyrealCashDeposit                         TransactionListParamsCategoryIn = "empyreal_cash_deposit"
+	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
+	TransactionListParamsCategoryInInboundACHTransferReturnIntention           TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
+	TransactionListParamsCategoryInInboundCheck                                TransactionListParamsCategoryIn = "inbound_check"
+	TransactionListParamsCategoryInInboundInternationalACHTransfer             TransactionListParamsCategoryIn = "inbound_international_ach_transfer"
+	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
+	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
+	TransactionListParamsCategoryInInboundWireDrawdownPayment                  TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
+	TransactionListParamsCategoryInInboundWireReversal                         TransactionListParamsCategoryIn = "inbound_wire_reversal"
+	TransactionListParamsCategoryInInboundWireTransfer                         TransactionListParamsCategoryIn = "inbound_wire_transfer"
+	TransactionListParamsCategoryInInterestPayment                             TransactionListParamsCategoryIn = "interest_payment"
+	TransactionListParamsCategoryInInternalGeneralLedgerTransaction            TransactionListParamsCategoryIn = "internal_general_ledger_transaction"
+	TransactionListParamsCategoryInInternalSource                              TransactionListParamsCategoryIn = "internal_source"
+	TransactionListParamsCategoryInCardRouteRefund                             TransactionListParamsCategoryIn = "card_route_refund"
+	TransactionListParamsCategoryInCardRouteSettlement                         TransactionListParamsCategoryIn = "card_route_settlement"
+	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
+	TransactionListParamsCategoryInSampleFunds                                 TransactionListParamsCategoryIn = "sample_funds"
+	TransactionListParamsCategoryInWireDrawdownPaymentIntention                TransactionListParamsCategoryIn = "wire_drawdown_payment_intention"
+	TransactionListParamsCategoryInWireDrawdownPaymentRejection                TransactionListParamsCategoryIn = "wire_drawdown_payment_rejection"
+	TransactionListParamsCategoryInWireTransferIntention                       TransactionListParamsCategoryIn = "wire_transfer_intention"
+	TransactionListParamsCategoryInWireTransferRejection                       TransactionListParamsCategoryIn = "wire_transfer_rejection"
+	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
 )
 
 type TransactionList struct {

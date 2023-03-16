@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -81,7 +82,7 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	Currency *CardAuthorizationSimulationPendingTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
@@ -150,7 +151,7 @@ func (r CardAuthorizationSimulationPendingTransaction) GetCurrency() (Currency C
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 // Transaction occured.
-func (r CardAuthorizationSimulationPendingTransaction) GetCreatedAt() (CreatedAt string) {
+func (r CardAuthorizationSimulationPendingTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -951,9 +952,9 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	Currency *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency `pjson:"currency"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt *string `pjson:"automatically_releases_at"`
+	AutomaticallyReleasesAt *time.Time `pjson:"automatically_releases_at" format:"2006-01-02T15:04:05Z07:00"`
 	// When the hold was released (if it has been released).
-	ReleasedAt *string `pjson:"released_at"`
+	ReleasedAt *time.Time `pjson:"released_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The status of the hold.
 	Status *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `pjson:"status"`
 	// The ID of the Transaction for which funds were held.
@@ -998,7 +999,7 @@ func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Get
 
 // When the hold will be released automatically. Certain conditions may cause it to
 // be released before this time.
-func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt string) {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetAutomaticallyReleasesAt() (AutomaticallyReleasesAt time.Time) {
 	if r.AutomaticallyReleasesAt != nil {
 		AutomaticallyReleasesAt = *r.AutomaticallyReleasesAt
 	}
@@ -1006,7 +1007,7 @@ func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Get
 }
 
 // When the hold was released (if it has been released).
-func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt string) {
+func (r CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) GetReleasedAt() (ReleasedAt time.Time) {
 	if r.ReleasedAt != nil {
 		ReleasedAt = *r.ReleasedAt
 	}
@@ -1314,7 +1315,7 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 	Currency *CardAuthorizationSimulationDeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// This is the description the vendor provides.
 	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
@@ -1380,7 +1381,7 @@ func (r CardAuthorizationSimulationDeclinedTransaction) GetCurrency() (Currency 
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r CardAuthorizationSimulationDeclinedTransaction) GetCreatedAt() (CreatedAt string) {
+func (r CardAuthorizationSimulationDeclinedTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}

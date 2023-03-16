@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -362,7 +363,7 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The person's address.
 	Address *EntityCorporationBeneficialOwnersIndividualAddress `pjson:"address"`
 	// A means of verifying the person's identity.
@@ -394,7 +395,7 @@ func (r EntityCorporationBeneficialOwnersIndividual) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r EntityCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
+func (r EntityCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -562,7 +563,7 @@ type EntityNaturalPerson struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The person's address.
 	Address *EntityNaturalPersonAddress `pjson:"address"`
 	// A means of verifying the person's identity.
@@ -593,7 +594,7 @@ func (r EntityNaturalPerson) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r EntityNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
+func (r EntityNaturalPerson) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -794,7 +795,7 @@ type EntityJointIndividuals struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The person's address.
 	Address *EntityJointIndividualsAddress `pjson:"address"`
 	// A means of verifying the person's identity.
@@ -825,7 +826,7 @@ func (r EntityJointIndividuals) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r EntityJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
+func (r EntityJointIndividuals) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -1219,7 +1220,7 @@ type EntityTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The person's address.
 	Address *EntityTrustTrusteesIndividualAddress `pjson:"address"`
 	// A means of verifying the person's identity.
@@ -1250,7 +1251,7 @@ func (r EntityTrustTrusteesIndividual) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r EntityTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
+func (r EntityTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -1410,7 +1411,7 @@ type EntityTrustGrantor struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The person's address.
 	Address *EntityTrustGrantorAddress `pjson:"address"`
 	// A means of verifying the person's identity.
@@ -1441,7 +1442,7 @@ func (r EntityTrustGrantor) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r EntityTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
+func (r EntityTrustGrantor) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -1983,7 +1984,7 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The individual's address.
 	Address *CreateAnEntityParametersCorporationBeneficialOwnersIndividualAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport, driver's
@@ -2020,7 +2021,7 @@ func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetName()
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth string) {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividual) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -2232,7 +2233,7 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The country that issued the passport.
 	Country    *string                `pjson:"country"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2264,7 +2265,7 @@ func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificat
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2287,7 +2288,7 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The state that issued the provided driver's license.
 	State      *string                `pjson:"state"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2319,7 +2320,7 @@ func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificat
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2345,7 +2346,7 @@ type CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentification
 	// A description of the document submitted.
 	Description *string `pjson:"description"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The identifier of the File containing the document.
 	FileID     *string                `pjson:"file_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2386,7 +2387,7 @@ func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificat
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersCorporationBeneficialOwnersIndividualIdentificationOther) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2416,7 +2417,7 @@ type CreateAnEntityParametersNaturalPerson struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The individual's address.
 	Address *CreateAnEntityParametersNaturalPersonAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport, driver's
@@ -2452,7 +2453,7 @@ func (r CreateAnEntityParametersNaturalPerson) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r CreateAnEntityParametersNaturalPerson) GetDateOfBirth() (DateOfBirth string) {
+func (r CreateAnEntityParametersNaturalPerson) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -2660,7 +2661,7 @@ type CreateAnEntityParametersNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The country that issued the passport.
 	Country    *string                `pjson:"country"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2690,7 +2691,7 @@ func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetFileID()
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersNaturalPersonIdentificationPassport) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2713,7 +2714,7 @@ type CreateAnEntityParametersNaturalPersonIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The state that issued the provided driver's license.
 	State      *string                `pjson:"state"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2745,7 +2746,7 @@ func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetFi
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersNaturalPersonIdentificationDriversLicense) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2771,7 +2772,7 @@ type CreateAnEntityParametersNaturalPersonIdentificationOther struct {
 	// A description of the document submitted.
 	Description *string `pjson:"description"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The identifier of the File containing the document.
 	FileID     *string                `pjson:"file_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -2810,7 +2811,7 @@ func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetDescription
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersNaturalPersonIdentificationOther) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -2875,7 +2876,7 @@ type CreateAnEntityParametersJointIndividuals struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The individual's address.
 	Address *CreateAnEntityParametersJointIndividualsAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport, driver's
@@ -2911,7 +2912,7 @@ func (r CreateAnEntityParametersJointIndividuals) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r CreateAnEntityParametersJointIndividuals) GetDateOfBirth() (DateOfBirth string) {
+func (r CreateAnEntityParametersJointIndividuals) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -3119,7 +3120,7 @@ type CreateAnEntityParametersJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The country that issued the passport.
 	Country    *string                `pjson:"country"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3150,7 +3151,7 @@ func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetFileI
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersJointIndividualsIdentificationPassport) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3173,7 +3174,7 @@ type CreateAnEntityParametersJointIndividualsIdentificationDriversLicense struct
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The state that issued the provided driver's license.
 	State      *string                `pjson:"state"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3205,7 +3206,7 @@ func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) Ge
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersJointIndividualsIdentificationDriversLicense) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3231,7 +3232,7 @@ type CreateAnEntityParametersJointIndividualsIdentificationOther struct {
 	// A description of the document submitted.
 	Description *string `pjson:"description"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The identifier of the File containing the document.
 	FileID     *string                `pjson:"file_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3270,7 +3271,7 @@ func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetDescript
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersJointIndividualsIdentificationOther) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3534,7 +3535,7 @@ type CreateAnEntityParametersTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The individual's address.
 	Address *CreateAnEntityParametersTrustTrusteesIndividualAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport, driver's
@@ -3571,7 +3572,7 @@ func (r CreateAnEntityParametersTrustTrusteesIndividual) GetName() (Name string)
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth string) {
+func (r CreateAnEntityParametersTrustTrusteesIndividual) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -3779,7 +3780,7 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport struc
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The country that issued the passport.
 	Country    *string                `pjson:"country"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3811,7 +3812,7 @@ func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) G
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationPassport) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3834,7 +3835,7 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The state that issued the provided driver's license.
 	State      *string                `pjson:"state"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3866,7 +3867,7 @@ func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLice
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationDriversLicense) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3892,7 +3893,7 @@ type CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther struct {
 	// A description of the document submitted.
 	Description *string `pjson:"description"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The identifier of the File containing the document.
 	FileID     *string                `pjson:"file_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -3933,7 +3934,7 @@ func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetD
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustTrusteesIndividualIdentificationOther) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -3956,7 +3957,7 @@ type CreateAnEntityParametersTrustGrantor struct {
 	// The person's legal name.
 	Name *string `pjson:"name"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth *string `pjson:"date_of_birth"`
+	DateOfBirth *time.Time `pjson:"date_of_birth" format:"2006-01-02"`
 	// The individual's address.
 	Address *CreateAnEntityParametersTrustGrantorAddress `pjson:"address"`
 	// The identification method for an individual can only be a passport, driver's
@@ -3992,7 +3993,7 @@ func (r CreateAnEntityParametersTrustGrantor) GetName() (Name string) {
 }
 
 // The person's date of birth in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustGrantor) GetDateOfBirth() (DateOfBirth string) {
+func (r CreateAnEntityParametersTrustGrantor) GetDateOfBirth() (DateOfBirth time.Time) {
 	if r.DateOfBirth != nil {
 		DateOfBirth = *r.DateOfBirth
 	}
@@ -4200,7 +4201,7 @@ type CreateAnEntityParametersTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID *string `pjson:"file_id"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The country that issued the passport.
 	Country    *string                `pjson:"country"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -4230,7 +4231,7 @@ func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetFileID() 
 }
 
 // The passport's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustGrantorIdentificationPassport) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -4253,7 +4254,7 @@ type CreateAnEntityParametersTrustGrantorIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID *string `pjson:"file_id"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The state that issued the provided driver's license.
 	State      *string                `pjson:"state"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -4285,7 +4286,7 @@ func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetFil
 }
 
 // The driver's license's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustGrantorIdentificationDriversLicense) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}
@@ -4311,7 +4312,7 @@ type CreateAnEntityParametersTrustGrantorIdentificationOther struct {
 	// A description of the document submitted.
 	Description *string `pjson:"description"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate *string `pjson:"expiration_date"`
+	ExpirationDate *time.Time `pjson:"expiration_date" format:"2006-01-02"`
 	// The identifier of the File containing the document.
 	FileID     *string                `pjson:"file_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -4350,7 +4351,7 @@ func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetDescription(
 }
 
 // The document's expiration date in YYYY-MM-DD format.
-func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetExpirationDate() (ExpirationDate string) {
+func (r CreateAnEntityParametersTrustGrantorIdentificationOther) GetExpirationDate() (ExpirationDate time.Time) {
 	if r.ExpirationDate != nil {
 		ExpirationDate = *r.ExpirationDate
 	}

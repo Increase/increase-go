@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -29,7 +30,7 @@ type CheckTransfer struct {
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency *CheckTransferCurrency `pjson:"currency"`
@@ -37,7 +38,7 @@ type CheckTransfer struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt *string `pjson:"mailed_at"`
+	MailedAt *time.Time `pjson:"mailed_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The descriptor that will be printed on the memo field on the check.
 	Message *string `pjson:"message"`
 	// The descriptor that will be printed on the letter included with the check.
@@ -48,7 +49,7 @@ type CheckTransfer struct {
 	Status *CheckTransferStatus `pjson:"status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was submitted.
-	SubmittedAt *string `pjson:"submitted_at"`
+	SubmittedAt *time.Time `pjson:"submitted_at" format:"2006-01-02T15:04:05Z07:00"`
 	// After the transfer is submitted, this will contain supplemental details.
 	Submission *CheckTransferSubmission `pjson:"submission"`
 	// If the transfer was created from a template, this will be the template's ID.
@@ -146,7 +147,7 @@ func (r CheckTransfer) GetAmount() (Amount int64) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r CheckTransfer) GetCreatedAt() (CreatedAt string) {
+func (r CheckTransfer) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -172,7 +173,7 @@ func (r CheckTransfer) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check was mailed.
-func (r CheckTransfer) GetMailedAt() (MailedAt string) {
+func (r CheckTransfer) GetMailedAt() (MailedAt time.Time) {
 	if r.MailedAt != nil {
 		MailedAt = *r.MailedAt
 	}
@@ -213,7 +214,7 @@ func (r CheckTransfer) GetStatus() (Status CheckTransferStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check was submitted.
-func (r CheckTransfer) GetSubmittedAt() (SubmittedAt string) {
+func (r CheckTransfer) GetSubmittedAt() (SubmittedAt time.Time) {
 	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
@@ -422,7 +423,7 @@ type CheckTransferStopPaymentRequest struct {
 	// The transaction ID of the corresponding credit transaction.
 	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `pjson:"requested_at"`
+	RequestedAt *time.Time `pjson:"requested_at" format:"2006-01-02T15:04:05Z07:00"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type       *CheckTransferStopPaymentRequestType `pjson:"type"`
@@ -460,7 +461,7 @@ func (r CheckTransferStopPaymentRequest) GetTransactionID() (TransactionID strin
 }
 
 // The time the stop-payment was requested.
-func (r CheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
+func (r CheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt time.Time) {
 	if r.RequestedAt != nil {
 		RequestedAt = *r.RequestedAt
 	}
@@ -786,9 +787,9 @@ type CheckTransferListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID  *string                            `query:"account_id"`
-	CreatedAt  *CheckTransfersListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}             `pjson:"-,extras"`
+	AccountID  *string                           `query:"account_id"`
+	CreatedAt  *CheckTransferListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferListParams using
@@ -836,7 +837,7 @@ func (r CheckTransferListParams) GetAccountID() (AccountID string) {
 	return
 }
 
-func (r CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransfersListParamsCreatedAt) {
+func (r CheckTransferListParams) GetCreatedAt() (CreatedAt CheckTransferListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -847,45 +848,45 @@ func (r CheckTransferListParams) String() (result string) {
 	return fmt.Sprintf("&CheckTransferListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
-type CheckTransfersListParamsCreatedAt struct {
+type CheckTransferListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// CheckTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
+// CheckTransferListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *CheckTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckTransferListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CheckTransfersListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes CheckTransferListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *CheckTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CheckTransferListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CheckTransfersListParamsCreatedAt into a url.Values of the
+// URLQuery serializes CheckTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CheckTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
+func (r CheckTransferListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -894,7 +895,7 @@ func (r CheckTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
+func (r CheckTransferListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -903,7 +904,7 @@ func (r CheckTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r CheckTransferListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -912,15 +913,15 @@ func (r CheckTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CheckTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r CheckTransferListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r CheckTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CheckTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r CheckTransferListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CheckTransferListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type CheckTransferList struct {

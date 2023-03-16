@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+	"time"
 	"unsafe"
 
 	"github.com/tidwall/gjson"
@@ -12,7 +13,7 @@ import (
 var decoders sync.Map // map[reflect.Type]decoderFunc
 
 func Unmarshal(raw []byte, to any) error {
-	d := &decoder{}
+	d := &decoder{dateFormat: time.RFC3339}
 	value := reflect.ValueOf(to).Elem()
 	result := gjson.ParseBytes(raw)
 	if !value.IsValid() {
@@ -21,18 +22,31 @@ func Unmarshal(raw []byte, to any) error {
 	return d.typeDecoder(value.Type())(result, value)
 }
 
-type decoder struct{}
+type decoder struct {
+	dateFormat string
+}
 
 type decoderFunc func(node gjson.Result, value reflect.Value) error
 
 type decoderField struct {
-	tag parsedStructTag
-	fn  decoderFunc
-	idx []int
+	tag        parsedStructTag
+	fn         decoderFunc
+	idx        []int
+	dateFormat string
+}
+
+type decoderEntry struct {
+	reflect.Type
+	dateFormat string
 }
 
 func (d *decoder) typeDecoder(t reflect.Type) decoderFunc {
-	if fi, ok := decoders.Load(t); ok {
+	entry := decoderEntry{
+		Type:       t,
+		dateFormat: d.dateFormat,
+	}
+
+	if fi, ok := decoders.Load(entry); ok {
 		return fi.(decoderFunc)
 	}
 
@@ -45,7 +59,7 @@ func (d *decoder) typeDecoder(t reflect.Type) decoderFunc {
 		f  decoderFunc
 	)
 	wg.Add(1)
-	fi, loaded := decoders.LoadOrStore(t, decoderFunc(func(node gjson.Result, v reflect.Value) error {
+	fi, loaded := decoders.LoadOrStore(entry, decoderFunc(func(node gjson.Result, v reflect.Value) error {
 		wg.Wait()
 		return f(node, v)
 	}))
@@ -56,7 +70,7 @@ func (d *decoder) typeDecoder(t reflect.Type) decoderFunc {
 	// Compute the real decoder and replace the indirect func with it.
 	f = d.newTypeDecoder(t)
 	wg.Done()
-	decoders.Store(t, f)
+	decoders.Store(entry, f)
 	return f
 }
 
@@ -81,6 +95,9 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 			return nil
 		}
 	case reflect.Struct:
+		if t == reflect.TypeOf(time.Time{}) {
+			return d.newTimeTypeDecoder(t)
+		}
 		return d.newStructTypeDecoder(t)
 	case reflect.Array:
 		fallthrough
@@ -176,22 +193,28 @@ func (d *decoder) newStructTypeDecoder(t reflect.Type) decoderFunc {
 				collectFieldDecoders(field.Type, idx)
 				continue
 			}
-			tag, ok := field.Tag.Lookup(pjsonStructTag)
+			ptag, ok := parseStructTag(field)
 			if !ok {
 				continue
 			}
-			ptag := parseStructTag(tag)
+			dateFormat, ok := parseFormatStructTag(field)
 			// We only want to support unexported fields if they're tagged with
 			// `extras` because that field shouldn't be part of the public API. We
 			// also want to only keep the top level extras
 			if ptag.storeExtraProperties && len(index) == 0 {
-				extraDecoder = &decoderField{ptag, nil, idx}
+				extraDecoder = &decoderField{ptag, nil, idx, dateFormat}
 				continue
 			}
 			if ptag.storeExtraProperties || !field.IsExported() {
 				continue
 			}
-			decoderFields[ptag.name] = decoderField{ptag, d.typeDecoder(field.Type), idx}
+			oldFormat := d.dateFormat
+			format, ok := parseFormatStructTag(field)
+			if ok {
+				d.dateFormat = format
+			}
+			decoderFields[ptag.name] = decoderField{ptag, d.typeDecoder(field.Type), idx, dateFormat}
+			d.dateFormat = oldFormat
 		}
 	}
 	collectFieldDecoders(t, []int{})
@@ -257,6 +280,20 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 		return func(node gjson.Result, v reflect.Value) error {
 			return fmt.Errorf("unknown type received at primitive decoder: %s", t.String())
 		}
+	}
+}
+
+func (d *decoder) newTimeTypeDecoder(t reflect.Type) decoderFunc {
+	format := d.dateFormat
+	return func(n gjson.Result, v reflect.Value) error {
+		t, err := time.Parse(format, n.Str)
+		if err != nil {
+			// FIXME: Currently, we do nothing on parse failure Later when we
+			// implment metadata we should make this change the metadata instead
+			return nil
+		}
+		v.Set(reflect.ValueOf(t))
+		return nil
 	}
 }
 

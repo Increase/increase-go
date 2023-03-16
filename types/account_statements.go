@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -17,15 +18,15 @@ type AccountStatement struct {
 	AccountID *string `pjson:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the File containing a PDF of the statement.
 	FileID *string `pjson:"file_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 	// start of the period the Account Statement covers.
-	StatementPeriodStart *string `pjson:"statement_period_start"`
+	StatementPeriodStart *time.Time `pjson:"statement_period_start" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 	// of the period the Account Statement covers.
-	StatementPeriodEnd *string `pjson:"statement_period_end"`
+	StatementPeriodEnd *time.Time `pjson:"statement_period_end" format:"2006-01-02T15:04:05Z07:00"`
 	// The Account's balance at the start of its statement period.
 	StartingBalance *int64 `pjson:"starting_balance"`
 	// The Account's balance at the start of its statement period.
@@ -68,7 +69,7 @@ func (r AccountStatement) GetAccountID() (AccountID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // Statement was created.
-func (r AccountStatement) GetCreatedAt() (CreatedAt string) {
+func (r AccountStatement) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -85,7 +86,7 @@ func (r AccountStatement) GetFileID() (FileID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 // start of the period the Account Statement covers.
-func (r AccountStatement) GetStatementPeriodStart() (StatementPeriodStart string) {
+func (r AccountStatement) GetStatementPeriodStart() (StatementPeriodStart time.Time) {
 	if r.StatementPeriodStart != nil {
 		StatementPeriodStart = *r.StatementPeriodStart
 	}
@@ -94,7 +95,7 @@ func (r AccountStatement) GetStatementPeriodStart() (StatementPeriodStart string
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 // of the period the Account Statement covers.
-func (r AccountStatement) GetStatementPeriodEnd() (StatementPeriodEnd string) {
+func (r AccountStatement) GetStatementPeriodEnd() (StatementPeriodEnd time.Time) {
 	if r.StatementPeriodEnd != nil {
 		StatementPeriodEnd = *r.StatementPeriodEnd
 	}
@@ -143,9 +144,9 @@ type AccountStatementListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Account Statements to those belonging to the specified Account.
-	AccountID            *string                                          `query:"account_id"`
-	StatementPeriodStart *AccountStatementsListParamsStatementPeriodStart `query:"statement_period_start"`
-	jsonFields           map[string]interface{}                           `pjson:"-,extras"`
+	AccountID            *string                                         `query:"account_id"`
+	StatementPeriodStart *AccountStatementListParamsStatementPeriodStart `query:"statement_period_start"`
+	jsonFields           map[string]interface{}                          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatementListParams
@@ -193,7 +194,7 @@ func (r AccountStatementListParams) GetAccountID() (AccountID string) {
 	return
 }
 
-func (r AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodStart AccountStatementsListParamsStatementPeriodStart) {
+func (r AccountStatementListParams) GetStatementPeriodStart() (StatementPeriodStart AccountStatementListParamsStatementPeriodStart) {
 	if r.StatementPeriodStart != nil {
 		StatementPeriodStart = *r.StatementPeriodStart
 	}
@@ -204,46 +205,46 @@ func (r AccountStatementListParams) String() (result string) {
 	return fmt.Sprintf("&AccountStatementListParams{Cursor:%s Limit:%s AccountID:%s StatementPeriodStart:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.StatementPeriodStart)
 }
 
-type AccountStatementsListParamsStatementPeriodStart struct {
+type AccountStatementListParamsStatementPeriodStart struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// AccountStatementsListParamsStatementPeriodStart using the internal pjson
-// library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *AccountStatementsListParamsStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
+// AccountStatementListParamsStatementPeriodStart using the internal pjson library.
+// Unrecognized fields are stored in the `jsonFields` property.
+func (r *AccountStatementListParamsStatementPeriodStart) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes AccountStatementsListParamsStatementPeriodStart into an
+// MarshalJSON serializes AccountStatementListParamsStatementPeriodStart into an
 // array of bytes using the gjson library. Members of the `jsonFields` field are
 // serialized into the top-level, and will overwrite known members of the same
 // name.
-func (r *AccountStatementsListParamsStatementPeriodStart) MarshalJSON() (data []byte, err error) {
+func (r *AccountStatementListParamsStatementPeriodStart) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes AccountStatementsListParamsStatementPeriodStart into a
+// URLQuery serializes AccountStatementListParamsStatementPeriodStart into a
 // url.Values of the query parameters associated with this value
-func (r *AccountStatementsListParamsStatementPeriodStart) URLQuery() (v url.Values) {
+func (r *AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r AccountStatementsListParamsStatementPeriodStart) GetAfter() (After string) {
+func (r AccountStatementListParamsStatementPeriodStart) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -252,7 +253,7 @@ func (r AccountStatementsListParamsStatementPeriodStart) GetAfter() (After strin
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before string) {
+func (r AccountStatementListParamsStatementPeriodStart) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -261,7 +262,7 @@ func (r AccountStatementsListParamsStatementPeriodStart) GetBefore() (Before str
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAfter string) {
+func (r AccountStatementListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -270,15 +271,15 @@ func (r AccountStatementsListParamsStatementPeriodStart) GetOnOrAfter() (OnOrAft
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r AccountStatementsListParamsStatementPeriodStart) GetOnOrBefore() (OnOrBefore string) {
+func (r AccountStatementListParamsStatementPeriodStart) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r AccountStatementsListParamsStatementPeriodStart) String() (result string) {
-	return fmt.Sprintf("&AccountStatementsListParamsStatementPeriodStart{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r AccountStatementListParamsStatementPeriodStart) String() (result string) {
+	return fmt.Sprintf("&AccountStatementListParamsStatementPeriodStart{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type AccountStatementList struct {

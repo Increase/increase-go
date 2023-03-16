@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -46,7 +47,7 @@ type WireTransfer struct {
 	Reversal *WireTransferReversal `pjson:"reversal"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The transfer's network.
 	Network *WireTransferNetwork `pjson:"network"`
 	// The lifecycle status of the transfer.
@@ -203,7 +204,7 @@ func (r WireTransfer) GetReversal() (Reversal WireTransferReversal) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r WireTransfer) GetCreatedAt() (CreatedAt string) {
+func (r WireTransfer) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -278,7 +279,7 @@ const (
 type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string                `pjson:"approved_at"`
+	ApprovedAt *time.Time             `pjson:"approved_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -298,7 +299,7 @@ func (r *WireTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r WireTransferApproval) GetApprovedAt() (ApprovedAt string) {
+func (r WireTransferApproval) GetApprovedAt() (ApprovedAt time.Time) {
 	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
@@ -312,7 +313,7 @@ func (r WireTransferApproval) String() (result string) {
 type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string                `pjson:"canceled_at"`
+	CanceledAt *time.Time             `pjson:"canceled_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -332,7 +333,7 @@ func (r *WireTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r WireTransferCancellation) GetCanceledAt() (CanceledAt string) {
+func (r WireTransferCancellation) GetCanceledAt() (CanceledAt time.Time) {
 	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
@@ -349,7 +350,7 @@ type WireTransferReversal struct {
 	// The description on the reversal message from Fedwire.
 	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `pjson:"input_cycle_date"`
+	InputCycleDate *time.Time `pjson:"input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number.
 	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
@@ -359,7 +360,7 @@ type WireTransferReversal struct {
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *time.Time `pjson:"previous_message_input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -403,7 +404,7 @@ func (r WireTransferReversal) GetDescription() (Description string) {
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r WireTransferReversal) GetInputCycleDate() (InputCycleDate string) {
+func (r WireTransferReversal) GetInputCycleDate() (InputCycleDate time.Time) {
 	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
@@ -443,7 +444,7 @@ func (r WireTransferReversal) GetPreviousMessageInputMessageAccountabilityData()
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r WireTransferReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+func (r WireTransferReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate time.Time) {
 	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
@@ -509,7 +510,7 @@ type WireTransferSubmission struct {
 	// The accountability data for the submission.
 	InputMessageAccountabilityData *string `pjson:"input_message_accountability_data"`
 	// When this wire transfer was submitted to Fedwire.
-	SubmittedAt *string                `pjson:"submitted_at"`
+	SubmittedAt *time.Time             `pjson:"submitted_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -536,7 +537,7 @@ func (r WireTransferSubmission) GetInputMessageAccountabilityData() (InputMessag
 }
 
 // When this wire transfer was submitted to Fedwire.
-func (r WireTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
+func (r WireTransferSubmission) GetSubmittedAt() (SubmittedAt time.Time) {
 	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
@@ -698,9 +699,9 @@ type WireTransferListParams struct {
 	// Filter Wire Transfers to those belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Wire Transfers to those made to the specified External Account.
-	ExternalAccountID *string                           `query:"external_account_id"`
-	CreatedAt         *WireTransfersListParamsCreatedAt `query:"created_at"`
-	jsonFields        map[string]interface{}            `pjson:"-,extras"`
+	ExternalAccountID *string                          `query:"external_account_id"`
+	CreatedAt         *WireTransferListParamsCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}           `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferListParams using
@@ -756,7 +757,7 @@ func (r WireTransferListParams) GetExternalAccountID() (ExternalAccountID string
 	return
 }
 
-func (r WireTransferListParams) GetCreatedAt() (CreatedAt WireTransfersListParamsCreatedAt) {
+func (r WireTransferListParams) GetCreatedAt() (CreatedAt WireTransferListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -767,45 +768,45 @@ func (r WireTransferListParams) String() (result string) {
 	return fmt.Sprintf("&WireTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
 }
 
-type WireTransfersListParamsCreatedAt struct {
+type WireTransferListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// WireTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
+// WireTransferListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *WireTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *WireTransferListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes WireTransfersListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes WireTransferListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *WireTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *WireTransferListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes WireTransfersListParamsCreatedAt into a url.Values of the
+// URLQuery serializes WireTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *WireTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r WireTransfersListParamsCreatedAt) GetAfter() (After string) {
+func (r WireTransferListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -814,7 +815,7 @@ func (r WireTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
+func (r WireTransferListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -823,7 +824,7 @@ func (r WireTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r WireTransferListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -832,15 +833,15 @@ func (r WireTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r WireTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r WireTransferListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r WireTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&WireTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r WireTransferListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&WireTransferListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type WireTransferList struct {

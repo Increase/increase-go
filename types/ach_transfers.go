@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -32,7 +33,7 @@ type ACHTransfer struct {
 	Cancellation *ACHTransferCancellation `pjson:"cancellation"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID *string `pjson:"external_account_id"`
 	// The ACH transfer's identifier.
@@ -157,7 +158,7 @@ func (r ACHTransfer) GetCancellation() (Cancellation ACHTransferCancellation) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r ACHTransfer) GetCreatedAt() (CreatedAt string) {
+func (r ACHTransfer) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -346,7 +347,7 @@ const (
 type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt *string                `pjson:"approved_at"`
+	ApprovedAt *time.Time             `pjson:"approved_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -366,7 +367,7 @@ func (r *ACHTransferApproval) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was approved.
-func (r ACHTransferApproval) GetApprovedAt() (ApprovedAt string) {
+func (r ACHTransferApproval) GetApprovedAt() (ApprovedAt time.Time) {
 	if r.ApprovedAt != nil {
 		ApprovedAt = *r.ApprovedAt
 	}
@@ -380,7 +381,7 @@ func (r ACHTransferApproval) String() (result string) {
 type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt *string                `pjson:"canceled_at"`
+	CanceledAt *time.Time             `pjson:"canceled_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -400,7 +401,7 @@ func (r *ACHTransferCancellation) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Transfer was canceled.
-func (r ACHTransferCancellation) GetCanceledAt() (CanceledAt string) {
+func (r ACHTransferCancellation) GetCanceledAt() (CanceledAt time.Time) {
 	if r.CanceledAt != nil {
 		CanceledAt = *r.CanceledAt
 	}
@@ -420,7 +421,7 @@ const (
 type ACHTransferNotificationOfChange struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The type of change that occurred.
 	ChangeCode *string `pjson:"change_code"`
 	// The corrected data.
@@ -444,7 +445,7 @@ func (r *ACHTransferNotificationOfChange) MarshalJSON() (data []byte, err error)
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the notification occurred.
-func (r ACHTransferNotificationOfChange) GetCreatedAt() (CreatedAt string) {
+func (r ACHTransferNotificationOfChange) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -474,7 +475,7 @@ func (r ACHTransferNotificationOfChange) String() (result string) {
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *ACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
@@ -500,7 +501,7 @@ func (r *ACHTransferReturn) MarshalJSON() (data []byte, err error) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r ACHTransferReturn) GetCreatedAt() (CreatedAt string) {
+func (r ACHTransferReturn) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -579,7 +580,7 @@ type ACHTransferSubmission struct {
 	// The trace number for the submission.
 	TraceNumber *string `pjson:"trace_number"`
 	// When the ACH transfer was sent to FedACH.
-	SubmittedAt *string                `pjson:"submitted_at"`
+	SubmittedAt *time.Time             `pjson:"submitted_at" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -606,7 +607,7 @@ func (r ACHTransferSubmission) GetTraceNumber() (TraceNumber string) {
 }
 
 // When the ACH transfer was sent to FedACH.
-func (r ACHTransferSubmission) GetSubmittedAt() (SubmittedAt string) {
+func (r ACHTransferSubmission) GetSubmittedAt() (SubmittedAt time.Time) {
 	if r.SubmittedAt != nil {
 		SubmittedAt = *r.SubmittedAt
 	}
@@ -664,7 +665,7 @@ type CreateAnACHTransferParameters struct {
 	CompanyName *string `pjson:"company_name"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate *string `pjson:"effective_date"`
+	EffectiveDate *time.Time `pjson:"effective_date" format:"2006-01-02"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
 	ExternalAccountID *string `pjson:"external_account_id"`
@@ -779,7 +780,7 @@ func (r CreateAnACHTransferParameters) GetCompanyName() (CompanyName string) {
 
 // The transfer effective date in
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-func (r CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate string) {
+func (r CreateAnACHTransferParameters) GetEffectiveDate() (EffectiveDate time.Time) {
 	if r.EffectiveDate != nil {
 		EffectiveDate = *r.EffectiveDate
 	}
@@ -886,9 +887,9 @@ type ACHTransferListParams struct {
 	// Filter ACH Transfers to those that originated from the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter ACH Transfers to those made to the specified External Account.
-	ExternalAccountID *string                          `query:"external_account_id"`
-	CreatedAt         *ACHTransfersListParamsCreatedAt `query:"created_at"`
-	jsonFields        map[string]interface{}           `pjson:"-,extras"`
+	ExternalAccountID *string                         `query:"external_account_id"`
+	CreatedAt         *ACHTransferListParamsCreatedAt `query:"created_at"`
+	jsonFields        map[string]interface{}          `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferListParams using
@@ -944,7 +945,7 @@ func (r ACHTransferListParams) GetExternalAccountID() (ExternalAccountID string)
 	return
 }
 
-func (r ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransfersListParamsCreatedAt) {
+func (r ACHTransferListParams) GetCreatedAt() (CreatedAt ACHTransferListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -955,45 +956,45 @@ func (r ACHTransferListParams) String() (result string) {
 	return fmt.Sprintf("&ACHTransferListParams{Cursor:%s Limit:%s AccountID:%s ExternalAccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.ExternalAccountID), r.CreatedAt)
 }
 
-type ACHTransfersListParamsCreatedAt struct {
+type ACHTransferListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHTransfersListParamsCreatedAt using the internal pjson library. Unrecognized
+// ACHTransferListParamsCreatedAt using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *ACHTransfersListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHTransferListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ACHTransfersListParamsCreatedAt into an array of bytes
+// MarshalJSON serializes ACHTransferListParamsCreatedAt into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *ACHTransfersListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *ACHTransferListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes ACHTransfersListParamsCreatedAt into a url.Values of the
+// URLQuery serializes ACHTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *ACHTransfersListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *ACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
+func (r ACHTransferListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -1002,7 +1003,7 @@ func (r ACHTransfersListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
+func (r ACHTransferListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -1011,7 +1012,7 @@ func (r ACHTransfersListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r ACHTransferListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -1020,15 +1021,15 @@ func (r ACHTransfersListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r ACHTransfersListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r ACHTransferListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r ACHTransfersListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&ACHTransfersListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r ACHTransferListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&ACHTransferListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type ACHTransferList struct {

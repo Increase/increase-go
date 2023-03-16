@@ -30,7 +30,7 @@ func TestCardProfilesGet(t *testing.T) {
 
 func TestCardProfilesListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.List(context.TODO(), &types.CardProfileListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.CardProfilesListParamsStatus{In: increase.P([]types.CardProfilesListParamsStatusIn{types.CardProfilesListParamsStatusInPending, types.CardProfilesListParamsStatusInPending, types.CardProfilesListParamsStatusInPending})})})
+	_, err := c.CardProfiles.List(context.TODO(), &types.CardProfileListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.CardProfileListParamsStatus{In: increase.P([]types.CardProfileListParamsStatusIn{types.CardProfileListParamsStatusInPending, types.CardProfileListParamsStatusInPending, types.CardProfileListParamsStatusInPending})})})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

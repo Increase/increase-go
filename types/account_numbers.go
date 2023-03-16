@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -19,7 +20,7 @@ type AccountNumber struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The name you choose for the Account Number.
 	Name *string `pjson:"name"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -72,7 +73,7 @@ func (r AccountNumber) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // Number was created.
-func (r AccountNumber) GetCreatedAt() (CreatedAt string) {
+func (r AccountNumber) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -229,7 +230,7 @@ type AccountNumberListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status *AccountNumbersListParamsStatus `query:"status"`
+	Status *AccountNumberListParamsStatus `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
 	AccountID  *string                `query:"account_id"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
@@ -273,7 +274,7 @@ func (r AccountNumberListParams) GetLimit() (Limit int64) {
 }
 
 // The status to retrieve Account Numbers for.
-func (r AccountNumberListParams) GetStatus() (Status AccountNumbersListParamsStatus) {
+func (r AccountNumberListParams) GetStatus() (Status AccountNumberListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -292,12 +293,12 @@ func (r AccountNumberListParams) String() (result string) {
 	return fmt.Sprintf("&AccountNumberListParams{Cursor:%s Limit:%s Status:%s AccountID:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.Status), core.FmtP(r.AccountID))
 }
 
-type AccountNumbersListParamsStatus string
+type AccountNumberListParamsStatus string
 
 const (
-	AccountNumbersListParamsStatusActive   AccountNumbersListParamsStatus = "active"
-	AccountNumbersListParamsStatusDisabled AccountNumbersListParamsStatus = "disabled"
-	AccountNumbersListParamsStatusCanceled AccountNumbersListParamsStatus = "canceled"
+	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
+	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
+	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )
 
 type AccountNumberList struct {

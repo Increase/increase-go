@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -14,7 +15,7 @@ type Group struct {
 	ACHDebitStatus *GroupACHDebitStatus `pjson:"ach_debit_status"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The Group identifier.
 	ID *string `pjson:"id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -54,7 +55,7 @@ func (r Group) GetACHDebitStatus() (ACHDebitStatus GroupACHDebitStatus) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 // was created.
-func (r Group) GetCreatedAt() (CreatedAt string) {
+func (r Group) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}

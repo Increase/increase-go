@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -16,7 +17,7 @@ type Account struct {
 	Balances *AccountBalances `pjson:"balances"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 	// currency.
 	Currency *AccountCurrency `pjson:"currency"`
@@ -32,7 +33,7 @@ type Account struct {
 	InterestAccrued *string `pjson:"interest_accrued"`
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
-	InterestAccruedAt *string `pjson:"interest_accrued_at"`
+	InterestAccruedAt *time.Time `pjson:"interest_accrued_at" format:"2006-01-02"`
 	// The name you choose for the Account.
 	Name *string `pjson:"name"`
 	// The status of the Account.
@@ -67,7 +68,7 @@ func (r Account) GetBalances() (Balances AccountBalances) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 // was created.
-func (r Account) GetCreatedAt() (CreatedAt string) {
+func (r Account) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -119,7 +120,7 @@ func (r Account) GetInterestAccrued() (InterestAccrued string) {
 
 // The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 // interest was accrued.
-func (r Account) GetInterestAccruedAt() (InterestAccruedAt string) {
+func (r Account) GetInterestAccruedAt() (InterestAccruedAt time.Time) {
 	if r.InterestAccruedAt != nil {
 		InterestAccruedAt = *r.InterestAccruedAt
 	}
@@ -320,8 +321,8 @@ type AccountListParams struct {
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID *string `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status     *AccountsListParamsStatus `query:"status"`
-	jsonFields map[string]interface{}    `pjson:"-,extras"`
+	Status     *AccountListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountListParams using the
@@ -370,7 +371,7 @@ func (r AccountListParams) GetEntityID() (EntityID string) {
 }
 
 // Filter Accounts for those with the specified status.
-func (r AccountListParams) GetStatus() (Status AccountsListParamsStatus) {
+func (r AccountListParams) GetStatus() (Status AccountListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -381,11 +382,11 @@ func (r AccountListParams) String() (result string) {
 	return fmt.Sprintf("&AccountListParams{Cursor:%s Limit:%s EntityID:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.EntityID), core.FmtP(r.Status))
 }
 
-type AccountsListParamsStatus string
+type AccountListParamsStatus string
 
 const (
-	AccountsListParamsStatusOpen   AccountsListParamsStatus = "open"
-	AccountsListParamsStatusClosed AccountsListParamsStatus = "closed"
+	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
+	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
 )
 
 type AccountList struct {

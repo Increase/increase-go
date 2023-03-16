@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -17,7 +18,7 @@ type Card struct {
 	AccountID *string `pjson:"account_id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The card's description for display purposes.
 	Description *string `pjson:"description"`
 	// The last 4 digits of the Card's Primary Account Number.
@@ -71,7 +72,7 @@ func (r Card) GetAccountID() (AccountID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card was created.
-func (r Card) GetCreatedAt() (CreatedAt string) {
+func (r Card) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -794,9 +795,9 @@ type CardListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountID  *string                   `query:"account_id"`
-	CreatedAt  *CardsListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}    `pjson:"-,extras"`
+	AccountID  *string                  `query:"account_id"`
+	CreatedAt  *CardListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}   `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardListParams using the
@@ -844,7 +845,7 @@ func (r CardListParams) GetAccountID() (AccountID string) {
 	return
 }
 
-func (r CardListParams) GetCreatedAt() (CreatedAt CardsListParamsCreatedAt) {
+func (r CardListParams) GetCreatedAt() (CreatedAt CardListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -855,45 +856,45 @@ func (r CardListParams) String() (result string) {
 	return fmt.Sprintf("&CardListParams{Cursor:%s Limit:%s AccountID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), r.CreatedAt)
 }
 
-type CardsListParamsCreatedAt struct {
+type CardListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardsListParamsCreatedAt
-// using the internal pjson library. Unrecognized fields are stored in the
-// `jsonFields` property.
-func (r *CardsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into CardListParamsCreatedAt using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *CardListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes CardsListParamsCreatedAt into an array of bytes using the
+// MarshalJSON serializes CardListParamsCreatedAt into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *CardListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes CardsListParamsCreatedAt into a url.Values of the query
+// URLQuery serializes CardListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *CardsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *CardListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CardsListParamsCreatedAt) GetAfter() (After string) {
+func (r CardListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -902,7 +903,7 @@ func (r CardsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r CardsListParamsCreatedAt) GetBefore() (Before string) {
+func (r CardListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -911,7 +912,7 @@ func (r CardsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r CardListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -920,15 +921,15 @@ func (r CardsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r CardsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r CardListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r CardsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&CardsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r CardListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&CardListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type CardList struct {

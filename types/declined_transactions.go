@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -22,7 +23,7 @@ type DeclinedTransaction struct {
 	Currency *DeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// This is the description the vendor provides.
 	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
@@ -87,7 +88,7 @@ func (r DeclinedTransaction) GetCurrency() (Currency DeclinedTransactionCurrency
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r DeclinedTransaction) GetCreatedAt() (CreatedAt string) {
+func (r DeclinedTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -1337,9 +1338,9 @@ type DeclinedTransactionListParams struct {
 	// Filter Declined Transactions to ones belonging to the specified Account.
 	AccountID *string `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteID    *string                                  `query:"route_id"`
-	CreatedAt  *DeclinedTransactionsListParamsCreatedAt `query:"created_at"`
-	jsonFields map[string]interface{}                   `pjson:"-,extras"`
+	RouteID    *string                                 `query:"route_id"`
+	CreatedAt  *DeclinedTransactionListParamsCreatedAt `query:"created_at"`
+	jsonFields map[string]interface{}                  `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into DeclinedTransactionListParams
@@ -1395,7 +1396,7 @@ func (r DeclinedTransactionListParams) GetRouteID() (RouteID string) {
 	return
 }
 
-func (r DeclinedTransactionListParams) GetCreatedAt() (CreatedAt DeclinedTransactionsListParamsCreatedAt) {
+func (r DeclinedTransactionListParams) GetCreatedAt() (CreatedAt DeclinedTransactionListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -1406,45 +1407,45 @@ func (r DeclinedTransactionListParams) String() (result string) {
 	return fmt.Sprintf("&DeclinedTransactionListParams{Cursor:%s Limit:%s AccountID:%s RouteID:%s CreatedAt:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AccountID), core.FmtP(r.RouteID), r.CreatedAt)
 }
 
-type DeclinedTransactionsListParamsCreatedAt struct {
+type DeclinedTransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionsListParamsCreatedAt using the internal pjson library.
+// DeclinedTransactionListParamsCreatedAt using the internal pjson library.
 // Unrecognized fields are stored in the `jsonFields` property.
-func (r *DeclinedTransactionsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *DeclinedTransactionListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes DeclinedTransactionsListParamsCreatedAt into an array of
+// MarshalJSON serializes DeclinedTransactionListParamsCreatedAt into an array of
 // bytes using the gjson library. Members of the `jsonFields` field are serialized
 // into the top-level, and will overwrite known members of the same name.
-func (r *DeclinedTransactionsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *DeclinedTransactionListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes DeclinedTransactionsListParamsCreatedAt into a url.Values of
+// URLQuery serializes DeclinedTransactionListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *DeclinedTransactionsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *DeclinedTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DeclinedTransactionsListParamsCreatedAt) GetAfter() (After string) {
+func (r DeclinedTransactionListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -1453,7 +1454,7 @@ func (r DeclinedTransactionsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r DeclinedTransactionsListParamsCreatedAt) GetBefore() (Before string) {
+func (r DeclinedTransactionListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -1462,7 +1463,7 @@ func (r DeclinedTransactionsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DeclinedTransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r DeclinedTransactionListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -1471,15 +1472,15 @@ func (r DeclinedTransactionsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter strin
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r DeclinedTransactionsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r DeclinedTransactionListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r DeclinedTransactionsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&DeclinedTransactionsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r DeclinedTransactionListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&DeclinedTransactionListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
 type DeclinedTransactionList struct {

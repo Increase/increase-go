@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -19,7 +20,7 @@ type Event struct {
 	// over time; your application should be able to handle such additions gracefully.
 	Category *EventCategory `pjson:"category"`
 	// The time the Event was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The Event identifier.
 	ID *string `pjson:"id"`
 	// A constant representing the object's type. For this resource it will always be
@@ -67,7 +68,7 @@ func (r Event) GetCategory() (Category EventCategory) {
 }
 
 // The time the Event was created.
-func (r Event) GetCreatedAt() (CreatedAt string) {
+func (r Event) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -161,10 +162,10 @@ type EventListParams struct {
 	// objects.
 	Limit *int64 `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID *string                    `query:"associated_object_id"`
-	CreatedAt          *EventsListParamsCreatedAt `query:"created_at"`
-	Category           *EventsListParamsCategory  `query:"category"`
-	jsonFields         map[string]interface{}     `pjson:"-,extras"`
+	AssociatedObjectID *string                   `query:"associated_object_id"`
+	CreatedAt          *EventListParamsCreatedAt `query:"created_at"`
+	Category           *EventListParamsCategory  `query:"category"`
+	jsonFields         map[string]interface{}    `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventListParams using the
@@ -212,14 +213,14 @@ func (r EventListParams) GetAssociatedObjectID() (AssociatedObjectID string) {
 	return
 }
 
-func (r EventListParams) GetCreatedAt() (CreatedAt EventsListParamsCreatedAt) {
+func (r EventListParams) GetCreatedAt() (CreatedAt EventListParamsCreatedAt) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
 	return
 }
 
-func (r EventListParams) GetCategory() (Category EventsListParamsCategory) {
+func (r EventListParams) GetCategory() (Category EventListParamsCategory) {
 	if r.Category != nil {
 		Category = *r.Category
 	}
@@ -230,45 +231,45 @@ func (r EventListParams) String() (result string) {
 	return fmt.Sprintf("&EventListParams{Cursor:%s Limit:%s AssociatedObjectID:%s CreatedAt:%s Category:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), core.FmtP(r.AssociatedObjectID), r.CreatedAt, r.Category)
 }
 
-type EventsListParamsCreatedAt struct {
+type EventListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After *string `pjson:"after"`
+	After *time.Time `pjson:"after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before *string `pjson:"before"`
+	Before *time.Time `pjson:"before" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter *string `pjson:"on_or_after"`
+	OnOrAfter *time.Time `pjson:"on_or_after" format:"2006-01-02T15:04:05Z07:00"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore *string                `pjson:"on_or_before"`
+	OnOrBefore *time.Time             `pjson:"on_or_before" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields map[string]interface{} `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventsListParamsCreatedAt
+// UnmarshalJSON deserializes the provided bytes into EventListParamsCreatedAt
 // using the internal pjson library. Unrecognized fields are stored in the
 // `jsonFields` property.
-func (r *EventsListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
+func (r *EventListParamsCreatedAt) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes EventsListParamsCreatedAt into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
+// MarshalJSON serializes EventListParamsCreatedAt into an array of bytes using the
+// gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *EventsListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
+func (r *EventListParamsCreatedAt) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes EventsListParamsCreatedAt into a url.Values of the query
+// URLQuery serializes EventListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *EventsListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r *EventListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r EventsListParamsCreatedAt) GetAfter() (After string) {
+func (r EventListParamsCreatedAt) GetAfter() (After time.Time) {
 	if r.After != nil {
 		After = *r.After
 	}
@@ -277,7 +278,7 @@ func (r EventsListParamsCreatedAt) GetAfter() (After string) {
 
 // Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 // timestamp.
-func (r EventsListParamsCreatedAt) GetBefore() (Before string) {
+func (r EventListParamsCreatedAt) GetBefore() (Before time.Time) {
 	if r.Before != nil {
 		Before = *r.Before
 	}
@@ -286,7 +287,7 @@ func (r EventsListParamsCreatedAt) GetBefore() (Before string) {
 
 // Return results on or after this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
+func (r EventListParamsCreatedAt) GetOnOrAfter() (OnOrAfter time.Time) {
 	if r.OnOrAfter != nil {
 		OnOrAfter = *r.OnOrAfter
 	}
@@ -295,108 +296,108 @@ func (r EventsListParamsCreatedAt) GetOnOrAfter() (OnOrAfter string) {
 
 // Return results on or before this
 // [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-func (r EventsListParamsCreatedAt) GetOnOrBefore() (OnOrBefore string) {
+func (r EventListParamsCreatedAt) GetOnOrBefore() (OnOrBefore time.Time) {
 	if r.OnOrBefore != nil {
 		OnOrBefore = *r.OnOrBefore
 	}
 	return
 }
 
-func (r EventsListParamsCreatedAt) String() (result string) {
-	return fmt.Sprintf("&EventsListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
+func (r EventListParamsCreatedAt) String() (result string) {
+	return fmt.Sprintf("&EventListParamsCreatedAt{After:%s Before:%s OnOrAfter:%s OnOrBefore:%s}", core.FmtP(r.After), core.FmtP(r.Before), core.FmtP(r.OnOrAfter), core.FmtP(r.OnOrBefore))
 }
 
-type EventsListParamsCategory struct {
+type EventListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]EventsListParamsCategoryIn `pjson:"in"`
-	jsonFields map[string]interface{}        `pjson:"-,extras"`
+	In         *[]EventListParamsCategoryIn `pjson:"in"`
+	jsonFields map[string]interface{}       `pjson:"-,extras"`
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventsListParamsCategory
-// using the internal pjson library. Unrecognized fields are stored in the
-// `jsonFields` property.
-func (r *EventsListParamsCategory) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into EventListParamsCategory using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *EventListParamsCategory) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes EventsListParamsCategory into an array of bytes using the
+// MarshalJSON serializes EventListParamsCategory into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *EventsListParamsCategory) MarshalJSON() (data []byte, err error) {
+func (r *EventListParamsCategory) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes EventsListParamsCategory into a url.Values of the query
+// URLQuery serializes EventListParamsCategory into a url.Values of the query
 // parameters associated with this value
-func (r *EventsListParamsCategory) URLQuery() (v url.Values) {
+func (r *EventListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r EventsListParamsCategory) GetIn() (In []EventsListParamsCategoryIn) {
+func (r EventListParamsCategory) GetIn() (In []EventListParamsCategoryIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r EventsListParamsCategory) String() (result string) {
-	return fmt.Sprintf("&EventsListParamsCategory{In:%s}", core.Fmt(r.In))
+func (r EventListParamsCategory) String() (result string) {
+	return fmt.Sprintf("&EventListParamsCategory{In:%s}", core.Fmt(r.In))
 }
 
-type EventsListParamsCategoryIn string
+type EventListParamsCategoryIn string
 
 const (
-	EventsListParamsCategoryInAccountCreated                                       EventsListParamsCategoryIn = "account.created"
-	EventsListParamsCategoryInAccountUpdated                                       EventsListParamsCategoryIn = "account.updated"
-	EventsListParamsCategoryInAccountNumberCreated                                 EventsListParamsCategoryIn = "account_number.created"
-	EventsListParamsCategoryInAccountNumberUpdated                                 EventsListParamsCategoryIn = "account_number.updated"
-	EventsListParamsCategoryInAccountStatementCreated                              EventsListParamsCategoryIn = "account_statement.created"
-	EventsListParamsCategoryInAccountTransferCreated                               EventsListParamsCategoryIn = "account_transfer.created"
-	EventsListParamsCategoryInAccountTransferUpdated                               EventsListParamsCategoryIn = "account_transfer.updated"
-	EventsListParamsCategoryInACHPrenotificationCreated                            EventsListParamsCategoryIn = "ach_prenotification.created"
-	EventsListParamsCategoryInACHPrenotificationUpdated                            EventsListParamsCategoryIn = "ach_prenotification.updated"
-	EventsListParamsCategoryInACHTransferCreated                                   EventsListParamsCategoryIn = "ach_transfer.created"
-	EventsListParamsCategoryInACHTransferUpdated                                   EventsListParamsCategoryIn = "ach_transfer.updated"
-	EventsListParamsCategoryInCardCreated                                          EventsListParamsCategoryIn = "card.created"
-	EventsListParamsCategoryInCardUpdated                                          EventsListParamsCategoryIn = "card.updated"
-	EventsListParamsCategoryInCardDisputeCreated                                   EventsListParamsCategoryIn = "card_dispute.created"
-	EventsListParamsCategoryInCardDisputeUpdated                                   EventsListParamsCategoryIn = "card_dispute.updated"
-	EventsListParamsCategoryInCheckDepositCreated                                  EventsListParamsCategoryIn = "check_deposit.created"
-	EventsListParamsCategoryInCheckDepositUpdated                                  EventsListParamsCategoryIn = "check_deposit.updated"
-	EventsListParamsCategoryInCheckTransferCreated                                 EventsListParamsCategoryIn = "check_transfer.created"
-	EventsListParamsCategoryInCheckTransferUpdated                                 EventsListParamsCategoryIn = "check_transfer.updated"
-	EventsListParamsCategoryInDeclinedTransactionCreated                           EventsListParamsCategoryIn = "declined_transaction.created"
-	EventsListParamsCategoryInDigitalWalletTokenCreated                            EventsListParamsCategoryIn = "digital_wallet_token.created"
-	EventsListParamsCategoryInDigitalWalletTokenUpdated                            EventsListParamsCategoryIn = "digital_wallet_token.updated"
-	EventsListParamsCategoryInDocumentCreated                                      EventsListParamsCategoryIn = "document.created"
-	EventsListParamsCategoryInEntityCreated                                        EventsListParamsCategoryIn = "entity.created"
-	EventsListParamsCategoryInEntityUpdated                                        EventsListParamsCategoryIn = "entity.updated"
-	EventsListParamsCategoryInExternalAccountCreated                               EventsListParamsCategoryIn = "external_account.created"
-	EventsListParamsCategoryInFileCreated                                          EventsListParamsCategoryIn = "file.created"
-	EventsListParamsCategoryInGroupUpdated                                         EventsListParamsCategoryIn = "group.updated"
-	EventsListParamsCategoryInGroupHeartbeat                                       EventsListParamsCategoryIn = "group.heartbeat"
-	EventsListParamsCategoryInInboundACHTransferReturnCreated                      EventsListParamsCategoryIn = "inbound_ach_transfer_return.created"
-	EventsListParamsCategoryInInboundACHTransferReturnUpdated                      EventsListParamsCategoryIn = "inbound_ach_transfer_return.updated"
-	EventsListParamsCategoryInInboundWireDrawdownRequestCreated                    EventsListParamsCategoryIn = "inbound_wire_drawdown_request.created"
-	EventsListParamsCategoryInOauthConnectionCreated                               EventsListParamsCategoryIn = "oauth_connection.created"
-	EventsListParamsCategoryInOauthConnectionDeactivated                           EventsListParamsCategoryIn = "oauth_connection.deactivated"
-	EventsListParamsCategoryInPendingTransactionCreated                            EventsListParamsCategoryIn = "pending_transaction.created"
-	EventsListParamsCategoryInPendingTransactionUpdated                            EventsListParamsCategoryIn = "pending_transaction.updated"
-	EventsListParamsCategoryInRealTimeDecisionCardAuthorizationRequested           EventsListParamsCategoryIn = "real_time_decision.card_authorization_requested"
-	EventsListParamsCategoryInRealTimeDecisionDigitalWalletTokenRequested          EventsListParamsCategoryIn = "real_time_decision.digital_wallet_token_requested"
-	EventsListParamsCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested EventsListParamsCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
-	EventsListParamsCategoryInRealTimePaymentsTransferCreated                      EventsListParamsCategoryIn = "real_time_payments_transfer.created"
-	EventsListParamsCategoryInRealTimePaymentsTransferUpdated                      EventsListParamsCategoryIn = "real_time_payments_transfer.updated"
-	EventsListParamsCategoryInRealTimePaymentsRequestForPaymentCreated             EventsListParamsCategoryIn = "real_time_payments_request_for_payment.created"
-	EventsListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated             EventsListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
-	EventsListParamsCategoryInTransactionCreated                                   EventsListParamsCategoryIn = "transaction.created"
-	EventsListParamsCategoryInWireDrawdownRequestCreated                           EventsListParamsCategoryIn = "wire_drawdown_request.created"
-	EventsListParamsCategoryInWireDrawdownRequestUpdated                           EventsListParamsCategoryIn = "wire_drawdown_request.updated"
-	EventsListParamsCategoryInWireTransferCreated                                  EventsListParamsCategoryIn = "wire_transfer.created"
-	EventsListParamsCategoryInWireTransferUpdated                                  EventsListParamsCategoryIn = "wire_transfer.updated"
+	EventListParamsCategoryInAccountCreated                                       EventListParamsCategoryIn = "account.created"
+	EventListParamsCategoryInAccountUpdated                                       EventListParamsCategoryIn = "account.updated"
+	EventListParamsCategoryInAccountNumberCreated                                 EventListParamsCategoryIn = "account_number.created"
+	EventListParamsCategoryInAccountNumberUpdated                                 EventListParamsCategoryIn = "account_number.updated"
+	EventListParamsCategoryInAccountStatementCreated                              EventListParamsCategoryIn = "account_statement.created"
+	EventListParamsCategoryInAccountTransferCreated                               EventListParamsCategoryIn = "account_transfer.created"
+	EventListParamsCategoryInAccountTransferUpdated                               EventListParamsCategoryIn = "account_transfer.updated"
+	EventListParamsCategoryInACHPrenotificationCreated                            EventListParamsCategoryIn = "ach_prenotification.created"
+	EventListParamsCategoryInACHPrenotificationUpdated                            EventListParamsCategoryIn = "ach_prenotification.updated"
+	EventListParamsCategoryInACHTransferCreated                                   EventListParamsCategoryIn = "ach_transfer.created"
+	EventListParamsCategoryInACHTransferUpdated                                   EventListParamsCategoryIn = "ach_transfer.updated"
+	EventListParamsCategoryInCardCreated                                          EventListParamsCategoryIn = "card.created"
+	EventListParamsCategoryInCardUpdated                                          EventListParamsCategoryIn = "card.updated"
+	EventListParamsCategoryInCardDisputeCreated                                   EventListParamsCategoryIn = "card_dispute.created"
+	EventListParamsCategoryInCardDisputeUpdated                                   EventListParamsCategoryIn = "card_dispute.updated"
+	EventListParamsCategoryInCheckDepositCreated                                  EventListParamsCategoryIn = "check_deposit.created"
+	EventListParamsCategoryInCheckDepositUpdated                                  EventListParamsCategoryIn = "check_deposit.updated"
+	EventListParamsCategoryInCheckTransferCreated                                 EventListParamsCategoryIn = "check_transfer.created"
+	EventListParamsCategoryInCheckTransferUpdated                                 EventListParamsCategoryIn = "check_transfer.updated"
+	EventListParamsCategoryInDeclinedTransactionCreated                           EventListParamsCategoryIn = "declined_transaction.created"
+	EventListParamsCategoryInDigitalWalletTokenCreated                            EventListParamsCategoryIn = "digital_wallet_token.created"
+	EventListParamsCategoryInDigitalWalletTokenUpdated                            EventListParamsCategoryIn = "digital_wallet_token.updated"
+	EventListParamsCategoryInDocumentCreated                                      EventListParamsCategoryIn = "document.created"
+	EventListParamsCategoryInEntityCreated                                        EventListParamsCategoryIn = "entity.created"
+	EventListParamsCategoryInEntityUpdated                                        EventListParamsCategoryIn = "entity.updated"
+	EventListParamsCategoryInExternalAccountCreated                               EventListParamsCategoryIn = "external_account.created"
+	EventListParamsCategoryInFileCreated                                          EventListParamsCategoryIn = "file.created"
+	EventListParamsCategoryInGroupUpdated                                         EventListParamsCategoryIn = "group.updated"
+	EventListParamsCategoryInGroupHeartbeat                                       EventListParamsCategoryIn = "group.heartbeat"
+	EventListParamsCategoryInInboundACHTransferReturnCreated                      EventListParamsCategoryIn = "inbound_ach_transfer_return.created"
+	EventListParamsCategoryInInboundACHTransferReturnUpdated                      EventListParamsCategoryIn = "inbound_ach_transfer_return.updated"
+	EventListParamsCategoryInInboundWireDrawdownRequestCreated                    EventListParamsCategoryIn = "inbound_wire_drawdown_request.created"
+	EventListParamsCategoryInOauthConnectionCreated                               EventListParamsCategoryIn = "oauth_connection.created"
+	EventListParamsCategoryInOauthConnectionDeactivated                           EventListParamsCategoryIn = "oauth_connection.deactivated"
+	EventListParamsCategoryInPendingTransactionCreated                            EventListParamsCategoryIn = "pending_transaction.created"
+	EventListParamsCategoryInPendingTransactionUpdated                            EventListParamsCategoryIn = "pending_transaction.updated"
+	EventListParamsCategoryInRealTimeDecisionCardAuthorizationRequested           EventListParamsCategoryIn = "real_time_decision.card_authorization_requested"
+	EventListParamsCategoryInRealTimeDecisionDigitalWalletTokenRequested          EventListParamsCategoryIn = "real_time_decision.digital_wallet_token_requested"
+	EventListParamsCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested EventListParamsCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
+	EventListParamsCategoryInRealTimePaymentsTransferCreated                      EventListParamsCategoryIn = "real_time_payments_transfer.created"
+	EventListParamsCategoryInRealTimePaymentsTransferUpdated                      EventListParamsCategoryIn = "real_time_payments_transfer.updated"
+	EventListParamsCategoryInRealTimePaymentsRequestForPaymentCreated             EventListParamsCategoryIn = "real_time_payments_request_for_payment.created"
+	EventListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated             EventListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
+	EventListParamsCategoryInTransactionCreated                                   EventListParamsCategoryIn = "transaction.created"
+	EventListParamsCategoryInWireDrawdownRequestCreated                           EventListParamsCategoryIn = "wire_drawdown_request.created"
+	EventListParamsCategoryInWireDrawdownRequestUpdated                           EventListParamsCategoryIn = "wire_drawdown_request.updated"
+	EventListParamsCategoryInWireTransferCreated                                  EventListParamsCategoryIn = "wire_transfer.created"
+	EventListParamsCategoryInWireTransferUpdated                                  EventListParamsCategoryIn = "wire_transfer.updated"
 )
 
 type EventList struct {

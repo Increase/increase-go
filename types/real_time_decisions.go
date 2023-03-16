@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -12,10 +13,10 @@ type RealTimeDecision struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Real-Time Decision was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// your application can no longer respond to the Real-Time Decision.
-	TimeoutAt *string `pjson:"timeout_at"`
+	TimeoutAt *time.Time `pjson:"timeout_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The status of the Real-Time Decision.
 	Status *RealTimeDecisionStatus `pjson:"status"`
 	// The category of the Real-Time Decision.
@@ -56,7 +57,7 @@ func (r RealTimeDecision) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Real-Time Decision was created.
-func (r RealTimeDecision) GetCreatedAt() (CreatedAt string) {
+func (r RealTimeDecision) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -65,7 +66,7 @@ func (r RealTimeDecision) GetCreatedAt() (CreatedAt string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // your application can no longer respond to the Real-Time Decision.
-func (r RealTimeDecision) GetTimeoutAt() (TimeoutAt string) {
+func (r RealTimeDecision) GetTimeoutAt() (TimeoutAt time.Time) {
 	if r.TimeoutAt != nil {
 		TimeoutAt = *r.TimeoutAt
 	}

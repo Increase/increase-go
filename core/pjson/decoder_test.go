@@ -3,6 +3,7 @@ package pjson
 import (
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/increase/increase-go/core/pointers"
 )
@@ -30,7 +31,7 @@ func assertError[P any](t *testing.T, raw []byte, expectErr string) {
 	}
 }
 
-func TestPrimitive(t *testing.T) {
+func TestDecodePrimitive(t *testing.T) {
 	assertDecode(t, []byte("true"), true)
 	assertDecode(t, []byte("false"), false)
 
@@ -46,6 +47,28 @@ func TestPrimitive(t *testing.T) {
 	assertDecode(t, []byte("1.89"), float64(1.89))
 }
 
+func TestDecodeDatetime(t *testing.T) {
+	timeString := "2007-03-01T13:00:00Z"
+	et, err := time.Parse(time.RFC3339, timeString)
+	if err != nil {
+		t.Fatalf("%v\n", err)
+	}
+	assertDecode(t, []byte("\""+timeString+"\""), et)
+}
+
+type DateTimeStruct struct {
+	Date     time.Time `pjson:"date" format:"2006-01-02"`
+	DateTime time.Time `pjson:"date-time" format:"2006-01-02T15:04:05Z07:00"`
+}
+
+func TestDecodeDatetimeStruct(t *testing.T) {
+	expected := DateTimeStruct{
+		Date:     time.Date(2006, time.January, 2, 0, 0, 0, 0, time.UTC),
+		DateTime: time.Date(2006, time.January, 2, 15, 4, 5, 0, time.UTC),
+	}
+	assertDecode(t, []byte(`{"date":"2006-01-02", "date-time": "2006-01-02T15:04:05Z"}`), expected)
+}
+
 type PrimitveStruct struct {
 	A bool    `pjson:"a"`
 	B int     `pjson:"b"`
@@ -54,7 +77,7 @@ type PrimitveStruct struct {
 	E float32 `pjson:"e"`
 }
 
-func TestPrimitiveStruct(t *testing.T) {
+func TestDecodePrimitiveStruct(t *testing.T) {
 	assertDecode(t, []byte("{\"a\":true}"), PrimitveStruct{A: true})
 	assertDecode(t, []byte("{\"b\":true}"), PrimitveStruct{B: 1})
 	assertDecode(t, []byte("{\"b\":165}"), PrimitveStruct{B: 165})
@@ -76,7 +99,7 @@ func TestPrimitiveStruct(t *testing.T) {
 	)
 }
 
-func TestPointers(t *testing.T) {
+func TestDecodePointers(t *testing.T) {
 	assertDecode(t, []byte("true"), pointers.P(true))
 	assertDecode(t, []byte("false"), pointers.P(false))
 	assertDecode(t, []byte("165"), pointers.P(165))
@@ -93,7 +116,7 @@ type PrimitvePointerStruct struct {
 	F *[]int   `pjson:"f"`
 }
 
-func TestPrimitivePointerStruct(t *testing.T) {
+func TestDecodePrimitivePointerStruct(t *testing.T) {
 	assertDecode(t, []byte("{\"a\":true}"), PrimitvePointerStruct{A: pointers.P(true)})
 	assertDecode(t, []byte("{\"b\":true}"), PrimitvePointerStruct{B: pointers.P(1)})
 	assertDecode(t, []byte("{\"b\":165}"), PrimitvePointerStruct{B: pointers.P(165)})
@@ -121,7 +144,7 @@ type StructWithExtraProperties struct {
 	Extras JSONExtras `pjson:"-,extras"`
 }
 
-func TestStructExtraProperties(t *testing.T) {
+func TestDecodeStructExtraProperties(t *testing.T) {
 	obj1 := StructWithExtraProperties{
 		A:      true,
 		Extras: JSONExtras{"foo": true},
@@ -152,7 +175,7 @@ type RecursiveStruct struct {
 	Child *RecursiveStruct `pjson:"child"`
 }
 
-func TestRecursiveStruct(t *testing.T) {
+func TestDecodeRecursiveStruct(t *testing.T) {
 	assertDecode(t, []byte("{\"name\": \"Robert\", \"child\": {\"name\":\"Alex\"}}"), RecursiveStruct{Name: "Robert", Child: &RecursiveStruct{Name: "Alex"}})
 }
 
@@ -161,7 +184,7 @@ type StructWithPrivateExtrasField struct {
 	jsonFields JSONExtras `pjson:"-,extras"`
 }
 
-func TestPrivateExtrasField(t *testing.T) {
+func TestDecodePrivateExtrasField(t *testing.T) {
 	expect := StructWithPrivateExtrasField{A: pointers.P(100), jsonFields: JSONExtras{"foo": true}}
 	assertDecode(t, []byte("{\"number\": 100, \"foo\": true}"), expect)
 
@@ -171,12 +194,12 @@ func TestPrivateExtrasField(t *testing.T) {
 	}
 }
 
-func TestStringCoercion(t *testing.T) {
+func TestDecodeStringCoercion(t *testing.T) {
 	assertDecode(t, []byte("65"), "65")
 	assertDecode(t, []byte("\"65\""), "65")
 }
 
-func TestStructWithEmbeddedDecode(t *testing.T) {
+func TestDecodeStructWithEmbeddedDecode(t *testing.T) {
 	assertDecode(t, []byte(`{"number":32,"x1":"hi","number2":5,"x2":"yo"}`), StructWithEmbedded{
 		StructWithPrivateExtrasField: StructWithPrivateExtrasField{A: pointers.P(32)},
 

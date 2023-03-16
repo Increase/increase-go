@@ -42,7 +42,7 @@ func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
 
 func TestExternalAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.List(context.TODO(), &types.ExternalAccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.ExternalAccountsListParamsStatus{In: increase.P([]types.ExternalAccountsListParamsStatusIn{types.ExternalAccountsListParamsStatusInActive, types.ExternalAccountsListParamsStatusInActive, types.ExternalAccountsListParamsStatusInActive})})})
+	_, err := c.ExternalAccounts.List(context.TODO(), &types.ExternalAccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.ExternalAccountListParamsStatus{In: increase.P([]types.ExternalAccountListParamsStatusIn{types.ExternalAccountListParamsStatusInActive, types.ExternalAccountListParamsStatusInActive, types.ExternalAccountListParamsStatusInActive})})})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

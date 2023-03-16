@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -84,7 +85,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
@@ -151,7 +152,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransaction) GetCurrency(
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r InboundRealTimePaymentsTransferSimulationResultTransaction) GetCreatedAt() (CreatedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -1033,7 +1034,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTrans
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `pjson:"return_reason_code"`
 	// The identifier of the ACH Transfer associated with this return.
@@ -1062,7 +1063,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the transfer was created.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -1128,7 +1129,7 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt *string `pjson:"accepted_at"`
+	AcceptedAt *time.Time `pjson:"accepted_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The identifier of the Card Dispute that was accepted.
 	CardDisputeID *string `pjson:"card_dispute_id"`
 	// The identifier of the Transaction that was created to return the disputed funds
@@ -1156,7 +1157,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the Card Dispute was accepted.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) GetAcceptedAt() (AcceptedAt time.Time) {
 	if r.AcceptedAt != nil {
 		AcceptedAt = *r.AcceptedAt
 	}
@@ -1542,7 +1543,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	Amount *int64 `pjson:"amount"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt *string `pjson:"returned_at"`
+	ReturnedAt *time.Time `pjson:"returned_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnCurrency `pjson:"currency"`
@@ -1583,7 +1584,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDep
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the check deposit was returned.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) GetReturnedAt() (ReturnedAt time.Time) {
 	if r.ReturnedAt != nil {
 		ReturnedAt = *r.ReturnedAt
 	}
@@ -1868,7 +1869,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The transaction ID of the corresponding credit transaction.
 	TransactionID *string `pjson:"transaction_id"`
 	// The time the stop-payment was requested.
-	RequestedAt *string `pjson:"requested_at"`
+	RequestedAt *time.Time `pjson:"requested_at" format:"2006-01-02T15:04:05Z07:00"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type       *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `pjson:"type"`
@@ -1909,7 +1910,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTra
 }
 
 // The time the stop-payment was requested.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) GetRequestedAt() (RequestedAt time.Time) {
 	if r.RequestedAt != nil {
 		RequestedAt = *r.RequestedAt
 	}
@@ -2010,7 +2011,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCas
 	// example, this is cents.
 	Amount      *int64                 `pjson:"amount"`
 	BagID       *string                `pjson:"bag_id"`
-	DepositDate *string                `pjson:"deposit_date"`
+	DepositDate *time.Time             `pjson:"deposit_date" format:"2006-01-02T15:04:05Z07:00"`
 	jsonFields  map[string]interface{} `pjson:"-,extras"`
 }
 
@@ -2047,7 +2048,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyreal
 	return
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) GetDepositDate() (DepositDate time.Time) {
 	if r.DepositDate != nil {
 		DepositDate = *r.DepositDate
 	}
@@ -2686,7 +2687,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The description on the reversal message from Fedwire.
 	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `pjson:"input_cycle_date"`
+	InputCycleDate *time.Time `pjson:"input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number.
 	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
@@ -2696,7 +2697,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *time.Time `pjson:"previous_message_input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -2738,7 +2739,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundW
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetInputCycleDate() (InputCycleDate time.Time) {
 	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
@@ -2778,7 +2779,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundW
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate time.Time) {
 	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
@@ -2944,7 +2945,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The description on the reversal message from Fedwire.
 	Description *string `pjson:"description"`
 	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate *string `pjson:"input_cycle_date"`
+	InputCycleDate *time.Time `pjson:"input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number.
 	InputSequenceNumber *string `pjson:"input_sequence_number"`
 	// The Fedwire input source identifier.
@@ -2954,7 +2955,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData *string `pjson:"previous_message_input_message_accountability_data"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate *string `pjson:"previous_message_input_cycle_date"`
+	PreviousMessageInputCycleDate *time.Time `pjson:"previous_message_input_cycle_date" format:"2006-01-02"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber *string `pjson:"previous_message_input_sequence_number"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -3001,7 +3002,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundW
 }
 
 // The Fedwire cycle date for the wire reversal.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetInputCycleDate() (InputCycleDate time.Time) {
 	if r.InputCycleDate != nil {
 		InputCycleDate = *r.InputCycleDate
 	}
@@ -3041,7 +3042,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundW
 }
 
 // The Fedwire cycle date for the wire transfer that was reversed.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) GetPreviousMessageInputCycleDate() (PreviousMessageInputCycleDate time.Time) {
 	if r.PreviousMessageInputCycleDate != nil {
 		PreviousMessageInputCycleDate = *r.PreviousMessageInputCycleDate
 	}
@@ -3258,9 +3259,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPay
 	// currency.
 	Currency *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency `pjson:"currency"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart *string `pjson:"period_start"`
+	PeriodStart *time.Time `pjson:"period_start" format:"2006-01-02T15:04:05Z07:00"`
 	// The end of the period for which this transaction paid interest.
-	PeriodEnd *string `pjson:"period_end"`
+	PeriodEnd *time.Time `pjson:"period_end" format:"2006-01-02T15:04:05Z07:00"`
 	// The account on which the interest was accrued.
 	AccruedOnAccountID *string                `pjson:"accrued_on_account_id"`
 	jsonFields         map[string]interface{} `pjson:"-,extras"`
@@ -3302,7 +3303,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterest
 }
 
 // The start of the period for which this transaction paid interest.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodStart() (PeriodStart string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodStart() (PeriodStart time.Time) {
 	if r.PeriodStart != nil {
 		PeriodStart = *r.PeriodStart
 	}
@@ -3310,7 +3311,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterest
 }
 
 // The end of the period for which this transaction paid interest.
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd string) {
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) GetPeriodEnd() (PeriodEnd time.Time) {
 	if r.PeriodEnd != nil {
 		PeriodEnd = *r.PeriodEnd
 	}
@@ -3897,7 +3898,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	Currency *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency `pjson:"currency"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occured.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// This is the description the vendor provides.
 	Description *string `pjson:"description"`
 	// The Declined Transaction identifier.
@@ -3965,7 +3966,7 @@ func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetC
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 // Transaction occured.
-func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetCreatedAt() (CreatedAt string) {
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}

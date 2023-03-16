@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/pjson"
@@ -15,7 +16,7 @@ type ExternalAccount struct {
 	ID *string `pjson:"id"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the External Account was created.
-	CreatedAt *string `pjson:"created_at"`
+	CreatedAt *time.Time `pjson:"created_at" format:"2006-01-02T15:04:05Z07:00"`
 	// The External Account's description for display purposes.
 	Description *string `pjson:"description"`
 	// The External Account's status.
@@ -58,7 +59,7 @@ func (r ExternalAccount) GetID() (ID string) {
 
 // The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 // the External Account was created.
-func (r ExternalAccount) GetCreatedAt() (CreatedAt string) {
+func (r ExternalAccount) GetCreatedAt() (CreatedAt time.Time) {
 	if r.CreatedAt != nil {
 		CreatedAt = *r.CreatedAt
 	}
@@ -281,9 +282,9 @@ type ExternalAccountListParams struct {
 	Cursor *string `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit      *int64                            `query:"limit"`
-	Status     *ExternalAccountsListParamsStatus `query:"status"`
-	jsonFields map[string]interface{}            `pjson:"-,extras"`
+	Limit      *int64                           `query:"limit"`
+	Status     *ExternalAccountListParamsStatus `query:"status"`
+	jsonFields map[string]interface{}           `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccountListParams
@@ -323,7 +324,7 @@ func (r ExternalAccountListParams) GetLimit() (Limit int64) {
 	return
 }
 
-func (r ExternalAccountListParams) GetStatus() (Status ExternalAccountsListParamsStatus) {
+func (r ExternalAccountListParams) GetStatus() (Status ExternalAccountListParamsStatus) {
 	if r.Status != nil {
 		Status = *r.Status
 	}
@@ -334,51 +335,51 @@ func (r ExternalAccountListParams) String() (result string) {
 	return fmt.Sprintf("&ExternalAccountListParams{Cursor:%s Limit:%s Status:%s}", core.FmtP(r.Cursor), core.FmtP(r.Limit), r.Status)
 }
 
-type ExternalAccountsListParamsStatus struct {
+type ExternalAccountListParamsStatus struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In         *[]ExternalAccountsListParamsStatusIn `pjson:"in"`
-	jsonFields map[string]interface{}                `pjson:"-,extras"`
+	In         *[]ExternalAccountListParamsStatusIn `pjson:"in"`
+	jsonFields map[string]interface{}               `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ExternalAccountsListParamsStatus using the internal pjson library. Unrecognized
+// ExternalAccountListParamsStatus using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *ExternalAccountsListParamsStatus) UnmarshalJSON(data []byte) (err error) {
+func (r *ExternalAccountListParamsStatus) UnmarshalJSON(data []byte) (err error) {
 	return pjson.Unmarshal(data, r)
 }
 
-// MarshalJSON serializes ExternalAccountsListParamsStatus into an array of bytes
+// MarshalJSON serializes ExternalAccountListParamsStatus into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *ExternalAccountsListParamsStatus) MarshalJSON() (data []byte, err error) {
+func (r *ExternalAccountListParamsStatus) MarshalJSON() (data []byte, err error) {
 	return pjson.Marshal(r)
 }
 
-// URLQuery serializes ExternalAccountsListParamsStatus into a url.Values of the
+// URLQuery serializes ExternalAccountListParamsStatus into a url.Values of the
 // query parameters associated with this value
-func (r *ExternalAccountsListParamsStatus) URLQuery() (v url.Values) {
+func (r *ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
 // Return results whose value is in the provided list. For GET requests, this
 // should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-func (r ExternalAccountsListParamsStatus) GetIn() (In []ExternalAccountsListParamsStatusIn) {
+func (r ExternalAccountListParamsStatus) GetIn() (In []ExternalAccountListParamsStatusIn) {
 	if r.In != nil {
 		In = *r.In
 	}
 	return
 }
 
-func (r ExternalAccountsListParamsStatus) String() (result string) {
-	return fmt.Sprintf("&ExternalAccountsListParamsStatus{In:%s}", core.Fmt(r.In))
+func (r ExternalAccountListParamsStatus) String() (result string) {
+	return fmt.Sprintf("&ExternalAccountListParamsStatus{In:%s}", core.Fmt(r.In))
 }
 
-type ExternalAccountsListParamsStatusIn string
+type ExternalAccountListParamsStatusIn string
 
 const (
-	ExternalAccountsListParamsStatusInActive   ExternalAccountsListParamsStatusIn = "active"
-	ExternalAccountsListParamsStatusInArchived ExternalAccountsListParamsStatusIn = "archived"
+	ExternalAccountListParamsStatusInActive   ExternalAccountListParamsStatusIn = "active"
+	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )
 
 type ExternalAccountList struct {
