@@ -7,10 +7,14 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"runtime"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/query"
@@ -84,12 +88,13 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	if reader != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
+
 	req.Header.Set("Accept", "application/json")
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
 	}
 	cfg := RequestConfig{
-		MaxRetries: 0,
+		MaxRetries: 2,
 		Context:    ctx,
 		Request:    req,
 		HTTPClient: http.DefaultClient,
@@ -129,14 +134,33 @@ func (cfg *RequestConfig) Execute() error {
 		return err
 	}
 	cfg.Request.URL = u
-	res, err := cfg.HTTPClient.Do(cfg.Request)
+
+	var res *http.Response
+	for i := 0; i <= cfg.MaxRetries; i += 1 {
+		res, err = cfg.HTTPClient.Do(cfg.Request.Clone(cfg.Request.Context()))
+
+		if i == cfg.MaxRetries || err == nil && res.StatusCode != http.StatusConflict && res.StatusCode != http.StatusTooManyRequests && res.StatusCode < http.StatusInternalServerError {
+			break
+		}
+
+		duration := time.Duration(500) * time.Millisecond * time.Duration(math.Exp(float64(i)))
+		if parsed, err := strconv.ParseInt(res.Header.Get("Retry-After"), 10, 64); err == nil {
+			duration = time.Duration(parsed) * time.Second
+		}
+		if duration > time.Duration(60)*time.Second {
+			duration = time.Duration(60) * time.Second
+		}
+		duration += time.Millisecond * time.Duration(-500+rand.Intn(1000))
+		time.Sleep(duration)
+	}
+
 	if err != nil {
 		return core.RequestError{Cause: err, Request: cfg.Request, Response: res}
 	}
 	if res.StatusCode > 299 {
-		// TODO appropriately retry
 		return core.NewAPIErrorFromResponse(cfg.Request, res)
 	}
+
 	if cfg.ResponseInto != nil {
 		*cfg.ResponseInto = res
 	}
@@ -144,7 +168,6 @@ func (cfg *RequestConfig) Execute() error {
 	if cfg.ResponseBodyInto == nil {
 		return nil
 	}
-
 	contents, err := io.ReadAll(res.Body)
 	if err != nil {
 		return fmt.Errorf("error reading response body: %w", err)
