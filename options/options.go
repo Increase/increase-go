@@ -16,6 +16,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/query"
 )
@@ -88,7 +89,7 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	if reader != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
-
+	req.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
 	req.Header.Set("Accept", "application/json")
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
