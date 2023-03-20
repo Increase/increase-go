@@ -61,6 +61,10 @@ type CheckTransfer struct {
 	StopPaymentRequest *CheckTransferStopPaymentRequest `pjson:"stop_payment_request"`
 	// After a check transfer is deposited, this will contain supplemental details.
 	Deposit *CheckTransferDeposit `pjson:"deposit"`
+	// After a check transfer is returned, this will contain supplemental details. A
+	// check transfer is returned when the receiver mails a never deposited check back
+	// to the bank printed on the check.
+	ReturnDetails *CheckTransferReturnDetails `pjson:"return_details"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type       *CheckTransferType     `pjson:"type"`
@@ -262,6 +266,16 @@ func (r CheckTransfer) GetDeposit() (Deposit CheckTransferDeposit) {
 	return
 }
 
+// After a check transfer is returned, this will contain supplemental details. A
+// check transfer is returned when the receiver mails a never deposited check back
+// to the bank printed on the check.
+func (r CheckTransfer) GetReturnDetails() (ReturnDetails CheckTransferReturnDetails) {
+	if r.ReturnDetails != nil {
+		ReturnDetails = *r.ReturnDetails
+	}
+	return
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer`.
 func (r CheckTransfer) GetType() (Type CheckTransferType) {
@@ -272,7 +286,7 @@ func (r CheckTransfer) GetType() (Type CheckTransferType) {
 }
 
 func (r CheckTransfer) String() (result string) {
-	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s Note:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.Note), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, core.FmtP(r.Type))
+	return fmt.Sprintf("&CheckTransfer{AccountID:%s AddressLine1:%s AddressLine2:%s AddressCity:%s AddressState:%s AddressZip:%s ReturnAddress:%s Amount:%s CreatedAt:%s Currency:%s ID:%s MailedAt:%s Message:%s Note:%s RecipientName:%s Status:%s SubmittedAt:%s Submission:%s TemplateID:%s TransactionID:%s StopPaymentRequest:%s Deposit:%s ReturnDetails:%s Type:%s}", core.FmtP(r.AccountID), core.FmtP(r.AddressLine1), core.FmtP(r.AddressLine2), core.FmtP(r.AddressCity), core.FmtP(r.AddressState), core.FmtP(r.AddressZip), r.ReturnAddress, core.FmtP(r.Amount), core.FmtP(r.CreatedAt), core.FmtP(r.Currency), core.FmtP(r.ID), core.FmtP(r.MailedAt), core.FmtP(r.Message), core.FmtP(r.Note), core.FmtP(r.RecipientName), core.FmtP(r.Status), core.FmtP(r.SubmittedAt), r.Submission, core.FmtP(r.TemplateID), core.FmtP(r.TransactionID), r.StopPaymentRequest, r.Deposit, r.ReturnDetails, core.FmtP(r.Type))
 }
 
 type CheckTransferReturnAddress struct {
@@ -545,6 +559,65 @@ type CheckTransferDepositType string
 
 const (
 	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
+)
+
+type CheckTransferReturnDetails struct {
+	// The identifier of the returned Check Transfer.
+	TransferID *string `pjson:"transfer_id"`
+	// If available, a document with additional information about the return.
+	FileID *string `pjson:"file_id"`
+	// The reason why the check was returned.
+	Reason     *CheckTransferReturnDetailsReason `pjson:"reason"`
+	jsonFields map[string]interface{}            `pjson:"-,extras"`
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferReturnDetails
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
+	return pjson.Unmarshal(data, r)
+}
+
+// MarshalJSON serializes CheckTransferReturnDetails into an array of bytes using
+// the gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CheckTransferReturnDetails) MarshalJSON() (data []byte, err error) {
+	return pjson.Marshal(r)
+}
+
+// The identifier of the returned Check Transfer.
+func (r CheckTransferReturnDetails) GetTransferID() (TransferID string) {
+	if r.TransferID != nil {
+		TransferID = *r.TransferID
+	}
+	return
+}
+
+// If available, a document with additional information about the return.
+func (r CheckTransferReturnDetails) GetFileID() (FileID string) {
+	if r.FileID != nil {
+		FileID = *r.FileID
+	}
+	return
+}
+
+// The reason why the check was returned.
+func (r CheckTransferReturnDetails) GetReason() (Reason CheckTransferReturnDetailsReason) {
+	if r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
+}
+
+func (r CheckTransferReturnDetails) String() (result string) {
+	return fmt.Sprintf("&CheckTransferReturnDetails{TransferID:%s FileID:%s Reason:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID), core.FmtP(r.Reason))
+}
+
+type CheckTransferReturnDetailsReason string
+
+const (
+	CheckTransferReturnDetailsReasonMailDeliveryFailure CheckTransferReturnDetailsReason = "mail_delivery_failure"
+	CheckTransferReturnDetailsReasonRefusedByRecipient  CheckTransferReturnDetailsReason = "refused_by_recipient"
 )
 
 type CheckTransferType string

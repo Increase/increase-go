@@ -11,7 +11,7 @@ import (
 
 func TestAccountsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), &types.CreateAnAccountParameters{EntityID: increase.P("string"), InformationalEntityID: increase.P("string"), Name: increase.P("New Account!")})
+	_, err := c.Accounts.New(context.TODO(), &types.CreateAnAccountParameters{EntityID: increase.P("string"), ProgramID: increase.P("string"), InformationalEntityID: increase.P("string"), Name: increase.P("New Account!")})
 	if err != nil {
 		t.Fatal("err should be nil", err)
 	}

@@ -1993,6 +1993,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {

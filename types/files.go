@@ -134,6 +134,7 @@ const (
 	FilePurposeDigitalWalletArtwork       FilePurpose = "digital_wallet_artwork"
 	FilePurposeDigitalWalletAppIcon       FilePurpose = "digital_wallet_app_icon"
 	FilePurposeEntitySupplementalDocument FilePurpose = "entity_supplemental_document"
+	FilePurposeExport                     FilePurpose = "export"
 )
 
 type FileDirection string
@@ -415,6 +416,7 @@ const (
 	FileListParamsPurposeInDigitalWalletArtwork       FileListParamsPurposeIn = "digital_wallet_artwork"
 	FileListParamsPurposeInDigitalWalletAppIcon       FileListParamsPurposeIn = "digital_wallet_app_icon"
 	FileListParamsPurposeInEntitySupplementalDocument FileListParamsPurposeIn = "entity_supplemental_document"
+	FileListParamsPurposeInExport                     FileListParamsPurposeIn = "export"
 )
 
 type FileList struct {

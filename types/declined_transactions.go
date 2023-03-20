@@ -691,6 +691,7 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined             DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
 	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 )
 
 type DeclinedTransactionSourceCheckDecline struct {

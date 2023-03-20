@@ -229,6 +229,8 @@ const (
 type CreateAnAccountParameters struct {
 	// The identifier for the Entity that will own the Account.
 	EntityID *string `pjson:"entity_id"`
+	// The identifier for the Program that this Account falls under.
+	ProgramID *string `pjson:"program_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
 	InformationalEntityID *string `pjson:"informational_entity_id"`
@@ -259,6 +261,14 @@ func (r CreateAnAccountParameters) GetEntityID() (EntityID string) {
 	return
 }
 
+// The identifier for the Program that this Account falls under.
+func (r CreateAnAccountParameters) GetProgramID() (ProgramID string) {
+	if r.ProgramID != nil {
+		ProgramID = *r.ProgramID
+	}
+	return
+}
+
 // The identifier of an Entity that, while not owning the Account, is associated
 // with its activity. Its relationship to your group must be `informational`.
 func (r CreateAnAccountParameters) GetInformationalEntityID() (InformationalEntityID string) {
@@ -277,7 +287,7 @@ func (r CreateAnAccountParameters) GetName() (Name string) {
 }
 
 func (r CreateAnAccountParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnAccountParameters{EntityID:%s InformationalEntityID:%s Name:%s}", core.FmtP(r.EntityID), core.FmtP(r.InformationalEntityID), core.FmtP(r.Name))
+	return fmt.Sprintf("&CreateAnAccountParameters{EntityID:%s ProgramID:%s InformationalEntityID:%s Name:%s}", core.FmtP(r.EntityID), core.FmtP(r.ProgramID), core.FmtP(r.InformationalEntityID), core.FmtP(r.Name))
 }
 
 type UpdateAnAccountParameters struct {

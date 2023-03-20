@@ -1787,8 +1787,10 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID     *string                `pjson:"file_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	FileID *string `pjson:"file_id"`
+	// The reason why the check was returned.
+	Reason     *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                                                     `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1824,9 +1826,24 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTra
 	return
 }
 
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+// The reason why the check was returned.
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) GetReason() (Reason InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason) {
+	if r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
 }
+
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s Reason:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID), core.FmtP(r.Reason))
+}
+
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReasonMailDeliveryFailure InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+)
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
@@ -4582,6 +4599,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 )
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline struct {

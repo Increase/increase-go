@@ -36,3 +36,12 @@ func (r *SimulationsCheckTransferService) Mail(ctx context.Context, check_transf
 	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
+
+// Simulates a [Check Transfer](#check-transfers) being returned via USPS to
+// Increase. This transfer must first have a `status` of `mailed`.
+func (r *SimulationsCheckTransferService) Return(ctx context.Context, check_transfer_id string, body *types.ReturnASandboxCheckTransferParameters, opts ...options.RequestOption) (res *types.CheckTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("simulations/check_transfers/%s/return", check_transfer_id)
+	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	return
+}

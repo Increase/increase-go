@@ -1758,8 +1758,10 @@ type ACHTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID     *string                `pjson:"file_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	FileID *string `pjson:"file_id"`
+	// The reason why the check was returned.
+	Reason     *ACHTransferSimulationTransactionSourceCheckTransferReturnReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                           `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1793,9 +1795,24 @@ func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) GetFileID() (
 	return
 }
 
-func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+// The reason why the check was returned.
+func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) GetReason() (Reason ACHTransferSimulationTransactionSourceCheckTransferReturnReason) {
+	if r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
 }
+
+func (r ACHTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&ACHTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s Reason:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID), core.FmtP(r.Reason))
+}
+
+type ACHTransferSimulationTransactionSourceCheckTransferReturnReason string
+
+const (
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient  ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+)
 
 type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
@@ -4514,6 +4531,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 )
 
 type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {

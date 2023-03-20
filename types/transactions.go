@@ -1687,8 +1687,10 @@ type TransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID     *string                `pjson:"file_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	FileID *string `pjson:"file_id"`
+	// The reason why the check was returned.
+	Reason     *TransactionSourceCheckTransferReturnReason `pjson:"reason"`
+	jsonFields map[string]interface{}                      `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1721,9 +1723,24 @@ func (r TransactionSourceCheckTransferReturn) GetFileID() (FileID string) {
 	return
 }
 
-func (r TransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&TransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+// The reason why the check was returned.
+func (r TransactionSourceCheckTransferReturn) GetReason() (Reason TransactionSourceCheckTransferReturnReason) {
+	if r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
 }
+
+func (r TransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&TransactionSourceCheckTransferReturn{TransferID:%s FileID:%s Reason:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID), core.FmtP(r.Reason))
+}
+
+type TransactionSourceCheckTransferReturnReason string
+
+const (
+	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	TransactionSourceCheckTransferReturnReasonRefusedByRecipient  TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+)
 
 type TransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.

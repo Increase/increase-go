@@ -1744,8 +1744,10 @@ type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID *string `pjson:"transfer_id"`
 	// If available, a document with additional information about the return.
-	FileID     *string                `pjson:"file_id"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	FileID *string `pjson:"file_id"`
+	// The reason why the check was returned.
+	Reason     *WireTransferSimulationTransactionSourceCheckTransferReturnReason `pjson:"reason"`
+	jsonFields map[string]interface{}                                            `pjson:"-,extras"`
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1779,9 +1781,24 @@ func (r WireTransferSimulationTransactionSourceCheckTransferReturn) GetFileID() 
 	return
 }
 
-func (r WireTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
-	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID))
+// The reason why the check was returned.
+func (r WireTransferSimulationTransactionSourceCheckTransferReturn) GetReason() (Reason WireTransferSimulationTransactionSourceCheckTransferReturnReason) {
+	if r.Reason != nil {
+		Reason = *r.Reason
+	}
+	return
 }
+
+func (r WireTransferSimulationTransactionSourceCheckTransferReturn) String() (result string) {
+	return fmt.Sprintf("&WireTransferSimulationTransactionSourceCheckTransferReturn{TransferID:%s FileID:%s Reason:%s}", core.FmtP(r.TransferID), core.FmtP(r.FileID), core.FmtP(r.Reason))
+}
+
+type WireTransferSimulationTransactionSourceCheckTransferReturnReason string
+
+const (
+	WireTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure WireTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	WireTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient  WireTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+)
 
 type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
