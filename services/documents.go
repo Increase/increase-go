@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type DocumentService struct {
@@ -20,7 +21,7 @@ func NewDocumentService(opts ...options.RequestOption) (r *DocumentService) {
 }
 
 // Retrieve a Document
-func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...options.RequestOption) (res *types.Document, err error) {
+func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...options.RequestOption) (res *responses.Document, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("documents/%s", document_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -28,15 +29,15 @@ func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...o
 }
 
 // List Documents
-func (r *DocumentService) List(ctx context.Context, query *types.DocumentListParams, opts ...options.RequestOption) (res *types.DocumentsPage, err error) {
+func (r *DocumentService) List(ctx context.Context, query *requests.DocumentListParams, opts ...options.RequestOption) (res *responses.DocumentsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "documents"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.DocumentsPage{
-		Page: &pagination.Page[types.Document]{
+	res = &responses.DocumentsPage{
+		Page: &pagination.Page[responses.Document]{
 			Config:  *cfg,
 			Options: opts,
 		},

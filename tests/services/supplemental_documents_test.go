@@ -2,11 +2,15 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestSupplementalDocumentsNew(t *testing.T) {
@@ -14,9 +18,14 @@ func TestSupplementalDocumentsNew(t *testing.T) {
 	_, err := c.Entities.SupplementalDocuments.New(
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
-		&types.CreateASupplementalDocumentForAnEntityParameters{FileID: increase.P("file_makxrc67oh9l6sg7w9yc")},
+		&requests.CreateASupplementalDocumentForAnEntityParameters{FileID: fields.F("file_makxrc67oh9l6sg7w9yc")},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

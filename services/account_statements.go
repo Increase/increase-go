@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type AccountStatementService struct {
@@ -20,7 +21,7 @@ func NewAccountStatementService(opts ...options.RequestOption) (r *AccountStatem
 }
 
 // Retrieve an Account Statement
-func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...options.RequestOption) (res *types.AccountStatement, err error) {
+func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...options.RequestOption) (res *responses.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_statements/%s", account_statement_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -28,15 +29,15 @@ func (r *AccountStatementService) Get(ctx context.Context, account_statement_id 
 }
 
 // List Account Statements
-func (r *AccountStatementService) List(ctx context.Context, query *types.AccountStatementListParams, opts ...options.RequestOption) (res *types.AccountStatementsPage, err error) {
+func (r *AccountStatementService) List(ctx context.Context, query *requests.AccountStatementListParams, opts ...options.RequestOption) (res *responses.AccountStatementsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "account_statements"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.AccountStatementsPage{
-		Page: &pagination.Page[types.AccountStatement]{
+	res = &responses.AccountStatementsPage{
+		Page: &pagination.Page[responses.AccountStatement]{
 			Config:  *cfg,
 			Options: opts,
 		},

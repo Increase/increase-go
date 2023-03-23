@@ -2,11 +2,15 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestCheckTransfersDeposit(t *testing.T) {
@@ -16,7 +20,12 @@ func TestCheckTransfersDeposit(t *testing.T) {
 		"check_transfer_30b43acfu9vw8fyc4f5",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -28,7 +37,12 @@ func TestCheckTransfersMail(t *testing.T) {
 		"check_transfer_30b43acfu9vw8fyc4f5",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -37,9 +51,14 @@ func TestCheckTransfersReturn(t *testing.T) {
 	_, err := c.Simulations.CheckTransfers.Return(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
-		&types.ReturnASandboxCheckTransferParameters{Reason: increase.P(types.ReturnASandboxCheckTransferParametersReasonMailDeliveryFailure)},
+		&requests.ReturnASandboxCheckTransferParameters{Reason: fields.F(requests.ReturnASandboxCheckTransferParametersReasonMailDeliveryFailure)},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

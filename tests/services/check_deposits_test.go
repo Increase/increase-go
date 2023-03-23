@@ -2,9 +2,12 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/options"
 )
 
@@ -16,7 +19,12 @@ func TestCheckDepositsReject(t *testing.T) {
 		"check_deposit_f06n9gpg7sxn8t19lfc1",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -27,7 +35,12 @@ func TestCheckDepositsReturn(t *testing.T) {
 		"check_deposit_f06n9gpg7sxn8t19lfc1",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -39,6 +52,11 @@ func TestCheckDepositsSubmit(t *testing.T) {
 		"check_deposit_f06n9gpg7sxn8t19lfc1",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

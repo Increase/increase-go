@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type AccountService struct {
@@ -20,7 +21,7 @@ func NewAccountService(opts ...options.RequestOption) (r *AccountService) {
 }
 
 // Create an Account
-func (r *AccountService) New(ctx context.Context, body *types.CreateAnAccountParameters, opts ...options.RequestOption) (res *types.Account, err error) {
+func (r *AccountService) New(ctx context.Context, body *requests.CreateAnAccountParameters, opts ...options.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "accounts"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *AccountService) New(ctx context.Context, body *types.CreateAnAccountPar
 }
 
 // Retrieve an Account
-func (r *AccountService) Get(ctx context.Context, account_id string, opts ...options.RequestOption) (res *types.Account, err error) {
+func (r *AccountService) Get(ctx context.Context, account_id string, opts ...options.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s", account_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,7 +37,7 @@ func (r *AccountService) Get(ctx context.Context, account_id string, opts ...opt
 }
 
 // Update an Account
-func (r *AccountService) Update(ctx context.Context, account_id string, body *types.UpdateAnAccountParameters, opts ...options.RequestOption) (res *types.Account, err error) {
+func (r *AccountService) Update(ctx context.Context, account_id string, body *requests.UpdateAnAccountParameters, opts ...options.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s", account_id)
 	err = options.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
@@ -44,15 +45,15 @@ func (r *AccountService) Update(ctx context.Context, account_id string, body *ty
 }
 
 // List Accounts
-func (r *AccountService) List(ctx context.Context, query *types.AccountListParams, opts ...options.RequestOption) (res *types.AccountsPage, err error) {
+func (r *AccountService) List(ctx context.Context, query *requests.AccountListParams, opts ...options.RequestOption) (res *responses.AccountsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "accounts"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.AccountsPage{
-		Page: &pagination.Page[types.Account]{
+	res = &responses.AccountsPage{
+		Page: &pagination.Page[responses.Account]{
 			Config:  *cfg,
 			Options: opts,
 		},
@@ -61,7 +62,7 @@ func (r *AccountService) List(ctx context.Context, query *types.AccountListParam
 }
 
 // Close an Account
-func (r *AccountService) Close(ctx context.Context, account_id string, opts ...options.RequestOption) (res *types.Account, err error) {
+func (r *AccountService) Close(ctx context.Context, account_id string, opts ...options.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s/close", account_id)
 	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)

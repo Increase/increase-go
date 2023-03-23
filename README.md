@@ -35,12 +35,13 @@ import (
   "fmt"
   "github.com/increase/increase-go"
   "github.com/increase/increase-go/options"
-  "github.com/increase/increase-go/types"
+  "github.com/increase/increase-go/requests"
+  "github.com/increase/increase-go/responses"
 )
 
 func main() {
   client := increase.NewIncrease()
-  res, err := client.Accounts.New(types.CreateAnAccountParameters{Name: increase.P("My First Increase Account")})
+  res, err := client.Accounts.New(requests.CreateAnAccountParameters{Name: fields.F("My First Increase Account")})
   if err != nil {
     panic(err)
   }

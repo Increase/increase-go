@@ -2,18 +2,27 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestACHTransfersNewInboundWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &types.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: increase.P("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.P(int64(1000)), CompanyDescriptiveDate: increase.P("x"), CompanyDiscretionaryData: increase.P("x"), CompanyEntryDescription: increase.P("x"), CompanyName: increase.P("x"), CompanyID: increase.P("x")})
+	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &requests.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: fields.F("account_number_v18nkfqm6afpsrvy82b2"), Amount: fields.F(int64(1000)), CompanyDescriptiveDate: fields.F("x"), CompanyDiscretionaryData: fields.F("x"), CompanyEntryDescription: fields.F("x"), CompanyName: fields.F("x"), CompanyID: fields.F("x")})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -23,10 +32,15 @@ func TestACHTransfersReturnWithOptionalParams(t *testing.T) {
 	_, err := c.Simulations.ACHTransfers.Return(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
-		&types.ReturnASandboxACHTransferParameters{Reason: increase.P(types.ReturnASandboxACHTransferParametersReasonInsufficientFund)},
+		&requests.ReturnASandboxACHTransferParameters{Reason: fields.F(requests.ReturnASandboxACHTransferParametersReasonInsufficientFund)},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -38,6 +52,11 @@ func TestACHTransfersSubmit(t *testing.T) {
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

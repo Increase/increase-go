@@ -4,7 +4,8 @@ import (
 	"context"
 
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type SimulationsWireTransferService struct {
@@ -18,7 +19,7 @@ func NewSimulationsWireTransferService(opts ...options.RequestOption) (r *Simula
 }
 
 // Simulates an inbound Wire Transfer to your account.
-func (r *SimulationsWireTransferService) NewInbound(ctx context.Context, body *types.SimulateAWireTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.WireTransferSimulation, err error) {
+func (r *SimulationsWireTransferService) NewInbound(ctx context.Context, body *requests.SimulateAWireTransferToYourAccountParameters, opts ...options.RequestOption) (res *responses.WireTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_wire_transfers"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)

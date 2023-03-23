@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type EventService struct {
@@ -20,7 +21,7 @@ func NewEventService(opts ...options.RequestOption) (r *EventService) {
 }
 
 // Retrieve an Event
-func (r *EventService) Get(ctx context.Context, event_id string, opts ...options.RequestOption) (res *types.Event, err error) {
+func (r *EventService) Get(ctx context.Context, event_id string, opts ...options.RequestOption) (res *responses.Event, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("events/%s", event_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -28,15 +29,15 @@ func (r *EventService) Get(ctx context.Context, event_id string, opts ...options
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query *types.EventListParams, opts ...options.RequestOption) (res *types.EventsPage, err error) {
+func (r *EventService) List(ctx context.Context, query *requests.EventListParams, opts ...options.RequestOption) (res *responses.EventsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "events"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.EventsPage{
-		Page: &pagination.Page[types.Event]{
+	res = &responses.EventsPage{
+		Page: &pagination.Page[responses.Event]{
 			Config:  *cfg,
 			Options: opts,
 		},

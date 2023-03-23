@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type EntityService struct {
@@ -22,7 +23,7 @@ func NewEntityService(opts ...options.RequestOption) (r *EntityService) {
 }
 
 // Create an Entity
-func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParameters, opts ...options.RequestOption) (res *types.Entity, err error) {
+func (r *EntityService) New(ctx context.Context, body *requests.CreateAnEntityParameters, opts ...options.RequestOption) (res *responses.Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "entities"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -30,7 +31,7 @@ func (r *EntityService) New(ctx context.Context, body *types.CreateAnEntityParam
 }
 
 // Retrieve an Entity
-func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...options.RequestOption) (res *types.Entity, err error) {
+func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...options.RequestOption) (res *responses.Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("entities/%s", entity_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -38,15 +39,15 @@ func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...optio
 }
 
 // List Entities
-func (r *EntityService) List(ctx context.Context, query *types.EntityListParams, opts ...options.RequestOption) (res *types.EntitiesPage, err error) {
+func (r *EntityService) List(ctx context.Context, query *requests.EntityListParams, opts ...options.RequestOption) (res *responses.EntitiesPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "entities"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.EntitiesPage{
-		Page: &pagination.Page[types.Entity]{
+	res = &responses.EntitiesPage{
+		Page: &pagination.Page[responses.Entity]{
 			Config:  *cfg,
 			Options: opts,
 		},

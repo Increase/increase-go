@@ -2,19 +2,28 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestACHPrenotificationsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHPrenotifications.New(context.TODO(), &types.CreateAnACHPrenotificationParameters{AccountNumber: increase.P("987654321"), Addendum: increase.P("x"), CompanyDescriptiveDate: increase.P("x"), CompanyDiscretionaryData: increase.P("x"), CompanyEntryDescription: increase.P("x"), CompanyName: increase.P("x"), CreditDebitIndicator: increase.P(types.CreateAnACHPrenotificationParametersCreditDebitIndicatorCredit), EffectiveDate: increase.P(time.Now()), IndividualID: increase.P("x"), IndividualName: increase.P("x"), RoutingNumber: increase.P("101050001"), StandardEntryClassCode: increase.P(types.CreateAnACHPrenotificationParametersStandardEntryClassCodeCorporateCreditOrDebit)})
+	_, err := c.ACHPrenotifications.New(context.TODO(), &requests.CreateAnACHPrenotificationParameters{AccountNumber: fields.F("987654321"), Addendum: fields.F("x"), CompanyDescriptiveDate: fields.F("x"), CompanyDiscretionaryData: fields.F("x"), CompanyEntryDescription: fields.F("x"), CompanyName: fields.F("x"), CreditDebitIndicator: fields.F(requests.CreateAnACHPrenotificationParametersCreditDebitIndicatorCredit), EffectiveDate: fields.F(time.Now()), IndividualID: fields.F("x"), IndividualName: fields.F("x"), RoutingNumber: fields.F("101050001"), StandardEntryClassCode: fields.F(requests.CreateAnACHPrenotificationParametersStandardEntryClassCodeCorporateCreditOrDebit)})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -25,14 +34,24 @@ func TestACHPrenotificationsGet(t *testing.T) {
 		"ach_prenotification_ubjf9qqsxl3obbcn1u34",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
 func TestACHPrenotificationsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHPrenotifications.List(context.TODO(), &types.ACHPrenotificationListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), CreatedAt: increase.P(types.ACHPrenotificationListParamsCreatedAt{After: increase.P(time.Now()), Before: increase.P(time.Now()), OnOrAfter: increase.P(time.Now()), OnOrBefore: increase.P(time.Now())})})
+	_, err := c.ACHPrenotifications.List(context.TODO(), &requests.ACHPrenotificationListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), CreatedAt: fields.F(requests.ACHPrenotificationListParamsCreatedAt{After: fields.F(time.Now()), Before: fields.F(time.Now()), OnOrAfter: fields.F(time.Now()), OnOrBefore: fields.F(time.Now())})})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

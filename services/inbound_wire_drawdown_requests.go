@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type InboundWireDrawdownRequestService struct {
@@ -20,7 +21,7 @@ func NewInboundWireDrawdownRequestService(opts ...options.RequestOption) (r *Inb
 }
 
 // Retrieve an Inbound Wire Drawdown Request
-func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wire_drawdown_request_id string, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequest, err error) {
+func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wire_drawdown_request_id string, opts ...options.RequestOption) (res *responses.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("inbound_wire_drawdown_requests/%s", inbound_wire_drawdown_request_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -28,15 +29,15 @@ func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wir
 }
 
 // List Inbound Wire Drawdown Requests
-func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *types.InboundWireDrawdownRequestListParams, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequestsPage, err error) {
+func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *requests.InboundWireDrawdownRequestListParams, opts ...options.RequestOption) (res *responses.InboundWireDrawdownRequestsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "inbound_wire_drawdown_requests"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.InboundWireDrawdownRequestsPage{
-		Page: &pagination.Page[types.InboundWireDrawdownRequest]{
+	res = &responses.InboundWireDrawdownRequestsPage{
+		Page: &pagination.Page[responses.InboundWireDrawdownRequest]{
 			Config:  *cfg,
 			Options: opts,
 		},

@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type InboundACHTransferReturnService struct {
@@ -20,7 +21,7 @@ func NewInboundACHTransferReturnService(opts ...options.RequestOption) (r *Inbou
 }
 
 // Create an ACH Return
-func (r *InboundACHTransferReturnService) New(ctx context.Context, body *types.CreateAnACHReturnParameters, opts ...options.RequestOption) (res *types.InboundACHTransferReturn, err error) {
+func (r *InboundACHTransferReturnService) New(ctx context.Context, body *requests.CreateAnACHReturnParameters, opts ...options.RequestOption) (res *responses.InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "inbound_ach_transfer_returns"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *InboundACHTransferReturnService) New(ctx context.Context, body *types.C
 }
 
 // Retrieve an Inbound ACH Transfer Return
-func (r *InboundACHTransferReturnService) Get(ctx context.Context, inbound_ach_transfer_return_id string, opts ...options.RequestOption) (res *types.InboundACHTransferReturn, err error) {
+func (r *InboundACHTransferReturnService) Get(ctx context.Context, inbound_ach_transfer_return_id string, opts ...options.RequestOption) (res *responses.InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("inbound_ach_transfer_returns/%s", inbound_ach_transfer_return_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,15 +37,15 @@ func (r *InboundACHTransferReturnService) Get(ctx context.Context, inbound_ach_t
 }
 
 // List Inbound ACH Transfer Returns
-func (r *InboundACHTransferReturnService) List(ctx context.Context, query *types.InboundACHTransferReturnListParams, opts ...options.RequestOption) (res *types.InboundACHTransferReturnsPage, err error) {
+func (r *InboundACHTransferReturnService) List(ctx context.Context, query *requests.InboundACHTransferReturnListParams, opts ...options.RequestOption) (res *responses.InboundACHTransferReturnsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "inbound_ach_transfer_returns"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.InboundACHTransferReturnsPage{
-		Page: &pagination.Page[types.InboundACHTransferReturn]{
+	res = &responses.InboundACHTransferReturnsPage{
+		Page: &pagination.Page[responses.InboundACHTransferReturn]{
 			Config:  *cfg,
 			Options: opts,
 		},

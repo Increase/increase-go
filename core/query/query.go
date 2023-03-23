@@ -3,29 +3,23 @@ package query
 import (
 	"net/url"
 	"reflect"
-	"sync"
 )
 
 const queryStructTag = "query"
 const pathParamStructTag = "pathparam"
 
-var encoders sync.Map // map[QuerySettings]*encoder
-
-func MarshalWithSettings(value interface{}, settings QuerySettings) (v url.Values) {
-	if value == nil {
-		return
+func MarshalWithSettings(value interface{}, settings QuerySettings) url.Values {
+	e := encoder{settings}
+	kv := url.Values{}
+	val := reflect.ValueOf(value)
+	if !val.IsValid() {
+		return nil
 	}
-	settings.assignDefaults()
-	e, _ := encoders.LoadOrStore(settings, &encoder{settings, sync.Map{}})
-
-	v = make(url.Values)
-
-	rv := reflect.ValueOf(value)
-	for _, pair := range e.(*encoder).valueEncoder(rv)("", rv) {
-		v.Add(pair.key, pair.value)
+	typ := val.Type()
+	for _, pair := range e.typeEncoder(typ)("", val) {
+		kv.Add(pair.key, pair.value)
 	}
-
-	return
+	return kv
 }
 
 func Marshal(value interface{}) url.Values {
@@ -35,3 +29,24 @@ func Marshal(value interface{}) url.Values {
 type Queryer interface {
 	URLQuery() url.Values
 }
+
+type QuerySettings struct {
+	NestedFormat NestedQueryFormat
+	ArrayFormat  ArrayQueryFormat
+}
+
+type NestedQueryFormat int
+
+const (
+	NestedQueryFormatBrackets NestedQueryFormat = iota
+	NestedQueryFormatDots
+)
+
+type ArrayQueryFormat int
+
+const (
+	ArrayQueryFormatComma ArrayQueryFormat = iota
+	ArrayQueryFormatRepeat
+	ArrayQueryFormatIndices
+	ArrayQueryFormatBrackets
+)

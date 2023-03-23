@@ -1,11 +1,9 @@
 package pagination
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/core/pjson"
+	pjson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/options"
 )
 
@@ -42,7 +40,7 @@ func (r *Page[T]) NextPageConfig() *options.RequestConfig {
 	if r.res == nil {
 		return nil
 	}
-	next := r.res.NextCursor
+	next := &r.res.NextCursor
 	if next == nil && len(*next) > 0 {
 		return nil
 	}
@@ -148,49 +146,28 @@ func (r *Page[T]) GetRawResponse() *http.Response {
 }
 
 type PageResponse[T any] struct {
-	Data *[]T `pjson:"data"`
+	Data []T `json:"data,required"`
 	// A pointer to a place in the list.
-	NextCursor *string                `pjson:"next_cursor"`
-	jsonFields map[string]interface{} `pjson:"-,extras"`
+	NextCursor string `json:"next_cursor,required,nullable"`
+	JSON       PageResponseJSON
+}
+
+type PageResponseJSON struct {
+	Data       pjson.Metadata
+	NextCursor pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the
 // internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *PageResponse[T]) UnmarshalJSON(data []byte) (err error) {
-	return pjson.Unmarshal(data, r)
-}
-
-// MarshalJSON serializes PageResponse[T] into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
-func (r *PageResponse[T]) MarshalJSON() (data []byte, err error) {
-	return pjson.Marshal(r)
-}
-
-func (r PageResponse[T]) GetData() (Data []T) {
-	if r.Data != nil {
-		Data = *r.Data
-	}
-	return
-}
-
-// A pointer to a place in the list.
-func (r PageResponse[T]) GetNextCursor() (NextCursor string) {
-	if r.NextCursor != nil {
-		NextCursor = *r.NextCursor
-	}
-	return
-}
-
-func (r PageResponse[T]) String() (result string) {
-	return fmt.Sprintf("&PageResponse[T]{Data:%s NextCursor:%s}", core.Fmt(r.Data), core.FmtP(r.NextCursor))
+	return pjson.UnmarshalRoot(data, r)
 }
 
 var _ PaginatedResponse[any] = (*PageResponse[any])(nil)
 
 func (r *PageResponse[T]) GetItems() []T {
-	return *r.Data
+	return r.Data
 }
 
 func (r *PageResponse[T]) GetItem(index int) *T {

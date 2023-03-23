@@ -19,6 +19,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/core/query"
+	"github.com/tidwall/sjson"
 )
 
 func getNormalizedOS() string {
@@ -69,24 +70,22 @@ func getPlatformProperties() map[string]string {
 }
 
 func NewRequestConfig(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) (*RequestConfig, error) {
-	var reader io.ReadCloser
+	var b []byte
 	if body, ok := body.(json.Marshaler); ok {
-		b, err := body.MarshalJSON()
+		var err error
+		b, err = body.MarshalJSON()
 		if err != nil {
 			return nil, err
-		}
-		if len(b) != 0 {
-			reader = io.NopCloser(bytes.NewBuffer(b))
 		}
 	}
 	if body, ok := body.(query.Queryer); ok {
 		u = u + "?" + body.URLQuery().Encode()
 	}
-	req, err := http.NewRequestWithContext(ctx, method, u, reader)
+	req, err := http.NewRequestWithContext(ctx, method, u, nil)
 	if err != nil {
 		return nil, err
 	}
-	if reader != nil {
+	if b != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
 	req.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
@@ -99,9 +98,13 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 		Context:    ctx,
 		Request:    req,
 		HTTPClient: http.DefaultClient,
+		buffer:     b,
 	}
 	cfg.ResponseBodyInto = dst
-	cfg.Apply(opts...)
+	err = cfg.Apply(opts...)
+	if err != nil {
+		return nil, err
+	}
 	return &cfg, nil
 }
 
@@ -127,6 +130,7 @@ type RequestConfig struct {
 	// ResponseInto copies the \*http.Response of the corresponding request into the
 	// given address
 	ResponseInto **http.Response
+	buffer       []byte
 }
 
 func (cfg *RequestConfig) Execute() error {
@@ -135,6 +139,13 @@ func (cfg *RequestConfig) Execute() error {
 		return err
 	}
 	cfg.Request.URL = u
+
+	if len(cfg.buffer) != 0 && cfg.Request.Body == nil {
+		buf := bytes.NewReader(cfg.buffer)
+		cfg.Request.ContentLength = int64(len(cfg.buffer))
+		cfg.Request.Body = io.NopCloser(buf)
+		cfg.Request.GetBody = func() (io.ReadCloser, error) { return io.NopCloser(bytes.NewReader(cfg.buffer)), nil }
+	}
 
 	var res *http.Response
 	for i := 0; i <= cfg.MaxRetries; i += 1 {
@@ -145,8 +156,10 @@ func (cfg *RequestConfig) Execute() error {
 		}
 
 		duration := time.Duration(500) * time.Millisecond * time.Duration(math.Exp(float64(i)))
-		if parsed, err := strconv.ParseInt(res.Header.Get("Retry-After"), 10, 64); err == nil {
-			duration = time.Duration(parsed) * time.Second
+		if res != nil {
+			if parsed, err := strconv.ParseInt(res.Header.Get("Retry-After"), 10, 64); err == nil {
+				duration = time.Duration(parsed) * time.Second
+			}
 		}
 		if duration > time.Duration(60)*time.Second {
 			duration = time.Duration(60) * time.Second
@@ -211,90 +224,118 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 	}
 }
 
-func (cfg *RequestConfig) Apply(opts ...RequestOption) {
+func (cfg *RequestConfig) Apply(opts ...RequestOption) error {
 	for _, opt := range opts {
-		opt(cfg)
+		err := opt(cfg)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
-type RequestOption = func(*RequestConfig)
+type RequestOption = func(*RequestConfig) error
 
 func WithBaseURL(base string) RequestOption {
 	u, err := url.Parse(base)
 	if err != nil {
 		log.Fatalf("failed to parse BaseURL: %s\n", err)
 	}
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.BaseURL = u
+		return nil
 	}
 }
 
 func WithHTTPClient(client *http.Client) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.HTTPClient = client
+		return nil
 	}
 }
 
 func WithMaxRetries(retries int) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.MaxRetries = retries
+		return nil
 	}
 }
 
 func WithHeader(key, value string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.Request.Header[key] = []string{value}
+		return nil
 	}
 }
 func WithHeaderAdd(key, value string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.Request.Header[key] = append(r.Request.Header[key], value)
+		return nil
 	}
 }
 func WithHeaderDel(key string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		delete(r.Request.Header, key)
+		return nil
 	}
 }
 
 func WithQuery(key, value string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		query := r.Request.URL.Query()
 		query.Set(key, value)
 		r.Request.URL.RawQuery = query.Encode()
+		return nil
 	}
 }
 func WithQueryAdd(key, value string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		query := r.Request.URL.Query()
 		query.Add(key, value)
 		r.Request.URL.RawQuery = query.Encode()
+		return nil
 	}
 }
 func WithQueryDel(key string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		query := r.Request.URL.Query()
 		query.Del(key)
 		r.Request.URL.RawQuery = query.Encode()
+		return nil
+	}
+}
+
+func WithJSONSet(key string, value interface{}) RequestOption {
+	return func(r *RequestConfig) (err error) {
+		r.buffer, err = sjson.SetBytes(r.buffer, key, value)
+		return err
+	}
+}
+func WithJSONDel(key string) RequestOption {
+	return func(r *RequestConfig) (err error) {
+		r.buffer, err = sjson.DeleteBytes(r.buffer, key)
+		return err
 	}
 }
 
 func WithResponseBodyInto(dst any) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.ResponseBodyInto = dst
+		return nil
 	}
 }
 
 func WithResponseInto(dst **http.Response) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.ResponseInto = dst
+		return nil
 	}
 }
 
 func WithAPIKey(key string) RequestOption {
-	return func(r *RequestConfig) {
+	return func(r *RequestConfig) error {
 		r.APIKey = key
-		r.Apply(WithHeader("Authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
+		return r.Apply(WithHeader("Authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
 	}
 }
 

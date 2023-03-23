@@ -7,12 +7,6 @@ import (
 	"github.com/increase/increase-go/services"
 )
 
-// P returns a pointer to the value of the argument, which is useful for constructing
-// primitive literals that are pointers.
-func P[T any](v T) *T {
-	return &v
-}
-
 type Increase struct {
 	Options                     []options.RequestOption
 	Accounts                    *services.AccountService

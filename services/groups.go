@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/responses"
 )
 
 type GroupService struct {
@@ -18,7 +18,7 @@ func NewGroupService(opts ...options.RequestOption) (r *GroupService) {
 }
 
 // Returns details for the currently authenticated Group.
-func (r *GroupService) GetDetails(ctx context.Context, opts ...options.RequestOption) (res *types.Group, err error) {
+func (r *GroupService) GetDetails(ctx context.Context, opts ...options.RequestOption) (res *responses.Group, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "groups/current"
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)

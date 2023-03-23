@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type CardService struct {
@@ -20,7 +21,7 @@ func NewCardService(opts ...options.RequestOption) (r *CardService) {
 }
 
 // Create a Card
-func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
+func (r *CardService) New(ctx context.Context, body *requests.CreateACardParameters, opts ...options.RequestOption) (res *responses.Card, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "cards"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *CardService) New(ctx context.Context, body *types.CreateACardParameters
 }
 
 // Retrieve a Card
-func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.Card, err error) {
+func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.RequestOption) (res *responses.Card, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("cards/%s", card_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,7 +37,7 @@ func (r *CardService) Get(ctx context.Context, card_id string, opts ...options.R
 }
 
 // Update a Card
-func (r *CardService) Update(ctx context.Context, card_id string, body *types.UpdateACardParameters, opts ...options.RequestOption) (res *types.Card, err error) {
+func (r *CardService) Update(ctx context.Context, card_id string, body *requests.UpdateACardParameters, opts ...options.RequestOption) (res *responses.Card, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("cards/%s", card_id)
 	err = options.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
@@ -44,15 +45,15 @@ func (r *CardService) Update(ctx context.Context, card_id string, body *types.Up
 }
 
 // List Cards
-func (r *CardService) List(ctx context.Context, query *types.CardListParams, opts ...options.RequestOption) (res *types.CardsPage, err error) {
+func (r *CardService) List(ctx context.Context, query *requests.CardListParams, opts ...options.RequestOption) (res *responses.CardsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "cards"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.CardsPage{
-		Page: &pagination.Page[types.Card]{
+	res = &responses.CardsPage{
+		Page: &pagination.Page[responses.Card]{
 			Config:  *cfg,
 			Options: opts,
 		},
@@ -61,7 +62,7 @@ func (r *CardService) List(ctx context.Context, query *types.CardListParams, opt
 }
 
 // Retrieve sensitive details for a Card
-func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...options.RequestOption) (res *types.CardDetails, err error) {
+func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...options.RequestOption) (res *responses.CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("cards/%s/details", card_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)

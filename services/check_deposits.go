@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type CheckDepositService struct {
@@ -20,7 +21,7 @@ func NewCheckDepositService(opts ...options.RequestOption) (r *CheckDepositServi
 }
 
 // Create a Check Deposit
-func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckDepositParameters, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+func (r *CheckDepositService) New(ctx context.Context, body *requests.CreateACheckDepositParameters, opts ...options.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_deposits"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *CheckDepositService) New(ctx context.Context, body *types.CreateACheckD
 }
 
 // Retrieve a Check Deposit
-func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *types.CheckDeposit, err error) {
+func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_deposits/%s", check_deposit_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,15 +37,15 @@ func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, 
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query *types.CheckDepositListParams, opts ...options.RequestOption) (res *types.CheckDepositsPage, err error) {
+func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDepositListParams, opts ...options.RequestOption) (res *responses.CheckDepositsPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "check_deposits"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.CheckDepositsPage{
-		Page: &pagination.Page[types.CheckDeposit]{
+	res = &responses.CheckDepositsPage{
+		Page: &pagination.Page[responses.CheckDeposit]{
 			Config:  *cfg,
 			Options: opts,
 		},

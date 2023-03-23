@@ -4,7 +4,8 @@ import (
 	"context"
 
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type SimulationsRealTimePaymentsTransferService struct {
@@ -19,7 +20,7 @@ func NewSimulationsRealTimePaymentsTransferService(opts ...options.RequestOption
 
 // Simulates an inbound Real Time Payments transfer to your account. Real Time
 // Payments are a beta feature.
-func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *types.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...options.RequestOption) (res *types.InboundRealTimePaymentsTransferSimulationResult, err error) {
+func (r *SimulationsRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *requests.SimulateARealTimePaymentsTransferToYourAccountParameters, opts ...options.RequestOption) (res *responses.InboundRealTimePaymentsTransferSimulationResult, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_real_time_payments_transfers"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)

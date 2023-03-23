@@ -2,18 +2,27 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestCardProfilesNew(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.New(context.TODO(), &types.CreateACardProfileParameters{Description: increase.P("My Card Profile"), DigitalWallets: increase.P(types.CreateACardProfileParametersDigitalWallets{TextColor: increase.P(types.CreateACardProfileParametersDigitalWalletsTextColor{Red: increase.P(int64(26)), Green: increase.P(int64(43)), Blue: increase.P(int64(59))}), IssuerName: increase.P("MyBank"), CardDescription: increase.P("MyBank Signature Card"), ContactWebsite: increase.P("https://example.com"), ContactEmail: increase.P("user@example.com"), ContactPhone: increase.P("+18885551212"), BackgroundImageFileID: increase.P("file_1ai913suu1zfn1pdetru"), AppIconFileID: increase.P("file_8zxqkwlh43wo144u8yec")})})
+	_, err := c.CardProfiles.New(context.TODO(), &requests.CreateACardProfileParameters{Description: fields.F("My Card Profile"), DigitalWallets: fields.F(requests.CreateACardProfileParametersDigitalWallets{TextColor: fields.F(requests.CreateACardProfileParametersDigitalWalletsTextColor{Red: fields.F(int64(26)), Green: fields.F(int64(43)), Blue: fields.F(int64(59))}), IssuerName: fields.F("MyBank"), CardDescription: fields.F("MyBank Signature Card"), ContactWebsite: fields.F("https://example.com"), ContactEmail: fields.F("user@example.com"), ContactPhone: fields.F("+18885551212"), BackgroundImageFileID: fields.F("file_1ai913suu1zfn1pdetru"), AppIconFileID: fields.F("file_8zxqkwlh43wo144u8yec")})})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -24,14 +33,24 @@ func TestCardProfilesGet(t *testing.T) {
 		"card_profile_cox5y73lob2eqly18piy",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
 func TestCardProfilesListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.List(context.TODO(), &types.CardProfileListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.CardProfileListParamsStatus{In: increase.P([]types.CardProfileListParamsStatusIn{types.CardProfileListParamsStatusInPending, types.CardProfileListParamsStatusInPending, types.CardProfileListParamsStatusInPending})})})
+	_, err := c.CardProfiles.List(context.TODO(), &requests.CardProfileListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), Status: fields.F(requests.CardProfileListParamsStatus{In: fields.F([]requests.CardProfileListParamsStatusIn{requests.CardProfileListParamsStatusInPending, requests.CardProfileListParamsStatusInPending, requests.CardProfileListParamsStatusInPending})})})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

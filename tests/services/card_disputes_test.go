@@ -2,11 +2,15 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestCardDisputesActionWithOptionalParams(t *testing.T) {
@@ -14,9 +18,14 @@ func TestCardDisputesActionWithOptionalParams(t *testing.T) {
 	_, err := c.Simulations.CardDisputes.Action(
 		context.TODO(),
 		"card_dispute_h9sc95nbl1cgltpp7men",
-		&types.SimulatesAdvancingTheStateOfACardDisputeParameters{Status: increase.P(types.SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted), Explanation: increase.P("This was a valid recurring transaction")},
+		&requests.SimulatesAdvancingTheStateOfACardDisputeParameters{Status: fields.F(requests.SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted), Explanation: fields.F("This was a valid recurring transaction")},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

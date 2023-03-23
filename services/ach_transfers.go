@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type ACHTransferService struct {
@@ -20,7 +21,7 @@ func NewACHTransferService(opts ...options.RequestOption) (r *ACHTransferService
 }
 
 // Create an ACH Transfer
-func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTransferParameters, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+func (r *ACHTransferService) New(ctx context.Context, body *requests.CreateAnACHTransferParameters, opts ...options.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "ach_transfers"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *ACHTransferService) New(ctx context.Context, body *types.CreateAnACHTra
 }
 
 // Retrieve an ACH Transfer
-func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s", ach_transfer_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,15 +37,15 @@ func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, op
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferListParams, opts ...options.RequestOption) (res *types.ACHTransfersPage, err error) {
+func (r *ACHTransferService) List(ctx context.Context, query *requests.ACHTransferListParams, opts ...options.RequestOption) (res *responses.ACHTransfersPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "ach_transfers"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.ACHTransfersPage{
-		Page: &pagination.Page[types.ACHTransfer]{
+	res = &responses.ACHTransfersPage{
+		Page: &pagination.Page[responses.ACHTransfer]{
 			Config:  *cfg,
 			Options: opts,
 		},
@@ -53,7 +54,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *types.ACHTransferL
 }
 
 // Approves an ACH Transfer in a pending_approval state.
-func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id)
 	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
@@ -61,7 +62,7 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 }
 
 // Cancels an ACH Transfer in a pending_approval state.
-func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *types.ACHTransfer, err error) {
+func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...options.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id)
 	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)

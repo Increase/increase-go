@@ -2,18 +2,27 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestAccountsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), &types.CreateAnAccountParameters{EntityID: increase.P("string"), ProgramID: increase.P("string"), InformationalEntityID: increase.P("string"), Name: increase.P("New Account!")})
+	_, err := c.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{EntityID: fields.F("string"), ProgramID: fields.F("string"), InformationalEntityID: fields.F("string"), Name: fields.F("New Account!")})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -24,7 +33,12 @@ func TestAccountsGet(t *testing.T) {
 		"account_in71c4amph0vgo2qllky",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -33,18 +47,28 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.Accounts.Update(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
-		&types.UpdateAnAccountParameters{Name: increase.P("My renamed account")},
+		&requests.UpdateAnAccountParameters{Name: fields.F("My renamed account")},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
 func TestAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &types.AccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), EntityID: increase.P("string"), Status: increase.P(types.AccountListParamsStatusOpen)})
+	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), EntityID: fields.F("string"), Status: fields.F(requests.AccountListParamsStatusOpen)})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -56,6 +80,11 @@ func TestAccountsClose(t *testing.T) {
 		"account_in71c4amph0vgo2qllky",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

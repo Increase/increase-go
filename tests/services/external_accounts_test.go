@@ -2,18 +2,27 @@ package services
 
 import (
 	"context"
+	"errors"
+	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
 )
 
 func TestExternalAccountsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.New(context.TODO(), &types.CreateAnExternalAccountParameters{RoutingNumber: increase.P("101050001"), AccountNumber: increase.P("987654321"), Funding: increase.P(types.CreateAnExternalAccountParametersFundingChecking), Description: increase.P("Landlord")})
+	_, err := c.ExternalAccounts.New(context.TODO(), &requests.CreateAnExternalAccountParameters{RoutingNumber: fields.F("101050001"), AccountNumber: fields.F("987654321"), Funding: fields.F(requests.CreateAnExternalAccountParametersFundingChecking), Description: fields.F("Landlord")})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -24,7 +33,12 @@ func TestExternalAccountsGet(t *testing.T) {
 		"external_account_ukk55lr923a3ac0pp7iv",
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
@@ -33,17 +47,27 @@ func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.ExternalAccounts.Update(
 		context.TODO(),
 		"external_account_ukk55lr923a3ac0pp7iv",
-		&types.UpdateAnExternalAccountParameters{Description: increase.P("New description"), Status: increase.P(types.UpdateAnExternalAccountParametersStatusActive)},
+		&requests.UpdateAnExternalAccountParameters{Description: fields.F("New description"), Status: fields.F(requests.UpdateAnExternalAccountParametersStatusActive)},
 	)
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
 
 func TestExternalAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.List(context.TODO(), &types.ExternalAccountListParams{Cursor: increase.P("string"), Limit: increase.P(int64(0)), Status: increase.P(types.ExternalAccountListParamsStatus{In: increase.P([]types.ExternalAccountListParamsStatusIn{types.ExternalAccountListParamsStatusInActive, types.ExternalAccountListParamsStatusInActive, types.ExternalAccountListParamsStatusInActive})})})
+	_, err := c.ExternalAccounts.List(context.TODO(), &requests.ExternalAccountListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), Status: fields.F(requests.ExternalAccountListParamsStatus{In: fields.F([]requests.ExternalAccountListParamsStatusIn{requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive})})})
 	if err != nil {
-		t.Fatal("err should be nil", err)
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

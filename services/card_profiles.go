@@ -6,7 +6,8 @@ import (
 
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/pagination"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type CardProfileService struct {
@@ -20,7 +21,7 @@ func NewCardProfileService(opts ...options.RequestOption) (r *CardProfileService
 }
 
 // Create a Card Profile
-func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardProfileParameters, opts ...options.RequestOption) (res *types.CardProfile, err error) {
+func (r *CardProfileService) New(ctx context.Context, body *requests.CreateACardProfileParameters, opts ...options.RequestOption) (res *responses.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "card_profiles"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -28,7 +29,7 @@ func (r *CardProfileService) New(ctx context.Context, body *types.CreateACardPro
 }
 
 // Retrieve a Card Profile
-func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...options.RequestOption) (res *types.CardProfile, err error) {
+func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...options.RequestOption) (res *responses.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("card_profiles/%s", card_profile_id)
 	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
@@ -36,15 +37,15 @@ func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, op
 }
 
 // List Card Profiles
-func (r *CardProfileService) List(ctx context.Context, query *types.CardProfileListParams, opts ...options.RequestOption) (res *types.CardProfilesPage, err error) {
+func (r *CardProfileService) List(ctx context.Context, query *requests.CardProfileListParams, opts ...options.RequestOption) (res *responses.CardProfilesPage, err error) {
 	opts = append(r.Options, opts...)
 	path := "card_profiles"
 	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
 	if err != nil {
 		return
 	}
-	res = &types.CardProfilesPage{
-		Page: &pagination.Page[types.CardProfile]{
+	res = &responses.CardProfilesPage{
+		Page: &pagination.Page[responses.CardProfile]{
 			Config:  *cfg,
 			Options: opts,
 		},

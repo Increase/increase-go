@@ -4,7 +4,8 @@ import (
 	"context"
 
 	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/types"
+	"github.com/increase/increase-go/requests"
+	"github.com/increase/increase-go/responses"
 )
 
 type SimulationsInboundWireDrawdownRequestService struct {
@@ -19,7 +20,7 @@ func NewSimulationsInboundWireDrawdownRequestService(opts ...options.RequestOpti
 
 // Simulates the receival of an
 // [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
-func (r *SimulationsInboundWireDrawdownRequestService) New(ctx context.Context, body *types.SimulateAnInboundWireDrawdownRequestBeingCreatedParameters, opts ...options.RequestOption) (res *types.InboundWireDrawdownRequest, err error) {
+func (r *SimulationsInboundWireDrawdownRequestService) New(ctx context.Context, body *requests.SimulateAnInboundWireDrawdownRequestBeingCreatedParameters, opts ...options.RequestOption) (res *responses.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_wire_drawdown_requests"
 	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
