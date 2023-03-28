@@ -34,7 +34,7 @@ type PendingTransaction struct {
 	// things like cards and ACH details.
 	RouteID fields.Field[string] `json:"route_id,required,nullable"`
 	// The type of the route this Pending Transaction came through.
-	RouteType fields.Field[string] `json:"route_type,required,nullable"`
+	RouteType fields.Field[PendingTransactionRouteType] `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Pending Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location.
@@ -67,6 +67,13 @@ const (
 	PendingTransactionCurrencyGbp PendingTransactionCurrency = "GBP"
 	PendingTransactionCurrencyJpy PendingTransactionCurrency = "JPY"
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
+)
+
+type PendingTransactionRouteType string
+
+const (
+	PendingTransactionRouteTypeAccountNumber PendingTransactionRouteType = "account_number"
+	PendingTransactionRouteTypeCard          PendingTransactionRouteType = "card"
 )
 
 type PendingTransactionSource struct {

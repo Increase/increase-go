@@ -31,7 +31,7 @@ type DeclinedTransaction struct {
 	// things like cards and ACH details.
 	RouteID fields.Field[string] `json:"route_id,required,nullable"`
 	// The type of the route this Declined Transaction came through.
-	RouteType fields.Field[string] `json:"route_type,required,nullable"`
+	RouteType fields.Field[DeclinedTransactionRouteType] `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
@@ -63,6 +63,13 @@ const (
 	DeclinedTransactionCurrencyGbp DeclinedTransactionCurrency = "GBP"
 	DeclinedTransactionCurrencyJpy DeclinedTransactionCurrency = "JPY"
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
+)
+
+type DeclinedTransactionRouteType string
+
+const (
+	DeclinedTransactionRouteTypeAccountNumber DeclinedTransactionRouteType = "account_number"
+	DeclinedTransactionRouteTypeCard          DeclinedTransactionRouteType = "card"
 )
 
 type DeclinedTransactionSource struct {
@@ -321,6 +328,7 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonReferToImage          DeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  DeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	DeclinedTransactionSourceCheckDeclineReasonReturned              DeclinedTransactionSourceCheckDeclineReason = "returned"
+	DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  DeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 )
 
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

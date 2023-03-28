@@ -34,7 +34,7 @@ type Transaction struct {
 	// like cards and ACH details.
 	RouteID fields.Field[string] `json:"route_id,required,nullable"`
 	// The type of the route this Transaction came through.
-	RouteType fields.Field[string] `json:"route_type,required,nullable"`
+	RouteType fields.Field[TransactionRouteType] `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
@@ -65,6 +65,13 @@ const (
 	TransactionCurrencyGbp TransactionCurrency = "GBP"
 	TransactionCurrencyJpy TransactionCurrency = "JPY"
 	TransactionCurrencyUsd TransactionCurrency = "USD"
+)
+
+type TransactionRouteType string
+
+const (
+	TransactionRouteTypeAccountNumber TransactionRouteType = "account_number"
+	TransactionRouteTypeCard          TransactionRouteType = "card"
 )
 
 type TransactionSource struct {

@@ -72,6 +72,9 @@ type ACHTransfer struct {
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
 	IndividualName fields.Field[string] `json:"individual_name,required,nullable"`
+	// The transfer effective date in
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+	EffectiveDate fields.Field[time.Time] `json:"effective_date,required,nullable" format:"date"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode fields.Field[ACHTransferStandardEntryClassCode] `json:"standard_entry_class_code,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -87,7 +90,7 @@ func (r *ACHTransfer) MarshalJSON() (data []byte, err error) {
 }
 
 func (r ACHTransfer) String() (result string) {
-	return fmt.Sprintf("&ACHTransfer{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s Currency:%s Approval:%s Cancellation:%s CreatedAt:%s ExternalAccountID:%s ID:%s Network:%s NotificationOfChange:%s Return:%s RoutingNumber:%s StatementDescriptor:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s Funding:%s IndividualID:%s IndividualName:%s StandardEntryClassCode:%s Type:%s}", r.AccountID, r.AccountNumber, r.Addendum, r.Amount, r.Currency, r.Approval, r.Cancellation, r.CreatedAt, r.ExternalAccountID, r.ID, r.Network, r.NotificationOfChange, r.Return, r.RoutingNumber, r.StatementDescriptor, r.Status, r.Submission, r.TemplateID, r.TransactionID, r.CompanyDescriptiveDate, r.CompanyDiscretionaryData, r.CompanyEntryDescription, r.CompanyName, r.Funding, r.IndividualID, r.IndividualName, r.StandardEntryClassCode, r.Type)
+	return fmt.Sprintf("&ACHTransfer{AccountID:%s AccountNumber:%s Addendum:%s Amount:%s Currency:%s Approval:%s Cancellation:%s CreatedAt:%s ExternalAccountID:%s ID:%s Network:%s NotificationOfChange:%s Return:%s RoutingNumber:%s StatementDescriptor:%s Status:%s Submission:%s TemplateID:%s TransactionID:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s Funding:%s IndividualID:%s IndividualName:%s EffectiveDate:%s StandardEntryClassCode:%s Type:%s}", r.AccountID, r.AccountNumber, r.Addendum, r.Amount, r.Currency, r.Approval, r.Cancellation, r.CreatedAt, r.ExternalAccountID, r.ID, r.Network, r.NotificationOfChange, r.Return, r.RoutingNumber, r.StatementDescriptor, r.Status, r.Submission, r.TemplateID, r.TransactionID, r.CompanyDescriptiveDate, r.CompanyDiscretionaryData, r.CompanyEntryDescription, r.CompanyName, r.Funding, r.IndividualID, r.IndividualName, r.EffectiveDate, r.StandardEntryClassCode, r.Type)
 }
 
 type ACHTransferCurrency string

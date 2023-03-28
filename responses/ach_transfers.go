@@ -69,6 +69,9 @@ type ACHTransfer struct {
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
 	IndividualName string `json:"individual_name,required,nullable"`
+	// The transfer effective date in
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -104,6 +107,7 @@ type ACHTransferJSON struct {
 	Funding                  pjson.Metadata
 	IndividualID             pjson.Metadata
 	IndividualName           pjson.Metadata
+	EffectiveDate            pjson.Metadata
 	StandardEntryClassCode   pjson.Metadata
 	Type                     pjson.Metadata
 	Raw                      []byte

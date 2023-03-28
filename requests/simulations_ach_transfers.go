@@ -56,7 +56,7 @@ type ACHTransferSimulationTransaction struct {
 	// like cards and ACH details.
 	RouteID fields.Field[string] `json:"route_id,required,nullable"`
 	// The type of the route this Transaction came through.
-	RouteType fields.Field[string] `json:"route_type,required,nullable"`
+	RouteType fields.Field[ACHTransferSimulationTransactionRouteType] `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
@@ -87,6 +87,13 @@ const (
 	ACHTransferSimulationTransactionCurrencyGbp ACHTransferSimulationTransactionCurrency = "GBP"
 	ACHTransferSimulationTransactionCurrencyJpy ACHTransferSimulationTransactionCurrency = "JPY"
 	ACHTransferSimulationTransactionCurrencyUsd ACHTransferSimulationTransactionCurrency = "USD"
+)
+
+type ACHTransferSimulationTransactionRouteType string
+
+const (
+	ACHTransferSimulationTransactionRouteTypeAccountNumber ACHTransferSimulationTransactionRouteType = "account_number"
+	ACHTransferSimulationTransactionRouteTypeCard          ACHTransferSimulationTransactionRouteType = "card"
 )
 
 type ACHTransferSimulationTransactionSource struct {
@@ -1410,7 +1417,7 @@ type ACHTransferSimulationDeclinedTransaction struct {
 	// things like cards and ACH details.
 	RouteID fields.Field[string] `json:"route_id,required,nullable"`
 	// The type of the route this Declined Transaction came through.
-	RouteType fields.Field[string] `json:"route_type,required,nullable"`
+	RouteType fields.Field[ACHTransferSimulationDeclinedTransactionRouteType] `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
@@ -1442,6 +1449,13 @@ const (
 	ACHTransferSimulationDeclinedTransactionCurrencyGbp ACHTransferSimulationDeclinedTransactionCurrency = "GBP"
 	ACHTransferSimulationDeclinedTransactionCurrencyJpy ACHTransferSimulationDeclinedTransactionCurrency = "JPY"
 	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
+)
+
+type ACHTransferSimulationDeclinedTransactionRouteType string
+
+const (
+	ACHTransferSimulationDeclinedTransactionRouteTypeAccountNumber ACHTransferSimulationDeclinedTransactionRouteType = "account_number"
+	ACHTransferSimulationDeclinedTransactionRouteTypeCard          ACHTransferSimulationDeclinedTransactionRouteType = "card"
 )
 
 type ACHTransferSimulationDeclinedTransactionSource struct {
@@ -1706,6 +1720,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 )
 
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

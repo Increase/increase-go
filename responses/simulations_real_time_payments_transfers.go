@@ -60,7 +60,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
 	// The type of the route this Transaction came through.
-	RouteType string `json:"route_type,required,nullable"`
+	RouteType InboundRealTimePaymentsTransferSimulationResultTransactionRouteType `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
@@ -103,6 +103,13 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionCurrency = "GBP"
 	InboundRealTimePaymentsTransferSimulationResultTransactionCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionCurrency = "JPY"
 	InboundRealTimePaymentsTransferSimulationResultTransactionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionCurrency = "USD"
+)
+
+type InboundRealTimePaymentsTransferSimulationResultTransactionRouteType string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeAccountNumber InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "account_number"
+	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeCard          InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "card"
 )
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
@@ -1746,7 +1753,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
 	// The type of the route this Declined Transaction came through.
-	RouteType string `json:"route_type,required,nullable"`
+	RouteType InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
@@ -1791,6 +1798,13 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrencyGbp InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency = "GBP"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrencyJpy InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency = "JPY"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency = "USD"
+)
+
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeAccountNumber InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "account_number"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeCard          InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "card"
 )
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource struct {
@@ -2100,6 +2114,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonReferToImage          InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonReturned              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "returned"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 )
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

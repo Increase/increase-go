@@ -59,7 +59,7 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
 	// The type of the route this Pending Transaction came through.
-	RouteType string `json:"route_type,required,nullable"`
+	RouteType CardAuthorizationSimulationPendingTransactionRouteType `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Pending Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location.
@@ -105,6 +105,13 @@ const (
 	CardAuthorizationSimulationPendingTransactionCurrencyGbp CardAuthorizationSimulationPendingTransactionCurrency = "GBP"
 	CardAuthorizationSimulationPendingTransactionCurrencyJpy CardAuthorizationSimulationPendingTransactionCurrency = "JPY"
 	CardAuthorizationSimulationPendingTransactionCurrencyUsd CardAuthorizationSimulationPendingTransactionCurrency = "USD"
+)
+
+type CardAuthorizationSimulationPendingTransactionRouteType string
+
+const (
+	CardAuthorizationSimulationPendingTransactionRouteTypeAccountNumber CardAuthorizationSimulationPendingTransactionRouteType = "account_number"
+	CardAuthorizationSimulationPendingTransactionRouteTypeCard          CardAuthorizationSimulationPendingTransactionRouteType = "card"
 )
 
 type CardAuthorizationSimulationPendingTransactionSource struct {
@@ -656,7 +663,7 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
 	// The type of the route this Declined Transaction came through.
-	RouteType string `json:"route_type,required,nullable"`
+	RouteType CardAuthorizationSimulationDeclinedTransactionRouteType `json:"route_type,required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
@@ -700,6 +707,13 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionCurrencyGbp CardAuthorizationSimulationDeclinedTransactionCurrency = "GBP"
 	CardAuthorizationSimulationDeclinedTransactionCurrencyJpy CardAuthorizationSimulationDeclinedTransactionCurrency = "JPY"
 	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
+)
+
+type CardAuthorizationSimulationDeclinedTransactionRouteType string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber CardAuthorizationSimulationDeclinedTransactionRouteType = "account_number"
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard          CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSource struct {
@@ -1008,6 +1022,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
