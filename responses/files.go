@@ -40,6 +40,8 @@ type FileJSON struct {
 	Filename    pjson.Metadata
 	DownloadURL pjson.Metadata
 	Type        pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into File using the internal pjson
@@ -89,6 +91,8 @@ type FileList struct {
 type FileListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into FileList using the internal

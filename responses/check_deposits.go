@@ -57,6 +57,8 @@ type CheckDepositJSON struct {
 	DepositRejection  pjson.Metadata
 	DepositReturn     pjson.Metadata
 	Type              pjson.Metadata
+	Raw               []byte
+	Extras            map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDeposit using the
@@ -116,6 +118,8 @@ type CheckDepositDepositAcceptanceJSON struct {
 	AuxiliaryOnUs  pjson.Metadata
 	SerialNumber   pjson.Metadata
 	CheckDepositID pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositAcceptance
@@ -156,6 +160,8 @@ type CheckDepositDepositRejectionJSON struct {
 	Currency   pjson.Metadata
 	Reason     pjson.Metadata
 	RejectedAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositRejection
@@ -214,6 +220,8 @@ type CheckDepositDepositReturnJSON struct {
 	CheckDepositID pjson.Metadata
 	TransactionID  pjson.Metadata
 	ReturnReason   pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositReturn
@@ -267,6 +275,8 @@ type CheckDepositList struct {
 type CheckDepositListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositList using the

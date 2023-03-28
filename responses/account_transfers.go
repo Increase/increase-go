@@ -63,6 +63,8 @@ type AccountTransferJSON struct {
 	Approval                 pjson.Metadata
 	Cancellation             pjson.Metadata
 	Type                     pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransfer using the
@@ -109,6 +111,8 @@ type AccountTransferApproval struct {
 
 type AccountTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferApproval using
@@ -127,6 +131,8 @@ type AccountTransferCancellation struct {
 
 type AccountTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferCancellation
@@ -153,6 +159,8 @@ type AccountTransferList struct {
 type AccountTransferListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferList using the

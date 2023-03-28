@@ -52,6 +52,8 @@ type AccountJSON struct {
 	Name                  pjson.Metadata
 	Status                pjson.Metadata
 	Type                  pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Account using the internal
@@ -73,6 +75,8 @@ type AccountBalances struct {
 type AccountBalancesJSON struct {
 	CurrentBalance   pjson.Metadata
 	AvailableBalance pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountBalances using the
@@ -117,6 +121,8 @@ type AccountList struct {
 type AccountListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountList using the

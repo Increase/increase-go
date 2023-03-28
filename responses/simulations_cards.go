@@ -25,6 +25,8 @@ type CardAuthorizationSimulationJSON struct {
 	PendingTransaction  pjson.Metadata
 	DeclinedTransaction pjson.Metadata
 	Type                pjson.Metadata
+	Raw                 []byte
+	Extras              map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardAuthorizationSimulation
@@ -83,6 +85,8 @@ type CardAuthorizationSimulationPendingTransactionJSON struct {
 	Source      pjson.Metadata
 	Status      pjson.Metadata
 	Type        pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -150,6 +154,8 @@ type CardAuthorizationSimulationPendingTransactionSourceJSON struct {
 	CardRouteAuthorization         pjson.Metadata
 	WireDrawdownPaymentInstruction pjson.Metadata
 	WireTransferInstruction        pjson.Metadata
+	Raw                            []byte
+	Extras                         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -191,6 +197,8 @@ type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 	Amount     pjson.Metadata
 	Currency   pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -224,6 +232,8 @@ type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction s
 type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON struct {
 	Amount     pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -278,6 +288,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 	Currency             pjson.Metadata
 	RealTimeDecisionID   pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -301,7 +313,9 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
-	Visa pjson.Metadata
+	Visa   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -326,6 +340,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator pjson.Metadata
 	PointOfServiceEntryMode     pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -384,6 +400,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJ
 	FrontImageFileID pjson.Metadata
 	BackImageFileID  pjson.Metadata
 	CheckDepositID   pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -421,6 +439,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 	Amount     pjson.Metadata
 	Currency   pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -468,6 +488,8 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON str
 	ReleasedAt              pjson.Metadata
 	Status                  pjson.Metadata
 	HeldTransactionID       pjson.Metadata
+	Raw                     []byte
+	Extras                  map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -521,6 +543,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJS
 	MerchantDescriptor   pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
 	MerchantState        pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -557,6 +581,8 @@ type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstr
 	AccountNumber      pjson.Metadata
 	RoutingNumber      pjson.Metadata
 	MessageToRecipient pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -584,6 +610,8 @@ type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJ
 	RoutingNumber      pjson.Metadata
 	MessageToRecipient pjson.Metadata
 	TransferID         pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -652,6 +680,8 @@ type CardAuthorizationSimulationDeclinedTransactionJSON struct {
 	RouteType   pjson.Metadata
 	Source      pjson.Metadata
 	Type        pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -707,6 +737,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline pjson.Metadata
 	InternationalACHDecline                pjson.Metadata
 	CardRouteDecline                       pjson.Metadata
+	Raw                                    []byte
+	Extras                                 map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -754,6 +786,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverIDNumber                   pjson.Metadata
 	ReceiverName                       pjson.Metadata
 	TraceNumber                        pjson.Metadata
+	Raw                                []byte
+	Extras                             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -830,6 +864,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct 
 	MerchantState        pjson.Metadata
 	RealTimeDecisionID   pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -853,7 +889,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 }
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa pjson.Metadata
+	Visa   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -878,6 +916,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator pjson.Metadata
 	PointOfServiceEntryMode     pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -942,6 +982,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct
 	Amount        pjson.Metadata
 	AuxiliaryOnUs pjson.Metadata
 	Reason        pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1003,6 +1045,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	DebtorRoutingNumber       pjson.Metadata
 	TransactionIdentification pjson.Metadata
 	RemittanceInformation     pjson.Metadata
+	Raw                       []byte
+	Extras                    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1113,6 +1157,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	ReceivingDepositoryFinancialInstitutionID              pjson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         pjson.Metadata
 	TraceNumber                                            pjson.Metadata
+	Raw                                                    []byte
+	Extras                                                 map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1148,6 +1194,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON st
 	MerchantDescriptor   pjson.Metadata
 	MerchantState        pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into

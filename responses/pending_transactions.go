@@ -56,6 +56,8 @@ type PendingTransactionJSON struct {
 	Source      pjson.Metadata
 	Status      pjson.Metadata
 	Type        pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into PendingTransaction using the
@@ -123,6 +125,8 @@ type PendingTransactionSourceJSON struct {
 	CardRouteAuthorization         pjson.Metadata
 	WireDrawdownPaymentInstruction pjson.Metadata
 	WireTransferInstruction        pjson.Metadata
+	Raw                            []byte
+	Extras                         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into PendingTransactionSource
@@ -164,6 +168,8 @@ type PendingTransactionSourceAccountTransferInstructionJSON struct {
 	Amount     pjson.Metadata
 	Currency   pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -196,6 +202,8 @@ type PendingTransactionSourceACHTransferInstruction struct {
 type PendingTransactionSourceACHTransferInstructionJSON struct {
 	Amount     pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -249,6 +257,8 @@ type PendingTransactionSourceCardAuthorizationJSON struct {
 	Currency             pjson.Metadata
 	RealTimeDecisionID   pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -271,7 +281,9 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 }
 
 type PendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
-	Visa pjson.Metadata
+	Visa   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -295,6 +307,8 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator pjson.Metadata
 	PointOfServiceEntryMode     pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -352,6 +366,8 @@ type PendingTransactionSourceCheckDepositInstructionJSON struct {
 	FrontImageFileID pjson.Metadata
 	BackImageFileID  pjson.Metadata
 	CheckDepositID   pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -388,6 +404,8 @@ type PendingTransactionSourceCheckTransferInstructionJSON struct {
 	Amount     pjson.Metadata
 	Currency   pjson.Metadata
 	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -434,6 +452,8 @@ type PendingTransactionSourceInboundFundsHoldJSON struct {
 	ReleasedAt              pjson.Metadata
 	Status                  pjson.Metadata
 	HeldTransactionID       pjson.Metadata
+	Raw                     []byte
+	Extras                  map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -486,6 +506,8 @@ type PendingTransactionSourceCardRouteAuthorizationJSON struct {
 	MerchantDescriptor   pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
 	MerchantState        pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -521,6 +543,8 @@ type PendingTransactionSourceWireDrawdownPaymentInstructionJSON struct {
 	AccountNumber      pjson.Metadata
 	RoutingNumber      pjson.Metadata
 	MessageToRecipient pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -547,6 +571,8 @@ type PendingTransactionSourceWireTransferInstructionJSON struct {
 	RoutingNumber      pjson.Metadata
 	MessageToRecipient pjson.Metadata
 	TransferID         pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -580,6 +606,8 @@ type PendingTransactionList struct {
 type PendingTransactionListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into PendingTransactionList using

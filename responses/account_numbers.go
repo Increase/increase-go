@@ -38,6 +38,8 @@ type AccountNumberJSON struct {
 	RoutingNumber pjson.Metadata
 	Status        pjson.Metadata
 	Type          pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountNumber using the
@@ -72,6 +74,8 @@ type AccountNumberList struct {
 type AccountNumberListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountNumberList using the

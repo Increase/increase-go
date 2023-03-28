@@ -155,6 +155,8 @@ type PageResponse[T any] struct {
 type PageResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into PageResponse[T] using the

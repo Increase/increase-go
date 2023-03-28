@@ -41,6 +41,8 @@ type ExternalAccountJSON struct {
 	Funding            pjson.Metadata
 	VerificationStatus pjson.Metadata
 	Type               pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccount using the
@@ -90,6 +92,8 @@ type ExternalAccountList struct {
 type ExternalAccountListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExternalAccountList using the

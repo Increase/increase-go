@@ -49,6 +49,8 @@ type CardJSON struct {
 	BillingAddress  pjson.Metadata
 	DigitalWallet   pjson.Metadata
 	Type            pjson.Metadata
+	Raw             []byte
+	Extras          map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Card using the internal pjson
@@ -85,6 +87,8 @@ type CardBillingAddressJSON struct {
 	City       pjson.Metadata
 	State      pjson.Metadata
 	PostalCode pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardBillingAddress using the
@@ -111,6 +115,8 @@ type CardDigitalWalletJSON struct {
 	Email         pjson.Metadata
 	Phone         pjson.Metadata
 	CardProfileID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDigitalWallet using the
@@ -152,6 +158,8 @@ type CardDetailsJSON struct {
 	ExpirationYear       pjson.Metadata
 	VerificationCode     pjson.Metadata
 	Type                 pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDetails using the
@@ -178,6 +186,8 @@ type CardList struct {
 type CardListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardList using the internal

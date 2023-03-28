@@ -92,6 +92,8 @@ type CheckTransferJSON struct {
 	Deposit            pjson.Metadata
 	ReturnDetails      pjson.Metadata
 	Type               pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransfer using the
@@ -118,12 +120,14 @@ type CheckTransferReturnAddress struct {
 }
 
 type CheckTransferReturnAddressJSON struct {
-	Name  pjson.Metadata
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Name   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferReturnAddress
@@ -169,6 +173,8 @@ type CheckTransferSubmission struct {
 
 type CheckTransferSubmissionJSON struct {
 	CheckNumber pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferSubmission using
@@ -196,6 +202,8 @@ type CheckTransferStopPaymentRequestJSON struct {
 	TransactionID pjson.Metadata
 	RequestedAt   pjson.Metadata
 	Type          pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -226,6 +234,8 @@ type CheckTransferDepositJSON struct {
 	FrontImageFileID pjson.Metadata
 	BackImageFileID  pjson.Metadata
 	Type             pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferDeposit using
@@ -255,6 +265,8 @@ type CheckTransferReturnDetailsJSON struct {
 	TransferID pjson.Metadata
 	FileID     pjson.Metadata
 	Reason     pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferReturnDetails
@@ -288,6 +300,8 @@ type CheckTransferList struct {
 type CheckTransferListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferList using the

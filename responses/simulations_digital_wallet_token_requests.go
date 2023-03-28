@@ -21,6 +21,8 @@ type DigitalWalletTokenRequestCreateResponseJSON struct {
 	DeclineReason        pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
 	Type                 pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into

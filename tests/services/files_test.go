@@ -1,8 +1,10 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"io"
 	"net/http/httputil"
 	"testing"
 	"time"
@@ -17,7 +19,7 @@ import (
 func TestFilesNewWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: prism mock server is broken for file uploads")
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Files.New(context.TODO(), &requests.CreateAFileParameters{File: fields.F("todo: files not implemented"), Description: fields.F("x"), Purpose: fields.F(requests.CreateAFileParametersPurposeCheckImageFront)})
+	_, err := c.Files.New(context.TODO(), &requests.CreateAFileParameters{File: fields.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))), Description: fields.F("x"), Purpose: fields.F(requests.CreateAFileParametersPurposeCheckImageFront)})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

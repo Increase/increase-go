@@ -36,6 +36,8 @@ type LimitJSON struct {
 	Status    pjson.Metadata
 	Type      pjson.Metadata
 	Value     pjson.Metadata
+	Raw       []byte
+	Extras    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Limit using the internal
@@ -94,6 +96,8 @@ type LimitList struct {
 type LimitListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into LimitList using the internal

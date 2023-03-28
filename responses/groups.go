@@ -28,6 +28,8 @@ type GroupJSON struct {
 	CreatedAt        pjson.Metadata
 	ID               pjson.Metadata
 	Type             pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Group using the internal

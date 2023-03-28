@@ -41,6 +41,8 @@ type RealTimeDecisionJSON struct {
 	DigitalWalletToken          pjson.Metadata
 	DigitalWalletAuthentication pjson.Metadata
 	Type                        pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RealTimeDecision using the
@@ -120,6 +122,8 @@ type RealTimeDecisionCardAuthorizationJSON struct {
 	PresentmentCurrency  pjson.Metadata
 	SettlementAmount     pjson.Metadata
 	SettlementCurrency   pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -142,7 +146,9 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
-	Visa pjson.Metadata
+	Visa   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -166,6 +172,8 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator pjson.Metadata
 	PointOfServiceEntryMode     pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -215,6 +223,8 @@ type RealTimeDecisionDigitalWalletTokenJSON struct {
 	CardID        pjson.Metadata
 	DigitalWallet pjson.Metadata
 	CardProfileID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -265,6 +275,8 @@ type RealTimeDecisionDigitalWalletAuthenticationJSON struct {
 	OneTimePasscode pjson.Metadata
 	Phone           pjson.Metadata
 	Email           pjson.Metadata
+	Raw             []byte
+	Extras          map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into

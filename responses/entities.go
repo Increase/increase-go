@@ -45,6 +45,8 @@ type EntityJSON struct {
 	Description           pjson.Metadata
 	Relationship          pjson.Metadata
 	SupplementalDocuments pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Entity using the internal
@@ -87,6 +89,8 @@ type EntityCorporationJSON struct {
 	IncorporationState pjson.Metadata
 	Address            pjson.Metadata
 	BeneficialOwners   pjson.Metadata
+	Raw                []byte
+	Extras             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporation using the
@@ -112,11 +116,13 @@ type EntityCorporationAddress struct {
 }
 
 type EntityCorporationAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporationAddress
@@ -140,6 +146,8 @@ type EntityCorporationBeneficialOwnersJSON struct {
 	Individual   pjson.Metadata
 	CompanyTitle pjson.Metadata
 	Prong        pjson.Metadata
+	Raw          []byte
+	Extras       map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -166,6 +174,8 @@ type EntityCorporationBeneficialOwnersIndividualJSON struct {
 	DateOfBirth    pjson.Metadata
 	Address        pjson.Metadata
 	Identification pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -191,11 +201,13 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 }
 
 type EntityCorporationBeneficialOwnersIndividualAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -217,6 +229,8 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 type EntityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
 	Method      pjson.Metadata
 	NumberLast4 pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -260,6 +274,8 @@ type EntityNaturalPersonJSON struct {
 	DateOfBirth    pjson.Metadata
 	Address        pjson.Metadata
 	Identification pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPerson using the
@@ -285,11 +301,13 @@ type EntityNaturalPersonAddress struct {
 }
 
 type EntityNaturalPersonAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPersonAddress
@@ -311,6 +329,8 @@ type EntityNaturalPersonIdentification struct {
 type EntityNaturalPersonIdentificationJSON struct {
 	Method      pjson.Metadata
 	NumberLast4 pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -341,6 +361,8 @@ type EntityJoint struct {
 type EntityJointJSON struct {
 	Name        pjson.Metadata
 	Individuals pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJoint using the
@@ -367,6 +389,8 @@ type EntityJointIndividualsJSON struct {
 	DateOfBirth    pjson.Metadata
 	Address        pjson.Metadata
 	Identification pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividuals using
@@ -392,11 +416,13 @@ type EntityJointIndividualsAddress struct {
 }
 
 type EntityJointIndividualsAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividualsAddress
@@ -418,6 +444,8 @@ type EntityJointIndividualsIdentification struct {
 type EntityJointIndividualsIdentificationJSON struct {
 	Method      pjson.Metadata
 	NumberLast4 pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -467,6 +495,8 @@ type EntityTrustJSON struct {
 	Trustees                pjson.Metadata
 	Grantor                 pjson.Metadata
 	FormationDocumentFileID pjson.Metadata
+	Raw                     []byte
+	Extras                  map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrust using the
@@ -499,11 +529,13 @@ type EntityTrustAddress struct {
 }
 
 type EntityTrustAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustAddress using the
@@ -525,6 +557,8 @@ type EntityTrustTrustees struct {
 type EntityTrustTrusteesJSON struct {
 	Structure  pjson.Metadata
 	Individual pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrustees using the
@@ -557,6 +591,8 @@ type EntityTrustTrusteesIndividualJSON struct {
 	DateOfBirth    pjson.Metadata
 	Address        pjson.Metadata
 	Identification pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrusteesIndividual
@@ -582,11 +618,13 @@ type EntityTrustTrusteesIndividualAddress struct {
 }
 
 type EntityTrustTrusteesIndividualAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -608,6 +646,8 @@ type EntityTrustTrusteesIndividualIdentification struct {
 type EntityTrustTrusteesIndividualIdentificationJSON struct {
 	Method      pjson.Metadata
 	NumberLast4 pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -644,6 +684,8 @@ type EntityTrustGrantorJSON struct {
 	DateOfBirth    pjson.Metadata
 	Address        pjson.Metadata
 	Identification pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantor using the
@@ -669,11 +711,13 @@ type EntityTrustGrantorAddress struct {
 }
 
 type EntityTrustGrantorAddressJSON struct {
-	Line1 pjson.Metadata
-	Line2 pjson.Metadata
-	City  pjson.Metadata
-	State pjson.Metadata
-	Zip   pjson.Metadata
+	Line1  pjson.Metadata
+	Line2  pjson.Metadata
+	City   pjson.Metadata
+	State  pjson.Metadata
+	Zip    pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantorAddress
@@ -695,6 +739,8 @@ type EntityTrustGrantorIdentification struct {
 type EntityTrustGrantorIdentificationJSON struct {
 	Method      pjson.Metadata
 	NumberLast4 pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -736,6 +782,8 @@ type EntitySupplementalDocuments struct {
 
 type EntitySupplementalDocumentsJSON struct {
 	FileID pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntitySupplementalDocuments
@@ -756,6 +804,8 @@ type EntityList struct {
 type EntityListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityList using the internal

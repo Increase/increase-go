@@ -18,6 +18,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/form"
 	"github.com/increase/increase-go/core/query"
 	"github.com/tidwall/sjson"
 )
@@ -71,12 +72,21 @@ func getPlatformProperties() map[string]string {
 
 func NewRequestConfig(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) (*RequestConfig, error) {
 	var b []byte
+	contentType := "application/json"
 	if body, ok := body.(json.Marshaler); ok {
 		var err error
 		b, err = body.MarshalJSON()
 		if err != nil {
 			return nil, err
 		}
+	}
+	if body, ok := body.(form.Marshaler); ok {
+		var err error
+		b, err = body.MarshalMultipart()
+		if err != nil {
+			return nil, err
+		}
+		contentType = "multipart/form-data"
 	}
 	if body, ok := body.(query.Queryer); ok {
 		u = u + "?" + body.URLQuery().Encode()
@@ -86,7 +96,7 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 		return nil, err
 	}
 	if b != nil {
-		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Content-Type", contentType)
 	}
 	req.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
 	req.Header.Set("Accept", "application/json")
@@ -216,12 +226,20 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 	if cfg == nil {
 		return nil
 	}
-	return &RequestConfig{
+	req := cfg.Request.Clone(ctx)
+	var err error
+	req.Body, err = req.GetBody()
+	if err != nil {
+		return nil
+	}
+	new := &RequestConfig{
 		MaxRetries: cfg.MaxRetries,
 		Context:    ctx,
-		Request:    cfg.Request.Clone(ctx),
+		Request:    req,
 		HTTPClient: cfg.HTTPClient,
 	}
+	new.Request.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
+	return new
 }
 
 func (cfg *RequestConfig) Apply(opts ...RequestOption) error {
@@ -340,9 +358,9 @@ func WithAPIKey(key string) RequestOption {
 }
 
 func WithEnvironmentProduction() RequestOption {
-	return WithBaseURL("https://api.increase.com")
+	return WithBaseURL("https://api.increase.com/")
 }
 
 func WithEnvironmentSandbox() RequestOption {
-	return WithBaseURL("https://sandbox.increase.com")
+	return WithBaseURL("https://sandbox.increase.com/")
 }

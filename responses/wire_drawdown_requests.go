@@ -60,6 +60,8 @@ type WireDrawdownRequestJSON struct {
 	Submission               pjson.Metadata
 	FulfillmentTransactionID pjson.Metadata
 	Status                   pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireDrawdownRequest using the
@@ -84,6 +86,8 @@ type WireDrawdownRequestSubmission struct {
 
 type WireDrawdownRequestSubmissionJSON struct {
 	InputMessageAccountabilityData pjson.Metadata
+	Raw                            []byte
+	Extras                         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestSubmission
@@ -113,6 +117,8 @@ type WireDrawdownRequestList struct {
 type WireDrawdownRequestListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestList using

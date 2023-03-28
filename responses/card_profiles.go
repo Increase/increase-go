@@ -33,6 +33,8 @@ type CardProfileJSON struct {
 	Description    pjson.Metadata
 	DigitalWallets pjson.Metadata
 	Type           pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfile using the
@@ -80,6 +82,8 @@ type CardProfileDigitalWalletsJSON struct {
 	ContactPhone          pjson.Metadata
 	BackgroundImageFileID pjson.Metadata
 	AppIconFileID         pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfileDigitalWallets
@@ -100,9 +104,11 @@ type CardProfileDigitalWalletsTextColor struct {
 }
 
 type CardProfileDigitalWalletsTextColorJSON struct {
-	Red   pjson.Metadata
-	Green pjson.Metadata
-	Blue  pjson.Metadata
+	Red    pjson.Metadata
+	Green  pjson.Metadata
+	Blue   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -129,6 +135,8 @@ type CardProfileList struct {
 type CardProfileListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfileList using the

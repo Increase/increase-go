@@ -35,6 +35,8 @@ type EventSubscriptionJSON struct {
 	URL                   pjson.Metadata
 	SharedSecret          pjson.Metadata
 	Type                  pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscription using the
@@ -123,6 +125,8 @@ type EventSubscriptionList struct {
 type EventSubscriptionListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscriptionList using

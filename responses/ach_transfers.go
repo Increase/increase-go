@@ -106,6 +106,8 @@ type ACHTransferJSON struct {
 	IndividualName           pjson.Metadata
 	StandardEntryClassCode   pjson.Metadata
 	Type                     pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransfer using the
@@ -135,6 +137,8 @@ type ACHTransferApproval struct {
 
 type ACHTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferApproval using the
@@ -153,6 +157,8 @@ type ACHTransferCancellation struct {
 
 type ACHTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferCancellation using
@@ -183,6 +189,8 @@ type ACHTransferNotificationOfChangeJSON struct {
 	CreatedAt     pjson.Metadata
 	ChangeCode    pjson.Metadata
 	CorrectedData pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -210,6 +218,8 @@ type ACHTransferReturnJSON struct {
 	ReturnReasonCode pjson.Metadata
 	TransferID       pjson.Metadata
 	TransactionID    pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferReturn using the
@@ -270,6 +280,8 @@ type ACHTransferSubmission struct {
 type ACHTransferSubmissionJSON struct {
 	TraceNumber pjson.Metadata
 	SubmittedAt pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferSubmission using
@@ -311,6 +323,8 @@ type ACHTransferList struct {
 type ACHTransferListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferList using the

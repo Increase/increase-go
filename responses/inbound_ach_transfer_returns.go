@@ -35,6 +35,8 @@ type InboundACHTransferReturnJSON struct {
 	Reason                          pjson.Metadata
 	Submission                      pjson.Metadata
 	Type                            pjson.Metadata
+	Raw                             []byte
+	Extras                          map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundACHTransferReturn
@@ -75,6 +77,8 @@ type InboundACHTransferReturnSubmission struct {
 type InboundACHTransferReturnSubmissionJSON struct {
 	TraceNumber pjson.Metadata
 	SubmittedAt pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -101,6 +105,8 @@ type InboundACHTransferReturnList struct {
 type InboundACHTransferReturnListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundACHTransferReturnList

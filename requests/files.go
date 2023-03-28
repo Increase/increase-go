@@ -1,7 +1,10 @@
 package requests
 
 import (
+	"bytes"
 	"fmt"
+	"io"
+	"mime/multipart"
 	"net/url"
 	"time"
 
@@ -79,18 +82,43 @@ type CreateAFileParameters struct {
 	// The file contents. This should follow the specifications of
 	// [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file
 	// transfers for the multipart/form-data protocol.
-	File fields.Field[string] `json:"file,required" format:"binary"`
+	File fields.Field[io.Reader] `form:"file,required" format:"binary"`
 	// The description you choose to give the File.
-	Description fields.Field[string] `json:"description"`
+	Description fields.Field[string] `form:"description"`
 	// What the File will be used for in Increase's systems.
-	Purpose fields.Field[CreateAFileParametersPurpose] `json:"purpose,required"`
+	Purpose fields.Field[CreateAFileParametersPurpose] `form:"purpose,required"`
 }
 
-// MarshalJSON serializes CreateAFileParameters into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r *CreateAFileParameters) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+func (r *CreateAFileParameters) MarshalMultipart() (data []byte, err error) {
+	body := bytes.NewBuffer(nil)
+	writer := multipart.NewWriter(body)
+	defer writer.Close()
+	{
+		name := "anonymous_file"
+		if nameable, ok := r.File.Value.(interface{ Name() string }); ok {
+			name = nameable.Name()
+		}
+		part, err := writer.CreateFormFile("file", name)
+		if err != nil {
+			return nil, err
+		}
+		io.Copy(part, r.File.Value)
+	}
+	{
+		bdy, err := pjson.Marshal(r.Description)
+		if err != nil {
+			return nil, err
+		}
+		writer.WriteField("description", string(bdy))
+	}
+	{
+		bdy, err := pjson.Marshal(r.Purpose)
+		if err != nil {
+			return nil, err
+		}
+		writer.WriteField("purpose", string(bdy))
+	}
+	return body.Bytes(), nil
 }
 
 func (r CreateAFileParameters) String() (result string) {

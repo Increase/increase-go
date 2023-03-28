@@ -56,6 +56,8 @@ type ACHPrenotificationJSON struct {
 	CreatedAt                pjson.Metadata
 	Status                   pjson.Metadata
 	Type                     pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotification using the
@@ -84,6 +86,8 @@ type ACHPrenotificationPrenotificationReturn struct {
 type ACHPrenotificationPrenotificationReturnJSON struct {
 	CreatedAt        pjson.Metadata
 	ReturnReasonCode pjson.Metadata
+	Raw              []byte
+	Extras           map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -119,6 +123,8 @@ type ACHPrenotificationList struct {
 type ACHPrenotificationListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotificationList using

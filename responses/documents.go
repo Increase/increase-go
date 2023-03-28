@@ -32,6 +32,8 @@ type DocumentJSON struct {
 	EntityID  pjson.Metadata
 	FileID    pjson.Metadata
 	Type      pjson.Metadata
+	Raw       []byte
+	Extras    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Document using the internal
@@ -63,6 +65,8 @@ type DocumentList struct {
 type DocumentListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DocumentList using the

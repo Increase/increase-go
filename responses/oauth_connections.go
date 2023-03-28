@@ -29,6 +29,8 @@ type OauthConnectionJSON struct {
 	GroupID   pjson.Metadata
 	Status    pjson.Metadata
 	Type      pjson.Metadata
+	Raw       []byte
+	Extras    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnection using the
@@ -62,6 +64,8 @@ type OauthConnectionList struct {
 type OauthConnectionListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnectionList using the

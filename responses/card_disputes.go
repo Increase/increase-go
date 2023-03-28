@@ -40,6 +40,8 @@ type CardDisputeJSON struct {
 	Acceptance            pjson.Metadata
 	Rejection             pjson.Metadata
 	Type                  pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDispute using the
@@ -73,6 +75,8 @@ type CardDisputeAcceptanceJSON struct {
 	AcceptedAt    pjson.Metadata
 	CardDisputeID pjson.Metadata
 	TransactionID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeAcceptance using
@@ -97,6 +101,8 @@ type CardDisputeRejectionJSON struct {
 	Explanation   pjson.Metadata
 	RejectedAt    pjson.Metadata
 	CardDisputeID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeRejection using
@@ -123,6 +129,8 @@ type CardDisputeList struct {
 type CardDisputeListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeList using the

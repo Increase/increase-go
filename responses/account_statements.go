@@ -43,6 +43,8 @@ type AccountStatementJSON struct {
 	StartingBalance      pjson.Metadata
 	EndingBalance        pjson.Metadata
 	Type                 pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatement using the
@@ -69,6 +71,8 @@ type AccountStatementList struct {
 type AccountStatementListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountStatementList using

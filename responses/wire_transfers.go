@@ -84,6 +84,8 @@ type WireTransferJSON struct {
 	TemplateID              pjson.Metadata
 	TransactionID           pjson.Metadata
 	Type                    pjson.Metadata
+	Raw                     []byte
+	Extras                  map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransfer using the
@@ -113,6 +115,8 @@ type WireTransferApproval struct {
 
 type WireTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferApproval using
@@ -131,6 +135,8 @@ type WireTransferCancellation struct {
 
 type WireTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferCancellation
@@ -182,6 +188,8 @@ type WireTransferReversalJSON struct {
 	PreviousMessageInputSource                            pjson.Metadata
 	ReceiverFinancialInstitutionInformation               pjson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation pjson.Metadata
+	Raw                                                   []byte
+	Extras                                                map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferReversal using
@@ -220,6 +228,8 @@ type WireTransferSubmission struct {
 type WireTransferSubmissionJSON struct {
 	InputMessageAccountabilityData pjson.Metadata
 	SubmittedAt                    pjson.Metadata
+	Raw                            []byte
+	Extras                         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferSubmission using
@@ -246,6 +256,8 @@ type WireTransferList struct {
 type WireTransferListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferList using the

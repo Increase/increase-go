@@ -52,6 +52,8 @@ type DeclinedTransactionJSON struct {
 	RouteType   pjson.Metadata
 	Source      pjson.Metadata
 	Type        pjson.Metadata
+	Raw         []byte
+	Extras      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DeclinedTransaction using the
@@ -107,6 +109,8 @@ type DeclinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline pjson.Metadata
 	InternationalACHDecline                pjson.Metadata
 	CardRouteDecline                       pjson.Metadata
+	Raw                                    []byte
+	Extras                                 map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DeclinedTransactionSource
@@ -154,6 +158,8 @@ type DeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverIDNumber                   pjson.Metadata
 	ReceiverName                       pjson.Metadata
 	TraceNumber                        pjson.Metadata
+	Raw                                []byte
+	Extras                             map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -229,6 +235,8 @@ type DeclinedTransactionSourceCardDeclineJSON struct {
 	MerchantState        pjson.Metadata
 	RealTimeDecisionID   pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -251,7 +259,9 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 }
 
 type DeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa pjson.Metadata
+	Visa   pjson.Metadata
+	Raw    []byte
+	Extras map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -275,6 +285,8 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator pjson.Metadata
 	PointOfServiceEntryMode     pjson.Metadata
+	Raw                         []byte
+	Extras                      map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -338,6 +350,8 @@ type DeclinedTransactionSourceCheckDeclineJSON struct {
 	Amount        pjson.Metadata
 	AuxiliaryOnUs pjson.Metadata
 	Reason        pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -398,6 +412,8 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct 
 	DebtorRoutingNumber       pjson.Metadata
 	TransactionIdentification pjson.Metadata
 	RemittanceInformation     pjson.Metadata
+	Raw                       []byte
+	Extras                    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -508,6 +524,8 @@ type DeclinedTransactionSourceInternationalACHDeclineJSON struct {
 	ReceivingDepositoryFinancialInstitutionID              pjson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         pjson.Metadata
 	TraceNumber                                            pjson.Metadata
+	Raw                                                    []byte
+	Extras                                                 map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -542,6 +560,8 @@ type DeclinedTransactionSourceCardRouteDeclineJSON struct {
 	MerchantDescriptor   pjson.Metadata
 	MerchantState        pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -579,6 +599,8 @@ type DeclinedTransactionList struct {
 type DeclinedTransactionListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DeclinedTransactionList using

@@ -29,6 +29,8 @@ type RoutingNumberJSON struct {
 	ACHTransfers              pjson.Metadata
 	RealTimePaymentsTransfers pjson.Metadata
 	WireTransfers             pjson.Metadata
+	Raw                       []byte
+	Extras                    map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumber using the
@@ -76,6 +78,8 @@ type RoutingNumberList struct {
 type RoutingNumberListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumberList using the

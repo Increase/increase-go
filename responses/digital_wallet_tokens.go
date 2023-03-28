@@ -32,6 +32,8 @@ type DigitalWalletTokenJSON struct {
 	Status         pjson.Metadata
 	TokenRequestor pjson.Metadata
 	Type           pjson.Metadata
+	Raw            []byte
+	Extras         map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DigitalWalletToken using the
@@ -74,6 +76,8 @@ type DigitalWalletTokenList struct {
 type DigitalWalletTokenListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DigitalWalletTokenList using

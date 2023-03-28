@@ -83,6 +83,8 @@ type InboundWireDrawdownRequestJSON struct {
 	BeneficiaryAddressLine1                 pjson.Metadata
 	BeneficiaryAddressLine2                 pjson.Metadata
 	BeneficiaryAddressLine3                 pjson.Metadata
+	Raw                                     []byte
+	Extras                                  map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundWireDrawdownRequest
@@ -109,6 +111,8 @@ type InboundWireDrawdownRequestList struct {
 type InboundWireDrawdownRequestListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into

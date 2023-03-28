@@ -32,6 +32,8 @@ type EventJSON struct {
 	CreatedAt            pjson.Metadata
 	ID                   pjson.Metadata
 	Type                 pjson.Metadata
+	Raw                  []byte
+	Extras               map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Event using the internal
@@ -110,6 +112,8 @@ type EventList struct {
 type EventListJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventList using the internal
