@@ -41,32 +41,32 @@ import (
 
 func main() {
 	client := increase.NewIncrease()
-	res, err := client.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{Name: fields.F("My First Increase Account")})
+	res, err := client.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{
+		Name: fields.F("My First Increase Account"),
+	})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Sprintf("%+#v", res)
+	fmt.Sprintf("%s", res.ID)
 }
 
 ```
 
 ### Request Fields
 
-Types in the `requests` package look like the following:
+Types for requests look like the following:
 
 ```go
-package requests
-
 type FooParams struct {
-    ID     fields.Field[string] `json:"id,required"`
-    Number fields.Field[int64]  `json:"number,required"`
-    Name   fields.Field[string] `json:"name"`
-    Other  fields.Field[Bar]    `json:"other"`
+	ID     fields.Field[string] `json:"id,required"`
+	Number fields.Field[int64]  `json:"number,required"`
+	Name   fields.Field[string] `json:"name"`
+	Other  fields.Field[Bar]    `json:"other"`
 }
 
 type Bar struct {
-    Number fields.Field[int64]  `json:"number"`
-    Name   fields.Field[string] `json:"name"`
+	Number fields.Field[int64]  `json:"number"`
+	Name   fields.Field[string] `json:"name"`
 }
 ```
 
@@ -76,20 +76,26 @@ For each field, you can either supply a value field with `fields.F(...)`, a
 value, then we do not populate the field. An example request may look like
 
 ```go
-client.Service.Foo(context.TODO(), &FooParams{
-    // Normally populates this field as `"id": "food_id"`
-    ID: fields.F("foo_id"),
+params := &FooParams{
+	// Normally populates this field as `"id": "food_id"`
+	ID: fields.F("foo_id"),
 
-    // Integer helper casts integer values and literals to fields.Field[int64]
-    Number: fields.Int(12),
+	// Integer helper casts integer values and literals to fields.Field[int64]
+	Number: fields.Int(12),
 
-    // Explicitly sends this field as null, e.g., `"name": null`
-    Name: fields.NullField[string](),
+	// Explicitly sends this field as null, e.g., `"name": null`
+	Name: fields.NullField[string](),
 
-    // Overrides this field as `"other": "ovveride_this_field"`
-    Other: fields.RawField[Bar]("override_this_field")
-})
+	// Overrides this field as `"other": "ovveride_this_field"`
+	Other: fields.RawField[Bar]("override_this_field")
+}
 ```
+
+If you want to add or override a field in the JSON body, then you can use the
+`options.WithJSONSet(key string, value interface{})` RequestOption, which you
+can read more about [here](#requestoptions). Internally, this uses
+'github.com/tidwall/sjson' library, so you can compose complex access as seen
+[here](https://github.com/tidwall/sjson).
 
 ### Response Objects
 
@@ -98,7 +104,7 @@ response objects is as simple as:
 
 ```go
 res, err := client.Service.Foo(context.TODO())
-res.ID // is just some string value
+res.Name // is just some string value
 ```
 
 If null, not present, or invalid, all fields will simply be their empty values.
@@ -115,7 +121,8 @@ res.JSON.Name.IsMissing()
 
 // This is true if `name` is present, but not coercable
 res.JSON.Name.IsMissing()
-// In this case, you can access the Raw JSON value of the field by accessing
+
+// If needed, you can access the Raw JSON value of the field by accessing
 res.JSON.Name.Raw()
 ```
 
@@ -148,17 +155,19 @@ For example:
 
 ```go
 client := Increase.NewIncrease(
-    // Adds header to every request made by client
-    options.WithHeader("X-Some-Header", "custom_header_info"),
+	// Adds header to every request made by client
+	options.WithHeader("X-Some-Header", "custom_header_info"),
 
-    // Overrides APIkey read from environment
-    options.WithAPIKey("api_key"),
+	// Overrides APIkey read from environment
+	options.WithAPIKey("api_key"),
 )
 
-client.<resource>.<method>(context.TODO(), <params>,
-    // These options override the client options
-    options.WithHeader("X-Some-Header", "some_other_custom_header_info"),
-    options.WithAPIKey("other_api_key"),
+client.Accounts.New(
+	context.TODO(),
+	...,
+	// These options override the client options
+	options.WithHeader("X-Some-Header", "some_other_custom_header_info"),
+	options.WithAPIKey("other_api_key"),
 )
 ```
 
@@ -177,16 +186,19 @@ element. When `Next()` is called, it will load the next element into
 the end of the current page, `Next()` will fetch the next page.
 
 ```go
-page, err := client.<Service>.List()
+page, err := client.Accounts.List(
+	context.TODO(),
+	...,
+)
 if err != nil {
-    panic(err.Error())
+	panic(err.Error())
 }
 for page.Next() {
-    item := page.Current()
-    println(item.Token)
+	item := page.Current()
+	// ...
 }
 if page.Err() != nil {
-    panic(page.Err().Error())
+	panic(page.Err().Error())
 }
 ```
 
