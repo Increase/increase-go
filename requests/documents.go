@@ -6,49 +6,8 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/core"
-	pjson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
 	"github.com/increase/increase-go/fields"
-)
-
-type Document struct {
-	// The Document identifier.
-	ID fields.Field[string] `json:"id,required"`
-	// The type of document.
-	Category fields.Field[DocumentCategory] `json:"category,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
-	// Document was created.
-	CreatedAt fields.Field[time.Time] `json:"created_at,required" format:"date-time"`
-	// The identifier of the Entity the document was generated for.
-	EntityID fields.Field[string] `json:"entity_id,required,nullable"`
-	// The identifier of the File containing the Document's contents.
-	FileID fields.Field[string] `json:"file_id,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `document`.
-	Type fields.Field[DocumentType] `json:"type,required"`
-}
-
-// MarshalJSON serializes Document into an array of bytes using the gjson library.
-// Members of the `jsonFields` field are serialized into the top-level, and will
-// overwrite known members of the same name.
-func (r *Document) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
-}
-
-func (r Document) String() (result string) {
-	return fmt.Sprintf("&Document{ID:%s Category:%s CreatedAt:%s EntityID:%s FileID:%s Type:%s}", r.ID, r.Category, r.CreatedAt, r.EntityID, r.FileID, r.Type)
-}
-
-type DocumentCategory string
-
-const (
-	DocumentCategoryForm_1099Int DocumentCategory = "form_1099_int"
-)
-
-type DocumentType string
-
-const (
-	DocumentTypeDocument DocumentType = "document"
 )
 
 type DocumentListParams struct {

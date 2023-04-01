@@ -3,75 +3,11 @@ package requests
 import (
 	"fmt"
 	"net/url"
-	"time"
 
 	"github.com/increase/increase-go/core"
 	pjson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
 	"github.com/increase/increase-go/fields"
-)
-
-type ExternalAccount struct {
-	// The External Account's identifier.
-	ID fields.Field[string] `json:"id,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the External Account was created.
-	CreatedAt fields.Field[time.Time] `json:"created_at,required" format:"date-time"`
-	// The External Account's description for display purposes.
-	Description fields.Field[string] `json:"description,required"`
-	// The External Account's status.
-	Status fields.Field[ExternalAccountStatus] `json:"status,required"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber fields.Field[string] `json:"routing_number,required"`
-	// The destination account number.
-	AccountNumber fields.Field[string] `json:"account_number,required"`
-	// The type of the account to which the transfer will be sent.
-	Funding fields.Field[ExternalAccountFunding] `json:"funding,required"`
-	// If you have verified ownership of the External Account.
-	VerificationStatus fields.Field[ExternalAccountVerificationStatus] `json:"verification_status,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `external_account`.
-	Type fields.Field[ExternalAccountType] `json:"type,required"`
-}
-
-// MarshalJSON serializes ExternalAccount into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
-func (r *ExternalAccount) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
-}
-
-func (r ExternalAccount) String() (result string) {
-	return fmt.Sprintf("&ExternalAccount{ID:%s CreatedAt:%s Description:%s Status:%s RoutingNumber:%s AccountNumber:%s Funding:%s VerificationStatus:%s Type:%s}", r.ID, r.CreatedAt, r.Description, r.Status, r.RoutingNumber, r.AccountNumber, r.Funding, r.VerificationStatus, r.Type)
-}
-
-type ExternalAccountStatus string
-
-const (
-	ExternalAccountStatusActive   ExternalAccountStatus = "active"
-	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
-)
-
-type ExternalAccountFunding string
-
-const (
-	ExternalAccountFundingChecking ExternalAccountFunding = "checking"
-	ExternalAccountFundingSavings  ExternalAccountFunding = "savings"
-	ExternalAccountFundingOther    ExternalAccountFunding = "other"
-)
-
-type ExternalAccountVerificationStatus string
-
-const (
-	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
-	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
-	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
-)
-
-type ExternalAccountType string
-
-const (
-	ExternalAccountTypeExternalAccount ExternalAccountType = "external_account"
 )
 
 type CreateAnExternalAccountParameters struct {
