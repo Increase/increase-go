@@ -8,14 +8,13 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestAccountNumbersNew(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.New(context.TODO(), &requests.CreateAnAccountNumberParameters{AccountID: fields.F("account_in71c4amph0vgo2qllky"), Name: fields.F("Rent payments")})
+	_, err := c.AccountNumbers.New(context.TODO(), &requests.CreateAnAccountNumberParameters{AccountID: increase.F("account_in71c4amph0vgo2qllky"), Name: increase.F("Rent payments")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -47,7 +46,7 @@ func TestAccountNumbersUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.AccountNumbers.Update(
 		context.TODO(),
 		"account_number_v18nkfqm6afpsrvy82b2",
-		&requests.UpdateAnAccountNumberParameters{Name: fields.F("x"), Status: fields.F(requests.UpdateAnAccountNumberParametersStatusActive)},
+		&requests.UpdateAnAccountNumberParameters{Name: increase.F("x"), Status: increase.F(requests.UpdateAnAccountNumberParametersStatusActive)},
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -61,7 +60,7 @@ func TestAccountNumbersUpdateWithOptionalParams(t *testing.T) {
 
 func TestAccountNumbersListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.List(context.TODO(), &requests.AccountNumberListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), Status: fields.F(requests.AccountNumberListParamsStatusActive), AccountID: fields.F("string")})
+	_, err := c.AccountNumbers.List(context.TODO(), &requests.AccountNumberListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(requests.AccountNumberListParamsStatusActive), AccountID: increase.F("string")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

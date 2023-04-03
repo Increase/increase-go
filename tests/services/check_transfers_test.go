@@ -8,7 +8,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -51,7 +50,7 @@ func TestCheckTransfersReturn(t *testing.T) {
 	_, err := c.Simulations.CheckTransfers.Return(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
-		&requests.ReturnASandboxCheckTransferParameters{Reason: fields.F(requests.ReturnASandboxCheckTransferParametersReasonMailDeliveryFailure)},
+		&requests.ReturnASandboxCheckTransferParameters{Reason: increase.F(requests.ReturnASandboxCheckTransferParametersReasonMailDeliveryFailure)},
 	)
 	if err != nil {
 		var apiError core.APIError

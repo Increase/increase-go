@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/increase/increase-go/core/fields"
 	pjson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
-	"github.com/increase/increase-go/fields"
 )
 
 type CreateAnAccountParameters struct {

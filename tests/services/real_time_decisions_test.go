@@ -8,7 +8,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -34,7 +33,7 @@ func TestRealTimeDecisionsActionWithOptionalParams(t *testing.T) {
 	_, err := c.RealTimeDecisions.Action(
 		context.TODO(),
 		"real_time_decision_j76n2e810ezcg3zh5qtn",
-		&requests.ActionARealTimeDecisionParameters{CardAuthorization: fields.F(requests.ActionARealTimeDecisionParametersCardAuthorization{Decision: fields.F(requests.ActionARealTimeDecisionParametersCardAuthorizationDecisionApprove)}), DigitalWalletToken: fields.F(requests.ActionARealTimeDecisionParametersDigitalWalletToken{Approval: fields.F(requests.ActionARealTimeDecisionParametersDigitalWalletTokenApproval{CardProfileID: fields.F("string"), Phone: fields.F("x"), Email: fields.F("x")}), Decline: fields.F(requests.ActionARealTimeDecisionParametersDigitalWalletTokenDecline{Reason: fields.F("x")})}), DigitalWalletAuthentication: fields.F(requests.ActionARealTimeDecisionParametersDigitalWalletAuthentication{Result: fields.F(requests.ActionARealTimeDecisionParametersDigitalWalletAuthenticationResultSuccess)})},
+		&requests.ActionARealTimeDecisionParameters{CardAuthorization: increase.F(requests.ActionARealTimeDecisionParametersCardAuthorization{Decision: increase.F(requests.ActionARealTimeDecisionParametersCardAuthorizationDecisionApprove)}), DigitalWalletToken: increase.F(requests.ActionARealTimeDecisionParametersDigitalWalletToken{Approval: increase.F(requests.ActionARealTimeDecisionParametersDigitalWalletTokenApproval{CardProfileID: increase.F("string"), Phone: increase.F("x"), Email: increase.F("x")}), Decline: increase.F(requests.ActionARealTimeDecisionParametersDigitalWalletTokenDecline{Reason: increase.F("x")})}), DigitalWalletAuthentication: increase.F(requests.ActionARealTimeDecisionParametersDigitalWalletAuthentication{Result: increase.F(requests.ActionARealTimeDecisionParametersDigitalWalletAuthenticationResultSuccess)})},
 	)
 	if err != nil {
 		var apiError core.APIError

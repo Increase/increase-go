@@ -8,14 +8,13 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestAccountsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{EntityID: fields.F("string"), ProgramID: fields.F("string"), InformationalEntityID: fields.F("string"), Name: fields.F("New Account!")})
+	_, err := c.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{EntityID: increase.F("string"), ProgramID: increase.F("string"), InformationalEntityID: increase.F("string"), Name: increase.F("New Account!")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -47,7 +46,7 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.Accounts.Update(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
-		&requests.UpdateAnAccountParameters{Name: fields.F("My renamed account")},
+		&requests.UpdateAnAccountParameters{Name: increase.F("My renamed account")},
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -61,7 +60,7 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 
 func TestAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), EntityID: fields.F("string"), Status: fields.F(requests.AccountListParamsStatusOpen)})
+	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(requests.AccountListParamsStatusOpen)})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

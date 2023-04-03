@@ -11,7 +11,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -19,7 +18,7 @@ import (
 func TestFilesNewWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: prism mock server is broken for file uploads")
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Files.New(context.TODO(), &requests.CreateAFileParameters{File: fields.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))), Description: fields.F("x"), Purpose: fields.F(requests.CreateAFileParametersPurposeCheckImageFront)})
+	_, err := c.Files.New(context.TODO(), &requests.CreateAFileParameters{File: increase.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))), Description: increase.F("x"), Purpose: increase.F(requests.CreateAFileParametersPurposeCheckImageFront)})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -48,7 +47,7 @@ func TestFilesGet(t *testing.T) {
 
 func TestFilesListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Files.List(context.TODO(), &requests.FileListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), CreatedAt: fields.F(requests.FileListParamsCreatedAt{After: fields.F(time.Now()), Before: fields.F(time.Now()), OnOrAfter: fields.F(time.Now()), OnOrBefore: fields.F(time.Now())}), Purpose: fields.F(requests.FileListParamsPurpose{In: fields.F([]requests.FileListParamsPurposeIn{requests.FileListParamsPurposeInCheckImageFront, requests.FileListParamsPurposeInCheckImageFront, requests.FileListParamsPurposeInCheckImageFront})})})
+	_, err := c.Files.List(context.TODO(), &requests.FileListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), CreatedAt: increase.F(requests.FileListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}), Purpose: increase.F(requests.FileListParamsPurpose{In: increase.F([]requests.FileListParamsPurposeIn{requests.FileListParamsPurposeInCheckImageFront, requests.FileListParamsPurposeInCheckImageFront, requests.FileListParamsPurposeInCheckImageFront})})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

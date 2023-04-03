@@ -8,7 +8,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -18,7 +17,7 @@ func TestCardDisputesActionWithOptionalParams(t *testing.T) {
 	_, err := c.Simulations.CardDisputes.Action(
 		context.TODO(),
 		"card_dispute_h9sc95nbl1cgltpp7men",
-		&requests.SimulatesAdvancingTheStateOfACardDisputeParameters{Status: fields.F(requests.SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted), Explanation: fields.F("This was a valid recurring transaction")},
+		&requests.SimulatesAdvancingTheStateOfACardDisputeParameters{Status: increase.F(requests.SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted), Explanation: increase.F("This was a valid recurring transaction")},
 	)
 	if err != nil {
 		var apiError core.APIError

@@ -8,14 +8,13 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestExternalAccountsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.New(context.TODO(), &requests.CreateAnExternalAccountParameters{RoutingNumber: fields.F("101050001"), AccountNumber: fields.F("987654321"), Funding: fields.F(requests.CreateAnExternalAccountParametersFundingChecking), Description: fields.F("Landlord")})
+	_, err := c.ExternalAccounts.New(context.TODO(), &requests.CreateAnExternalAccountParameters{RoutingNumber: increase.F("101050001"), AccountNumber: increase.F("987654321"), Funding: increase.F(requests.CreateAnExternalAccountParametersFundingChecking), Description: increase.F("Landlord")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -47,7 +46,7 @@ func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.ExternalAccounts.Update(
 		context.TODO(),
 		"external_account_ukk55lr923a3ac0pp7iv",
-		&requests.UpdateAnExternalAccountParameters{Description: fields.F("New description"), Status: fields.F(requests.UpdateAnExternalAccountParametersStatusActive)},
+		&requests.UpdateAnExternalAccountParameters{Description: increase.F("New description"), Status: increase.F(requests.UpdateAnExternalAccountParametersStatusActive)},
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -61,7 +60,7 @@ func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
 
 func TestExternalAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.List(context.TODO(), &requests.ExternalAccountListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), Status: fields.F(requests.ExternalAccountListParamsStatus{In: fields.F([]requests.ExternalAccountListParamsStatusIn{requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive})})})
+	_, err := c.ExternalAccounts.List(context.TODO(), &requests.ExternalAccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(requests.ExternalAccountListParamsStatus{In: increase.F([]requests.ExternalAccountListParamsStatusIn{requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive})})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

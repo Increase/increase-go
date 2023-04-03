@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/increase/increase-go/fields"
+	"github.com/increase/increase-go/core/fields"
 )
 
 var encoders sync.Map // map[reflect.Type]encoderFunc

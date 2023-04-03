@@ -9,7 +9,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -32,7 +31,7 @@ func TestDeclinedTransactionsGet(t *testing.T) {
 
 func TestDeclinedTransactionsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.DeclinedTransactions.List(context.TODO(), &requests.DeclinedTransactionListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), AccountID: fields.F("string"), RouteID: fields.F("string"), CreatedAt: fields.F(requests.DeclinedTransactionListParamsCreatedAt{After: fields.F(time.Now()), Before: fields.F(time.Now()), OnOrAfter: fields.F(time.Now()), OnOrBefore: fields.F(time.Now())})})
+	_, err := c.DeclinedTransactions.List(context.TODO(), &requests.DeclinedTransactionListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), RouteID: increase.F("string"), CreatedAt: increase.F(requests.DeclinedTransactionListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

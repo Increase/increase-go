@@ -5,8 +5,8 @@ import (
 	"net/url"
 
 	"github.com/increase/increase-go/core"
+	"github.com/increase/increase-go/core/fields"
 	"github.com/increase/increase-go/core/query"
-	"github.com/increase/increase-go/fields"
 )
 
 type PendingTransactionListParams struct {

@@ -8,7 +8,6 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
@@ -18,7 +17,7 @@ func TestSupplementalDocumentsNew(t *testing.T) {
 	_, err := c.Entities.SupplementalDocuments.New(
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
-		&requests.CreateASupplementalDocumentForAnEntityParameters{FileID: fields.F("file_makxrc67oh9l6sg7w9yc")},
+		&requests.CreateASupplementalDocumentForAnEntityParameters{FileID: increase.F("file_makxrc67oh9l6sg7w9yc")},
 	)
 	if err != nil {
 		var apiError core.APIError

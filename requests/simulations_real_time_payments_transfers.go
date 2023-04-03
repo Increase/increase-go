@@ -3,8 +3,8 @@ package requests
 import (
 	"fmt"
 
+	"github.com/increase/increase-go/core/fields"
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/fields"
 )
 
 type SimulateARealTimePaymentsTransferToYourAccountParameters struct {

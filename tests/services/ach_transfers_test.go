@@ -8,14 +8,13 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestACHTransfersNewInboundWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &requests.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: fields.F("account_number_v18nkfqm6afpsrvy82b2"), Amount: fields.F(int64(1000)), CompanyDescriptiveDate: fields.F("x"), CompanyDiscretionaryData: fields.F("x"), CompanyEntryDescription: fields.F("x"), CompanyName: fields.F("x"), CompanyID: fields.F("x")})
+	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &requests.SimulateAnACHTransferToYourAccountParameters{AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.F(int64(1000)), CompanyDescriptiveDate: increase.F("x"), CompanyDiscretionaryData: increase.F("x"), CompanyEntryDescription: increase.F("x"), CompanyName: increase.F("x"), CompanyID: increase.F("x")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -32,7 +31,7 @@ func TestACHTransfersReturnWithOptionalParams(t *testing.T) {
 	_, err := c.Simulations.ACHTransfers.Return(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
-		&requests.ReturnASandboxACHTransferParameters{Reason: fields.F(requests.ReturnASandboxACHTransferParametersReasonInsufficientFund)},
+		&requests.ReturnASandboxACHTransferParameters{Reason: increase.F(requests.ReturnASandboxACHTransferParametersReasonInsufficientFund)},
 	)
 	if err != nil {
 		var apiError core.APIError

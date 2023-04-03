@@ -35,14 +35,14 @@ import (
 	"context"
 	"fmt"
 	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/fields"
+	"github.com/increase/increase-go/core/fields"
 	"github.com/increase/increase-go/requests"
 )
 
 func main() {
 	client := increase.NewIncrease()
 	res, err := client.Accounts.New(context.TODO(), &requests.CreateAnAccountParameters{
-		Name: fields.F("My First Increase Account"),
+		Name: increase.F("My First Increase Account"),
 	})
 	if err != nil {
 		panic(err)
@@ -70,24 +70,26 @@ type Bar struct {
 }
 ```
 
-For each field, you can either supply a value field with `fields.F(...)`, a
-`null` value with `fields.NullField()`, or some raw JSON value with
-`fields.RawField(...)` that you specify as a byte slice. If you do not supply a
-value, then we do not populate the field. An example request may look like
+For each field, you can either supply a value field with
+`increase.F(...)`, a `null` value with `increase.NullField()`, or
+some raw JSON value with `increase.RawField(...)` that you specify as a
+byte slice. We also provide convenient helpers `increase.Int(...)` and
+`increase.Str(...)`. If you do not supply a value, then we do not
+populate the field. An example request may look like
 
 ```go
 params := &FooParams{
 	// Normally populates this field as `"id": "food_id"`
-	ID: fields.F("foo_id"),
+	ID: increase.F("foo_id"),
 
 	// Integer helper casts integer values and literals to fields.Field[int64]
-	Number: fields.Int(12),
+	Number: increase.Int(12),
 
 	// Explicitly sends this field as null, e.g., `"name": null`
-	Name: fields.NullField[string](),
+	Name: increase.NullField[string](),
 
 	// Overrides this field as `"other": "ovveride_this_field"`
-	Other: fields.RawField[Bar]("override_this_field")
+	Other: increase.RawField[Bar]("override_this_field")
 }
 ```
 

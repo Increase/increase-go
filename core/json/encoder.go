@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/increase/increase-go/fields"
-
 	"github.com/tidwall/sjson"
+
+	"github.com/increase/increase-go/core/fields"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

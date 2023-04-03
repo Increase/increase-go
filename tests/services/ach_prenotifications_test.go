@@ -9,14 +9,13 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/fields"
 	"github.com/increase/increase-go/options"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestACHPrenotificationsNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHPrenotifications.New(context.TODO(), &requests.CreateAnACHPrenotificationParameters{AccountNumber: fields.F("987654321"), Addendum: fields.F("x"), CompanyDescriptiveDate: fields.F("x"), CompanyDiscretionaryData: fields.F("x"), CompanyEntryDescription: fields.F("x"), CompanyName: fields.F("x"), CreditDebitIndicator: fields.F(requests.CreateAnACHPrenotificationParametersCreditDebitIndicatorCredit), EffectiveDate: fields.F(time.Now()), IndividualID: fields.F("x"), IndividualName: fields.F("x"), RoutingNumber: fields.F("101050001"), StandardEntryClassCode: fields.F(requests.CreateAnACHPrenotificationParametersStandardEntryClassCodeCorporateCreditOrDebit)})
+	_, err := c.ACHPrenotifications.New(context.TODO(), &requests.CreateAnACHPrenotificationParameters{AccountNumber: increase.F("987654321"), Addendum: increase.F("x"), CompanyDescriptiveDate: increase.F("x"), CompanyDiscretionaryData: increase.F("x"), CompanyEntryDescription: increase.F("x"), CompanyName: increase.F("x"), CreditDebitIndicator: increase.F(requests.CreateAnACHPrenotificationParametersCreditDebitIndicatorCredit), EffectiveDate: increase.F(time.Now()), IndividualID: increase.F("x"), IndividualName: increase.F("x"), RoutingNumber: increase.F("101050001"), StandardEntryClassCode: increase.F(requests.CreateAnACHPrenotificationParametersStandardEntryClassCodeCorporateCreditOrDebit)})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -45,7 +44,7 @@ func TestACHPrenotificationsGet(t *testing.T) {
 
 func TestACHPrenotificationsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHPrenotifications.List(context.TODO(), &requests.ACHPrenotificationListParams{Cursor: fields.F("string"), Limit: fields.F(int64(0)), CreatedAt: fields.F(requests.ACHPrenotificationListParamsCreatedAt{After: fields.F(time.Now()), Before: fields.F(time.Now()), OnOrAfter: fields.F(time.Now()), OnOrBefore: fields.F(time.Now())})})
+	_, err := c.ACHPrenotifications.List(context.TODO(), &requests.ACHPrenotificationListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), CreatedAt: increase.F(requests.ACHPrenotificationListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
