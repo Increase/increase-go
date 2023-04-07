@@ -3,28 +3,12 @@ package increase
 import (
 	"os"
 
-	"github.com/increase/increase-go/core/fields"
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/services"
 )
 
-func F[T any](value T) fields.Field[T]          { return fields.Field[T]{Value: value, Present: true} }
-func NullField[T any]() fields.Field[T]         { return fields.Field[T]{Null: true, Present: true} }
-func RawField[T any](value any) fields.Field[T] { return fields.Field[T]{Raw: value, Present: true} }
-
-func Float[T float32 | float64](value T) fields.Field[float64] {
-	return fields.Field[float64]{Value: float64(value), Present: true}
-}
-func Int[T int | int8 | int16 | int32 | int64](value T) fields.Field[int64] {
-	return fields.Field[int64]{Value: int64(value), Present: true}
-}
-func UInt[T uint | uint8 | uint16 | uint32 | uint64](value T) fields.Field[uint64] {
-	return fields.Field[uint64]{Value: uint64(value), Present: true}
-}
-func Str(str string) fields.Field[string] { return F(str) }
-
 type Increase struct {
-	Options                     []options.RequestOption
+	Options                     []option.RequestOption
 	Accounts                    *services.AccountService
 	AccountNumbers              *services.AccountNumberService
 	RealTimeDecisions           *services.RealTimeDecisionService
@@ -58,14 +42,14 @@ type Increase struct {
 	Simulations                 *services.SimulationService
 }
 
-// NewIncrease generates a new client with the default options read from the
-// environment ("INCREASE_API_KEY"). The options passed in as arguments are applied
-// after these default arguments, and all options will be passed down to the
+// NewIncrease generates a new client with the default option read from the
+// environment ("INCREASE_API_KEY"). The option passed in as arguments are applied
+// after these default arguments, and all option will be passed down to the
 // services and requests that this client makes.
-func NewIncrease(opts ...options.RequestOption) (r *Increase) {
-	defaults := []options.RequestOption{options.WithEnvironmentProduction()}
+func NewIncrease(opts ...option.RequestOption) (r *Increase) {
+	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("INCREASE_API_KEY"); ok {
-		defaults = append(defaults, options.WithAPIKey(o))
+		defaults = append(defaults, option.WithAPIKey(o))
 	}
 	opts = append(defaults, opts...)
 

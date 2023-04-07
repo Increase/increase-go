@@ -2,7 +2,6 @@ package responses
 
 import (
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Limit struct {
@@ -85,39 +84,24 @@ const (
 	LimitTypeLimit LimitType = "limit"
 )
 
-type LimitList struct {
+type LimitListResponse struct {
 	// The contents of the list.
 	Data []Limit `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       LimitListJSON
+	JSON       LimitListResponseJSON
 }
 
-type LimitListJSON struct {
+type LimitListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into LimitList using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *LimitList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into LimitListResponse using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *LimitListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type LimitsPage struct {
-	*pagination.Page[Limit]
-}
-
-func (r *LimitsPage) Limit() *Limit {
-	return r.Current()
-}
-
-func (r *LimitsPage) NextPage() (*LimitsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &LimitsPage{page}, nil
-	}
 }

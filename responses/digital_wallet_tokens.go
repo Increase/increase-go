@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type DigitalWalletToken struct {
@@ -65,40 +64,24 @@ const (
 	DigitalWalletTokenTypeDigitalWalletToken DigitalWalletTokenType = "digital_wallet_token"
 )
 
-type DigitalWalletTokenList struct {
+type DigitalWalletTokenListResponse struct {
 	// The contents of the list.
 	Data []DigitalWalletToken `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       DigitalWalletTokenListJSON
+	JSON       DigitalWalletTokenListResponseJSON
 }
 
-type DigitalWalletTokenListJSON struct {
+type DigitalWalletTokenListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into DigitalWalletTokenList using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *DigitalWalletTokenList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// DigitalWalletTokenListResponse using the internal pjson library. Unrecognized
+// fields are stored in the `jsonFields` property.
+func (r *DigitalWalletTokenListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type DigitalWalletTokensPage struct {
-	*pagination.Page[DigitalWalletToken]
-}
-
-func (r *DigitalWalletTokensPage) DigitalWalletToken() *DigitalWalletToken {
-	return r.Current()
-}
-
-func (r *DigitalWalletTokensPage) NextPage() (*DigitalWalletTokensPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &DigitalWalletTokensPage{page}, nil
-	}
 }

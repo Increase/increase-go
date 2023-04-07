@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type PendingTransaction struct {
@@ -602,40 +601,24 @@ const (
 	PendingTransactionTypePendingTransaction PendingTransactionType = "pending_transaction"
 )
 
-type PendingTransactionList struct {
+type PendingTransactionListResponse struct {
 	// The contents of the list.
 	Data []PendingTransaction `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       PendingTransactionListJSON
+	JSON       PendingTransactionListResponseJSON
 }
 
-type PendingTransactionListJSON struct {
+type PendingTransactionListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into PendingTransactionList using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *PendingTransactionList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// PendingTransactionListResponse using the internal pjson library. Unrecognized
+// fields are stored in the `jsonFields` property.
+func (r *PendingTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type PendingTransactionsPage struct {
-	*pagination.Page[PendingTransaction]
-}
-
-func (r *PendingTransactionsPage) PendingTransaction() *PendingTransaction {
-	return r.Current()
-}
-
-func (r *PendingTransactionsPage) NextPage() (*PendingTransactionsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &PendingTransactionsPage{page}, nil
-	}
 }

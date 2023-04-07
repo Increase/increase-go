@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type CardProfile struct {
@@ -124,40 +123,24 @@ const (
 	CardProfileTypeCardProfile CardProfileType = "card_profile"
 )
 
-type CardProfileList struct {
+type CardProfileListResponse struct {
 	// The contents of the list.
 	Data []CardProfile `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CardProfileListJSON
+	JSON       CardProfileListResponseJSON
 }
 
-type CardProfileListJSON struct {
+type CardProfileListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardProfileList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// UnmarshalJSON deserializes the provided bytes into CardProfileListResponse using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
-func (r *CardProfileList) UnmarshalJSON(data []byte) (err error) {
+func (r *CardProfileListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type CardProfilesPage struct {
-	*pagination.Page[CardProfile]
-}
-
-func (r *CardProfilesPage) CardProfile() *CardProfile {
-	return r.Current()
-}
-
-func (r *CardProfilesPage) NextPage() (*CardProfilesPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &CardProfilesPage{page}, nil
-	}
 }

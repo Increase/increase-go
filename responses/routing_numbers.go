@@ -2,7 +2,6 @@ package responses
 
 import (
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type RoutingNumber struct {
@@ -67,40 +66,24 @@ const (
 	RoutingNumberWireTransfersNotSupported RoutingNumberWireTransfers = "not_supported"
 )
 
-type RoutingNumberList struct {
+type RoutingNumberListResponse struct {
 	// The contents of the list.
 	Data []RoutingNumber `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       RoutingNumberListJSON
+	JSON       RoutingNumberListResponseJSON
 }
 
-type RoutingNumberListJSON struct {
+type RoutingNumberListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into RoutingNumberList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *RoutingNumberList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into RoutingNumberListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type RoutingNumbersPage struct {
-	*pagination.Page[RoutingNumber]
-}
-
-func (r *RoutingNumbersPage) RoutingNumber() *RoutingNumber {
-	return r.Current()
-}
-
-func (r *RoutingNumbersPage) NextPage() (*RoutingNumbersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &RoutingNumbersPage{page}, nil
-	}
 }

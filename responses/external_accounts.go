@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type ExternalAccount struct {
@@ -81,40 +80,24 @@ const (
 	ExternalAccountTypeExternalAccount ExternalAccountType = "external_account"
 )
 
-type ExternalAccountList struct {
+type ExternalAccountListResponse struct {
 	// The contents of the list.
 	Data []ExternalAccount `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ExternalAccountListJSON
+	JSON       ExternalAccountListResponseJSON
 }
 
-type ExternalAccountListJSON struct {
+type ExternalAccountListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into ExternalAccountList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *ExternalAccountList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into ExternalAccountListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *ExternalAccountListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type ExternalAccountsPage struct {
-	*pagination.Page[ExternalAccount]
-}
-
-func (r *ExternalAccountsPage) ExternalAccount() *ExternalAccount {
-	return r.Current()
-}
-
-func (r *ExternalAccountsPage) NextPage() (*ExternalAccountsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &ExternalAccountsPage{page}, nil
-	}
 }

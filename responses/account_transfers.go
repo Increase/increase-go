@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type AccountTransfer struct {
@@ -148,40 +147,24 @@ const (
 	AccountTransferTypeAccountTransfer AccountTransferType = "account_transfer"
 )
 
-type AccountTransferList struct {
+type AccountTransferListResponse struct {
 	// The contents of the list.
 	Data []AccountTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountTransferListJSON
+	JSON       AccountTransferListResponseJSON
 }
 
-type AccountTransferListJSON struct {
+type AccountTransferListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountTransferList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *AccountTransferList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into AccountTransferListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *AccountTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type AccountTransfersPage struct {
-	*pagination.Page[AccountTransfer]
-}
-
-func (r *AccountTransfersPage) AccountTransfer() *AccountTransfer {
-	return r.Current()
-}
-
-func (r *AccountTransfersPage) NextPage() (*AccountTransfersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &AccountTransfersPage{page}, nil
-	}
 }

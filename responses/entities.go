@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Entity struct {
@@ -793,39 +792,24 @@ func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
 }
 
-type EntityList struct {
+type EntityListResponse struct {
 	// The contents of the list.
 	Data []Entity `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EntityListJSON
+	JSON       EntityListResponseJSON
 }
 
-type EntityListJSON struct {
+type EntityListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityList using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *EntityList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into EntityListResponse using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *EntityListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type EntitiesPage struct {
-	*pagination.Page[Entity]
-}
-
-func (r *EntitiesPage) Entity() *Entity {
-	return r.Current()
-}
-
-func (r *EntitiesPage) NextPage() (*EntitiesPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &EntitiesPage{page}, nil
-	}
 }

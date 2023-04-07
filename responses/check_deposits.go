@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type CheckDeposit struct {
@@ -264,40 +263,24 @@ const (
 	CheckDepositTypeCheckDeposit CheckDepositType = "check_deposit"
 )
 
-type CheckDepositList struct {
+type CheckDepositListResponse struct {
 	// The contents of the list.
 	Data []CheckDeposit `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CheckDepositListJSON
+	JSON       CheckDepositListResponseJSON
 }
 
-type CheckDepositListJSON struct {
+type CheckDepositListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDepositList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *CheckDepositList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into CheckDepositListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *CheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type CheckDepositsPage struct {
-	*pagination.Page[CheckDeposit]
-}
-
-func (r *CheckDepositsPage) CheckDeposit() *CheckDeposit {
-	return r.Current()
-}
-
-func (r *CheckDepositsPage) NextPage() (*CheckDepositsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &CheckDepositsPage{page}, nil
-	}
 }

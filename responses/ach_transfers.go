@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type ACHTransfer struct {
@@ -316,40 +315,24 @@ const (
 	ACHTransferTypeACHTransfer ACHTransferType = "ach_transfer"
 )
 
-type ACHTransferList struct {
+type ACHTransferListResponse struct {
 	// The contents of the list.
 	Data []ACHTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ACHTransferListJSON
+	JSON       ACHTransferListResponseJSON
 }
 
-type ACHTransferListJSON struct {
+type ACHTransferListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// UnmarshalJSON deserializes the provided bytes into ACHTransferListResponse using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
-func (r *ACHTransferList) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type ACHTransfersPage struct {
-	*pagination.Page[ACHTransfer]
-}
-
-func (r *ACHTransfersPage) ACHTransfer() *ACHTransfer {
-	return r.Current()
-}
-
-func (r *ACHTransfersPage) NextPage() (*ACHTransfersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &ACHTransfersPage{page}, nil
-	}
 }

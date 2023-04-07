@@ -2,7 +2,6 @@ package responses
 
 import (
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type InboundWireDrawdownRequest struct {
@@ -100,15 +99,15 @@ const (
 	InboundWireDrawdownRequestTypeInboundWireDrawdownRequest InboundWireDrawdownRequestType = "inbound_wire_drawdown_request"
 )
 
-type InboundWireDrawdownRequestList struct {
+type InboundWireDrawdownRequestListResponse struct {
 	// The contents of the list.
 	Data []InboundWireDrawdownRequest `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       InboundWireDrawdownRequestListJSON
+	JSON       InboundWireDrawdownRequestListResponseJSON
 }
 
-type InboundWireDrawdownRequestListJSON struct {
+type InboundWireDrawdownRequestListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
@@ -116,24 +115,8 @@ type InboundWireDrawdownRequestListJSON struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InboundWireDrawdownRequestList using the internal pjson library. Unrecognized
-// fields are stored in the `jsonFields` property.
-func (r *InboundWireDrawdownRequestList) UnmarshalJSON(data []byte) (err error) {
+// InboundWireDrawdownRequestListResponse using the internal pjson library.
+// Unrecognized fields are stored in the `jsonFields` property.
+func (r *InboundWireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type InboundWireDrawdownRequestsPage struct {
-	*pagination.Page[InboundWireDrawdownRequest]
-}
-
-func (r *InboundWireDrawdownRequestsPage) InboundWireDrawdownRequest() *InboundWireDrawdownRequest {
-	return r.Current()
-}
-
-func (r *InboundWireDrawdownRequestsPage) NextPage() (*InboundWireDrawdownRequestsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &InboundWireDrawdownRequestsPage{page}, nil
-	}
 }

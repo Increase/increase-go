@@ -4,25 +4,25 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type EntitiesSupplementalDocumentService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewEntitiesSupplementalDocumentService(opts ...options.RequestOption) (r *EntitiesSupplementalDocumentService) {
+func NewEntitiesSupplementalDocumentService(opts ...option.RequestOption) (r *EntitiesSupplementalDocumentService) {
 	r = &EntitiesSupplementalDocumentService{}
 	r.Options = opts
 	return
 }
 
 // Create a supplemental document for an Entity
-func (r *EntitiesSupplementalDocumentService) New(ctx context.Context, entity_id string, body *requests.CreateASupplementalDocumentForAnEntityParameters, opts ...options.RequestOption) (res *responses.Entity, err error) {
+func (r *EntitiesSupplementalDocumentService) New(ctx context.Context, entity_id string, body *requests.SupplementalDocumentNewParams, opts ...option.RequestOption) (res *responses.Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("entities/%s/supplemental_documents", entity_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

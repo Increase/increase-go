@@ -4,16 +4,16 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type SimulationsCheckTransferService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewSimulationsCheckTransferService(opts ...options.RequestOption) (r *SimulationsCheckTransferService) {
+func NewSimulationsCheckTransferService(opts ...option.RequestOption) (r *SimulationsCheckTransferService) {
 	r = &SimulationsCheckTransferService{}
 	r.Options = opts
 	return
@@ -21,28 +21,28 @@ func NewSimulationsCheckTransferService(opts ...options.RequestOption) (r *Simul
 
 // Simulates a [Check Transfer](#check-transfers) being deposited at a bank. This
 // transfer must first have a `status` of `mailed`.
-func (r *SimulationsCheckTransferService) Deposit(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *responses.CheckTransfer, err error) {
+func (r *SimulationsCheckTransferService) Deposit(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/deposit", check_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
 // Simulates the mailing of a [Check Transfer](#check-transfers), which happens
 // once per weekday in production but can be sped up in sandbox. This transfer must
 // first have a `status` of `pending_approval` or `pending_submission`.
-func (r *SimulationsCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...options.RequestOption) (res *responses.CheckTransfer, err error) {
+func (r *SimulationsCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/mail", check_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
 // Simulates a [Check Transfer](#check-transfers) being returned via USPS to
 // Increase. This transfer must first have a `status` of `mailed`.
-func (r *SimulationsCheckTransferService) Return(ctx context.Context, check_transfer_id string, body *requests.ReturnASandboxCheckTransferParameters, opts ...options.RequestOption) (res *responses.CheckTransfer, err error) {
+func (r *SimulationsCheckTransferService) Return(ctx context.Context, check_transfer_id string, body *requests.CheckTransferReturnParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/return", check_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

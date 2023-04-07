@@ -3,52 +3,58 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
-	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/pagination"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type WireDrawdownRequestService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewWireDrawdownRequestService(opts ...options.RequestOption) (r *WireDrawdownRequestService) {
+func NewWireDrawdownRequestService(opts ...option.RequestOption) (r *WireDrawdownRequestService) {
 	r = &WireDrawdownRequestService{}
 	r.Options = opts
 	return
 }
 
 // Create a Wire Drawdown Request
-func (r *WireDrawdownRequestService) New(ctx context.Context, body *requests.CreateAWireDrawdownRequestParameters, opts ...options.RequestOption) (res *responses.WireDrawdownRequest, err error) {
+func (r *WireDrawdownRequestService) New(ctx context.Context, body *requests.WireDrawdownRequestNewParams, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "wire_drawdown_requests"
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Wire Drawdown Request
-func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...options.RequestOption) (res *responses.WireDrawdownRequest, err error) {
+func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id)
-	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.WireDrawdownRequestListParams, opts ...options.RequestOption) (res *responses.WireDrawdownRequestsPage, err error) {
+func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.WireDrawdownRequestListParams, opts ...option.RequestOption) (res *responses.Page[responses.WireDrawdownRequest], err error) {
+	var raw *http.Response
 	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_drawdown_requests"
-	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
+	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
 	if err != nil {
 		return
 	}
-	res = &responses.WireDrawdownRequestsPage{
-		Page: &pagination.Page[responses.WireDrawdownRequest]{
-			Config:  *cfg,
-			Options: opts,
-		},
+	err = cfg.Execute()
+	if err != nil {
+		return
 	}
-	return res, res.Fire()
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Wire Drawdown Requests
+func (r *WireDrawdownRequestService) ListAutoPager(ctx context.Context, query *requests.WireDrawdownRequestListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.WireDrawdownRequest] {
+	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

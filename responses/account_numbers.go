@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type AccountNumber struct {
@@ -63,40 +62,24 @@ const (
 	AccountNumberTypeAccountNumber AccountNumberType = "account_number"
 )
 
-type AccountNumberList struct {
+type AccountNumberListResponse struct {
 	// The contents of the list.
 	Data []AccountNumber `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountNumberListJSON
+	JSON       AccountNumberListResponseJSON
 }
 
-type AccountNumberListJSON struct {
+type AccountNumberListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountNumberList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *AccountNumberList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into AccountNumberListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *AccountNumberListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type AccountNumbersPage struct {
-	*pagination.Page[AccountNumber]
-}
-
-func (r *AccountNumbersPage) AccountNumber() *AccountNumber {
-	return r.Current()
-}
-
-func (r *AccountNumbersPage) NextPage() (*AccountNumbersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &AccountNumbersPage{page}, nil
-	}
 }

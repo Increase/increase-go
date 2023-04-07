@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type CheckTransfer struct {
@@ -289,40 +288,24 @@ const (
 	CheckTransferTypeCheckTransfer CheckTransferType = "check_transfer"
 )
 
-type CheckTransferList struct {
+type CheckTransferListResponse struct {
 	// The contents of the list.
 	Data []CheckTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CheckTransferListJSON
+	JSON       CheckTransferListResponseJSON
 }
 
-type CheckTransferListJSON struct {
+type CheckTransferListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *CheckTransferList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into CheckTransferListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *CheckTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type CheckTransfersPage struct {
-	*pagination.Page[CheckTransfer]
-}
-
-func (r *CheckTransfersPage) CheckTransfer() *CheckTransfer {
-	return r.Current()
-}
-
-func (r *CheckTransfersPage) NextPage() (*CheckTransfersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &CheckTransfersPage{page}, nil
-	}
 }

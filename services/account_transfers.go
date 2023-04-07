@@ -3,68 +3,74 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
-	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/pagination"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type AccountTransferService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewAccountTransferService(opts ...options.RequestOption) (r *AccountTransferService) {
+func NewAccountTransferService(opts ...option.RequestOption) (r *AccountTransferService) {
 	r = &AccountTransferService{}
 	r.Options = opts
 	return
 }
 
 // Create an Account Transfer
-func (r *AccountTransferService) New(ctx context.Context, body *requests.CreateAnAccountTransferParameters, opts ...options.RequestOption) (res *responses.AccountTransfer, err error) {
+func (r *AccountTransferService) New(ctx context.Context, body *requests.AccountTransferNewParams, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "account_transfers"
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve an Account Transfer
-func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id string, opts ...options.RequestOption) (res *responses.AccountTransfer, err error) {
+func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s", account_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Account Transfers
-func (r *AccountTransferService) List(ctx context.Context, query *requests.AccountTransferListParams, opts ...options.RequestOption) (res *responses.AccountTransfersPage, err error) {
+func (r *AccountTransferService) List(ctx context.Context, query *requests.AccountTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountTransfer], err error) {
+	var raw *http.Response
 	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_transfers"
-	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
+	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
 	if err != nil {
 		return
 	}
-	res = &responses.AccountTransfersPage{
-		Page: &pagination.Page[responses.AccountTransfer]{
-			Config:  *cfg,
-			Options: opts,
-		},
+	err = cfg.Execute()
+	if err != nil {
+		return
 	}
-	return res, res.Fire()
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Account Transfers
+func (r *AccountTransferService) ListAutoPager(ctx context.Context, query *requests.AccountTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountTransfer] {
+	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approve an Account Transfer
-func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...options.RequestOption) (res *responses.AccountTransfer, err error) {
+func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s/approve", account_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }
 
 // Cancel an Account Transfer
-func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...options.RequestOption) (res *responses.AccountTransfer, err error) {
+func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s/cancel", account_transfer_id)
-	err = options.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
 	return
 }

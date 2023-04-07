@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type EventSubscription struct {
@@ -114,40 +113,24 @@ const (
 	EventSubscriptionTypeEventSubscription EventSubscriptionType = "event_subscription"
 )
 
-type EventSubscriptionList struct {
+type EventSubscriptionListResponse struct {
 	// The contents of the list.
 	Data []EventSubscription `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EventSubscriptionListJSON
+	JSON       EventSubscriptionListResponseJSON
 }
 
-type EventSubscriptionListJSON struct {
+type EventSubscriptionListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventSubscriptionList using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *EventSubscriptionList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into EventSubscriptionListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *EventSubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type EventSubscriptionsPage struct {
-	*pagination.Page[EventSubscription]
-}
-
-func (r *EventSubscriptionsPage) EventSubscription() *EventSubscription {
-	return r.Current()
-}
-
-func (r *EventSubscriptionsPage) NextPage() (*EventSubscriptionsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &EventSubscriptionsPage{page}, nil
-	}
 }

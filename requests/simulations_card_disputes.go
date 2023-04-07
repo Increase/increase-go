@@ -1,34 +1,27 @@
 package requests
 
 import (
-	"fmt"
-
-	"github.com/increase/increase-go/core/fields"
+	"github.com/increase/increase-go/core/field"
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type SimulatesAdvancingTheStateOfACardDisputeParameters struct {
+type CardDisputeActionParams struct {
 	// The status to move the dispute to.
-	Status fields.Field[SimulatesAdvancingTheStateOfACardDisputeParametersStatus] `json:"status,required"`
+	Status field.Field[CardDisputeActionParamsStatus] `json:"status,required"`
 	// Why the dispute was rejected. Not required for accepting disputes.
-	Explanation fields.Field[string] `json:"explanation"`
+	Explanation field.Field[string] `json:"explanation"`
 }
 
-// MarshalJSON serializes SimulatesAdvancingTheStateOfACardDisputeParameters into
-// an array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
-func (r *SimulatesAdvancingTheStateOfACardDisputeParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes CardDisputeActionParams into an array of bytes using the
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *CardDisputeActionParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-func (r SimulatesAdvancingTheStateOfACardDisputeParameters) String() (result string) {
-	return fmt.Sprintf("&SimulatesAdvancingTheStateOfACardDisputeParameters{Status:%s Explanation:%s}", r.Status, r.Explanation)
-}
-
-type SimulatesAdvancingTheStateOfACardDisputeParametersStatus string
+type CardDisputeActionParamsStatus string
 
 const (
-	SimulatesAdvancingTheStateOfACardDisputeParametersStatusAccepted SimulatesAdvancingTheStateOfACardDisputeParametersStatus = "accepted"
-	SimulatesAdvancingTheStateOfACardDisputeParametersStatusRejected SimulatesAdvancingTheStateOfACardDisputeParametersStatus = "rejected"
+	CardDisputeActionParamsStatusAccepted CardDisputeActionParamsStatus = "accepted"
+	CardDisputeActionParamsStatusRejected CardDisputeActionParamsStatus = "rejected"
 )

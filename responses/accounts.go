@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Account struct {
@@ -110,40 +109,24 @@ const (
 	AccountTypeAccount AccountType = "account"
 )
 
-type AccountList struct {
+type AccountListResponse struct {
 	// The contents of the list.
 	Data []Account `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountListJSON
+	JSON       AccountListResponseJSON
 }
 
-type AccountListJSON struct {
+type AccountListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountList using the
+// UnmarshalJSON deserializes the provided bytes into AccountListResponse using the
 // internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
-func (r *AccountList) UnmarshalJSON(data []byte) (err error) {
+func (r *AccountListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type AccountsPage struct {
-	*pagination.Page[Account]
-}
-
-func (r *AccountsPage) Account() *Account {
-	return r.Current()
-}
-
-func (r *AccountsPage) NextPage() (*AccountsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &AccountsPage{page}, nil
-	}
 }

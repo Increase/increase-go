@@ -3,52 +3,58 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
-	"github.com/increase/increase-go/options"
-	"github.com/increase/increase-go/pagination"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type CheckDepositService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewCheckDepositService(opts ...options.RequestOption) (r *CheckDepositService) {
+func NewCheckDepositService(opts ...option.RequestOption) (r *CheckDepositService) {
 	r = &CheckDepositService{}
 	r.Options = opts
 	return
 }
 
 // Create a Check Deposit
-func (r *CheckDepositService) New(ctx context.Context, body *requests.CreateACheckDepositParameters, opts ...options.RequestOption) (res *responses.CheckDeposit, err error) {
+func (r *CheckDepositService) New(ctx context.Context, body *requests.CheckDepositNewParams, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_deposits"
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
 // Retrieve a Check Deposit
-func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...options.RequestOption) (res *responses.CheckDeposit, err error) {
+func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_deposits/%s", check_deposit_id)
-	err = options.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
 	return
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDepositListParams, opts ...options.RequestOption) (res *responses.CheckDepositsPage, err error) {
+func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDepositListParams, opts ...option.RequestOption) (res *responses.Page[responses.CheckDeposit], err error) {
+	var raw *http.Response
 	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_deposits"
-	cfg, err := options.NewRequestConfig(ctx, "GET", path, query, nil, opts...)
+	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
 	if err != nil {
 		return
 	}
-	res = &responses.CheckDepositsPage{
-		Page: &pagination.Page[responses.CheckDeposit]{
-			Config:  *cfg,
-			Options: opts,
-		},
+	err = cfg.Execute()
+	if err != nil {
+		return
 	}
-	return res, res.Fire()
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Check Deposits
+func (r *CheckDepositService) ListAutoPager(ctx context.Context, query *requests.CheckDepositListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CheckDeposit] {
+	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

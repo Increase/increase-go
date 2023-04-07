@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Card struct {
@@ -175,39 +174,24 @@ const (
 	CardDetailsTypeCardDetails CardDetailsType = "card_details"
 )
 
-type CardList struct {
+type CardListResponse struct {
 	// The contents of the list.
 	Data []Card `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CardListJSON
+	JSON       CardListResponseJSON
 }
 
-type CardListJSON struct {
+type CardListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardList using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *CardList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into CardListResponse using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type CardsPage struct {
-	*pagination.Page[Card]
-}
-
-func (r *CardsPage) Card() *Card {
-	return r.Current()
-}
-
-func (r *CardsPage) NextPage() (*CardsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &CardsPage{page}, nil
-	}
 }

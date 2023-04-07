@@ -1,78 +1,65 @@
 package requests
 
 import (
-	"fmt"
 	"net/url"
 
-	"github.com/increase/increase-go/core/fields"
+	"github.com/increase/increase-go/core/field"
 	pjson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
 )
 
-type CreateAnAccountNumberParameters struct {
+type AccountNumberNewParams struct {
 	// The Account the Account Number should belong to.
-	AccountID fields.Field[string] `json:"account_id,required"`
+	AccountID field.Field[string] `json:"account_id,required"`
 	// The name you choose for the Account Number.
-	Name fields.Field[string] `json:"name,required"`
+	Name field.Field[string] `json:"name,required"`
 }
 
-// MarshalJSON serializes CreateAnAccountNumberParameters into an array of bytes
-// using the gjson library. Members of the `jsonFields` field are serialized into
-// the top-level, and will overwrite known members of the same name.
-func (r *CreateAnAccountNumberParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes AccountNumberNewParams into an array of bytes using the
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-func (r CreateAnAccountNumberParameters) String() (result string) {
-	return fmt.Sprintf("&CreateAnAccountNumberParameters{AccountID:%s Name:%s}", r.AccountID, r.Name)
-}
-
-type UpdateAnAccountNumberParameters struct {
+type AccountNumberUpdateParams struct {
 	// The name you choose for the Account Number.
-	Name fields.Field[string] `json:"name"`
+	Name field.Field[string] `json:"name"`
 	// This indicates if transfers can be made to the Account Number.
-	Status fields.Field[UpdateAnAccountNumberParametersStatus] `json:"status"`
+	Status field.Field[AccountNumberUpdateParamsStatus] `json:"status"`
 }
 
-// MarshalJSON serializes UpdateAnAccountNumberParameters into an array of bytes
-// using the gjson library. Members of the `jsonFields` field are serialized into
-// the top-level, and will overwrite known members of the same name.
-func (r *UpdateAnAccountNumberParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes AccountNumberUpdateParams into an array of bytes using
+// the gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-func (r UpdateAnAccountNumberParameters) String() (result string) {
-	return fmt.Sprintf("&UpdateAnAccountNumberParameters{Name:%s Status:%s}", r.Name, r.Status)
-}
-
-type UpdateAnAccountNumberParametersStatus string
+type AccountNumberUpdateParamsStatus string
 
 const (
-	UpdateAnAccountNumberParametersStatusActive   UpdateAnAccountNumberParametersStatus = "active"
-	UpdateAnAccountNumberParametersStatusDisabled UpdateAnAccountNumberParametersStatus = "disabled"
-	UpdateAnAccountNumberParametersStatusCanceled UpdateAnAccountNumberParametersStatus = "canceled"
+	AccountNumberUpdateParamsStatusActive   AccountNumberUpdateParamsStatus = "active"
+	AccountNumberUpdateParamsStatusDisabled AccountNumberUpdateParamsStatus = "disabled"
+	AccountNumberUpdateParamsStatusCanceled AccountNumberUpdateParamsStatus = "canceled"
 )
 
 type AccountNumberListParams struct {
 	// Return the page of entries after this one.
-	Cursor fields.Field[string] `query:"cursor"`
+	Cursor field.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit fields.Field[int64] `query:"limit"`
+	Limit field.Field[int64] `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status fields.Field[AccountNumberListParamsStatus] `query:"status"`
+	Status field.Field[AccountNumberListParamsStatus] `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID fields.Field[string] `query:"account_id"`
+	AccountID field.Field[string] `query:"account_id"`
 }
 
 // URLQuery serializes AccountNumberListParams into a url.Values of the query
 // parameters associated with this value
 func (r *AccountNumberListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
-}
-
-func (r AccountNumberListParams) String() (result string) {
-	return fmt.Sprintf("&AccountNumberListParams{Cursor:%s Limit:%s Status:%s AccountID:%s}", r.Cursor, r.Limit, r.Status, r.AccountID)
 }
 
 type AccountNumberListParamsStatus string

@@ -1,84 +1,73 @@
 package requests
 
 import (
-	"fmt"
-
-	"github.com/increase/increase-go/core/fields"
+	"github.com/increase/increase-go/core/field"
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type SimulateAnACHTransferToYourAccountParameters struct {
+type ACHTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
-	AccountNumberID fields.Field[string] `json:"account_number_id,required"`
+	AccountNumberID field.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount fields.Field[int64] `json:"amount,required"`
+	Amount field.Field[int64] `json:"amount,required"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate fields.Field[string] `json:"company_descriptive_date"`
+	CompanyDescriptiveDate field.Field[string] `json:"company_descriptive_date"`
 	// Data associated with the transfer set by the sender.
-	CompanyDiscretionaryData fields.Field[string] `json:"company_discretionary_data"`
+	CompanyDiscretionaryData field.Field[string] `json:"company_discretionary_data"`
 	// The description of the transfer set by the sender.
-	CompanyEntryDescription fields.Field[string] `json:"company_entry_description"`
+	CompanyEntryDescription field.Field[string] `json:"company_entry_description"`
 	// The name of the sender.
-	CompanyName fields.Field[string] `json:"company_name"`
+	CompanyName field.Field[string] `json:"company_name"`
 	// The sender's company id.
-	CompanyID fields.Field[string] `json:"company_id"`
+	CompanyID field.Field[string] `json:"company_id"`
 }
 
-// MarshalJSON serializes SimulateAnACHTransferToYourAccountParameters into an
-// array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
-func (r *SimulateAnACHTransferToYourAccountParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes ACHTransferNewInboundParams into an array of bytes using
+// the gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-func (r SimulateAnACHTransferToYourAccountParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAnACHTransferToYourAccountParameters{AccountNumberID:%s Amount:%s CompanyDescriptiveDate:%s CompanyDiscretionaryData:%s CompanyEntryDescription:%s CompanyName:%s CompanyID:%s}", r.AccountNumberID, r.Amount, r.CompanyDescriptiveDate, r.CompanyDiscretionaryData, r.CompanyEntryDescription, r.CompanyName, r.CompanyID)
-}
-
-type ReturnASandboxACHTransferParameters struct {
+type ACHTransferReturnParams struct {
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
-	Reason fields.Field[ReturnASandboxACHTransferParametersReason] `json:"reason"`
+	Reason field.Field[ACHTransferReturnParamsReason] `json:"reason"`
 }
 
-// MarshalJSON serializes ReturnASandboxACHTransferParameters into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
-func (r *ReturnASandboxACHTransferParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes ACHTransferReturnParams into an array of bytes using the
+// gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *ACHTransferReturnParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-func (r ReturnASandboxACHTransferParameters) String() (result string) {
-	return fmt.Sprintf("&ReturnASandboxACHTransferParameters{Reason:%s}", r.Reason)
-}
-
-type ReturnASandboxACHTransferParametersReason string
+type ACHTransferReturnParamsReason string
 
 const (
-	ReturnASandboxACHTransferParametersReasonInsufficientFund                                          ReturnASandboxACHTransferParametersReason = "insufficient_fund"
-	ReturnASandboxACHTransferParametersReasonNoAccount                                                 ReturnASandboxACHTransferParametersReason = "no_account"
-	ReturnASandboxACHTransferParametersReasonAccountClosed                                             ReturnASandboxACHTransferParametersReason = "account_closed"
-	ReturnASandboxACHTransferParametersReasonInvalidAccountNumberStructure                             ReturnASandboxACHTransferParametersReason = "invalid_account_number_structure"
-	ReturnASandboxACHTransferParametersReasonAccountFrozenEntryReturnedPerOfacInstruction              ReturnASandboxACHTransferParametersReason = "account_frozen_entry_returned_per_ofac_instruction"
-	ReturnASandboxACHTransferParametersReasonCreditEntryRefusedByReceiver                              ReturnASandboxACHTransferParametersReason = "credit_entry_refused_by_receiver"
-	ReturnASandboxACHTransferParametersReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   ReturnASandboxACHTransferParametersReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	ReturnASandboxACHTransferParametersReasonCorporateCustomerAdvisedNotAuthorized                     ReturnASandboxACHTransferParametersReason = "corporate_customer_advised_not_authorized"
-	ReturnASandboxACHTransferParametersReasonPaymentStopped                                            ReturnASandboxACHTransferParametersReason = "payment_stopped"
-	ReturnASandboxACHTransferParametersReasonNonTransactionAccount                                     ReturnASandboxACHTransferParametersReason = "non_transaction_account"
-	ReturnASandboxACHTransferParametersReasonUncollectedFunds                                          ReturnASandboxACHTransferParametersReason = "uncollected_funds"
-	ReturnASandboxACHTransferParametersReasonRoutingNumberCheckDigitError                              ReturnASandboxACHTransferParametersReason = "routing_number_check_digit_error"
-	ReturnASandboxACHTransferParametersReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ReturnASandboxACHTransferParametersReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	ReturnASandboxACHTransferParametersReasonAmountFieldError                                          ReturnASandboxACHTransferParametersReason = "amount_field_error"
-	ReturnASandboxACHTransferParametersReasonAuthorizationRevokedByCustomer                            ReturnASandboxACHTransferParametersReason = "authorization_revoked_by_customer"
-	ReturnASandboxACHTransferParametersReasonInvalidACHRoutingNumber                                   ReturnASandboxACHTransferParametersReason = "invalid_ach_routing_number"
-	ReturnASandboxACHTransferParametersReasonFileRecordEditCriteria                                    ReturnASandboxACHTransferParametersReason = "file_record_edit_criteria"
-	ReturnASandboxACHTransferParametersReasonEnrInvalidIndividualName                                  ReturnASandboxACHTransferParametersReason = "enr_invalid_individual_name"
-	ReturnASandboxACHTransferParametersReasonReturnedPerOdfiRequest                                    ReturnASandboxACHTransferParametersReason = "returned_per_odfi_request"
-	ReturnASandboxACHTransferParametersReasonAddendaError                                              ReturnASandboxACHTransferParametersReason = "addenda_error"
-	ReturnASandboxACHTransferParametersReasonLimitedParticipationDfi                                   ReturnASandboxACHTransferParametersReason = "limited_participation_dfi"
-	ReturnASandboxACHTransferParametersReasonIncorrectlyCodedOutboundInternationalPayment              ReturnASandboxACHTransferParametersReason = "incorrectly_coded_outbound_international_payment"
-	ReturnASandboxACHTransferParametersReasonOther                                                     ReturnASandboxACHTransferParametersReason = "other"
+	ACHTransferReturnParamsReasonInsufficientFund                                          ACHTransferReturnParamsReason = "insufficient_fund"
+	ACHTransferReturnParamsReasonNoAccount                                                 ACHTransferReturnParamsReason = "no_account"
+	ACHTransferReturnParamsReasonAccountClosed                                             ACHTransferReturnParamsReason = "account_closed"
+	ACHTransferReturnParamsReasonInvalidAccountNumberStructure                             ACHTransferReturnParamsReason = "invalid_account_number_structure"
+	ACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction              ACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
+	ACHTransferReturnParamsReasonCreditEntryRefusedByReceiver                              ACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
+	ACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   ACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	ACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized                     ACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
+	ACHTransferReturnParamsReasonPaymentStopped                                            ACHTransferReturnParamsReason = "payment_stopped"
+	ACHTransferReturnParamsReasonNonTransactionAccount                                     ACHTransferReturnParamsReason = "non_transaction_account"
+	ACHTransferReturnParamsReasonUncollectedFunds                                          ACHTransferReturnParamsReason = "uncollected_funds"
+	ACHTransferReturnParamsReasonRoutingNumberCheckDigitError                              ACHTransferReturnParamsReason = "routing_number_check_digit_error"
+	ACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	ACHTransferReturnParamsReasonAmountFieldError                                          ACHTransferReturnParamsReason = "amount_field_error"
+	ACHTransferReturnParamsReasonAuthorizationRevokedByCustomer                            ACHTransferReturnParamsReason = "authorization_revoked_by_customer"
+	ACHTransferReturnParamsReasonInvalidACHRoutingNumber                                   ACHTransferReturnParamsReason = "invalid_ach_routing_number"
+	ACHTransferReturnParamsReasonFileRecordEditCriteria                                    ACHTransferReturnParamsReason = "file_record_edit_criteria"
+	ACHTransferReturnParamsReasonEnrInvalidIndividualName                                  ACHTransferReturnParamsReason = "enr_invalid_individual_name"
+	ACHTransferReturnParamsReasonReturnedPerOdfiRequest                                    ACHTransferReturnParamsReason = "returned_per_odfi_request"
+	ACHTransferReturnParamsReasonAddendaError                                              ACHTransferReturnParamsReason = "addenda_error"
+	ACHTransferReturnParamsReasonLimitedParticipationDfi                                   ACHTransferReturnParamsReason = "limited_participation_dfi"
+	ACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment              ACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
+	ACHTransferReturnParamsReasonOther                                                     ACHTransferReturnParamsReason = "other"
 )

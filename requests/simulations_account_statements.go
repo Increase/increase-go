@@ -1,25 +1,18 @@
 package requests
 
 import (
-	"fmt"
-
-	"github.com/increase/increase-go/core/fields"
+	"github.com/increase/increase-go/core/field"
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type SimulateAnAccountStatementBeingCreatedParameters struct {
+type AccountStatementNewParams struct {
 	// The identifier of the Account the statement is for.
-	AccountID fields.Field[string] `json:"account_id,required"`
+	AccountID field.Field[string] `json:"account_id,required"`
 }
 
-// MarshalJSON serializes SimulateAnAccountStatementBeingCreatedParameters into an
-// array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
-func (r *SimulateAnAccountStatementBeingCreatedParameters) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes AccountStatementNewParams into an array of bytes using
+// the gjson library. Members of the `jsonFields` field are serialized into the
+// top-level, and will overwrite known members of the same name.
+func (r *AccountStatementNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
-}
-
-func (r SimulateAnAccountStatementBeingCreatedParameters) String() (result string) {
-	return fmt.Sprintf("&SimulateAnAccountStatementBeingCreatedParameters{AccountID:%s}", r.AccountID)
 }

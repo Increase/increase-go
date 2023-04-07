@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Transaction struct {
@@ -1667,40 +1666,24 @@ const (
 	TransactionTypeTransaction TransactionType = "transaction"
 )
 
-type TransactionList struct {
+type TransactionListResponse struct {
 	// The contents of the list.
 	Data []Transaction `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       TransactionListJSON
+	JSON       TransactionListResponseJSON
 }
 
-type TransactionListJSON struct {
+type TransactionListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into TransactionList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// UnmarshalJSON deserializes the provided bytes into TransactionListResponse using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
 // property.
-func (r *TransactionList) UnmarshalJSON(data []byte) (err error) {
+func (r *TransactionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type TransactionsPage struct {
-	*pagination.Page[Transaction]
-}
-
-func (r *TransactionsPage) Transaction() *Transaction {
-	return r.Current()
-}
-
-func (r *TransactionsPage) NextPage() (*TransactionsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &TransactionsPage{page}, nil
-	}
 }

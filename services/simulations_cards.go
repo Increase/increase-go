@@ -3,16 +3,16 @@ package services
 import (
 	"context"
 
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 	"github.com/increase/increase-go/responses"
 )
 
 type SimulationsCardService struct {
-	Options []options.RequestOption
+	Options []option.RequestOption
 }
 
-func NewSimulationsCardService(opts ...options.RequestOption) (r *SimulationsCardService) {
+func NewSimulationsCardService(opts ...option.RequestOption) (r *SimulationsCardService) {
 	r = &SimulationsCardService{}
 	r.Options = opts
 	return
@@ -25,10 +25,10 @@ func NewSimulationsCardService(opts ...options.RequestOption) (r *SimulationsCar
 // `card_decline`. You can pass either a Card id or a
 // [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
 // ways purchases can be made.
-func (r *SimulationsCardService) Authorize(ctx context.Context, body *requests.SimulateAnAuthorizationOnACardParameters, opts ...options.RequestOption) (res *responses.CardAuthorizationSimulation, err error) {
+func (r *SimulationsCardService) Authorize(ctx context.Context, body *requests.CardAuthorizeParams, opts ...option.RequestOption) (res *responses.CardAuthorizationSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_authorizations"
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }
 
@@ -37,9 +37,9 @@ func (r *SimulationsCardService) Authorize(ctx context.Context, body *requests.S
 // simulates that event, which may occur many days after the purchase in
 // production. The amount settled can be different from the amount originally
 // authorized, for example, when adding a tip to a restaurant bill.
-func (r *SimulationsCardService) Settlement(ctx context.Context, body *requests.SimulateSettlingACardAuthorizationParameters, opts ...options.RequestOption) (res *responses.Transaction, err error) {
+func (r *SimulationsCardService) Settlement(ctx context.Context, body *requests.CardSettlementParams, opts ...option.RequestOption) (res *responses.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_settlements"
-	err = options.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
 	return
 }

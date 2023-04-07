@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type Event struct {
@@ -101,39 +100,24 @@ const (
 	EventTypeEvent EventType = "event"
 )
 
-type EventList struct {
+type EventListResponse struct {
 	// The contents of the list.
 	Data []Event `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EventListJSON
+	JSON       EventListResponseJSON
 }
 
-type EventListJSON struct {
+type EventListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventList using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *EventList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into EventListResponse using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *EventListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type EventsPage struct {
-	*pagination.Page[Event]
-}
-
-func (r *EventsPage) Event() *Event {
-	return r.Current()
-}
-
-func (r *EventsPage) NextPage() (*EventsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &EventsPage{page}, nil
-	}
 }

@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type DeclinedTransaction struct {
@@ -596,40 +595,24 @@ const (
 	DeclinedTransactionTypeDeclinedTransaction DeclinedTransactionType = "declined_transaction"
 )
 
-type DeclinedTransactionList struct {
+type DeclinedTransactionListResponse struct {
 	// The contents of the list.
 	Data []DeclinedTransaction `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       DeclinedTransactionListJSON
+	JSON       DeclinedTransactionListResponseJSON
 }
 
-type DeclinedTransactionListJSON struct {
+type DeclinedTransactionListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into DeclinedTransactionList using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *DeclinedTransactionList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// DeclinedTransactionListResponse using the internal pjson library. Unrecognized
+// fields are stored in the `jsonFields` property.
+func (r *DeclinedTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type DeclinedTransactionsPage struct {
-	*pagination.Page[DeclinedTransaction]
-}
-
-func (r *DeclinedTransactionsPage) DeclinedTransaction() *DeclinedTransaction {
-	return r.Current()
-}
-
-func (r *DeclinedTransactionsPage) NextPage() (*DeclinedTransactionsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &DeclinedTransactionsPage{page}, nil
-	}
 }

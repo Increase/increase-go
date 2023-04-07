@@ -8,12 +8,12 @@ import (
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 )
 
 func TestPendingTransactionsGet(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.PendingTransactions.Get(
 		context.TODO(),
 		"pending_transaction_k1sfetcau2qbvjbzgju4",
@@ -29,7 +29,7 @@ func TestPendingTransactionsGet(t *testing.T) {
 }
 
 func TestPendingTransactionsListWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(options.WithAPIKey("APIKey"), options.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.PendingTransactions.List(context.TODO(), &requests.PendingTransactionListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), RouteID: increase.F("string"), SourceID: increase.F("string"), Status: increase.F(requests.PendingTransactionListParamsStatus{In: increase.F([]requests.PendingTransactionListParamsStatusIn{requests.PendingTransactionListParamsStatusInPending, requests.PendingTransactionListParamsStatusInPending, requests.PendingTransactionListParamsStatusInPending})})})
 	if err != nil {
 		var apiError core.APIError

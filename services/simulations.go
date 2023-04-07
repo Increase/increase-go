@@ -1,11 +1,11 @@
 package services
 
 import (
-	"github.com/increase/increase-go/options"
+	"github.com/increase/increase-go/option"
 )
 
 type SimulationService struct {
-	Options                     []options.RequestOption
+	Options                     []option.RequestOption
 	AccountTransfers            *SimulationsAccountTransferService
 	AccountStatements           *SimulationsAccountStatementService
 	ACHTransfers                *SimulationsACHTransferService
@@ -21,7 +21,7 @@ type SimulationService struct {
 	RealTimePaymentsTransfers   *SimulationsRealTimePaymentsTransferService
 }
 
-func NewSimulationService(opts ...options.RequestOption) (r *SimulationService) {
+func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r = &SimulationService{}
 	r.Options = opts
 	r.AccountTransfers = NewSimulationsAccountTransferService(opts...)

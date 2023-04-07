@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type ACHPrenotification struct {
@@ -112,40 +111,24 @@ const (
 	ACHPrenotificationTypeACHPrenotification ACHPrenotificationType = "ach_prenotification"
 )
 
-type ACHPrenotificationList struct {
+type ACHPrenotificationListResponse struct {
 	// The contents of the list.
 	Data []ACHPrenotification `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ACHPrenotificationListJSON
+	JSON       ACHPrenotificationListResponseJSON
 }
 
-type ACHPrenotificationListJSON struct {
+type ACHPrenotificationListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHPrenotificationList using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *ACHPrenotificationList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// ACHPrenotificationListResponse using the internal pjson library. Unrecognized
+// fields are stored in the `jsonFields` property.
+func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type ACHPrenotificationsPage struct {
-	*pagination.Page[ACHPrenotification]
-}
-
-func (r *ACHPrenotificationsPage) ACHPrenotification() *ACHPrenotification {
-	return r.Current()
-}
-
-func (r *ACHPrenotificationsPage) NextPage() (*ACHPrenotificationsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &ACHPrenotificationsPage{page}, nil
-	}
 }

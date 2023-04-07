@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type File struct {
@@ -80,39 +79,24 @@ const (
 	FileTypeFile FileType = "file"
 )
 
-type FileList struct {
+type FileListResponse struct {
 	// The contents of the list.
 	Data []File `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       FileListJSON
+	JSON       FileListResponseJSON
 }
 
-type FileListJSON struct {
+type FileListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into FileList using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
-func (r *FileList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into FileListResponse using the
+// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type FilesPage struct {
-	*pagination.Page[File]
-}
-
-func (r *FilesPage) File() *File {
-	return r.Current()
-}
-
-func (r *FilesPage) NextPage() (*FilesPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &FilesPage{page}, nil
-	}
 }

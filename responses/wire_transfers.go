@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type WireTransfer struct {
@@ -245,40 +244,24 @@ const (
 	WireTransferTypeWireTransfer WireTransferType = "wire_transfer"
 )
 
-type WireTransferList struct {
+type WireTransferListResponse struct {
 	// The contents of the list.
 	Data []WireTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       WireTransferListJSON
+	JSON       WireTransferListResponseJSON
 }
 
-type WireTransferListJSON struct {
+type WireTransferListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferList using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *WireTransferList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into WireTransferListResponse
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *WireTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type WireTransfersPage struct {
-	*pagination.Page[WireTransfer]
-}
-
-func (r *WireTransfersPage) WireTransfer() *WireTransfer {
-	return r.Current()
-}
-
-func (r *WireTransfersPage) NextPage() (*WireTransfersPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &WireTransfersPage{page}, nil
-	}
 }

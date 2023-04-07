@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pjson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/pagination"
 )
 
 type InboundACHTransferReturn struct {
@@ -94,40 +93,24 @@ const (
 	InboundACHTransferReturnTypeInboundACHTransferReturn InboundACHTransferReturnType = "inbound_ach_transfer_return"
 )
 
-type InboundACHTransferReturnList struct {
+type InboundACHTransferReturnListResponse struct {
 	// The contents of the list.
 	Data []InboundACHTransferReturn `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       InboundACHTransferReturnListJSON
+	JSON       InboundACHTransferReturnListResponseJSON
 }
 
-type InboundACHTransferReturnListJSON struct {
+type InboundACHTransferReturnListResponseJSON struct {
 	Data       pjson.Metadata
 	NextCursor pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into InboundACHTransferReturnList
-// using the internal pjson library. Unrecognized fields are stored in the
-// `jsonFields` property.
-func (r *InboundACHTransferReturnList) UnmarshalJSON(data []byte) (err error) {
+// UnmarshalJSON deserializes the provided bytes into
+// InboundACHTransferReturnListResponse using the internal pjson library.
+// Unrecognized fields are stored in the `jsonFields` property.
+func (r *InboundACHTransferReturnListResponse) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
-}
-
-type InboundACHTransferReturnsPage struct {
-	*pagination.Page[InboundACHTransferReturn]
-}
-
-func (r *InboundACHTransferReturnsPage) InboundACHTransferReturn() *InboundACHTransferReturn {
-	return r.Current()
-}
-
-func (r *InboundACHTransferReturnsPage) NextPage() (*InboundACHTransferReturnsPage, error) {
-	if page, err := r.Page.NextPage(); err != nil {
-		return nil, err
-	} else {
-		return &InboundACHTransferReturnsPage{page}, nil
-	}
 }
