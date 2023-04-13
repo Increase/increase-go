@@ -44,11 +44,11 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.W
 	path := "wire_drawdown_requests"
 	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
 	if err != nil {
-		return
+		return nil, err
 	}
 	err = cfg.Execute()
 	if err != nil {
-		return
+		return nil, err
 	}
 	res.SetPageConfig(cfg, raw)
 	return res, nil
