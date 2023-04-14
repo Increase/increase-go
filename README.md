@@ -199,7 +199,7 @@ for iter.Next() {
 	account := iter.Current()
 	fmt.Printf("%+v\n", account)
 }
-if err := accounts.Err(); err != nil {
+if err := iter.Err(); err != nil {
 	panic(err.Error())
 }
 ```
@@ -213,7 +213,7 @@ for page != nil {
 	for _, account := range page.Data {
 		fmt.Printf("%+v\n", account)
 	}
-	accounts, err = accounts.GetNextPage()
+	page, err = page.GetNextPage()
 }
 if err != nil {
 	panic(err.Error())
