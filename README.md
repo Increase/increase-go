@@ -33,8 +33,8 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/core/field"
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
 )
@@ -44,13 +44,13 @@ func main() {
 		option.WithAPIKey("my api key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
 		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
-	account, err := increaseClient.Accounts.New(context.TODO(), &requests.AccountNewParams{
+	account, err := client.Accounts.New(context.TODO(), &requests.AccountNewParams{
 		Name: increase.F("My First Increase Account"),
 	})
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
-	println(account.ID)
+	fmt.Printf("%+v\n", account)
 }
 
 ```
@@ -190,17 +190,16 @@ client.Accounts.New(
 
 This library provides some conveniences for working with paginated list endpoints.
 
-You can use `.ListAutoPaging()` methods to iterate through items across all pages:
+You can use `.ListAutoPager()` methods to iterate through items across all pages:
 
 ```go
-iter := client.Accounts.ListAutoPager(context.TODO(), params)
-
+iter := client.Accounts.ListAutoPager(context.TODO(), &requests.AccountListParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	item := iter.Current()
-	println(item.ID)
+	account := iter.Current()
+	fmt.Printf("%+v\n", account)
 }
-if err := iter.Err(); err != nil {
+if err := accounts.Err(); err != nil {
 	panic(err.Error())
 }
 ```
@@ -209,12 +208,12 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.Accounts.List(context.TODO(), params)
+page, err := client.Accounts.List(context.TODO(), &requests.AccountListParams{})
 for page != nil {
-	for _, item := range page.Data {
-		println(item.ID)
+	for _, account := range page.Data {
+		fmt.Printf("%+v\n", account)
 	}
-	page, err = page.GetNextPage()
+	accounts, err = accounts.GetNextPage()
 }
 if err != nil {
 	panic(err.Error())
@@ -236,16 +235,16 @@ You can use the `WithMaxRetries` option to configure or disable this:
 ```go
 // Configure the default for all requests:
 increaseClient := increase.NewIncrease(
-  option.WithMaxRetries(0), // default is 2
+	option.WithMaxRetries(0), // default is 2
 )
 
 // Override per-request:
-increaseClient.Accounts.New(
-  context.TODO(),
-  &requests.AccountNewParams{
-    Name: increase.F("Jack"),
-  },
-  option.WithMaxRetries(5),
+client.Accounts.New(
+	context.TODO(),
+	&requests.AccountNewParams{
+		Name: increase.F("Jack"),
+	},
+	option.WithMaxRetries(5),
 )
 ```
 
