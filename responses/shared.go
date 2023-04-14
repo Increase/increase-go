@@ -71,7 +71,10 @@ func NewPageAutoPager[T any](page *Page[T], err error) *PageAutoPager[T] {
 }
 
 func (r *PageAutoPager[T]) Next() bool {
-	if len(r.page.Data) != 0 && r.idx >= len(r.page.Data) {
+	if len(r.page.Data) == 0 {
+		return false
+	}
+	if r.idx >= len(r.page.Data) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
 		if r.err != nil || r.page == nil {
