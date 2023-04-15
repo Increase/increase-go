@@ -17,6 +17,6 @@ type OauthConnectionListParams struct {
 
 // URLQuery serializes OauthConnectionListParams into a url.Values of the query
 // parameters associated with this value
-func (r *OauthConnectionListParams) URLQuery() (v url.Values) {
+func (r OauthConnectionListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

@@ -13,6 +13,6 @@ type DocumentNewParams struct {
 // MarshalJSON serializes DocumentNewParams into an array of bytes using the gjson
 // library. Members of the `jsonFields` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *DocumentNewParams) MarshalJSON() (data []byte, err error) {
+func (r DocumentNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }

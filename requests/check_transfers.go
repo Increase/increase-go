@@ -40,7 +40,7 @@ type CheckTransferNewParams struct {
 // MarshalJSON serializes CheckTransferNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
+func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -72,7 +72,7 @@ type CheckTransferListParams struct {
 
 // URLQuery serializes CheckTransferListParams into a url.Values of the query
 // parameters associated with this value
-func (r *CheckTransferListParams) URLQuery() (v url.Values) {
+func (r CheckTransferListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -93,6 +93,6 @@ type CheckTransferListParamsCreatedAt struct {
 
 // URLQuery serializes CheckTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

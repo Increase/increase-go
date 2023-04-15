@@ -21,7 +21,7 @@ type AccountStatementListParams struct {
 
 // URLQuery serializes AccountStatementListParams into a url.Values of the query
 // parameters associated with this value
-func (r *AccountStatementListParams) URLQuery() (v url.Values) {
+func (r AccountStatementListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -42,6 +42,6 @@ type AccountStatementListParamsStatementPeriodStart struct {
 
 // URLQuery serializes AccountStatementListParamsStatementPeriodStart into a
 // url.Values of the query parameters associated with this value
-func (r *AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values) {
+func (r AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

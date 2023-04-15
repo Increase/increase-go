@@ -24,7 +24,7 @@ type TransactionListParams struct {
 
 // URLQuery serializes TransactionListParams into a url.Values of the query
 // parameters associated with this value
-func (r *TransactionListParams) URLQuery() (v url.Values) {
+func (r TransactionListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -45,7 +45,7 @@ type TransactionListParamsCreatedAt struct {
 
 // URLQuery serializes TransactionListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -57,7 +57,7 @@ type TransactionListParamsCategory struct {
 
 // URLQuery serializes TransactionListParamsCategory into a url.Values of the query
 // parameters associated with this value
-func (r *TransactionListParamsCategory) URLQuery() (v url.Values) {
+func (r TransactionListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

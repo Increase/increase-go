@@ -22,7 +22,7 @@ type EventListParams struct {
 
 // URLQuery serializes EventListParams into a url.Values of the query parameters
 // associated with this value
-func (r *EventListParams) URLQuery() (v url.Values) {
+func (r EventListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -43,7 +43,7 @@ type EventListParamsCreatedAt struct {
 
 // URLQuery serializes EventListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *EventListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -55,7 +55,7 @@ type EventListParamsCategory struct {
 
 // URLQuery serializes EventListParamsCategory into a url.Values of the query
 // parameters associated with this value
-func (r *EventListParamsCategory) URLQuery() (v url.Values) {
+func (r EventListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

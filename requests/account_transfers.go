@@ -26,7 +26,7 @@ type AccountTransferNewParams struct {
 // MarshalJSON serializes AccountTransferNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *AccountTransferNewParams) MarshalJSON() (data []byte, err error) {
+func (r AccountTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -43,7 +43,7 @@ type AccountTransferListParams struct {
 
 // URLQuery serializes AccountTransferListParams into a url.Values of the query
 // parameters associated with this value
-func (r *AccountTransferListParams) URLQuery() (v url.Values) {
+func (r AccountTransferListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -64,6 +64,6 @@ type AccountTransferListParamsCreatedAt struct {
 
 // URLQuery serializes AccountTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *AccountTransferListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r AccountTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

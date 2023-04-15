@@ -26,7 +26,7 @@ type CheckDepositNewParams struct {
 // MarshalJSON serializes CheckDepositNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
+func (r CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -43,7 +43,7 @@ type CheckDepositListParams struct {
 
 // URLQuery serializes CheckDepositListParams into a url.Values of the query
 // parameters associated with this value
-func (r *CheckDepositListParams) URLQuery() (v url.Values) {
+func (r CheckDepositListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -64,6 +64,6 @@ type CheckDepositListParamsCreatedAt struct {
 
 // URLQuery serializes CheckDepositListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r CheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

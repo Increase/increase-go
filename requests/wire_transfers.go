@@ -39,7 +39,7 @@ type WireTransferNewParams struct {
 // MarshalJSON serializes WireTransferNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *WireTransferNewParams) MarshalJSON() (data []byte, err error) {
+func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -58,7 +58,7 @@ type WireTransferListParams struct {
 
 // URLQuery serializes WireTransferListParams into a url.Values of the query
 // parameters associated with this value
-func (r *WireTransferListParams) URLQuery() (v url.Values) {
+func (r WireTransferListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -79,6 +79,6 @@ type WireTransferListParamsCreatedAt struct {
 
 // URLQuery serializes WireTransferListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

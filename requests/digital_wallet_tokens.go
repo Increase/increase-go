@@ -21,7 +21,7 @@ type DigitalWalletTokenListParams struct {
 
 // URLQuery serializes DigitalWalletTokenListParams into a url.Values of the query
 // parameters associated with this value
-func (r *DigitalWalletTokenListParams) URLQuery() (v url.Values) {
+func (r DigitalWalletTokenListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -42,6 +42,6 @@ type DigitalWalletTokenListParamsCreatedAt struct {
 
 // URLQuery serializes DigitalWalletTokenListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

@@ -23,7 +23,7 @@ type DeclinedTransactionListParams struct {
 
 // URLQuery serializes DeclinedTransactionListParams into a url.Values of the query
 // parameters associated with this value
-func (r *DeclinedTransactionListParams) URLQuery() (v url.Values) {
+func (r DeclinedTransactionListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -44,6 +44,6 @@ type DeclinedTransactionListParamsCreatedAt struct {
 
 // URLQuery serializes DeclinedTransactionListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *DeclinedTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r DeclinedTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

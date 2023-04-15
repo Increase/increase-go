@@ -19,7 +19,7 @@ type CardProfileNewParams struct {
 // MarshalJSON serializes CardProfileNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardProfileNewParams) MarshalJSON() (data []byte, err error) {
+func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -62,7 +62,7 @@ type CardProfileListParams struct {
 
 // URLQuery serializes CardProfileListParams into a url.Values of the query
 // parameters associated with this value
-func (r *CardProfileListParams) URLQuery() (v url.Values) {
+func (r CardProfileListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -74,7 +74,7 @@ type CardProfileListParamsStatus struct {
 
 // URLQuery serializes CardProfileListParamsStatus into a url.Values of the query
 // parameters associated with this value
-func (r *CardProfileListParamsStatus) URLQuery() (v url.Values) {
+func (r CardProfileListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

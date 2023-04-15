@@ -23,7 +23,7 @@ type FileNewParams struct {
 	Purpose field.Field[FileNewParamsPurpose] `form:"purpose,required"`
 }
 
-func (r *FileNewParams) MarshalMultipart() (data []byte, err error) {
+func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
 	body := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(body)
 	defer writer.Close()
@@ -81,7 +81,7 @@ type FileListParams struct {
 
 // URLQuery serializes FileListParams into a url.Values of the query parameters
 // associated with this value
-func (r *FileListParams) URLQuery() (v url.Values) {
+func (r FileListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -102,7 +102,7 @@ type FileListParamsCreatedAt struct {
 
 // URLQuery serializes FileListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *FileListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r FileListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -114,7 +114,7 @@ type FileListParamsPurpose struct {
 
 // URLQuery serializes FileListParamsPurpose into a url.Values of the query
 // parameters associated with this value
-func (r *FileListParamsPurpose) URLQuery() (v url.Values) {
+func (r FileListParamsPurpose) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

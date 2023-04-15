@@ -17,7 +17,7 @@ type CardAuthorizeParams struct {
 // MarshalJSON serializes CardAuthorizeParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardAuthorizeParams) MarshalJSON() (data []byte, err error) {
+func (r CardAuthorizeParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -35,6 +35,6 @@ type CardSettlementParams struct {
 // MarshalJSON serializes CardSettlementParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardSettlementParams) MarshalJSON() (data []byte, err error) {
+func (r CardSettlementParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }

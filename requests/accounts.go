@@ -23,7 +23,7 @@ type AccountNewParams struct {
 // MarshalJSON serializes AccountNewParams into an array of bytes using the gjson
 // library. Members of the `jsonFields` field are serialized into the top-level,
 // and will overwrite known members of the same name.
-func (r *AccountNewParams) MarshalJSON() (data []byte, err error) {
+func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -35,7 +35,7 @@ type AccountUpdateParams struct {
 // MarshalJSON serializes AccountUpdateParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *AccountUpdateParams) MarshalJSON() (data []byte, err error) {
+func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -53,7 +53,7 @@ type AccountListParams struct {
 
 // URLQuery serializes AccountListParams into a url.Values of the query parameters
 // associated with this value
-func (r *AccountListParams) URLQuery() (v url.Values) {
+func (r AccountListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

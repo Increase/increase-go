@@ -20,7 +20,7 @@ type InboundACHTransferReturnNewParams struct {
 // MarshalJSON serializes InboundACHTransferReturnNewParams into an array of bytes
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
-func (r *InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {
+func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -47,6 +47,6 @@ type InboundACHTransferReturnListParams struct {
 
 // URLQuery serializes InboundACHTransferReturnListParams into a url.Values of the
 // query parameters associated with this value
-func (r *InboundACHTransferReturnListParams) URLQuery() (v url.Values) {
+func (r InboundACHTransferReturnListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

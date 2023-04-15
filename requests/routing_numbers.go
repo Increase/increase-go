@@ -19,6 +19,6 @@ type RoutingNumberListParams struct {
 
 // URLQuery serializes RoutingNumberListParams into a url.Values of the query
 // parameters associated with this value
-func (r *RoutingNumberListParams) URLQuery() (v url.Values) {
+func (r RoutingNumberListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

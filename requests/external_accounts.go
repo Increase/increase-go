@@ -23,7 +23,7 @@ type ExternalAccountNewParams struct {
 // MarshalJSON serializes ExternalAccountNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
+func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -45,7 +45,7 @@ type ExternalAccountUpdateParams struct {
 // MarshalJSON serializes ExternalAccountUpdateParams into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
+func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -67,7 +67,7 @@ type ExternalAccountListParams struct {
 
 // URLQuery serializes ExternalAccountListParams into a url.Values of the query
 // parameters associated with this value
-func (r *ExternalAccountListParams) URLQuery() (v url.Values) {
+func (r ExternalAccountListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -79,7 +79,7 @@ type ExternalAccountListParamsStatus struct {
 
 // URLQuery serializes ExternalAccountListParamsStatus into a url.Values of the
 // query parameters associated with this value
-func (r *ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
+func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

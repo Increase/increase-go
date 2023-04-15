@@ -22,7 +22,7 @@ type DocumentListParams struct {
 
 // URLQuery serializes DocumentListParams into a url.Values of the query parameters
 // associated with this value
-func (r *DocumentListParams) URLQuery() (v url.Values) {
+func (r DocumentListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -34,7 +34,7 @@ type DocumentListParamsCategory struct {
 
 // URLQuery serializes DocumentListParamsCategory into a url.Values of the query
 // parameters associated with this value
-func (r *DocumentListParamsCategory) URLQuery() (v url.Values) {
+func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -61,6 +61,6 @@ type DocumentListParamsCreatedAt struct {
 
 // URLQuery serializes DocumentListParamsCreatedAt into a url.Values of the query
 // parameters associated with this value
-func (r *DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

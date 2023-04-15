@@ -42,7 +42,7 @@ type ACHPrenotificationNewParams struct {
 // MarshalJSON serializes ACHPrenotificationNewParams into an array of bytes using
 // the gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
+func (r ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -72,7 +72,7 @@ type ACHPrenotificationListParams struct {
 
 // URLQuery serializes ACHPrenotificationListParams into a url.Values of the query
 // parameters associated with this value
-func (r *ACHPrenotificationListParams) URLQuery() (v url.Values) {
+func (r ACHPrenotificationListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -93,6 +93,6 @@ type ACHPrenotificationListParamsCreatedAt struct {
 
 // URLQuery serializes ACHPrenotificationListParamsCreatedAt into a url.Values of
 // the query parameters associated with this value
-func (r *ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

@@ -17,6 +17,6 @@ type InboundWireDrawdownRequestListParams struct {
 
 // URLQuery serializes InboundWireDrawdownRequestListParams into a url.Values of
 // the query parameters associated with this value
-func (r *InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
+func (r InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }

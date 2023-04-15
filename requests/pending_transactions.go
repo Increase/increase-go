@@ -24,7 +24,7 @@ type PendingTransactionListParams struct {
 
 // URLQuery serializes PendingTransactionListParams into a url.Values of the query
 // parameters associated with this value
-func (r *PendingTransactionListParams) URLQuery() (v url.Values) {
+func (r PendingTransactionListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -36,7 +36,7 @@ type PendingTransactionListParamsStatus struct {
 
 // URLQuery serializes PendingTransactionListParamsStatus into a url.Values of the
 // query parameters associated with this value
-func (r *PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
+func (r PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 

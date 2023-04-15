@@ -20,7 +20,7 @@ type CardDisputeNewParams struct {
 // MarshalJSON serializes CardDisputeNewParams into an array of bytes using the
 // gjson library. Members of the `jsonFields` field are serialized into the
 // top-level, and will overwrite known members of the same name.
-func (r *CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
+func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
@@ -36,7 +36,7 @@ type CardDisputeListParams struct {
 
 // URLQuery serializes CardDisputeListParams into a url.Values of the query
 // parameters associated with this value
-func (r *CardDisputeListParams) URLQuery() (v url.Values) {
+func (r CardDisputeListParams) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -57,7 +57,7 @@ type CardDisputeListParamsCreatedAt struct {
 
 // URLQuery serializes CardDisputeListParamsCreatedAt into a url.Values of the
 // query parameters associated with this value
-func (r *CardDisputeListParamsCreatedAt) URLQuery() (v url.Values) {
+func (r CardDisputeListParamsCreatedAt) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
@@ -69,7 +69,7 @@ type CardDisputeListParamsStatus struct {
 
 // URLQuery serializes CardDisputeListParamsStatus into a url.Values of the query
 // parameters associated with this value
-func (r *CardDisputeListParamsStatus) URLQuery() (v url.Values) {
+func (r CardDisputeListParamsStatus) URLQuery() (v url.Values) {
 	return query.Marshal(r)
 }
 
