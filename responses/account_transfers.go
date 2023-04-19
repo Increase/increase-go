@@ -30,8 +30,6 @@ type AccountTransfer struct {
 	Network AccountTransferNetwork `json:"network,required"`
 	// The lifecycle status of the transfer.
 	Status AccountTransferStatus `json:"status,required"`
-	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID string `json:"template_id,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was approved,
@@ -57,7 +55,6 @@ type AccountTransferJSON struct {
 	Description              pjson.Metadata
 	Network                  pjson.Metadata
 	Status                   pjson.Metadata
-	TemplateID               pjson.Metadata
 	TransactionID            pjson.Metadata
 	Approval                 pjson.Metadata
 	Cancellation             pjson.Metadata
@@ -93,23 +90,24 @@ const (
 type AccountTransferStatus string
 
 const (
-	AccountTransferStatusPendingSubmission AccountTransferStatus = "pending_submission"
-	AccountTransferStatusPendingApproval   AccountTransferStatus = "pending_approval"
-	AccountTransferStatusCanceled          AccountTransferStatus = "canceled"
-	AccountTransferStatusRequiresAttention AccountTransferStatus = "requires_attention"
-	AccountTransferStatusFlaggedByOperator AccountTransferStatus = "flagged_by_operator"
-	AccountTransferStatusComplete          AccountTransferStatus = "complete"
+	AccountTransferStatusPendingApproval AccountTransferStatus = "pending_approval"
+	AccountTransferStatusCanceled        AccountTransferStatus = "canceled"
+	AccountTransferStatusComplete        AccountTransferStatus = "complete"
 )
 
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	// If the Transfer was approved by a user in the dashboard, the email address of
+	// that user.
+	ApprovedBy string `json:"approved_by,required,nullable"`
 	JSON       AccountTransferApprovalJSON
 }
 
 type AccountTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	ApprovedBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
@@ -125,11 +123,15 @@ type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	// If the Transfer was canceled by a user in the dashboard, the email address of
+	// that user.
+	CanceledBy string `json:"canceled_by,required,nullable"`
 	JSON       AccountTransferCancellationJSON
 }
 
 type AccountTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	CanceledBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }

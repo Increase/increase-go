@@ -44,7 +44,7 @@ func TestEntitiesGet(t *testing.T) {
 
 func TestEntitiesListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Entities.List(context.TODO(), &requests.EntityListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
+	_, err := c.Entities.List(context.TODO(), &requests.EntityListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), CreatedAt: increase.F(requests.EntityListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

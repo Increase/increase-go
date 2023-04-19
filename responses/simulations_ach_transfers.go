@@ -143,6 +143,9 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement ACHTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	// A Card Revenue Payment object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_revenue_payment`.
+	CardRevenuePayment ACHTransferSimulationTransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance ACHTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
@@ -168,6 +171,9 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
 	EmpyrealCashDeposit ACHTransferSimulationTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit,required,nullable"`
+	// A Fee Payment object. This field will be present in the JSON response if and
+	// only if `category` is equal to `fee_payment`.
+	FeePayment ACHTransferSimulationTransactionSourceFeePayment `json:"fee_payment,required,nullable"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer ACHTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
@@ -207,6 +213,10 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
 	CardRouteSettlement ACHTransferSimulationTransactionSourceCardRouteSettlement `json:"card_route_settlement,required,nullable"`
+	// A Real Time Payments Transfer Acknowledgement object. This field will be present
+	// in the JSON response if and only if `category` is equal to
+	// `real_time_payments_transfer_acknowledgement`.
+	RealTimePaymentsTransferAcknowledgement ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
 	SampleFunds ACHTransferSimulationTransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
@@ -238,6 +248,7 @@ type ACHTransferSimulationTransactionSourceJSON struct {
 	CardDisputeAcceptance                       pjson.Metadata
 	CardRefund                                  pjson.Metadata
 	CardSettlement                              pjson.Metadata
+	CardRevenuePayment                          pjson.Metadata
 	CheckDepositAcceptance                      pjson.Metadata
 	CheckDepositReturn                          pjson.Metadata
 	CheckTransferIntention                      pjson.Metadata
@@ -246,6 +257,7 @@ type ACHTransferSimulationTransactionSourceJSON struct {
 	CheckTransferStopPaymentRequest             pjson.Metadata
 	DisputeResolution                           pjson.Metadata
 	EmpyrealCashDeposit                         pjson.Metadata
+	FeePayment                                  pjson.Metadata
 	InboundACHTransfer                          pjson.Metadata
 	InboundCheck                                pjson.Metadata
 	InboundInternationalACHTransfer             pjson.Metadata
@@ -258,6 +270,7 @@ type ACHTransferSimulationTransactionSourceJSON struct {
 	InternalSource                              pjson.Metadata
 	CardRouteRefund                             pjson.Metadata
 	CardRouteSettlement                         pjson.Metadata
+	RealTimePaymentsTransferAcknowledgement     pjson.Metadata
 	SampleFunds                                 pjson.Metadata
 	WireDrawdownPaymentIntention                pjson.Metadata
 	WireDrawdownPaymentRejection                pjson.Metadata
@@ -286,6 +299,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
 	ACHTransferSimulationTransactionSourceCategoryCardRefund                                  ACHTransferSimulationTransactionSourceCategory = "card_refund"
 	ACHTransferSimulationTransactionSourceCategoryCardSettlement                              ACHTransferSimulationTransactionSourceCategory = "card_settlement"
+	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment                          ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
 	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
 	ACHTransferSimulationTransactionSourceCategoryCheckDepositReturn                          ACHTransferSimulationTransactionSourceCategory = "check_deposit_return"
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
@@ -294,6 +308,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
 	ACHTransferSimulationTransactionSourceCategoryDisputeResolution                           ACHTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	ACHTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         ACHTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
+	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"
 	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer                          ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
 	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
 	ACHTransferSimulationTransactionSourceCategoryInboundCheck                                ACHTransferSimulationTransactionSourceCategory = "inbound_check"
@@ -525,7 +540,7 @@ type ACHTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          ACHTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
 }
 
@@ -545,6 +560,8 @@ func (r *ACHTransferSimulationTransactionSourceCardDisputeAcceptance) UnmarshalJ
 }
 
 type ACHTransferSimulationTransactionSourceCardRefund struct {
+	// The Card Refund identifier.
+	ID string `json:"id,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -553,6 +570,16 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	Currency ACHTransferSimulationTransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The identifier for the Transaction this refunds, if any.
 	CardSettlementTransactionID string `json:"card_settlement_transaction_id,required,nullable"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type ACHTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
@@ -560,9 +587,15 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 }
 
 type ACHTransferSimulationTransactionSourceCardRefundJSON struct {
+	ID                          pjson.Metadata
 	Amount                      pjson.Metadata
 	Currency                    pjson.Metadata
 	CardSettlementTransactionID pjson.Metadata
+	MerchantCity                pjson.Metadata
+	MerchantState               pjson.Metadata
+	MerchantCountry             pjson.Metadata
+	MerchantName                pjson.Metadata
+	MerchantCategoryCode        pjson.Metadata
 	Type                        pjson.Metadata
 	Raw                         []byte
 	Extras                      map[string]pjson.Metadata
@@ -593,6 +626,11 @@ const (
 )
 
 type ACHTransferSimulationTransactionSourceCardSettlement struct {
+	// The Card Settlement identifier.
+	ID string `json:"id,required"`
+	// The Card Authorization that was created prior to this Card Settlement, if on
+	// exists.
+	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -603,12 +641,17 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	PresentmentAmount int64 `json:"presentment_amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency  string `json:"presentment_currency,required"`
-	MerchantCity         string `json:"merchant_city,required,nullable"`
-	MerchantCountry      string `json:"merchant_country,required"`
-	MerchantName         string `json:"merchant_name,required,nullable"`
+	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
-	MerchantState        string `json:"merchant_state,required,nullable"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -618,15 +661,17 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 }
 
 type ACHTransferSimulationTransactionSourceCardSettlementJSON struct {
+	ID                   pjson.Metadata
+	CardAuthorization    pjson.Metadata
 	Amount               pjson.Metadata
 	Currency             pjson.Metadata
 	PresentmentAmount    pjson.Metadata
 	PresentmentCurrency  pjson.Metadata
 	MerchantCity         pjson.Metadata
+	MerchantState        pjson.Metadata
 	MerchantCountry      pjson.Metadata
 	MerchantName         pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
-	MerchantState        pjson.Metadata
 	PendingTransactionID pjson.Metadata
 	Type                 pjson.Metadata
 	Raw                  []byte
@@ -655,6 +700,50 @@ type ACHTransferSimulationTransactionSourceCardSettlementType string
 
 const (
 	ACHTransferSimulationTransactionSourceCardSettlementTypeCardSettlement ACHTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
+)
+
+type ACHTransferSimulationTransactionSourceCardRevenuePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The account the card belonged to.
+	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
+	JSON                  ACHTransferSimulationTransactionSourceCardRevenuePaymentJSON
+}
+
+type ACHTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                pjson.Metadata
+	Currency              pjson.Metadata
+	PeriodStart           pjson.Metadata
+	PeriodEnd             pjson.Metadata
+	TransactedOnAccountID pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceCardRevenuePayment using the internal
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+func (r *ACHTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
+
+const (
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyCad ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyChf ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyEur ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyGbp ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyJpy ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
@@ -976,6 +1065,41 @@ type ACHTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
 func (r *ACHTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
 }
+
+type ACHTransferSimulationTransactionSourceFeePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency ACHTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
+	JSON     ACHTransferSimulationTransactionSourceFeePaymentJSON
+}
+
+type ACHTransferSimulationTransactionSourceFeePaymentJSON struct {
+	Amount   pjson.Metadata
+	Currency pjson.Metadata
+	Raw      []byte
+	Extras   map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceFeePayment using the internal pjson
+// library. Unrecognized fields are stored in the `jsonFields` property.
+func (r *ACHTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type ACHTransferSimulationTransactionSourceFeePaymentCurrency string
+
+const (
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyCad ACHTransferSimulationTransactionSourceFeePaymentCurrency = "CAD"
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyChf ACHTransferSimulationTransactionSourceFeePaymentCurrency = "CHF"
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyEur ACHTransferSimulationTransactionSourceFeePaymentCurrency = "EUR"
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyGbp ACHTransferSimulationTransactionSourceFeePaymentCurrency = "GBP"
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyJpy ACHTransferSimulationTransactionSourceFeePaymentCurrency = "JPY"
+	ACHTransferSimulationTransactionSourceFeePaymentCurrencyUsd ACHTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
+)
 
 type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
@@ -1585,6 +1709,38 @@ const (
 	ACHTransferSimulationTransactionSourceCardRouteSettlementCurrencyUsd ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
+type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// The destination account number.
+	DestinationAccountNumber string `json:"destination_account_number,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	DestinationRoutingNumber string `json:"destination_routing_number,required"`
+	// Unstructured information that will show on the recipient's bank statement.
+	RemittanceInformation string `json:"remittance_information,required"`
+	// The identifier of the Real Time Payments Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+}
+
+type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
+	Amount                   pjson.Metadata
+	DestinationAccountNumber pjson.Metadata
+	DestinationRoutingNumber pjson.Metadata
+	RemittanceInformation    pjson.Metadata
+	TransferID               pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
 type ACHTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator string `json:"originator,required"`
@@ -1883,11 +2039,12 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
@@ -2030,17 +2187,18 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive               ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds           ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit               ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
 type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
@@ -2083,6 +2241,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
 )
 
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

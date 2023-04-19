@@ -12,9 +12,12 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestCardsAuthorizeWithOptionalParams(t *testing.T) {
+func TestProgramsGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.Cards.Authorize(context.TODO(), &requests.CardAuthorizeParams{Amount: increase.F(int64(1000)), CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), DigitalWalletTokenID: increase.F("string"), EventSubscriptionID: increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g")})
+	_, err := c.Programs.Get(
+		context.TODO(),
+		"program_i2v2os4mwza1oetokh9i",
+	)
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -25,9 +28,9 @@ func TestCardsAuthorizeWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestCardsSettlementWithOptionalParams(t *testing.T) {
+func TestProgramsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.Cards.Settlement(context.TODO(), &requests.CardSettlementParams{CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"), Amount: increase.F(int64(1))})
+	_, err := c.Programs.List(context.TODO(), &requests.ProgramListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

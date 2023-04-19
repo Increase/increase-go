@@ -66,7 +66,7 @@ type CardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          CardDisputeAcceptanceJSON
 }
 

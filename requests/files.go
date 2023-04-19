@@ -66,6 +66,7 @@ const (
 	FileNewParamsPurposeTrustFormationDocument     FileNewParamsPurpose = "trust_formation_document"
 	FileNewParamsPurposeDigitalWalletArtwork       FileNewParamsPurpose = "digital_wallet_artwork"
 	FileNewParamsPurposeDigitalWalletAppIcon       FileNewParamsPurpose = "digital_wallet_app_icon"
+	FileNewParamsPurposeDocumentRequest            FileNewParamsPurpose = "document_request"
 	FileNewParamsPurposeEntitySupplementalDocument FileNewParamsPurpose = "entity_supplemental_document"
 )
 
@@ -107,8 +108,8 @@ func (r FileListParamsCreatedAt) URLQuery() (v url.Values) {
 }
 
 type FileListParamsPurpose struct {
-	// Return results whose value is in the provided list. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	// Filter Files for those with the specified purpose or purposes. For GET requests,
+	// this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 	In field.Field[[]FileListParamsPurposeIn] `query:"in"`
 }
 
@@ -131,6 +132,7 @@ const (
 	FileListParamsPurposeInTrustFormationDocument     FileListParamsPurposeIn = "trust_formation_document"
 	FileListParamsPurposeInDigitalWalletArtwork       FileListParamsPurposeIn = "digital_wallet_artwork"
 	FileListParamsPurposeInDigitalWalletAppIcon       FileListParamsPurposeIn = "digital_wallet_app_icon"
+	FileListParamsPurposeInDocumentRequest            FileListParamsPurposeIn = "document_request"
 	FileListParamsPurposeInEntitySupplementalDocument FileListParamsPurposeIn = "entity_supplemental_document"
 	FileListParamsPurposeInExport                     FileListParamsPurposeIn = "export"
 )

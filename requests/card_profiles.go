@@ -67,8 +67,9 @@ func (r CardProfileListParams) URLQuery() (v url.Values) {
 }
 
 type CardProfileListParamsStatus struct {
-	// Return results whose value is in the provided list. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	// Filter Card Profiles for those with the specified status or statuses. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
 	In field.Field[[]CardProfileListParamsStatusIn] `query:"in"`
 }
 

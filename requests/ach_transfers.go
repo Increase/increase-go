@@ -21,7 +21,7 @@ type ACHTransferNewParams struct {
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
 	Amount field.Field[int64] `json:"amount,required"`
-	// The description of the date of the transfer, usually in the format `YYYYMMDD`.
+	// The description of the date of the transfer, usually in the format `YYMMDD`.
 	// This is included in the transfer data sent to the receiving bank.
 	CompanyDescriptiveDate field.Field[string] `json:"company_descriptive_date"`
 	// The data you choose to associate with the transfer. This is included in the

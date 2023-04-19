@@ -7,9 +7,6 @@ import (
 )
 
 type Account struct {
-	// The Account's balances in the minor unit of its currency. For dollars, for
-	// example, these values will represent cents.
-	Balances AccountBalances `json:"balances,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -40,7 +37,6 @@ type Account struct {
 }
 
 type AccountJSON struct {
-	Balances              pjson.Metadata
 	CreatedAt             pjson.Metadata
 	Currency              pjson.Metadata
 	EntityID              pjson.Metadata
@@ -58,30 +54,6 @@ type AccountJSON struct {
 // UnmarshalJSON deserializes the provided bytes into Account using the internal
 // pjson library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Account) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
-}
-
-type AccountBalances struct {
-	// The Account's current balance, representing the sum of all posted Transactions
-	// on the Account.
-	CurrentBalance int64 `json:"current_balance,required"`
-	// The Account's available balance, representing the current balance less any open
-	// Pending Transactions on the Account.
-	AvailableBalance int64 `json:"available_balance,required"`
-	JSON             AccountBalancesJSON
-}
-
-type AccountBalancesJSON struct {
-	CurrentBalance   pjson.Metadata
-	AvailableBalance pjson.Metadata
-	Raw              []byte
-	Extras           map[string]pjson.Metadata
-}
-
-// UnmarshalJSON deserializes the provided bytes into AccountBalances using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
-// property.
-func (r *AccountBalances) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
 }
 

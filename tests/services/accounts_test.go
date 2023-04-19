@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http/httputil"
 	"testing"
+	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
@@ -60,7 +61,7 @@ func TestAccountsUpdateWithOptionalParams(t *testing.T) {
 
 func TestAccountsListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(requests.AccountListParamsStatusOpen)})
+	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(requests.AccountListParamsStatusOpen), CreatedAt: increase.F(requests.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

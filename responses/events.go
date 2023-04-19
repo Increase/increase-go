@@ -57,6 +57,8 @@ const (
 	EventCategoryACHTransferUpdated                                   EventCategory = "ach_transfer.updated"
 	EventCategoryCardCreated                                          EventCategory = "card.created"
 	EventCategoryCardUpdated                                          EventCategory = "card.updated"
+	EventCategoryCardPaymentCreated                                   EventCategory = "card_payment.created"
+	EventCategoryCardPaymentUpdated                                   EventCategory = "card_payment.updated"
 	EventCategoryCardDisputeCreated                                   EventCategory = "card_dispute.created"
 	EventCategoryCardDisputeUpdated                                   EventCategory = "card_dispute.updated"
 	EventCategoryCheckDepositCreated                                  EventCategory = "check_deposit.created"

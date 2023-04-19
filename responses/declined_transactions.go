@@ -184,11 +184,12 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	DeclinedTransactionSourceACHDeclineReasonDuplicateReturn              DeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	DeclinedTransactionSourceACHDeclineReasonEntityNotActive              DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	DeclinedTransactionSourceACHDeclineReasonGroupLocked                  DeclinedTransactionSourceACHDeclineReason = "group_locked"
 	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds            DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	DeclinedTransactionSourceACHDeclineReasonMisroutedReturn              DeclinedTransactionSourceACHDeclineReason = "misrouted_return"
 	DeclinedTransactionSourceACHDeclineReasonNoACHRoute                   DeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	DeclinedTransactionSourceACHDeclineReasonOriginatorRequest            DeclinedTransactionSourceACHDeclineReason = "originator_request"
+	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
 type DeclinedTransactionSourceCardDecline struct {
@@ -329,17 +330,18 @@ const (
 type DeclinedTransactionSourceCardDeclineReason string
 
 const (
-	DeclinedTransactionSourceCardDeclineReasonCardNotActive               DeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	DeclinedTransactionSourceCardDeclineReasonEntityNotActive             DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	DeclinedTransactionSourceCardDeclineReasonGroupLocked                 DeclinedTransactionSourceCardDeclineReason = "group_locked"
-	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds           DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	DeclinedTransactionSourceCardDeclineReasonBreachesLimit               DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined             DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	DeclinedTransactionSourceCardDeclineReasonCardNotActive                DeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	DeclinedTransactionSourceCardDeclineReasonEntityNotActive              DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceCardDeclineReasonGroupLocked                  DeclinedTransactionSourceCardDeclineReason = "group_locked"
+	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds            DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	DeclinedTransactionSourceCardDeclineReasonBreachesLimit                DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined              DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
 type DeclinedTransactionSourceCheckDecline struct {
@@ -382,6 +384,7 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  DeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	DeclinedTransactionSourceCheckDeclineReasonReturned              DeclinedTransactionSourceCheckDeclineReason = "returned"
 	DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  DeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized         DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
 )
 
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

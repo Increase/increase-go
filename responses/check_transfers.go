@@ -47,8 +47,6 @@ type CheckTransfer struct {
 	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
 	// After the transfer is submitted, this will contain supplemental details.
 	Submission CheckTransferSubmission `json:"submission,required,nullable"`
-	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID string `json:"template_id,required,nullable"`
 	// The ID for the transaction caused by the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// After a stop-payment is requested on the check, this will contain supplemental
@@ -85,7 +83,6 @@ type CheckTransferJSON struct {
 	Status             pjson.Metadata
 	SubmittedAt        pjson.Metadata
 	Submission         pjson.Metadata
-	TemplateID         pjson.Metadata
 	TransactionID      pjson.Metadata
 	StopPaymentRequest pjson.Metadata
 	Deposit            pjson.Metadata

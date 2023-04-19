@@ -48,8 +48,9 @@ func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
 }
 
 type EventListParamsCategory struct {
-	// Return results whose value is in the provided list. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	// Filter Events for those with the specified category or categories. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
 	In field.Field[[]EventListParamsCategoryIn] `query:"in"`
 }
 
@@ -75,6 +76,8 @@ const (
 	EventListParamsCategoryInACHTransferUpdated                                   EventListParamsCategoryIn = "ach_transfer.updated"
 	EventListParamsCategoryInCardCreated                                          EventListParamsCategoryIn = "card.created"
 	EventListParamsCategoryInCardUpdated                                          EventListParamsCategoryIn = "card.updated"
+	EventListParamsCategoryInCardPaymentCreated                                   EventListParamsCategoryIn = "card_payment.created"
+	EventListParamsCategoryInCardPaymentUpdated                                   EventListParamsCategoryIn = "card_payment.updated"
 	EventListParamsCategoryInCardDisputeCreated                                   EventListParamsCategoryIn = "card_dispute.created"
 	EventListParamsCategoryInCardDisputeUpdated                                   EventListParamsCategoryIn = "card_dispute.updated"
 	EventListParamsCategoryInCheckDepositCreated                                  EventListParamsCategoryIn = "check_deposit.created"

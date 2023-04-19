@@ -50,8 +50,6 @@ type WireTransfer struct {
 	// After the transfer is submitted to Fedwire, this will contain supplemental
 	// details.
 	Submission WireTransferSubmission `json:"submission,required,nullable"`
-	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID string `json:"template_id,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -80,7 +78,6 @@ type WireTransferJSON struct {
 	Network                 pjson.Metadata
 	Status                  pjson.Metadata
 	Submission              pjson.Metadata
-	TemplateID              pjson.Metadata
 	TransactionID           pjson.Metadata
 	Type                    pjson.Metadata
 	Raw                     []byte
@@ -109,11 +106,15 @@ type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	// If the Transfer was approved by a user in the dashboard, the email address of
+	// that user.
+	ApprovedBy string `json:"approved_by,required,nullable"`
 	JSON       WireTransferApprovalJSON
 }
 
 type WireTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	ApprovedBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
@@ -129,11 +130,15 @@ type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	// If the Transfer was canceled by a user in the dashboard, the email address of
+	// that user.
+	CanceledBy string `json:"canceled_by,required,nullable"`
 	JSON       WireTransferCancellationJSON
 }
 
 type WireTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	CanceledBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }

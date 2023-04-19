@@ -72,8 +72,9 @@ func (r ExternalAccountListParams) URLQuery() (v url.Values) {
 }
 
 type ExternalAccountListParamsStatus struct {
-	// Return results whose value is in the provided list. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	// Filter External Accounts for those with the specified status or statuses. For
+	// GET requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
 	In field.Field[[]ExternalAccountListParamsStatusIn] `query:"in"`
 }
 

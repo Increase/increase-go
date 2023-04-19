@@ -62,6 +62,7 @@ const (
 	FilePurposeTrustFormationDocument     FilePurpose = "trust_formation_document"
 	FilePurposeDigitalWalletArtwork       FilePurpose = "digital_wallet_artwork"
 	FilePurposeDigitalWalletAppIcon       FilePurpose = "digital_wallet_app_icon"
+	FilePurposeDocumentRequest            FilePurpose = "document_request"
 	FilePurposeEntitySupplementalDocument FilePurpose = "entity_supplemental_document"
 	FilePurposeExport                     FilePurpose = "export"
 )

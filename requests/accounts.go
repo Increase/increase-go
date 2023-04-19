@@ -2,6 +2,7 @@ package requests
 
 import (
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/core/field"
 	pjson "github.com/increase/increase-go/core/json"
@@ -48,7 +49,8 @@ type AccountListParams struct {
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID field.Field[string] `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status field.Field[AccountListParamsStatus] `query:"status"`
+	Status    field.Field[AccountListParamsStatus]    `query:"status"`
+	CreatedAt field.Field[AccountListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes AccountListParams into a url.Values of the query parameters
@@ -63,3 +65,24 @@ const (
 	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
 )
+
+type AccountListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After field.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes AccountListParamsCreatedAt into a url.Values of the query
+// parameters associated with this value
+func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
+	return query.Marshal(r)
+}

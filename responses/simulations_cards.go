@@ -47,6 +47,9 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	// Transcation's Account.
 	Currency CardAuthorizationSimulationPendingTransactionCurrency `json:"currency,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
+	// Transaction was completed.
+	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// For a Pending Transaction related to a transfer, this is the description you
@@ -77,6 +80,7 @@ type CardAuthorizationSimulationPendingTransactionJSON struct {
 	AccountID   pjson.Metadata
 	Amount      pjson.Metadata
 	Currency    pjson.Metadata
+	CompletedAt pjson.Metadata
 	CreatedAt   pjson.Metadata
 	Description pjson.Metadata
 	ID          pjson.Metadata
@@ -140,6 +144,10 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// A Deprecated Card Authorization object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_authorization`.
 	CardRouteAuthorization CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization `json:"card_route_authorization,required,nullable"`
+	// A Real Time Payments Transfer Instruction object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `real_time_payments_transfer_instruction`.
+	RealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
 	// A Wire Drawdown Payment Instruction object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `wire_drawdown_payment_instruction`.
@@ -151,18 +159,19 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceJSON struct {
-	Category                       pjson.Metadata
-	AccountTransferInstruction     pjson.Metadata
-	ACHTransferInstruction         pjson.Metadata
-	CardAuthorization              pjson.Metadata
-	CheckDepositInstruction        pjson.Metadata
-	CheckTransferInstruction       pjson.Metadata
-	InboundFundsHold               pjson.Metadata
-	CardRouteAuthorization         pjson.Metadata
-	WireDrawdownPaymentInstruction pjson.Metadata
-	WireTransferInstruction        pjson.Metadata
-	Raw                            []byte
-	Extras                         map[string]pjson.Metadata
+	Category                            pjson.Metadata
+	AccountTransferInstruction          pjson.Metadata
+	ACHTransferInstruction              pjson.Metadata
+	CardAuthorization                   pjson.Metadata
+	CheckDepositInstruction             pjson.Metadata
+	CheckTransferInstruction            pjson.Metadata
+	InboundFundsHold                    pjson.Metadata
+	CardRouteAuthorization              pjson.Metadata
+	RealTimePaymentsTransferInstruction pjson.Metadata
+	WireDrawdownPaymentInstruction      pjson.Metadata
+	WireTransferInstruction             pjson.Metadata
+	Raw                                 []byte
+	Extras                              map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -252,6 +261,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
+	// The Card Authorization identifier.
+	ID string `json:"id,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
@@ -280,10 +291,14 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON
+	// A constant representing the object's type. For this resource it will always be
+	// `card_authorization`.
+	Type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType `json:"type,required"`
+	JSON CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON struct {
+	ID                   pjson.Metadata
 	MerchantAcceptorID   pjson.Metadata
 	MerchantDescriptor   pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
@@ -295,6 +310,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 	Currency             pjson.Metadata
 	RealTimeDecisionID   pjson.Metadata
 	DigitalWalletTokenID pjson.Metadata
+	Type                 pjson.Metadata
 	Raw                  []byte
 	Extras               map[string]pjson.Metadata
 }
@@ -381,6 +397,12 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "GBP"
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "JPY"
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
+)
+
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationTypeCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
 
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction struct {
@@ -473,6 +495,9 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
+	// was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency `json:"currency,required"`
@@ -485,16 +510,20 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
 	// The ID of the Transaction for which funds were held.
 	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
-	JSON              CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
+	// The ID of the Pending Transaction representing the held funds.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	JSON                 CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
 }
 
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON struct {
 	Amount                  pjson.Metadata
+	CreatedAt               pjson.Metadata
 	Currency                pjson.Metadata
 	AutomaticallyReleasesAt pjson.Metadata
 	ReleasedAt              pjson.Metadata
 	Status                  pjson.Metadata
 	HeldTransactionID       pjson.Metadata
+	PendingTransactionID    pjson.Metadata
 	Raw                     []byte
 	Extras                  map[string]pjson.Metadata
 }
@@ -572,6 +601,31 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "JPY"
 	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "USD"
 )
+
+type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction struct {
+	// The pending amount in the minor unit of the transaction's currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Real Time Payments Transfer that led to this Pending
+	// Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON
+}
+
+type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON struct {
+	Amount     pjson.Metadata
+	TransferID pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
 
 type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -821,11 +875,12 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
@@ -969,17 +1024,18 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds           CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed       CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard         CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
@@ -1023,6 +1079,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
 )
 
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {

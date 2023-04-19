@@ -138,6 +138,9 @@ type WireTransferSimulationTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement WireTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	// A Card Revenue Payment object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_revenue_payment`.
+	CardRevenuePayment WireTransferSimulationTransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance WireTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
@@ -163,6 +166,9 @@ type WireTransferSimulationTransactionSource struct {
 	// A Empyreal Cash Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `empyreal_cash_deposit`.
 	EmpyrealCashDeposit WireTransferSimulationTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit,required,nullable"`
+	// A Fee Payment object. This field will be present in the JSON response if and
+	// only if `category` is equal to `fee_payment`.
+	FeePayment WireTransferSimulationTransactionSourceFeePayment `json:"fee_payment,required,nullable"`
 	// A Inbound ACH Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer WireTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
@@ -202,6 +208,10 @@ type WireTransferSimulationTransactionSource struct {
 	// A Deprecated Card Settlement object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_settlement`.
 	CardRouteSettlement WireTransferSimulationTransactionSourceCardRouteSettlement `json:"card_route_settlement,required,nullable"`
+	// A Real Time Payments Transfer Acknowledgement object. This field will be present
+	// in the JSON response if and only if `category` is equal to
+	// `real_time_payments_transfer_acknowledgement`.
+	RealTimePaymentsTransferAcknowledgement WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
 	SampleFunds WireTransferSimulationTransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
@@ -233,6 +243,7 @@ type WireTransferSimulationTransactionSourceJSON struct {
 	CardDisputeAcceptance                       pjson.Metadata
 	CardRefund                                  pjson.Metadata
 	CardSettlement                              pjson.Metadata
+	CardRevenuePayment                          pjson.Metadata
 	CheckDepositAcceptance                      pjson.Metadata
 	CheckDepositReturn                          pjson.Metadata
 	CheckTransferIntention                      pjson.Metadata
@@ -241,6 +252,7 @@ type WireTransferSimulationTransactionSourceJSON struct {
 	CheckTransferStopPaymentRequest             pjson.Metadata
 	DisputeResolution                           pjson.Metadata
 	EmpyrealCashDeposit                         pjson.Metadata
+	FeePayment                                  pjson.Metadata
 	InboundACHTransfer                          pjson.Metadata
 	InboundCheck                                pjson.Metadata
 	InboundInternationalACHTransfer             pjson.Metadata
@@ -253,6 +265,7 @@ type WireTransferSimulationTransactionSourceJSON struct {
 	InternalSource                              pjson.Metadata
 	CardRouteRefund                             pjson.Metadata
 	CardRouteSettlement                         pjson.Metadata
+	RealTimePaymentsTransferAcknowledgement     pjson.Metadata
 	SampleFunds                                 pjson.Metadata
 	WireDrawdownPaymentIntention                pjson.Metadata
 	WireDrawdownPaymentRejection                pjson.Metadata
@@ -281,6 +294,7 @@ const (
 	WireTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       WireTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
 	WireTransferSimulationTransactionSourceCategoryCardRefund                                  WireTransferSimulationTransactionSourceCategory = "card_refund"
 	WireTransferSimulationTransactionSourceCategoryCardSettlement                              WireTransferSimulationTransactionSourceCategory = "card_settlement"
+	WireTransferSimulationTransactionSourceCategoryCardRevenuePayment                          WireTransferSimulationTransactionSourceCategory = "card_revenue_payment"
 	WireTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      WireTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
 	WireTransferSimulationTransactionSourceCategoryCheckDepositReturn                          WireTransferSimulationTransactionSourceCategory = "check_deposit_return"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferIntention                      WireTransferSimulationTransactionSourceCategory = "check_transfer_intention"
@@ -289,6 +303,7 @@ const (
 	WireTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             WireTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
 	WireTransferSimulationTransactionSourceCategoryDisputeResolution                           WireTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	WireTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         WireTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
+	WireTransferSimulationTransactionSourceCategoryFeePayment                                  WireTransferSimulationTransactionSourceCategory = "fee_payment"
 	WireTransferSimulationTransactionSourceCategoryInboundACHTransfer                          WireTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
 	WireTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           WireTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
 	WireTransferSimulationTransactionSourceCategoryInboundCheck                                WireTransferSimulationTransactionSourceCategory = "inbound_check"
@@ -520,7 +535,7 @@ type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          WireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
 }
 
@@ -540,6 +555,8 @@ func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) Unmarshal
 }
 
 type WireTransferSimulationTransactionSourceCardRefund struct {
+	// The Card Refund identifier.
+	ID string `json:"id,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -548,6 +565,16 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 	Currency WireTransferSimulationTransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The identifier for the Transaction this refunds, if any.
 	CardSettlementTransactionID string `json:"card_settlement_transaction_id,required,nullable"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type WireTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
@@ -555,9 +582,15 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 }
 
 type WireTransferSimulationTransactionSourceCardRefundJSON struct {
+	ID                          pjson.Metadata
 	Amount                      pjson.Metadata
 	Currency                    pjson.Metadata
 	CardSettlementTransactionID pjson.Metadata
+	MerchantCity                pjson.Metadata
+	MerchantState               pjson.Metadata
+	MerchantCountry             pjson.Metadata
+	MerchantName                pjson.Metadata
+	MerchantCategoryCode        pjson.Metadata
 	Type                        pjson.Metadata
 	Raw                         []byte
 	Extras                      map[string]pjson.Metadata
@@ -588,6 +621,11 @@ const (
 )
 
 type WireTransferSimulationTransactionSourceCardSettlement struct {
+	// The Card Settlement identifier.
+	ID string `json:"id,required"`
+	// The Card Authorization that was created prior to this Card Settlement, if on
+	// exists.
+	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -598,12 +636,17 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	PresentmentAmount int64 `json:"presentment_amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency  string `json:"presentment_currency,required"`
-	MerchantCity         string `json:"merchant_city,required,nullable"`
-	MerchantCountry      string `json:"merchant_country,required"`
-	MerchantName         string `json:"merchant_name,required,nullable"`
+	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
-	MerchantState        string `json:"merchant_state,required,nullable"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -613,15 +656,17 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 }
 
 type WireTransferSimulationTransactionSourceCardSettlementJSON struct {
+	ID                   pjson.Metadata
+	CardAuthorization    pjson.Metadata
 	Amount               pjson.Metadata
 	Currency             pjson.Metadata
 	PresentmentAmount    pjson.Metadata
 	PresentmentCurrency  pjson.Metadata
 	MerchantCity         pjson.Metadata
+	MerchantState        pjson.Metadata
 	MerchantCountry      pjson.Metadata
 	MerchantName         pjson.Metadata
 	MerchantCategoryCode pjson.Metadata
-	MerchantState        pjson.Metadata
 	PendingTransactionID pjson.Metadata
 	Type                 pjson.Metadata
 	Raw                  []byte
@@ -650,6 +695,50 @@ type WireTransferSimulationTransactionSourceCardSettlementType string
 
 const (
 	WireTransferSimulationTransactionSourceCardSettlementTypeCardSettlement WireTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
+)
+
+type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The account the card belonged to.
+	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
+	JSON                  WireTransferSimulationTransactionSourceCardRevenuePaymentJSON
+}
+
+type WireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                pjson.Metadata
+	Currency              pjson.Metadata
+	PeriodStart           pjson.Metadata
+	PeriodEnd             pjson.Metadata
+	TransactedOnAccountID pjson.Metadata
+	Raw                   []byte
+	Extras                map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceCardRevenuePayment using the internal
+// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+func (r *WireTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
+
+const (
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyCad WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyChf WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyEur WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyGbp WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyJpy WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
@@ -971,6 +1060,41 @@ type WireTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
 func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
 }
+
+type WireTransferSimulationTransactionSourceFeePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency WireTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
+	JSON     WireTransferSimulationTransactionSourceFeePaymentJSON
+}
+
+type WireTransferSimulationTransactionSourceFeePaymentJSON struct {
+	Amount   pjson.Metadata
+	Currency pjson.Metadata
+	Raw      []byte
+	Extras   map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceFeePayment using the internal pjson
+// library. Unrecognized fields are stored in the `jsonFields` property.
+func (r *WireTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type WireTransferSimulationTransactionSourceFeePaymentCurrency string
+
+const (
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyCad WireTransferSimulationTransactionSourceFeePaymentCurrency = "CAD"
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyChf WireTransferSimulationTransactionSourceFeePaymentCurrency = "CHF"
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyEur WireTransferSimulationTransactionSourceFeePaymentCurrency = "EUR"
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyGbp WireTransferSimulationTransactionSourceFeePaymentCurrency = "GBP"
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyJpy WireTransferSimulationTransactionSourceFeePaymentCurrency = "JPY"
+	WireTransferSimulationTransactionSourceFeePaymentCurrencyUsd WireTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
+)
 
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
@@ -1579,6 +1703,38 @@ const (
 	WireTransferSimulationTransactionSourceCardRouteSettlementCurrencyJpy WireTransferSimulationTransactionSourceCardRouteSettlementCurrency = "JPY"
 	WireTransferSimulationTransactionSourceCardRouteSettlementCurrencyUsd WireTransferSimulationTransactionSourceCardRouteSettlementCurrency = "USD"
 )
+
+type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// The destination account number.
+	DestinationAccountNumber string `json:"destination_account_number,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	DestinationRoutingNumber string `json:"destination_routing_number,required"`
+	// Unstructured information that will show on the recipient's bank statement.
+	RemittanceInformation string `json:"remittance_information,required"`
+	// The identifier of the Real Time Payments Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+}
+
+type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
+	Amount                   pjson.Metadata
+	DestinationAccountNumber pjson.Metadata
+	DestinationRoutingNumber pjson.Metadata
+	RemittanceInformation    pjson.Metadata
+	TransferID               pjson.Metadata
+	Raw                      []byte
+	Extras                   map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
 
 type WireTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.

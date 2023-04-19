@@ -49,8 +49,6 @@ type ACHTransfer struct {
 	// After the transfer is submitted to FedACH, this will contain supplemental
 	// details.
 	Submission ACHTransferSubmission `json:"submission,required,nullable"`
-	// If the transfer was created from a template, this will be the template's ID.
-	TemplateID string `json:"template_id,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The description of the date of the transfer.
@@ -97,7 +95,6 @@ type ACHTransferJSON struct {
 	StatementDescriptor      pjson.Metadata
 	Status                   pjson.Metadata
 	Submission               pjson.Metadata
-	TemplateID               pjson.Metadata
 	TransactionID            pjson.Metadata
 	CompanyDescriptiveDate   pjson.Metadata
 	CompanyDiscretionaryData pjson.Metadata
@@ -135,11 +132,15 @@ type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	// If the Transfer was approved by a user in the dashboard, the email address of
+	// that user.
+	ApprovedBy string `json:"approved_by,required,nullable"`
 	JSON       ACHTransferApprovalJSON
 }
 
 type ACHTransferApprovalJSON struct {
 	ApprovedAt pjson.Metadata
+	ApprovedBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
@@ -155,11 +156,15 @@ type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	// If the Transfer was canceled by a user in the dashboard, the email address of
+	// that user.
+	CanceledBy string `json:"canceled_by,required,nullable"`
 	JSON       ACHTransferCancellationJSON
 }
 
 type ACHTransferCancellationJSON struct {
 	CanceledAt pjson.Metadata
+	CanceledBy pjson.Metadata
 	Raw        []byte
 	Extras     map[string]pjson.Metadata
 }
@@ -265,6 +270,7 @@ type ACHTransferStatus string
 const (
 	ACHTransferStatusPendingApproval   ACHTransferStatus = "pending_approval"
 	ACHTransferStatusCanceled          ACHTransferStatus = "canceled"
+	ACHTransferStatusPendingReviewing  ACHTransferStatus = "pending_reviewing"
 	ACHTransferStatusPendingSubmission ACHTransferStatus = "pending_submission"
 	ACHTransferStatusSubmitted         ACHTransferStatus = "submitted"
 	ACHTransferStatusReturned          ACHTransferStatus = "returned"
