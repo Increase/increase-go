@@ -924,19 +924,27 @@ const (
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID string `json:"transfer_id,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// If available, a document with additional information about the return.
 	FileID string `json:"file_id,required,nullable"`
 	// The reason why the check was returned.
 	Reason InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason `json:"reason,required"`
-	JSON   InterestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON
+	// The identifier of the Transaction that was created to credit you for the
+	// returned check.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          InterestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON struct {
-	TransferID pjson.Metadata
-	FileID     pjson.Metadata
-	Reason     pjson.Metadata
-	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	TransferID    pjson.Metadata
+	ReturnedAt    pjson.Metadata
+	FileID        pjson.Metadata
+	Reason        pjson.Metadata
+	TransactionID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
@@ -1427,6 +1435,9 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaym
 type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the reversal was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The description on the reversal message from Fedwire.
 	Description string `json:"description,required"`
 	// The Fedwire cycle date for the wire reversal.
@@ -1450,11 +1461,14 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
 	// Additional financial institution information included in the wire reversal.
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
-	JSON                                                  InterestPaymentSimulationResultTransactionSourceInboundWireReversalJSON
+	// The ID for the Transaction associated with the transfer reversal.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          InterestPaymentSimulationResultTransactionSourceInboundWireReversalJSON
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireReversalJSON struct {
 	Amount                                                pjson.Metadata
+	CreatedAt                                             pjson.Metadata
 	Description                                           pjson.Metadata
 	InputCycleDate                                        pjson.Metadata
 	InputSequenceNumber                                   pjson.Metadata
@@ -1466,6 +1480,7 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversalJSON str
 	PreviousMessageInputSource                            pjson.Metadata
 	ReceiverFinancialInstitutionInformation               pjson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation pjson.Metadata
+	TransactionID                                         pjson.Metadata
 	Raw                                                   []byte
 	Extras                                                map[string]pjson.Metadata
 }

@@ -12,6 +12,12 @@ type RealTimePaymentsTransfer struct {
 	Type RealTimePaymentsTransferType `json:"type,required"`
 	// The Real Time Payments Transfer's identifier.
 	ID string `json:"id,required"`
+	// If your account requires approvals for transfers and the transfer was approved,
+	// this will contain details of the approval.
+	Approval RealTimePaymentsTransferApproval `json:"approval,required,nullable"`
+	// If your account requires approvals for transfers and the transfer was not
+	// approved, this will contain details of the cancellation.
+	Cancellation RealTimePaymentsTransferCancellation `json:"cancellation,required,nullable"`
 	// The lifecycle status of the transfer.
 	Status RealTimePaymentsTransferStatus `json:"status,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -51,6 +57,8 @@ type RealTimePaymentsTransfer struct {
 type RealTimePaymentsTransferJSON struct {
 	Type                     pjson.Metadata
 	ID                       pjson.Metadata
+	Approval                 pjson.Metadata
+	Cancellation             pjson.Metadata
 	Status                   pjson.Metadata
 	CreatedAt                pjson.Metadata
 	AccountID                pjson.Metadata
@@ -82,6 +90,54 @@ const (
 	RealTimePaymentsTransferTypeRealTimePaymentsTransfer RealTimePaymentsTransferType = "real_time_payments_transfer"
 )
 
+type RealTimePaymentsTransferApproval struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was approved.
+	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	// If the Transfer was approved by a user in the dashboard, the email address of
+	// that user.
+	ApprovedBy string `json:"approved_by,required,nullable"`
+	JSON       RealTimePaymentsTransferApprovalJSON
+}
+
+type RealTimePaymentsTransferApprovalJSON struct {
+	ApprovedAt pjson.Metadata
+	ApprovedBy pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimePaymentsTransferApproval using the internal pjson library. Unrecognized
+// fields are stored in the `jsonFields` property.
+func (r *RealTimePaymentsTransferApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type RealTimePaymentsTransferCancellation struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Transfer was canceled.
+	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	// If the Transfer was canceled by a user in the dashboard, the email address of
+	// that user.
+	CanceledBy string `json:"canceled_by,required,nullable"`
+	JSON       RealTimePaymentsTransferCancellationJSON
+}
+
+type RealTimePaymentsTransferCancellationJSON struct {
+	CanceledAt pjson.Metadata
+	CanceledBy pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into
+// RealTimePaymentsTransferCancellation using the internal pjson library.
+// Unrecognized fields are stored in the `jsonFields` property.
+func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
 type RealTimePaymentsTransferStatus string
 
 const (
@@ -106,12 +162,16 @@ const (
 )
 
 type RealTimePaymentsTransferSubmission struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was submitted to The Clearing House.
+	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
 	// The Real Time Payments network identification of the transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      RealTimePaymentsTransferSubmissionJSON
 }
 
 type RealTimePaymentsTransferSubmissionJSON struct {
+	SubmittedAt               pjson.Metadata
 	TransactionIdentification pjson.Metadata
 	Raw                       []byte
 	Extras                    map[string]pjson.Metadata
@@ -125,6 +185,9 @@ func (r *RealTimePaymentsTransferSubmission) UnmarshalJSON(data []byte) (err err
 }
 
 type RealTimePaymentsTransferRejection struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was rejected.
+	RejectedAt time.Time `json:"rejected_at,required,nullable" format:"date-time"`
 	// The reason the transfer was rejected as provided by the recipient bank or the
 	// Real Time Payments network.
 	RejectReasonCode RealTimePaymentsTransferRejectionRejectReasonCode `json:"reject_reason_code,required"`
@@ -135,6 +198,7 @@ type RealTimePaymentsTransferRejection struct {
 }
 
 type RealTimePaymentsTransferRejectionJSON struct {
+	RejectedAt                        pjson.Metadata
 	RejectReasonCode                  pjson.Metadata
 	RejectReasonAdditionalInformation pjson.Metadata
 	Raw                               []byte

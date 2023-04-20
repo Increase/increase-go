@@ -11,6 +11,9 @@ type Increase struct {
 	Options                     []option.RequestOption
 	Accounts                    *services.AccountService
 	AccountNumbers              *services.AccountNumberService
+	BookkeepingAccounts         *services.BookkeepingAccountService
+	BookkeepingEntrySets        *services.BookkeepingEntrySetService
+	BookkeepingEntries          *services.BookkeepingEntryService
 	RealTimeDecisions           *services.RealTimeDecisionService
 	RealTimePaymentsTransfers   *services.RealTimePaymentsTransferService
 	BalanceLookups              *services.BalanceLookupService
@@ -61,6 +64,9 @@ func NewIncrease(opts ...option.RequestOption) (r *Increase) {
 
 	r.Accounts = services.NewAccountService(opts...)
 	r.AccountNumbers = services.NewAccountNumberService(opts...)
+	r.BookkeepingAccounts = services.NewBookkeepingAccountService(opts...)
+	r.BookkeepingEntrySets = services.NewBookkeepingEntrySetService(opts...)
+	r.BookkeepingEntries = services.NewBookkeepingEntryService(opts...)
 	r.RealTimeDecisions = services.NewRealTimeDecisionService(opts...)
 	r.RealTimePaymentsTransfers = services.NewRealTimePaymentsTransferService(opts...)
 	r.BalanceLookups = services.NewBalanceLookupService(opts...)

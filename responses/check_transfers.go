@@ -29,6 +29,12 @@ type CheckTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency CheckTransferCurrency `json:"currency,required"`
+	// If your account requires approvals for transfers and the transfer was approved,
+	// this will contain details of the approval.
+	Approval CheckTransferApproval `json:"approval,required,nullable"`
+	// If your account requires approvals for transfers and the transfer was not
+	// approved, this will contain details of the cancellation.
+	Cancellation CheckTransferCancellation `json:"cancellation,required,nullable"`
 	// The Check transfer's identifier.
 	ID string `json:"id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -75,6 +81,8 @@ type CheckTransferJSON struct {
 	Amount             pjson.Metadata
 	CreatedAt          pjson.Metadata
 	Currency           pjson.Metadata
+	Approval           pjson.Metadata
+	Cancellation       pjson.Metadata
 	ID                 pjson.Metadata
 	MailedAt           pjson.Metadata
 	Message            pjson.Metadata
@@ -144,12 +152,59 @@ const (
 	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
+type CheckTransferApproval struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was approved.
+	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	// If the Transfer was approved by a user in the dashboard, the email address of
+	// that user.
+	ApprovedBy string `json:"approved_by,required,nullable"`
+	JSON       CheckTransferApprovalJSON
+}
+
+type CheckTransferApprovalJSON struct {
+	ApprovedAt pjson.Metadata
+	ApprovedBy pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferApproval using
+// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// property.
+func (r *CheckTransferApproval) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
+type CheckTransferCancellation struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Transfer was canceled.
+	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	// If the Transfer was canceled by a user in the dashboard, the email address of
+	// that user.
+	CanceledBy string `json:"canceled_by,required,nullable"`
+	JSON       CheckTransferCancellationJSON
+}
+
+type CheckTransferCancellationJSON struct {
+	CanceledAt pjson.Metadata
+	CanceledBy pjson.Metadata
+	Raw        []byte
+	Extras     map[string]pjson.Metadata
+}
+
+// UnmarshalJSON deserializes the provided bytes into CheckTransferCancellation
+// using the internal pjson library. Unrecognized fields are stored in the
+// `jsonFields` property.
+func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
+	return pjson.UnmarshalRoot(data, r)
+}
+
 type CheckTransferStatus string
 
 const (
 	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	CheckTransferStatusSubmitting        CheckTransferStatus = "submitting"
 	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
 	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
 	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
@@ -162,12 +217,15 @@ const (
 )
 
 type CheckTransferSubmission struct {
+	// When this check transfer was submitted to our check printer.
+	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
 	// The identitying number of the check.
 	CheckNumber string `json:"check_number,required"`
 	JSON        CheckTransferSubmissionJSON
 }
 
 type CheckTransferSubmissionJSON struct {
+	SubmittedAt pjson.Metadata
 	CheckNumber pjson.Metadata
 	Raw         []byte
 	Extras      map[string]pjson.Metadata
@@ -216,6 +274,8 @@ const (
 )
 
 type CheckTransferDeposit struct {
+	// When the check was deposited.
+	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// The ID for the File containing the image of the rear of the check.
@@ -227,6 +287,7 @@ type CheckTransferDeposit struct {
 }
 
 type CheckTransferDepositJSON struct {
+	DepositedAt      pjson.Metadata
 	FrontImageFileID pjson.Metadata
 	BackImageFileID  pjson.Metadata
 	Type             pjson.Metadata
@@ -250,19 +311,27 @@ const (
 type CheckTransferReturnDetails struct {
 	// The identifier of the returned Check Transfer.
 	TransferID string `json:"transfer_id,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// If available, a document with additional information about the return.
 	FileID string `json:"file_id,required,nullable"`
 	// The reason why the check was returned.
 	Reason CheckTransferReturnDetailsReason `json:"reason,required"`
-	JSON   CheckTransferReturnDetailsJSON
+	// The identifier of the Transaction that was created to credit you for the
+	// returned check.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          CheckTransferReturnDetailsJSON
 }
 
 type CheckTransferReturnDetailsJSON struct {
-	TransferID pjson.Metadata
-	FileID     pjson.Metadata
-	Reason     pjson.Metadata
-	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	TransferID    pjson.Metadata
+	ReturnedAt    pjson.Metadata
+	FileID        pjson.Metadata
+	Reason        pjson.Metadata
+	TransactionID pjson.Metadata
+	Raw           []byte
+	Extras        map[string]pjson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferReturnDetails
