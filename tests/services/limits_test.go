@@ -12,7 +12,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestLimitsNewWithOptionalParams(t *testing.T) {
+func TestLimitNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.New(context.TODO(), &requests.LimitNewParams{Metric: increase.F(requests.LimitNewParamsMetricCount), Interval: increase.F(requests.LimitNewParamsIntervalTransaction), ModelID: increase.F("account_in71c4amph0vgo2qllky"), Value: increase.F(int64(1234))})
 	if err != nil {
@@ -25,7 +25,7 @@ func TestLimitsNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestLimitsGet(t *testing.T) {
+func TestLimitGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Get(
 		context.TODO(),
@@ -41,7 +41,7 @@ func TestLimitsGet(t *testing.T) {
 	}
 }
 
-func TestLimitsUpdate(t *testing.T) {
+func TestLimitUpdate(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Update(
 		context.TODO(),
@@ -58,7 +58,7 @@ func TestLimitsUpdate(t *testing.T) {
 	}
 }
 
-func TestLimitsListWithOptionalParams(t *testing.T) {
+func TestLimitListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.List(context.TODO(), &requests.LimitListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), ModelID: increase.F("x"), Status: increase.F("x")})
 	if err != nil {

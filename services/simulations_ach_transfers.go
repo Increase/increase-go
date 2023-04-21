@@ -9,12 +9,12 @@ import (
 	"github.com/increase/increase-go/responses"
 )
 
-type SimulationsACHTransferService struct {
+type SimulationACHTransferService struct {
 	Options []option.RequestOption
 }
 
-func NewSimulationsACHTransferService(opts ...option.RequestOption) (r *SimulationsACHTransferService) {
-	r = &SimulationsACHTransferService{}
+func NewSimulationACHTransferService(opts ...option.RequestOption) (r *SimulationACHTransferService) {
+	r = &SimulationACHTransferService{}
 	r.Options = opts
 	return
 }
@@ -25,7 +25,7 @@ func NewSimulationsACHTransferService(opts ...option.RequestOption) (r *Simulati
 // positive or negative. The result of calling this API will be either a
 // [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
 // depending on whether or not the transfer is allowed.
-func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *requests.ACHTransferNewInboundParams, opts ...option.RequestOption) (res *responses.ACHTransferSimulation, err error) {
+func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body *requests.SimulationACHTransferNewInboundParams, opts ...option.RequestOption) (res *responses.ACHTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_ach_transfers"
 	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -35,7 +35,7 @@ func (r *SimulationsACHTransferService) NewInbound(ctx context.Context, body *re
 // Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
-func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *requests.ACHTransferReturnParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
+func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *requests.SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id)
 	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
@@ -48,7 +48,7 @@ func (r *SimulationsACHTransferService) Return(ctx context.Context, ach_transfer
 // Federal Reserve three times per day on weekdays. Since sandbox ACH Transfers are
 // not submitted to the Federal Reserve, this endpoint allows you to skip that
 // delay and transition the ACH Transfer to a status of `submitted`.
-func (r *SimulationsACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
+func (r *SimulationACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id)
 	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)

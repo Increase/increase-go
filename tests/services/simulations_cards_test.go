@@ -12,12 +12,9 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestOauthConnectionGet(t *testing.T) {
+func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.OauthConnections.Get(
-		context.TODO(),
-		"connection_dauknoksyr4wilz4e6my",
-	)
+	_, err := c.Simulations.Cards.Authorize(context.TODO(), &requests.SimulationCardAuthorizeParams{Amount: increase.F(int64(1000)), CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), DigitalWalletTokenID: increase.F("string"), EventSubscriptionID: increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -28,9 +25,9 @@ func TestOauthConnectionGet(t *testing.T) {
 	}
 }
 
-func TestOauthConnectionListWithOptionalParams(t *testing.T) {
+func TestSimulationCardSettlementWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.OauthConnections.List(context.TODO(), &requests.OauthConnectionListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
+	_, err := c.Simulations.Cards.Settlement(context.TODO(), &requests.SimulationCardSettlementParams{CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"), Amount: increase.F(int64(1))})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

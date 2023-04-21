@@ -5,7 +5,7 @@ import (
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type ACHTransferNewInboundParams struct {
+type SimulationACHTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
 	AccountNumberID field.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
@@ -24,50 +24,50 @@ type ACHTransferNewInboundParams struct {
 	CompanyID field.Field[string] `json:"company_id"`
 }
 
-// MarshalJSON serializes ACHTransferNewInboundParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r ACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationACHTransferNewInboundParams into an array of
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r SimulationACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-type ACHTransferReturnParams struct {
+type SimulationACHTransferReturnParams struct {
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
-	Reason field.Field[ACHTransferReturnParamsReason] `json:"reason"`
+	Reason field.Field[SimulationACHTransferReturnParamsReason] `json:"reason"`
 }
 
-// MarshalJSON serializes ACHTransferReturnParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r ACHTransferReturnParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationACHTransferReturnParams into an array of bytes
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-type ACHTransferReturnParamsReason string
+type SimulationACHTransferReturnParamsReason string
 
 const (
-	ACHTransferReturnParamsReasonInsufficientFund                                          ACHTransferReturnParamsReason = "insufficient_fund"
-	ACHTransferReturnParamsReasonNoAccount                                                 ACHTransferReturnParamsReason = "no_account"
-	ACHTransferReturnParamsReasonAccountClosed                                             ACHTransferReturnParamsReason = "account_closed"
-	ACHTransferReturnParamsReasonInvalidAccountNumberStructure                             ACHTransferReturnParamsReason = "invalid_account_number_structure"
-	ACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction              ACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
-	ACHTransferReturnParamsReasonCreditEntryRefusedByReceiver                              ACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
-	ACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   ACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	ACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized                     ACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
-	ACHTransferReturnParamsReasonPaymentStopped                                            ACHTransferReturnParamsReason = "payment_stopped"
-	ACHTransferReturnParamsReasonNonTransactionAccount                                     ACHTransferReturnParamsReason = "non_transaction_account"
-	ACHTransferReturnParamsReasonUncollectedFunds                                          ACHTransferReturnParamsReason = "uncollected_funds"
-	ACHTransferReturnParamsReasonRoutingNumberCheckDigitError                              ACHTransferReturnParamsReason = "routing_number_check_digit_error"
-	ACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	ACHTransferReturnParamsReasonAmountFieldError                                          ACHTransferReturnParamsReason = "amount_field_error"
-	ACHTransferReturnParamsReasonAuthorizationRevokedByCustomer                            ACHTransferReturnParamsReason = "authorization_revoked_by_customer"
-	ACHTransferReturnParamsReasonInvalidACHRoutingNumber                                   ACHTransferReturnParamsReason = "invalid_ach_routing_number"
-	ACHTransferReturnParamsReasonFileRecordEditCriteria                                    ACHTransferReturnParamsReason = "file_record_edit_criteria"
-	ACHTransferReturnParamsReasonEnrInvalidIndividualName                                  ACHTransferReturnParamsReason = "enr_invalid_individual_name"
-	ACHTransferReturnParamsReasonReturnedPerOdfiRequest                                    ACHTransferReturnParamsReason = "returned_per_odfi_request"
-	ACHTransferReturnParamsReasonAddendaError                                              ACHTransferReturnParamsReason = "addenda_error"
-	ACHTransferReturnParamsReasonLimitedParticipationDfi                                   ACHTransferReturnParamsReason = "limited_participation_dfi"
-	ACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment              ACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
-	ACHTransferReturnParamsReasonOther                                                     ACHTransferReturnParamsReason = "other"
+	SimulationACHTransferReturnParamsReasonInsufficientFund                                          SimulationACHTransferReturnParamsReason = "insufficient_fund"
+	SimulationACHTransferReturnParamsReasonNoAccount                                                 SimulationACHTransferReturnParamsReason = "no_account"
+	SimulationACHTransferReturnParamsReasonAccountClosed                                             SimulationACHTransferReturnParamsReason = "account_closed"
+	SimulationACHTransferReturnParamsReasonInvalidAccountNumberStructure                             SimulationACHTransferReturnParamsReason = "invalid_account_number_structure"
+	SimulationACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction              SimulationACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
+	SimulationACHTransferReturnParamsReasonCreditEntryRefusedByReceiver                              SimulationACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
+	SimulationACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   SimulationACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	SimulationACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized                     SimulationACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
+	SimulationACHTransferReturnParamsReasonPaymentStopped                                            SimulationACHTransferReturnParamsReason = "payment_stopped"
+	SimulationACHTransferReturnParamsReasonNonTransactionAccount                                     SimulationACHTransferReturnParamsReason = "non_transaction_account"
+	SimulationACHTransferReturnParamsReasonUncollectedFunds                                          SimulationACHTransferReturnParamsReason = "uncollected_funds"
+	SimulationACHTransferReturnParamsReasonRoutingNumberCheckDigitError                              SimulationACHTransferReturnParamsReason = "routing_number_check_digit_error"
+	SimulationACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete SimulationACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	SimulationACHTransferReturnParamsReasonAmountFieldError                                          SimulationACHTransferReturnParamsReason = "amount_field_error"
+	SimulationACHTransferReturnParamsReasonAuthorizationRevokedByCustomer                            SimulationACHTransferReturnParamsReason = "authorization_revoked_by_customer"
+	SimulationACHTransferReturnParamsReasonInvalidACHRoutingNumber                                   SimulationACHTransferReturnParamsReason = "invalid_ach_routing_number"
+	SimulationACHTransferReturnParamsReasonFileRecordEditCriteria                                    SimulationACHTransferReturnParamsReason = "file_record_edit_criteria"
+	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualName                                  SimulationACHTransferReturnParamsReason = "enr_invalid_individual_name"
+	SimulationACHTransferReturnParamsReasonReturnedPerOdfiRequest                                    SimulationACHTransferReturnParamsReason = "returned_per_odfi_request"
+	SimulationACHTransferReturnParamsReasonAddendaError                                              SimulationACHTransferReturnParamsReason = "addenda_error"
+	SimulationACHTransferReturnParamsReasonLimitedParticipationDfi                                   SimulationACHTransferReturnParamsReason = "limited_participation_dfi"
+	SimulationACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment              SimulationACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
+	SimulationACHTransferReturnParamsReasonOther                                                     SimulationACHTransferReturnParamsReason = "other"
 )

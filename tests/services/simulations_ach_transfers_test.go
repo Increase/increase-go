@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http/httputil"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
@@ -13,9 +12,9 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
+func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.New(context.TODO(), &requests.RealTimePaymentsTransferNewParams{SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"), DestinationAccountNumber: increase.F("987654321"), DestinationRoutingNumber: increase.F("101050001"), ExternalAccountID: increase.F("string"), Amount: increase.F(int64(100)), CreditorName: increase.F("Ian Crease"), RemittanceInformation: increase.F("Invoice 29582"), RequireApproval: increase.F(true)})
+	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), &requests.SimulationACHTransferNewInboundParams{AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.F(int64(1000)), CompanyDescriptiveDate: increase.F("x"), CompanyDiscretionaryData: increase.F("x"), CompanyEntryDescription: increase.F("x"), CompanyName: increase.F("x"), CompanyID: increase.F("x")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {
@@ -26,11 +25,13 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestRealTimePaymentsTransferGet(t *testing.T) {
+func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
+	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.Get(
+	_, err := c.Simulations.ACHTransfers.Return(
 		context.TODO(),
-		"real_time_payments_transfer_iyuhl5kdn7ssmup83mvq",
+		"ach_transfer_uoxatyh3lt5evrsdvo7q",
+		&requests.SimulationACHTransferReturnParams{Reason: increase.F(requests.SimulationACHTransferReturnParamsReasonInsufficientFund)},
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -42,9 +43,13 @@ func TestRealTimePaymentsTransferGet(t *testing.T) {
 	}
 }
 
-func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
+func TestSimulationACHTransferSubmit(t *testing.T) {
+	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.List(context.TODO(), &requests.RealTimePaymentsTransferListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), ExternalAccountID: increase.F("string"), CreatedAt: increase.F(requests.RealTimePaymentsTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.Simulations.ACHTransfers.Submit(
+		context.TODO(),
+		"ach_transfer_uoxatyh3lt5evrsdvo7q",
+	)
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

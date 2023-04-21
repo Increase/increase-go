@@ -12,7 +12,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestEventSubscriptionsNewWithOptionalParams(t *testing.T) {
+func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.New(context.TODO(), &requests.EventSubscriptionNewParams{URL: increase.F("https://website.com/webhooks"), SharedSecret: increase.F("x"), SelectedEventCategory: increase.F(requests.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated)})
 	if err != nil {
@@ -25,7 +25,7 @@ func TestEventSubscriptionsNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestEventSubscriptionsGet(t *testing.T) {
+func TestEventSubscriptionGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.Get(
 		context.TODO(),
@@ -41,7 +41,7 @@ func TestEventSubscriptionsGet(t *testing.T) {
 	}
 }
 
-func TestEventSubscriptionsUpdateWithOptionalParams(t *testing.T) {
+func TestEventSubscriptionUpdateWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.Update(
 		context.TODO(),
@@ -58,7 +58,7 @@ func TestEventSubscriptionsUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestEventSubscriptionsListWithOptionalParams(t *testing.T) {
+func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.List(context.TODO(), &requests.EventSubscriptionListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
 	if err != nil {

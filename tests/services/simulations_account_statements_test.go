@@ -12,9 +12,9 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestDigitalWalletTokenRequestsNew(t *testing.T) {
+func TestSimulationAccountStatementNew(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.DigitalWalletTokenRequests.New(context.TODO(), &requests.DigitalWalletTokenRequestNewParams{CardID: increase.F("card_oubs0hwk5rn6knuecxg2")})
+	_, err := c.Simulations.AccountStatements.New(context.TODO(), &requests.SimulationAccountStatementNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

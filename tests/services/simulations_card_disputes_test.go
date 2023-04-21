@@ -12,9 +12,13 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestInterestPaymentsNew(t *testing.T) {
+func TestSimulationCardDisputeActionWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.InterestPayments.New(context.TODO(), &requests.InterestPaymentNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky"), Amount: increase.F(int64(1000))})
+	_, err := c.Simulations.CardDisputes.Action(
+		context.TODO(),
+		"card_dispute_h9sc95nbl1cgltpp7men",
+		&requests.SimulationCardDisputeActionParams{Status: increase.F(requests.SimulationCardDisputeActionParamsStatusAccepted), Explanation: increase.F("This was a valid recurring transaction")},
+	)
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

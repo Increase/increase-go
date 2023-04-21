@@ -8,18 +8,18 @@ import (
 	"github.com/increase/increase-go/responses"
 )
 
-type SimulationsDocumentService struct {
+type SimulationDocumentService struct {
 	Options []option.RequestOption
 }
 
-func NewSimulationsDocumentService(opts ...option.RequestOption) (r *SimulationsDocumentService) {
-	r = &SimulationsDocumentService{}
+func NewSimulationDocumentService(opts ...option.RequestOption) (r *SimulationDocumentService) {
+	r = &SimulationDocumentService{}
 	r.Options = opts
 	return
 }
 
 // Simulates an tax document being created for an account.
-func (r *SimulationsDocumentService) New(ctx context.Context, body *requests.DocumentNewParams, opts ...option.RequestOption) (res *responses.Document, err error) {
+func (r *SimulationDocumentService) New(ctx context.Context, body *requests.SimulationDocumentNewParams, opts ...option.RequestOption) (res *responses.Document, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/documents"
 	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)

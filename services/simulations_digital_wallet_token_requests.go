@@ -8,19 +8,19 @@ import (
 	"github.com/increase/increase-go/responses"
 )
 
-type SimulationsDigitalWalletTokenRequestService struct {
+type SimulationDigitalWalletTokenRequestService struct {
 	Options []option.RequestOption
 }
 
-func NewSimulationsDigitalWalletTokenRequestService(opts ...option.RequestOption) (r *SimulationsDigitalWalletTokenRequestService) {
-	r = &SimulationsDigitalWalletTokenRequestService{}
+func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption) (r *SimulationDigitalWalletTokenRequestService) {
+	r = &SimulationDigitalWalletTokenRequestService{}
 	r.Options = opts
 	return
 }
 
 // Simulates a user attempting add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
-func (r *SimulationsDigitalWalletTokenRequestService) New(ctx context.Context, body *requests.DigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *responses.DigitalWalletTokenRequestCreateResponse, err error) {
+func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body *requests.SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *responses.DigitalWalletTokenRequestCreateResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/digital_wallet_token_requests"
 	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)

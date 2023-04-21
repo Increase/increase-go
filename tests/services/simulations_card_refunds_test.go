@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http/httputil"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
@@ -13,9 +12,9 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
+func TestSimulationCardRefundNew(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingEntrySets.New(context.TODO(), &requests.BookkeepingEntrySetNewParams{Date: increase.F(time.Now()), TransactionID: increase.F("string"), Entries: increase.F([]requests.BookkeepingEntrySetNewParamsEntries{})})
+	_, err := c.Simulations.CardRefunds.New(context.TODO(), &requests.SimulationCardRefundNewParams{TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi")})
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

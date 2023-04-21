@@ -5,7 +5,7 @@ import (
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type CardAuthorizeParams struct {
+type SimulationCardAuthorizeParams struct {
 	// The authorization amount in cents.
 	Amount field.Field[int64] `json:"amount,required"`
 	// The identifier of the Card to be authorized.
@@ -19,14 +19,14 @@ type CardAuthorizeParams struct {
 	EventSubscriptionID field.Field[string] `json:"event_subscription_id"`
 }
 
-// MarshalJSON serializes CardAuthorizeParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r CardAuthorizeParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationCardAuthorizeParams into an array of bytes
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r SimulationCardAuthorizeParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-type CardSettlementParams struct {
+type SimulationCardSettlementParams struct {
 	// The identifier of the Card to create a settlement on.
 	CardID field.Field[string] `json:"card_id,required"`
 	// The identifier of the Pending Transaction for the Card Authorization you wish to
@@ -37,9 +37,9 @@ type CardSettlementParams struct {
 	Amount field.Field[int64] `json:"amount"`
 }
 
-// MarshalJSON serializes CardSettlementParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r CardSettlementParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationCardSettlementParams into an array of bytes
+// using the gjson library. Members of the `jsonFields` field are serialized into
+// the top-level, and will overwrite known members of the same name.
+func (r SimulationCardSettlementParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }

@@ -5,7 +5,7 @@ import (
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type WireTransferNewInboundParams struct {
+type SimulationWireTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound Wire Transfer is for.
 	AccountNumberID field.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in cents. Must be positive.
@@ -51,9 +51,9 @@ type WireTransferNewInboundParams struct {
 	OriginatorToBeneficiaryInformationLine4 field.Field[string] `json:"originator_to_beneficiary_information_line4"`
 }
 
-// MarshalJSON serializes WireTransferNewInboundParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
-func (r WireTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationWireTransferNewInboundParams into an array of
+// bytes using the gjson library. Members of the `jsonFields` field are serialized
+// into the top-level, and will overwrite known members of the same name.
+func (r SimulationWireTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }

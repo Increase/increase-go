@@ -12,7 +12,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestExternalAccountsNewWithOptionalParams(t *testing.T) {
+func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ExternalAccounts.New(context.TODO(), &requests.ExternalAccountNewParams{RoutingNumber: increase.F("101050001"), AccountNumber: increase.F("987654321"), Funding: increase.F(requests.ExternalAccountNewParamsFundingChecking), Description: increase.F("Landlord")})
 	if err != nil {
@@ -25,7 +25,7 @@ func TestExternalAccountsNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestExternalAccountsGet(t *testing.T) {
+func TestExternalAccountGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ExternalAccounts.Get(
 		context.TODO(),
@@ -41,7 +41,7 @@ func TestExternalAccountsGet(t *testing.T) {
 	}
 }
 
-func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
+func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ExternalAccounts.Update(
 		context.TODO(),
@@ -58,7 +58,7 @@ func TestExternalAccountsUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestExternalAccountsListWithOptionalParams(t *testing.T) {
+func TestExternalAccountListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ExternalAccounts.List(context.TODO(), &requests.ExternalAccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(requests.ExternalAccountListParamsStatus{In: increase.F([]requests.ExternalAccountListParamsStatusIn{requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive, requests.ExternalAccountListParamsStatusInActive})})})
 	if err != nil {

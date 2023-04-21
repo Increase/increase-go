@@ -5,50 +5,51 @@ import (
 	pjson "github.com/increase/increase-go/core/json"
 )
 
-type RealTimePaymentsTransferCompleteParams struct {
+type SimulationRealTimePaymentsTransferCompleteParams struct {
 	// If set, the simulation will reject the transfer.
-	Rejection field.Field[RealTimePaymentsTransferCompleteParamsRejection] `json:"rejection"`
+	Rejection field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejection] `json:"rejection"`
 }
 
-// MarshalJSON serializes RealTimePaymentsTransferCompleteParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
-func (r RealTimePaymentsTransferCompleteParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationRealTimePaymentsTransferCompleteParams into an
+// array of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }
 
-type RealTimePaymentsTransferCompleteParamsRejection struct {
+type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
 	// The reason code that the simulated rejection will have.
-	RejectReasonCode field.Field[RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
+	RejectReasonCode field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
 }
 
-type RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
+type SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
 
 const (
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountClosed                                 RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_closed"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountBlocked                                RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_blocked"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountType                    RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_type"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountNumber                  RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_number"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeEndCustomerDeceased                           RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "end_customer_deceased"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeNarrative                                     RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "narrative"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionForbidden                          RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_forbidden"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionTypeNotSupported                   RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_type_not_supported"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnexpectedAmount                              RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unexpected_amount"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAmountExceedsBankLimits                       RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "amount_exceeds_bank_limits"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAddress                        RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_address"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnknownEndCustomer                            RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unknown_end_customer"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidDebtorAddress                          RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_debtor_address"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTimeout                                       RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "timeout"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnsupportedMessageForRecipient                RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unsupported_message_for_recipient"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRecipientConnectionNotAvailable               RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "recipient_connection_not_available"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRealTimePaymentsSuspended                     RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "real_time_payments_suspended"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInstructedAgentSignedOff                      RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "instructed_agent_signed_off"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeProcessingError                               RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "processing_error"
-	RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeOther                                         RealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "other"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountClosed                                 SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_closed"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountBlocked                                SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_blocked"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountType                    SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_type"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountNumber                  SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_number"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeEndCustomerDeceased                           SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "end_customer_deceased"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeNarrative                                     SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "narrative"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionForbidden                          SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_forbidden"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionTypeNotSupported                   SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_type_not_supported"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnexpectedAmount                              SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unexpected_amount"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAmountExceedsBankLimits                       SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "amount_exceeds_bank_limits"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAddress                        SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_address"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnknownEndCustomer                            SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unknown_end_customer"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidDebtorAddress                          SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_debtor_address"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTimeout                                       SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "timeout"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnsupportedMessageForRecipient                SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unsupported_message_for_recipient"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRecipientConnectionNotAvailable               SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "recipient_connection_not_available"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRealTimePaymentsSuspended                     SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "real_time_payments_suspended"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInstructedAgentSignedOff                      SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "instructed_agent_signed_off"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeProcessingError                               SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "processing_error"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeOther                                         SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "other"
 )
 
-type RealTimePaymentsTransferNewInboundParams struct {
+type SimulationRealTimePaymentsTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound Real Time Payments Transfer is
 	// for.
 	AccountNumberID field.Field[string] `json:"account_number_id,required"`
@@ -66,9 +67,10 @@ type RealTimePaymentsTransferNewInboundParams struct {
 	RemittanceInformation field.Field[string] `json:"remittance_information"`
 }
 
-// MarshalJSON serializes RealTimePaymentsTransferNewInboundParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
-func (r RealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
+// MarshalJSON serializes SimulationRealTimePaymentsTransferNewInboundParams into
+// an array of bytes using the gjson library. Members of the `jsonFields` field are
+// serialized into the top-level, and will overwrite known members of the same
+// name.
+func (r SimulationRealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return pjson.MarshalRoot(r)
 }

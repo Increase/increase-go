@@ -12,7 +12,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestBookkeepingEntriesListWithOptionalParams(t *testing.T) {
+func TestBookkeepingEntryListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.BookkeepingEntries.List(context.TODO(), &requests.BookkeepingEntryListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
 	if err != nil {

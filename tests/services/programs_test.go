@@ -12,7 +12,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestProgramsGet(t *testing.T) {
+func TestProgramGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Programs.Get(
 		context.TODO(),
@@ -28,7 +28,7 @@ func TestProgramsGet(t *testing.T) {
 	}
 }
 
-func TestProgramsListWithOptionalParams(t *testing.T) {
+func TestProgramListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Programs.List(context.TODO(), &requests.ProgramListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
 	if err != nil {

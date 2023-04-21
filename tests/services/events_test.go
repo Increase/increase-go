@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestEventsGet(t *testing.T) {
+func TestEventGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Events.Get(
 		context.TODO(),
@@ -29,7 +29,7 @@ func TestEventsGet(t *testing.T) {
 	}
 }
 
-func TestEventsListWithOptionalParams(t *testing.T) {
+func TestEventListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Events.List(context.TODO(), &requests.EventListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AssociatedObjectID: increase.F("string"), CreatedAt: increase.F(requests.EventListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}), Category: increase.F(requests.EventListParamsCategory{In: increase.F([]requests.EventListParamsCategoryIn{requests.EventListParamsCategoryInAccountCreated, requests.EventListParamsCategoryInAccountCreated, requests.EventListParamsCategoryInAccountCreated})})})
 	if err != nil {

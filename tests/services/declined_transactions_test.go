@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestDeclinedTransactionsGet(t *testing.T) {
+func TestDeclinedTransactionGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.DeclinedTransactions.Get(
 		context.TODO(),
@@ -29,7 +29,7 @@ func TestDeclinedTransactionsGet(t *testing.T) {
 	}
 }
 
-func TestDeclinedTransactionsListWithOptionalParams(t *testing.T) {
+func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.DeclinedTransactions.List(context.TODO(), &requests.DeclinedTransactionListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), RouteID: increase.F("string"), CreatedAt: increase.F(requests.DeclinedTransactionListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {

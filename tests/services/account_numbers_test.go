@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestAccountNumbersNew(t *testing.T) {
+func TestAccountNumberNew(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.New(context.TODO(), &requests.AccountNumberNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky"), Name: increase.F("Rent payments")})
 	if err != nil {
@@ -26,7 +26,7 @@ func TestAccountNumbersNew(t *testing.T) {
 	}
 }
 
-func TestAccountNumbersGet(t *testing.T) {
+func TestAccountNumberGet(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.Get(
 		context.TODO(),
@@ -42,7 +42,7 @@ func TestAccountNumbersGet(t *testing.T) {
 	}
 }
 
-func TestAccountNumbersUpdateWithOptionalParams(t *testing.T) {
+func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.Update(
 		context.TODO(),
@@ -59,7 +59,7 @@ func TestAccountNumbersUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestAccountNumbersListWithOptionalParams(t *testing.T) {
+func TestAccountNumberListWithOptionalParams(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.List(context.TODO(), &requests.AccountNumberListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(requests.AccountNumberListParamsStatusActive), AccountID: increase.F("string"), CreatedAt: increase.F(requests.AccountNumberListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {

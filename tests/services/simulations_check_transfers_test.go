@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http/httputil"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
@@ -13,24 +12,11 @@ import (
 	"github.com/increase/increase-go/requests"
 )
 
-func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
+func TestSimulationCheckTransferDeposit(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.New(context.TODO(), &requests.RealTimePaymentsTransferNewParams{SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"), DestinationAccountNumber: increase.F("987654321"), DestinationRoutingNumber: increase.F("101050001"), ExternalAccountID: increase.F("string"), Amount: increase.F(int64(100)), CreditorName: increase.F("Ian Crease"), RemittanceInformation: increase.F("Invoice 29582"), RequireApproval: increase.F(true)})
-	if err != nil {
-		var apiError core.APIError
-		if errors.As(err, &apiError) {
-			body, _ := httputil.DumpRequest(apiError.Request(), true)
-			println(string(body))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestRealTimePaymentsTransferGet(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.Get(
+	_, err := c.Simulations.CheckTransfers.Deposit(
 		context.TODO(),
-		"real_time_payments_transfer_iyuhl5kdn7ssmup83mvq",
+		"check_transfer_30b43acfu9vw8fyc4f5",
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -42,9 +28,30 @@ func TestRealTimePaymentsTransferGet(t *testing.T) {
 	}
 }
 
-func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
+func TestSimulationCheckTransferMail(t *testing.T) {
+	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.List(context.TODO(), &requests.RealTimePaymentsTransferListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), ExternalAccountID: increase.F("string"), CreatedAt: increase.F(requests.RealTimePaymentsTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.Simulations.CheckTransfers.Mail(
+		context.TODO(),
+		"check_transfer_30b43acfu9vw8fyc4f5",
+	)
+	if err != nil {
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestSimulationCheckTransferReturn(t *testing.T) {
+	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Simulations.CheckTransfers.Return(
+		context.TODO(),
+		"check_transfer_30b43acfu9vw8fyc4f5",
+		&requests.SimulationCheckTransferReturnParams{Reason: increase.F(requests.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure)},
+	)
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

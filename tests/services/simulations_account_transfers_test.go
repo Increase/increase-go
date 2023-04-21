@@ -9,15 +9,14 @@ import (
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/option"
-	"github.com/increase/increase-go/requests"
 )
 
-func TestSupplementalDocumentsNew(t *testing.T) {
+func TestSimulationAccountTransferComplete(t *testing.T) {
+	t.Skip("Prism tests are broken")
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Entities.SupplementalDocuments.New(
+	_, err := c.Simulations.AccountTransfers.Complete(
 		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		&requests.SupplementalDocumentNewParams{FileID: increase.F("file_makxrc67oh9l6sg7w9yc")},
+		"account_transfer_7k9qe1ysdgqztnt63l7n",
 	)
 	if err != nil {
 		var apiError core.APIError

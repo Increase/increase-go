@@ -5,32 +5,18 @@ import (
 	"errors"
 	"net/http/httputil"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/option"
-	"github.com/increase/increase-go/requests"
 )
 
-func TestExportNewWithOptionalParams(t *testing.T) {
+func TestSimulationCheckDepositReject(t *testing.T) {
+	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Exports.New(context.TODO(), &requests.ExportNewParams{Category: increase.F(requests.ExportNewParamsCategoryTransactionCsv), TransactionCsv: increase.F(requests.ExportNewParamsTransactionCsv{AccountID: increase.F("account_in71c4amph0vgo2qllky"), CreatedAt: increase.F(requests.ExportNewParamsTransactionCsvCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})}), BalanceCsv: increase.F(requests.ExportNewParamsBalanceCsv{AccountID: increase.F("string"), CreatedAt: increase.F(requests.ExportNewParamsBalanceCsvCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})})
-	if err != nil {
-		var apiError core.APIError
-		if errors.As(err, &apiError) {
-			body, _ := httputil.DumpRequest(apiError.Request(), true)
-			println(string(body))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestExportGet(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Exports.Get(
+	_, err := c.Simulations.CheckDeposits.Reject(
 		context.TODO(),
-		"export_8s4m48qz3bclzje0zwh9",
+		"check_deposit_f06n9gpg7sxn8t19lfc1",
 	)
 	if err != nil {
 		var apiError core.APIError
@@ -42,9 +28,29 @@ func TestExportGet(t *testing.T) {
 	}
 }
 
-func TestExportListWithOptionalParams(t *testing.T) {
+func TestSimulationCheckDepositReturn(t *testing.T) {
 	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Exports.List(context.TODO(), &requests.ExportListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
+	_, err := c.Simulations.CheckDeposits.Return(
+		context.TODO(),
+		"check_deposit_f06n9gpg7sxn8t19lfc1",
+	)
+	if err != nil {
+		var apiError core.APIError
+		if errors.As(err, &apiError) {
+			body, _ := httputil.DumpRequest(apiError.Request(), true)
+			println(string(body))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestSimulationCheckDepositSubmit(t *testing.T) {
+	t.Skip("Prism incorrectly returns an invalid JSON error")
+	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Simulations.CheckDeposits.Submit(
+		context.TODO(),
+		"check_deposit_f06n9gpg7sxn8t19lfc1",
+	)
 	if err != nil {
 		var apiError core.APIError
 		if errors.As(err, &apiError) {

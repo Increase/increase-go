@@ -6,38 +6,38 @@ import (
 
 type SimulationService struct {
 	Options                     []option.RequestOption
-	AccountTransfers            *SimulationsAccountTransferService
-	AccountStatements           *SimulationsAccountStatementService
-	ACHTransfers                *SimulationsACHTransferService
-	CardDisputes                *SimulationsCardDisputeService
-	CardRefunds                 *SimulationsCardRefundService
-	CheckTransfers              *SimulationsCheckTransferService
-	Documents                   *SimulationsDocumentService
-	DigitalWalletTokenRequests  *SimulationsDigitalWalletTokenRequestService
-	CheckDeposits               *SimulationsCheckDepositService
-	InboundWireDrawdownRequests *SimulationsInboundWireDrawdownRequestService
-	InterestPayments            *SimulationsInterestPaymentService
-	WireTransfers               *SimulationsWireTransferService
-	Cards                       *SimulationsCardService
-	RealTimePaymentsTransfers   *SimulationsRealTimePaymentsTransferService
+	AccountTransfers            *SimulationAccountTransferService
+	AccountStatements           *SimulationAccountStatementService
+	ACHTransfers                *SimulationACHTransferService
+	CardDisputes                *SimulationCardDisputeService
+	CardRefunds                 *SimulationCardRefundService
+	CheckTransfers              *SimulationCheckTransferService
+	Documents                   *SimulationDocumentService
+	DigitalWalletTokenRequests  *SimulationDigitalWalletTokenRequestService
+	CheckDeposits               *SimulationCheckDepositService
+	InboundWireDrawdownRequests *SimulationInboundWireDrawdownRequestService
+	InterestPayments            *SimulationInterestPaymentService
+	WireTransfers               *SimulationWireTransferService
+	Cards                       *SimulationCardService
+	RealTimePaymentsTransfers   *SimulationRealTimePaymentsTransferService
 }
 
 func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r = &SimulationService{}
 	r.Options = opts
-	r.AccountTransfers = NewSimulationsAccountTransferService(opts...)
-	r.AccountStatements = NewSimulationsAccountStatementService(opts...)
-	r.ACHTransfers = NewSimulationsACHTransferService(opts...)
-	r.CardDisputes = NewSimulationsCardDisputeService(opts...)
-	r.CardRefunds = NewSimulationsCardRefundService(opts...)
-	r.CheckTransfers = NewSimulationsCheckTransferService(opts...)
-	r.Documents = NewSimulationsDocumentService(opts...)
-	r.DigitalWalletTokenRequests = NewSimulationsDigitalWalletTokenRequestService(opts...)
-	r.CheckDeposits = NewSimulationsCheckDepositService(opts...)
-	r.InboundWireDrawdownRequests = NewSimulationsInboundWireDrawdownRequestService(opts...)
-	r.InterestPayments = NewSimulationsInterestPaymentService(opts...)
-	r.WireTransfers = NewSimulationsWireTransferService(opts...)
-	r.Cards = NewSimulationsCardService(opts...)
-	r.RealTimePaymentsTransfers = NewSimulationsRealTimePaymentsTransferService(opts...)
+	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
+	r.AccountStatements = NewSimulationAccountStatementService(opts...)
+	r.ACHTransfers = NewSimulationACHTransferService(opts...)
+	r.CardDisputes = NewSimulationCardDisputeService(opts...)
+	r.CardRefunds = NewSimulationCardRefundService(opts...)
+	r.CheckTransfers = NewSimulationCheckTransferService(opts...)
+	r.Documents = NewSimulationDocumentService(opts...)
+	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
+	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
+	r.InboundWireDrawdownRequests = NewSimulationInboundWireDrawdownRequestService(opts...)
+	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
+	r.WireTransfers = NewSimulationWireTransferService(opts...)
+	r.Cards = NewSimulationCardService(opts...)
+	r.RealTimePaymentsTransfers = NewSimulationRealTimePaymentsTransferService(opts...)
 	return
 }

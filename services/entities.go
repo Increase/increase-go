@@ -12,13 +12,13 @@ import (
 
 type EntityService struct {
 	Options               []option.RequestOption
-	SupplementalDocuments *EntitiesSupplementalDocumentService
+	SupplementalDocuments *EntitySupplementalDocumentService
 }
 
 func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 	r = &EntityService{}
 	r.Options = opts
-	r.SupplementalDocuments = NewEntitiesSupplementalDocumentService(opts...)
+	r.SupplementalDocuments = NewEntitySupplementalDocumentService(opts...)
 	return
 }
 

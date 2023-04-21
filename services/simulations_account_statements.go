@@ -8,19 +8,19 @@ import (
 	"github.com/increase/increase-go/responses"
 )
 
-type SimulationsAccountStatementService struct {
+type SimulationAccountStatementService struct {
 	Options []option.RequestOption
 }
 
-func NewSimulationsAccountStatementService(opts ...option.RequestOption) (r *SimulationsAccountStatementService) {
-	r = &SimulationsAccountStatementService{}
+func NewSimulationAccountStatementService(opts ...option.RequestOption) (r *SimulationAccountStatementService) {
+	r = &SimulationAccountStatementService{}
 	r.Options = opts
 	return
 }
 
 // Simulates an [Account Statement](#account-statements) being created for an
 // account. In production, Account Statements are generated once per month.
-func (r *SimulationsAccountStatementService) New(ctx context.Context, body *requests.AccountStatementNewParams, opts ...option.RequestOption) (res *responses.AccountStatement, err error) {
+func (r *SimulationAccountStatementService) New(ctx context.Context, body *requests.SimulationAccountStatementNewParams, opts ...option.RequestOption) (res *responses.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/account_statements"
 	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
