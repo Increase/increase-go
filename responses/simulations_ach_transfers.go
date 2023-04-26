@@ -570,6 +570,9 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	Currency ACHTransferSimulationTransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The identifier for the Transaction this refunds, if any.
 	CardSettlementTransactionID string `json:"card_settlement_transaction_id,required,nullable"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The state the merchant resides in.
@@ -591,6 +594,7 @@ type ACHTransferSimulationTransactionSourceCardRefundJSON struct {
 	Amount                      pjson.Metadata
 	Currency                    pjson.Metadata
 	CardSettlementTransactionID pjson.Metadata
+	MerchantAcceptorID          pjson.Metadata
 	MerchantCity                pjson.Metadata
 	MerchantState               pjson.Metadata
 	MerchantCountry             pjson.Metadata
@@ -642,6 +646,9 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The state the merchant resides in.
@@ -667,6 +674,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementJSON struct {
 	Currency             pjson.Metadata
 	PresentmentAmount    pjson.Metadata
 	PresentmentCurrency  pjson.Metadata
+	MerchantAcceptorID   pjson.Metadata
 	MerchantCity         pjson.Metadata
 	MerchantState        pjson.Metadata
 	MerchantCountry      pjson.Metadata
@@ -2208,6 +2216,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"

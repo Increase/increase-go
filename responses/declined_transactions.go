@@ -336,6 +336,7 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds            DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	DeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        DeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	DeclinedTransactionSourceCardDeclineReasonBreachesLimit                DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined              DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"

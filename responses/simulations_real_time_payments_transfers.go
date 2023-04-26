@@ -577,6 +577,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The identifier for the Transaction this refunds, if any.
 	CardSettlementTransactionID string `json:"card_settlement_transaction_id,required,nullable"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The state the merchant resides in.
@@ -598,6 +601,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJ
 	Amount                      pjson.Metadata
 	Currency                    pjson.Metadata
 	CardSettlementTransactionID pjson.Metadata
+	MerchantAcceptorID          pjson.Metadata
 	MerchantCity                pjson.Metadata
 	MerchantState               pjson.Metadata
 	MerchantCountry             pjson.Metadata
@@ -650,6 +654,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The state the merchant resides in.
@@ -675,6 +682,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	Currency             pjson.Metadata
 	PresentmentAmount    pjson.Metadata
 	PresentmentCurrency  pjson.Metadata
+	MerchantAcceptorID   pjson.Metadata
 	MerchantCity         pjson.Metadata
 	MerchantState        pjson.Metadata
 	MerchantCountry      pjson.Metadata
@@ -2241,6 +2249,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"

@@ -37,7 +37,7 @@ type ACHTransfer struct {
 	Network ACHTransferNetwork `json:"network,required"`
 	// If the receiving bank accepts the transfer but notifies that future transfers
 	// should use different details, this will contain those details.
-	NotificationOfChange ACHTransferNotificationOfChange `json:"notification_of_change,required,nullable"`
+	NotificationsOfChange []ACHTransferNotificationsOfChange `json:"notifications_of_change,required"`
 	// If your transfer is returned, this will contain details of the return.
 	Return ACHTransferReturn `json:"return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -89,7 +89,7 @@ type ACHTransferJSON struct {
 	ExternalAccountID        pjson.Metadata
 	ID                       pjson.Metadata
 	Network                  pjson.Metadata
-	NotificationOfChange     pjson.Metadata
+	NotificationsOfChange    pjson.Metadata
 	Return                   pjson.Metadata
 	RoutingNumber            pjson.Metadata
 	StatementDescriptor      pjson.Metadata
@@ -182,7 +182,7 @@ const (
 	ACHTransferNetworkACH ACHTransferNetwork = "ach"
 )
 
-type ACHTransferNotificationOfChange struct {
+type ACHTransferNotificationsOfChange struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -190,10 +190,10 @@ type ACHTransferNotificationOfChange struct {
 	ChangeCode string `json:"change_code,required"`
 	// The corrected data.
 	CorrectedData string `json:"corrected_data,required"`
-	JSON          ACHTransferNotificationOfChangeJSON
+	JSON          ACHTransferNotificationsOfChangeJSON
 }
 
-type ACHTransferNotificationOfChangeJSON struct {
+type ACHTransferNotificationsOfChangeJSON struct {
 	CreatedAt     pjson.Metadata
 	ChangeCode    pjson.Metadata
 	CorrectedData pjson.Metadata
@@ -202,9 +202,9 @@ type ACHTransferNotificationOfChangeJSON struct {
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHTransferNotificationOfChange using the internal pjson library. Unrecognized
+// ACHTransferNotificationsOfChange using the internal pjson library. Unrecognized
 // fields are stored in the `jsonFields` property.
-func (r *ACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err error) {
+func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
 	return pjson.UnmarshalRoot(data, r)
 }
 

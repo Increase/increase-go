@@ -1030,6 +1030,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
