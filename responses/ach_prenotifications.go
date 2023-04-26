@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type ACHPrenotification struct {
@@ -41,29 +41,29 @@ type ACHPrenotification struct {
 }
 
 type ACHPrenotificationJSON struct {
-	ID                       pjson.Metadata
-	AccountNumber            pjson.Metadata
-	Addendum                 pjson.Metadata
-	CompanyDescriptiveDate   pjson.Metadata
-	CompanyDiscretionaryData pjson.Metadata
-	CompanyEntryDescription  pjson.Metadata
-	CompanyName              pjson.Metadata
-	CreditDebitIndicator     pjson.Metadata
-	EffectiveDate            pjson.Metadata
-	RoutingNumber            pjson.Metadata
-	PrenotificationReturn    pjson.Metadata
-	CreatedAt                pjson.Metadata
-	Status                   pjson.Metadata
-	Type                     pjson.Metadata
+	ID                       apijson.Metadata
+	AccountNumber            apijson.Metadata
+	Addendum                 apijson.Metadata
+	CompanyDescriptiveDate   apijson.Metadata
+	CompanyDiscretionaryData apijson.Metadata
+	CompanyEntryDescription  apijson.Metadata
+	CompanyName              apijson.Metadata
+	CreditDebitIndicator     apijson.Metadata
+	EffectiveDate            apijson.Metadata
+	RoutingNumber            apijson.Metadata
+	PrenotificationReturn    apijson.Metadata
+	CreatedAt                apijson.Metadata
+	Status                   apijson.Metadata
+	Type                     apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHPrenotification using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHPrenotificationCreditDebitIndicator string
@@ -83,17 +83,17 @@ type ACHPrenotificationPrenotificationReturn struct {
 }
 
 type ACHPrenotificationPrenotificationReturnJSON struct {
-	CreatedAt        pjson.Metadata
-	ReturnReasonCode pjson.Metadata
+	CreatedAt        apijson.Metadata
+	ReturnReasonCode apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHPrenotificationPrenotificationReturn using the internal pjson library.
+// ACHPrenotificationPrenotificationReturn using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHPrenotificationStatus string
@@ -120,15 +120,15 @@ type ACHPrenotificationListResponse struct {
 }
 
 type ACHPrenotificationListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHPrenotificationListResponse using the internal pjson library. Unrecognized
+// ACHPrenotificationListResponse using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

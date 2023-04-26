@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type RoutingNumber struct {
@@ -22,21 +22,21 @@ type RoutingNumber struct {
 }
 
 type RoutingNumberJSON struct {
-	Name                      pjson.Metadata
-	RoutingNumber             pjson.Metadata
-	Type                      pjson.Metadata
-	ACHTransfers              pjson.Metadata
-	RealTimePaymentsTransfers pjson.Metadata
-	WireTransfers             pjson.Metadata
+	Name                      apijson.Metadata
+	RoutingNumber             apijson.Metadata
+	Type                      apijson.Metadata
+	ACHTransfers              apijson.Metadata
+	RealTimePaymentsTransfers apijson.Metadata
+	WireTransfers             apijson.Metadata
 	Raw                       []byte
-	Extras                    map[string]pjson.Metadata
+	Extras                    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumber using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RoutingNumberType string
@@ -75,15 +75,15 @@ type RoutingNumberListResponse struct {
 }
 
 type RoutingNumberListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RoutingNumberListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

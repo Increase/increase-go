@@ -24,7 +24,7 @@ func NewLimitService(opts ...option.RequestOption) (r *LimitService) {
 func (r *LimitService) New(ctx context.Context, body *requests.LimitNewParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "limits"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *LimitService) New(ctx context.Context, body *requests.LimitNewParams, o
 func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...option.RequestOption) (res *responses.Limit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("limits/%s", limit_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -40,7 +40,7 @@ func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...option.
 func (r *LimitService) Update(ctx context.Context, limit_id string, body *requests.LimitUpdateParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("limits/%s", limit_id)
-	err = option.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
 
@@ -50,7 +50,7 @@ func (r *LimitService) List(ctx context.Context, query *requests.LimitListParams
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "limits"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

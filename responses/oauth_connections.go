@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type OauthConnection struct {
@@ -23,20 +23,20 @@ type OauthConnection struct {
 }
 
 type OauthConnectionJSON struct {
-	ID        pjson.Metadata
-	CreatedAt pjson.Metadata
-	GroupID   pjson.Metadata
-	Status    pjson.Metadata
-	Type      pjson.Metadata
+	ID        apijson.Metadata
+	CreatedAt apijson.Metadata
+	GroupID   apijson.Metadata
+	Status    apijson.Metadata
+	Type      apijson.Metadata
 	Raw       []byte
-	Extras    map[string]pjson.Metadata
+	Extras    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnection using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type OauthConnectionStatus string
@@ -61,15 +61,15 @@ type OauthConnectionListResponse struct {
 }
 
 type OauthConnectionListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into OauthConnectionListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *OauthConnectionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

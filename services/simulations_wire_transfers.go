@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -22,6 +23,6 @@ func NewSimulationWireTransferService(opts ...option.RequestOption) (r *Simulati
 func (r *SimulationWireTransferService) NewInbound(ctx context.Context, body *requests.SimulationWireTransferNewInboundParams, opts ...option.RequestOption) (res *responses.WireTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_wire_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

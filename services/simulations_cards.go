@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -28,7 +29,7 @@ func NewSimulationCardService(opts ...option.RequestOption) (r *SimulationCardSe
 func (r *SimulationCardService) Authorize(ctx context.Context, body *requests.SimulationCardAuthorizeParams, opts ...option.RequestOption) (res *responses.CardAuthorizationSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_authorizations"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -40,6 +41,6 @@ func (r *SimulationCardService) Authorize(ctx context.Context, body *requests.Si
 func (r *SimulationCardService) Settlement(ctx context.Context, body *requests.SimulationCardSettlementParams, opts ...option.RequestOption) (res *responses.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_settlements"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

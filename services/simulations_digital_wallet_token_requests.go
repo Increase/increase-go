@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -23,6 +24,6 @@ func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption)
 func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body *requests.SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *responses.DigitalWalletTokenRequestCreateResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/digital_wallet_token_requests"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

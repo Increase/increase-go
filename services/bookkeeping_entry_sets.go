@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -22,6 +23,6 @@ func NewBookkeepingEntrySetService(opts ...option.RequestOption) (r *Bookkeeping
 func (r *BookkeepingEntrySetService) New(ctx context.Context, body *requests.BookkeepingEntrySetNewParams, opts ...option.RequestOption) (res *responses.BookkeepingEntrySet, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "bookkeeping_entry_sets"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

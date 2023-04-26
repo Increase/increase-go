@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type File struct {
@@ -31,22 +31,22 @@ type File struct {
 }
 
 type FileJSON struct {
-	CreatedAt   pjson.Metadata
-	ID          pjson.Metadata
-	Purpose     pjson.Metadata
-	Description pjson.Metadata
-	Direction   pjson.Metadata
-	Filename    pjson.Metadata
-	DownloadURL pjson.Metadata
-	Type        pjson.Metadata
+	CreatedAt   apijson.Metadata
+	ID          apijson.Metadata
+	Purpose     apijson.Metadata
+	Description apijson.Metadata
+	Direction   apijson.Metadata
+	Filename    apijson.Metadata
+	DownloadURL apijson.Metadata
+	Type        apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into File using the internal pjson
+// UnmarshalJSON deserializes the provided bytes into File using the internal json
 // library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *File) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type FilePurpose string
@@ -89,15 +89,15 @@ type FileListResponse struct {
 }
 
 type FileListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into FileListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

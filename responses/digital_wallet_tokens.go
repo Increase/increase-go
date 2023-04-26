@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type DigitalWalletToken struct {
@@ -25,21 +25,21 @@ type DigitalWalletToken struct {
 }
 
 type DigitalWalletTokenJSON struct {
-	ID             pjson.Metadata
-	CardID         pjson.Metadata
-	CreatedAt      pjson.Metadata
-	Status         pjson.Metadata
-	TokenRequestor pjson.Metadata
-	Type           pjson.Metadata
+	ID             apijson.Metadata
+	CardID         apijson.Metadata
+	CreatedAt      apijson.Metadata
+	Status         apijson.Metadata
+	TokenRequestor apijson.Metadata
+	Type           apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DigitalWalletToken using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type DigitalWalletTokenStatus string
@@ -73,15 +73,15 @@ type DigitalWalletTokenListResponse struct {
 }
 
 type DigitalWalletTokenListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// DigitalWalletTokenListResponse using the internal pjson library. Unrecognized
+// DigitalWalletTokenListResponse using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *DigitalWalletTokenListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

@@ -24,7 +24,7 @@ func NewCheckTransferService(opts ...option.RequestOption) (r *CheckTransferServ
 func (r *CheckTransferService) New(ctx context.Context, body *requests.CheckTransferNewParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *CheckTransferService) New(ctx context.Context, body *requests.CheckTran
 func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_transfers/%s", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *CheckTransferService) List(ctx context.Context, query *requests.CheckTr
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_transfers"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (r *CheckTransferService) ListAutoPager(ctx context.Context, query *request
 func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_transfers/%s/approve", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -71,7 +71,7 @@ func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id st
 func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_transfers/%s/cancel", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -79,6 +79,6 @@ func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id str
 func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_transfers/%s/stop_payment", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

@@ -24,7 +24,7 @@ func NewAccountService(opts ...option.RequestOption) (r *AccountService) {
 func (r *AccountService) New(ctx context.Context, body *requests.AccountNewParams, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "accounts"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *AccountService) New(ctx context.Context, body *requests.AccountNewParam
 func (r *AccountService) Get(ctx context.Context, account_id string, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s", account_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -40,7 +40,7 @@ func (r *AccountService) Get(ctx context.Context, account_id string, opts ...opt
 func (r *AccountService) Update(ctx context.Context, account_id string, body *requests.AccountUpdateParams, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s", account_id)
-	err = option.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
 
@@ -50,7 +50,7 @@ func (r *AccountService) List(ctx context.Context, query *requests.AccountListPa
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "accounts"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -71,6 +71,6 @@ func (r *AccountService) ListAutoPager(ctx context.Context, query *requests.Acco
 func (r *AccountService) Close(ctx context.Context, account_id string, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s/close", account_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type DigitalWalletTokenRequestCreateResponse struct {
@@ -18,18 +18,18 @@ type DigitalWalletTokenRequestCreateResponse struct {
 }
 
 type DigitalWalletTokenRequestCreateResponseJSON struct {
-	DeclineReason        pjson.Metadata
-	DigitalWalletTokenID pjson.Metadata
-	Type                 pjson.Metadata
+	DeclineReason        apijson.Metadata
+	DigitalWalletTokenID apijson.Metadata
+	Type                 apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// DigitalWalletTokenRequestCreateResponse using the internal pjson library.
+// DigitalWalletTokenRequestCreateResponse using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type DigitalWalletTokenRequestCreateResponseDeclineReason string

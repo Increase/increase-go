@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -28,7 +29,7 @@ func NewSimulationACHTransferService(opts ...option.RequestOption) (r *Simulatio
 func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body *requests.SimulationACHTransferNewInboundParams, opts ...option.RequestOption) (res *responses.ACHTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_ach_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -38,7 +39,7 @@ func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body *req
 func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *requests.SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -51,6 +52,6 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_
 func (r *SimulationACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

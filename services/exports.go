@@ -24,7 +24,7 @@ func NewExportService(opts ...option.RequestOption) (r *ExportService) {
 func (r *ExportService) New(ctx context.Context, body *requests.ExportNewParams, opts ...option.RequestOption) (res *responses.Export, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "exports"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *ExportService) New(ctx context.Context, body *requests.ExportNewParams,
 func (r *ExportService) Get(ctx context.Context, export_id string, opts ...option.RequestOption) (res *responses.Export, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("exports/%s", export_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *ExportService) List(ctx context.Context, query *requests.ExportListPara
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "exports"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

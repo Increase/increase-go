@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type BalanceLookupLookupResponse struct {
@@ -20,19 +20,19 @@ type BalanceLookupLookupResponse struct {
 }
 
 type BalanceLookupLookupResponseJSON struct {
-	AccountID        pjson.Metadata
-	CurrentBalance   pjson.Metadata
-	AvailableBalance pjson.Metadata
-	Type             pjson.Metadata
+	AccountID        apijson.Metadata
+	CurrentBalance   apijson.Metadata
+	AvailableBalance apijson.Metadata
+	Type             apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into BalanceLookupLookupResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *BalanceLookupLookupResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type BalanceLookupLookupResponseType string

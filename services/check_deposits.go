@@ -24,7 +24,7 @@ func NewCheckDepositService(opts ...option.RequestOption) (r *CheckDepositServic
 func (r *CheckDepositService) New(ctx context.Context, body *requests.CheckDepositNewParams, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_deposits"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *CheckDepositService) New(ctx context.Context, body *requests.CheckDepos
 func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("check_deposits/%s", check_deposit_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDep
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_deposits"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

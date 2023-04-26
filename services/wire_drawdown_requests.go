@@ -24,7 +24,7 @@ func NewWireDrawdownRequestService(opts ...option.RequestOption) (r *WireDrawdow
 func (r *WireDrawdownRequestService) New(ctx context.Context, body *requests.WireDrawdownRequestNewParams, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "wire_drawdown_requests"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *WireDrawdownRequestService) New(ctx context.Context, body *requests.Wir
 func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.W
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_drawdown_requests"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

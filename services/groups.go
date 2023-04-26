@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/responses"
@@ -21,6 +22,6 @@ func NewGroupService(opts ...option.RequestOption) (r *GroupService) {
 func (r *GroupService) GetDetails(ctx context.Context, opts ...option.RequestOption) (res *responses.Group, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "groups/current"
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

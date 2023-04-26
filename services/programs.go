@@ -24,7 +24,7 @@ func NewProgramService(opts ...option.RequestOption) (r *ProgramService) {
 func (r *ProgramService) Get(ctx context.Context, program_id string, opts ...option.RequestOption) (res *responses.Program, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("programs/%s", program_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *ProgramService) List(ctx context.Context, query *requests.ProgramListPa
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "programs"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

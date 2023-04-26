@@ -24,7 +24,7 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...option.RequestOption) (res *responses.Document, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("documents/%s", document_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *DocumentService) List(ctx context.Context, query *requests.DocumentList
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "documents"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

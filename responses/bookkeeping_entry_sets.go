@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type BookkeepingEntrySet struct {
@@ -22,20 +22,20 @@ type BookkeepingEntrySet struct {
 }
 
 type BookkeepingEntrySetJSON struct {
-	ID            pjson.Metadata
-	TransactionID pjson.Metadata
-	Date          pjson.Metadata
-	Entries       pjson.Metadata
-	Type          pjson.Metadata
+	ID            apijson.Metadata
+	TransactionID apijson.Metadata
+	Date          apijson.Metadata
+	Entries       apijson.Metadata
+	Type          apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into BookkeepingEntrySet using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *BookkeepingEntrySet) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type BookkeepingEntrySetEntries struct {
@@ -49,18 +49,18 @@ type BookkeepingEntrySetEntries struct {
 }
 
 type BookkeepingEntrySetEntriesJSON struct {
-	AccountID pjson.Metadata
-	Amount    pjson.Metadata
-	ID        pjson.Metadata
+	AccountID apijson.Metadata
+	Amount    apijson.Metadata
+	ID        apijson.Metadata
 	Raw       []byte
-	Extras    map[string]pjson.Metadata
+	Extras    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into BookkeepingEntrySetEntries
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *BookkeepingEntrySetEntries) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type BookkeepingEntrySetType string

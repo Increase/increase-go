@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type RealTimePaymentsTransfer struct {
@@ -55,33 +55,33 @@ type RealTimePaymentsTransfer struct {
 }
 
 type RealTimePaymentsTransferJSON struct {
-	Type                     pjson.Metadata
-	ID                       pjson.Metadata
-	Approval                 pjson.Metadata
-	Cancellation             pjson.Metadata
-	Status                   pjson.Metadata
-	CreatedAt                pjson.Metadata
-	AccountID                pjson.Metadata
-	ExternalAccountID        pjson.Metadata
-	SourceAccountNumberID    pjson.Metadata
-	CreditorName             pjson.Metadata
-	RemittanceInformation    pjson.Metadata
-	Amount                   pjson.Metadata
-	Currency                 pjson.Metadata
-	DestinationAccountNumber pjson.Metadata
-	DestinationRoutingNumber pjson.Metadata
-	TransactionID            pjson.Metadata
-	Submission               pjson.Metadata
-	Rejection                pjson.Metadata
+	Type                     apijson.Metadata
+	ID                       apijson.Metadata
+	Approval                 apijson.Metadata
+	Cancellation             apijson.Metadata
+	Status                   apijson.Metadata
+	CreatedAt                apijson.Metadata
+	AccountID                apijson.Metadata
+	ExternalAccountID        apijson.Metadata
+	SourceAccountNumberID    apijson.Metadata
+	CreditorName             apijson.Metadata
+	RemittanceInformation    apijson.Metadata
+	Amount                   apijson.Metadata
+	Currency                 apijson.Metadata
+	DestinationAccountNumber apijson.Metadata
+	DestinationRoutingNumber apijson.Metadata
+	TransactionID            apijson.Metadata
+	Submission               apijson.Metadata
+	Rejection                apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RealTimePaymentsTransfer
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimePaymentsTransferType string
@@ -101,17 +101,17 @@ type RealTimePaymentsTransferApproval struct {
 }
 
 type RealTimePaymentsTransferApprovalJSON struct {
-	ApprovedAt pjson.Metadata
-	ApprovedBy pjson.Metadata
+	ApprovedAt apijson.Metadata
+	ApprovedBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimePaymentsTransferApproval using the internal pjson library. Unrecognized
+// RealTimePaymentsTransferApproval using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *RealTimePaymentsTransferApproval) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimePaymentsTransferCancellation struct {
@@ -125,17 +125,17 @@ type RealTimePaymentsTransferCancellation struct {
 }
 
 type RealTimePaymentsTransferCancellationJSON struct {
-	CanceledAt pjson.Metadata
-	CanceledBy pjson.Metadata
+	CanceledAt apijson.Metadata
+	CanceledBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimePaymentsTransferCancellation using the internal pjson library.
+// RealTimePaymentsTransferCancellation using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimePaymentsTransferStatus string
@@ -171,17 +171,17 @@ type RealTimePaymentsTransferSubmission struct {
 }
 
 type RealTimePaymentsTransferSubmissionJSON struct {
-	SubmittedAt               pjson.Metadata
-	TransactionIdentification pjson.Metadata
+	SubmittedAt               apijson.Metadata
+	TransactionIdentification apijson.Metadata
 	Raw                       []byte
-	Extras                    map[string]pjson.Metadata
+	Extras                    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimePaymentsTransferSubmission using the internal pjson library.
-// Unrecognized fields are stored in the `jsonFields` property.
+// RealTimePaymentsTransferSubmission using the internal json library. Unrecognized
+// fields are stored in the `jsonFields` property.
 func (r *RealTimePaymentsTransferSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimePaymentsTransferRejection struct {
@@ -198,18 +198,18 @@ type RealTimePaymentsTransferRejection struct {
 }
 
 type RealTimePaymentsTransferRejectionJSON struct {
-	RejectedAt                        pjson.Metadata
-	RejectReasonCode                  pjson.Metadata
-	RejectReasonAdditionalInformation pjson.Metadata
+	RejectedAt                        apijson.Metadata
+	RejectReasonCode                  apijson.Metadata
+	RejectReasonAdditionalInformation apijson.Metadata
 	Raw                               []byte
-	Extras                            map[string]pjson.Metadata
+	Extras                            map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimePaymentsTransferRejection using the internal pjson library. Unrecognized
+// RealTimePaymentsTransferRejection using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *RealTimePaymentsTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimePaymentsTransferRejectionRejectReasonCode string
@@ -247,15 +247,15 @@ type RealTimePaymentsTransferListResponse struct {
 }
 
 type RealTimePaymentsTransferListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimePaymentsTransferListResponse using the internal pjson library.
+// RealTimePaymentsTransferListResponse using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimePaymentsTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

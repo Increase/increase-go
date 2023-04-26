@@ -24,7 +24,7 @@ func NewACHTransferService(opts ...option.RequestOption) (r *ACHTransferService)
 func (r *ACHTransferService) New(ctx context.Context, body *requests.ACHTransferNewParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "ach_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *ACHTransferService) New(ctx context.Context, body *requests.ACHTransfer
 func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s", ach_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *requests.ACHTransf
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "ach_transfers"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (r *ACHTransferService) ListAutoPager(ctx context.Context, query *requests.
 func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -71,6 +71,6 @@ func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string
 func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

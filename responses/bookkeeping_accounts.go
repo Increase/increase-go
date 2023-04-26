@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type BookkeepingAccount struct {
@@ -22,21 +22,21 @@ type BookkeepingAccount struct {
 }
 
 type BookkeepingAccountJSON struct {
-	ID                 pjson.Metadata
-	ComplianceCategory pjson.Metadata
-	AccountID          pjson.Metadata
-	EntityID           pjson.Metadata
-	Name               pjson.Metadata
-	Type               pjson.Metadata
+	ID                 apijson.Metadata
+	ComplianceCategory apijson.Metadata
+	AccountID          apijson.Metadata
+	EntityID           apijson.Metadata
+	Name               apijson.Metadata
+	Type               apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into BookkeepingAccount using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *BookkeepingAccount) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type BookkeepingAccountComplianceCategory string
@@ -61,15 +61,15 @@ type BookkeepingAccountListResponse struct {
 }
 
 type BookkeepingAccountListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// BookkeepingAccountListResponse using the internal pjson library. Unrecognized
+// BookkeepingAccountListResponse using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *BookkeepingAccountListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

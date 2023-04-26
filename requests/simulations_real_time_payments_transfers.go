@@ -2,7 +2,7 @@ package requests
 
 import (
 	"github.com/increase/increase-go/core/field"
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type SimulationRealTimePaymentsTransferCompleteParams struct {
@@ -15,7 +15,7 @@ type SimulationRealTimePaymentsTransferCompleteParams struct {
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }
 
 type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
@@ -72,5 +72,5 @@ type SimulationRealTimePaymentsTransferNewInboundParams struct {
 // serialized into the top-level, and will overwrite known members of the same
 // name.
 func (r SimulationRealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Card struct {
@@ -37,25 +37,25 @@ type Card struct {
 }
 
 type CardJSON struct {
-	ID              pjson.Metadata
-	AccountID       pjson.Metadata
-	CreatedAt       pjson.Metadata
-	Description     pjson.Metadata
-	Last4           pjson.Metadata
-	ExpirationMonth pjson.Metadata
-	ExpirationYear  pjson.Metadata
-	Status          pjson.Metadata
-	BillingAddress  pjson.Metadata
-	DigitalWallet   pjson.Metadata
-	Type            pjson.Metadata
+	ID              apijson.Metadata
+	AccountID       apijson.Metadata
+	CreatedAt       apijson.Metadata
+	Description     apijson.Metadata
+	Last4           apijson.Metadata
+	ExpirationMonth apijson.Metadata
+	ExpirationYear  apijson.Metadata
+	Status          apijson.Metadata
+	BillingAddress  apijson.Metadata
+	DigitalWallet   apijson.Metadata
+	Type            apijson.Metadata
 	Raw             []byte
-	Extras          map[string]pjson.Metadata
+	Extras          map[string]apijson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into Card using the internal pjson
+// UnmarshalJSON deserializes the provided bytes into Card using the internal json
 // library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Card) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardStatus string
@@ -81,20 +81,20 @@ type CardBillingAddress struct {
 }
 
 type CardBillingAddressJSON struct {
-	Line1      pjson.Metadata
-	Line2      pjson.Metadata
-	City       pjson.Metadata
-	State      pjson.Metadata
-	PostalCode pjson.Metadata
+	Line1      apijson.Metadata
+	Line2      apijson.Metadata
+	City       apijson.Metadata
+	State      apijson.Metadata
+	PostalCode apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardBillingAddress using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardDigitalWallet struct {
@@ -111,18 +111,18 @@ type CardDigitalWallet struct {
 }
 
 type CardDigitalWalletJSON struct {
-	Email         pjson.Metadata
-	Phone         pjson.Metadata
-	CardProfileID pjson.Metadata
+	Email         apijson.Metadata
+	Phone         apijson.Metadata
+	CardProfileID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDigitalWallet using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardType string
@@ -151,21 +151,21 @@ type CardDetails struct {
 }
 
 type CardDetailsJSON struct {
-	CardID               pjson.Metadata
-	PrimaryAccountNumber pjson.Metadata
-	ExpirationMonth      pjson.Metadata
-	ExpirationYear       pjson.Metadata
-	VerificationCode     pjson.Metadata
-	Type                 pjson.Metadata
+	CardID               apijson.Metadata
+	PrimaryAccountNumber apijson.Metadata
+	ExpirationMonth      apijson.Metadata
+	ExpirationYear       apijson.Metadata
+	VerificationCode     apijson.Metadata
+	Type                 apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDetails using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardDetailsType string
@@ -183,15 +183,15 @@ type CardListResponse struct {
 }
 
 type CardListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

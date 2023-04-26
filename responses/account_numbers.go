@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type AccountNumber struct {
@@ -29,23 +29,23 @@ type AccountNumber struct {
 }
 
 type AccountNumberJSON struct {
-	AccountID     pjson.Metadata
-	AccountNumber pjson.Metadata
-	ID            pjson.Metadata
-	CreatedAt     pjson.Metadata
-	Name          pjson.Metadata
-	RoutingNumber pjson.Metadata
-	Status        pjson.Metadata
-	Type          pjson.Metadata
+	AccountID     apijson.Metadata
+	AccountNumber apijson.Metadata
+	ID            apijson.Metadata
+	CreatedAt     apijson.Metadata
+	Name          apijson.Metadata
+	RoutingNumber apijson.Metadata
+	Status        apijson.Metadata
+	Type          apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountNumber using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type AccountNumberStatus string
@@ -71,15 +71,15 @@ type AccountNumberListResponse struct {
 }
 
 type AccountNumberListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountNumberListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *AccountNumberListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

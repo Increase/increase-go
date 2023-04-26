@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type EventSubscription struct {
@@ -27,22 +27,22 @@ type EventSubscription struct {
 }
 
 type EventSubscriptionJSON struct {
-	ID                    pjson.Metadata
-	CreatedAt             pjson.Metadata
-	Status                pjson.Metadata
-	SelectedEventCategory pjson.Metadata
-	URL                   pjson.Metadata
-	SharedSecret          pjson.Metadata
-	Type                  pjson.Metadata
+	ID                    apijson.Metadata
+	CreatedAt             apijson.Metadata
+	Status                apijson.Metadata
+	SelectedEventCategory apijson.Metadata
+	URL                   apijson.Metadata
+	SharedSecret          apijson.Metadata
+	Type                  apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscription using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EventSubscriptionStatus string
@@ -124,15 +124,15 @@ type EventSubscriptionListResponse struct {
 }
 
 type EventSubscriptionListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventSubscriptionListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EventSubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Document struct {
@@ -25,20 +25,20 @@ type Document struct {
 }
 
 type DocumentJSON struct {
-	ID        pjson.Metadata
-	Category  pjson.Metadata
-	CreatedAt pjson.Metadata
-	EntityID  pjson.Metadata
-	FileID    pjson.Metadata
-	Type      pjson.Metadata
+	ID        apijson.Metadata
+	Category  apijson.Metadata
+	CreatedAt apijson.Metadata
+	EntityID  apijson.Metadata
+	FileID    apijson.Metadata
+	Type      apijson.Metadata
 	Raw       []byte
-	Extras    map[string]pjson.Metadata
+	Extras    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Document using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Document) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type DocumentCategory string
@@ -108,15 +108,15 @@ type DocumentListResponse struct {
 }
 
 type DocumentListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into DocumentListResponse using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *DocumentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

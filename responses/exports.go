@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Export struct {
@@ -29,21 +29,21 @@ type Export struct {
 }
 
 type ExportJSON struct {
-	ID              pjson.Metadata
-	CreatedAt       pjson.Metadata
-	Category        pjson.Metadata
-	Status          pjson.Metadata
-	FileID          pjson.Metadata
-	FileDownloadURL pjson.Metadata
-	Type            pjson.Metadata
+	ID              apijson.Metadata
+	CreatedAt       apijson.Metadata
+	Category        apijson.Metadata
+	Status          apijson.Metadata
+	FileID          apijson.Metadata
+	FileDownloadURL apijson.Metadata
+	Type            apijson.Metadata
 	Raw             []byte
-	Extras          map[string]pjson.Metadata
+	Extras          map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Export using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Export) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ExportCategory string
@@ -75,15 +75,15 @@ type ExportListResponse struct {
 }
 
 type ExportListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ExportListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ExportListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type InterestPaymentSimulationResult struct {
@@ -17,17 +17,17 @@ type InterestPaymentSimulationResult struct {
 }
 
 type InterestPaymentSimulationResultJSON struct {
-	Transaction pjson.Metadata
-	Type        pjson.Metadata
+	Transaction apijson.Metadata
+	Type        apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InterestPaymentSimulationResult using the internal pjson library. Unrecognized
+// InterestPaymentSimulationResult using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResult) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransaction struct {
@@ -66,25 +66,25 @@ type InterestPaymentSimulationResultTransaction struct {
 }
 
 type InterestPaymentSimulationResultTransactionJSON struct {
-	AccountID   pjson.Metadata
-	Amount      pjson.Metadata
-	Currency    pjson.Metadata
-	CreatedAt   pjson.Metadata
-	Description pjson.Metadata
-	ID          pjson.Metadata
-	RouteID     pjson.Metadata
-	RouteType   pjson.Metadata
-	Source      pjson.Metadata
-	Type        pjson.Metadata
+	AccountID   apijson.Metadata
+	Amount      apijson.Metadata
+	Currency    apijson.Metadata
+	CreatedAt   apijson.Metadata
+	Description apijson.Metadata
+	ID          apijson.Metadata
+	RouteID     apijson.Metadata
+	RouteType   apijson.Metadata
+	Source      apijson.Metadata
+	Type        apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InterestPaymentSimulationResultTransaction using the internal pjson library.
+// InterestPaymentSimulationResultTransaction using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransaction) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionCurrency string
@@ -232,53 +232,53 @@ type InterestPaymentSimulationResultTransactionSource struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceJSON struct {
-	Category                                    pjson.Metadata
-	AccountTransferIntention                    pjson.Metadata
-	ACHCheckConversionReturn                    pjson.Metadata
-	ACHCheckConversion                          pjson.Metadata
-	ACHTransferIntention                        pjson.Metadata
-	ACHTransferRejection                        pjson.Metadata
-	ACHTransferReturn                           pjson.Metadata
-	CardDisputeAcceptance                       pjson.Metadata
-	CardRefund                                  pjson.Metadata
-	CardSettlement                              pjson.Metadata
-	CardRevenuePayment                          pjson.Metadata
-	CheckDepositAcceptance                      pjson.Metadata
-	CheckDepositReturn                          pjson.Metadata
-	CheckTransferIntention                      pjson.Metadata
-	CheckTransferReturn                         pjson.Metadata
-	CheckTransferRejection                      pjson.Metadata
-	CheckTransferStopPaymentRequest             pjson.Metadata
-	DisputeResolution                           pjson.Metadata
-	EmpyrealCashDeposit                         pjson.Metadata
-	FeePayment                                  pjson.Metadata
-	InboundACHTransfer                          pjson.Metadata
-	InboundCheck                                pjson.Metadata
-	InboundInternationalACHTransfer             pjson.Metadata
-	InboundRealTimePaymentsTransferConfirmation pjson.Metadata
-	InboundWireDrawdownPaymentReversal          pjson.Metadata
-	InboundWireDrawdownPayment                  pjson.Metadata
-	InboundWireReversal                         pjson.Metadata
-	InboundWireTransfer                         pjson.Metadata
-	InterestPayment                             pjson.Metadata
-	InternalSource                              pjson.Metadata
-	CardRouteRefund                             pjson.Metadata
-	CardRouteSettlement                         pjson.Metadata
-	RealTimePaymentsTransferAcknowledgement     pjson.Metadata
-	SampleFunds                                 pjson.Metadata
-	WireDrawdownPaymentIntention                pjson.Metadata
-	WireDrawdownPaymentRejection                pjson.Metadata
-	WireTransferIntention                       pjson.Metadata
-	WireTransferRejection                       pjson.Metadata
+	Category                                    apijson.Metadata
+	AccountTransferIntention                    apijson.Metadata
+	ACHCheckConversionReturn                    apijson.Metadata
+	ACHCheckConversion                          apijson.Metadata
+	ACHTransferIntention                        apijson.Metadata
+	ACHTransferRejection                        apijson.Metadata
+	ACHTransferReturn                           apijson.Metadata
+	CardDisputeAcceptance                       apijson.Metadata
+	CardRefund                                  apijson.Metadata
+	CardSettlement                              apijson.Metadata
+	CardRevenuePayment                          apijson.Metadata
+	CheckDepositAcceptance                      apijson.Metadata
+	CheckDepositReturn                          apijson.Metadata
+	CheckTransferIntention                      apijson.Metadata
+	CheckTransferReturn                         apijson.Metadata
+	CheckTransferRejection                      apijson.Metadata
+	CheckTransferStopPaymentRequest             apijson.Metadata
+	DisputeResolution                           apijson.Metadata
+	EmpyrealCashDeposit                         apijson.Metadata
+	FeePayment                                  apijson.Metadata
+	InboundACHTransfer                          apijson.Metadata
+	InboundCheck                                apijson.Metadata
+	InboundInternationalACHTransfer             apijson.Metadata
+	InboundRealTimePaymentsTransferConfirmation apijson.Metadata
+	InboundWireDrawdownPaymentReversal          apijson.Metadata
+	InboundWireDrawdownPayment                  apijson.Metadata
+	InboundWireReversal                         apijson.Metadata
+	InboundWireTransfer                         apijson.Metadata
+	InterestPayment                             apijson.Metadata
+	InternalSource                              apijson.Metadata
+	CardRouteRefund                             apijson.Metadata
+	CardRouteSettlement                         apijson.Metadata
+	RealTimePaymentsTransferAcknowledgement     apijson.Metadata
+	SampleFunds                                 apijson.Metadata
+	WireDrawdownPaymentIntention                apijson.Metadata
+	WireDrawdownPaymentRejection                apijson.Metadata
+	WireTransferIntention                       apijson.Metadata
+	WireTransferRejection                       apijson.Metadata
 	Raw                                         []byte
-	Extras                                      map[string]pjson.Metadata
+	Extras                                      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InterestPaymentSimulationResultTransactionSource using the internal pjson
+// InterestPaymentSimulationResultTransactionSource using the internal json
 // library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSource) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCategory string
@@ -345,22 +345,22 @@ type InterestPaymentSimulationResultTransactionSourceAccountTransferIntention st
 }
 
 type InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionJSON struct {
-	Amount               pjson.Metadata
-	Currency             pjson.Metadata
-	Description          pjson.Metadata
-	DestinationAccountID pjson.Metadata
-	SourceAccountID      pjson.Metadata
-	TransferID           pjson.Metadata
+	Amount               apijson.Metadata
+	Currency             apijson.Metadata
+	Description          apijson.Metadata
+	DestinationAccountID apijson.Metadata
+	SourceAccountID      apijson.Metadata
+	TransferID           apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceAccountTransferIntention using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency string
@@ -384,18 +384,18 @@ type InterestPaymentSimulationResultTransactionSourceACHCheckConversionReturn st
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHCheckConversionReturnJSON struct {
-	Amount           pjson.Metadata
-	ReturnReasonCode pjson.Metadata
+	Amount           apijson.Metadata
+	ReturnReasonCode apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceACHCheckConversionReturn using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHCheckConversion struct {
@@ -408,18 +408,18 @@ type InterestPaymentSimulationResultTransactionSourceACHCheckConversion struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHCheckConversionJSON struct {
-	Amount pjson.Metadata
-	FileID pjson.Metadata
+	Amount apijson.Metadata
+	FileID apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceACHCheckConversion using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferIntention struct {
@@ -435,21 +435,21 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferIntention struct
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferIntentionJSON struct {
-	Amount              pjson.Metadata
-	AccountNumber       pjson.Metadata
-	RoutingNumber       pjson.Metadata
-	StatementDescriptor pjson.Metadata
-	TransferID          pjson.Metadata
+	Amount              apijson.Metadata
+	AccountNumber       apijson.Metadata
+	RoutingNumber       apijson.Metadata
+	StatementDescriptor apijson.Metadata
+	TransferID          apijson.Metadata
 	Raw                 []byte
-	Extras              map[string]pjson.Metadata
+	Extras              map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceACHTransferIntention using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferRejection struct {
@@ -459,17 +459,17 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferRejection struct
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferRejectionJSON struct {
-	TransferID pjson.Metadata
+	TransferID apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceACHTransferRejection using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
@@ -486,20 +486,20 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturnJSON struct {
-	CreatedAt        pjson.Metadata
-	ReturnReasonCode pjson.Metadata
-	TransferID       pjson.Metadata
-	TransactionID    pjson.Metadata
+	CreatedAt        apijson.Metadata
+	ReturnReasonCode apijson.Metadata
+	TransferID       apijson.Metadata
+	TransactionID    apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceACHTransferReturn using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode string
@@ -543,19 +543,19 @@ type InterestPaymentSimulationResultTransactionSourceCardDisputeAcceptance struc
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardDisputeAcceptanceJSON struct {
-	AcceptedAt    pjson.Metadata
-	CardDisputeID pjson.Metadata
-	TransactionID pjson.Metadata
+	AcceptedAt    apijson.Metadata
+	CardDisputeID apijson.Metadata
+	TransactionID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardDisputeAcceptance using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
@@ -589,26 +589,26 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRefundJSON struct {
-	ID                          pjson.Metadata
-	Amount                      pjson.Metadata
-	Currency                    pjson.Metadata
-	CardSettlementTransactionID pjson.Metadata
-	MerchantAcceptorID          pjson.Metadata
-	MerchantCity                pjson.Metadata
-	MerchantState               pjson.Metadata
-	MerchantCountry             pjson.Metadata
-	MerchantName                pjson.Metadata
-	MerchantCategoryCode        pjson.Metadata
-	Type                        pjson.Metadata
+	ID                          apijson.Metadata
+	Amount                      apijson.Metadata
+	Currency                    apijson.Metadata
+	CardSettlementTransactionID apijson.Metadata
+	MerchantAcceptorID          apijson.Metadata
+	MerchantCity                apijson.Metadata
+	MerchantState               apijson.Metadata
+	MerchantCountry             apijson.Metadata
+	MerchantName                apijson.Metadata
+	MerchantCategoryCode        apijson.Metadata
+	Type                        apijson.Metadata
 	Raw                         []byte
-	Extras                      map[string]pjson.Metadata
+	Extras                      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardRefund using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRefundCurrency string
@@ -667,30 +667,30 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardSettlementJSON struct {
-	ID                   pjson.Metadata
-	CardAuthorization    pjson.Metadata
-	Amount               pjson.Metadata
-	Currency             pjson.Metadata
-	PresentmentAmount    pjson.Metadata
-	PresentmentCurrency  pjson.Metadata
-	MerchantAcceptorID   pjson.Metadata
-	MerchantCity         pjson.Metadata
-	MerchantState        pjson.Metadata
-	MerchantCountry      pjson.Metadata
-	MerchantName         pjson.Metadata
-	MerchantCategoryCode pjson.Metadata
-	PendingTransactionID pjson.Metadata
-	Type                 pjson.Metadata
+	ID                   apijson.Metadata
+	CardAuthorization    apijson.Metadata
+	Amount               apijson.Metadata
+	Currency             apijson.Metadata
+	PresentmentAmount    apijson.Metadata
+	PresentmentCurrency  apijson.Metadata
+	MerchantAcceptorID   apijson.Metadata
+	MerchantCity         apijson.Metadata
+	MerchantState        apijson.Metadata
+	MerchantCountry      apijson.Metadata
+	MerchantName         apijson.Metadata
+	MerchantCategoryCode apijson.Metadata
+	PendingTransactionID apijson.Metadata
+	Type                 apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardSettlement using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency string
@@ -727,21 +727,21 @@ type InterestPaymentSimulationResultTransactionSourceCardRevenuePayment struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
-	Amount                pjson.Metadata
-	Currency              pjson.Metadata
-	PeriodStart           pjson.Metadata
-	PeriodEnd             pjson.Metadata
-	TransactedOnAccountID pjson.Metadata
+	Amount                apijson.Metadata
+	Currency              apijson.Metadata
+	PeriodStart           apijson.Metadata
+	PeriodEnd             apijson.Metadata
+	TransactedOnAccountID apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardRevenuePayment using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency string
@@ -778,23 +778,23 @@ type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance stru
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceJSON struct {
-	Amount         pjson.Metadata
-	Currency       pjson.Metadata
-	AccountNumber  pjson.Metadata
-	RoutingNumber  pjson.Metadata
-	AuxiliaryOnUs  pjson.Metadata
-	SerialNumber   pjson.Metadata
-	CheckDepositID pjson.Metadata
+	Amount         apijson.Metadata
+	Currency       apijson.Metadata
+	AccountNumber  apijson.Metadata
+	RoutingNumber  apijson.Metadata
+	AuxiliaryOnUs  apijson.Metadata
+	SerialNumber   apijson.Metadata
+	CheckDepositID apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
@@ -828,22 +828,22 @@ type InterestPaymentSimulationResultTransactionSourceCheckDepositReturn struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckDepositReturnJSON struct {
-	Amount         pjson.Metadata
-	ReturnedAt     pjson.Metadata
-	Currency       pjson.Metadata
-	CheckDepositID pjson.Metadata
-	TransactionID  pjson.Metadata
-	ReturnReason   pjson.Metadata
+	Amount         apijson.Metadata
+	ReturnedAt     apijson.Metadata
+	Currency       apijson.Metadata
+	CheckDepositID apijson.Metadata
+	TransactionID  apijson.Metadata
+	ReturnReason   apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckDepositReturn using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency string
@@ -897,25 +897,25 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferIntention stru
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionJSON struct {
-	AddressLine1  pjson.Metadata
-	AddressLine2  pjson.Metadata
-	AddressCity   pjson.Metadata
-	AddressState  pjson.Metadata
-	AddressZip    pjson.Metadata
-	Amount        pjson.Metadata
-	Currency      pjson.Metadata
-	RecipientName pjson.Metadata
-	TransferID    pjson.Metadata
+	AddressLine1  apijson.Metadata
+	AddressLine2  apijson.Metadata
+	AddressCity   apijson.Metadata
+	AddressState  apijson.Metadata
+	AddressZip    apijson.Metadata
+	Amount        apijson.Metadata
+	Currency      apijson.Metadata
+	RecipientName apijson.Metadata
+	TransferID    apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckTransferIntention using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency string
@@ -946,21 +946,21 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferReturn struct 
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON struct {
-	TransferID    pjson.Metadata
-	ReturnedAt    pjson.Metadata
-	FileID        pjson.Metadata
-	Reason        pjson.Metadata
-	TransactionID pjson.Metadata
+	TransferID    apijson.Metadata
+	ReturnedAt    apijson.Metadata
+	FileID        apijson.Metadata
+	Reason        apijson.Metadata
+	TransactionID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckTransferReturn using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason string
@@ -977,17 +977,17 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferRejection stru
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID pjson.Metadata
+	TransferID apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckTransferRejection using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
@@ -1004,20 +1004,20 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentReq
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	TransferID    pjson.Metadata
-	TransactionID pjson.Metadata
-	RequestedAt   pjson.Metadata
-	Type          pjson.Metadata
+	TransferID    apijson.Metadata
+	TransactionID apijson.Metadata
+	RequestedAt   apijson.Metadata
+	Type          apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestType string
@@ -1039,19 +1039,19 @@ type InterestPaymentSimulationResultTransactionSourceDisputeResolution struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceDisputeResolutionJSON struct {
-	Amount                pjson.Metadata
-	Currency              pjson.Metadata
-	DisputedTransactionID pjson.Metadata
+	Amount                apijson.Metadata
+	Currency              apijson.Metadata
+	DisputedTransactionID apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceDisputeResolution using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceDisputeResolutionCurrency string
@@ -1075,19 +1075,19 @@ type InterestPaymentSimulationResultTransactionSourceEmpyrealCashDeposit struct 
 }
 
 type InterestPaymentSimulationResultTransactionSourceEmpyrealCashDepositJSON struct {
-	Amount      pjson.Metadata
-	BagID       pjson.Metadata
-	DepositDate pjson.Metadata
+	Amount      apijson.Metadata
+	BagID       apijson.Metadata
+	DepositDate apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceEmpyrealCashDeposit using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceFeePayment struct {
@@ -1101,17 +1101,17 @@ type InterestPaymentSimulationResultTransactionSourceFeePayment struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceFeePaymentJSON struct {
-	Amount   pjson.Metadata
-	Currency pjson.Metadata
+	Amount   apijson.Metadata
+	Currency apijson.Metadata
 	Raw      []byte
-	Extras   map[string]pjson.Metadata
+	Extras   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceFeePayment using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency string
@@ -1141,25 +1141,25 @@ type InterestPaymentSimulationResultTransactionSourceInboundACHTransfer struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundACHTransferJSON struct {
-	Amount                             pjson.Metadata
-	OriginatorCompanyName              pjson.Metadata
-	OriginatorCompanyDescriptiveDate   pjson.Metadata
-	OriginatorCompanyDiscretionaryData pjson.Metadata
-	OriginatorCompanyEntryDescription  pjson.Metadata
-	OriginatorCompanyID                pjson.Metadata
-	ReceiverIDNumber                   pjson.Metadata
-	ReceiverName                       pjson.Metadata
-	TraceNumber                        pjson.Metadata
+	Amount                             apijson.Metadata
+	OriginatorCompanyName              apijson.Metadata
+	OriginatorCompanyDescriptiveDate   apijson.Metadata
+	OriginatorCompanyDiscretionaryData apijson.Metadata
+	OriginatorCompanyEntryDescription  apijson.Metadata
+	OriginatorCompanyID                apijson.Metadata
+	ReceiverIDNumber                   apijson.Metadata
+	ReceiverName                       apijson.Metadata
+	TraceNumber                        apijson.Metadata
 	Raw                                []byte
-	Extras                             map[string]pjson.Metadata
+	Extras                             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundACHTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
@@ -1176,20 +1176,20 @@ type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundCheckJSON struct {
-	Amount                pjson.Metadata
-	Currency              pjson.Metadata
-	CheckNumber           pjson.Metadata
-	CheckFrontImageFileID pjson.Metadata
-	CheckRearImageFileID  pjson.Metadata
+	Amount                apijson.Metadata
+	Currency              apijson.Metadata
+	CheckNumber           apijson.Metadata
+	CheckFrontImageFileID apijson.Metadata
+	CheckRearImageFileID  apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundCheck using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency string
@@ -1246,52 +1246,52 @@ type InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTran
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTransferJSON struct {
-	Amount                                                 pjson.Metadata
-	ForeignExchangeIndicator                               pjson.Metadata
-	ForeignExchangeReferenceIndicator                      pjson.Metadata
-	ForeignExchangeReference                               pjson.Metadata
-	DestinationCountryCode                                 pjson.Metadata
-	DestinationCurrencyCode                                pjson.Metadata
-	ForeignPaymentAmount                                   pjson.Metadata
-	ForeignTraceNumber                                     pjson.Metadata
-	InternationalTransactionTypeCode                       pjson.Metadata
-	OriginatingCurrencyCode                                pjson.Metadata
-	OriginatingDepositoryFinancialInstitutionName          pjson.Metadata
-	OriginatingDepositoryFinancialInstitutionIDQualifier   pjson.Metadata
-	OriginatingDepositoryFinancialInstitutionID            pjson.Metadata
-	OriginatingDepositoryFinancialInstitutionBranchCountry pjson.Metadata
-	OriginatorCity                                         pjson.Metadata
-	OriginatorCompanyEntryDescription                      pjson.Metadata
-	OriginatorCountry                                      pjson.Metadata
-	OriginatorIdentification                               pjson.Metadata
-	OriginatorName                                         pjson.Metadata
-	OriginatorPostalCode                                   pjson.Metadata
-	OriginatorStreetAddress                                pjson.Metadata
-	OriginatorStateOrProvince                              pjson.Metadata
-	PaymentRelatedInformation                              pjson.Metadata
-	PaymentRelatedInformation2                             pjson.Metadata
-	ReceiverIdentificationNumber                           pjson.Metadata
-	ReceiverStreetAddress                                  pjson.Metadata
-	ReceiverCity                                           pjson.Metadata
-	ReceiverStateOrProvince                                pjson.Metadata
-	ReceiverCountry                                        pjson.Metadata
-	ReceiverPostalCode                                     pjson.Metadata
-	ReceivingCompanyOrIndividualName                       pjson.Metadata
-	ReceivingDepositoryFinancialInstitutionName            pjson.Metadata
-	ReceivingDepositoryFinancialInstitutionIDQualifier     pjson.Metadata
-	ReceivingDepositoryFinancialInstitutionID              pjson.Metadata
-	ReceivingDepositoryFinancialInstitutionCountry         pjson.Metadata
-	TraceNumber                                            pjson.Metadata
+	Amount                                                 apijson.Metadata
+	ForeignExchangeIndicator                               apijson.Metadata
+	ForeignExchangeReferenceIndicator                      apijson.Metadata
+	ForeignExchangeReference                               apijson.Metadata
+	DestinationCountryCode                                 apijson.Metadata
+	DestinationCurrencyCode                                apijson.Metadata
+	ForeignPaymentAmount                                   apijson.Metadata
+	ForeignTraceNumber                                     apijson.Metadata
+	InternationalTransactionTypeCode                       apijson.Metadata
+	OriginatingCurrencyCode                                apijson.Metadata
+	OriginatingDepositoryFinancialInstitutionName          apijson.Metadata
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Metadata
+	OriginatingDepositoryFinancialInstitutionID            apijson.Metadata
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Metadata
+	OriginatorCity                                         apijson.Metadata
+	OriginatorCompanyEntryDescription                      apijson.Metadata
+	OriginatorCountry                                      apijson.Metadata
+	OriginatorIdentification                               apijson.Metadata
+	OriginatorName                                         apijson.Metadata
+	OriginatorPostalCode                                   apijson.Metadata
+	OriginatorStreetAddress                                apijson.Metadata
+	OriginatorStateOrProvince                              apijson.Metadata
+	PaymentRelatedInformation                              apijson.Metadata
+	PaymentRelatedInformation2                             apijson.Metadata
+	ReceiverIdentificationNumber                           apijson.Metadata
+	ReceiverStreetAddress                                  apijson.Metadata
+	ReceiverCity                                           apijson.Metadata
+	ReceiverStateOrProvince                                apijson.Metadata
+	ReceiverCountry                                        apijson.Metadata
+	ReceiverPostalCode                                     apijson.Metadata
+	ReceivingCompanyOrIndividualName                       apijson.Metadata
+	ReceivingDepositoryFinancialInstitutionName            apijson.Metadata
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Metadata
+	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
+	TraceNumber                                            apijson.Metadata
 	Raw                                                    []byte
-	Extras                                                 map[string]pjson.Metadata
+	Extras                                                 map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTransfer
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
@@ -1317,24 +1317,24 @@ type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTran
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
-	Amount                    pjson.Metadata
-	Currency                  pjson.Metadata
-	CreditorName              pjson.Metadata
-	DebtorName                pjson.Metadata
-	DebtorAccountNumber       pjson.Metadata
-	DebtorRoutingNumber       pjson.Metadata
-	TransactionIdentification pjson.Metadata
-	RemittanceInformation     pjson.Metadata
+	Amount                    apijson.Metadata
+	Currency                  apijson.Metadata
+	CreditorName              apijson.Metadata
+	DebtorName                apijson.Metadata
+	DebtorAccountNumber       apijson.Metadata
+	DebtorRoutingNumber       apijson.Metadata
+	TransactionIdentification apijson.Metadata
+	RemittanceInformation     apijson.Metadata
 	Raw                       []byte
-	Extras                    map[string]pjson.Metadata
+	Extras                    map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
@@ -1373,26 +1373,26 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
-	Amount                                        pjson.Metadata
-	Description                                   pjson.Metadata
-	InputCycleDate                                pjson.Metadata
-	InputSequenceNumber                           pjson.Metadata
-	InputSource                                   pjson.Metadata
-	InputMessageAccountabilityData                pjson.Metadata
-	PreviousMessageInputMessageAccountabilityData pjson.Metadata
-	PreviousMessageInputCycleDate                 pjson.Metadata
-	PreviousMessageInputSequenceNumber            pjson.Metadata
-	PreviousMessageInputSource                    pjson.Metadata
+	Amount                                        apijson.Metadata
+	Description                                   apijson.Metadata
+	InputCycleDate                                apijson.Metadata
+	InputSequenceNumber                           apijson.Metadata
+	InputSource                                   apijson.Metadata
+	InputMessageAccountabilityData                apijson.Metadata
+	PreviousMessageInputMessageAccountabilityData apijson.Metadata
+	PreviousMessageInputCycleDate                 apijson.Metadata
+	PreviousMessageInputSequenceNumber            apijson.Metadata
+	PreviousMessageInputSource                    apijson.Metadata
 	Raw                                           []byte
-	Extras                                        map[string]pjson.Metadata
+	Extras                                        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
@@ -1415,29 +1415,29 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment 
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             pjson.Metadata
-	BeneficiaryAddressLine1            pjson.Metadata
-	BeneficiaryAddressLine2            pjson.Metadata
-	BeneficiaryAddressLine3            pjson.Metadata
-	BeneficiaryName                    pjson.Metadata
-	BeneficiaryReference               pjson.Metadata
-	Description                        pjson.Metadata
-	InputMessageAccountabilityData     pjson.Metadata
-	OriginatorAddressLine1             pjson.Metadata
-	OriginatorAddressLine2             pjson.Metadata
-	OriginatorAddressLine3             pjson.Metadata
-	OriginatorName                     pjson.Metadata
-	OriginatorToBeneficiaryInformation pjson.Metadata
+	Amount                             apijson.Metadata
+	BeneficiaryAddressLine1            apijson.Metadata
+	BeneficiaryAddressLine2            apijson.Metadata
+	BeneficiaryAddressLine3            apijson.Metadata
+	BeneficiaryName                    apijson.Metadata
+	BeneficiaryReference               apijson.Metadata
+	Description                        apijson.Metadata
+	InputMessageAccountabilityData     apijson.Metadata
+	OriginatorAddressLine1             apijson.Metadata
+	OriginatorAddressLine2             apijson.Metadata
+	OriginatorAddressLine3             apijson.Metadata
+	OriginatorName                     apijson.Metadata
+	OriginatorToBeneficiaryInformation apijson.Metadata
 	Raw                                []byte
-	Extras                             map[string]pjson.Metadata
+	Extras                             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct {
@@ -1475,30 +1475,30 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireReversalJSON struct {
-	Amount                                                pjson.Metadata
-	CreatedAt                                             pjson.Metadata
-	Description                                           pjson.Metadata
-	InputCycleDate                                        pjson.Metadata
-	InputSequenceNumber                                   pjson.Metadata
-	InputSource                                           pjson.Metadata
-	InputMessageAccountabilityData                        pjson.Metadata
-	PreviousMessageInputMessageAccountabilityData         pjson.Metadata
-	PreviousMessageInputCycleDate                         pjson.Metadata
-	PreviousMessageInputSequenceNumber                    pjson.Metadata
-	PreviousMessageInputSource                            pjson.Metadata
-	ReceiverFinancialInstitutionInformation               pjson.Metadata
-	FinancialInstitutionToFinancialInstitutionInformation pjson.Metadata
-	TransactionID                                         pjson.Metadata
+	Amount                                                apijson.Metadata
+	CreatedAt                                             apijson.Metadata
+	Description                                           apijson.Metadata
+	InputCycleDate                                        apijson.Metadata
+	InputSequenceNumber                                   apijson.Metadata
+	InputSource                                           apijson.Metadata
+	InputMessageAccountabilityData                        apijson.Metadata
+	PreviousMessageInputMessageAccountabilityData         apijson.Metadata
+	PreviousMessageInputCycleDate                         apijson.Metadata
+	PreviousMessageInputSequenceNumber                    apijson.Metadata
+	PreviousMessageInputSource                            apijson.Metadata
+	ReceiverFinancialInstitutionInformation               apijson.Metadata
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
+	TransactionID                                         apijson.Metadata
 	Raw                                                   []byte
-	Extras                                                map[string]pjson.Metadata
+	Extras                                                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundWireReversal using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireTransfer struct {
@@ -1525,33 +1525,33 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireTransfer struct 
 }
 
 type InterestPaymentSimulationResultTransactionSourceInboundWireTransferJSON struct {
-	Amount                                  pjson.Metadata
-	BeneficiaryAddressLine1                 pjson.Metadata
-	BeneficiaryAddressLine2                 pjson.Metadata
-	BeneficiaryAddressLine3                 pjson.Metadata
-	BeneficiaryName                         pjson.Metadata
-	BeneficiaryReference                    pjson.Metadata
-	Description                             pjson.Metadata
-	InputMessageAccountabilityData          pjson.Metadata
-	OriginatorAddressLine1                  pjson.Metadata
-	OriginatorAddressLine2                  pjson.Metadata
-	OriginatorAddressLine3                  pjson.Metadata
-	OriginatorName                          pjson.Metadata
-	OriginatorToBeneficiaryInformationLine1 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine2 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine3 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine4 pjson.Metadata
-	OriginatorToBeneficiaryInformation      pjson.Metadata
+	Amount                                  apijson.Metadata
+	BeneficiaryAddressLine1                 apijson.Metadata
+	BeneficiaryAddressLine2                 apijson.Metadata
+	BeneficiaryAddressLine3                 apijson.Metadata
+	BeneficiaryName                         apijson.Metadata
+	BeneficiaryReference                    apijson.Metadata
+	Description                             apijson.Metadata
+	InputMessageAccountabilityData          apijson.Metadata
+	OriginatorAddressLine1                  apijson.Metadata
+	OriginatorAddressLine2                  apijson.Metadata
+	OriginatorAddressLine3                  apijson.Metadata
+	OriginatorName                          apijson.Metadata
+	OriginatorToBeneficiaryInformationLine1 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine2 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
+	OriginatorToBeneficiaryInformation      apijson.Metadata
 	Raw                                     []byte
-	Extras                                  map[string]pjson.Metadata
+	Extras                                  map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInboundWireTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInterestPayment struct {
@@ -1571,21 +1571,21 @@ type InterestPaymentSimulationResultTransactionSourceInterestPayment struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceInterestPaymentJSON struct {
-	Amount             pjson.Metadata
-	Currency           pjson.Metadata
-	PeriodStart        pjson.Metadata
-	PeriodEnd          pjson.Metadata
-	AccruedOnAccountID pjson.Metadata
+	Amount             apijson.Metadata
+	Currency           apijson.Metadata
+	PeriodStart        apijson.Metadata
+	PeriodEnd          apijson.Metadata
+	AccruedOnAccountID apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInterestPayment using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency string
@@ -1611,19 +1611,19 @@ type InterestPaymentSimulationResultTransactionSourceInternalSource struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceInternalSourceJSON struct {
-	Amount   pjson.Metadata
-	Currency pjson.Metadata
-	Reason   pjson.Metadata
+	Amount   apijson.Metadata
+	Currency apijson.Metadata
+	Reason   apijson.Metadata
 	Raw      []byte
-	Extras   map[string]pjson.Metadata
+	Extras   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceInternalSource using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency string
@@ -1668,24 +1668,24 @@ type InterestPaymentSimulationResultTransactionSourceCardRouteRefund struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRouteRefundJSON struct {
-	Amount               pjson.Metadata
-	Currency             pjson.Metadata
-	MerchantAcceptorID   pjson.Metadata
-	MerchantCity         pjson.Metadata
-	MerchantCountry      pjson.Metadata
-	MerchantDescriptor   pjson.Metadata
-	MerchantState        pjson.Metadata
-	MerchantCategoryCode pjson.Metadata
+	Amount               apijson.Metadata
+	Currency             apijson.Metadata
+	MerchantAcceptorID   apijson.Metadata
+	MerchantCity         apijson.Metadata
+	MerchantCountry      apijson.Metadata
+	MerchantDescriptor   apijson.Metadata
+	MerchantState        apijson.Metadata
+	MerchantCategoryCode apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardRouteRefund using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRouteRefundCurrency string
@@ -1716,24 +1716,24 @@ type InterestPaymentSimulationResultTransactionSourceCardRouteSettlement struct 
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRouteSettlementJSON struct {
-	Amount               pjson.Metadata
-	Currency             pjson.Metadata
-	MerchantAcceptorID   pjson.Metadata
-	MerchantCity         pjson.Metadata
-	MerchantCountry      pjson.Metadata
-	MerchantDescriptor   pjson.Metadata
-	MerchantState        pjson.Metadata
-	MerchantCategoryCode pjson.Metadata
+	Amount               apijson.Metadata
+	Currency             apijson.Metadata
+	MerchantAcceptorID   apijson.Metadata
+	MerchantCity         apijson.Metadata
+	MerchantCountry      apijson.Metadata
+	MerchantDescriptor   apijson.Metadata
+	MerchantState        apijson.Metadata
+	MerchantCategoryCode apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceCardRouteSettlement using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRouteSettlementCurrency string
@@ -1762,21 +1762,21 @@ type InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAck
 }
 
 type InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
-	Amount                   pjson.Metadata
-	DestinationAccountNumber pjson.Metadata
-	DestinationRoutingNumber pjson.Metadata
-	RemittanceInformation    pjson.Metadata
-	TransferID               pjson.Metadata
+	Amount                   apijson.Metadata
+	DestinationAccountNumber apijson.Metadata
+	DestinationRoutingNumber apijson.Metadata
+	RemittanceInformation    apijson.Metadata
+	TransferID               apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceSampleFunds struct {
@@ -1786,16 +1786,16 @@ type InterestPaymentSimulationResultTransactionSourceSampleFunds struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceSampleFundsJSON struct {
-	Originator pjson.Metadata
+	Originator apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceSampleFunds using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentIntention struct {
@@ -1809,21 +1809,21 @@ type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentIntentio
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON struct {
-	Amount             pjson.Metadata
-	AccountNumber      pjson.Metadata
-	RoutingNumber      pjson.Metadata
-	MessageToRecipient pjson.Metadata
-	TransferID         pjson.Metadata
+	Amount             apijson.Metadata
+	AccountNumber      apijson.Metadata
+	RoutingNumber      apijson.Metadata
+	MessageToRecipient apijson.Metadata
+	TransferID         apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentIntention
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
@@ -1832,17 +1832,17 @@ type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentRejectio
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID pjson.Metadata
+	TransferID apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentRejection
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InterestPaymentSimulationResultTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireTransferIntention struct {
@@ -1859,21 +1859,21 @@ type InterestPaymentSimulationResultTransactionSourceWireTransferIntention struc
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireTransferIntentionJSON struct {
-	Amount             pjson.Metadata
-	AccountNumber      pjson.Metadata
-	RoutingNumber      pjson.Metadata
-	MessageToRecipient pjson.Metadata
-	TransferID         pjson.Metadata
+	Amount             apijson.Metadata
+	AccountNumber      apijson.Metadata
+	RoutingNumber      apijson.Metadata
+	MessageToRecipient apijson.Metadata
+	TransferID         apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceWireTransferIntention using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireTransferRejection struct {
@@ -1882,17 +1882,17 @@ type InterestPaymentSimulationResultTransactionSourceWireTransferRejection struc
 }
 
 type InterestPaymentSimulationResultTransactionSourceWireTransferRejectionJSON struct {
-	TransferID pjson.Metadata
+	TransferID apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // InterestPaymentSimulationResultTransactionSourceWireTransferRejection using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *InterestPaymentSimulationResultTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InterestPaymentSimulationResultTransactionType string

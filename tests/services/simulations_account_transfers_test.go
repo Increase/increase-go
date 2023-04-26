@@ -3,11 +3,9 @@ package services
 import (
 	"context"
 	"errors"
-	"net/http/httputil"
 	"testing"
 
 	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/core"
 	"github.com/increase/increase-go/option"
 )
 
@@ -19,10 +17,9 @@ func TestSimulationAccountTransferComplete(t *testing.T) {
 		"account_transfer_7k9qe1ysdgqztnt63l7n",
 	)
 	if err != nil {
-		var apiError core.APIError
-		if errors.As(err, &apiError) {
-			body, _ := httputil.DumpRequest(apiError.Request(), true)
-			println(string(body))
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			println(apierr.DumpRequest(true))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

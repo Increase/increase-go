@@ -23,7 +23,7 @@ func NewBookkeepingAccountService(opts ...option.RequestOption) (r *BookkeepingA
 func (r *BookkeepingAccountService) New(ctx context.Context, body *requests.BookkeepingAccountNewParams, opts ...option.RequestOption) (res *responses.BookkeepingAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "bookkeeping_accounts"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -33,7 +33,7 @@ func (r *BookkeepingAccountService) List(ctx context.Context, query *requests.Bo
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_accounts"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

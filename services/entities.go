@@ -26,7 +26,7 @@ func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 func (r *EntityService) New(ctx context.Context, body *requests.EntityNewParams, opts ...option.RequestOption) (res *responses.Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "entities"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *EntityService) New(ctx context.Context, body *requests.EntityNewParams,
 func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...option.RequestOption) (res *responses.Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("entities/%s", entity_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -44,7 +44,7 @@ func (r *EntityService) List(ctx context.Context, query *requests.EntityListPara
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entities"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

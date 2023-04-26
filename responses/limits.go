@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Limit struct {
@@ -27,22 +27,22 @@ type Limit struct {
 }
 
 type LimitJSON struct {
-	ID        pjson.Metadata
-	Interval  pjson.Metadata
-	Metric    pjson.Metadata
-	ModelID   pjson.Metadata
-	ModelType pjson.Metadata
-	Status    pjson.Metadata
-	Type      pjson.Metadata
-	Value     pjson.Metadata
+	ID        apijson.Metadata
+	Interval  apijson.Metadata
+	Metric    apijson.Metadata
+	ModelID   apijson.Metadata
+	ModelType apijson.Metadata
+	Status    apijson.Metadata
+	Type      apijson.Metadata
+	Value     apijson.Metadata
 	Raw       []byte
-	Extras    map[string]pjson.Metadata
+	Extras    map[string]apijson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into Limit using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// UnmarshalJSON deserializes the provided bytes into Limit using the internal json
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Limit) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type LimitInterval string
@@ -93,15 +93,15 @@ type LimitListResponse struct {
 }
 
 type LimitListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into LimitListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *LimitListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

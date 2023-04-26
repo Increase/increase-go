@@ -24,7 +24,7 @@ func NewExternalAccountService(opts ...option.RequestOption) (r *ExternalAccount
 func (r *ExternalAccountService) New(ctx context.Context, body *requests.ExternalAccountNewParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "external_accounts"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *ExternalAccountService) New(ctx context.Context, body *requests.Externa
 func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("external_accounts/%s", external_account_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -40,7 +40,7 @@ func (r *ExternalAccountService) Get(ctx context.Context, external_account_id st
 func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *requests.ExternalAccountUpdateParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("external_accounts/%s", external_account_id)
-	err = option.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
 
@@ -50,7 +50,7 @@ func (r *ExternalAccountService) List(ctx context.Context, query *requests.Exter
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "external_accounts"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

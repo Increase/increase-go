@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Event struct {
@@ -25,20 +25,20 @@ type Event struct {
 }
 
 type EventJSON struct {
-	AssociatedObjectID   pjson.Metadata
-	AssociatedObjectType pjson.Metadata
-	Category             pjson.Metadata
-	CreatedAt            pjson.Metadata
-	ID                   pjson.Metadata
-	Type                 pjson.Metadata
+	AssociatedObjectID   apijson.Metadata
+	AssociatedObjectType apijson.Metadata
+	Category             apijson.Metadata
+	CreatedAt            apijson.Metadata
+	ID                   apijson.Metadata
+	Type                 apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into Event using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// UnmarshalJSON deserializes the provided bytes into Event using the internal json
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Event) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EventCategory string
@@ -111,15 +111,15 @@ type EventListResponse struct {
 }
 
 type EventListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EventListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EventListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

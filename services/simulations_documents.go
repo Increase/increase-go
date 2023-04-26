@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -22,6 +23,6 @@ func NewSimulationDocumentService(opts ...option.RequestOption) (r *SimulationDo
 func (r *SimulationDocumentService) New(ctx context.Context, body *requests.SimulationDocumentNewParams, opts ...option.RequestOption) (res *responses.Document, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/documents"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

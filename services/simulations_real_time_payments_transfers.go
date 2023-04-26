@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -25,7 +26,7 @@ func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) 
 func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, real_time_payments_transfer_id string, body *requests.SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *responses.RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/real_time_payments_transfers/%s/complete", real_time_payments_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -34,6 +35,6 @@ func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context
 func (r *SimulationRealTimePaymentsTransferService) NewInbound(ctx context.Context, body *requests.SimulationRealTimePaymentsTransferNewInboundParams, opts ...option.RequestOption) (res *responses.InboundRealTimePaymentsTransferSimulationResult, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_real_time_payments_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

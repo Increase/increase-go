@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type WireTransfer struct {
@@ -59,36 +59,36 @@ type WireTransfer struct {
 }
 
 type WireTransferJSON struct {
-	ID                      pjson.Metadata
-	MessageToRecipient      pjson.Metadata
-	Amount                  pjson.Metadata
-	Currency                pjson.Metadata
-	AccountNumber           pjson.Metadata
-	BeneficiaryName         pjson.Metadata
-	BeneficiaryAddressLine1 pjson.Metadata
-	BeneficiaryAddressLine2 pjson.Metadata
-	BeneficiaryAddressLine3 pjson.Metadata
-	AccountID               pjson.Metadata
-	ExternalAccountID       pjson.Metadata
-	RoutingNumber           pjson.Metadata
-	Approval                pjson.Metadata
-	Cancellation            pjson.Metadata
-	Reversal                pjson.Metadata
-	CreatedAt               pjson.Metadata
-	Network                 pjson.Metadata
-	Status                  pjson.Metadata
-	Submission              pjson.Metadata
-	TransactionID           pjson.Metadata
-	Type                    pjson.Metadata
+	ID                      apijson.Metadata
+	MessageToRecipient      apijson.Metadata
+	Amount                  apijson.Metadata
+	Currency                apijson.Metadata
+	AccountNumber           apijson.Metadata
+	BeneficiaryName         apijson.Metadata
+	BeneficiaryAddressLine1 apijson.Metadata
+	BeneficiaryAddressLine2 apijson.Metadata
+	BeneficiaryAddressLine3 apijson.Metadata
+	AccountID               apijson.Metadata
+	ExternalAccountID       apijson.Metadata
+	RoutingNumber           apijson.Metadata
+	Approval                apijson.Metadata
+	Cancellation            apijson.Metadata
+	Reversal                apijson.Metadata
+	CreatedAt               apijson.Metadata
+	Network                 apijson.Metadata
+	Status                  apijson.Metadata
+	Submission              apijson.Metadata
+	TransactionID           apijson.Metadata
+	Type                    apijson.Metadata
 	Raw                     []byte
-	Extras                  map[string]pjson.Metadata
+	Extras                  map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireTransferCurrency string
@@ -113,17 +113,17 @@ type WireTransferApproval struct {
 }
 
 type WireTransferApprovalJSON struct {
-	ApprovedAt pjson.Metadata
-	ApprovedBy pjson.Metadata
+	ApprovedAt apijson.Metadata
+	ApprovedBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferApproval using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *WireTransferApproval) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireTransferCancellation struct {
@@ -137,17 +137,17 @@ type WireTransferCancellation struct {
 }
 
 type WireTransferCancellationJSON struct {
-	CanceledAt pjson.Metadata
-	CanceledBy pjson.Metadata
+	CanceledAt apijson.Metadata
+	CanceledBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferCancellation
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireTransferReversal struct {
@@ -185,29 +185,29 @@ type WireTransferReversal struct {
 }
 
 type WireTransferReversalJSON struct {
-	Amount                                                pjson.Metadata
-	CreatedAt                                             pjson.Metadata
-	Description                                           pjson.Metadata
-	InputCycleDate                                        pjson.Metadata
-	InputSequenceNumber                                   pjson.Metadata
-	InputSource                                           pjson.Metadata
-	InputMessageAccountabilityData                        pjson.Metadata
-	PreviousMessageInputMessageAccountabilityData         pjson.Metadata
-	PreviousMessageInputCycleDate                         pjson.Metadata
-	PreviousMessageInputSequenceNumber                    pjson.Metadata
-	PreviousMessageInputSource                            pjson.Metadata
-	ReceiverFinancialInstitutionInformation               pjson.Metadata
-	FinancialInstitutionToFinancialInstitutionInformation pjson.Metadata
-	TransactionID                                         pjson.Metadata
+	Amount                                                apijson.Metadata
+	CreatedAt                                             apijson.Metadata
+	Description                                           apijson.Metadata
+	InputCycleDate                                        apijson.Metadata
+	InputSequenceNumber                                   apijson.Metadata
+	InputSource                                           apijson.Metadata
+	InputMessageAccountabilityData                        apijson.Metadata
+	PreviousMessageInputMessageAccountabilityData         apijson.Metadata
+	PreviousMessageInputCycleDate                         apijson.Metadata
+	PreviousMessageInputSequenceNumber                    apijson.Metadata
+	PreviousMessageInputSource                            apijson.Metadata
+	ReceiverFinancialInstitutionInformation               apijson.Metadata
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
+	TransactionID                                         apijson.Metadata
 	Raw                                                   []byte
-	Extras                                                map[string]pjson.Metadata
+	Extras                                                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferReversal using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireTransferNetwork string
@@ -237,17 +237,17 @@ type WireTransferSubmission struct {
 }
 
 type WireTransferSubmissionJSON struct {
-	InputMessageAccountabilityData pjson.Metadata
-	SubmittedAt                    pjson.Metadata
+	InputMessageAccountabilityData apijson.Metadata
+	SubmittedAt                    apijson.Metadata
 	Raw                            []byte
-	Extras                         map[string]pjson.Metadata
+	Extras                         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferSubmission using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireTransferType string
@@ -265,15 +265,15 @@ type WireTransferListResponse struct {
 }
 
 type WireTransferListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireTransferListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *WireTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

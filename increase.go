@@ -3,6 +3,7 @@ package increase
 import (
 	"os"
 
+	"github.com/increase/increase-go/apierror"
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/services"
 )
@@ -103,3 +104,5 @@ func NewIncrease(opts ...option.RequestOption) (r *Increase) {
 
 	return
 }
+
+type Error = apierror.Error

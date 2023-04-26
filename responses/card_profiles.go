@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type CardProfile struct {
@@ -26,21 +26,21 @@ type CardProfile struct {
 }
 
 type CardProfileJSON struct {
-	ID             pjson.Metadata
-	CreatedAt      pjson.Metadata
-	Status         pjson.Metadata
-	Description    pjson.Metadata
-	DigitalWallets pjson.Metadata
-	Type           pjson.Metadata
+	ID             apijson.Metadata
+	CreatedAt      apijson.Metadata
+	Status         apijson.Metadata
+	Description    apijson.Metadata
+	DigitalWallets apijson.Metadata
+	Type           apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfile using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardProfileStatus string
@@ -73,23 +73,23 @@ type CardProfileDigitalWallets struct {
 }
 
 type CardProfileDigitalWalletsJSON struct {
-	TextColor             pjson.Metadata
-	IssuerName            pjson.Metadata
-	CardDescription       pjson.Metadata
-	ContactWebsite        pjson.Metadata
-	ContactEmail          pjson.Metadata
-	ContactPhone          pjson.Metadata
-	BackgroundImageFileID pjson.Metadata
-	AppIconFileID         pjson.Metadata
+	TextColor             apijson.Metadata
+	IssuerName            apijson.Metadata
+	CardDescription       apijson.Metadata
+	ContactWebsite        apijson.Metadata
+	ContactEmail          apijson.Metadata
+	ContactPhone          apijson.Metadata
+	BackgroundImageFileID apijson.Metadata
+	AppIconFileID         apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfileDigitalWallets
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardProfileDigitalWalletsTextColor struct {
@@ -103,18 +103,18 @@ type CardProfileDigitalWalletsTextColor struct {
 }
 
 type CardProfileDigitalWalletsTextColorJSON struct {
-	Red    pjson.Metadata
-	Green  pjson.Metadata
-	Blue   pjson.Metadata
+	Red    apijson.Metadata
+	Green  apijson.Metadata
+	Blue   apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// CardProfileDigitalWalletsTextColor using the internal pjson library.
-// Unrecognized fields are stored in the `jsonFields` property.
+// CardProfileDigitalWalletsTextColor using the internal json library. Unrecognized
+// fields are stored in the `jsonFields` property.
 func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardProfileType string
@@ -132,15 +132,15 @@ type CardProfileListResponse struct {
 }
 
 type CardProfileListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardProfileListResponse using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardProfileListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

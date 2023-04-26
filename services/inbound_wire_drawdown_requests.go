@@ -24,7 +24,7 @@ func NewInboundWireDrawdownRequestService(opts ...option.RequestOption) (r *Inbo
 func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wire_drawdown_request_id string, opts ...option.RequestOption) (res *responses.InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("inbound_wire_drawdown_requests/%s", inbound_wire_drawdown_request_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *req
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_wire_drawdown_requests"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

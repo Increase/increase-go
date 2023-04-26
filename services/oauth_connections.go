@@ -24,7 +24,7 @@ func NewOauthConnectionService(opts ...option.RequestOption) (r *OauthConnection
 func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...option.RequestOption) (res *responses.OauthConnection, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("oauth_connections/%s", oauth_connection_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *OauthConnectionService) List(ctx context.Context, query *requests.Oauth
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "oauth_connections"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

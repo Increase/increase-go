@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type RealTimeDecision struct {
@@ -32,24 +32,24 @@ type RealTimeDecision struct {
 }
 
 type RealTimeDecisionJSON struct {
-	ID                          pjson.Metadata
-	CreatedAt                   pjson.Metadata
-	TimeoutAt                   pjson.Metadata
-	Status                      pjson.Metadata
-	Category                    pjson.Metadata
-	CardAuthorization           pjson.Metadata
-	DigitalWalletToken          pjson.Metadata
-	DigitalWalletAuthentication pjson.Metadata
-	Type                        pjson.Metadata
+	ID                          apijson.Metadata
+	CreatedAt                   apijson.Metadata
+	TimeoutAt                   apijson.Metadata
+	Status                      apijson.Metadata
+	Category                    apijson.Metadata
+	CardAuthorization           apijson.Metadata
+	DigitalWalletToken          apijson.Metadata
+	DigitalWalletAuthentication apijson.Metadata
+	Type                        apijson.Metadata
 	Raw                         []byte
-	Extras                      map[string]pjson.Metadata
+	Extras                      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into RealTimeDecision using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionStatus string
@@ -108,29 +108,29 @@ type RealTimeDecisionCardAuthorization struct {
 }
 
 type RealTimeDecisionCardAuthorizationJSON struct {
-	MerchantAcceptorID   pjson.Metadata
-	MerchantDescriptor   pjson.Metadata
-	MerchantCategoryCode pjson.Metadata
-	MerchantCity         pjson.Metadata
-	MerchantCountry      pjson.Metadata
-	Network              pjson.Metadata
-	NetworkDetails       pjson.Metadata
-	Decision             pjson.Metadata
-	CardID               pjson.Metadata
-	AccountID            pjson.Metadata
-	PresentmentAmount    pjson.Metadata
-	PresentmentCurrency  pjson.Metadata
-	SettlementAmount     pjson.Metadata
-	SettlementCurrency   pjson.Metadata
+	MerchantAcceptorID   apijson.Metadata
+	MerchantDescriptor   apijson.Metadata
+	MerchantCategoryCode apijson.Metadata
+	MerchantCity         apijson.Metadata
+	MerchantCountry      apijson.Metadata
+	Network              apijson.Metadata
+	NetworkDetails       apijson.Metadata
+	Decision             apijson.Metadata
+	CardID               apijson.Metadata
+	AccountID            apijson.Metadata
+	PresentmentAmount    apijson.Metadata
+	PresentmentCurrency  apijson.Metadata
+	SettlementAmount     apijson.Metadata
+	SettlementCurrency   apijson.Metadata
 	Raw                  []byte
-	Extras               map[string]pjson.Metadata
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorization using the internal pjson library. Unrecognized
+// RealTimeDecisionCardAuthorization using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionCardAuthorizationNetwork string
@@ -146,16 +146,16 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
-	Visa   pjson.Metadata
+	Visa   apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorizationNetworkDetails using the internal pjson
-// library. Unrecognized fields are stored in the `jsonFields` property.
+// RealTimeDecisionCardAuthorizationNetworkDetails using the internal json library.
+// Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
@@ -170,17 +170,17 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator pjson.Metadata
-	PointOfServiceEntryMode     pjson.Metadata
+	ElectronicCommerceIndicator apijson.Metadata
+	PointOfServiceEntryMode     apijson.Metadata
 	Raw                         []byte
-	Extras                      map[string]pjson.Metadata
+	Extras                      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorizationNetworkDetailsVisa using the internal pjson
+// RealTimeDecisionCardAuthorizationNetworkDetailsVisa using the internal json
 // library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
@@ -219,19 +219,19 @@ type RealTimeDecisionDigitalWalletToken struct {
 }
 
 type RealTimeDecisionDigitalWalletTokenJSON struct {
-	Decision      pjson.Metadata
-	CardID        pjson.Metadata
-	DigitalWallet pjson.Metadata
-	CardProfileID pjson.Metadata
+	Decision      apijson.Metadata
+	CardID        apijson.Metadata
+	DigitalWallet apijson.Metadata
+	CardProfileID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionDigitalWalletToken using the internal pjson library.
-// Unrecognized fields are stored in the `jsonFields` property.
+// RealTimeDecisionDigitalWalletToken using the internal json library. Unrecognized
+// fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionDigitalWalletTokenDecision string
@@ -268,22 +268,22 @@ type RealTimeDecisionDigitalWalletAuthentication struct {
 }
 
 type RealTimeDecisionDigitalWalletAuthenticationJSON struct {
-	Result          pjson.Metadata
-	CardID          pjson.Metadata
-	DigitalWallet   pjson.Metadata
-	Channel         pjson.Metadata
-	OneTimePasscode pjson.Metadata
-	Phone           pjson.Metadata
-	Email           pjson.Metadata
+	Result          apijson.Metadata
+	CardID          apijson.Metadata
+	DigitalWallet   apijson.Metadata
+	Channel         apijson.Metadata
+	OneTimePasscode apijson.Metadata
+	Phone           apijson.Metadata
+	Email           apijson.Metadata
 	Raw             []byte
-	Extras          map[string]pjson.Metadata
+	Extras          map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionDigitalWalletAuthentication using the internal pjson library.
+// RealTimeDecisionDigitalWalletAuthentication using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type RealTimeDecisionDigitalWalletAuthenticationResult string

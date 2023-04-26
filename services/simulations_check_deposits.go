@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/responses"
@@ -24,7 +25,7 @@ func NewSimulationCheckDepositService(opts ...option.RequestOption) (r *Simulati
 func (r *SimulationCheckDepositService) Reject(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_deposits/%s/reject", check_deposit_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -33,7 +34,7 @@ func (r *SimulationCheckDepositService) Reject(ctx context.Context, check_deposi
 func (r *SimulationCheckDepositService) Return(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_deposits/%s/return", check_deposit_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -42,6 +43,6 @@ func (r *SimulationCheckDepositService) Return(ctx context.Context, check_deposi
 func (r *SimulationCheckDepositService) Submit(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_deposits/%s/submit", check_deposit_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

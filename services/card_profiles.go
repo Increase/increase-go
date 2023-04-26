@@ -24,7 +24,7 @@ func NewCardProfileService(opts ...option.RequestOption) (r *CardProfileService)
 func (r *CardProfileService) New(ctx context.Context, body *requests.CardProfileNewParams, opts ...option.RequestOption) (res *responses.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "card_profiles"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *CardProfileService) New(ctx context.Context, body *requests.CardProfile
 func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...option.RequestOption) (res *responses.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("card_profiles/%s", card_profile_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *CardProfileService) List(ctx context.Context, query *requests.CardProfi
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_profiles"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -24,7 +25,7 @@ func NewSimulationCheckTransferService(opts ...option.RequestOption) (r *Simulat
 func (r *SimulationCheckTransferService) Deposit(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/deposit", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +35,7 @@ func (r *SimulationCheckTransferService) Deposit(ctx context.Context, check_tran
 func (r *SimulationCheckTransferService) Mail(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/mail", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -43,6 +44,6 @@ func (r *SimulationCheckTransferService) Mail(ctx context.Context, check_transfe
 func (r *SimulationCheckTransferService) Return(ctx context.Context, check_transfer_id string, body *requests.SimulationCheckTransferReturnParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/return", check_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

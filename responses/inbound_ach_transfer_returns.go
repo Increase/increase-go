@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type InboundACHTransferReturn struct {
@@ -27,22 +27,22 @@ type InboundACHTransferReturn struct {
 }
 
 type InboundACHTransferReturnJSON struct {
-	ID                              pjson.Metadata
-	InboundACHTransferTransactionID pjson.Metadata
-	TransactionID                   pjson.Metadata
-	Status                          pjson.Metadata
-	Reason                          pjson.Metadata
-	Submission                      pjson.Metadata
-	Type                            pjson.Metadata
+	ID                              apijson.Metadata
+	InboundACHTransferTransactionID apijson.Metadata
+	TransactionID                   apijson.Metadata
+	Status                          apijson.Metadata
+	Reason                          apijson.Metadata
+	Submission                      apijson.Metadata
+	Type                            apijson.Metadata
 	Raw                             []byte
-	Extras                          map[string]pjson.Metadata
+	Extras                          map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundACHTransferReturn
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InboundACHTransferReturnStatus string
@@ -74,17 +74,17 @@ type InboundACHTransferReturnSubmission struct {
 }
 
 type InboundACHTransferReturnSubmissionJSON struct {
-	TraceNumber pjson.Metadata
-	SubmittedAt pjson.Metadata
+	TraceNumber apijson.Metadata
+	SubmittedAt apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InboundACHTransferReturnSubmission using the internal pjson library.
-// Unrecognized fields are stored in the `jsonFields` property.
+// InboundACHTransferReturnSubmission using the internal json library. Unrecognized
+// fields are stored in the `jsonFields` property.
 func (r *InboundACHTransferReturnSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InboundACHTransferReturnType string
@@ -102,15 +102,15 @@ type InboundACHTransferReturnListResponse struct {
 }
 
 type InboundACHTransferReturnListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InboundACHTransferReturnListResponse using the internal pjson library.
+// InboundACHTransferReturnListResponse using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundACHTransferReturnListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

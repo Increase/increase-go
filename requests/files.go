@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/core/field"
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
 )
 
@@ -39,14 +39,14 @@ func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
 		io.Copy(part, r.File.Value)
 	}
 	{
-		bdy, err := pjson.Marshal(r.Description)
+		bdy, err := apijson.Marshal(r.Description)
 		if err != nil {
 			return nil, err
 		}
 		writer.WriteField("description", string(bdy))
 	}
 	{
-		bdy, err := pjson.Marshal(r.Purpose)
+		bdy, err := apijson.Marshal(r.Purpose)
 		if err != nil {
 			return nil, err
 		}

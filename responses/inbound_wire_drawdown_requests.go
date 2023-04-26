@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type InboundWireDrawdownRequest struct {
@@ -60,37 +60,37 @@ type InboundWireDrawdownRequest struct {
 }
 
 type InboundWireDrawdownRequestJSON struct {
-	Type                                    pjson.Metadata
-	ID                                      pjson.Metadata
-	RecipientAccountNumberID                pjson.Metadata
-	OriginatorAccountNumber                 pjson.Metadata
-	OriginatorRoutingNumber                 pjson.Metadata
-	BeneficiaryAccountNumber                pjson.Metadata
-	BeneficiaryRoutingNumber                pjson.Metadata
-	Amount                                  pjson.Metadata
-	Currency                                pjson.Metadata
-	MessageToRecipient                      pjson.Metadata
-	OriginatorToBeneficiaryInformationLine1 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine2 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine3 pjson.Metadata
-	OriginatorToBeneficiaryInformationLine4 pjson.Metadata
-	OriginatorName                          pjson.Metadata
-	OriginatorAddressLine1                  pjson.Metadata
-	OriginatorAddressLine2                  pjson.Metadata
-	OriginatorAddressLine3                  pjson.Metadata
-	BeneficiaryName                         pjson.Metadata
-	BeneficiaryAddressLine1                 pjson.Metadata
-	BeneficiaryAddressLine2                 pjson.Metadata
-	BeneficiaryAddressLine3                 pjson.Metadata
+	Type                                    apijson.Metadata
+	ID                                      apijson.Metadata
+	RecipientAccountNumberID                apijson.Metadata
+	OriginatorAccountNumber                 apijson.Metadata
+	OriginatorRoutingNumber                 apijson.Metadata
+	BeneficiaryAccountNumber                apijson.Metadata
+	BeneficiaryRoutingNumber                apijson.Metadata
+	Amount                                  apijson.Metadata
+	Currency                                apijson.Metadata
+	MessageToRecipient                      apijson.Metadata
+	OriginatorToBeneficiaryInformationLine1 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine2 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
+	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
+	OriginatorName                          apijson.Metadata
+	OriginatorAddressLine1                  apijson.Metadata
+	OriginatorAddressLine2                  apijson.Metadata
+	OriginatorAddressLine3                  apijson.Metadata
+	BeneficiaryName                         apijson.Metadata
+	BeneficiaryAddressLine1                 apijson.Metadata
+	BeneficiaryAddressLine2                 apijson.Metadata
+	BeneficiaryAddressLine3                 apijson.Metadata
 	Raw                                     []byte
-	Extras                                  map[string]pjson.Metadata
+	Extras                                  map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into InboundWireDrawdownRequest
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type InboundWireDrawdownRequestType string
@@ -108,15 +108,15 @@ type InboundWireDrawdownRequestListResponse struct {
 }
 
 type InboundWireDrawdownRequestListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// InboundWireDrawdownRequestListResponse using the internal pjson library.
+// InboundWireDrawdownRequestListResponse using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundWireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

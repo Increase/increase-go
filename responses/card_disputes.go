@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type CardDispute struct {
@@ -31,23 +31,23 @@ type CardDispute struct {
 }
 
 type CardDisputeJSON struct {
-	ID                    pjson.Metadata
-	Explanation           pjson.Metadata
-	Status                pjson.Metadata
-	CreatedAt             pjson.Metadata
-	DisputedTransactionID pjson.Metadata
-	Acceptance            pjson.Metadata
-	Rejection             pjson.Metadata
-	Type                  pjson.Metadata
+	ID                    apijson.Metadata
+	Explanation           apijson.Metadata
+	Status                apijson.Metadata
+	CreatedAt             apijson.Metadata
+	DisputedTransactionID apijson.Metadata
+	Acceptance            apijson.Metadata
+	Rejection             apijson.Metadata
+	Type                  apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDispute using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardDisputeStatus string
@@ -71,18 +71,18 @@ type CardDisputeAcceptance struct {
 }
 
 type CardDisputeAcceptanceJSON struct {
-	AcceptedAt    pjson.Metadata
-	CardDisputeID pjson.Metadata
-	TransactionID pjson.Metadata
+	AcceptedAt    apijson.Metadata
+	CardDisputeID apijson.Metadata
+	TransactionID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeAcceptance using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardDisputeRejection struct {
@@ -97,18 +97,18 @@ type CardDisputeRejection struct {
 }
 
 type CardDisputeRejectionJSON struct {
-	Explanation   pjson.Metadata
-	RejectedAt    pjson.Metadata
-	CardDisputeID pjson.Metadata
+	Explanation   apijson.Metadata
+	RejectedAt    apijson.Metadata
+	CardDisputeID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeRejection using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CardDisputeType string
@@ -126,15 +126,15 @@ type CardDisputeListResponse struct {
 }
 
 type CardDisputeListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CardDisputeListResponse using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CardDisputeListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

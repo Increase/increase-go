@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type AccountTransfer struct {
@@ -45,29 +45,29 @@ type AccountTransfer struct {
 }
 
 type AccountTransferJSON struct {
-	ID                       pjson.Metadata
-	Amount                   pjson.Metadata
-	AccountID                pjson.Metadata
-	Currency                 pjson.Metadata
-	DestinationAccountID     pjson.Metadata
-	DestinationTransactionID pjson.Metadata
-	CreatedAt                pjson.Metadata
-	Description              pjson.Metadata
-	Network                  pjson.Metadata
-	Status                   pjson.Metadata
-	TransactionID            pjson.Metadata
-	Approval                 pjson.Metadata
-	Cancellation             pjson.Metadata
-	Type                     pjson.Metadata
+	ID                       apijson.Metadata
+	Amount                   apijson.Metadata
+	AccountID                apijson.Metadata
+	Currency                 apijson.Metadata
+	DestinationAccountID     apijson.Metadata
+	DestinationTransactionID apijson.Metadata
+	CreatedAt                apijson.Metadata
+	Description              apijson.Metadata
+	Network                  apijson.Metadata
+	Status                   apijson.Metadata
+	TransactionID            apijson.Metadata
+	Approval                 apijson.Metadata
+	Cancellation             apijson.Metadata
+	Type                     apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type AccountTransferCurrency string
@@ -106,17 +106,17 @@ type AccountTransferApproval struct {
 }
 
 type AccountTransferApprovalJSON struct {
-	ApprovedAt pjson.Metadata
-	ApprovedBy pjson.Metadata
+	ApprovedAt apijson.Metadata
+	ApprovedBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferApproval using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *AccountTransferApproval) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type AccountTransferCancellation struct {
@@ -130,17 +130,17 @@ type AccountTransferCancellation struct {
 }
 
 type AccountTransferCancellationJSON struct {
-	CanceledAt pjson.Metadata
-	CanceledBy pjson.Metadata
+	CanceledAt apijson.Metadata
+	CanceledBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferCancellation
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type AccountTransferType string
@@ -158,15 +158,15 @@ type AccountTransferListResponse struct {
 }
 
 type AccountTransferListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into AccountTransferListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *AccountTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

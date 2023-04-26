@@ -26,7 +26,7 @@ func NewFileService(opts ...option.RequestOption) (r *FileService) {
 func (r *FileService) New(ctx context.Context, body *requests.FileNewParams, opts ...option.RequestOption) (res *responses.File, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "files"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *FileService) New(ctx context.Context, body *requests.FileNewParams, opt
 func (r *FileService) Get(ctx context.Context, file_id string, opts ...option.RequestOption) (res *responses.File, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("files/%s", file_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -44,7 +44,7 @@ func (r *FileService) List(ctx context.Context, query *requests.FileListParams, 
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "files"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

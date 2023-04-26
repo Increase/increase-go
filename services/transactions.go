@@ -24,7 +24,7 @@ func NewTransactionService(opts ...option.RequestOption) (r *TransactionService)
 func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...option.RequestOption) (res *responses.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("transactions/%s", transaction_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *TransactionService) List(ctx context.Context, query *requests.Transacti
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "transactions"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

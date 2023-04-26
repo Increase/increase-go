@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -23,6 +24,6 @@ func NewSimulationCardRefundService(opts ...option.RequestOption) (r *Simulation
 func (r *SimulationCardRefundService) New(ctx context.Context, body *requests.SimulationCardRefundNewParams, opts ...option.RequestOption) (res *responses.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_refunds"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

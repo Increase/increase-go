@@ -24,7 +24,7 @@ func NewDigitalWalletTokenService(opts ...option.RequestOption) (r *DigitalWalle
 func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...option.RequestOption) (res *responses.DigitalWalletToken, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query *requests.Di
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "digital_wallet_tokens"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

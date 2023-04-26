@@ -24,7 +24,7 @@ func NewCardDisputeService(opts ...option.RequestOption) (r *CardDisputeService)
 func (r *CardDisputeService) New(ctx context.Context, body *requests.CardDisputeNewParams, opts ...option.RequestOption) (res *responses.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "card_disputes"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *CardDisputeService) New(ctx context.Context, body *requests.CardDispute
 func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...option.RequestOption) (res *responses.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("card_disputes/%s", card_dispute_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *CardDisputeService) List(ctx context.Context, query *requests.CardDispu
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_disputes"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

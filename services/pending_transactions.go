@@ -24,7 +24,7 @@ func NewPendingTransactionService(opts ...option.RequestOption) (r *PendingTrans
 func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...option.RequestOption) (res *responses.PendingTransaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("pending_transactions/%s", pending_transaction_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *PendingTransactionService) List(ctx context.Context, query *requests.Pe
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "pending_transactions"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

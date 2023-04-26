@@ -24,7 +24,7 @@ func NewWireTransferService(opts ...option.RequestOption) (r *WireTransferServic
 func (r *WireTransferService) New(ctx context.Context, body *requests.WireTransferNewParams, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "wire_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *WireTransferService) New(ctx context.Context, body *requests.WireTransf
 func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("wire_transfers/%s", wire_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *WireTransferService) List(ctx context.Context, query *requests.WireTran
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_transfers"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (r *WireTransferService) ListAutoPager(ctx context.Context, query *requests
 func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -71,7 +71,7 @@ func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id stri
 func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -82,7 +82,7 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -92,6 +92,6 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

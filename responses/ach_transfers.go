@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type ACHTransfer struct {
@@ -78,43 +78,43 @@ type ACHTransfer struct {
 }
 
 type ACHTransferJSON struct {
-	AccountID                pjson.Metadata
-	AccountNumber            pjson.Metadata
-	Addendum                 pjson.Metadata
-	Amount                   pjson.Metadata
-	Currency                 pjson.Metadata
-	Approval                 pjson.Metadata
-	Cancellation             pjson.Metadata
-	CreatedAt                pjson.Metadata
-	ExternalAccountID        pjson.Metadata
-	ID                       pjson.Metadata
-	Network                  pjson.Metadata
-	NotificationsOfChange    pjson.Metadata
-	Return                   pjson.Metadata
-	RoutingNumber            pjson.Metadata
-	StatementDescriptor      pjson.Metadata
-	Status                   pjson.Metadata
-	Submission               pjson.Metadata
-	TransactionID            pjson.Metadata
-	CompanyDescriptiveDate   pjson.Metadata
-	CompanyDiscretionaryData pjson.Metadata
-	CompanyEntryDescription  pjson.Metadata
-	CompanyName              pjson.Metadata
-	Funding                  pjson.Metadata
-	IndividualID             pjson.Metadata
-	IndividualName           pjson.Metadata
-	EffectiveDate            pjson.Metadata
-	StandardEntryClassCode   pjson.Metadata
-	Type                     pjson.Metadata
+	AccountID                apijson.Metadata
+	AccountNumber            apijson.Metadata
+	Addendum                 apijson.Metadata
+	Amount                   apijson.Metadata
+	Currency                 apijson.Metadata
+	Approval                 apijson.Metadata
+	Cancellation             apijson.Metadata
+	CreatedAt                apijson.Metadata
+	ExternalAccountID        apijson.Metadata
+	ID                       apijson.Metadata
+	Network                  apijson.Metadata
+	NotificationsOfChange    apijson.Metadata
+	Return                   apijson.Metadata
+	RoutingNumber            apijson.Metadata
+	StatementDescriptor      apijson.Metadata
+	Status                   apijson.Metadata
+	Submission               apijson.Metadata
+	TransactionID            apijson.Metadata
+	CompanyDescriptiveDate   apijson.Metadata
+	CompanyDiscretionaryData apijson.Metadata
+	CompanyEntryDescription  apijson.Metadata
+	CompanyName              apijson.Metadata
+	Funding                  apijson.Metadata
+	IndividualID             apijson.Metadata
+	IndividualName           apijson.Metadata
+	EffectiveDate            apijson.Metadata
+	StandardEntryClassCode   apijson.Metadata
+	Type                     apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferCurrency string
@@ -139,17 +139,17 @@ type ACHTransferApproval struct {
 }
 
 type ACHTransferApprovalJSON struct {
-	ApprovedAt pjson.Metadata
-	ApprovedBy pjson.Metadata
+	ApprovedAt apijson.Metadata
+	ApprovedBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferApproval using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransferApproval) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferCancellation struct {
@@ -163,17 +163,17 @@ type ACHTransferCancellation struct {
 }
 
 type ACHTransferCancellationJSON struct {
-	CanceledAt pjson.Metadata
-	CanceledBy pjson.Metadata
+	CanceledAt apijson.Metadata
+	CanceledBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferCancellation using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferNetwork string
@@ -194,18 +194,18 @@ type ACHTransferNotificationsOfChange struct {
 }
 
 type ACHTransferNotificationsOfChangeJSON struct {
-	CreatedAt     pjson.Metadata
-	ChangeCode    pjson.Metadata
-	CorrectedData pjson.Metadata
+	CreatedAt     apijson.Metadata
+	ChangeCode    apijson.Metadata
+	CorrectedData apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// ACHTransferNotificationsOfChange using the internal pjson library. Unrecognized
+// ACHTransferNotificationsOfChange using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferReturn struct {
@@ -222,19 +222,19 @@ type ACHTransferReturn struct {
 }
 
 type ACHTransferReturnJSON struct {
-	CreatedAt        pjson.Metadata
-	ReturnReasonCode pjson.Metadata
-	TransferID       pjson.Metadata
-	TransactionID    pjson.Metadata
+	CreatedAt        apijson.Metadata
+	ReturnReasonCode apijson.Metadata
+	TransferID       apijson.Metadata
+	TransactionID    apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferReturn using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferReturnReturnReasonCode string
@@ -287,17 +287,17 @@ type ACHTransferSubmission struct {
 }
 
 type ACHTransferSubmissionJSON struct {
-	TraceNumber pjson.Metadata
-	SubmittedAt pjson.Metadata
+	TraceNumber apijson.Metadata
+	SubmittedAt apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferSubmission using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type ACHTransferFunding string
@@ -330,15 +330,15 @@ type ACHTransferListResponse struct {
 }
 
 type ACHTransferListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into ACHTransferListResponse using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *ACHTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

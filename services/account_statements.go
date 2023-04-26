@@ -24,7 +24,7 @@ func NewAccountStatementService(opts ...option.RequestOption) (r *AccountStateme
 func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...option.RequestOption) (res *responses.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_statements/%s", account_statement_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *AccountStatementService) List(ctx context.Context, query *requests.Acco
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_statements"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

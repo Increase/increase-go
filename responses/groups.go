@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Group struct {
@@ -23,19 +23,19 @@ type Group struct {
 }
 
 type GroupJSON struct {
-	ActivationStatus pjson.Metadata
-	ACHDebitStatus   pjson.Metadata
-	CreatedAt        pjson.Metadata
-	ID               pjson.Metadata
-	Type             pjson.Metadata
+	ActivationStatus apijson.Metadata
+	ACHDebitStatus   apijson.Metadata
+	CreatedAt        apijson.Metadata
+	ID               apijson.Metadata
+	Type             apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
-// UnmarshalJSON deserializes the provided bytes into Group using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// UnmarshalJSON deserializes the provided bytes into Group using the internal json
+// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Group) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type GroupActivationStatus string

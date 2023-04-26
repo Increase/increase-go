@@ -24,7 +24,7 @@ func NewInboundACHTransferReturnService(opts ...option.RequestOption) (r *Inboun
 func (r *InboundACHTransferReturnService) New(ctx context.Context, body *requests.InboundACHTransferReturnNewParams, opts ...option.RequestOption) (res *responses.InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "inbound_ach_transfer_returns"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *InboundACHTransferReturnService) New(ctx context.Context, body *request
 func (r *InboundACHTransferReturnService) Get(ctx context.Context, inbound_ach_transfer_return_id string, opts ...option.RequestOption) (res *responses.InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("inbound_ach_transfer_returns/%s", inbound_ach_transfer_return_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *InboundACHTransferReturnService) List(ctx context.Context, query *reque
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_ach_transfer_returns"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

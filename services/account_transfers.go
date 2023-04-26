@@ -24,7 +24,7 @@ func NewAccountTransferService(opts ...option.RequestOption) (r *AccountTransfer
 func (r *AccountTransferService) New(ctx context.Context, body *requests.AccountTransferNewParams, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "account_transfers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *AccountTransferService) New(ctx context.Context, body *requests.Account
 func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s", account_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *AccountTransferService) List(ctx context.Context, query *requests.Accou
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_transfers"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (r *AccountTransferService) ListAutoPager(ctx context.Context, query *reque
 func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s/approve", account_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
@@ -71,6 +71,6 @@ func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_i
 func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_transfers/%s/cancel", account_transfer_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

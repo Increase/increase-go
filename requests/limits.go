@@ -4,7 +4,7 @@ import (
 	"net/url"
 
 	"github.com/increase/increase-go/core/field"
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 	"github.com/increase/increase-go/core/query"
 )
 
@@ -24,7 +24,7 @@ type LimitNewParams struct {
 // library. Members of the `jsonFields` field are serialized into the top-level,
 // and will overwrite known members of the same name.
 func (r LimitNewParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }
 
 type LimitNewParamsMetric string
@@ -54,7 +54,7 @@ type LimitUpdateParams struct {
 // library. Members of the `jsonFields` field are serialized into the top-level,
 // and will overwrite known members of the same name.
 func (r LimitUpdateParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }
 
 type LimitUpdateParamsStatus string

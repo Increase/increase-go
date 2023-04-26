@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type CheckTransfer struct {
@@ -71,40 +71,40 @@ type CheckTransfer struct {
 }
 
 type CheckTransferJSON struct {
-	AccountID          pjson.Metadata
-	AddressLine1       pjson.Metadata
-	AddressLine2       pjson.Metadata
-	AddressCity        pjson.Metadata
-	AddressState       pjson.Metadata
-	AddressZip         pjson.Metadata
-	ReturnAddress      pjson.Metadata
-	Amount             pjson.Metadata
-	CreatedAt          pjson.Metadata
-	Currency           pjson.Metadata
-	Approval           pjson.Metadata
-	Cancellation       pjson.Metadata
-	ID                 pjson.Metadata
-	MailedAt           pjson.Metadata
-	Message            pjson.Metadata
-	Note               pjson.Metadata
-	RecipientName      pjson.Metadata
-	Status             pjson.Metadata
-	SubmittedAt        pjson.Metadata
-	Submission         pjson.Metadata
-	TransactionID      pjson.Metadata
-	StopPaymentRequest pjson.Metadata
-	Deposit            pjson.Metadata
-	ReturnDetails      pjson.Metadata
-	Type               pjson.Metadata
+	AccountID          apijson.Metadata
+	AddressLine1       apijson.Metadata
+	AddressLine2       apijson.Metadata
+	AddressCity        apijson.Metadata
+	AddressState       apijson.Metadata
+	AddressZip         apijson.Metadata
+	ReturnAddress      apijson.Metadata
+	Amount             apijson.Metadata
+	CreatedAt          apijson.Metadata
+	Currency           apijson.Metadata
+	Approval           apijson.Metadata
+	Cancellation       apijson.Metadata
+	ID                 apijson.Metadata
+	MailedAt           apijson.Metadata
+	Message            apijson.Metadata
+	Note               apijson.Metadata
+	RecipientName      apijson.Metadata
+	Status             apijson.Metadata
+	SubmittedAt        apijson.Metadata
+	Submission         apijson.Metadata
+	TransactionID      apijson.Metadata
+	StopPaymentRequest apijson.Metadata
+	Deposit            apijson.Metadata
+	ReturnDetails      apijson.Metadata
+	Type               apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransfer using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferReturnAddress struct {
@@ -124,21 +124,21 @@ type CheckTransferReturnAddress struct {
 }
 
 type CheckTransferReturnAddressJSON struct {
-	Name   pjson.Metadata
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Name   apijson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferReturnAddress
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferCurrency string
@@ -163,17 +163,17 @@ type CheckTransferApproval struct {
 }
 
 type CheckTransferApprovalJSON struct {
-	ApprovedAt pjson.Metadata
-	ApprovedBy pjson.Metadata
+	ApprovedAt apijson.Metadata
+	ApprovedBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferApproval using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CheckTransferApproval) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferCancellation struct {
@@ -187,17 +187,17 @@ type CheckTransferCancellation struct {
 }
 
 type CheckTransferCancellationJSON struct {
-	CanceledAt pjson.Metadata
-	CanceledBy pjson.Metadata
+	CanceledAt apijson.Metadata
+	CanceledBy apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferCancellation
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferStatus string
@@ -225,17 +225,17 @@ type CheckTransferSubmission struct {
 }
 
 type CheckTransferSubmissionJSON struct {
-	SubmittedAt pjson.Metadata
-	CheckNumber pjson.Metadata
+	SubmittedAt apijson.Metadata
+	CheckNumber apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferSubmission using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferStopPaymentRequest struct {
@@ -252,19 +252,19 @@ type CheckTransferStopPaymentRequest struct {
 }
 
 type CheckTransferStopPaymentRequestJSON struct {
-	TransferID    pjson.Metadata
-	TransactionID pjson.Metadata
-	RequestedAt   pjson.Metadata
-	Type          pjson.Metadata
+	TransferID    apijson.Metadata
+	TransactionID apijson.Metadata
+	RequestedAt   apijson.Metadata
+	Type          apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// CheckTransferStopPaymentRequest using the internal pjson library. Unrecognized
+// CheckTransferStopPaymentRequest using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferStopPaymentRequestType string
@@ -287,19 +287,19 @@ type CheckTransferDeposit struct {
 }
 
 type CheckTransferDepositJSON struct {
-	DepositedAt      pjson.Metadata
-	FrontImageFileID pjson.Metadata
-	BackImageFileID  pjson.Metadata
-	Type             pjson.Metadata
+	DepositedAt      apijson.Metadata
+	FrontImageFileID apijson.Metadata
+	BackImageFileID  apijson.Metadata
+	Type             apijson.Metadata
 	Raw              []byte
-	Extras           map[string]pjson.Metadata
+	Extras           map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferDeposit using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferDepositType string
@@ -325,20 +325,20 @@ type CheckTransferReturnDetails struct {
 }
 
 type CheckTransferReturnDetailsJSON struct {
-	TransferID    pjson.Metadata
-	ReturnedAt    pjson.Metadata
-	FileID        pjson.Metadata
-	Reason        pjson.Metadata
-	TransactionID pjson.Metadata
+	TransferID    apijson.Metadata
+	ReturnedAt    apijson.Metadata
+	FileID        apijson.Metadata
+	Reason        apijson.Metadata
+	TransactionID apijson.Metadata
 	Raw           []byte
-	Extras        map[string]pjson.Metadata
+	Extras        map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferReturnDetails
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckTransferReturnDetailsReason string
@@ -363,15 +363,15 @@ type CheckTransferListResponse struct {
 }
 
 type CheckTransferListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckTransferListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

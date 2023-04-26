@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type CheckDeposit struct {
@@ -43,28 +43,28 @@ type CheckDeposit struct {
 }
 
 type CheckDepositJSON struct {
-	ID                pjson.Metadata
-	Amount            pjson.Metadata
-	CreatedAt         pjson.Metadata
-	Currency          pjson.Metadata
-	Status            pjson.Metadata
-	AccountID         pjson.Metadata
-	FrontImageFileID  pjson.Metadata
-	BackImageFileID   pjson.Metadata
-	TransactionID     pjson.Metadata
-	DepositAcceptance pjson.Metadata
-	DepositRejection  pjson.Metadata
-	DepositReturn     pjson.Metadata
-	Type              pjson.Metadata
+	ID                apijson.Metadata
+	Amount            apijson.Metadata
+	CreatedAt         apijson.Metadata
+	Currency          apijson.Metadata
+	Status            apijson.Metadata
+	AccountID         apijson.Metadata
+	FrontImageFileID  apijson.Metadata
+	BackImageFileID   apijson.Metadata
+	TransactionID     apijson.Metadata
+	DepositAcceptance apijson.Metadata
+	DepositRejection  apijson.Metadata
+	DepositReturn     apijson.Metadata
+	Type              apijson.Metadata
 	Raw               []byte
-	Extras            map[string]pjson.Metadata
+	Extras            map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDeposit using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckDepositCurrency string
@@ -110,22 +110,22 @@ type CheckDepositDepositAcceptance struct {
 }
 
 type CheckDepositDepositAcceptanceJSON struct {
-	Amount         pjson.Metadata
-	Currency       pjson.Metadata
-	AccountNumber  pjson.Metadata
-	RoutingNumber  pjson.Metadata
-	AuxiliaryOnUs  pjson.Metadata
-	SerialNumber   pjson.Metadata
-	CheckDepositID pjson.Metadata
+	Amount         apijson.Metadata
+	Currency       apijson.Metadata
+	AccountNumber  apijson.Metadata
+	RoutingNumber  apijson.Metadata
+	AuxiliaryOnUs  apijson.Metadata
+	SerialNumber   apijson.Metadata
+	CheckDepositID apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositAcceptance
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckDepositDepositAcceptanceCurrency string
@@ -155,19 +155,19 @@ type CheckDepositDepositRejection struct {
 }
 
 type CheckDepositDepositRejectionJSON struct {
-	Amount     pjson.Metadata
-	Currency   pjson.Metadata
-	Reason     pjson.Metadata
-	RejectedAt pjson.Metadata
+	Amount     apijson.Metadata
+	Currency   apijson.Metadata
+	Reason     apijson.Metadata
+	RejectedAt apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositRejection
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckDepositDepositRejectionCurrency string
@@ -213,21 +213,21 @@ type CheckDepositDepositReturn struct {
 }
 
 type CheckDepositDepositReturnJSON struct {
-	Amount         pjson.Metadata
-	ReturnedAt     pjson.Metadata
-	Currency       pjson.Metadata
-	CheckDepositID pjson.Metadata
-	TransactionID  pjson.Metadata
-	ReturnReason   pjson.Metadata
+	Amount         apijson.Metadata
+	ReturnedAt     apijson.Metadata
+	Currency       apijson.Metadata
+	CheckDepositID apijson.Metadata
+	TransactionID  apijson.Metadata
+	ReturnReason   apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositDepositReturn
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type CheckDepositDepositReturnCurrency string
@@ -272,15 +272,15 @@ type CheckDepositListResponse struct {
 }
 
 type CheckDepositListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into CheckDepositListResponse
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *CheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

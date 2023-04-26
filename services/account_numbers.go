@@ -24,7 +24,7 @@ func NewAccountNumberService(opts ...option.RequestOption) (r *AccountNumberServ
 func (r *AccountNumberService) New(ctx context.Context, body *requests.AccountNumberNewParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "account_numbers"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *AccountNumberService) New(ctx context.Context, body *requests.AccountNu
 func (r *AccountNumberService) Get(ctx context.Context, account_number_id string, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_numbers/%s", account_number_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -40,7 +40,7 @@ func (r *AccountNumberService) Get(ctx context.Context, account_number_id string
 func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *requests.AccountNumberUpdateParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_numbers/%s", account_number_id)
-	err = option.ExecuteNewRequest(ctx, "PATCH", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
 
@@ -50,7 +50,7 @@ func (r *AccountNumberService) List(ctx context.Context, query *requests.Account
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_numbers"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type Entity struct {
@@ -34,24 +34,24 @@ type Entity struct {
 }
 
 type EntityJSON struct {
-	ID                    pjson.Metadata
-	Structure             pjson.Metadata
-	Corporation           pjson.Metadata
-	NaturalPerson         pjson.Metadata
-	Joint                 pjson.Metadata
-	Trust                 pjson.Metadata
-	Type                  pjson.Metadata
-	Description           pjson.Metadata
-	Relationship          pjson.Metadata
-	SupplementalDocuments pjson.Metadata
+	ID                    apijson.Metadata
+	Structure             apijson.Metadata
+	Corporation           apijson.Metadata
+	NaturalPerson         apijson.Metadata
+	Joint                 apijson.Metadata
+	Trust                 apijson.Metadata
+	Type                  apijson.Metadata
+	Description           apijson.Metadata
+	Relationship          apijson.Metadata
+	SupplementalDocuments apijson.Metadata
 	Raw                   []byte
-	Extras                map[string]pjson.Metadata
+	Extras                map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into Entity using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityStructure string
@@ -82,21 +82,21 @@ type EntityCorporation struct {
 }
 
 type EntityCorporationJSON struct {
-	Name               pjson.Metadata
-	Website            pjson.Metadata
-	TaxIdentifier      pjson.Metadata
-	IncorporationState pjson.Metadata
-	Address            pjson.Metadata
-	BeneficialOwners   pjson.Metadata
+	Name               apijson.Metadata
+	Website            apijson.Metadata
+	TaxIdentifier      apijson.Metadata
+	IncorporationState apijson.Metadata
+	Address            apijson.Metadata
+	BeneficialOwners   apijson.Metadata
 	Raw                []byte
-	Extras             map[string]pjson.Metadata
+	Extras             map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporation using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationAddress struct {
@@ -115,20 +115,20 @@ type EntityCorporationAddress struct {
 }
 
 type EntityCorporationAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityCorporationAddress
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationBeneficialOwners struct {
@@ -142,18 +142,18 @@ type EntityCorporationBeneficialOwners struct {
 }
 
 type EntityCorporationBeneficialOwnersJSON struct {
-	Individual   pjson.Metadata
-	CompanyTitle pjson.Metadata
-	Prong        pjson.Metadata
+	Individual   apijson.Metadata
+	CompanyTitle apijson.Metadata
+	Prong        apijson.Metadata
 	Raw          []byte
-	Extras       map[string]pjson.Metadata
+	Extras       map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwners using the internal pjson library. Unrecognized
+// EntityCorporationBeneficialOwners using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationBeneficialOwnersIndividual struct {
@@ -169,19 +169,19 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 }
 
 type EntityCorporationBeneficialOwnersIndividualJSON struct {
-	Name           pjson.Metadata
-	DateOfBirth    pjson.Metadata
-	Address        pjson.Metadata
-	Identification pjson.Metadata
+	Name           apijson.Metadata
+	DateOfBirth    apijson.Metadata
+	Address        apijson.Metadata
+	Identification apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwnersIndividual using the internal pjson library.
+// EntityCorporationBeneficialOwnersIndividual using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
@@ -200,20 +200,20 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 }
 
 type EntityCorporationBeneficialOwnersIndividualAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwnersIndividualAddress using the internal pjson
+// EntityCorporationBeneficialOwnersIndividualAddress using the internal json
 // library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
@@ -226,17 +226,17 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 }
 
 type EntityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
-	Method      pjson.Metadata
-	NumberLast4 pjson.Metadata
+	Method      apijson.Metadata
+	NumberLast4 apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
 // EntityCorporationBeneficialOwnersIndividualIdentification using the internal
-// pjson library. Unrecognized fields are stored in the `jsonFields` property.
+// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -269,19 +269,19 @@ type EntityNaturalPerson struct {
 }
 
 type EntityNaturalPersonJSON struct {
-	Name           pjson.Metadata
-	DateOfBirth    pjson.Metadata
-	Address        pjson.Metadata
-	Identification pjson.Metadata
+	Name           apijson.Metadata
+	DateOfBirth    apijson.Metadata
+	Address        apijson.Metadata
+	Identification apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPerson using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityNaturalPersonAddress struct {
@@ -300,20 +300,20 @@ type EntityNaturalPersonAddress struct {
 }
 
 type EntityNaturalPersonAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityNaturalPersonAddress
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityNaturalPersonIdentification struct {
@@ -326,17 +326,17 @@ type EntityNaturalPersonIdentification struct {
 }
 
 type EntityNaturalPersonIdentificationJSON struct {
-	Method      pjson.Metadata
-	NumberLast4 pjson.Metadata
+	Method      apijson.Metadata
+	NumberLast4 apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityNaturalPersonIdentification using the internal pjson library. Unrecognized
+// EntityNaturalPersonIdentification using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityNaturalPersonIdentificationMethod string
@@ -358,17 +358,17 @@ type EntityJoint struct {
 }
 
 type EntityJointJSON struct {
-	Name        pjson.Metadata
-	Individuals pjson.Metadata
+	Name        apijson.Metadata
+	Individuals apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJoint using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityJointIndividuals struct {
@@ -384,19 +384,19 @@ type EntityJointIndividuals struct {
 }
 
 type EntityJointIndividualsJSON struct {
-	Name           pjson.Metadata
-	DateOfBirth    pjson.Metadata
-	Address        pjson.Metadata
-	Identification pjson.Metadata
+	Name           apijson.Metadata
+	DateOfBirth    apijson.Metadata
+	Address        apijson.Metadata
+	Identification apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividuals using
-// the internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// the internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityJointIndividualsAddress struct {
@@ -415,20 +415,20 @@ type EntityJointIndividualsAddress struct {
 }
 
 type EntityJointIndividualsAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityJointIndividualsAddress
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityJointIndividualsIdentification struct {
@@ -441,17 +441,17 @@ type EntityJointIndividualsIdentification struct {
 }
 
 type EntityJointIndividualsIdentificationJSON struct {
-	Method      pjson.Metadata
-	NumberLast4 pjson.Metadata
+	Method      apijson.Metadata
+	NumberLast4 apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityJointIndividualsIdentification using the internal pjson library.
+// EntityJointIndividualsIdentification using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityJointIndividualsIdentificationMethod string
@@ -486,23 +486,23 @@ type EntityTrust struct {
 }
 
 type EntityTrustJSON struct {
-	Name                    pjson.Metadata
-	Category                pjson.Metadata
-	Address                 pjson.Metadata
-	FormationState          pjson.Metadata
-	TaxIdentifier           pjson.Metadata
-	Trustees                pjson.Metadata
-	Grantor                 pjson.Metadata
-	FormationDocumentFileID pjson.Metadata
+	Name                    apijson.Metadata
+	Category                apijson.Metadata
+	Address                 apijson.Metadata
+	FormationState          apijson.Metadata
+	TaxIdentifier           apijson.Metadata
+	Trustees                apijson.Metadata
+	Grantor                 apijson.Metadata
+	FormationDocumentFileID apijson.Metadata
 	Raw                     []byte
-	Extras                  map[string]pjson.Metadata
+	Extras                  map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrust using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustCategory string
@@ -528,20 +528,20 @@ type EntityTrustAddress struct {
 }
 
 type EntityTrustAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustAddress using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustTrustees struct {
@@ -554,17 +554,17 @@ type EntityTrustTrustees struct {
 }
 
 type EntityTrustTrusteesJSON struct {
-	Structure  pjson.Metadata
-	Individual pjson.Metadata
+	Structure  apijson.Metadata
+	Individual apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrustees using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustTrusteesStructure string
@@ -586,19 +586,19 @@ type EntityTrustTrusteesIndividual struct {
 }
 
 type EntityTrustTrusteesIndividualJSON struct {
-	Name           pjson.Metadata
-	DateOfBirth    pjson.Metadata
-	Address        pjson.Metadata
-	Identification pjson.Metadata
+	Name           apijson.Metadata
+	DateOfBirth    apijson.Metadata
+	Address        apijson.Metadata
+	Identification apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustTrusteesIndividual
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustTrusteesIndividualAddress struct {
@@ -617,20 +617,20 @@ type EntityTrustTrusteesIndividualAddress struct {
 }
 
 type EntityTrustTrusteesIndividualAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityTrustTrusteesIndividualAddress using the internal pjson library.
+// EntityTrustTrusteesIndividualAddress using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustTrusteesIndividualIdentification struct {
@@ -643,17 +643,17 @@ type EntityTrustTrusteesIndividualIdentification struct {
 }
 
 type EntityTrustTrusteesIndividualIdentificationJSON struct {
-	Method      pjson.Metadata
-	NumberLast4 pjson.Metadata
+	Method      apijson.Metadata
+	NumberLast4 apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityTrustTrusteesIndividualIdentification using the internal pjson library.
+// EntityTrustTrusteesIndividualIdentification using the internal json library.
 // Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustTrusteesIndividualIdentificationMethod string
@@ -679,19 +679,19 @@ type EntityTrustGrantor struct {
 }
 
 type EntityTrustGrantorJSON struct {
-	Name           pjson.Metadata
-	DateOfBirth    pjson.Metadata
-	Address        pjson.Metadata
-	Identification pjson.Metadata
+	Name           apijson.Metadata
+	DateOfBirth    apijson.Metadata
+	Address        apijson.Metadata
+	Identification apijson.Metadata
 	Raw            []byte
-	Extras         map[string]pjson.Metadata
+	Extras         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantor using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustGrantorAddress struct {
@@ -710,20 +710,20 @@ type EntityTrustGrantorAddress struct {
 }
 
 type EntityTrustGrantorAddressJSON struct {
-	Line1  pjson.Metadata
-	Line2  pjson.Metadata
-	City   pjson.Metadata
-	State  pjson.Metadata
-	Zip    pjson.Metadata
+	Line1  apijson.Metadata
+	Line2  apijson.Metadata
+	City   apijson.Metadata
+	State  apijson.Metadata
+	Zip    apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityTrustGrantorAddress
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustGrantorIdentification struct {
@@ -736,17 +736,17 @@ type EntityTrustGrantorIdentification struct {
 }
 
 type EntityTrustGrantorIdentificationJSON struct {
-	Method      pjson.Metadata
-	NumberLast4 pjson.Metadata
+	Method      apijson.Metadata
+	NumberLast4 apijson.Metadata
 	Raw         []byte
-	Extras      map[string]pjson.Metadata
+	Extras      map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// EntityTrustGrantorIdentification using the internal pjson library. Unrecognized
+// EntityTrustGrantorIdentification using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityTrustGrantorIdentificationMethod string
@@ -780,16 +780,16 @@ type EntitySupplementalDocuments struct {
 }
 
 type EntitySupplementalDocumentsJSON struct {
-	FileID pjson.Metadata
+	FileID apijson.Metadata
 	Raw    []byte
-	Extras map[string]pjson.Metadata
+	Extras map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntitySupplementalDocuments
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type EntityListResponse struct {
@@ -801,15 +801,15 @@ type EntityListResponse struct {
 }
 
 type EntityListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into EntityListResponse using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *EntityListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

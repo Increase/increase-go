@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -26,6 +27,6 @@ func NewSimulationCardDisputeService(opts ...option.RequestOption) (r *Simulatio
 func (r *SimulationCardDisputeService) Action(ctx context.Context, card_dispute_id string, body *requests.SimulationCardDisputeActionParams, opts ...option.RequestOption) (res *responses.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id)
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

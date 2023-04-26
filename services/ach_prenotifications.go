@@ -24,7 +24,7 @@ func NewACHPrenotificationService(opts ...option.RequestOption) (r *ACHPrenotifi
 func (r *ACHPrenotificationService) New(ctx context.Context, body *requests.ACHPrenotificationNewParams, opts ...option.RequestOption) (res *responses.ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "ach_prenotifications"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -32,7 +32,7 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body *requests.ACHP
 func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification_id string, opts ...option.RequestOption) (res *responses.ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("ach_prenotifications/%s", ach_prenotification_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -42,7 +42,7 @@ func (r *ACHPrenotificationService) List(ctx context.Context, query *requests.AC
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "ach_prenotifications"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -2,7 +2,7 @@ package requests
 
 import (
 	"github.com/increase/increase-go/core/field"
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type SimulationCardAuthorizeParams struct {
@@ -23,7 +23,7 @@ type SimulationCardAuthorizeParams struct {
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
 func (r SimulationCardAuthorizeParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }
 
 type SimulationCardSettlementParams struct {
@@ -41,5 +41,5 @@ type SimulationCardSettlementParams struct {
 // using the gjson library. Members of the `jsonFields` field are serialized into
 // the top-level, and will overwrite known members of the same name.
 func (r SimulationCardSettlementParams) MarshalJSON() (data []byte, err error) {
-	return pjson.MarshalRoot(r)
+	return apijson.MarshalRoot(r)
 }

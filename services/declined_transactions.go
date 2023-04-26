@@ -24,7 +24,7 @@ func NewDeclinedTransactionService(opts ...option.RequestOption) (r *DeclinedTra
 func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...option.RequestOption) (res *responses.DeclinedTransaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("declined_transactions/%s", declined_transaction_id)
-	err = option.ExecuteNewRequest(ctx, "GET", path, nil, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -34,7 +34,7 @@ func (r *DeclinedTransactionService) List(ctx context.Context, query *requests.D
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "declined_transactions"
-	cfg, err := option.NewRequestConfig(ctx, "GET", path, query, &res, opts...)
+	cfg, err := option.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}

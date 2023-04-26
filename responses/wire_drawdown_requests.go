@@ -1,7 +1,7 @@
 package responses
 
 import (
-	pjson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/core/json"
 )
 
 type WireDrawdownRequest struct {
@@ -44,30 +44,30 @@ type WireDrawdownRequest struct {
 }
 
 type WireDrawdownRequestJSON struct {
-	Type                     pjson.Metadata
-	ID                       pjson.Metadata
-	AccountNumberID          pjson.Metadata
-	RecipientAccountNumber   pjson.Metadata
-	RecipientRoutingNumber   pjson.Metadata
-	Amount                   pjson.Metadata
-	Currency                 pjson.Metadata
-	MessageToRecipient       pjson.Metadata
-	RecipientName            pjson.Metadata
-	RecipientAddressLine1    pjson.Metadata
-	RecipientAddressLine2    pjson.Metadata
-	RecipientAddressLine3    pjson.Metadata
-	Submission               pjson.Metadata
-	FulfillmentTransactionID pjson.Metadata
-	Status                   pjson.Metadata
+	Type                     apijson.Metadata
+	ID                       apijson.Metadata
+	AccountNumberID          apijson.Metadata
+	RecipientAccountNumber   apijson.Metadata
+	RecipientRoutingNumber   apijson.Metadata
+	Amount                   apijson.Metadata
+	Currency                 apijson.Metadata
+	MessageToRecipient       apijson.Metadata
+	RecipientName            apijson.Metadata
+	RecipientAddressLine1    apijson.Metadata
+	RecipientAddressLine2    apijson.Metadata
+	RecipientAddressLine3    apijson.Metadata
+	Submission               apijson.Metadata
+	FulfillmentTransactionID apijson.Metadata
+	Status                   apijson.Metadata
 	Raw                      []byte
-	Extras                   map[string]pjson.Metadata
+	Extras                   map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireDrawdownRequest using the
-// internal pjson library. Unrecognized fields are stored in the `jsonFields`
+// internal json library. Unrecognized fields are stored in the `jsonFields`
 // property.
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireDrawdownRequestType string
@@ -84,16 +84,16 @@ type WireDrawdownRequestSubmission struct {
 }
 
 type WireDrawdownRequestSubmissionJSON struct {
-	InputMessageAccountabilityData pjson.Metadata
+	InputMessageAccountabilityData apijson.Metadata
 	Raw                            []byte
-	Extras                         map[string]pjson.Metadata
+	Extras                         map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestSubmission
-// using the internal pjson library. Unrecognized fields are stored in the
+// using the internal json library. Unrecognized fields are stored in the
 // `jsonFields` property.
 func (r *WireDrawdownRequestSubmission) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }
 
 type WireDrawdownRequestStatus string
@@ -114,15 +114,15 @@ type WireDrawdownRequestListResponse struct {
 }
 
 type WireDrawdownRequestListResponseJSON struct {
-	Data       pjson.Metadata
-	NextCursor pjson.Metadata
+	Data       apijson.Metadata
+	NextCursor apijson.Metadata
 	Raw        []byte
-	Extras     map[string]pjson.Metadata
+	Extras     map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
-// WireDrawdownRequestListResponse using the internal pjson library. Unrecognized
+// WireDrawdownRequestListResponse using the internal json library. Unrecognized
 // fields are stored in the `jsonFields` property.
 func (r *WireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
-	return pjson.UnmarshalRoot(data, r)
+	return apijson.UnmarshalRoot(data, r)
 }

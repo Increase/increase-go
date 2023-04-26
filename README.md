@@ -222,7 +222,29 @@ if err != nil {
 
 ### Errors
 
-Errors are still WIP.
+When the API returns a non-success status code, we return an error with type `*increase.Error`. This contains the `StatusCode`, `*http.Request`, and `*http.Response` values of the request, as well as the JSON of the error body (much like other response objects in the SDK).
+
+To handle errors, we recommend that you use the `errors.As` pattern:
+
+```go
+_, err := client.Accounts.New(context.TODO(), &requests.AccountNewParams{
+	Naem: "Oops",
+})
+if err != nil {
+	var apierr *increase.Error
+	if errors.As(err, &apierr) {
+		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
+		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
+		println(apierr.Type)                       // missing_param
+		println(apierr.Title)                      // Missing param "name"
+		println(apierr.Detail)                     // Looks like "naem" may have been a typo?
+		println(apierr.Status)                     // 400
+	}
+	panic(err.Error()) // GET "/accounts": 400 Bad Request { ... }
+}
+```
+
+When other errors occur, we return them unwrapped; for example, when HTTP transport returns an error, we return the `*url.Error` which could wrap `*net.OpError`.
 
 ## Retries
 

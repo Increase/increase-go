@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/increase/increase-go/option"
 	"github.com/increase/increase-go/requests"
@@ -22,6 +23,6 @@ func NewBalanceLookupService(opts ...option.RequestOption) (r *BalanceLookupServ
 func (r *BalanceLookupService) Lookup(ctx context.Context, body *requests.BalanceLookupLookupParams, opts ...option.RequestOption) (res *responses.BalanceLookupLookupResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "balance_lookups"
-	err = option.ExecuteNewRequest(ctx, "POST", path, body, &res, opts...)
+	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
