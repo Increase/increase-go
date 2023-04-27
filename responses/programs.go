@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Program struct {
@@ -29,7 +29,7 @@ type ProgramJSON struct {
 	UpdatedAt apijson.Metadata
 	ID        apijson.Metadata
 	Type      apijson.Metadata
-	Raw       []byte
+	raw       string
 	Extras    map[string]apijson.Metadata
 }
 
@@ -56,7 +56,7 @@ type ProgramListResponse struct {
 type ProgramListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

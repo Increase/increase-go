@@ -11,8 +11,8 @@ import (
 )
 
 func TestManualPagination(t *testing.T) {
-	client := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	page, err := client.Accounts.List(context.TODO(), &requests.AccountListParams{})
+	client := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	page, err := client.Accounts.List(context.TODO(), requests.AccountListParams{})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

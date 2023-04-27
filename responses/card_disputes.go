@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type CardDispute struct {
@@ -39,7 +39,7 @@ type CardDisputeJSON struct {
 	Acceptance            apijson.Metadata
 	Rejection             apijson.Metadata
 	Type                  apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -74,7 +74,7 @@ type CardDisputeAcceptanceJSON struct {
 	AcceptedAt    apijson.Metadata
 	CardDisputeID apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -100,7 +100,7 @@ type CardDisputeRejectionJSON struct {
 	Explanation   apijson.Metadata
 	RejectedAt    apijson.Metadata
 	CardDisputeID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -128,7 +128,7 @@ type CardDisputeListResponse struct {
 type CardDisputeListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

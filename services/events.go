@@ -29,7 +29,7 @@ func (r *EventService) Get(ctx context.Context, event_id string, opts ...option.
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query *requests.EventListParams, opts ...option.RequestOption) (res *responses.Page[responses.Event], err error) {
+func (r *EventService) List(ctx context.Context, query requests.EventListParams, opts ...option.RequestOption) (res *responses.Page[responses.Event], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *EventService) List(ctx context.Context, query *requests.EventListParams
 }
 
 // List Events
-func (r *EventService) ListAutoPager(ctx context.Context, query *requests.EventListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Event] {
+func (r *EventService) ListAutoPaging(ctx context.Context, query requests.EventListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Event] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

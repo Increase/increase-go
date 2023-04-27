@@ -18,8 +18,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/increase/increase-go/apierror"
-	"github.com/increase/increase-go/core/form"
-	"github.com/increase/increase-go/core/query"
+	"github.com/increase/increase-go/internal/form"
+	"github.com/increase/increase-go/internal/query"
 	"github.com/tidwall/sjson"
 )
 

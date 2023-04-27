@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type WireDrawdownRequest struct {
@@ -59,7 +59,7 @@ type WireDrawdownRequestJSON struct {
 	Submission               apijson.Metadata
 	FulfillmentTransactionID apijson.Metadata
 	Status                   apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -85,7 +85,7 @@ type WireDrawdownRequestSubmission struct {
 
 type WireDrawdownRequestSubmissionJSON struct {
 	InputMessageAccountabilityData apijson.Metadata
-	Raw                            []byte
+	raw                            string
 	Extras                         map[string]apijson.Metadata
 }
 
@@ -116,7 +116,7 @@ type WireDrawdownRequestListResponse struct {
 type WireDrawdownRequestListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

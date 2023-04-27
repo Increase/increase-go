@@ -21,7 +21,7 @@ func NewCheckDepositService(opts ...option.RequestOption) (r *CheckDepositServic
 }
 
 // Create a Check Deposit
-func (r *CheckDepositService) New(ctx context.Context, body *requests.CheckDepositNewParams, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
+func (r *CheckDepositService) New(ctx context.Context, body requests.CheckDepositNewParams, opts ...option.RequestOption) (res *responses.CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_deposits"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, 
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDepositListParams, opts ...option.RequestOption) (res *responses.Page[responses.CheckDeposit], err error) {
+func (r *CheckDepositService) List(ctx context.Context, query requests.CheckDepositListParams, opts ...option.RequestOption) (res *responses.Page[responses.CheckDeposit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *CheckDepositService) List(ctx context.Context, query *requests.CheckDep
 }
 
 // List Check Deposits
-func (r *CheckDepositService) ListAutoPager(ctx context.Context, query *requests.CheckDepositListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CheckDeposit] {
+func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query requests.CheckDepositListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CheckDeposit] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

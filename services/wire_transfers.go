@@ -21,7 +21,7 @@ func NewWireTransferService(opts ...option.RequestOption) (r *WireTransferServic
 }
 
 // Create a Wire Transfer
-func (r *WireTransferService) New(ctx context.Context, body *requests.WireTransferNewParams, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
+func (r *WireTransferService) New(ctx context.Context, body requests.WireTransferNewParams, opts ...option.RequestOption) (res *responses.WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "wire_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, 
 }
 
 // List Wire Transfers
-func (r *WireTransferService) List(ctx context.Context, query *requests.WireTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.WireTransfer], err error) {
+func (r *WireTransferService) List(ctx context.Context, query requests.WireTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.WireTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,7 +55,7 @@ func (r *WireTransferService) List(ctx context.Context, query *requests.WireTran
 }
 
 // List Wire Transfers
-func (r *WireTransferService) ListAutoPager(ctx context.Context, query *requests.WireTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.WireTransfer] {
+func (r *WireTransferService) ListAutoPaging(ctx context.Context, query requests.WireTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.WireTransfer] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type ACHTransferSimulation struct {
@@ -25,7 +25,7 @@ type ACHTransferSimulationJSON struct {
 	Transaction         apijson.Metadata
 	DeclinedTransaction apijson.Metadata
 	Type                apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -82,7 +82,7 @@ type ACHTransferSimulationTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -276,7 +276,7 @@ type ACHTransferSimulationTransactionSourceJSON struct {
 	WireDrawdownPaymentRejection                apijson.Metadata
 	WireTransferIntention                       apijson.Metadata
 	WireTransferRejection                       apijson.Metadata
-	Raw                                         []byte
+	raw                                         string
 	Extras                                      map[string]apijson.Metadata
 }
 
@@ -357,7 +357,7 @@ type ACHTransferSimulationTransactionSourceAccountTransferIntentionJSON struct {
 	DestinationAccountID apijson.Metadata
 	SourceAccountID      apijson.Metadata
 	TransferID           apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -392,7 +392,7 @@ type ACHTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 type ACHTransferSimulationTransactionSourceACHCheckConversionReturnJSON struct {
 	Amount           apijson.Metadata
 	ReturnReasonCode apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -416,7 +416,7 @@ type ACHTransferSimulationTransactionSourceACHCheckConversion struct {
 type ACHTransferSimulationTransactionSourceACHCheckConversionJSON struct {
 	Amount apijson.Metadata
 	FileID apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -445,7 +445,7 @@ type ACHTransferSimulationTransactionSourceACHTransferIntentionJSON struct {
 	RoutingNumber       apijson.Metadata
 	StatementDescriptor apijson.Metadata
 	TransferID          apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -464,7 +464,7 @@ type ACHTransferSimulationTransactionSourceACHTransferRejection struct {
 
 type ACHTransferSimulationTransactionSourceACHTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -493,7 +493,7 @@ type ACHTransferSimulationTransactionSourceACHTransferReturnJSON struct {
 	ReturnReasonCode apijson.Metadata
 	TransferID       apijson.Metadata
 	TransactionID    apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -548,7 +548,7 @@ type ACHTransferSimulationTransactionSourceCardDisputeAcceptanceJSON struct {
 	AcceptedAt    apijson.Metadata
 	CardDisputeID apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -601,7 +601,7 @@ type ACHTransferSimulationTransactionSourceCardRefundJSON struct {
 	MerchantName                apijson.Metadata
 	MerchantCategoryCode        apijson.Metadata
 	Type                        apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -682,7 +682,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementJSON struct {
 	MerchantCategoryCode apijson.Metadata
 	PendingTransactionID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -732,7 +732,7 @@ type ACHTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
 	PeriodStart           apijson.Metadata
 	PeriodEnd             apijson.Metadata
 	TransactedOnAccountID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -784,7 +784,7 @@ type ACHTransferSimulationTransactionSourceCheckDepositAcceptanceJSON struct {
 	AuxiliaryOnUs  apijson.Metadata
 	SerialNumber   apijson.Metadata
 	CheckDepositID apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -832,7 +832,7 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturnJSON struct {
 	CheckDepositID apijson.Metadata
 	TransactionID  apijson.Metadata
 	ReturnReason   apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -903,7 +903,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferIntentionJSON struct {
 	Currency      apijson.Metadata
 	RecipientName apijson.Metadata
 	TransferID    apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -947,7 +947,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferReturnJSON struct {
 	FileID        apijson.Metadata
 	Reason        apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -973,7 +973,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
 
 type ACHTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1002,7 +1002,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON s
 	TransactionID apijson.Metadata
 	RequestedAt   apijson.Metadata
 	Type          apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -1036,7 +1036,7 @@ type ACHTransferSimulationTransactionSourceDisputeResolutionJSON struct {
 	Amount                apijson.Metadata
 	Currency              apijson.Metadata
 	DisputedTransactionID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1071,7 +1071,7 @@ type ACHTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
 	Amount      apijson.Metadata
 	BagID       apijson.Metadata
 	DepositDate apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -1095,7 +1095,7 @@ type ACHTransferSimulationTransactionSourceFeePayment struct {
 type ACHTransferSimulationTransactionSourceFeePaymentJSON struct {
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1142,7 +1142,7 @@ type ACHTransferSimulationTransactionSourceInboundACHTransferJSON struct {
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1172,7 +1172,7 @@ type ACHTransferSimulationTransactionSourceInboundCheckJSON struct {
 	CheckNumber           apijson.Metadata
 	CheckFrontImageFileID apijson.Metadata
 	CheckRearImageFileID  apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1273,7 +1273,7 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferJSON s
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -1316,7 +1316,7 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -1374,7 +1374,7 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSO
 	PreviousMessageInputCycleDate                 apijson.Metadata
 	PreviousMessageInputSequenceNumber            apijson.Metadata
 	PreviousMessageInputSource                    apijson.Metadata
-	Raw                                           []byte
+	raw                                           string
 	Extras                                        map[string]apijson.Metadata
 }
 
@@ -1419,7 +1419,7 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct
 	OriginatorAddressLine3             apijson.Metadata
 	OriginatorName                     apijson.Metadata
 	OriginatorToBeneficiaryInformation apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1480,7 +1480,7 @@ type ACHTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
-	Raw                                                   []byte
+	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
 
@@ -1532,7 +1532,7 @@ type ACHTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
 	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
 	OriginatorToBeneficiaryInformation      apijson.Metadata
-	Raw                                     []byte
+	raw                                     string
 	Extras                                  map[string]apijson.Metadata
 }
 
@@ -1565,7 +1565,7 @@ type ACHTransferSimulationTransactionSourceInterestPaymentJSON struct {
 	PeriodStart        apijson.Metadata
 	PeriodEnd          apijson.Metadata
 	AccruedOnAccountID apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1602,7 +1602,7 @@ type ACHTransferSimulationTransactionSourceInternalSourceJSON struct {
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
 	Reason   apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1663,7 +1663,7 @@ type ACHTransferSimulationTransactionSourceCardRouteRefundJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1710,7 +1710,7 @@ type ACHTransferSimulationTransactionSourceCardRouteSettlementJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1752,7 +1752,7 @@ type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgeme
 	DestinationRoutingNumber apijson.Metadata
 	RemittanceInformation    apijson.Metadata
 	TransferID               apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -1772,7 +1772,7 @@ type ACHTransferSimulationTransactionSourceSampleFunds struct {
 
 type ACHTransferSimulationTransactionSourceSampleFundsJSON struct {
 	Originator apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1799,7 +1799,7 @@ type ACHTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON stru
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1818,7 +1818,7 @@ type ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 
 type ACHTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1849,7 +1849,7 @@ type ACHTransferSimulationTransactionSourceWireTransferIntentionJSON struct {
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1867,7 +1867,7 @@ type ACHTransferSimulationTransactionSourceWireTransferRejection struct {
 
 type ACHTransferSimulationTransactionSourceWireTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1929,7 +1929,7 @@ type ACHTransferSimulationDeclinedTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -1993,7 +1993,7 @@ type ACHTransferSimulationDeclinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline apijson.Metadata
 	InternationalACHDecline                apijson.Metadata
 	CardRouteDecline                       apijson.Metadata
-	Raw                                    []byte
+	raw                                    string
 	Extras                                 map[string]apijson.Metadata
 }
 
@@ -2042,7 +2042,7 @@ type ACHTransferSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -2120,7 +2120,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 	MerchantState        apijson.Metadata
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -2145,7 +2145,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails str
 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -2171,7 +2171,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -2239,7 +2239,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
 	Amount        apijson.Metadata
 	AuxiliaryOnUs apijson.Metadata
 	Reason        apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -2303,7 +2303,7 @@ type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransf
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -2415,7 +2415,7 @@ type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON s
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -2452,7 +2452,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 

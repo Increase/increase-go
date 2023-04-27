@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type DeclinedTransaction struct {
@@ -51,7 +51,7 @@ type DeclinedTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -115,7 +115,7 @@ type DeclinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline apijson.Metadata
 	InternationalACHDecline                apijson.Metadata
 	CardRouteDecline                       apijson.Metadata
-	Raw                                    []byte
+	raw                                    string
 	Extras                                 map[string]apijson.Metadata
 }
 
@@ -164,7 +164,7 @@ type DeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -242,7 +242,7 @@ type DeclinedTransactionSourceCardDeclineJSON struct {
 	MerchantState        apijson.Metadata
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -267,7 +267,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 
 type DeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -292,7 +292,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -359,7 +359,7 @@ type DeclinedTransactionSourceCheckDeclineJSON struct {
 	Amount        apijson.Metadata
 	AuxiliaryOnUs apijson.Metadata
 	Reason        apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -423,7 +423,7 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct 
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -535,7 +535,7 @@ type DeclinedTransactionSourceInternationalACHDeclineJSON struct {
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -571,7 +571,7 @@ type DeclinedTransactionSourceCardRouteDeclineJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -610,7 +610,7 @@ type DeclinedTransactionListResponse struct {
 type DeclinedTransactionListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

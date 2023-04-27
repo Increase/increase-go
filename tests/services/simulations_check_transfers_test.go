@@ -11,7 +11,7 @@ import (
 )
 
 func TestSimulationCheckTransferDeposit(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Deposit(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
@@ -27,7 +27,7 @@ func TestSimulationCheckTransferDeposit(t *testing.T) {
 
 func TestSimulationCheckTransferMail(t *testing.T) {
 	t.Skip("Prism incorrectly returns an invalid JSON error")
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Mail(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
@@ -42,11 +42,11 @@ func TestSimulationCheckTransferMail(t *testing.T) {
 }
 
 func TestSimulationCheckTransferReturn(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Return(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
-		&requests.SimulationCheckTransferReturnParams{Reason: increase.F(requests.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure)},
+		requests.SimulationCheckTransferReturnParams{Reason: increase.F(requests.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure)},
 	)
 	if err != nil {
 		var apierr *increase.Error

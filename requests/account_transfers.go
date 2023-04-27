@@ -4,9 +4,9 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/increase/increase-go/core/field"
-	apijson "github.com/increase/increase-go/core/json"
-	"github.com/increase/increase-go/core/query"
+	"github.com/increase/increase-go/internal/field"
+	apijson "github.com/increase/increase-go/internal/json"
+	"github.com/increase/increase-go/internal/query"
 )
 
 type AccountTransferNewParams struct {

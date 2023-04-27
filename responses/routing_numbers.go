@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type RoutingNumber struct {
@@ -28,7 +28,7 @@ type RoutingNumberJSON struct {
 	ACHTransfers              apijson.Metadata
 	RealTimePaymentsTransfers apijson.Metadata
 	WireTransfers             apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -77,7 +77,7 @@ type RoutingNumberListResponse struct {
 type RoutingNumberListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

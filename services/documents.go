@@ -29,7 +29,7 @@ func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...o
 }
 
 // List Documents
-func (r *DocumentService) List(ctx context.Context, query *requests.DocumentListParams, opts ...option.RequestOption) (res *responses.Page[responses.Document], err error) {
+func (r *DocumentService) List(ctx context.Context, query requests.DocumentListParams, opts ...option.RequestOption) (res *responses.Page[responses.Document], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *DocumentService) List(ctx context.Context, query *requests.DocumentList
 }
 
 // List Documents
-func (r *DocumentService) ListAutoPager(ctx context.Context, query *requests.DocumentListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Document] {
+func (r *DocumentService) ListAutoPaging(ctx context.Context, query requests.DocumentListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Document] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

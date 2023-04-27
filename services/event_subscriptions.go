@@ -21,7 +21,7 @@ func NewEventSubscriptionService(opts ...option.RequestOption) (r *EventSubscrip
 }
 
 // Create an Event Subscription
-func (r *EventSubscriptionService) New(ctx context.Context, body *requests.EventSubscriptionNewParams, opts ...option.RequestOption) (res *responses.EventSubscription, err error) {
+func (r *EventSubscriptionService) New(ctx context.Context, body requests.EventSubscriptionNewParams, opts ...option.RequestOption) (res *responses.EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "event_subscriptions"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_i
 }
 
 // Update an Event Subscription
-func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body *requests.EventSubscriptionUpdateParams, opts ...option.RequestOption) (res *responses.EventSubscription, err error) {
+func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body requests.EventSubscriptionUpdateParams, opts ...option.RequestOption) (res *responses.EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("event_subscriptions/%s", event_subscription_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, event_subscriptio
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) List(ctx context.Context, query *requests.EventSubscriptionListParams, opts ...option.RequestOption) (res *responses.Page[responses.EventSubscription], err error) {
+func (r *EventSubscriptionService) List(ctx context.Context, query requests.EventSubscriptionListParams, opts ...option.RequestOption) (res *responses.Page[responses.EventSubscription], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,6 +63,6 @@ func (r *EventSubscriptionService) List(ctx context.Context, query *requests.Eve
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) ListAutoPager(ctx context.Context, query *requests.EventSubscriptionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.EventSubscription] {
+func (r *EventSubscriptionService) ListAutoPaging(ctx context.Context, query requests.EventSubscriptionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.EventSubscription] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

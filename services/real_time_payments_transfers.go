@@ -21,7 +21,7 @@ func NewRealTimePaymentsTransferService(opts ...option.RequestOption) (r *RealTi
 }
 
 // Create a Real Time Payments Transfer
-func (r *RealTimePaymentsTransferService) New(ctx context.Context, body *requests.RealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *responses.RealTimePaymentsTransfer, err error) {
+func (r *RealTimePaymentsTransferService) New(ctx context.Context, body requests.RealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *responses.RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "real_time_payments_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *RealTimePaymentsTransferService) Get(ctx context.Context, real_time_pay
 }
 
 // List Real Time Payments Transfers
-func (r *RealTimePaymentsTransferService) List(ctx context.Context, query *requests.RealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.RealTimePaymentsTransfer], err error) {
+func (r *RealTimePaymentsTransferService) List(ctx context.Context, query requests.RealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.RealTimePaymentsTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *RealTimePaymentsTransferService) List(ctx context.Context, query *reque
 }
 
 // List Real Time Payments Transfers
-func (r *RealTimePaymentsTransferService) ListAutoPager(ctx context.Context, query *requests.RealTimePaymentsTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.RealTimePaymentsTransfer] {
+func (r *RealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, query requests.RealTimePaymentsTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.RealTimePaymentsTransfer] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

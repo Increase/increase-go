@@ -29,7 +29,7 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transacti
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) List(ctx context.Context, query *requests.DeclinedTransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.DeclinedTransaction], err error) {
+func (r *DeclinedTransactionService) List(ctx context.Context, query requests.DeclinedTransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.DeclinedTransaction], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *DeclinedTransactionService) List(ctx context.Context, query *requests.D
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) ListAutoPager(ctx context.Context, query *requests.DeclinedTransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.DeclinedTransaction] {
+func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query requests.DeclinedTransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.DeclinedTransaction] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

@@ -29,7 +29,7 @@ func (r *ProgramService) Get(ctx context.Context, program_id string, opts ...opt
 }
 
 // List Programs
-func (r *ProgramService) List(ctx context.Context, query *requests.ProgramListParams, opts ...option.RequestOption) (res *responses.Page[responses.Program], err error) {
+func (r *ProgramService) List(ctx context.Context, query requests.ProgramListParams, opts ...option.RequestOption) (res *responses.Page[responses.Program], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *ProgramService) List(ctx context.Context, query *requests.ProgramListPa
 }
 
 // List Programs
-func (r *ProgramService) ListAutoPager(ctx context.Context, query *requests.ProgramListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Program] {
+func (r *ProgramService) ListAutoPaging(ctx context.Context, query requests.ProgramListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Program] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

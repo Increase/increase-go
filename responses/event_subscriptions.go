@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type EventSubscription struct {
@@ -34,7 +34,7 @@ type EventSubscriptionJSON struct {
 	URL                   apijson.Metadata
 	SharedSecret          apijson.Metadata
 	Type                  apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -126,7 +126,7 @@ type EventSubscriptionListResponse struct {
 type EventSubscriptionListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

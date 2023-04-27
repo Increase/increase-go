@@ -12,8 +12,8 @@ import (
 )
 
 func TestAccountNewWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), &requests.AccountNewParams{EntityID: increase.F("string"), ProgramID: increase.F("string"), InformationalEntityID: increase.F("string"), Name: increase.F("New Account!")})
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Accounts.New(context.TODO(), requests.AccountNewParams{EntityID: increase.F("string"), ProgramID: increase.F("string"), InformationalEntityID: increase.F("string"), Name: increase.F("New Account!")})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -24,7 +24,7 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountGet(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Get(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
@@ -39,11 +39,11 @@ func TestAccountGet(t *testing.T) {
 }
 
 func TestAccountUpdateWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Update(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
-		&requests.AccountUpdateParams{Name: increase.F("My renamed account")},
+		requests.AccountUpdateParams{Name: increase.F("My renamed account")},
 	)
 	if err != nil {
 		var apierr *increase.Error
@@ -55,8 +55,8 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountListWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), &requests.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(requests.AccountListParamsStatusOpen), CreatedAt: increase.F(requests.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Accounts.List(context.TODO(), requests.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(requests.AccountListParamsStatusOpen), CreatedAt: increase.F(requests.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -68,7 +68,7 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 
 func TestAccountClose(t *testing.T) {
 	t.Skip("Prism tests are broken")
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Close(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",

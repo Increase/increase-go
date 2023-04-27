@@ -21,7 +21,7 @@ func NewCardService(opts ...option.RequestOption) (r *CardService) {
 }
 
 // Create a Card
-func (r *CardService) New(ctx context.Context, body *requests.CardNewParams, opts ...option.RequestOption) (res *responses.Card, err error) {
+func (r *CardService) New(ctx context.Context, body requests.CardNewParams, opts ...option.RequestOption) (res *responses.Card, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "cards"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *CardService) Get(ctx context.Context, card_id string, opts ...option.Re
 }
 
 // Update a Card
-func (r *CardService) Update(ctx context.Context, card_id string, body *requests.CardUpdateParams, opts ...option.RequestOption) (res *responses.Card, err error) {
+func (r *CardService) Update(ctx context.Context, card_id string, body requests.CardUpdateParams, opts ...option.RequestOption) (res *responses.Card, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("cards/%s", card_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *CardService) Update(ctx context.Context, card_id string, body *requests
 }
 
 // List Cards
-func (r *CardService) List(ctx context.Context, query *requests.CardListParams, opts ...option.RequestOption) (res *responses.Page[responses.Card], err error) {
+func (r *CardService) List(ctx context.Context, query requests.CardListParams, opts ...option.RequestOption) (res *responses.Page[responses.Card], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,7 +63,7 @@ func (r *CardService) List(ctx context.Context, query *requests.CardListParams, 
 }
 
 // List Cards
-func (r *CardService) ListAutoPager(ctx context.Context, query *requests.CardListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Card] {
+func (r *CardService) ListAutoPaging(ctx context.Context, query requests.CardListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Card] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

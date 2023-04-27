@@ -21,7 +21,7 @@ func NewCardDisputeService(opts ...option.RequestOption) (r *CardDisputeService)
 }
 
 // Create a Card Dispute
-func (r *CardDisputeService) New(ctx context.Context, body *requests.CardDisputeNewParams, opts ...option.RequestOption) (res *responses.CardDispute, err error) {
+func (r *CardDisputeService) New(ctx context.Context, body requests.CardDisputeNewParams, opts ...option.RequestOption) (res *responses.CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "card_disputes"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, op
 }
 
 // List Card Disputes
-func (r *CardDisputeService) List(ctx context.Context, query *requests.CardDisputeListParams, opts ...option.RequestOption) (res *responses.Page[responses.CardDispute], err error) {
+func (r *CardDisputeService) List(ctx context.Context, query requests.CardDisputeListParams, opts ...option.RequestOption) (res *responses.Page[responses.CardDispute], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *CardDisputeService) List(ctx context.Context, query *requests.CardDispu
 }
 
 // List Card Disputes
-func (r *CardDisputeService) ListAutoPager(ctx context.Context, query *requests.CardDisputeListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CardDispute] {
+func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query requests.CardDisputeListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CardDispute] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

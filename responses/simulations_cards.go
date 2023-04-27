@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type CardAuthorizationSimulation struct {
@@ -25,7 +25,7 @@ type CardAuthorizationSimulationJSON struct {
 	PendingTransaction  apijson.Metadata
 	DeclinedTransaction apijson.Metadata
 	Type                apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -89,7 +89,7 @@ type CardAuthorizationSimulationPendingTransactionJSON struct {
 	Source      apijson.Metadata
 	Status      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -170,7 +170,7 @@ type CardAuthorizationSimulationPendingTransactionSourceJSON struct {
 	RealTimePaymentsTransferInstruction apijson.Metadata
 	WireDrawdownPaymentInstruction      apijson.Metadata
 	WireTransferInstruction             apijson.Metadata
-	Raw                                 []byte
+	raw                                 string
 	Extras                              map[string]apijson.Metadata
 }
 
@@ -213,7 +213,7 @@ type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 	Amount     apijson.Metadata
 	Currency   apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -248,7 +248,7 @@ type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction s
 type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -311,7 +311,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -337,7 +337,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -363,7 +363,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -429,7 +429,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJ
 	FrontImageFileID apijson.Metadata
 	BackImageFileID  apijson.Metadata
 	CheckDepositID   apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -468,7 +468,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 	Amount     apijson.Metadata
 	Currency   apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -524,7 +524,7 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON str
 	Status                  apijson.Metadata
 	HeldTransactionID       apijson.Metadata
 	PendingTransactionID    apijson.Metadata
-	Raw                     []byte
+	raw                     string
 	Extras                  map[string]apijson.Metadata
 }
 
@@ -579,7 +579,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJS
 	MerchantDescriptor   apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
 	MerchantState        apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -615,7 +615,7 @@ type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransfer
 type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -642,7 +642,7 @@ type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstr
 	AccountNumber      apijson.Metadata
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -671,7 +671,7 @@ type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJ
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -741,7 +741,7 @@ type CardAuthorizationSimulationDeclinedTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -805,7 +805,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline apijson.Metadata
 	InternationalACHDecline                apijson.Metadata
 	CardRouteDecline                       apijson.Metadata
-	Raw                                    []byte
+	raw                                    string
 	Extras                                 map[string]apijson.Metadata
 }
 
@@ -854,7 +854,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -933,7 +933,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct 
 	MerchantState        apijson.Metadata
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -959,7 +959,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -985,7 +985,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -1053,7 +1053,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct
 	Amount        apijson.Metadata
 	AuxiliaryOnUs apijson.Metadata
 	Reason        apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -1118,7 +1118,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -1230,7 +1230,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -1267,7 +1267,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON st
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 

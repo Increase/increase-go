@@ -21,7 +21,7 @@ func NewCheckTransferService(opts ...option.RequestOption) (r *CheckTransferServ
 }
 
 // Create a Check Transfer
-func (r *CheckTransferService) New(ctx context.Context, body *requests.CheckTransferNewParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
+func (r *CheckTransferService) New(ctx context.Context, body requests.CheckTransferNewParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "check_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string
 }
 
 // List Check Transfers
-func (r *CheckTransferService) List(ctx context.Context, query *requests.CheckTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.CheckTransfer], err error) {
+func (r *CheckTransferService) List(ctx context.Context, query requests.CheckTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.CheckTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,7 +55,7 @@ func (r *CheckTransferService) List(ctx context.Context, query *requests.CheckTr
 }
 
 // List Check Transfers
-func (r *CheckTransferService) ListAutoPager(ctx context.Context, query *requests.CheckTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CheckTransfer] {
+func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query requests.CheckTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CheckTransfer] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

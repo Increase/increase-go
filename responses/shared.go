@@ -3,7 +3,7 @@ package responses
 import (
 	"net/http"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 	"github.com/increase/increase-go/option"
 )
 
@@ -19,7 +19,7 @@ type Page[T any] struct {
 type PageJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -71,7 +71,7 @@ func NewPageAutoPager[T any](page *Page[T], err error) *PageAutoPager[T] {
 }
 
 func (r *PageAutoPager[T]) Next() bool {
-	if len(r.page.Data) == 0 {
+	if r.page == nil || len(r.page.Data) == 0 {
 		return false
 	}
 	if r.idx >= len(r.page.Data) {

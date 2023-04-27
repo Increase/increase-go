@@ -23,7 +23,7 @@ func NewFileService(opts ...option.RequestOption) (r *FileService) {
 // To upload a file to Increase, you'll need to send a request of Content-Type
 // `multipart/form-data`. The request should contain the file you would like to
 // upload, as well as the parameters for creating a file.
-func (r *FileService) New(ctx context.Context, body *requests.FileNewParams, opts ...option.RequestOption) (res *responses.File, err error) {
+func (r *FileService) New(ctx context.Context, body requests.FileNewParams, opts ...option.RequestOption) (res *responses.File, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "files"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -39,7 +39,7 @@ func (r *FileService) Get(ctx context.Context, file_id string, opts ...option.Re
 }
 
 // List Files
-func (r *FileService) List(ctx context.Context, query *requests.FileListParams, opts ...option.RequestOption) (res *responses.Page[responses.File], err error) {
+func (r *FileService) List(ctx context.Context, query requests.FileListParams, opts ...option.RequestOption) (res *responses.Page[responses.File], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -57,6 +57,6 @@ func (r *FileService) List(ctx context.Context, query *requests.FileListParams, 
 }
 
 // List Files
-func (r *FileService) ListAutoPager(ctx context.Context, query *requests.FileListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.File] {
+func (r *FileService) ListAutoPaging(ctx context.Context, query requests.FileListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.File] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

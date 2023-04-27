@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type DigitalWalletToken struct {
@@ -31,7 +31,7 @@ type DigitalWalletTokenJSON struct {
 	Status         apijson.Metadata
 	TokenRequestor apijson.Metadata
 	Type           apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -75,7 +75,7 @@ type DigitalWalletTokenListResponse struct {
 type DigitalWalletTokenListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/increase/increase-go/core/field"
+	"github.com/increase/increase-go/internal/field"
 )
 
 type Struct struct {

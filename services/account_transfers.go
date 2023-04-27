@@ -21,7 +21,7 @@ func NewAccountTransferService(opts ...option.RequestOption) (r *AccountTransfer
 }
 
 // Create an Account Transfer
-func (r *AccountTransferService) New(ctx context.Context, body *requests.AccountTransferNewParams, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
+func (r *AccountTransferService) New(ctx context.Context, body requests.AccountTransferNewParams, opts ...option.RequestOption) (res *responses.AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "account_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id st
 }
 
 // List Account Transfers
-func (r *AccountTransferService) List(ctx context.Context, query *requests.AccountTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountTransfer], err error) {
+func (r *AccountTransferService) List(ctx context.Context, query requests.AccountTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,7 +55,7 @@ func (r *AccountTransferService) List(ctx context.Context, query *requests.Accou
 }
 
 // List Account Transfers
-func (r *AccountTransferService) ListAutoPager(ctx context.Context, query *requests.AccountTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountTransfer] {
+func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query requests.AccountTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountTransfer] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

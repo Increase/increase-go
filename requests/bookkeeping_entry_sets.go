@@ -3,8 +3,8 @@ package requests
 import (
 	"time"
 
-	"github.com/increase/increase-go/core/field"
-	apijson "github.com/increase/increase-go/core/json"
+	"github.com/increase/increase-go/internal/field"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type BookkeepingEntrySetNewParams struct {

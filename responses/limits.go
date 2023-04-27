@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Limit struct {
@@ -35,7 +35,7 @@ type LimitJSON struct {
 	Status    apijson.Metadata
 	Type      apijson.Metadata
 	Value     apijson.Metadata
-	Raw       []byte
+	raw       string
 	Extras    map[string]apijson.Metadata
 }
 
@@ -95,7 +95,7 @@ type LimitListResponse struct {
 type LimitListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

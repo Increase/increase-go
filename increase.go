@@ -8,7 +8,7 @@ import (
 	"github.com/increase/increase-go/services"
 )
 
-type Increase struct {
+type Client struct {
 	Options                     []option.RequestOption
 	Accounts                    *services.AccountService
 	AccountNumbers              *services.AccountNumberService
@@ -50,18 +50,18 @@ type Increase struct {
 	Simulations                 *services.SimulationService
 }
 
-// NewIncrease generates a new client with the default option read from the
+// NewClient generates a new client with the default option read from the
 // environment ("INCREASE_API_KEY"). The option passed in as arguments are applied
 // after these default arguments, and all option will be passed down to the
 // services and requests that this client makes.
-func NewIncrease(opts ...option.RequestOption) (r *Increase) {
+func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("INCREASE_API_KEY"); ok {
 		defaults = append(defaults, option.WithAPIKey(o))
 	}
 	opts = append(defaults, opts...)
 
-	r = &Increase{Options: opts}
+	r = &Client{Options: opts}
 
 	r.Accounts = services.NewAccountService(opts...)
 	r.AccountNumbers = services.NewAccountNumberService(opts...)

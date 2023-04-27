@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type ACHPrenotification struct {
@@ -55,7 +55,7 @@ type ACHPrenotificationJSON struct {
 	CreatedAt                apijson.Metadata
 	Status                   apijson.Metadata
 	Type                     apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -85,7 +85,7 @@ type ACHPrenotificationPrenotificationReturn struct {
 type ACHPrenotificationPrenotificationReturnJSON struct {
 	CreatedAt        apijson.Metadata
 	ReturnReasonCode apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -122,7 +122,7 @@ type ACHPrenotificationListResponse struct {
 type ACHPrenotificationListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

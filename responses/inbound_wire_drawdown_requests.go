@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type InboundWireDrawdownRequest struct {
@@ -82,7 +82,7 @@ type InboundWireDrawdownRequestJSON struct {
 	BeneficiaryAddressLine1                 apijson.Metadata
 	BeneficiaryAddressLine2                 apijson.Metadata
 	BeneficiaryAddressLine3                 apijson.Metadata
-	Raw                                     []byte
+	raw                                     string
 	Extras                                  map[string]apijson.Metadata
 }
 
@@ -110,7 +110,7 @@ type InboundWireDrawdownRequestListResponse struct {
 type InboundWireDrawdownRequestListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

@@ -20,7 +20,7 @@ func NewSimulationDocumentService(opts ...option.RequestOption) (r *SimulationDo
 }
 
 // Simulates an tax document being created for an account.
-func (r *SimulationDocumentService) New(ctx context.Context, body *requests.SimulationDocumentNewParams, opts ...option.RequestOption) (res *responses.Document, err error) {
+func (r *SimulationDocumentService) New(ctx context.Context, body requests.SimulationDocumentNewParams, opts ...option.RequestOption) (res *responses.Document, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/documents"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

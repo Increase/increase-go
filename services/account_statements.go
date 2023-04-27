@@ -29,7 +29,7 @@ func (r *AccountStatementService) Get(ctx context.Context, account_statement_id 
 }
 
 // List Account Statements
-func (r *AccountStatementService) List(ctx context.Context, query *requests.AccountStatementListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountStatement], err error) {
+func (r *AccountStatementService) List(ctx context.Context, query requests.AccountStatementListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountStatement], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *AccountStatementService) List(ctx context.Context, query *requests.Acco
 }
 
 // List Account Statements
-func (r *AccountStatementService) ListAutoPager(ctx context.Context, query *requests.AccountStatementListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountStatement] {
+func (r *AccountStatementService) ListAutoPaging(ctx context.Context, query requests.AccountStatementListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountStatement] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

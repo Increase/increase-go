@@ -11,8 +11,8 @@ import (
 )
 
 func TestLimitNewWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.New(context.TODO(), &requests.LimitNewParams{Metric: increase.F(requests.LimitNewParamsMetricCount), Interval: increase.F(requests.LimitNewParamsIntervalTransaction), ModelID: increase.F("account_in71c4amph0vgo2qllky"), Value: increase.F(int64(1234))})
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Limits.New(context.TODO(), requests.LimitNewParams{Metric: increase.F(requests.LimitNewParamsMetricCount), Interval: increase.F(requests.LimitNewParamsIntervalTransaction), ModelID: increase.F("account_in71c4amph0vgo2qllky"), Value: increase.F(int64(1234))})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -23,7 +23,7 @@ func TestLimitNewWithOptionalParams(t *testing.T) {
 }
 
 func TestLimitGet(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Get(
 		context.TODO(),
 		"limit_fku42k0qtc8ulsuas38q",
@@ -38,11 +38,11 @@ func TestLimitGet(t *testing.T) {
 }
 
 func TestLimitUpdate(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Update(
 		context.TODO(),
 		"limit_fku42k0qtc8ulsuas38q",
-		&requests.LimitUpdateParams{Status: increase.F(requests.LimitUpdateParamsStatusInactive)},
+		requests.LimitUpdateParams{Status: increase.F(requests.LimitUpdateParamsStatusInactive)},
 	)
 	if err != nil {
 		var apierr *increase.Error
@@ -54,8 +54,8 @@ func TestLimitUpdate(t *testing.T) {
 }
 
 func TestLimitListWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.List(context.TODO(), &requests.LimitListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), ModelID: increase.F("x"), Status: increase.F("x")})
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Limits.List(context.TODO(), requests.LimitListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), ModelID: increase.F("x"), Status: increase.F("x")})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

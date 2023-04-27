@@ -21,7 +21,7 @@ func NewAccountService(opts ...option.RequestOption) (r *AccountService) {
 }
 
 // Create an Account
-func (r *AccountService) New(ctx context.Context, body *requests.AccountNewParams, opts ...option.RequestOption) (res *responses.Account, err error) {
+func (r *AccountService) New(ctx context.Context, body requests.AccountNewParams, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "accounts"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *AccountService) Get(ctx context.Context, account_id string, opts ...opt
 }
 
 // Update an Account
-func (r *AccountService) Update(ctx context.Context, account_id string, body *requests.AccountUpdateParams, opts ...option.RequestOption) (res *responses.Account, err error) {
+func (r *AccountService) Update(ctx context.Context, account_id string, body requests.AccountUpdateParams, opts ...option.RequestOption) (res *responses.Account, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("accounts/%s", account_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *AccountService) Update(ctx context.Context, account_id string, body *re
 }
 
 // List Accounts
-func (r *AccountService) List(ctx context.Context, query *requests.AccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.Account], err error) {
+func (r *AccountService) List(ctx context.Context, query requests.AccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.Account], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,7 +63,7 @@ func (r *AccountService) List(ctx context.Context, query *requests.AccountListPa
 }
 
 // List Accounts
-func (r *AccountService) ListAutoPager(ctx context.Context, query *requests.AccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Account] {
+func (r *AccountService) ListAutoPaging(ctx context.Context, query requests.AccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Account] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

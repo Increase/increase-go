@@ -21,7 +21,7 @@ func NewLimitService(opts ...option.RequestOption) (r *LimitService) {
 }
 
 // Create a Limit
-func (r *LimitService) New(ctx context.Context, body *requests.LimitNewParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
+func (r *LimitService) New(ctx context.Context, body requests.LimitNewParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "limits"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...option.
 }
 
 // Update a Limit
-func (r *LimitService) Update(ctx context.Context, limit_id string, body *requests.LimitUpdateParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
+func (r *LimitService) Update(ctx context.Context, limit_id string, body requests.LimitUpdateParams, opts ...option.RequestOption) (res *responses.Limit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("limits/%s", limit_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *LimitService) Update(ctx context.Context, limit_id string, body *reques
 }
 
 // List Limits
-func (r *LimitService) List(ctx context.Context, query *requests.LimitListParams, opts ...option.RequestOption) (res *responses.Page[responses.Limit], err error) {
+func (r *LimitService) List(ctx context.Context, query requests.LimitListParams, opts ...option.RequestOption) (res *responses.Page[responses.Limit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,6 +63,6 @@ func (r *LimitService) List(ctx context.Context, query *requests.LimitListParams
 }
 
 // List Limits
-func (r *LimitService) ListAutoPager(ctx context.Context, query *requests.LimitListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Limit] {
+func (r *LimitService) ListAutoPaging(ctx context.Context, query requests.LimitListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Limit] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

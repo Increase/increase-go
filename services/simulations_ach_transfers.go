@@ -26,7 +26,7 @@ func NewSimulationACHTransferService(opts ...option.RequestOption) (r *Simulatio
 // positive or negative. The result of calling this API will be either a
 // [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
 // depending on whether or not the transfer is allowed.
-func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body *requests.SimulationACHTransferNewInboundParams, opts ...option.RequestOption) (res *responses.ACHTransferSimulation, err error) {
+func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body requests.SimulationACHTransferNewInboundParams, opts ...option.RequestOption) (res *responses.ACHTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_ach_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -36,7 +36,7 @@ func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body *req
 // Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
-func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_id string, body *requests.SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
+func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_id string, body requests.SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

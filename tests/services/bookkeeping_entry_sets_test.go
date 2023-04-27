@@ -12,8 +12,8 @@ import (
 )
 
 func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingEntrySets.New(context.TODO(), &requests.BookkeepingEntrySetNewParams{Date: increase.F(time.Now()), TransactionID: increase.F("string"), Entries: increase.F([]requests.BookkeepingEntrySetNewParamsEntries{})})
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.BookkeepingEntrySets.New(context.TODO(), requests.BookkeepingEntrySetNewParams{Date: increase.F(time.Now()), TransactionID: increase.F("string"), Entries: increase.F([]requests.BookkeepingEntrySetNewParamsEntries{})})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type InboundACHTransferReturn struct {
@@ -34,7 +34,7 @@ type InboundACHTransferReturnJSON struct {
 	Reason                          apijson.Metadata
 	Submission                      apijson.Metadata
 	Type                            apijson.Metadata
-	Raw                             []byte
+	raw                             string
 	Extras                          map[string]apijson.Metadata
 }
 
@@ -76,7 +76,7 @@ type InboundACHTransferReturnSubmission struct {
 type InboundACHTransferReturnSubmissionJSON struct {
 	TraceNumber apijson.Metadata
 	SubmittedAt apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -104,7 +104,7 @@ type InboundACHTransferReturnListResponse struct {
 type InboundACHTransferReturnListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

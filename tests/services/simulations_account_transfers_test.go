@@ -11,7 +11,7 @@ import (
 
 func TestSimulationAccountTransferComplete(t *testing.T) {
 	t.Skip("Prism tests are broken")
-	c := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.AccountTransfers.Complete(
 		context.TODO(),
 		"account_transfer_7k9qe1ysdgqztnt63l7n",

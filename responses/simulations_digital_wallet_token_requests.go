@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type DigitalWalletTokenRequestCreateResponse struct {
@@ -21,7 +21,7 @@ type DigitalWalletTokenRequestCreateResponseJSON struct {
 	DeclineReason        apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 

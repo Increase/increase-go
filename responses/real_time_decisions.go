@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type RealTimeDecision struct {
@@ -41,7 +41,7 @@ type RealTimeDecisionJSON struct {
 	DigitalWalletToken          apijson.Metadata
 	DigitalWalletAuthentication apijson.Metadata
 	Type                        apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -122,7 +122,7 @@ type RealTimeDecisionCardAuthorizationJSON struct {
 	PresentmentCurrency  apijson.Metadata
 	SettlementAmount     apijson.Metadata
 	SettlementCurrency   apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -147,7 +147,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 
 type RealTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -172,7 +172,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -223,7 +223,7 @@ type RealTimeDecisionDigitalWalletTokenJSON struct {
 	CardID        apijson.Metadata
 	DigitalWallet apijson.Metadata
 	CardProfileID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -275,7 +275,7 @@ type RealTimeDecisionDigitalWalletAuthenticationJSON struct {
 	OneTimePasscode apijson.Metadata
 	Phone           apijson.Metadata
 	Email           apijson.Metadata
-	Raw             []byte
+	raw             string
 	Extras          map[string]apijson.Metadata
 }
 

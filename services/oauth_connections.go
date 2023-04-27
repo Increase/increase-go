@@ -29,7 +29,7 @@ func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id st
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) List(ctx context.Context, query *requests.OauthConnectionListParams, opts ...option.RequestOption) (res *responses.Page[responses.OauthConnection], err error) {
+func (r *OauthConnectionService) List(ctx context.Context, query requests.OauthConnectionListParams, opts ...option.RequestOption) (res *responses.Page[responses.OauthConnection], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *OauthConnectionService) List(ctx context.Context, query *requests.Oauth
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) ListAutoPager(ctx context.Context, query *requests.OauthConnectionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.OauthConnection] {
+func (r *OauthConnectionService) ListAutoPaging(ctx context.Context, query requests.OauthConnectionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.OauthConnection] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

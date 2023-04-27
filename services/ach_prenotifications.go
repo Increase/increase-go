@@ -21,7 +21,7 @@ func NewACHPrenotificationService(opts ...option.RequestOption) (r *ACHPrenotifi
 }
 
 // Create an ACH Prenotification
-func (r *ACHPrenotificationService) New(ctx context.Context, body *requests.ACHPrenotificationNewParams, opts ...option.RequestOption) (res *responses.ACHPrenotification, err error) {
+func (r *ACHPrenotificationService) New(ctx context.Context, body requests.ACHPrenotificationNewParams, opts ...option.RequestOption) (res *responses.ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "ach_prenotifications"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) List(ctx context.Context, query *requests.ACHPrenotificationListParams, opts ...option.RequestOption) (res *responses.Page[responses.ACHPrenotification], err error) {
+func (r *ACHPrenotificationService) List(ctx context.Context, query requests.ACHPrenotificationListParams, opts ...option.RequestOption) (res *responses.Page[responses.ACHPrenotification], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *ACHPrenotificationService) List(ctx context.Context, query *requests.AC
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) ListAutoPager(ctx context.Context, query *requests.ACHPrenotificationListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ACHPrenotification] {
+func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query requests.ACHPrenotificationListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ACHPrenotification] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

@@ -2,10 +2,11 @@ package apierror
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httputil"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Error struct {
@@ -29,7 +30,7 @@ type ErrorJSON struct {
 	Status     apijson.Metadata
 	Errors     apijson.Metadata
 	RetryAfter apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -40,7 +41,8 @@ func (r *Error) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r *Error) Error() string {
-	return fmt.Sprintf("%s \"%s\": %d %s %s", r.Request.Method, r.Request.URL, r.Response.StatusCode, http.StatusText(r.Response.StatusCode), string(r.JSON.Raw))
+	body, _ := io.ReadAll(r.Response.Body)
+	return fmt.Sprintf("%s \"%s\": %d %s %s", r.Request.Method, r.Request.URL, r.Response.StatusCode, http.StatusText(r.Response.StatusCode), string(body))
 }
 
 func (r *Error) DumpRequest(body bool) []byte {

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type InboundRealTimePaymentsTransferSimulationResult struct {
@@ -26,7 +26,7 @@ type InboundRealTimePaymentsTransferSimulationResultJSON struct {
 	Transaction         apijson.Metadata
 	DeclinedTransaction apijson.Metadata
 	Type                apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -83,7 +83,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -277,7 +277,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	WireDrawdownPaymentRejection                apijson.Metadata
 	WireTransferIntention                       apijson.Metadata
 	WireTransferRejection                       apijson.Metadata
-	Raw                                         []byte
+	raw                                         string
 	Extras                                      map[string]apijson.Metadata
 }
 
@@ -359,7 +359,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTran
 	DestinationAccountID apijson.Metadata
 	SourceAccountID      apijson.Metadata
 	TransferID           apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -394,7 +394,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckCon
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON struct {
 	Amount           apijson.Metadata
 	ReturnReasonCode apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -418,7 +418,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckCon
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON struct {
 	Amount apijson.Metadata
 	FileID apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -448,7 +448,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	RoutingNumber       apijson.Metadata
 	StatementDescriptor apijson.Metadata
 	TransferID          apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -468,7 +468,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -498,7 +498,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	ReturnReasonCode apijson.Metadata
 	TransferID       apijson.Metadata
 	TransactionID    apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -554,7 +554,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDispute
 	AcceptedAt    apijson.Metadata
 	CardDisputeID apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -608,7 +608,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJ
 	MerchantName                apijson.Metadata
 	MerchantCategoryCode        apijson.Metadata
 	Type                        apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -690,7 +690,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	MerchantCategoryCode apijson.Metadata
 	PendingTransactionID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -741,7 +741,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenue
 	PeriodStart           apijson.Metadata
 	PeriodEnd             apijson.Metadata
 	TransactedOnAccountID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -794,7 +794,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	AuxiliaryOnUs  apijson.Metadata
 	SerialNumber   apijson.Metadata
 	CheckDepositID apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -843,7 +843,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	CheckDepositID apijson.Metadata
 	TransactionID  apijson.Metadata
 	ReturnReason   apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -915,7 +915,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	Currency      apijson.Metadata
 	RecipientName apijson.Metadata
 	TransferID    apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -960,7 +960,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	FileID        apijson.Metadata
 	Reason        apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -987,7 +987,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1017,7 +1017,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	TransactionID apijson.Metadata
 	RequestedAt   apijson.Metadata
 	Type          apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -1051,7 +1051,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeReso
 	Amount                apijson.Metadata
 	Currency              apijson.Metadata
 	DisputedTransactionID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1087,7 +1087,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCas
 	Amount      apijson.Metadata
 	BagID       apijson.Metadata
 	DepositDate apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -1112,7 +1112,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON struct {
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1160,7 +1160,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1191,7 +1191,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundChec
 	CheckNumber           apijson.Metadata
 	CheckFrontImageFileID apijson.Metadata
 	CheckRearImageFileID  apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1293,7 +1293,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -1336,7 +1336,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundReal
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -1394,7 +1394,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	PreviousMessageInputCycleDate                 apijson.Metadata
 	PreviousMessageInputSequenceNumber            apijson.Metadata
 	PreviousMessageInputSource                    apijson.Metadata
-	Raw                                           []byte
+	raw                                           string
 	Extras                                        map[string]apijson.Metadata
 }
 
@@ -1439,7 +1439,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	OriginatorAddressLine3             apijson.Metadata
 	OriginatorName                     apijson.Metadata
 	OriginatorToBeneficiaryInformation apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1500,7 +1500,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
-	Raw                                                   []byte
+	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
 
@@ -1553,7 +1553,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
 	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
 	OriginatorToBeneficiaryInformation      apijson.Metadata
-	Raw                                     []byte
+	raw                                     string
 	Extras                                  map[string]apijson.Metadata
 }
 
@@ -1587,7 +1587,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPay
 	PeriodStart        apijson.Metadata
 	PeriodEnd          apijson.Metadata
 	AccruedOnAccountID apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1625,7 +1625,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSou
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
 	Reason   apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1687,7 +1687,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRe
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1735,7 +1735,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSe
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1778,7 +1778,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePay
 	DestinationRoutingNumber apijson.Metadata
 	RemittanceInformation    apijson.Metadata
 	TransferID               apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -1798,7 +1798,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON struct {
 	Originator apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1826,7 +1826,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdow
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1845,7 +1845,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdow
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1876,7 +1876,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1895,7 +1895,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1958,7 +1958,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON stru
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -2023,7 +2023,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSO
 	InboundRealTimePaymentsTransferDecline apijson.Metadata
 	InternationalACHDecline                apijson.Metadata
 	CardRouteDecline                       apijson.Metadata
-	Raw                                    []byte
+	raw                                    string
 	Extras                                 map[string]apijson.Metadata
 }
 
@@ -2073,7 +2073,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -2152,7 +2152,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantState        apijson.Metadata
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -2178,7 +2178,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -2204,7 +2204,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -2272,7 +2272,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 	Amount        apijson.Metadata
 	AuxiliaryOnUs apijson.Metadata
 	Reason        apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -2337,7 +2337,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -2449,7 +2449,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -2486,7 +2486,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 

@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type BalanceLookupLookupResponse struct {
@@ -24,7 +24,7 @@ type BalanceLookupLookupResponseJSON struct {
 	CurrentBalance   apijson.Metadata
 	AvailableBalance apijson.Metadata
 	Type             apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 

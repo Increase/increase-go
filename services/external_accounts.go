@@ -21,7 +21,7 @@ func NewExternalAccountService(opts ...option.RequestOption) (r *ExternalAccount
 }
 
 // Create an External Account
-func (r *ExternalAccountService) New(ctx context.Context, body *requests.ExternalAccountNewParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
+func (r *ExternalAccountService) New(ctx context.Context, body requests.ExternalAccountNewParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "external_accounts"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *ExternalAccountService) Get(ctx context.Context, external_account_id st
 }
 
 // Update an External Account
-func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body *requests.ExternalAccountUpdateParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
+func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body requests.ExternalAccountUpdateParams, opts ...option.RequestOption) (res *responses.ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("external_accounts/%s", external_account_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *ExternalAccountService) Update(ctx context.Context, external_account_id
 }
 
 // List External Accounts
-func (r *ExternalAccountService) List(ctx context.Context, query *requests.ExternalAccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.ExternalAccount], err error) {
+func (r *ExternalAccountService) List(ctx context.Context, query requests.ExternalAccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.ExternalAccount], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,6 +63,6 @@ func (r *ExternalAccountService) List(ctx context.Context, query *requests.Exter
 }
 
 // List External Accounts
-func (r *ExternalAccountService) ListAutoPager(ctx context.Context, query *requests.ExternalAccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ExternalAccount] {
+func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query requests.ExternalAccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ExternalAccount] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

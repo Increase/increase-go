@@ -23,7 +23,7 @@ func NewRoutingNumberService(opts ...option.RequestOption) (r *RoutingNumberServ
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) List(ctx context.Context, query *requests.RoutingNumberListParams, opts ...option.RequestOption) (res *responses.Page[responses.RoutingNumber], err error) {
+func (r *RoutingNumberService) List(ctx context.Context, query requests.RoutingNumberListParams, opts ...option.RequestOption) (res *responses.Page[responses.RoutingNumber], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -44,6 +44,6 @@ func (r *RoutingNumberService) List(ctx context.Context, query *requests.Routing
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) ListAutoPager(ctx context.Context, query *requests.RoutingNumberListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.RoutingNumber] {
+func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query requests.RoutingNumberListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.RoutingNumber] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

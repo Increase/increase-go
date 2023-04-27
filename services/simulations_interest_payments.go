@@ -21,7 +21,7 @@ func NewSimulationInterestPaymentService(opts ...option.RequestOption) (r *Simul
 
 // Simulates an interest payment to your account. In production, this happens
 // automatically on the first of each month.
-func (r *SimulationInterestPaymentService) New(ctx context.Context, body *requests.SimulationInterestPaymentNewParams, opts ...option.RequestOption) (res *responses.InterestPaymentSimulationResult, err error) {
+func (r *SimulationInterestPaymentService) New(ctx context.Context, body requests.SimulationInterestPaymentNewParams, opts ...option.RequestOption) (res *responses.InterestPaymentSimulationResult, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/interest_payment"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

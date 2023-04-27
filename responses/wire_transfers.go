@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type WireTransfer struct {
@@ -80,7 +80,7 @@ type WireTransferJSON struct {
 	Submission              apijson.Metadata
 	TransactionID           apijson.Metadata
 	Type                    apijson.Metadata
-	Raw                     []byte
+	raw                     string
 	Extras                  map[string]apijson.Metadata
 }
 
@@ -115,7 +115,7 @@ type WireTransferApproval struct {
 type WireTransferApprovalJSON struct {
 	ApprovedAt apijson.Metadata
 	ApprovedBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -139,7 +139,7 @@ type WireTransferCancellation struct {
 type WireTransferCancellationJSON struct {
 	CanceledAt apijson.Metadata
 	CanceledBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -199,7 +199,7 @@ type WireTransferReversalJSON struct {
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
-	Raw                                                   []byte
+	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
 
@@ -239,7 +239,7 @@ type WireTransferSubmission struct {
 type WireTransferSubmissionJSON struct {
 	InputMessageAccountabilityData apijson.Metadata
 	SubmittedAt                    apijson.Metadata
-	Raw                            []byte
+	raw                            string
 	Extras                         map[string]apijson.Metadata
 }
 
@@ -267,7 +267,7 @@ type WireTransferListResponse struct {
 type WireTransferListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

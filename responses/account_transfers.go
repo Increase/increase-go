@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type AccountTransfer struct {
@@ -59,7 +59,7 @@ type AccountTransferJSON struct {
 	Approval                 apijson.Metadata
 	Cancellation             apijson.Metadata
 	Type                     apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -108,7 +108,7 @@ type AccountTransferApproval struct {
 type AccountTransferApprovalJSON struct {
 	ApprovedAt apijson.Metadata
 	ApprovedBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -132,7 +132,7 @@ type AccountTransferCancellation struct {
 type AccountTransferCancellationJSON struct {
 	CanceledAt apijson.Metadata
 	CanceledBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -160,7 +160,7 @@ type AccountTransferListResponse struct {
 type AccountTransferListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

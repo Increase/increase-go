@@ -20,7 +20,7 @@ func NewBookkeepingEntrySetService(opts ...option.RequestOption) (r *Bookkeeping
 }
 
 // Create a Bookkeeping Entry Set
-func (r *BookkeepingEntrySetService) New(ctx context.Context, body *requests.BookkeepingEntrySetNewParams, opts ...option.RequestOption) (res *responses.BookkeepingEntrySet, err error) {
+func (r *BookkeepingEntrySetService) New(ctx context.Context, body requests.BookkeepingEntrySetNewParams, opts ...option.RequestOption) (res *responses.BookkeepingEntrySet, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "bookkeeping_entry_sets"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

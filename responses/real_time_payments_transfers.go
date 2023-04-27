@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type RealTimePaymentsTransfer struct {
@@ -73,7 +73,7 @@ type RealTimePaymentsTransferJSON struct {
 	TransactionID            apijson.Metadata
 	Submission               apijson.Metadata
 	Rejection                apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -103,7 +103,7 @@ type RealTimePaymentsTransferApproval struct {
 type RealTimePaymentsTransferApprovalJSON struct {
 	ApprovedAt apijson.Metadata
 	ApprovedBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -127,7 +127,7 @@ type RealTimePaymentsTransferCancellation struct {
 type RealTimePaymentsTransferCancellationJSON struct {
 	CanceledAt apijson.Metadata
 	CanceledBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -173,7 +173,7 @@ type RealTimePaymentsTransferSubmission struct {
 type RealTimePaymentsTransferSubmissionJSON struct {
 	SubmittedAt               apijson.Metadata
 	TransactionIdentification apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -201,7 +201,7 @@ type RealTimePaymentsTransferRejectionJSON struct {
 	RejectedAt                        apijson.Metadata
 	RejectReasonCode                  apijson.Metadata
 	RejectReasonAdditionalInformation apijson.Metadata
-	Raw                               []byte
+	raw                               string
 	Extras                            map[string]apijson.Metadata
 }
 
@@ -249,7 +249,7 @@ type RealTimePaymentsTransferListResponse struct {
 type RealTimePaymentsTransferListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

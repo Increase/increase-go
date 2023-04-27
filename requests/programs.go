@@ -3,8 +3,8 @@ package requests
 import (
 	"net/url"
 
-	"github.com/increase/increase-go/core/field"
-	"github.com/increase/increase-go/core/query"
+	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/query"
 )
 
 type ProgramListParams struct {

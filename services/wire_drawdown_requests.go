@@ -21,7 +21,7 @@ func NewWireDrawdownRequestService(opts ...option.RequestOption) (r *WireDrawdow
 }
 
 // Create a Wire Drawdown Request
-func (r *WireDrawdownRequestService) New(ctx context.Context, body *requests.WireDrawdownRequestNewParams, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
+func (r *WireDrawdownRequestService) New(ctx context.Context, body requests.WireDrawdownRequestNewParams, opts ...option.RequestOption) (res *responses.WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "wire_drawdown_requests"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_requ
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.WireDrawdownRequestListParams, opts ...option.RequestOption) (res *responses.Page[responses.WireDrawdownRequest], err error) {
+func (r *WireDrawdownRequestService) List(ctx context.Context, query requests.WireDrawdownRequestListParams, opts ...option.RequestOption) (res *responses.Page[responses.WireDrawdownRequest], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query *requests.W
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) ListAutoPager(ctx context.Context, query *requests.WireDrawdownRequestListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.WireDrawdownRequest] {
+func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query requests.WireDrawdownRequestListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.WireDrawdownRequest] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

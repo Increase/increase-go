@@ -21,7 +21,7 @@ func NewAccountNumberService(opts ...option.RequestOption) (r *AccountNumberServ
 }
 
 // Create an Account Number
-func (r *AccountNumberService) New(ctx context.Context, body *requests.AccountNumberNewParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
+func (r *AccountNumberService) New(ctx context.Context, body requests.AccountNumberNewParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "account_numbers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *AccountNumberService) Get(ctx context.Context, account_number_id string
 }
 
 // Update an Account Number
-func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body *requests.AccountNumberUpdateParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
+func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body requests.AccountNumberUpdateParams, opts ...option.RequestOption) (res *responses.AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("account_numbers/%s", account_number_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
@@ -45,7 +45,7 @@ func (r *AccountNumberService) Update(ctx context.Context, account_number_id str
 }
 
 // List Account Numbers
-func (r *AccountNumberService) List(ctx context.Context, query *requests.AccountNumberListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountNumber], err error) {
+func (r *AccountNumberService) List(ctx context.Context, query requests.AccountNumberListParams, opts ...option.RequestOption) (res *responses.Page[responses.AccountNumber], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -63,6 +63,6 @@ func (r *AccountNumberService) List(ctx context.Context, query *requests.Account
 }
 
 // List Account Numbers
-func (r *AccountNumberService) ListAutoPager(ctx context.Context, query *requests.AccountNumberListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountNumber] {
+func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query requests.AccountNumberListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.AccountNumber] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type BookkeepingEntrySet struct {
@@ -27,7 +27,7 @@ type BookkeepingEntrySetJSON struct {
 	Date          apijson.Metadata
 	Entries       apijson.Metadata
 	Type          apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -52,7 +52,7 @@ type BookkeepingEntrySetEntriesJSON struct {
 	AccountID apijson.Metadata
 	Amount    apijson.Metadata
 	ID        apijson.Metadata
-	Raw       []byte
+	raw       string
 	Extras    map[string]apijson.Metadata
 }
 

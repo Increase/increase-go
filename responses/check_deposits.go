@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type CheckDeposit struct {
@@ -56,7 +56,7 @@ type CheckDepositJSON struct {
 	DepositRejection  apijson.Metadata
 	DepositReturn     apijson.Metadata
 	Type              apijson.Metadata
-	Raw               []byte
+	raw               string
 	Extras            map[string]apijson.Metadata
 }
 
@@ -117,7 +117,7 @@ type CheckDepositDepositAcceptanceJSON struct {
 	AuxiliaryOnUs  apijson.Metadata
 	SerialNumber   apijson.Metadata
 	CheckDepositID apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -159,7 +159,7 @@ type CheckDepositDepositRejectionJSON struct {
 	Currency   apijson.Metadata
 	Reason     apijson.Metadata
 	RejectedAt apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -219,7 +219,7 @@ type CheckDepositDepositReturnJSON struct {
 	CheckDepositID apijson.Metadata
 	TransactionID  apijson.Metadata
 	ReturnReason   apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -274,7 +274,7 @@ type CheckDepositListResponse struct {
 type CheckDepositListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

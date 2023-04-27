@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type CheckTransfer struct {
@@ -96,7 +96,7 @@ type CheckTransferJSON struct {
 	Deposit            apijson.Metadata
 	ReturnDetails      apijson.Metadata
 	Type               apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -130,7 +130,7 @@ type CheckTransferReturnAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -165,7 +165,7 @@ type CheckTransferApproval struct {
 type CheckTransferApprovalJSON struct {
 	ApprovedAt apijson.Metadata
 	ApprovedBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -189,7 +189,7 @@ type CheckTransferCancellation struct {
 type CheckTransferCancellationJSON struct {
 	CanceledAt apijson.Metadata
 	CanceledBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -227,7 +227,7 @@ type CheckTransferSubmission struct {
 type CheckTransferSubmissionJSON struct {
 	SubmittedAt apijson.Metadata
 	CheckNumber apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -256,7 +256,7 @@ type CheckTransferStopPaymentRequestJSON struct {
 	TransactionID apijson.Metadata
 	RequestedAt   apijson.Metadata
 	Type          apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -291,7 +291,7 @@ type CheckTransferDepositJSON struct {
 	FrontImageFileID apijson.Metadata
 	BackImageFileID  apijson.Metadata
 	Type             apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -330,7 +330,7 @@ type CheckTransferReturnDetailsJSON struct {
 	FileID        apijson.Metadata
 	Reason        apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -365,7 +365,7 @@ type CheckTransferListResponse struct {
 type CheckTransferListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

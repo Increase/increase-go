@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Card struct {
@@ -48,7 +48,7 @@ type CardJSON struct {
 	BillingAddress  apijson.Metadata
 	DigitalWallet   apijson.Metadata
 	Type            apijson.Metadata
-	Raw             []byte
+	raw             string
 	Extras          map[string]apijson.Metadata
 }
 
@@ -86,7 +86,7 @@ type CardBillingAddressJSON struct {
 	City       apijson.Metadata
 	State      apijson.Metadata
 	PostalCode apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -114,7 +114,7 @@ type CardDigitalWalletJSON struct {
 	Email         apijson.Metadata
 	Phone         apijson.Metadata
 	CardProfileID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -157,7 +157,7 @@ type CardDetailsJSON struct {
 	ExpirationYear       apijson.Metadata
 	VerificationCode     apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -185,7 +185,7 @@ type CardListResponse struct {
 type CardListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

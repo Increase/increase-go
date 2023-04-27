@@ -29,7 +29,7 @@ func (r *TransactionService) Get(ctx context.Context, transaction_id string, opt
 }
 
 // List Transactions
-func (r *TransactionService) List(ctx context.Context, query *requests.TransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.Transaction], err error) {
+func (r *TransactionService) List(ctx context.Context, query requests.TransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.Transaction], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *TransactionService) List(ctx context.Context, query *requests.Transacti
 }
 
 // List Transactions
-func (r *TransactionService) ListAutoPager(ctx context.Context, query *requests.TransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Transaction] {
+func (r *TransactionService) ListAutoPaging(ctx context.Context, query requests.TransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Transaction] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

@@ -29,7 +29,7 @@ func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wir
 }
 
 // List Inbound Wire Drawdown Requests
-func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *requests.InboundWireDrawdownRequestListParams, opts ...option.RequestOption) (res *responses.Page[responses.InboundWireDrawdownRequest], err error) {
+func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query requests.InboundWireDrawdownRequestListParams, opts ...option.RequestOption) (res *responses.Page[responses.InboundWireDrawdownRequest], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *InboundWireDrawdownRequestService) List(ctx context.Context, query *req
 }
 
 // List Inbound Wire Drawdown Requests
-func (r *InboundWireDrawdownRequestService) ListAutoPager(ctx context.Context, query *requests.InboundWireDrawdownRequestListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.InboundWireDrawdownRequest] {
+func (r *InboundWireDrawdownRequestService) ListAutoPaging(ctx context.Context, query requests.InboundWireDrawdownRequestListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.InboundWireDrawdownRequest] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

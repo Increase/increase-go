@@ -20,7 +20,7 @@ func NewBookkeepingEntryService(opts ...option.RequestOption) (r *BookkeepingEnt
 }
 
 // List Bookkeeping Entries
-func (r *BookkeepingEntryService) List(ctx context.Context, query *requests.BookkeepingEntryListParams, opts ...option.RequestOption) (res *responses.Page[responses.BookkeepingEntry], err error) {
+func (r *BookkeepingEntryService) List(ctx context.Context, query requests.BookkeepingEntryListParams, opts ...option.RequestOption) (res *responses.Page[responses.BookkeepingEntry], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -38,6 +38,6 @@ func (r *BookkeepingEntryService) List(ctx context.Context, query *requests.Book
 }
 
 // List Bookkeeping Entries
-func (r *BookkeepingEntryService) ListAutoPager(ctx context.Context, query *requests.BookkeepingEntryListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.BookkeepingEntry] {
+func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query requests.BookkeepingEntryListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.BookkeepingEntry] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

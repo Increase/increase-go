@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Export struct {
@@ -36,7 +36,7 @@ type ExportJSON struct {
 	FileID          apijson.Metadata
 	FileDownloadURL apijson.Metadata
 	Type            apijson.Metadata
-	Raw             []byte
+	raw             string
 	Extras          map[string]apijson.Metadata
 }
 
@@ -77,7 +77,7 @@ type ExportListResponse struct {
 type ExportListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

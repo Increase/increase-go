@@ -20,7 +20,7 @@ func NewBookkeepingAccountService(opts ...option.RequestOption) (r *BookkeepingA
 }
 
 // Create a Bookkeeping Account
-func (r *BookkeepingAccountService) New(ctx context.Context, body *requests.BookkeepingAccountNewParams, opts ...option.RequestOption) (res *responses.BookkeepingAccount, err error) {
+func (r *BookkeepingAccountService) New(ctx context.Context, body requests.BookkeepingAccountNewParams, opts ...option.RequestOption) (res *responses.BookkeepingAccount, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "bookkeeping_accounts"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -28,7 +28,7 @@ func (r *BookkeepingAccountService) New(ctx context.Context, body *requests.Book
 }
 
 // List Bookkeeping Accounts
-func (r *BookkeepingAccountService) List(ctx context.Context, query *requests.BookkeepingAccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.BookkeepingAccount], err error) {
+func (r *BookkeepingAccountService) List(ctx context.Context, query requests.BookkeepingAccountListParams, opts ...option.RequestOption) (res *responses.Page[responses.BookkeepingAccount], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -46,6 +46,6 @@ func (r *BookkeepingAccountService) List(ctx context.Context, query *requests.Bo
 }
 
 // List Bookkeeping Accounts
-func (r *BookkeepingAccountService) ListAutoPager(ctx context.Context, query *requests.BookkeepingAccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.BookkeepingAccount] {
+func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query requests.BookkeepingAccountListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.BookkeepingAccount] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

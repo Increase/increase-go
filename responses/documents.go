@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Document struct {
@@ -31,7 +31,7 @@ type DocumentJSON struct {
 	EntityID  apijson.Metadata
 	FileID    apijson.Metadata
 	Type      apijson.Metadata
-	Raw       []byte
+	raw       string
 	Extras    map[string]apijson.Metadata
 }
 
@@ -110,7 +110,7 @@ type DocumentListResponse struct {
 type DocumentListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

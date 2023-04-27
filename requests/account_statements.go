@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/increase/increase-go/core/field"
-	"github.com/increase/increase-go/core/query"
+	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/query"
 )
 
 type AccountStatementListParams struct {

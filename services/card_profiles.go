@@ -21,7 +21,7 @@ func NewCardProfileService(opts ...option.RequestOption) (r *CardProfileService)
 }
 
 // Create a Card Profile
-func (r *CardProfileService) New(ctx context.Context, body *requests.CardProfileNewParams, opts ...option.RequestOption) (res *responses.CardProfile, err error) {
+func (r *CardProfileService) New(ctx context.Context, body requests.CardProfileNewParams, opts ...option.RequestOption) (res *responses.CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "card_profiles"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, op
 }
 
 // List Card Profiles
-func (r *CardProfileService) List(ctx context.Context, query *requests.CardProfileListParams, opts ...option.RequestOption) (res *responses.Page[responses.CardProfile], err error) {
+func (r *CardProfileService) List(ctx context.Context, query requests.CardProfileListParams, opts ...option.RequestOption) (res *responses.Page[responses.CardProfile], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *CardProfileService) List(ctx context.Context, query *requests.CardProfi
 }
 
 // List Card Profiles
-func (r *CardProfileService) ListAutoPager(ctx context.Context, query *requests.CardProfileListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CardProfile] {
+func (r *CardProfileService) ListAutoPaging(ctx context.Context, query requests.CardProfileListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.CardProfile] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

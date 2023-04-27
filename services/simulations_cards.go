@@ -26,7 +26,7 @@ func NewSimulationCardService(opts ...option.RequestOption) (r *SimulationCardSe
 // `card_decline`. You can pass either a Card id or a
 // [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
 // ways purchases can be made.
-func (r *SimulationCardService) Authorize(ctx context.Context, body *requests.SimulationCardAuthorizeParams, opts ...option.RequestOption) (res *responses.CardAuthorizationSimulation, err error) {
+func (r *SimulationCardService) Authorize(ctx context.Context, body requests.SimulationCardAuthorizeParams, opts ...option.RequestOption) (res *responses.CardAuthorizationSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_authorizations"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -38,7 +38,7 @@ func (r *SimulationCardService) Authorize(ctx context.Context, body *requests.Si
 // simulates that event, which may occur many days after the purchase in
 // production. The amount settled can be different from the amount originally
 // authorized, for example, when adding a tip to a restaurant bill.
-func (r *SimulationCardService) Settlement(ctx context.Context, body *requests.SimulationCardSettlementParams, opts ...option.RequestOption) (res *responses.Transaction, err error) {
+func (r *SimulationCardService) Settlement(ctx context.Context, body requests.SimulationCardSettlementParams, opts ...option.RequestOption) (res *responses.Transaction, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_settlements"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

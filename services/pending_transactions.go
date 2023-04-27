@@ -29,7 +29,7 @@ func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction
 }
 
 // List Pending Transactions
-func (r *PendingTransactionService) List(ctx context.Context, query *requests.PendingTransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.PendingTransaction], err error) {
+func (r *PendingTransactionService) List(ctx context.Context, query requests.PendingTransactionListParams, opts ...option.RequestOption) (res *responses.Page[responses.PendingTransaction], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *PendingTransactionService) List(ctx context.Context, query *requests.Pe
 }
 
 // List Pending Transactions
-func (r *PendingTransactionService) ListAutoPager(ctx context.Context, query *requests.PendingTransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.PendingTransaction] {
+func (r *PendingTransactionService) ListAutoPaging(ctx context.Context, query requests.PendingTransactionListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.PendingTransaction] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

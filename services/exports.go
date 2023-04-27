@@ -21,7 +21,7 @@ func NewExportService(opts ...option.RequestOption) (r *ExportService) {
 }
 
 // Create an Export
-func (r *ExportService) New(ctx context.Context, body *requests.ExportNewParams, opts ...option.RequestOption) (res *responses.Export, err error) {
+func (r *ExportService) New(ctx context.Context, body requests.ExportNewParams, opts ...option.RequestOption) (res *responses.Export, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "exports"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *ExportService) Get(ctx context.Context, export_id string, opts ...optio
 }
 
 // List Exports
-func (r *ExportService) List(ctx context.Context, query *requests.ExportListParams, opts ...option.RequestOption) (res *responses.Page[responses.Export], err error) {
+func (r *ExportService) List(ctx context.Context, query requests.ExportListParams, opts ...option.RequestOption) (res *responses.Page[responses.Export], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,6 +55,6 @@ func (r *ExportService) List(ctx context.Context, query *requests.ExportListPara
 }
 
 // List Exports
-func (r *ExportService) ListAutoPager(ctx context.Context, query *requests.ExportListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Export] {
+func (r *ExportService) ListAutoPaging(ctx context.Context, query requests.ExportListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.Export] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

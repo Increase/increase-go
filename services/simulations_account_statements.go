@@ -21,7 +21,7 @@ func NewSimulationAccountStatementService(opts ...option.RequestOption) (r *Simu
 
 // Simulates an [Account Statement](#account-statements) being created for an
 // account. In production, Account Statements are generated once per month.
-func (r *SimulationAccountStatementService) New(ctx context.Context, body *requests.SimulationAccountStatementNewParams, opts ...option.RequestOption) (res *responses.AccountStatement, err error) {
+func (r *SimulationAccountStatementService) New(ctx context.Context, body requests.SimulationAccountStatementNewParams, opts ...option.RequestOption) (res *responses.AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/account_statements"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

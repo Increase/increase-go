@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type Entity struct {
@@ -44,7 +44,7 @@ type EntityJSON struct {
 	Description           apijson.Metadata
 	Relationship          apijson.Metadata
 	SupplementalDocuments apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -88,7 +88,7 @@ type EntityCorporationJSON struct {
 	IncorporationState apijson.Metadata
 	Address            apijson.Metadata
 	BeneficialOwners   apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -120,7 +120,7 @@ type EntityCorporationAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -145,7 +145,7 @@ type EntityCorporationBeneficialOwnersJSON struct {
 	Individual   apijson.Metadata
 	CompanyTitle apijson.Metadata
 	Prong        apijson.Metadata
-	Raw          []byte
+	raw          string
 	Extras       map[string]apijson.Metadata
 }
 
@@ -173,7 +173,7 @@ type EntityCorporationBeneficialOwnersIndividualJSON struct {
 	DateOfBirth    apijson.Metadata
 	Address        apijson.Metadata
 	Identification apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -205,7 +205,7 @@ type EntityCorporationBeneficialOwnersIndividualAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -228,7 +228,7 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 type EntityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
 	Method      apijson.Metadata
 	NumberLast4 apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -273,7 +273,7 @@ type EntityNaturalPersonJSON struct {
 	DateOfBirth    apijson.Metadata
 	Address        apijson.Metadata
 	Identification apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -305,7 +305,7 @@ type EntityNaturalPersonAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -328,7 +328,7 @@ type EntityNaturalPersonIdentification struct {
 type EntityNaturalPersonIdentificationJSON struct {
 	Method      apijson.Metadata
 	NumberLast4 apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -360,7 +360,7 @@ type EntityJoint struct {
 type EntityJointJSON struct {
 	Name        apijson.Metadata
 	Individuals apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -388,7 +388,7 @@ type EntityJointIndividualsJSON struct {
 	DateOfBirth    apijson.Metadata
 	Address        apijson.Metadata
 	Identification apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -420,7 +420,7 @@ type EntityJointIndividualsAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -443,7 +443,7 @@ type EntityJointIndividualsIdentification struct {
 type EntityJointIndividualsIdentificationJSON struct {
 	Method      apijson.Metadata
 	NumberLast4 apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -494,7 +494,7 @@ type EntityTrustJSON struct {
 	Trustees                apijson.Metadata
 	Grantor                 apijson.Metadata
 	FormationDocumentFileID apijson.Metadata
-	Raw                     []byte
+	raw                     string
 	Extras                  map[string]apijson.Metadata
 }
 
@@ -533,7 +533,7 @@ type EntityTrustAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -556,7 +556,7 @@ type EntityTrustTrustees struct {
 type EntityTrustTrusteesJSON struct {
 	Structure  apijson.Metadata
 	Individual apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -590,7 +590,7 @@ type EntityTrustTrusteesIndividualJSON struct {
 	DateOfBirth    apijson.Metadata
 	Address        apijson.Metadata
 	Identification apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -622,7 +622,7 @@ type EntityTrustTrusteesIndividualAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -645,7 +645,7 @@ type EntityTrustTrusteesIndividualIdentification struct {
 type EntityTrustTrusteesIndividualIdentificationJSON struct {
 	Method      apijson.Metadata
 	NumberLast4 apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -683,7 +683,7 @@ type EntityTrustGrantorJSON struct {
 	DateOfBirth    apijson.Metadata
 	Address        apijson.Metadata
 	Identification apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -715,7 +715,7 @@ type EntityTrustGrantorAddressJSON struct {
 	City   apijson.Metadata
 	State  apijson.Metadata
 	Zip    apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -738,7 +738,7 @@ type EntityTrustGrantorIdentification struct {
 type EntityTrustGrantorIdentificationJSON struct {
 	Method      apijson.Metadata
 	NumberLast4 apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -781,7 +781,7 @@ type EntitySupplementalDocuments struct {
 
 type EntitySupplementalDocumentsJSON struct {
 	FileID apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -803,7 +803,7 @@ type EntityListResponse struct {
 type EntityListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

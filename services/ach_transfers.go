@@ -21,7 +21,7 @@ func NewACHTransferService(opts ...option.RequestOption) (r *ACHTransferService)
 }
 
 // Create an ACH Transfer
-func (r *ACHTransferService) New(ctx context.Context, body *requests.ACHTransferNewParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
+func (r *ACHTransferService) New(ctx context.Context, body requests.ACHTransferNewParams, opts ...option.RequestOption) (res *responses.ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "ach_transfers"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -37,7 +37,7 @@ func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, op
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) List(ctx context.Context, query *requests.ACHTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.ACHTransfer], err error) {
+func (r *ACHTransferService) List(ctx context.Context, query requests.ACHTransferListParams, opts ...option.RequestOption) (res *responses.Page[responses.ACHTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -55,7 +55,7 @@ func (r *ACHTransferService) List(ctx context.Context, query *requests.ACHTransf
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) ListAutoPager(ctx context.Context, query *requests.ACHTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ACHTransfer] {
+func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query requests.ACHTransferListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.ACHTransfer] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 

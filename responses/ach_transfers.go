@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type ACHTransfer struct {
@@ -106,7 +106,7 @@ type ACHTransferJSON struct {
 	EffectiveDate            apijson.Metadata
 	StandardEntryClassCode   apijson.Metadata
 	Type                     apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -141,7 +141,7 @@ type ACHTransferApproval struct {
 type ACHTransferApprovalJSON struct {
 	ApprovedAt apijson.Metadata
 	ApprovedBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -165,7 +165,7 @@ type ACHTransferCancellation struct {
 type ACHTransferCancellationJSON struct {
 	CanceledAt apijson.Metadata
 	CanceledBy apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -197,7 +197,7 @@ type ACHTransferNotificationsOfChangeJSON struct {
 	CreatedAt     apijson.Metadata
 	ChangeCode    apijson.Metadata
 	CorrectedData apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -226,7 +226,7 @@ type ACHTransferReturnJSON struct {
 	ReturnReasonCode apijson.Metadata
 	TransferID       apijson.Metadata
 	TransactionID    apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -289,7 +289,7 @@ type ACHTransferSubmission struct {
 type ACHTransferSubmissionJSON struct {
 	TraceNumber apijson.Metadata
 	SubmittedAt apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -332,7 +332,7 @@ type ACHTransferListResponse struct {
 type ACHTransferListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

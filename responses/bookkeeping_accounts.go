@@ -1,7 +1,7 @@
 package responses
 
 import (
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type BookkeepingAccount struct {
@@ -28,7 +28,7 @@ type BookkeepingAccountJSON struct {
 	EntityID           apijson.Metadata
 	Name               apijson.Metadata
 	Type               apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -63,7 +63,7 @@ type BookkeepingAccountListResponse struct {
 type BookkeepingAccountListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

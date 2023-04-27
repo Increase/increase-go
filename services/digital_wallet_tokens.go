@@ -29,7 +29,7 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_toke
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) List(ctx context.Context, query *requests.DigitalWalletTokenListParams, opts ...option.RequestOption) (res *responses.Page[responses.DigitalWalletToken], err error) {
+func (r *DigitalWalletTokenService) List(ctx context.Context, query requests.DigitalWalletTokenListParams, opts ...option.RequestOption) (res *responses.Page[responses.DigitalWalletToken], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -47,6 +47,6 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query *requests.Di
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) ListAutoPager(ctx context.Context, query *requests.DigitalWalletTokenListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.DigitalWalletToken] {
+func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query requests.DigitalWalletTokenListParams, opts ...option.RequestOption) *responses.PageAutoPager[responses.DigitalWalletToken] {
 	return responses.NewPageAutoPager(r.List(ctx, query, opts...))
 }

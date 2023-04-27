@@ -12,7 +12,7 @@ import (
 
 	"github.com/tidwall/sjson"
 
-	"github.com/increase/increase-go/core/field"
+	"github.com/increase/increase-go/internal/field"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

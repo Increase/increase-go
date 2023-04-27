@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type WireTransferSimulation struct {
@@ -20,7 +20,7 @@ type WireTransferSimulation struct {
 type WireTransferSimulationJSON struct {
 	Transaction apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -77,7 +77,7 @@ type WireTransferSimulationTransactionJSON struct {
 	RouteType   apijson.Metadata
 	Source      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -271,7 +271,7 @@ type WireTransferSimulationTransactionSourceJSON struct {
 	WireDrawdownPaymentRejection                apijson.Metadata
 	WireTransferIntention                       apijson.Metadata
 	WireTransferRejection                       apijson.Metadata
-	Raw                                         []byte
+	raw                                         string
 	Extras                                      map[string]apijson.Metadata
 }
 
@@ -352,7 +352,7 @@ type WireTransferSimulationTransactionSourceAccountTransferIntentionJSON struct 
 	DestinationAccountID apijson.Metadata
 	SourceAccountID      apijson.Metadata
 	TransferID           apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -387,7 +387,7 @@ type WireTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 type WireTransferSimulationTransactionSourceACHCheckConversionReturnJSON struct {
 	Amount           apijson.Metadata
 	ReturnReasonCode apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -411,7 +411,7 @@ type WireTransferSimulationTransactionSourceACHCheckConversion struct {
 type WireTransferSimulationTransactionSourceACHCheckConversionJSON struct {
 	Amount apijson.Metadata
 	FileID apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -440,7 +440,7 @@ type WireTransferSimulationTransactionSourceACHTransferIntentionJSON struct {
 	RoutingNumber       apijson.Metadata
 	StatementDescriptor apijson.Metadata
 	TransferID          apijson.Metadata
-	Raw                 []byte
+	raw                 string
 	Extras              map[string]apijson.Metadata
 }
 
@@ -459,7 +459,7 @@ type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 
 type WireTransferSimulationTransactionSourceACHTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -488,7 +488,7 @@ type WireTransferSimulationTransactionSourceACHTransferReturnJSON struct {
 	ReturnReasonCode apijson.Metadata
 	TransferID       apijson.Metadata
 	TransactionID    apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -543,7 +543,7 @@ type WireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON struct {
 	AcceptedAt    apijson.Metadata
 	CardDisputeID apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -596,7 +596,7 @@ type WireTransferSimulationTransactionSourceCardRefundJSON struct {
 	MerchantName                apijson.Metadata
 	MerchantCategoryCode        apijson.Metadata
 	Type                        apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -677,7 +677,7 @@ type WireTransferSimulationTransactionSourceCardSettlementJSON struct {
 	MerchantCategoryCode apijson.Metadata
 	PendingTransactionID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -727,7 +727,7 @@ type WireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
 	PeriodStart           apijson.Metadata
 	PeriodEnd             apijson.Metadata
 	TransactedOnAccountID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -779,7 +779,7 @@ type WireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON struct {
 	AuxiliaryOnUs  apijson.Metadata
 	SerialNumber   apijson.Metadata
 	CheckDepositID apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -827,7 +827,7 @@ type WireTransferSimulationTransactionSourceCheckDepositReturnJSON struct {
 	CheckDepositID apijson.Metadata
 	TransactionID  apijson.Metadata
 	ReturnReason   apijson.Metadata
-	Raw            []byte
+	raw            string
 	Extras         map[string]apijson.Metadata
 }
 
@@ -898,7 +898,7 @@ type WireTransferSimulationTransactionSourceCheckTransferIntentionJSON struct {
 	Currency      apijson.Metadata
 	RecipientName apijson.Metadata
 	TransferID    apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -942,7 +942,7 @@ type WireTransferSimulationTransactionSourceCheckTransferReturnJSON struct {
 	FileID        apijson.Metadata
 	Reason        apijson.Metadata
 	TransactionID apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -968,7 +968,7 @@ type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 
 type WireTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -997,7 +997,7 @@ type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON 
 	TransactionID apijson.Metadata
 	RequestedAt   apijson.Metadata
 	Type          apijson.Metadata
-	Raw           []byte
+	raw           string
 	Extras        map[string]apijson.Metadata
 }
 
@@ -1031,7 +1031,7 @@ type WireTransferSimulationTransactionSourceDisputeResolutionJSON struct {
 	Amount                apijson.Metadata
 	Currency              apijson.Metadata
 	DisputedTransactionID apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1066,7 +1066,7 @@ type WireTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
 	Amount      apijson.Metadata
 	BagID       apijson.Metadata
 	DepositDate apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -1090,7 +1090,7 @@ type WireTransferSimulationTransactionSourceFeePayment struct {
 type WireTransferSimulationTransactionSourceFeePaymentJSON struct {
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1137,7 +1137,7 @@ type WireTransferSimulationTransactionSourceInboundACHTransferJSON struct {
 	ReceiverIDNumber                   apijson.Metadata
 	ReceiverName                       apijson.Metadata
 	TraceNumber                        apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1167,7 +1167,7 @@ type WireTransferSimulationTransactionSourceInboundCheckJSON struct {
 	CheckNumber           apijson.Metadata
 	CheckFrontImageFileID apijson.Metadata
 	CheckRearImageFileID  apijson.Metadata
-	Raw                   []byte
+	raw                   string
 	Extras                map[string]apijson.Metadata
 }
 
@@ -1268,7 +1268,7 @@ type WireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON 
 	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
 	TraceNumber                                            apijson.Metadata
-	Raw                                                    []byte
+	raw                                                    string
 	Extras                                                 map[string]apijson.Metadata
 }
 
@@ -1311,7 +1311,7 @@ type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfi
 	DebtorRoutingNumber       apijson.Metadata
 	TransactionIdentification apijson.Metadata
 	RemittanceInformation     apijson.Metadata
-	Raw                       []byte
+	raw                       string
 	Extras                    map[string]apijson.Metadata
 }
 
@@ -1369,7 +1369,7 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJS
 	PreviousMessageInputCycleDate                 apijson.Metadata
 	PreviousMessageInputSequenceNumber            apijson.Metadata
 	PreviousMessageInputSource                    apijson.Metadata
-	Raw                                           []byte
+	raw                                           string
 	Extras                                        map[string]apijson.Metadata
 }
 
@@ -1414,7 +1414,7 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struc
 	OriginatorAddressLine3             apijson.Metadata
 	OriginatorName                     apijson.Metadata
 	OriginatorToBeneficiaryInformation apijson.Metadata
-	Raw                                []byte
+	raw                                string
 	Extras                             map[string]apijson.Metadata
 }
 
@@ -1475,7 +1475,7 @@ type WireTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
-	Raw                                                   []byte
+	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
 
@@ -1527,7 +1527,7 @@ type WireTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
 	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
 	OriginatorToBeneficiaryInformation      apijson.Metadata
-	Raw                                     []byte
+	raw                                     string
 	Extras                                  map[string]apijson.Metadata
 }
 
@@ -1560,7 +1560,7 @@ type WireTransferSimulationTransactionSourceInterestPaymentJSON struct {
 	PeriodStart        apijson.Metadata
 	PeriodEnd          apijson.Metadata
 	AccruedOnAccountID apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1597,7 +1597,7 @@ type WireTransferSimulationTransactionSourceInternalSourceJSON struct {
 	Amount   apijson.Metadata
 	Currency apijson.Metadata
 	Reason   apijson.Metadata
-	Raw      []byte
+	raw      string
 	Extras   map[string]apijson.Metadata
 }
 
@@ -1658,7 +1658,7 @@ type WireTransferSimulationTransactionSourceCardRouteRefundJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1705,7 +1705,7 @@ type WireTransferSimulationTransactionSourceCardRouteSettlementJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantState        apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -1747,7 +1747,7 @@ type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgem
 	DestinationRoutingNumber apijson.Metadata
 	RemittanceInformation    apijson.Metadata
 	TransferID               apijson.Metadata
-	Raw                      []byte
+	raw                      string
 	Extras                   map[string]apijson.Metadata
 }
 
@@ -1767,7 +1767,7 @@ type WireTransferSimulationTransactionSourceSampleFunds struct {
 
 type WireTransferSimulationTransactionSourceSampleFundsJSON struct {
 	Originator apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1794,7 +1794,7 @@ type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON str
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1813,7 +1813,7 @@ type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct 
 
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -1844,7 +1844,7 @@ type WireTransferSimulationTransactionSourceWireTransferIntentionJSON struct {
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -1862,7 +1862,7 @@ type WireTransferSimulationTransactionSourceWireTransferRejection struct {
 
 type WireTransferSimulationTransactionSourceWireTransferRejectionJSON struct {
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

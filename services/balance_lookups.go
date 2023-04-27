@@ -20,7 +20,7 @@ func NewBalanceLookupService(opts ...option.RequestOption) (r *BalanceLookupServ
 }
 
 // Look up the balance for an Account
-func (r *BalanceLookupService) Lookup(ctx context.Context, body *requests.BalanceLookupLookupParams, opts ...option.RequestOption) (res *responses.BalanceLookupLookupResponse, err error) {
+func (r *BalanceLookupService) Lookup(ctx context.Context, body requests.BalanceLookupLookupParams, opts ...option.RequestOption) (res *responses.BalanceLookupLookupResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "balance_lookups"
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)

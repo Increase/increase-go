@@ -11,8 +11,8 @@ import (
 )
 
 func TestUsage(t *testing.T) {
-	client := increase.NewIncrease(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	account, err := client.Accounts.New(context.TODO(), &requests.AccountNewParams{
+	client := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	account, err := client.Accounts.New(context.TODO(), requests.AccountNewParams{
 		Name: increase.F("My First Increase Account"),
 	})
 	if err != nil {

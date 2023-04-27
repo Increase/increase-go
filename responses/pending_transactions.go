@@ -3,7 +3,7 @@ package responses
 import (
 	"time"
 
-	apijson "github.com/increase/increase-go/core/json"
+	apijson "github.com/increase/increase-go/internal/json"
 )
 
 type PendingTransaction struct {
@@ -59,7 +59,7 @@ type PendingTransactionJSON struct {
 	Source      apijson.Metadata
 	Status      apijson.Metadata
 	Type        apijson.Metadata
-	Raw         []byte
+	raw         string
 	Extras      map[string]apijson.Metadata
 }
 
@@ -140,7 +140,7 @@ type PendingTransactionSourceJSON struct {
 	RealTimePaymentsTransferInstruction apijson.Metadata
 	WireDrawdownPaymentInstruction      apijson.Metadata
 	WireTransferInstruction             apijson.Metadata
-	Raw                                 []byte
+	raw                                 string
 	Extras                              map[string]apijson.Metadata
 }
 
@@ -183,7 +183,7 @@ type PendingTransactionSourceAccountTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	Currency   apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -217,7 +217,7 @@ type PendingTransactionSourceACHTransferInstruction struct {
 type PendingTransactionSourceACHTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -279,7 +279,7 @@ type PendingTransactionSourceCardAuthorizationJSON struct {
 	RealTimeDecisionID   apijson.Metadata
 	DigitalWalletTokenID apijson.Metadata
 	Type                 apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -304,7 +304,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 
 type PendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
 	Visa   apijson.Metadata
-	Raw    []byte
+	raw    string
 	Extras map[string]apijson.Metadata
 }
 
@@ -329,7 +329,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Metadata
 	PointOfServiceEntryMode     apijson.Metadata
-	Raw                         []byte
+	raw                         string
 	Extras                      map[string]apijson.Metadata
 }
 
@@ -394,7 +394,7 @@ type PendingTransactionSourceCheckDepositInstructionJSON struct {
 	FrontImageFileID apijson.Metadata
 	BackImageFileID  apijson.Metadata
 	CheckDepositID   apijson.Metadata
-	Raw              []byte
+	raw              string
 	Extras           map[string]apijson.Metadata
 }
 
@@ -432,7 +432,7 @@ type PendingTransactionSourceCheckTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	Currency   apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -487,7 +487,7 @@ type PendingTransactionSourceInboundFundsHoldJSON struct {
 	Status                  apijson.Metadata
 	HeldTransactionID       apijson.Metadata
 	PendingTransactionID    apijson.Metadata
-	Raw                     []byte
+	raw                     string
 	Extras                  map[string]apijson.Metadata
 }
 
@@ -541,7 +541,7 @@ type PendingTransactionSourceCardRouteAuthorizationJSON struct {
 	MerchantDescriptor   apijson.Metadata
 	MerchantCategoryCode apijson.Metadata
 	MerchantState        apijson.Metadata
-	Raw                  []byte
+	raw                  string
 	Extras               map[string]apijson.Metadata
 }
 
@@ -576,7 +576,7 @@ type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 type PendingTransactionSourceRealTimePaymentsTransferInstructionJSON struct {
 	Amount     apijson.Metadata
 	TransferID apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 
@@ -602,7 +602,7 @@ type PendingTransactionSourceWireDrawdownPaymentInstructionJSON struct {
 	AccountNumber      apijson.Metadata
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -630,7 +630,7 @@ type PendingTransactionSourceWireTransferInstructionJSON struct {
 	RoutingNumber      apijson.Metadata
 	MessageToRecipient apijson.Metadata
 	TransferID         apijson.Metadata
-	Raw                []byte
+	raw                string
 	Extras             map[string]apijson.Metadata
 }
 
@@ -665,7 +665,7 @@ type PendingTransactionListResponse struct {
 type PendingTransactionListResponseJSON struct {
 	Data       apijson.Metadata
 	NextCursor apijson.Metadata
-	Raw        []byte
+	raw        string
 	Extras     map[string]apijson.Metadata
 }
 

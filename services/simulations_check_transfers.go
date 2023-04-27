@@ -41,7 +41,7 @@ func (r *SimulationCheckTransferService) Mail(ctx context.Context, check_transfe
 
 // Simulates a [Check Transfer](#check-transfers) being returned via USPS to
 // Increase. This transfer must first have a `status` of `mailed`.
-func (r *SimulationCheckTransferService) Return(ctx context.Context, check_transfer_id string, body *requests.SimulationCheckTransferReturnParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
+func (r *SimulationCheckTransferService) Return(ctx context.Context, check_transfer_id string, body requests.SimulationCheckTransferReturnParams, opts ...option.RequestOption) (res *responses.CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/check_transfers/%s/return", check_transfer_id)
 	err = option.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
