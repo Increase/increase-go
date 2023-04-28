@@ -64,7 +64,7 @@ const (
 	DocumentListParamsCategoryInEndUserTermsOfService            DocumentListParamsCategoryIn = "end_user_terms_of_service"
 	DocumentListParamsCategoryInESignPolicy                      DocumentListParamsCategoryIn = "e_sign_policy"
 	DocumentListParamsCategoryInFinancialStatement               DocumentListParamsCategoryIn = "financial_statement"
-	DocumentListParamsCategoryInForm_1099Int                     DocumentListParamsCategoryIn = "form_1099_int"
+	DocumentListParamsCategoryInForm1099Int                      DocumentListParamsCategoryIn = "form_1099_int"
 	DocumentListParamsCategoryInFraudPreventionPolicy            DocumentListParamsCategoryIn = "fraud_prevention_policy"
 	DocumentListParamsCategoryInFundsAvailabilityPolicy          DocumentListParamsCategoryIn = "funds_availability_policy"
 	DocumentListParamsCategoryInFundsAvailabilityDisclosure      DocumentListParamsCategoryIn = "funds_availability_disclosure"

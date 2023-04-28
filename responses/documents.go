@@ -66,7 +66,7 @@ const (
 	DocumentCategoryEndUserTermsOfService            DocumentCategory = "end_user_terms_of_service"
 	DocumentCategoryESignPolicy                      DocumentCategory = "e_sign_policy"
 	DocumentCategoryFinancialStatement               DocumentCategory = "financial_statement"
-	DocumentCategoryForm_1099Int                     DocumentCategory = "form_1099_int"
+	DocumentCategoryForm1099Int                      DocumentCategory = "form_1099_int"
 	DocumentCategoryFraudPreventionPolicy            DocumentCategory = "fraud_prevention_policy"
 	DocumentCategoryFundsAvailabilityPolicy          DocumentCategory = "funds_availability_policy"
 	DocumentCategoryFundsAvailabilityDisclosure      DocumentCategory = "funds_availability_disclosure"

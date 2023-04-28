@@ -54,8 +54,8 @@ type FilePurpose string
 const (
 	FilePurposeCheckImageFront            FilePurpose = "check_image_front"
 	FilePurposeCheckImageBack             FilePurpose = "check_image_back"
-	FilePurposeForm_1099Int               FilePurpose = "form_1099_int"
-	FilePurposeFormSs_4                   FilePurpose = "form_ss_4"
+	FilePurposeForm1099Int                FilePurpose = "form_1099_int"
+	FilePurposeFormSS4                    FilePurpose = "form_ss_4"
 	FilePurposeIdentityDocument           FilePurpose = "identity_document"
 	FilePurposeIncreaseStatement          FilePurpose = "increase_statement"
 	FilePurposeOther                      FilePurpose = "other"

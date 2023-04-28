@@ -60,7 +60,7 @@ type FileNewParamsPurpose string
 const (
 	FileNewParamsPurposeCheckImageFront            FileNewParamsPurpose = "check_image_front"
 	FileNewParamsPurposeCheckImageBack             FileNewParamsPurpose = "check_image_back"
-	FileNewParamsPurposeFormSs_4                   FileNewParamsPurpose = "form_ss_4"
+	FileNewParamsPurposeFormSS4                    FileNewParamsPurpose = "form_ss_4"
 	FileNewParamsPurposeIdentityDocument           FileNewParamsPurpose = "identity_document"
 	FileNewParamsPurposeOther                      FileNewParamsPurpose = "other"
 	FileNewParamsPurposeTrustFormationDocument     FileNewParamsPurpose = "trust_formation_document"
@@ -124,8 +124,8 @@ type FileListParamsPurposeIn string
 const (
 	FileListParamsPurposeInCheckImageFront            FileListParamsPurposeIn = "check_image_front"
 	FileListParamsPurposeInCheckImageBack             FileListParamsPurposeIn = "check_image_back"
-	FileListParamsPurposeInForm_1099Int               FileListParamsPurposeIn = "form_1099_int"
-	FileListParamsPurposeInFormSs_4                   FileListParamsPurposeIn = "form_ss_4"
+	FileListParamsPurposeInForm1099Int                FileListParamsPurposeIn = "form_1099_int"
+	FileListParamsPurposeInFormSS4                    FileListParamsPurposeIn = "form_ss_4"
 	FileListParamsPurposeInIdentityDocument           FileListParamsPurposeIn = "identity_document"
 	FileListParamsPurposeInIncreaseStatement          FileListParamsPurposeIn = "increase_statement"
 	FileListParamsPurposeInOther                      FileListParamsPurposeIn = "other"
