@@ -567,8 +567,6 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency InterestPaymentSimulationResultTransactionSourceCardRefundCurrency `json:"currency,required"`
-	// The identifier for the Transaction this refunds, if any.
-	CardSettlementTransactionID string `json:"card_settlement_transaction_id,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
@@ -589,19 +587,18 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 }
 
 type InterestPaymentSimulationResultTransactionSourceCardRefundJSON struct {
-	ID                          apijson.Metadata
-	Amount                      apijson.Metadata
-	Currency                    apijson.Metadata
-	CardSettlementTransactionID apijson.Metadata
-	MerchantAcceptorID          apijson.Metadata
-	MerchantCity                apijson.Metadata
-	MerchantState               apijson.Metadata
-	MerchantCountry             apijson.Metadata
-	MerchantName                apijson.Metadata
-	MerchantCategoryCode        apijson.Metadata
-	Type                        apijson.Metadata
-	raw                         string
-	Extras                      map[string]apijson.Metadata
+	ID                   apijson.Metadata
+	Amount               apijson.Metadata
+	Currency             apijson.Metadata
+	MerchantAcceptorID   apijson.Metadata
+	MerchantCity         apijson.Metadata
+	MerchantState        apijson.Metadata
+	MerchantCountry      apijson.Metadata
+	MerchantName         apijson.Metadata
+	MerchantCategoryCode apijson.Metadata
+	Type                 apijson.Metadata
+	raw                  string
+	Extras               map[string]apijson.Metadata
 }
 
 // UnmarshalJSON deserializes the provided bytes into
