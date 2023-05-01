@@ -36,7 +36,6 @@ import (
 	"fmt"
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/option"
-	"github.com/increase/increase-go/requests"
 )
 
 func main() {
@@ -44,7 +43,7 @@ func main() {
 		option.WithAPIKey("my api key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
 		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
-	account, err := client.Accounts.New(context.TODO(), requests.AccountNewParams{
+	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name: increase.F("My First Increase Account"),
 	})
 	if err != nil {
@@ -81,8 +80,8 @@ byte slice. We also provide convenient helpers `increase.Int(...)` and
 populate the field. An example request may look like
 
 ```go
-params := &FooParams{
-	// Normally populates this field as `"id": "food_id"`
+params := FooParams{
+	// Normally populates this field as `"id": "foo_id"`
 	ID: increase.F("foo_id"),
 
 	// Integer helper casts integer values and literals to fields.Field[int64]
@@ -125,7 +124,7 @@ res.JSON.Name.IsNull()
 res.JSON.Name.IsMissing()
 
 // This is true if `name` is present, but not coercable
-res.JSON.Name.IsMissing()
+res.JSON.Name.IsInvalid()
 
 // If needed, you can access the Raw JSON value of the field by accessing
 res.JSON.Name.Raw()
@@ -193,7 +192,7 @@ This library provides some conveniences for working with paginated list endpoint
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
 ```go
-iter := client.Accounts.ListAutoPaging(context.TODO(), requests.AccountListParams{})
+iter := client.Accounts.ListAutoPaging(context.TODO(), increase.AccountListParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
 	account := iter.Current()
@@ -208,7 +207,7 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.Accounts.List(context.TODO(), requests.AccountListParams{})
+page, err := client.Accounts.List(context.TODO(), increase.AccountListParams{})
 for page != nil {
 	for _, account := range page.Data {
 		fmt.Printf("%+v\n", account)
@@ -227,7 +226,7 @@ When the API returns a non-success status code, we return an error with type `*i
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Accounts.New(context.TODO(), requests.AccountNewParams{
+_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 	Naem: "Oops",
 })
 if err != nil {
@@ -263,7 +262,7 @@ client := increase.NewClient(
 // Override per-request:
 client.Accounts.New(
 	context.TODO(),
-	requests.AccountNewParams{
+	increase.AccountNewParams{
 		Name: increase.F("Jack"),
 	},
 	option.WithMaxRetries(5),
