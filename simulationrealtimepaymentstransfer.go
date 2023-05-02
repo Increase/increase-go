@@ -1515,7 +1515,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
+	// The ID for the Wire Transfer that is being reversed.
+	WireTransferID string `json:"wire_transfer_id,required"`
+	JSON           InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
 }
 
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON struct {
@@ -1533,6 +1535,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
+	WireTransferID                                        apijson.Metadata
 	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
@@ -2398,6 +2401,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"

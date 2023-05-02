@@ -1512,7 +1512,9 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          ACHTransferSimulationTransactionSourceInboundWireReversalJSON
+	// The ID for the Wire Transfer that is being reversed.
+	WireTransferID string `json:"wire_transfer_id,required"`
+	JSON           ACHTransferSimulationTransactionSourceInboundWireReversalJSON
 }
 
 type ACHTransferSimulationTransactionSourceInboundWireReversalJSON struct {
@@ -1530,6 +1532,7 @@ type ACHTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
+	WireTransferID                                        apijson.Metadata
 	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
@@ -2381,6 +2384,7 @@ type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransf
 const (
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"

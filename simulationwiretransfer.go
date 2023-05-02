@@ -1477,7 +1477,9 @@ type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          WireTransferSimulationTransactionSourceInboundWireReversalJSON
+	// The ID for the Wire Transfer that is being reversed.
+	WireTransferID string `json:"wire_transfer_id,required"`
+	JSON           WireTransferSimulationTransactionSourceInboundWireReversalJSON
 }
 
 type WireTransferSimulationTransactionSourceInboundWireReversalJSON struct {
@@ -1495,6 +1497,7 @@ type WireTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	ReceiverFinancialInstitutionInformation               apijson.Metadata
 	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
 	TransactionID                                         apijson.Metadata
+	WireTransferID                                        apijson.Metadata
 	raw                                                   string
 	Extras                                                map[string]apijson.Metadata
 }
