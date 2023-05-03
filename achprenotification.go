@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// ACHPrenotificationService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewACHPrenotificationService] method
+// instead.
 type ACHPrenotificationService struct {
 	Options []option.RequestOption
 }
 
+// NewACHPrenotificationService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewACHPrenotificationService(opts ...option.RequestOption) (r *ACHPrenotificationService) {
 	r = &ACHPrenotificationService{}
 	r.Options = opts
@@ -64,6 +72,8 @@ func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query AC
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// ACH Prenotifications are one way you can verify account and routing numbers by
+// Automated Clearing House (ACH).
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
 	ID string `json:"id,required"`
@@ -95,31 +105,30 @@ type ACHPrenotification struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_prenotification`.
 	Type ACHPrenotificationType `json:"type,required"`
-	JSON ACHPrenotificationJSON
+	JSON achPrenotificationJSON
 }
 
-type ACHPrenotificationJSON struct {
-	ID                       apijson.Metadata
-	AccountNumber            apijson.Metadata
-	Addendum                 apijson.Metadata
-	CompanyDescriptiveDate   apijson.Metadata
-	CompanyDiscretionaryData apijson.Metadata
-	CompanyEntryDescription  apijson.Metadata
-	CompanyName              apijson.Metadata
-	CreditDebitIndicator     apijson.Metadata
-	EffectiveDate            apijson.Metadata
-	RoutingNumber            apijson.Metadata
-	PrenotificationReturn    apijson.Metadata
-	CreatedAt                apijson.Metadata
-	Status                   apijson.Metadata
-	Type                     apijson.Metadata
+// achPrenotificationJSON contains the JSON metadata for the struct
+// [ACHPrenotification]
+type achPrenotificationJSON struct {
+	ID                       apijson.Field
+	AccountNumber            apijson.Field
+	Addendum                 apijson.Field
+	CompanyDescriptiveDate   apijson.Field
+	CompanyDiscretionaryData apijson.Field
+	CompanyEntryDescription  apijson.Field
+	CompanyName              apijson.Field
+	CreditDebitIndicator     apijson.Field
+	EffectiveDate            apijson.Field
+	RoutingNumber            apijson.Field
+	PrenotificationReturn    apijson.Field
+	CreatedAt                apijson.Field
+	Status                   apijson.Field
+	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHPrenotification using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -131,25 +140,25 @@ const (
 	ACHPrenotificationCreditDebitIndicatorDebit  ACHPrenotificationCreditDebitIndicator = "debit"
 )
 
+// If your prenotification is returned, this will contain details of the return.
 type ACHPrenotificationPrenotificationReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Prenotification was returned.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Why the Prenotification was returned.
 	ReturnReasonCode string `json:"return_reason_code,required"`
-	JSON             ACHPrenotificationPrenotificationReturnJSON
+	JSON             achPrenotificationPrenotificationReturnJSON
 }
 
-type ACHPrenotificationPrenotificationReturnJSON struct {
-	CreatedAt        apijson.Metadata
-	ReturnReasonCode apijson.Metadata
+// achPrenotificationPrenotificationReturnJSON contains the JSON metadata for the
+// struct [ACHPrenotificationPrenotificationReturn]
+type achPrenotificationPrenotificationReturnJSON struct {
+	CreatedAt        apijson.Field
+	ReturnReasonCode apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// ACHPrenotificationPrenotificationReturn using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -199,9 +208,6 @@ type ACHPrenotificationNewParams struct {
 	StandardEntryClassCode field.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 }
 
-// MarshalJSON serializes ACHPrenotificationNewParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -230,8 +236,8 @@ type ACHPrenotificationListParams struct {
 	CreatedAt field.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes ACHPrenotificationListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [ACHPrenotificationListParams]'s query parameters as
+// `url.Values`.
 func (r ACHPrenotificationListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -251,30 +257,30 @@ type ACHPrenotificationListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes ACHPrenotificationListParamsCreatedAt into a url.Values of
-// the query parameters associated with this value
+// URLQuery serializes [ACHPrenotificationListParamsCreatedAt]'s query parameters
+// as `url.Values`.
 func (r ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of ACH Prenotification objects
 type ACHPrenotificationListResponse struct {
 	// The contents of the list.
 	Data []ACHPrenotification `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ACHPrenotificationListResponseJSON
+	JSON       achPrenotificationListResponseJSON
 }
 
-type ACHPrenotificationListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// achPrenotificationListResponseJSON contains the JSON metadata for the struct
+// [ACHPrenotificationListResponse]
+type achPrenotificationListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// ACHPrenotificationListResponse using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

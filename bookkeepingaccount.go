@@ -13,10 +13,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// BookkeepingAccountService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewBookkeepingAccountService] method
+// instead.
 type BookkeepingAccountService struct {
 	Options []option.RequestOption
 }
 
+// NewBookkeepingAccountService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewBookkeepingAccountService(opts ...option.RequestOption) (r *BookkeepingAccountService) {
 	r = &BookkeepingAccountService{}
 	r.Options = opts
@@ -54,6 +62,7 @@ func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query Bo
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Accounts are T-accounts. They can store accounting entries.
 type BookkeepingAccount struct {
 	// The account identifier.
 	ID string `json:"id,required"`
@@ -68,23 +77,22 @@ type BookkeepingAccount struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_account`.
 	Type BookkeepingAccountType `json:"type,required"`
-	JSON BookkeepingAccountJSON
+	JSON bookkeepingAccountJSON
 }
 
-type BookkeepingAccountJSON struct {
-	ID                 apijson.Metadata
-	ComplianceCategory apijson.Metadata
-	AccountID          apijson.Metadata
-	EntityID           apijson.Metadata
-	Name               apijson.Metadata
-	Type               apijson.Metadata
+// bookkeepingAccountJSON contains the JSON metadata for the struct
+// [BookkeepingAccount]
+type bookkeepingAccountJSON struct {
+	ID                 apijson.Field
+	ComplianceCategory apijson.Field
+	AccountID          apijson.Field
+	EntityID           apijson.Field
+	Name               apijson.Field
+	Type               apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into BookkeepingAccount using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *BookkeepingAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -113,9 +121,6 @@ type BookkeepingAccountNewParams struct {
 	Name field.Field[string] `json:"name,required"`
 }
 
-// MarshalJSON serializes BookkeepingAccountNewParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -135,30 +140,30 @@ type BookkeepingAccountListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes BookkeepingAccountListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [BookkeepingAccountListParams]'s query parameters as
+// `url.Values`.
 func (r BookkeepingAccountListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Bookkeeping Account objects
 type BookkeepingAccountListResponse struct {
 	// The contents of the list.
 	Data []BookkeepingAccount `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       BookkeepingAccountListResponseJSON
+	JSON       bookkeepingAccountListResponseJSON
 }
 
-type BookkeepingAccountListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// bookkeepingAccountListResponseJSON contains the JSON metadata for the struct
+// [BookkeepingAccountListResponse]
+type bookkeepingAccountListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// BookkeepingAccountListResponse using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *BookkeepingAccountListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

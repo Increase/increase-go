@@ -13,10 +13,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// RealTimeDecisionService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewRealTimeDecisionService] method
+// instead.
 type RealTimeDecisionService struct {
 	Options []option.RequestOption
 }
 
+// NewRealTimeDecisionService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewRealTimeDecisionService(opts ...option.RequestOption) (r *RealTimeDecisionService) {
 	r = &RealTimeDecisionService{}
 	r.Options = opts
@@ -39,6 +47,10 @@ func (r *RealTimeDecisionService) Action(ctx context.Context, real_time_decision
 	return
 }
 
+// Real Time Decisions are created when your application needs to take action in
+// real-time to some event such as a card authorization. Real time decisions are
+// currently in beta; please contact support@increase.com if you're interested in
+// trying them out!
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
 	ID string `json:"id,required"`
@@ -61,26 +73,25 @@ type RealTimeDecision struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_decision`.
 	Type RealTimeDecisionType `json:"type,required"`
-	JSON RealTimeDecisionJSON
+	JSON realTimeDecisionJSON
 }
 
-type RealTimeDecisionJSON struct {
-	ID                          apijson.Metadata
-	CreatedAt                   apijson.Metadata
-	TimeoutAt                   apijson.Metadata
-	Status                      apijson.Metadata
-	Category                    apijson.Metadata
-	CardAuthorization           apijson.Metadata
-	DigitalWalletToken          apijson.Metadata
-	DigitalWalletAuthentication apijson.Metadata
-	Type                        apijson.Metadata
+// realTimeDecisionJSON contains the JSON metadata for the struct
+// [RealTimeDecision]
+type realTimeDecisionJSON struct {
+	ID                          apijson.Field
+	CreatedAt                   apijson.Field
+	TimeoutAt                   apijson.Field
+	Status                      apijson.Field
+	Category                    apijson.Field
+	CardAuthorization           apijson.Field
+	DigitalWalletToken          apijson.Field
+	DigitalWalletAuthentication apijson.Field
+	Type                        apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Metadata
+	Extras                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into RealTimeDecision using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -101,6 +112,7 @@ const (
 	RealTimeDecisionCategoryDigitalWalletAuthenticationRequested RealTimeDecisionCategory = "digital_wallet_authentication_requested"
 )
 
+// Fields related to a card authorization.
 type RealTimeDecisionCardAuthorization struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -137,31 +149,30 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
 	SettlementCurrency string `json:"settlement_currency,required"`
-	JSON               RealTimeDecisionCardAuthorizationJSON
+	JSON               realTimeDecisionCardAuthorizationJSON
 }
 
-type RealTimeDecisionCardAuthorizationJSON struct {
-	MerchantAcceptorID   apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	Network              apijson.Metadata
-	NetworkDetails       apijson.Metadata
-	Decision             apijson.Metadata
-	CardID               apijson.Metadata
-	AccountID            apijson.Metadata
-	PresentmentAmount    apijson.Metadata
-	PresentmentCurrency  apijson.Metadata
-	SettlementAmount     apijson.Metadata
-	SettlementCurrency   apijson.Metadata
+// realTimeDecisionCardAuthorizationJSON contains the JSON metadata for the struct
+// [RealTimeDecisionCardAuthorization]
+type realTimeDecisionCardAuthorizationJSON struct {
+	MerchantAcceptorID   apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	Network              apijson.Field
+	NetworkDetails       apijson.Field
+	Decision             apijson.Field
+	CardID               apijson.Field
+	AccountID            apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
+	SettlementAmount     apijson.Field
+	SettlementCurrency   apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorization using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -172,25 +183,26 @@ const (
 	RealTimeDecisionCardAuthorizationNetworkVisa RealTimeDecisionCardAuthorizationNetwork = "visa"
 )
 
+// Fields specific to the `network`
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	// Fields specific to the `visa` network
 	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required"`
-	JSON RealTimeDecisionCardAuthorizationNetworkDetailsJSON
+	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON
 }
 
-type RealTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
-	Visa   apijson.Metadata
+// realTimeDecisionCardAuthorizationNetworkDetailsJSON contains the JSON metadata
+// for the struct [RealTimeDecisionCardAuthorizationNetworkDetails]
+type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
+	Visa   apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorizationNetworkDetails using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Fields specific to the `visa` network
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
@@ -199,19 +211,18 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaJSON
+	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON
 }
 
-type RealTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator apijson.Metadata
-	PointOfServiceEntryMode     apijson.Metadata
+// realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON contains the JSON
+// metadata for the struct [RealTimeDecisionCardAuthorizationNetworkDetailsVisa]
+type realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Metadata
+	Extras                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionCardAuthorizationNetworkDetailsVisa using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -236,6 +247,7 @@ const (
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
+// Fields related to a digital wallet token provisioning attempt.
 type RealTimeDecisionDigitalWalletToken struct {
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
@@ -248,21 +260,20 @@ type RealTimeDecisionDigitalWalletToken struct {
 	// will be null until the real time decision is responded to or if the real time
 	// decision did not set a card profile.
 	CardProfileID string `json:"card_profile_id,required,nullable"`
-	JSON          RealTimeDecisionDigitalWalletTokenJSON
+	JSON          realTimeDecisionDigitalWalletTokenJSON
 }
 
-type RealTimeDecisionDigitalWalletTokenJSON struct {
-	Decision      apijson.Metadata
-	CardID        apijson.Metadata
-	DigitalWallet apijson.Metadata
-	CardProfileID apijson.Metadata
+// realTimeDecisionDigitalWalletTokenJSON contains the JSON metadata for the struct
+// [RealTimeDecisionDigitalWalletToken]
+type realTimeDecisionDigitalWalletTokenJSON struct {
+	Decision      apijson.Field
+	CardID        apijson.Field
+	DigitalWallet apijson.Field
+	CardProfileID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionDigitalWalletToken using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -281,6 +292,7 @@ const (
 	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
 )
 
+// Fields related to a digital wallet authentication attempt.
 type RealTimeDecisionDigitalWalletAuthentication struct {
 	// Whether your application successfully delivered the one-time passcode.
 	Result RealTimeDecisionDigitalWalletAuthenticationResult `json:"result,required,nullable"`
@@ -297,24 +309,23 @@ type RealTimeDecisionDigitalWalletAuthentication struct {
 	Phone string `json:"phone,required,nullable"`
 	// The email to send the one-time passcode to if `channel` is equal to `email`.
 	Email string `json:"email,required,nullable"`
-	JSON  RealTimeDecisionDigitalWalletAuthenticationJSON
+	JSON  realTimeDecisionDigitalWalletAuthenticationJSON
 }
 
-type RealTimeDecisionDigitalWalletAuthenticationJSON struct {
-	Result          apijson.Metadata
-	CardID          apijson.Metadata
-	DigitalWallet   apijson.Metadata
-	Channel         apijson.Metadata
-	OneTimePasscode apijson.Metadata
-	Phone           apijson.Metadata
-	Email           apijson.Metadata
+// realTimeDecisionDigitalWalletAuthenticationJSON contains the JSON metadata for
+// the struct [RealTimeDecisionDigitalWalletAuthentication]
+type realTimeDecisionDigitalWalletAuthenticationJSON struct {
+	Result          apijson.Field
+	CardID          apijson.Field
+	DigitalWallet   apijson.Field
+	Channel         apijson.Field
+	OneTimePasscode apijson.Field
+	Phone           apijson.Field
+	Email           apijson.Field
 	raw             string
-	Extras          map[string]apijson.Metadata
+	Extras          map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// RealTimeDecisionDigitalWalletAuthentication using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -358,13 +369,12 @@ type RealTimeDecisionActionParams struct {
 	DigitalWalletAuthentication field.Field[RealTimeDecisionActionParamsDigitalWalletAuthentication] `json:"digital_wallet_authentication"`
 }
 
-// MarshalJSON serializes RealTimeDecisionActionParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r RealTimeDecisionActionParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// If the Real-Time Decision relates to a card authorization attempt, this object
+// contains your response to the authorization.
 type RealTimeDecisionActionParamsCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
 	Decision field.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
@@ -377,6 +387,8 @@ const (
 	RealTimeDecisionActionParamsCardAuthorizationDecisionDecline RealTimeDecisionActionParamsCardAuthorizationDecision = "decline"
 )
 
+// If the Real-Time Decision relates to a digital wallet token provisioning
+// attempt, this object contains your response to the attempt.
 type RealTimeDecisionActionParamsDigitalWalletToken struct {
 	// If your application approves the provisioning attempt, this contains metadata
 	// about the digital wallet token that will be generated.
@@ -386,6 +398,8 @@ type RealTimeDecisionActionParamsDigitalWalletToken struct {
 	Decline field.Field[RealTimeDecisionActionParamsDigitalWalletTokenDecline] `json:"decline"`
 }
 
+// If your application approves the provisioning attempt, this contains metadata
+// about the digital wallet token that will be generated.
 type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
 	CardProfileID field.Field[string] `json:"card_profile_id,required"`
@@ -397,12 +411,16 @@ type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	Email field.Field[string] `json:"email"`
 }
 
+// If your application declines the provisioning attempt, this contains details
+// about the decline.
 type RealTimeDecisionActionParamsDigitalWalletTokenDecline struct {
 	// Why the tokenization attempt was declined. This is for logging purposes only and
 	// is not displayed to the end-user.
 	Reason field.Field[string] `json:"reason"`
 }
 
+// If the Real-Time Decision relates to a digital wallet authentication attempt,
+// this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
 	Result field.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`

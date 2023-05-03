@@ -11,10 +11,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// EntitySupplementalDocumentService contains methods and other services that help
+// with interacting with the increase API. Note, unlike clients, this service does
+// not read variables from the environment automatically. You should not
+// instantiate this service directly, and instead use the
+// [NewEntitySupplementalDocumentService] method instead.
 type EntitySupplementalDocumentService struct {
 	Options []option.RequestOption
 }
 
+// NewEntitySupplementalDocumentService generates a new service that applies the
+// given options to each request. These options are applied after the parent
+// client's options (if there is one), and before any request-specific options.
 func NewEntitySupplementalDocumentService(opts ...option.RequestOption) (r *EntitySupplementalDocumentService) {
 	r = &EntitySupplementalDocumentService{}
 	r.Options = opts
@@ -34,9 +42,6 @@ type EntitySupplementalDocumentNewParams struct {
 	FileID field.Field[string] `json:"file_id,required"`
 }
 
-// MarshalJSON serializes EntitySupplementalDocumentNewParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
 func (r EntitySupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

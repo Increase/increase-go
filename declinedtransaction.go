@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// DeclinedTransactionService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewDeclinedTransactionService]
+// method instead.
 type DeclinedTransactionService struct {
 	Options []option.RequestOption
 }
 
+// NewDeclinedTransactionService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewDeclinedTransactionService(opts ...option.RequestOption) (r *DeclinedTransactionService) {
 	r = &DeclinedTransactionService{}
 	r.Options = opts
@@ -56,6 +64,9 @@ func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query D
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Declined Transactions are refused additions and removals of money from your bank
+// account. For example, Declined Transactions are caused when your Account has an
+// insufficient balance or your Limits are triggered.
 type DeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID string `json:"account_id,required"`
@@ -87,27 +98,26 @@ type DeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type DeclinedTransactionType `json:"type,required"`
-	JSON DeclinedTransactionJSON
+	JSON declinedTransactionJSON
 }
 
-type DeclinedTransactionJSON struct {
-	AccountID   apijson.Metadata
-	Amount      apijson.Metadata
-	Currency    apijson.Metadata
-	CreatedAt   apijson.Metadata
-	Description apijson.Metadata
-	ID          apijson.Metadata
-	RouteID     apijson.Metadata
-	RouteType   apijson.Metadata
-	Source      apijson.Metadata
-	Type        apijson.Metadata
+// declinedTransactionJSON contains the JSON metadata for the struct
+// [DeclinedTransaction]
+type declinedTransactionJSON struct {
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	CreatedAt   apijson.Field
+	Description apijson.Field
+	ID          apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into DeclinedTransaction using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -130,6 +140,11 @@ const (
 	DeclinedTransactionRouteTypeCard          DeclinedTransactionRouteType = "card"
 )
 
+// This is an object giving more details on the network-level event that caused the
+// Declined Transaction. For example, for a card transaction this lists the
+// merchant's industry and location. Note that for backwards compatibility reasons,
+// additional undocumented keys may appear in this object. These should be treated
+// as deprecated and will be removed in the future.
 type DeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -154,24 +169,23 @@ type DeclinedTransactionSource struct {
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
 	CardRouteDecline DeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
-	JSON             DeclinedTransactionSourceJSON
+	JSON             declinedTransactionSourceJSON
 }
 
-type DeclinedTransactionSourceJSON struct {
-	Category                               apijson.Metadata
-	ACHDecline                             apijson.Metadata
-	CardDecline                            apijson.Metadata
-	CheckDecline                           apijson.Metadata
-	InboundRealTimePaymentsTransferDecline apijson.Metadata
-	InternationalACHDecline                apijson.Metadata
-	CardRouteDecline                       apijson.Metadata
+// declinedTransactionSourceJSON contains the JSON metadata for the struct
+// [DeclinedTransactionSource]
+type declinedTransactionSourceJSON struct {
+	Category                               apijson.Field
+	ACHDecline                             apijson.Field
+	CardDecline                            apijson.Field
+	CheckDecline                           apijson.Field
+	InboundRealTimePaymentsTransferDecline apijson.Field
+	InternationalACHDecline                apijson.Field
+	CardRouteDecline                       apijson.Field
 	raw                                    string
-	Extras                                 map[string]apijson.Metadata
+	Extras                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into DeclinedTransactionSource
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -188,6 +202,8 @@ const (
 	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
 
+// A ACH Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `ach_decline`.
 type DeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -201,26 +217,25 @@ type DeclinedTransactionSourceACHDecline struct {
 	ReceiverIDNumber string                                    `json:"receiver_id_number,required,nullable"`
 	ReceiverName     string                                    `json:"receiver_name,required,nullable"`
 	TraceNumber      string                                    `json:"trace_number,required"`
-	JSON             DeclinedTransactionSourceACHDeclineJSON
+	JSON             declinedTransactionSourceACHDeclineJSON
 }
 
-type DeclinedTransactionSourceACHDeclineJSON struct {
-	Amount                             apijson.Metadata
-	OriginatorCompanyName              apijson.Metadata
-	OriginatorCompanyDescriptiveDate   apijson.Metadata
-	OriginatorCompanyDiscretionaryData apijson.Metadata
-	OriginatorCompanyID                apijson.Metadata
-	Reason                             apijson.Metadata
-	ReceiverIDNumber                   apijson.Metadata
-	ReceiverName                       apijson.Metadata
-	TraceNumber                        apijson.Metadata
+// declinedTransactionSourceACHDeclineJSON contains the JSON metadata for the
+// struct [DeclinedTransactionSourceACHDecline]
+type declinedTransactionSourceACHDeclineJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyName              apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyID                apijson.Field
+	Reason                             apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceACHDecline using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -242,6 +257,8 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
+// A Card Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_decline`.
 type DeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -275,30 +292,29 @@ type DeclinedTransactionSourceCardDecline struct {
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 DeclinedTransactionSourceCardDeclineJSON
+	JSON                 declinedTransactionSourceCardDeclineJSON
 }
 
-type DeclinedTransactionSourceCardDeclineJSON struct {
-	MerchantAcceptorID   apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	Network              apijson.Metadata
-	NetworkDetails       apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	Reason               apijson.Metadata
-	MerchantState        apijson.Metadata
-	RealTimeDecisionID   apijson.Metadata
-	DigitalWalletTokenID apijson.Metadata
+// declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
+// struct [DeclinedTransactionSourceCardDecline]
+type declinedTransactionSourceCardDeclineJSON struct {
+	MerchantAcceptorID   apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	Network              apijson.Field
+	NetworkDetails       apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	Reason               apijson.Field
+	MerchantState        apijson.Field
+	RealTimeDecisionID   apijson.Field
+	DigitalWalletTokenID apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceCardDecline using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -309,25 +325,26 @@ const (
 	DeclinedTransactionSourceCardDeclineNetworkVisa DeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
 
+// Fields specific to the `network`
 type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	// Fields specific to the `visa` network
 	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
-	JSON DeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
 
-type DeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa   apijson.Metadata
+// declinedTransactionSourceCardDeclineNetworkDetailsJSON contains the JSON
+// metadata for the struct [DeclinedTransactionSourceCardDeclineNetworkDetails]
+type declinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Visa   apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceCardDeclineNetworkDetails using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Fields specific to the `visa` network
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
@@ -336,19 +353,18 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
-type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator apijson.Metadata
-	PointOfServiceEntryMode     apijson.Metadata
+// declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON contains the JSON
+// metadata for the struct [DeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
+type declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Metadata
+	Extras                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceCardDeclineNetworkDetailsVisa using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -395,6 +411,8 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
+// A Check Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `check_decline`.
 type DeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -402,20 +420,19 @@ type DeclinedTransactionSourceCheckDecline struct {
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
 	// Why the check was declined.
 	Reason DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   DeclinedTransactionSourceCheckDeclineJSON
+	JSON   declinedTransactionSourceCheckDeclineJSON
 }
 
-type DeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount        apijson.Metadata
-	AuxiliaryOnUs apijson.Metadata
-	Reason        apijson.Metadata
+// declinedTransactionSourceCheckDeclineJSON contains the JSON metadata for the
+// struct [DeclinedTransactionSourceCheckDecline]
+type declinedTransactionSourceCheckDeclineJSON struct {
+	Amount        apijson.Field
+	AuxiliaryOnUs apijson.Field
+	Reason        apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceCheckDecline using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -438,6 +455,9 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized         DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
 )
 
+// A Inbound Real Time Payments Transfer Decline object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_decline`.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -460,27 +480,26 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	JSON                  declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
 
-type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
-	Amount                    apijson.Metadata
-	Currency                  apijson.Metadata
-	Reason                    apijson.Metadata
-	CreditorName              apijson.Metadata
-	DebtorName                apijson.Metadata
-	DebtorAccountNumber       apijson.Metadata
-	DebtorRoutingNumber       apijson.Metadata
-	TransactionIdentification apijson.Metadata
-	RemittanceInformation     apijson.Metadata
+// declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the
+// JSON metadata for the struct
+// [DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
+type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
+	Amount                    apijson.Field
+	Currency                  apijson.Field
+	Reason                    apijson.Field
+	CreditorName              apijson.Field
+	DebtorName                apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	TransactionIdentification apijson.Field
+	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Metadata
+	Extras                    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -507,6 +526,8 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
+// A International ACH Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `international_ach_decline`.
 type DeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -546,57 +567,58 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   DeclinedTransactionSourceInternationalACHDeclineJSON
+	JSON                                                   declinedTransactionSourceInternationalACHDeclineJSON
 }
 
-type DeclinedTransactionSourceInternationalACHDeclineJSON struct {
-	Amount                                                 apijson.Metadata
-	ForeignExchangeIndicator                               apijson.Metadata
-	ForeignExchangeReferenceIndicator                      apijson.Metadata
-	ForeignExchangeReference                               apijson.Metadata
-	DestinationCountryCode                                 apijson.Metadata
-	DestinationCurrencyCode                                apijson.Metadata
-	ForeignPaymentAmount                                   apijson.Metadata
-	ForeignTraceNumber                                     apijson.Metadata
-	InternationalTransactionTypeCode                       apijson.Metadata
-	OriginatingCurrencyCode                                apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionName          apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionID            apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Metadata
-	OriginatorCity                                         apijson.Metadata
-	OriginatorCompanyEntryDescription                      apijson.Metadata
-	OriginatorCountry                                      apijson.Metadata
-	OriginatorIdentification                               apijson.Metadata
-	OriginatorName                                         apijson.Metadata
-	OriginatorPostalCode                                   apijson.Metadata
-	OriginatorStreetAddress                                apijson.Metadata
-	OriginatorStateOrProvince                              apijson.Metadata
-	PaymentRelatedInformation                              apijson.Metadata
-	PaymentRelatedInformation2                             apijson.Metadata
-	ReceiverIdentificationNumber                           apijson.Metadata
-	ReceiverStreetAddress                                  apijson.Metadata
-	ReceiverCity                                           apijson.Metadata
-	ReceiverStateOrProvince                                apijson.Metadata
-	ReceiverCountry                                        apijson.Metadata
-	ReceiverPostalCode                                     apijson.Metadata
-	ReceivingCompanyOrIndividualName                       apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionName            apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
-	TraceNumber                                            apijson.Metadata
+// declinedTransactionSourceInternationalACHDeclineJSON contains the JSON metadata
+// for the struct [DeclinedTransactionSourceInternationalACHDecline]
+type declinedTransactionSourceInternationalACHDeclineJSON struct {
+	Amount                                                 apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Metadata
+	Extras                                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceInternationalACHDecline using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Deprecated Card Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_route_decline`.
 type DeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -610,25 +632,24 @@ type DeclinedTransactionSourceCardRouteDecline struct {
 	MerchantDescriptor   string                                            `json:"merchant_descriptor,required"`
 	MerchantState        string                                            `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                            `json:"merchant_category_code,required,nullable"`
-	JSON                 DeclinedTransactionSourceCardRouteDeclineJSON
+	JSON                 declinedTransactionSourceCardRouteDeclineJSON
 }
 
-type DeclinedTransactionSourceCardRouteDeclineJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// declinedTransactionSourceCardRouteDeclineJSON contains the JSON metadata for the
+// struct [DeclinedTransactionSourceCardRouteDecline]
+type declinedTransactionSourceCardRouteDeclineJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionSourceCardRouteDecline using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -663,8 +684,8 @@ type DeclinedTransactionListParams struct {
 	CreatedAt field.Field[DeclinedTransactionListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes DeclinedTransactionListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [DeclinedTransactionListParams]'s query parameters as
+// `url.Values`.
 func (r DeclinedTransactionListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -684,30 +705,30 @@ type DeclinedTransactionListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes DeclinedTransactionListParamsCreatedAt into a url.Values of
-// the query parameters associated with this value
+// URLQuery serializes [DeclinedTransactionListParamsCreatedAt]'s query parameters
+// as `url.Values`.
 func (r DeclinedTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Declined Transaction objects
 type DeclinedTransactionListResponse struct {
 	// The contents of the list.
 	Data []DeclinedTransaction `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       DeclinedTransactionListResponseJSON
+	JSON       declinedTransactionListResponseJSON
 }
 
-type DeclinedTransactionListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// declinedTransactionListResponseJSON contains the JSON metadata for the struct
+// [DeclinedTransactionListResponse]
+type declinedTransactionListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DeclinedTransactionListResponse using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *DeclinedTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

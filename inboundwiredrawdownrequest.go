@@ -14,10 +14,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// InboundWireDrawdownRequestService contains methods and other services that help
+// with interacting with the increase API. Note, unlike clients, this service does
+// not read variables from the environment automatically. You should not
+// instantiate this service directly, and instead use the
+// [NewInboundWireDrawdownRequestService] method instead.
 type InboundWireDrawdownRequestService struct {
 	Options []option.RequestOption
 }
 
+// NewInboundWireDrawdownRequestService generates a new service that applies the
+// given options to each request. These options are applied after the parent
+// client's options (if there is one), and before any request-specific options.
 func NewInboundWireDrawdownRequestService(opts ...option.RequestOption) (r *InboundWireDrawdownRequestService) {
 	r = &InboundWireDrawdownRequestService{}
 	r.Options = opts
@@ -55,6 +63,9 @@ func (r *InboundWireDrawdownRequestService) ListAutoPaging(ctx context.Context, 
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Inbound wire drawdown requests are requests from someone else to send them a
+// wire. This feature is in beta; reach out to
+// [support@increase.com](mailto:support@increase.com) to learn more.
 type InboundWireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_drawdown_request`.
@@ -107,39 +118,38 @@ type InboundWireDrawdownRequest struct {
 	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
 	// Line 3 of the drawdown request's beneficiary's address.
 	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	JSON                    InboundWireDrawdownRequestJSON
+	JSON                    inboundWireDrawdownRequestJSON
 }
 
-type InboundWireDrawdownRequestJSON struct {
-	Type                                    apijson.Metadata
-	ID                                      apijson.Metadata
-	RecipientAccountNumberID                apijson.Metadata
-	OriginatorAccountNumber                 apijson.Metadata
-	OriginatorRoutingNumber                 apijson.Metadata
-	BeneficiaryAccountNumber                apijson.Metadata
-	BeneficiaryRoutingNumber                apijson.Metadata
-	Amount                                  apijson.Metadata
-	Currency                                apijson.Metadata
-	MessageToRecipient                      apijson.Metadata
-	OriginatorToBeneficiaryInformationLine1 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine2 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
-	OriginatorName                          apijson.Metadata
-	OriginatorAddressLine1                  apijson.Metadata
-	OriginatorAddressLine2                  apijson.Metadata
-	OriginatorAddressLine3                  apijson.Metadata
-	BeneficiaryName                         apijson.Metadata
-	BeneficiaryAddressLine1                 apijson.Metadata
-	BeneficiaryAddressLine2                 apijson.Metadata
-	BeneficiaryAddressLine3                 apijson.Metadata
+// inboundWireDrawdownRequestJSON contains the JSON metadata for the struct
+// [InboundWireDrawdownRequest]
+type inboundWireDrawdownRequestJSON struct {
+	Type                                    apijson.Field
+	ID                                      apijson.Field
+	RecipientAccountNumberID                apijson.Field
+	OriginatorAccountNumber                 apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
+	BeneficiaryAccountNumber                apijson.Field
+	BeneficiaryRoutingNumber                apijson.Field
+	Amount                                  apijson.Field
+	Currency                                apijson.Field
+	MessageToRecipient                      apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
 	raw                                     string
-	Extras                                  map[string]apijson.Metadata
+	Extras                                  map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into InboundWireDrawdownRequest
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -158,30 +168,30 @@ type InboundWireDrawdownRequestListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes InboundWireDrawdownRequestListParams into a url.Values of
-// the query parameters associated with this value
+// URLQuery serializes [InboundWireDrawdownRequestListParams]'s query parameters as
+// `url.Values`.
 func (r InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Inbound Wire Drawdown Request objects
 type InboundWireDrawdownRequestListResponse struct {
 	// The contents of the list.
 	Data []InboundWireDrawdownRequest `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       InboundWireDrawdownRequestListResponseJSON
+	JSON       inboundWireDrawdownRequestListResponseJSON
 }
 
-type InboundWireDrawdownRequestListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// inboundWireDrawdownRequestListResponseJSON contains the JSON metadata for the
+// struct [InboundWireDrawdownRequestListResponse]
+type inboundWireDrawdownRequestListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundWireDrawdownRequestListResponse using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundWireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

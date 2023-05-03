@@ -15,11 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// EntityService contains methods and other services that help with interacting
+// with the increase API. Note, unlike clients, this service does not read
+// variables from the environment automatically. You should not instantiate this
+// service directly, and instead use the [NewEntityService] method instead.
 type EntityService struct {
 	Options               []option.RequestOption
 	SupplementalDocuments *EntitySupplementalDocumentService
 }
 
+// NewEntityService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 	r = &EntityService{}
 	r.Options = opts
@@ -66,6 +73,8 @@ func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListPara
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Entities are the legal entities that own accounts. They can be people,
+// corporations, partnerships, or trusts.
 type Entity struct {
 	// The entity's identifier.
 	ID string `json:"id,required"`
@@ -90,26 +99,25 @@ type Entity struct {
 	Relationship EntityRelationship `json:"relationship,required"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments []EntitySupplementalDocuments `json:"supplemental_documents,required"`
-	JSON                  EntityJSON
+	JSON                  entityJSON
 }
 
-type EntityJSON struct {
-	ID                    apijson.Metadata
-	Structure             apijson.Metadata
-	Corporation           apijson.Metadata
-	NaturalPerson         apijson.Metadata
-	Joint                 apijson.Metadata
-	Trust                 apijson.Metadata
-	Type                  apijson.Metadata
-	Description           apijson.Metadata
-	Relationship          apijson.Metadata
-	SupplementalDocuments apijson.Metadata
+// entityJSON contains the JSON metadata for the struct [Entity]
+type entityJSON struct {
+	ID                    apijson.Field
+	Structure             apijson.Field
+	Corporation           apijson.Field
+	NaturalPerson         apijson.Field
+	Joint                 apijson.Field
+	Trust                 apijson.Field
+	Type                  apijson.Field
+	Description           apijson.Field
+	Relationship          apijson.Field
+	SupplementalDocuments apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Entity using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -123,6 +131,8 @@ const (
 	EntityStructureTrust         EntityStructure = "trust"
 )
 
+// Details of the corporation entity. Will be present if `structure` is equal to
+// `corporation`.
 type EntityCorporation struct {
 	// The legal name of the corporation.
 	Name string `json:"name,required"`
@@ -138,27 +148,27 @@ type EntityCorporation struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
 	BeneficialOwners []EntityCorporationBeneficialOwners `json:"beneficial_owners,required"`
-	JSON             EntityCorporationJSON
+	JSON             entityCorporationJSON
 }
 
-type EntityCorporationJSON struct {
-	Name               apijson.Metadata
-	Website            apijson.Metadata
-	TaxIdentifier      apijson.Metadata
-	IncorporationState apijson.Metadata
-	Address            apijson.Metadata
-	BeneficialOwners   apijson.Metadata
+// entityCorporationJSON contains the JSON metadata for the struct
+// [EntityCorporation]
+type entityCorporationJSON struct {
+	Name               apijson.Field
+	Website            apijson.Field
+	TaxIdentifier      apijson.Field
+	IncorporationState apijson.Field
+	Address            apijson.Field
+	BeneficialOwners   apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityCorporation using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The corporation's address.
 type EntityCorporationAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -171,22 +181,21 @@ type EntityCorporationAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityCorporationAddressJSON
+	JSON entityCorporationAddressJSON
 }
 
-type EntityCorporationAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityCorporationAddressJSON contains the JSON metadata for the struct
+// [EntityCorporationAddress]
+type entityCorporationAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityCorporationAddress
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -198,24 +207,24 @@ type EntityCorporationBeneficialOwners struct {
 	CompanyTitle string `json:"company_title,required,nullable"`
 	// Why this person is considered a beneficial owner of the entity.
 	Prong EntityCorporationBeneficialOwnersProng `json:"prong,required"`
-	JSON  EntityCorporationBeneficialOwnersJSON
+	JSON  entityCorporationBeneficialOwnersJSON
 }
 
-type EntityCorporationBeneficialOwnersJSON struct {
-	Individual   apijson.Metadata
-	CompanyTitle apijson.Metadata
-	Prong        apijson.Metadata
+// entityCorporationBeneficialOwnersJSON contains the JSON metadata for the struct
+// [EntityCorporationBeneficialOwners]
+type entityCorporationBeneficialOwnersJSON struct {
+	Individual   apijson.Field
+	CompanyTitle apijson.Field
+	Prong        apijson.Field
 	raw          string
-	Extras       map[string]apijson.Metadata
+	Extras       map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwners using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Personal details for the beneficial owner.
 type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name string `json:"name,required"`
@@ -225,25 +234,25 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 	Address EntityCorporationBeneficialOwnersIndividualAddress `json:"address,required"`
 	// A means of verifying the person's identity.
 	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification,required"`
-	JSON           EntityCorporationBeneficialOwnersIndividualJSON
+	JSON           entityCorporationBeneficialOwnersIndividualJSON
 }
 
-type EntityCorporationBeneficialOwnersIndividualJSON struct {
-	Name           apijson.Metadata
-	DateOfBirth    apijson.Metadata
-	Address        apijson.Metadata
-	Identification apijson.Metadata
+// entityCorporationBeneficialOwnersIndividualJSON contains the JSON metadata for
+// the struct [EntityCorporationBeneficialOwnersIndividual]
+type entityCorporationBeneficialOwnersIndividualJSON struct {
+	Name           apijson.Field
+	DateOfBirth    apijson.Field
+	Address        apijson.Field
+	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwnersIndividual using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The person's address.
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -256,45 +265,45 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityCorporationBeneficialOwnersIndividualAddressJSON
+	JSON entityCorporationBeneficialOwnersIndividualAddressJSON
 }
 
-type EntityCorporationBeneficialOwnersIndividualAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityCorporationBeneficialOwnersIndividualAddressJSON contains the JSON
+// metadata for the struct [EntityCorporationBeneficialOwnersIndividualAddress]
+type entityCorporationBeneficialOwnersIndividualAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwnersIndividualAddress using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A means of verifying the person's identity.
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string `json:"number_last4,required"`
-	JSON        EntityCorporationBeneficialOwnersIndividualIdentificationJSON
+	JSON        entityCorporationBeneficialOwnersIndividualIdentificationJSON
 }
 
-type EntityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
-	Method      apijson.Metadata
-	NumberLast4 apijson.Metadata
+// entityCorporationBeneficialOwnersIndividualIdentificationJSON contains the JSON
+// metadata for the struct
+// [EntityCorporationBeneficialOwnersIndividualIdentification]
+type entityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityCorporationBeneficialOwnersIndividualIdentification using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -316,6 +325,8 @@ const (
 	EntityCorporationBeneficialOwnersProngControl   EntityCorporationBeneficialOwnersProng = "control"
 )
 
+// Details of the natural person entity. Will be present if `structure` is equal to
+// `natural_person`.
 type EntityNaturalPerson struct {
 	// The person's legal name.
 	Name string `json:"name,required"`
@@ -325,25 +336,25 @@ type EntityNaturalPerson struct {
 	Address EntityNaturalPersonAddress `json:"address,required"`
 	// A means of verifying the person's identity.
 	Identification EntityNaturalPersonIdentification `json:"identification,required"`
-	JSON           EntityNaturalPersonJSON
+	JSON           entityNaturalPersonJSON
 }
 
-type EntityNaturalPersonJSON struct {
-	Name           apijson.Metadata
-	DateOfBirth    apijson.Metadata
-	Address        apijson.Metadata
-	Identification apijson.Metadata
+// entityNaturalPersonJSON contains the JSON metadata for the struct
+// [EntityNaturalPerson]
+type entityNaturalPersonJSON struct {
+	Name           apijson.Field
+	DateOfBirth    apijson.Field
+	Address        apijson.Field
+	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityNaturalPerson using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The person's address.
 type EntityNaturalPersonAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -356,45 +367,44 @@ type EntityNaturalPersonAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityNaturalPersonAddressJSON
+	JSON entityNaturalPersonAddressJSON
 }
 
-type EntityNaturalPersonAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityNaturalPersonAddressJSON contains the JSON metadata for the struct
+// [EntityNaturalPersonAddress]
+type entityNaturalPersonAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityNaturalPersonAddress
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A means of verifying the person's identity.
 type EntityNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method EntityNaturalPersonIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string `json:"number_last4,required"`
-	JSON        EntityNaturalPersonIdentificationJSON
+	JSON        entityNaturalPersonIdentificationJSON
 }
 
-type EntityNaturalPersonIdentificationJSON struct {
-	Method      apijson.Metadata
-	NumberLast4 apijson.Metadata
+// entityNaturalPersonIdentificationJSON contains the JSON metadata for the struct
+// [EntityNaturalPersonIdentification]
+type entityNaturalPersonIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityNaturalPersonIdentification using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -409,24 +419,23 @@ const (
 	EntityNaturalPersonIdentificationMethodOther                                  EntityNaturalPersonIdentificationMethod = "other"
 )
 
+// Details of the joint entity. Will be present if `structure` is equal to `joint`.
 type EntityJoint struct {
 	// The entity's name.
 	Name string `json:"name,required"`
 	// The two individuals that share control of the entity.
 	Individuals []EntityJointIndividuals `json:"individuals,required"`
-	JSON        EntityJointJSON
+	JSON        entityJointJSON
 }
 
-type EntityJointJSON struct {
-	Name        apijson.Metadata
-	Individuals apijson.Metadata
+// entityJointJSON contains the JSON metadata for the struct [EntityJoint]
+type entityJointJSON struct {
+	Name        apijson.Field
+	Individuals apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityJoint using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -440,25 +449,25 @@ type EntityJointIndividuals struct {
 	Address EntityJointIndividualsAddress `json:"address,required"`
 	// A means of verifying the person's identity.
 	Identification EntityJointIndividualsIdentification `json:"identification,required"`
-	JSON           EntityJointIndividualsJSON
+	JSON           entityJointIndividualsJSON
 }
 
-type EntityJointIndividualsJSON struct {
-	Name           apijson.Metadata
-	DateOfBirth    apijson.Metadata
-	Address        apijson.Metadata
-	Identification apijson.Metadata
+// entityJointIndividualsJSON contains the JSON metadata for the struct
+// [EntityJointIndividuals]
+type entityJointIndividualsJSON struct {
+	Name           apijson.Field
+	DateOfBirth    apijson.Field
+	Address        apijson.Field
+	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityJointIndividuals using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The person's address.
 type EntityJointIndividualsAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -471,45 +480,44 @@ type EntityJointIndividualsAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityJointIndividualsAddressJSON
+	JSON entityJointIndividualsAddressJSON
 }
 
-type EntityJointIndividualsAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityJointIndividualsAddressJSON contains the JSON metadata for the struct
+// [EntityJointIndividualsAddress]
+type entityJointIndividualsAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityJointIndividualsAddress
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A means of verifying the person's identity.
 type EntityJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method EntityJointIndividualsIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string `json:"number_last4,required"`
-	JSON        EntityJointIndividualsIdentificationJSON
+	JSON        entityJointIndividualsIdentificationJSON
 }
 
-type EntityJointIndividualsIdentificationJSON struct {
-	Method      apijson.Metadata
-	NumberLast4 apijson.Metadata
+// entityJointIndividualsIdentificationJSON contains the JSON metadata for the
+// struct [EntityJointIndividualsIdentification]
+type entityJointIndividualsIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityJointIndividualsIdentification using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -524,6 +532,7 @@ const (
 	EntityJointIndividualsIdentificationMethodOther                                  EntityJointIndividualsIdentificationMethod = "other"
 )
 
+// Details of the trust entity. Will be present if `structure` is equal to `trust`.
 type EntityTrust struct {
 	// The trust's name
 	Name string `json:"name,required"`
@@ -542,25 +551,23 @@ type EntityTrust struct {
 	Grantor EntityTrustGrantor `json:"grantor,required,nullable"`
 	// The ID for the File containing the formation document of the trust.
 	FormationDocumentFileID string `json:"formation_document_file_id,required,nullable"`
-	JSON                    EntityTrustJSON
+	JSON                    entityTrustJSON
 }
 
-type EntityTrustJSON struct {
-	Name                    apijson.Metadata
-	Category                apijson.Metadata
-	Address                 apijson.Metadata
-	FormationState          apijson.Metadata
-	TaxIdentifier           apijson.Metadata
-	Trustees                apijson.Metadata
-	Grantor                 apijson.Metadata
-	FormationDocumentFileID apijson.Metadata
+// entityTrustJSON contains the JSON metadata for the struct [EntityTrust]
+type entityTrustJSON struct {
+	Name                    apijson.Field
+	Category                apijson.Field
+	Address                 apijson.Field
+	FormationState          apijson.Field
+	TaxIdentifier           apijson.Field
+	Trustees                apijson.Field
+	Grantor                 apijson.Field
+	FormationDocumentFileID apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Metadata
+	Extras                  map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrust using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -572,6 +579,7 @@ const (
 	EntityTrustCategoryIrrevocable EntityTrustCategory = "irrevocable"
 )
 
+// The trust's address.
 type EntityTrustAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -584,22 +592,21 @@ type EntityTrustAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityTrustAddressJSON
+	JSON entityTrustAddressJSON
 }
 
-type EntityTrustAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityTrustAddressJSON contains the JSON metadata for the struct
+// [EntityTrustAddress]
+type entityTrustAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrustAddress using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -610,19 +617,18 @@ type EntityTrustTrustees struct {
 	// The individual trustee of the trust. Will be present if the trustee's
 	// `structure` is equal to `individual`.
 	Individual EntityTrustTrusteesIndividual `json:"individual,required,nullable"`
-	JSON       EntityTrustTrusteesJSON
+	JSON       entityTrustTrusteesJSON
 }
 
-type EntityTrustTrusteesJSON struct {
-	Structure  apijson.Metadata
-	Individual apijson.Metadata
+// entityTrustTrusteesJSON contains the JSON metadata for the struct
+// [EntityTrustTrustees]
+type entityTrustTrusteesJSON struct {
+	Structure  apijson.Field
+	Individual apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrustTrustees using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -633,6 +639,8 @@ const (
 	EntityTrustTrusteesStructureIndividual EntityTrustTrusteesStructure = "individual"
 )
 
+// The individual trustee of the trust. Will be present if the trustee's
+// `structure` is equal to `individual`.
 type EntityTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name string `json:"name,required"`
@@ -642,25 +650,25 @@ type EntityTrustTrusteesIndividual struct {
 	Address EntityTrustTrusteesIndividualAddress `json:"address,required"`
 	// A means of verifying the person's identity.
 	Identification EntityTrustTrusteesIndividualIdentification `json:"identification,required"`
-	JSON           EntityTrustTrusteesIndividualJSON
+	JSON           entityTrustTrusteesIndividualJSON
 }
 
-type EntityTrustTrusteesIndividualJSON struct {
-	Name           apijson.Metadata
-	DateOfBirth    apijson.Metadata
-	Address        apijson.Metadata
-	Identification apijson.Metadata
+// entityTrustTrusteesIndividualJSON contains the JSON metadata for the struct
+// [EntityTrustTrusteesIndividual]
+type entityTrustTrusteesIndividualJSON struct {
+	Name           apijson.Field
+	DateOfBirth    apijson.Field
+	Address        apijson.Field
+	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrustTrusteesIndividual
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The person's address.
 type EntityTrustTrusteesIndividualAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -673,45 +681,44 @@ type EntityTrustTrusteesIndividualAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityTrustTrusteesIndividualAddressJSON
+	JSON entityTrustTrusteesIndividualAddressJSON
 }
 
-type EntityTrustTrusteesIndividualAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityTrustTrusteesIndividualAddressJSON contains the JSON metadata for the
+// struct [EntityTrustTrusteesIndividualAddress]
+type entityTrustTrusteesIndividualAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityTrustTrusteesIndividualAddress using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A means of verifying the person's identity.
 type EntityTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method EntityTrustTrusteesIndividualIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string `json:"number_last4,required"`
-	JSON        EntityTrustTrusteesIndividualIdentificationJSON
+	JSON        entityTrustTrusteesIndividualIdentificationJSON
 }
 
-type EntityTrustTrusteesIndividualIdentificationJSON struct {
-	Method      apijson.Metadata
-	NumberLast4 apijson.Metadata
+// entityTrustTrusteesIndividualIdentificationJSON contains the JSON metadata for
+// the struct [EntityTrustTrusteesIndividualIdentification]
+type entityTrustTrusteesIndividualIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityTrustTrusteesIndividualIdentification using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -726,6 +733,7 @@ const (
 	EntityTrustTrusteesIndividualIdentificationMethodOther                                  EntityTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
+// The grantor of the trust. Will be present if the `category` is `revocable`.
 type EntityTrustGrantor struct {
 	// The person's legal name.
 	Name string `json:"name,required"`
@@ -735,25 +743,25 @@ type EntityTrustGrantor struct {
 	Address EntityTrustGrantorAddress `json:"address,required"`
 	// A means of verifying the person's identity.
 	Identification EntityTrustGrantorIdentification `json:"identification,required"`
-	JSON           EntityTrustGrantorJSON
+	JSON           entityTrustGrantorJSON
 }
 
-type EntityTrustGrantorJSON struct {
-	Name           apijson.Metadata
-	DateOfBirth    apijson.Metadata
-	Address        apijson.Metadata
-	Identification apijson.Metadata
+// entityTrustGrantorJSON contains the JSON metadata for the struct
+// [EntityTrustGrantor]
+type entityTrustGrantorJSON struct {
+	Name           apijson.Field
+	DateOfBirth    apijson.Field
+	Address        apijson.Field
+	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrustGrantor using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The person's address.
 type EntityTrustGrantorAddress struct {
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
@@ -766,45 +774,44 @@ type EntityTrustGrantorAddress struct {
 	State string `json:"state,required"`
 	// The ZIP code of the address.
 	Zip  string `json:"zip,required"`
-	JSON EntityTrustGrantorAddressJSON
+	JSON entityTrustGrantorAddressJSON
 }
 
-type EntityTrustGrantorAddressJSON struct {
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// entityTrustGrantorAddressJSON contains the JSON metadata for the struct
+// [EntityTrustGrantorAddress]
+type entityTrustGrantorAddressJSON struct {
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityTrustGrantorAddress
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A means of verifying the person's identity.
 type EntityTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method EntityTrustGrantorIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string `json:"number_last4,required"`
-	JSON        EntityTrustGrantorIdentificationJSON
+	JSON        entityTrustGrantorIdentificationJSON
 }
 
-type EntityTrustGrantorIdentificationJSON struct {
-	Method      apijson.Metadata
-	NumberLast4 apijson.Metadata
+// entityTrustGrantorIdentificationJSON contains the JSON metadata for the struct
+// [EntityTrustGrantorIdentification]
+type entityTrustGrantorIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// EntityTrustGrantorIdentification using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -836,18 +843,17 @@ const (
 type EntitySupplementalDocuments struct {
 	// The File containing the document.
 	FileID string `json:"file_id,required"`
-	JSON   EntitySupplementalDocumentsJSON
+	JSON   entitySupplementalDocumentsJSON
 }
 
-type EntitySupplementalDocumentsJSON struct {
-	FileID apijson.Metadata
+// entitySupplementalDocumentsJSON contains the JSON metadata for the struct
+// [EntitySupplementalDocuments]
+type entitySupplementalDocumentsJSON struct {
+	FileID apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntitySupplementalDocuments
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -877,9 +883,6 @@ type EntityNewParams struct {
 	SupplementalDocuments field.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
 }
 
-// MarshalJSON serializes EntityNewParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -893,6 +896,8 @@ const (
 	EntityNewParamsStructureTrust         EntityNewParamsStructure = "trust"
 )
 
+// Details of the corporation entity to create. Required if `structure` is equal to
+// `corporation`.
 type EntityNewParamsCorporation struct {
 	// The legal name of the corporation.
 	Name field.Field[string] `json:"name,required"`
@@ -910,6 +915,7 @@ type EntityNewParamsCorporation struct {
 	BeneficialOwners field.Field[[]EntityNewParamsCorporationBeneficialOwners] `json:"beneficial_owners,required"`
 }
 
+// The corporation's address.
 type EntityNewParamsCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -933,6 +939,7 @@ type EntityNewParamsCorporationBeneficialOwners struct {
 	Prong field.Field[EntityNewParamsCorporationBeneficialOwnersProng] `json:"prong,required"`
 }
 
+// Personal details for the beneficial owner.
 type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
 	Name field.Field[string] `json:"name,required"`
@@ -949,6 +956,7 @@ type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
 	Identification field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification,required"`
 }
 
+// The individual's address.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -963,6 +971,7 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	Zip field.Field[string] `json:"zip,required"`
 }
 
+// A means of verifying the person's identity.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method,required"`
@@ -990,6 +999,8 @@ const (
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -999,6 +1010,8 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport 
 	Country field.Field[string] `json:"country,required"`
 }
 
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1008,6 +1021,8 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLi
 	State field.Field[string] `json:"state,required"`
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
@@ -1027,6 +1042,10 @@ const (
 	EntityNewParamsCorporationBeneficialOwnersProngControl   EntityNewParamsCorporationBeneficialOwnersProng = "control"
 )
 
+// Details of the natural person entity to create. Required if `structure` is equal
+// to `natural_person`. Natural people entities should be submitted with
+// `social_security_number` or `individual_taxpayer_identification_number`
+// identification methods.
 type EntityNewParamsNaturalPerson struct {
 	// The person's legal name.
 	Name field.Field[string] `json:"name,required"`
@@ -1043,6 +1062,7 @@ type EntityNewParamsNaturalPerson struct {
 	Identification field.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
 }
 
+// The individual's address.
 type EntityNewParamsNaturalPersonAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -1057,6 +1077,7 @@ type EntityNewParamsNaturalPersonAddress struct {
 	Zip field.Field[string] `json:"zip,required"`
 }
 
+// A means of verifying the person's identity.
 type EntityNewParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method field.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
@@ -1084,6 +1105,8 @@ const (
 	EntityNewParamsNaturalPersonIdentificationMethodOther                                  EntityNewParamsNaturalPersonIdentificationMethod = "other"
 )
 
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
 type EntityNewParamsNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1093,6 +1116,8 @@ type EntityNewParamsNaturalPersonIdentificationPassport struct {
 	Country field.Field[string] `json:"country,required"`
 }
 
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
 type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1102,6 +1127,8 @@ type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 	State field.Field[string] `json:"state,required"`
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
 type EntityNewParamsNaturalPersonIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
@@ -1114,6 +1141,8 @@ type EntityNewParamsNaturalPersonIdentificationOther struct {
 	FileID field.Field[string] `json:"file_id,required"`
 }
 
+// Details of the joint entity to create. Required if `structure` is equal to
+// `joint`.
 type EntityNewParamsJoint struct {
 	// The name of the joint entity.
 	Name field.Field[string] `json:"name"`
@@ -1137,6 +1166,7 @@ type EntityNewParamsJointIndividuals struct {
 	Identification field.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification,required"`
 }
 
+// The individual's address.
 type EntityNewParamsJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -1151,6 +1181,7 @@ type EntityNewParamsJointIndividualsAddress struct {
 	Zip field.Field[string] `json:"zip,required"`
 }
 
+// A means of verifying the person's identity.
 type EntityNewParamsJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method field.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method,required"`
@@ -1178,6 +1209,8 @@ const (
 	EntityNewParamsJointIndividualsIdentificationMethodOther                                  EntityNewParamsJointIndividualsIdentificationMethod = "other"
 )
 
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
 type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1187,6 +1220,8 @@ type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	Country field.Field[string] `json:"country,required"`
 }
 
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
 type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1196,6 +1231,8 @@ type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	State field.Field[string] `json:"state,required"`
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
 type EntityNewParamsJointIndividualsIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
@@ -1208,6 +1245,8 @@ type EntityNewParamsJointIndividualsIdentificationOther struct {
 	FileID field.Field[string] `json:"file_id,required"`
 }
 
+// Details of the trust entity to create. Required if `structure` is equal to
+// `trust`.
 type EntityNewParamsTrust struct {
 	// The legal name of the trust.
 	Name field.Field[string] `json:"name,required"`
@@ -1238,6 +1277,7 @@ const (
 	EntityNewParamsTrustCategoryIrrevocable EntityNewParamsTrustCategory = "irrevocable"
 )
 
+// The trust's address.
 type EntityNewParamsTrustAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -1266,6 +1306,8 @@ const (
 	EntityNewParamsTrustTrusteesStructureIndividual EntityNewParamsTrustTrusteesStructure = "individual"
 )
 
+// Details of the individual trustee. Required when the trustee `structure` is
+// equal to `individual`.
 type EntityNewParamsTrustTrusteesIndividual struct {
 	// The person's legal name.
 	Name field.Field[string] `json:"name,required"`
@@ -1282,6 +1324,7 @@ type EntityNewParamsTrustTrusteesIndividual struct {
 	Identification field.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification,required"`
 }
 
+// The individual's address.
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -1296,6 +1339,7 @@ type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	Zip field.Field[string] `json:"zip,required"`
 }
 
+// A means of verifying the person's identity.
 type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method field.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method,required"`
@@ -1323,6 +1367,8 @@ const (
 	EntityNewParamsTrustTrusteesIndividualIdentificationMethodOther                                  EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1332,6 +1378,8 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	Country field.Field[string] `json:"country,required"`
 }
 
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1341,6 +1389,8 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	State field.Field[string] `json:"state,required"`
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
@@ -1353,6 +1403,7 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	FileID field.Field[string] `json:"file_id,required"`
 }
 
+// The grantor of the trust. Required if `category` is equal to `revocable`.
 type EntityNewParamsTrustGrantor struct {
 	// The person's legal name.
 	Name field.Field[string] `json:"name,required"`
@@ -1369,6 +1420,7 @@ type EntityNewParamsTrustGrantor struct {
 	Identification field.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification,required"`
 }
 
+// The individual's address.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -1383,6 +1435,7 @@ type EntityNewParamsTrustGrantorAddress struct {
 	Zip field.Field[string] `json:"zip,required"`
 }
 
+// A means of verifying the person's identity.
 type EntityNewParamsTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method field.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method,required"`
@@ -1410,6 +1463,8 @@ const (
 	EntityNewParamsTrustGrantorIdentificationMethodOther                                  EntityNewParamsTrustGrantorIdentificationMethod = "other"
 )
 
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
 type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1419,6 +1474,8 @@ type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	Country field.Field[string] `json:"country,required"`
 }
 
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
 	FileID field.Field[string] `json:"file_id,required"`
@@ -1428,6 +1485,8 @@ type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	State field.Field[string] `json:"state,required"`
 }
 
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
 type EntityNewParamsTrustGrantorIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
@@ -1462,8 +1521,7 @@ type EntityListParams struct {
 	CreatedAt field.Field[EntityListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes EntityListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.
 func (r EntityListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -1483,30 +1541,30 @@ type EntityListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes EntityListParamsCreatedAt into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [EntityListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r EntityListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Entity objects
 type EntityListResponse struct {
 	// The contents of the list.
 	Data []Entity `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EntityListResponseJSON
+	JSON       entityListResponseJSON
 }
 
-type EntityListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// entityListResponseJSON contains the JSON metadata for the struct
+// [EntityListResponse]
+type entityListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EntityListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EntityListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

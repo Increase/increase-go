@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// CheckTransferService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewCheckTransferService] method
+// instead.
 type CheckTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewCheckTransferService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewCheckTransferService(opts ...option.RequestOption) (r *CheckTransferService) {
 	r = &CheckTransferService{}
 	r.Options = opts
@@ -88,6 +96,8 @@ func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_i
 	return
 }
 
+// Check Transfers move funds from your Increase account by mailing a physical
+// check.
 type CheckTransfer struct {
 	// The identifier of the Account from which funds will be transferred.
 	AccountID string `json:"account_id,required"`
@@ -149,46 +159,45 @@ type CheckTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
-	JSON CheckTransferJSON
+	JSON checkTransferJSON
 }
 
-type CheckTransferJSON struct {
-	AccountID          apijson.Metadata
-	AddressLine1       apijson.Metadata
-	AddressLine2       apijson.Metadata
-	AddressCity        apijson.Metadata
-	AddressState       apijson.Metadata
-	AddressZip         apijson.Metadata
-	ReturnAddress      apijson.Metadata
-	Amount             apijson.Metadata
-	CreatedAt          apijson.Metadata
-	Currency           apijson.Metadata
-	Approval           apijson.Metadata
-	Cancellation       apijson.Metadata
-	ID                 apijson.Metadata
-	MailedAt           apijson.Metadata
-	Message            apijson.Metadata
-	Note               apijson.Metadata
-	RecipientName      apijson.Metadata
-	Status             apijson.Metadata
-	SubmittedAt        apijson.Metadata
-	Submission         apijson.Metadata
-	TransactionID      apijson.Metadata
-	StopPaymentRequest apijson.Metadata
-	Deposit            apijson.Metadata
-	ReturnDetails      apijson.Metadata
-	Type               apijson.Metadata
+// checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
+type checkTransferJSON struct {
+	AccountID          apijson.Field
+	AddressLine1       apijson.Field
+	AddressLine2       apijson.Field
+	AddressCity        apijson.Field
+	AddressState       apijson.Field
+	AddressZip         apijson.Field
+	ReturnAddress      apijson.Field
+	Amount             apijson.Field
+	CreatedAt          apijson.Field
+	Currency           apijson.Field
+	Approval           apijson.Field
+	Cancellation       apijson.Field
+	ID                 apijson.Field
+	MailedAt           apijson.Field
+	Message            apijson.Field
+	Note               apijson.Field
+	RecipientName      apijson.Field
+	Status             apijson.Field
+	SubmittedAt        apijson.Field
+	Submission         apijson.Field
+	TransactionID      apijson.Field
+	StopPaymentRequest apijson.Field
+	Deposit            apijson.Field
+	ReturnDetails      apijson.Field
+	Type               apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransfer using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The return address to be printed on the check.
 type CheckTransferReturnAddress struct {
 	// The name of the address.
 	Name string `json:"name,required,nullable"`
@@ -202,23 +211,22 @@ type CheckTransferReturnAddress struct {
 	State string `json:"state,required,nullable"`
 	// The postal code of the address.
 	Zip  string `json:"zip,required,nullable"`
-	JSON CheckTransferReturnAddressJSON
+	JSON checkTransferReturnAddressJSON
 }
 
-type CheckTransferReturnAddressJSON struct {
-	Name   apijson.Metadata
-	Line1  apijson.Metadata
-	Line2  apijson.Metadata
-	City   apijson.Metadata
-	State  apijson.Metadata
-	Zip    apijson.Metadata
+// checkTransferReturnAddressJSON contains the JSON metadata for the struct
+// [CheckTransferReturnAddress]
+type checkTransferReturnAddressJSON struct {
+	Name   apijson.Field
+	Line1  apijson.Field
+	Line2  apijson.Field
+	City   apijson.Field
+	State  apijson.Field
+	Zip    apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferReturnAddress
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -234,6 +242,8 @@ const (
 	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
+// If your account requires approvals for transfers and the transfer was approved,
+// this will contain details of the approval.
 type CheckTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -241,23 +251,24 @@ type CheckTransferApproval struct {
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
 	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       CheckTransferApprovalJSON
+	JSON       checkTransferApprovalJSON
 }
 
-type CheckTransferApprovalJSON struct {
-	ApprovedAt apijson.Metadata
-	ApprovedBy apijson.Metadata
+// checkTransferApprovalJSON contains the JSON metadata for the struct
+// [CheckTransferApproval]
+type checkTransferApprovalJSON struct {
+	ApprovedAt apijson.Field
+	ApprovedBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferApproval using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CheckTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your account requires approvals for transfers and the transfer was not
+// approved, this will contain details of the cancellation.
 type CheckTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -265,19 +276,18 @@ type CheckTransferCancellation struct {
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
 	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       CheckTransferCancellationJSON
+	JSON       checkTransferCancellationJSON
 }
 
-type CheckTransferCancellationJSON struct {
-	CanceledAt apijson.Metadata
-	CanceledBy apijson.Metadata
+// checkTransferCancellationJSON contains the JSON metadata for the struct
+// [CheckTransferCancellation]
+type checkTransferCancellationJSON struct {
+	CanceledAt apijson.Field
+	CanceledBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferCancellation
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -298,28 +308,30 @@ const (
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 )
 
+// After the transfer is submitted, this will contain supplemental details.
 type CheckTransferSubmission struct {
 	// When this check transfer was submitted to our check printer.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
 	// The identitying number of the check.
 	CheckNumber string `json:"check_number,required"`
-	JSON        CheckTransferSubmissionJSON
+	JSON        checkTransferSubmissionJSON
 }
 
-type CheckTransferSubmissionJSON struct {
-	SubmittedAt apijson.Metadata
-	CheckNumber apijson.Metadata
+// checkTransferSubmissionJSON contains the JSON metadata for the struct
+// [CheckTransferSubmission]
+type checkTransferSubmissionJSON struct {
+	SubmittedAt apijson.Field
+	CheckNumber apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferSubmission using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// After a stop-payment is requested on the check, this will contain supplemental
+// details.
 type CheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID string `json:"transfer_id,required"`
@@ -330,21 +342,20 @@ type CheckTransferStopPaymentRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type CheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON CheckTransferStopPaymentRequestJSON
+	JSON checkTransferStopPaymentRequestJSON
 }
 
-type CheckTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Metadata
-	TransactionID apijson.Metadata
-	RequestedAt   apijson.Metadata
-	Type          apijson.Metadata
+// checkTransferStopPaymentRequestJSON contains the JSON metadata for the struct
+// [CheckTransferStopPaymentRequest]
+type checkTransferStopPaymentRequestJSON struct {
+	TransferID    apijson.Field
+	TransactionID apijson.Field
+	RequestedAt   apijson.Field
+	Type          apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// CheckTransferStopPaymentRequest using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -355,6 +366,7 @@ const (
 	CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest CheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
+// After a check transfer is deposited, this will contain supplemental details.
 type CheckTransferDeposit struct {
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
@@ -365,21 +377,20 @@ type CheckTransferDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type CheckTransferDepositType `json:"type,required"`
-	JSON CheckTransferDepositJSON
+	JSON checkTransferDepositJSON
 }
 
-type CheckTransferDepositJSON struct {
-	DepositedAt      apijson.Metadata
-	FrontImageFileID apijson.Metadata
-	BackImageFileID  apijson.Metadata
-	Type             apijson.Metadata
+// checkTransferDepositJSON contains the JSON metadata for the struct
+// [CheckTransferDeposit]
+type checkTransferDepositJSON struct {
+	DepositedAt      apijson.Field
+	FrontImageFileID apijson.Field
+	BackImageFileID  apijson.Field
+	Type             apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferDeposit using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -390,6 +401,9 @@ const (
 	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
 )
 
+// After a check transfer is returned, this will contain supplemental details. A
+// check transfer is returned when the receiver mails a never deposited check back
+// to the bank printed on the check.
 type CheckTransferReturnDetails struct {
 	// The identifier of the returned Check Transfer.
 	TransferID string `json:"transfer_id,required"`
@@ -403,22 +417,21 @@ type CheckTransferReturnDetails struct {
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          CheckTransferReturnDetailsJSON
+	JSON          checkTransferReturnDetailsJSON
 }
 
-type CheckTransferReturnDetailsJSON struct {
-	TransferID    apijson.Metadata
-	ReturnedAt    apijson.Metadata
-	FileID        apijson.Metadata
-	Reason        apijson.Metadata
-	TransactionID apijson.Metadata
+// checkTransferReturnDetailsJSON contains the JSON metadata for the struct
+// [CheckTransferReturnDetails]
+type checkTransferReturnDetailsJSON struct {
+	TransferID    apijson.Field
+	ReturnedAt    apijson.Field
+	FileID        apijson.Field
+	Reason        apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferReturnDetails
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -464,13 +477,12 @@ type CheckTransferNewParams struct {
 	RequireApproval field.Field[bool] `json:"require_approval"`
 }
 
-// MarshalJSON serializes CheckTransferNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The return address to be printed on the check. If omitted this will default to
+// the address of the Entity of the Account used to make the Check Transfer.
 type CheckTransferNewParamsReturnAddress struct {
 	// The name of the return address.
 	Name field.Field[string] `json:"name,required"`
@@ -497,8 +509,8 @@ type CheckTransferListParams struct {
 	CreatedAt field.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes CheckTransferListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CheckTransferListParams]'s query parameters as
+// `url.Values`.
 func (r CheckTransferListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -518,30 +530,30 @@ type CheckTransferListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes CheckTransferListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [CheckTransferListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Check Transfer objects
 type CheckTransferListResponse struct {
 	// The contents of the list.
 	Data []CheckTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CheckTransferListResponseJSON
+	JSON       checkTransferListResponseJSON
 }
 
-type CheckTransferListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// checkTransferListResponseJSON contains the JSON metadata for the struct
+// [CheckTransferListResponse]
+type checkTransferListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckTransferListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

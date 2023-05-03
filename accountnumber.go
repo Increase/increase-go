@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// AccountNumberService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewAccountNumberService] method
+// instead.
 type AccountNumberService struct {
 	Options []option.RequestOption
 }
 
+// NewAccountNumberService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewAccountNumberService(opts ...option.RequestOption) (r *AccountNumberService) {
 	r = &AccountNumberService{}
 	r.Options = opts
@@ -72,6 +80,11 @@ func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query Account
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Each account can have multiple account and routing numbers. We recommend that
+// you use a set per vendor. This is similar to how you use different passwords for
+// different websites. Account numbers can also be used to seamlessly reconcile
+// inbound payments. Generating a unique account number per vendor ensures you
+// always know the originator of an incoming payment.
 type AccountNumber struct {
 	// The identifier for the account this Account Number belongs to.
 	AccountID string `json:"account_id,required"`
@@ -91,25 +104,23 @@ type AccountNumber struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
 	Type AccountNumberType `json:"type,required"`
-	JSON AccountNumberJSON
+	JSON accountNumberJSON
 }
 
-type AccountNumberJSON struct {
-	AccountID     apijson.Metadata
-	AccountNumber apijson.Metadata
-	ID            apijson.Metadata
-	CreatedAt     apijson.Metadata
-	Name          apijson.Metadata
-	RoutingNumber apijson.Metadata
-	Status        apijson.Metadata
-	Type          apijson.Metadata
+// accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
+type accountNumberJSON struct {
+	AccountID     apijson.Field
+	AccountNumber apijson.Field
+	ID            apijson.Field
+	CreatedAt     apijson.Field
+	Name          apijson.Field
+	RoutingNumber apijson.Field
+	Status        apijson.Field
+	Type          apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountNumber using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -135,9 +146,6 @@ type AccountNumberNewParams struct {
 	Name field.Field[string] `json:"name,required"`
 }
 
-// MarshalJSON serializes AccountNumberNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -149,9 +157,6 @@ type AccountNumberUpdateParams struct {
 	Status field.Field[AccountNumberUpdateParamsStatus] `json:"status"`
 }
 
-// MarshalJSON serializes AccountNumberUpdateParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -177,8 +182,8 @@ type AccountNumberListParams struct {
 	CreatedAt field.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes AccountNumberListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [AccountNumberListParams]'s query parameters as
+// `url.Values`.
 func (r AccountNumberListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -206,30 +211,30 @@ type AccountNumberListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes AccountNumberListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [AccountNumberListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Account Number objects
 type AccountNumberListResponse struct {
 	// The contents of the list.
 	Data []AccountNumber `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountNumberListResponseJSON
+	JSON       accountNumberListResponseJSON
 }
 
-type AccountNumberListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// accountNumberListResponseJSON contains the JSON metadata for the struct
+// [AccountNumberListResponse]
+type accountNumberListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountNumberListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *AccountNumberListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

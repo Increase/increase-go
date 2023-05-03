@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// DigitalWalletTokenService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewDigitalWalletTokenService] method
+// instead.
 type DigitalWalletTokenService struct {
 	Options []option.RequestOption
 }
 
+// NewDigitalWalletTokenService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewDigitalWalletTokenService(opts ...option.RequestOption) (r *DigitalWalletTokenService) {
 	r = &DigitalWalletTokenService{}
 	r.Options = opts
@@ -56,6 +64,9 @@ func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query Di
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// A Digital Wallet Token is created when a user adds a Card to their Apple Pay or
+// Google Pay app. The Digital Wallet Token can be used for purchases just like a
+// Card.
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
 	ID string `json:"id,required"`
@@ -71,23 +82,22 @@ type DigitalWalletToken struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type,required"`
-	JSON DigitalWalletTokenJSON
+	JSON digitalWalletTokenJSON
 }
 
-type DigitalWalletTokenJSON struct {
-	ID             apijson.Metadata
-	CardID         apijson.Metadata
-	CreatedAt      apijson.Metadata
-	Status         apijson.Metadata
-	TokenRequestor apijson.Metadata
-	Type           apijson.Metadata
+// digitalWalletTokenJSON contains the JSON metadata for the struct
+// [DigitalWalletToken]
+type digitalWalletTokenJSON struct {
+	ID             apijson.Field
+	CardID         apijson.Field
+	CreatedAt      apijson.Field
+	Status         apijson.Field
+	TokenRequestor apijson.Field
+	Type           apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into DigitalWalletToken using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -125,8 +135,8 @@ type DigitalWalletTokenListParams struct {
 	CreatedAt field.Field[DigitalWalletTokenListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes DigitalWalletTokenListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [DigitalWalletTokenListParams]'s query parameters as
+// `url.Values`.
 func (r DigitalWalletTokenListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -146,30 +156,30 @@ type DigitalWalletTokenListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes DigitalWalletTokenListParamsCreatedAt into a url.Values of
-// the query parameters associated with this value
+// URLQuery serializes [DigitalWalletTokenListParamsCreatedAt]'s query parameters
+// as `url.Values`.
 func (r DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Digital Wallet Token objects
 type DigitalWalletTokenListResponse struct {
 	// The contents of the list.
 	Data []DigitalWalletToken `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       DigitalWalletTokenListResponseJSON
+	JSON       digitalWalletTokenListResponseJSON
 }
 
-type DigitalWalletTokenListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// digitalWalletTokenListResponseJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenListResponse]
+type digitalWalletTokenListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DigitalWalletTokenListResponse using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *DigitalWalletTokenListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

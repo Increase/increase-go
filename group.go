@@ -10,10 +10,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// GroupService contains methods and other services that help with interacting with
+// the increase API. Note, unlike clients, this service does not read variables
+// from the environment automatically. You should not instantiate this service
+// directly, and instead use the [NewGroupService] method instead.
 type GroupService struct {
 	Options []option.RequestOption
 }
 
+// NewGroupService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewGroupService(opts ...option.RequestOption) (r *GroupService) {
 	r = &GroupService{}
 	r.Options = opts
@@ -28,6 +35,9 @@ func (r *GroupService) GetDetails(ctx context.Context, opts ...option.RequestOpt
 	return
 }
 
+// Groups represent organizations using Increase. You can retrieve information
+// about your own organization via the API, or (more commonly) OAuth platforms can
+// retrieve information about the organizations that have granted them access.
 type Group struct {
 	// If the Group is activated or not.
 	ActivationStatus GroupActivationStatus `json:"activation_status,required"`
@@ -41,21 +51,20 @@ type Group struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
 	Type GroupType `json:"type,required"`
-	JSON GroupJSON
+	JSON groupJSON
 }
 
-type GroupJSON struct {
-	ActivationStatus apijson.Metadata
-	ACHDebitStatus   apijson.Metadata
-	CreatedAt        apijson.Metadata
-	ID               apijson.Metadata
-	Type             apijson.Metadata
+// groupJSON contains the JSON metadata for the struct [Group]
+type groupJSON struct {
+	ActivationStatus apijson.Field
+	ACHDebitStatus   apijson.Field
+	CreatedAt        apijson.Field
+	ID               apijson.Field
+	Type             apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Group using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Group) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

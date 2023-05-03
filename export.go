@@ -15,10 +15,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// ExportService contains methods and other services that help with interacting
+// with the increase API. Note, unlike clients, this service does not read
+// variables from the environment automatically. You should not instantiate this
+// service directly, and instead use the [NewExportService] method instead.
 type ExportService struct {
 	Options []option.RequestOption
 }
 
+// NewExportService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewExportService(opts ...option.RequestOption) (r *ExportService) {
 	r = &ExportService{}
 	r.Options = opts
@@ -64,6 +71,11 @@ func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListPara
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Exports are batch summaries of your Increase data. You can make them from the
+// API or dashboard. Since they can take a while, they are generated
+// asynchronously. We send a webhook when they are ready. For more information,
+// please read our
+// [Exports documentation](https://increase.com/documentation/exports).
 type Export struct {
 	// The Export identifier.
 	ID string `json:"id,required"`
@@ -83,23 +95,22 @@ type Export struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `export`.
 	Type ExportType `json:"type,required"`
-	JSON ExportJSON
+	JSON exportJSON
 }
 
-type ExportJSON struct {
-	ID              apijson.Metadata
-	CreatedAt       apijson.Metadata
-	Category        apijson.Metadata
-	Status          apijson.Metadata
-	FileID          apijson.Metadata
-	FileDownloadURL apijson.Metadata
-	Type            apijson.Metadata
+// exportJSON contains the JSON metadata for the struct [Export]
+type exportJSON struct {
+	ID              apijson.Field
+	CreatedAt       apijson.Field
+	Category        apijson.Field
+	Status          apijson.Field
+	FileID          apijson.Field
+	FileDownloadURL apijson.Field
+	Type            apijson.Field
 	raw             string
-	Extras          map[string]apijson.Metadata
+	Extras          map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Export using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Export) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -135,9 +146,6 @@ type ExportNewParams struct {
 	BalanceCsv field.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
 }
 
-// MarshalJSON serializes ExportNewParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -149,6 +157,8 @@ const (
 	ExportNewParamsCategoryBalanceCsv     ExportNewParamsCategory = "balance_csv"
 )
 
+// Options for the created export. Required if `category` is equal to
+// `transaction_csv`.
 type ExportNewParamsTransactionCsv struct {
 	// Filter exported Transactions to the specified Account.
 	AccountID field.Field[string] `json:"account_id"`
@@ -156,6 +166,7 @@ type ExportNewParamsTransactionCsv struct {
 	CreatedAt field.Field[ExportNewParamsTransactionCsvCreatedAt] `json:"created_at"`
 }
 
+// Filter results by time range on the `created_at` attribute.
 type ExportNewParamsTransactionCsvCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -171,6 +182,8 @@ type ExportNewParamsTransactionCsvCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `json:"on_or_before" format:"date-time"`
 }
 
+// Options for the created export. Required if `category` is equal to
+// `balance_csv`.
 type ExportNewParamsBalanceCsv struct {
 	// Filter exported Transactions to the specified Account.
 	AccountID field.Field[string] `json:"account_id"`
@@ -178,6 +191,7 @@ type ExportNewParamsBalanceCsv struct {
 	CreatedAt field.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
 }
 
+// Filter results by time range on the `created_at` attribute.
 type ExportNewParamsBalanceCsvCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -201,30 +215,29 @@ type ExportListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes ExportListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [ExportListParams]'s query parameters as `url.Values`.
 func (r ExportListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Export objects
 type ExportListResponse struct {
 	// The contents of the list.
 	Data []Export `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ExportListResponseJSON
+	JSON       exportListResponseJSON
 }
 
-type ExportListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// exportListResponseJSON contains the JSON metadata for the struct
+// [ExportListResponse]
+type exportListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ExportListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ExportListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

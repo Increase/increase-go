@@ -8,34 +8,24 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-type SharedService struct {
-	Options []option.RequestOption
-}
-
-func NewSharedService(opts ...option.RequestOption) (r *SharedService) {
-	r = &SharedService{}
-	r.Options = opts
-	return
-}
-
+// A list of Account objects
 type Page[T any] struct {
 	Data []T `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       PageJSON
+	JSON       pageJSON
 	cfg        *requestconfig.RequestConfig
 	res        *http.Response
 }
 
-type PageJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// pageJSON contains the JSON metadata for the struct [Page[T]]
+type pageJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Page[T] using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Page[T]) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

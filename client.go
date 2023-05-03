@@ -6,6 +6,9 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// Client creates a struct with services and top level methods that help with
+// interacting with the increase API. You should not instantiate this client
+// directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options                     []option.RequestOption
 	Accounts                    *AccountService
@@ -49,7 +52,7 @@ type Client struct {
 }
 
 // NewClient generates a new client with the default option read from the
-// environment ("INCREASE_API_KEY"). The option passed in as arguments are applied
+// environment (`INCREASE_API_KEY`). The option passed in as arguments are applied
 // after these default arguments, and all option will be passed down to the
 // services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {

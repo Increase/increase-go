@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// OauthConnectionService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewOauthConnectionService] method
+// instead.
 type OauthConnectionService struct {
 	Options []option.RequestOption
 }
 
+// NewOauthConnectionService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewOauthConnectionService(opts ...option.RequestOption) (r *OauthConnectionService) {
 	r = &OauthConnectionService{}
 	r.Options = opts
@@ -56,6 +64,8 @@ func (r *OauthConnectionService) ListAutoPaging(ctx context.Context, query Oauth
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// When a user authorizes your OAuth application, an OAuth Connection object is
+// created.
 type OauthConnection struct {
 	// The OAuth Connection's identifier.
 	ID string `json:"id,required"`
@@ -69,22 +79,20 @@ type OauthConnection struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_connection`.
 	Type OauthConnectionType `json:"type,required"`
-	JSON OauthConnectionJSON
+	JSON oauthConnectionJSON
 }
 
-type OauthConnectionJSON struct {
-	ID        apijson.Metadata
-	CreatedAt apijson.Metadata
-	GroupID   apijson.Metadata
-	Status    apijson.Metadata
-	Type      apijson.Metadata
+// oauthConnectionJSON contains the JSON metadata for the struct [OauthConnection]
+type oauthConnectionJSON struct {
+	ID        apijson.Field
+	CreatedAt apijson.Field
+	GroupID   apijson.Field
+	Status    apijson.Field
+	Type      apijson.Field
 	raw       string
-	Extras    map[string]apijson.Metadata
+	Extras    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into OauthConnection using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -110,30 +118,30 @@ type OauthConnectionListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes OauthConnectionListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [OauthConnectionListParams]'s query parameters as
+// `url.Values`.
 func (r OauthConnectionListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of OAuth Connection objects
 type OauthConnectionListResponse struct {
 	// The contents of the list.
 	Data []OauthConnection `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       OauthConnectionListResponseJSON
+	JSON       oauthConnectionListResponseJSON
 }
 
-type OauthConnectionListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// oauthConnectionListResponseJSON contains the JSON metadata for the struct
+// [OauthConnectionListResponse]
+type oauthConnectionListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into OauthConnectionListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *OauthConnectionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

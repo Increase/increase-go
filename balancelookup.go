@@ -10,10 +10,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// BalanceLookupService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewBalanceLookupService] method
+// instead.
 type BalanceLookupService struct {
 	Options []option.RequestOption
 }
 
+// NewBalanceLookupService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewBalanceLookupService(opts ...option.RequestOption) (r *BalanceLookupService) {
 	r = &BalanceLookupService{}
 	r.Options = opts
@@ -28,6 +36,8 @@ func (r *BalanceLookupService) Lookup(ctx context.Context, body BalanceLookupLoo
 	return
 }
 
+// Represents a request to lookup the balance of an Account at a given point in
+// time.
 type BalanceLookupLookupResponse struct {
 	// The identifier for the account for which the balance was queried.
 	AccountID string `json:"account_id,required"`
@@ -40,21 +50,20 @@ type BalanceLookupLookupResponse struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
 	Type BalanceLookupLookupResponseType `json:"type,required"`
-	JSON BalanceLookupLookupResponseJSON
+	JSON balanceLookupLookupResponseJSON
 }
 
-type BalanceLookupLookupResponseJSON struct {
-	AccountID        apijson.Metadata
-	CurrentBalance   apijson.Metadata
-	AvailableBalance apijson.Metadata
-	Type             apijson.Metadata
+// balanceLookupLookupResponseJSON contains the JSON metadata for the struct
+// [BalanceLookupLookupResponse]
+type balanceLookupLookupResponseJSON struct {
+	AccountID        apijson.Field
+	CurrentBalance   apijson.Field
+	AvailableBalance apijson.Field
+	Type             apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into BalanceLookupLookupResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *BalanceLookupLookupResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -70,9 +79,6 @@ type BalanceLookupLookupParams struct {
 	AccountID field.Field[string] `json:"account_id,required"`
 }
 
-// MarshalJSON serializes BalanceLookupLookupParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r BalanceLookupLookupParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

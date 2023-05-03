@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// WireTransferService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewWireTransferService] method
+// instead.
 type WireTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewWireTransferService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewWireTransferService(opts ...option.RequestOption) (r *WireTransferService) {
 	r = &WireTransferService{}
 	r.Options = opts
@@ -101,6 +109,8 @@ func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id strin
 	return
 }
 
+// Wire transfers move funds between your Increase account and any other account
+// accessible by Fedwire.
 type WireTransfer struct {
 	// The wire transfer's identifier.
 	ID string `json:"id,required"`
@@ -150,38 +160,36 @@ type WireTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
 	Type WireTransferType `json:"type,required"`
-	JSON WireTransferJSON
+	JSON wireTransferJSON
 }
 
-type WireTransferJSON struct {
-	ID                      apijson.Metadata
-	MessageToRecipient      apijson.Metadata
-	Amount                  apijson.Metadata
-	Currency                apijson.Metadata
-	AccountNumber           apijson.Metadata
-	BeneficiaryName         apijson.Metadata
-	BeneficiaryAddressLine1 apijson.Metadata
-	BeneficiaryAddressLine2 apijson.Metadata
-	BeneficiaryAddressLine3 apijson.Metadata
-	AccountID               apijson.Metadata
-	ExternalAccountID       apijson.Metadata
-	RoutingNumber           apijson.Metadata
-	Approval                apijson.Metadata
-	Cancellation            apijson.Metadata
-	Reversal                apijson.Metadata
-	CreatedAt               apijson.Metadata
-	Network                 apijson.Metadata
-	Status                  apijson.Metadata
-	Submission              apijson.Metadata
-	TransactionID           apijson.Metadata
-	Type                    apijson.Metadata
+// wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
+type wireTransferJSON struct {
+	ID                      apijson.Field
+	MessageToRecipient      apijson.Field
+	Amount                  apijson.Field
+	Currency                apijson.Field
+	AccountNumber           apijson.Field
+	BeneficiaryName         apijson.Field
+	BeneficiaryAddressLine1 apijson.Field
+	BeneficiaryAddressLine2 apijson.Field
+	BeneficiaryAddressLine3 apijson.Field
+	AccountID               apijson.Field
+	ExternalAccountID       apijson.Field
+	RoutingNumber           apijson.Field
+	Approval                apijson.Field
+	Cancellation            apijson.Field
+	Reversal                apijson.Field
+	CreatedAt               apijson.Field
+	Network                 apijson.Field
+	Status                  apijson.Field
+	Submission              apijson.Field
+	TransactionID           apijson.Field
+	Type                    apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Metadata
+	Extras                  map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransfer using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -197,6 +205,8 @@ const (
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
+// If your account requires approvals for transfers and the transfer was approved,
+// this will contain details of the approval.
 type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -204,23 +214,24 @@ type WireTransferApproval struct {
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
 	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       WireTransferApprovalJSON
+	JSON       wireTransferApprovalJSON
 }
 
-type WireTransferApprovalJSON struct {
-	ApprovedAt apijson.Metadata
-	ApprovedBy apijson.Metadata
+// wireTransferApprovalJSON contains the JSON metadata for the struct
+// [WireTransferApproval]
+type wireTransferApprovalJSON struct {
+	ApprovedAt apijson.Field
+	ApprovedBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferApproval using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your account requires approvals for transfers and the transfer was not
+// approved, this will contain details of the cancellation.
 type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -228,23 +239,23 @@ type WireTransferCancellation struct {
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
 	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       WireTransferCancellationJSON
+	JSON       wireTransferCancellationJSON
 }
 
-type WireTransferCancellationJSON struct {
-	CanceledAt apijson.Metadata
-	CanceledBy apijson.Metadata
+// wireTransferCancellationJSON contains the JSON metadata for the struct
+// [WireTransferCancellation]
+type wireTransferCancellationJSON struct {
+	CanceledAt apijson.Field
+	CanceledBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferCancellation
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
@@ -278,32 +289,31 @@ type WireTransferReversal struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           WireTransferReversalJSON
+	JSON           wireTransferReversalJSON
 }
 
-type WireTransferReversalJSON struct {
-	Amount                                                apijson.Metadata
-	CreatedAt                                             apijson.Metadata
-	Description                                           apijson.Metadata
-	InputCycleDate                                        apijson.Metadata
-	InputSequenceNumber                                   apijson.Metadata
-	InputSource                                           apijson.Metadata
-	InputMessageAccountabilityData                        apijson.Metadata
-	PreviousMessageInputMessageAccountabilityData         apijson.Metadata
-	PreviousMessageInputCycleDate                         apijson.Metadata
-	PreviousMessageInputSequenceNumber                    apijson.Metadata
-	PreviousMessageInputSource                            apijson.Metadata
-	ReceiverFinancialInstitutionInformation               apijson.Metadata
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
-	TransactionID                                         apijson.Metadata
-	WireTransferID                                        apijson.Metadata
+// wireTransferReversalJSON contains the JSON metadata for the struct
+// [WireTransferReversal]
+type wireTransferReversalJSON struct {
+	Amount                                                apijson.Field
+	CreatedAt                                             apijson.Field
+	Description                                           apijson.Field
+	InputCycleDate                                        apijson.Field
+	InputSequenceNumber                                   apijson.Field
+	InputSource                                           apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
+	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputSequenceNumber                    apijson.Field
+	PreviousMessageInputSource                            apijson.Field
+	ReceiverFinancialInstitutionInformation               apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
+	TransactionID                                         apijson.Field
+	WireTransferID                                        apijson.Field
 	raw                                                   string
-	Extras                                                map[string]apijson.Metadata
+	Extras                                                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferReversal using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -326,24 +336,25 @@ const (
 	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
 )
 
+// After the transfer is submitted to Fedwire, this will contain supplemental
+// details.
 type WireTransferSubmission struct {
 	// The accountability data for the submission.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// When this wire transfer was submitted to Fedwire.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	JSON        WireTransferSubmissionJSON
+	JSON        wireTransferSubmissionJSON
 }
 
-type WireTransferSubmissionJSON struct {
-	InputMessageAccountabilityData apijson.Metadata
-	SubmittedAt                    apijson.Metadata
+// wireTransferSubmissionJSON contains the JSON metadata for the struct
+// [WireTransferSubmission]
+type wireTransferSubmissionJSON struct {
+	InputMessageAccountabilityData apijson.Field
+	SubmittedAt                    apijson.Field
 	raw                            string
-	Extras                         map[string]apijson.Metadata
+	Extras                         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferSubmission using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -381,9 +392,6 @@ type WireTransferNewParams struct {
 	RequireApproval field.Field[bool] `json:"require_approval"`
 }
 
-// MarshalJSON serializes WireTransferNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -401,8 +409,7 @@ type WireTransferListParams struct {
 	CreatedAt         field.Field[WireTransferListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes WireTransferListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.
 func (r WireTransferListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -422,30 +429,30 @@ type WireTransferListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes WireTransferListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [WireTransferListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Wire Transfer objects
 type WireTransferListResponse struct {
 	// The contents of the list.
 	Data []WireTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       WireTransferListResponseJSON
+	JSON       wireTransferListResponseJSON
 }
 
-type WireTransferListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// wireTransferListResponseJSON contains the JSON metadata for the struct
+// [WireTransferListResponse]
+type wireTransferListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *WireTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

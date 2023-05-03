@@ -15,10 +15,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// CardService contains methods and other services that help with interacting with
+// the increase API. Note, unlike clients, this service does not read variables
+// from the environment automatically. You should not instantiate this service
+// directly, and instead use the [NewCardService] method instead.
 type CardService struct {
 	Options []option.RequestOption
 }
 
+// NewCardService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewCardService(opts ...option.RequestOption) (r *CardService) {
 	r = &CardService{}
 	r.Options = opts
@@ -80,6 +87,10 @@ func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, o
 	return
 }
 
+// Cards are commercial credit cards. They'll immediately work for online purchases
+// after you create them. All cards maintain a credit limit of 100% of the
+// Account’s available balance at the time of transaction. Funds are deducted from
+// the Account upon transaction settlement.
 type Card struct {
 	// The card identifier.
 	ID string `json:"id,required"`
@@ -107,27 +118,26 @@ type Card struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card`.
 	Type CardType `json:"type,required"`
-	JSON CardJSON
+	JSON cardJSON
 }
 
-type CardJSON struct {
-	ID              apijson.Metadata
-	AccountID       apijson.Metadata
-	CreatedAt       apijson.Metadata
-	Description     apijson.Metadata
-	Last4           apijson.Metadata
-	ExpirationMonth apijson.Metadata
-	ExpirationYear  apijson.Metadata
-	Status          apijson.Metadata
-	BillingAddress  apijson.Metadata
-	DigitalWallet   apijson.Metadata
-	Type            apijson.Metadata
+// cardJSON contains the JSON metadata for the struct [Card]
+type cardJSON struct {
+	ID              apijson.Field
+	AccountID       apijson.Field
+	CreatedAt       apijson.Field
+	Description     apijson.Field
+	Last4           apijson.Field
+	ExpirationMonth apijson.Field
+	ExpirationYear  apijson.Field
+	Status          apijson.Field
+	BillingAddress  apijson.Field
+	DigitalWallet   apijson.Field
+	Type            apijson.Field
 	raw             string
-	Extras          map[string]apijson.Metadata
+	Extras          map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Card using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Card) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -140,6 +150,7 @@ const (
 	CardStatusCanceled CardStatus = "canceled"
 )
 
+// The Card's billing address.
 type CardBillingAddress struct {
 	// The first line of the billing address.
 	Line1 string `json:"line1,required,nullable"`
@@ -151,26 +162,28 @@ type CardBillingAddress struct {
 	State string `json:"state,required,nullable"`
 	// The postal code of the billing address.
 	PostalCode string `json:"postal_code,required,nullable"`
-	JSON       CardBillingAddressJSON
+	JSON       cardBillingAddressJSON
 }
 
-type CardBillingAddressJSON struct {
-	Line1      apijson.Metadata
-	Line2      apijson.Metadata
-	City       apijson.Metadata
-	State      apijson.Metadata
-	PostalCode apijson.Metadata
+// cardBillingAddressJSON contains the JSON metadata for the struct
+// [CardBillingAddress]
+type cardBillingAddressJSON struct {
+	Line1      apijson.Field
+	Line2      apijson.Field
+	City       apijson.Field
+	State      apijson.Field
+	PostalCode apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardBillingAddress using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The contact information used in the two-factor steps for digital wallet card
+// creation. At least one field must be present to complete the digital wallet
+// steps.
 type CardDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -181,20 +194,19 @@ type CardDigitalWallet struct {
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
 	CardProfileID string `json:"card_profile_id,required,nullable"`
-	JSON          CardDigitalWalletJSON
+	JSON          cardDigitalWalletJSON
 }
 
-type CardDigitalWalletJSON struct {
-	Email         apijson.Metadata
-	Phone         apijson.Metadata
-	CardProfileID apijson.Metadata
+// cardDigitalWalletJSON contains the JSON metadata for the struct
+// [CardDigitalWallet]
+type cardDigitalWalletJSON struct {
+	Email         apijson.Field
+	Phone         apijson.Field
+	CardProfileID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDigitalWallet using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -205,6 +217,7 @@ const (
 	CardTypeCard CardType = "card"
 )
 
+// An object containing the sensitive details (card number, cvc, etc) for a Card.
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
 	CardID string `json:"card_id,required"`
@@ -221,23 +234,21 @@ type CardDetails struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_details`.
 	Type CardDetailsType `json:"type,required"`
-	JSON CardDetailsJSON
+	JSON cardDetailsJSON
 }
 
-type CardDetailsJSON struct {
-	CardID               apijson.Metadata
-	PrimaryAccountNumber apijson.Metadata
-	ExpirationMonth      apijson.Metadata
-	ExpirationYear       apijson.Metadata
-	VerificationCode     apijson.Metadata
-	Type                 apijson.Metadata
+// cardDetailsJSON contains the JSON metadata for the struct [CardDetails]
+type cardDetailsJSON struct {
+	CardID               apijson.Field
+	PrimaryAccountNumber apijson.Field
+	ExpirationMonth      apijson.Field
+	ExpirationYear       apijson.Field
+	VerificationCode     apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDetails using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -263,13 +274,11 @@ type CardNewParams struct {
 	DigitalWallet field.Field[CardNewParamsDigitalWallet] `json:"digital_wallet"`
 }
 
-// MarshalJSON serializes CardNewParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r CardNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The card's billing address.
 type CardNewParamsBillingAddress struct {
 	// The first line of the billing address.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -283,6 +292,11 @@ type CardNewParamsBillingAddress struct {
 	PostalCode field.Field[string] `json:"postal_code,required"`
 }
 
+// The contact information used in the two-factor steps for digital wallet card
+// creation. To add the card to a digital wallet, you may supply an email or phone
+// number with this request. Otherwise, subscribe and then action a Real Time
+// Decision with the category `digital_wallet_token_requested` or
+// `digital_wallet_authentication_requested`.
 type CardNewParamsDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -308,9 +322,6 @@ type CardUpdateParams struct {
 	DigitalWallet field.Field[CardUpdateParamsDigitalWallet] `json:"digital_wallet"`
 }
 
-// MarshalJSON serializes CardUpdateParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -323,6 +334,7 @@ const (
 	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
 )
 
+// The card's updated billing address.
 type CardUpdateParamsBillingAddress struct {
 	// The first line of the billing address.
 	Line1 field.Field[string] `json:"line1,required"`
@@ -336,6 +348,9 @@ type CardUpdateParamsBillingAddress struct {
 	PostalCode field.Field[string] `json:"postal_code,required"`
 }
 
+// The contact information used in the two-factor steps for digital wallet card
+// creation. At least one field must be present to complete the digital wallet
+// steps.
 type CardUpdateParamsDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
@@ -359,8 +374,7 @@ type CardListParams struct {
 	CreatedAt field.Field[CardListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes CardListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [CardListParams]'s query parameters as `url.Values`.
 func (r CardListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -380,30 +394,30 @@ type CardListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes CardListParamsCreatedAt into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CardListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r CardListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Card objects
 type CardListResponse struct {
 	// The contents of the list.
 	Data []Card `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CardListResponseJSON
+	JSON       cardListResponseJSON
 }
 
-type CardListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// cardListResponseJSON contains the JSON metadata for the struct
+// [CardListResponse]
+type cardListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

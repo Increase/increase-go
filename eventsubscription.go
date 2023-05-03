@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// EventSubscriptionService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewEventSubscriptionService] method
+// instead.
 type EventSubscriptionService struct {
 	Options []option.RequestOption
 }
 
+// NewEventSubscriptionService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewEventSubscriptionService(opts ...option.RequestOption) (r *EventSubscriptionService) {
 	r = &EventSubscriptionService{}
 	r.Options = opts
@@ -72,6 +80,12 @@ func (r *EventSubscriptionService) ListAutoPaging(ctx context.Context, query Eve
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Webhooks are event notifications we send to you by HTTPS POST requests. Event
+// Subscriptions are how you configure your application to listen for them. You can
+// create an Event Subscription through your
+// [developer dashboard](https://dashboard.increase.com/developers/webhooks) or the
+// API. For more information, see our
+// [webhooks guide](https://increase.com/documentation/webhooks).
 type EventSubscription struct {
 	// The event subscription identifier.
 	ID string `json:"id,required"`
@@ -89,24 +103,23 @@ type EventSubscription struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
 	Type EventSubscriptionType `json:"type,required"`
-	JSON EventSubscriptionJSON
+	JSON eventSubscriptionJSON
 }
 
-type EventSubscriptionJSON struct {
-	ID                    apijson.Metadata
-	CreatedAt             apijson.Metadata
-	Status                apijson.Metadata
-	SelectedEventCategory apijson.Metadata
-	URL                   apijson.Metadata
-	SharedSecret          apijson.Metadata
-	Type                  apijson.Metadata
+// eventSubscriptionJSON contains the JSON metadata for the struct
+// [EventSubscription]
+type eventSubscriptionJSON struct {
+	ID                    apijson.Field
+	CreatedAt             apijson.Field
+	Status                apijson.Field
+	SelectedEventCategory apijson.Field
+	URL                   apijson.Field
+	SharedSecret          apijson.Field
+	Type                  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventSubscription using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -192,9 +205,6 @@ type EventSubscriptionNewParams struct {
 	SelectedEventCategory field.Field[EventSubscriptionNewParamsSelectedEventCategory] `json:"selected_event_category"`
 }
 
-// MarshalJSON serializes EventSubscriptionNewParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r EventSubscriptionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -259,9 +269,6 @@ type EventSubscriptionUpdateParams struct {
 	Status field.Field[EventSubscriptionUpdateParamsStatus] `json:"status"`
 }
 
-// MarshalJSON serializes EventSubscriptionUpdateParams into an array of bytes
-// using the gjson library. Members of the `jsonFields` field are serialized into
-// the top-level, and will overwrite known members of the same name.
 func (r EventSubscriptionUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -282,30 +289,30 @@ type EventSubscriptionListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes EventSubscriptionListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [EventSubscriptionListParams]'s query parameters as
+// `url.Values`.
 func (r EventSubscriptionListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Event Subscription objects
 type EventSubscriptionListResponse struct {
 	// The contents of the list.
 	Data []EventSubscription `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EventSubscriptionListResponseJSON
+	JSON       eventSubscriptionListResponseJSON
 }
 
-type EventSubscriptionListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// eventSubscriptionListResponseJSON contains the JSON metadata for the struct
+// [EventSubscriptionListResponse]
+type eventSubscriptionListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventSubscriptionListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *EventSubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

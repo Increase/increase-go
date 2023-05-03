@@ -10,10 +10,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationCardRefundService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewSimulationCardRefundService]
+// method instead.
 type SimulationCardRefundService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationCardRefundService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewSimulationCardRefundService(opts ...option.RequestOption) (r *SimulationCardRefundService) {
 	r = &SimulationCardRefundService{}
 	r.Options = opts
@@ -35,9 +43,6 @@ type SimulationCardRefundNewParams struct {
 	TransactionID field.Field[string] `json:"transaction_id,required"`
 }
 
-// MarshalJSON serializes SimulationCardRefundNewParams into an array of bytes
-// using the gjson library. Members of the `jsonFields` field are serialized into
-// the top-level, and will overwrite known members of the same name.
 func (r SimulationCardRefundNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

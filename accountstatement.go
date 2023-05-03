@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// AccountStatementService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewAccountStatementService] method
+// instead.
 type AccountStatementService struct {
 	Options []option.RequestOption
 }
 
+// NewAccountStatementService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewAccountStatementService(opts ...option.RequestOption) (r *AccountStatementService) {
 	r = &AccountStatementService{}
 	r.Options = opts
@@ -56,6 +64,9 @@ func (r *AccountStatementService) ListAutoPaging(ctx context.Context, query Acco
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Account Statements are generated monthly for every active Account. You can
+// access the statement's data via the API or retrieve a PDF with its details via
+// its associated File.
 type AccountStatement struct {
 	// The Account Statement identifier.
 	ID string `json:"id,required"`
@@ -79,26 +90,25 @@ type AccountStatement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
 	Type AccountStatementType `json:"type,required"`
-	JSON AccountStatementJSON
+	JSON accountStatementJSON
 }
 
-type AccountStatementJSON struct {
-	ID                   apijson.Metadata
-	AccountID            apijson.Metadata
-	CreatedAt            apijson.Metadata
-	FileID               apijson.Metadata
-	StatementPeriodStart apijson.Metadata
-	StatementPeriodEnd   apijson.Metadata
-	StartingBalance      apijson.Metadata
-	EndingBalance        apijson.Metadata
-	Type                 apijson.Metadata
+// accountStatementJSON contains the JSON metadata for the struct
+// [AccountStatement]
+type accountStatementJSON struct {
+	ID                   apijson.Field
+	AccountID            apijson.Field
+	CreatedAt            apijson.Field
+	FileID               apijson.Field
+	StatementPeriodStart apijson.Field
+	StatementPeriodEnd   apijson.Field
+	StartingBalance      apijson.Field
+	EndingBalance        apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountStatement using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *AccountStatement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -120,8 +130,8 @@ type AccountStatementListParams struct {
 	StatementPeriodStart field.Field[AccountStatementListParamsStatementPeriodStart] `query:"statement_period_start"`
 }
 
-// URLQuery serializes AccountStatementListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [AccountStatementListParams]'s query parameters as
+// `url.Values`.
 func (r AccountStatementListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -141,30 +151,30 @@ type AccountStatementListParamsStatementPeriodStart struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes AccountStatementListParamsStatementPeriodStart into a
-// url.Values of the query parameters associated with this value
+// URLQuery serializes [AccountStatementListParamsStatementPeriodStart]'s query
+// parameters as `url.Values`.
 func (r AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Account Statement objects
 type AccountStatementListResponse struct {
 	// The contents of the list.
 	Data []AccountStatement `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountStatementListResponseJSON
+	JSON       accountStatementListResponseJSON
 }
 
-type AccountStatementListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// accountStatementListResponseJSON contains the JSON metadata for the struct
+// [AccountStatementListResponse]
+type accountStatementListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountStatementListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *AccountStatementListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

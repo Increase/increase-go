@@ -11,10 +11,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationWireTransferService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewSimulationWireTransferService]
+// method instead.
 type SimulationWireTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationWireTransferService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewSimulationWireTransferService(opts ...option.RequestOption) (r *SimulationWireTransferService) {
 	r = &SimulationWireTransferService{}
 	r.Options = opts
@@ -29,6 +37,7 @@ func (r *SimulationWireTransferService) NewInbound(ctx context.Context, body Sim
 	return
 }
 
+// The results of an inbound Wire Transfer simulation.
 type WireTransferSimulation struct {
 	// If the Wire Transfer attempt succeeds, this will contain the resulting
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
@@ -37,23 +46,25 @@ type WireTransferSimulation struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer_simulation_result`.
 	Type WireTransferSimulationType `json:"type,required"`
-	JSON WireTransferSimulationJSON
+	JSON wireTransferSimulationJSON
 }
 
-type WireTransferSimulationJSON struct {
-	Transaction apijson.Metadata
-	Type        apijson.Metadata
+// wireTransferSimulationJSON contains the JSON metadata for the struct
+// [WireTransferSimulation]
+type wireTransferSimulationJSON struct {
+	Transaction apijson.Field
+	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireTransferSimulation using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the Wire Transfer attempt succeeds, this will contain the resulting
+// [Transaction](#transactions) object. The Transaction's `source` will be of
+// `category: inbound_wire_transfer`.
 type WireTransferSimulationTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID string `json:"account_id,required"`
@@ -86,27 +97,26 @@ type WireTransferSimulationTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
 	Type WireTransferSimulationTransactionType `json:"type,required"`
-	JSON WireTransferSimulationTransactionJSON
+	JSON wireTransferSimulationTransactionJSON
 }
 
-type WireTransferSimulationTransactionJSON struct {
-	AccountID   apijson.Metadata
-	Amount      apijson.Metadata
-	Currency    apijson.Metadata
-	CreatedAt   apijson.Metadata
-	Description apijson.Metadata
-	ID          apijson.Metadata
-	RouteID     apijson.Metadata
-	RouteType   apijson.Metadata
-	Source      apijson.Metadata
-	Type        apijson.Metadata
+// wireTransferSimulationTransactionJSON contains the JSON metadata for the struct
+// [WireTransferSimulationTransaction]
+type wireTransferSimulationTransactionJSON struct {
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	CreatedAt   apijson.Field
+	Description apijson.Field
+	ID          apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransaction using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -129,6 +139,10 @@ const (
 	WireTransferSimulationTransactionRouteTypeCard          WireTransferSimulationTransactionRouteType = "card"
 )
 
+// This is an object giving more details on the network-level event that caused the
+// Transaction. Note that for backwards compatibility reasons, additional
+// undocumented keys may appear in this object. These should be treated as
+// deprecated and will be removed in the future.
 type WireTransferSimulationTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -252,55 +266,54 @@ type WireTransferSimulationTransactionSource struct {
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
 	WireTransferRejection WireTransferSimulationTransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
-	JSON                  WireTransferSimulationTransactionSourceJSON
+	JSON                  wireTransferSimulationTransactionSourceJSON
 }
 
-type WireTransferSimulationTransactionSourceJSON struct {
-	Category                                    apijson.Metadata
-	AccountTransferIntention                    apijson.Metadata
-	ACHCheckConversionReturn                    apijson.Metadata
-	ACHCheckConversion                          apijson.Metadata
-	ACHTransferIntention                        apijson.Metadata
-	ACHTransferRejection                        apijson.Metadata
-	ACHTransferReturn                           apijson.Metadata
-	CardDisputeAcceptance                       apijson.Metadata
-	CardRefund                                  apijson.Metadata
-	CardSettlement                              apijson.Metadata
-	CardRevenuePayment                          apijson.Metadata
-	CheckDepositAcceptance                      apijson.Metadata
-	CheckDepositReturn                          apijson.Metadata
-	CheckTransferIntention                      apijson.Metadata
-	CheckTransferReturn                         apijson.Metadata
-	CheckTransferRejection                      apijson.Metadata
-	CheckTransferStopPaymentRequest             apijson.Metadata
-	DisputeResolution                           apijson.Metadata
-	EmpyrealCashDeposit                         apijson.Metadata
-	FeePayment                                  apijson.Metadata
-	InboundACHTransfer                          apijson.Metadata
-	InboundCheck                                apijson.Metadata
-	InboundInternationalACHTransfer             apijson.Metadata
-	InboundRealTimePaymentsTransferConfirmation apijson.Metadata
-	InboundWireDrawdownPaymentReversal          apijson.Metadata
-	InboundWireDrawdownPayment                  apijson.Metadata
-	InboundWireReversal                         apijson.Metadata
-	InboundWireTransfer                         apijson.Metadata
-	InterestPayment                             apijson.Metadata
-	InternalSource                              apijson.Metadata
-	CardRouteRefund                             apijson.Metadata
-	CardRouteSettlement                         apijson.Metadata
-	RealTimePaymentsTransferAcknowledgement     apijson.Metadata
-	SampleFunds                                 apijson.Metadata
-	WireDrawdownPaymentIntention                apijson.Metadata
-	WireDrawdownPaymentRejection                apijson.Metadata
-	WireTransferIntention                       apijson.Metadata
-	WireTransferRejection                       apijson.Metadata
+// wireTransferSimulationTransactionSourceJSON contains the JSON metadata for the
+// struct [WireTransferSimulationTransactionSource]
+type wireTransferSimulationTransactionSourceJSON struct {
+	Category                                    apijson.Field
+	AccountTransferIntention                    apijson.Field
+	ACHCheckConversionReturn                    apijson.Field
+	ACHCheckConversion                          apijson.Field
+	ACHTransferIntention                        apijson.Field
+	ACHTransferRejection                        apijson.Field
+	ACHTransferReturn                           apijson.Field
+	CardDisputeAcceptance                       apijson.Field
+	CardRefund                                  apijson.Field
+	CardSettlement                              apijson.Field
+	CardRevenuePayment                          apijson.Field
+	CheckDepositAcceptance                      apijson.Field
+	CheckDepositReturn                          apijson.Field
+	CheckTransferIntention                      apijson.Field
+	CheckTransferReturn                         apijson.Field
+	CheckTransferRejection                      apijson.Field
+	CheckTransferStopPaymentRequest             apijson.Field
+	DisputeResolution                           apijson.Field
+	EmpyrealCashDeposit                         apijson.Field
+	FeePayment                                  apijson.Field
+	InboundACHTransfer                          apijson.Field
+	InboundCheck                                apijson.Field
+	InboundInternationalACHTransfer             apijson.Field
+	InboundRealTimePaymentsTransferConfirmation apijson.Field
+	InboundWireDrawdownPaymentReversal          apijson.Field
+	InboundWireDrawdownPayment                  apijson.Field
+	InboundWireReversal                         apijson.Field
+	InboundWireTransfer                         apijson.Field
+	InterestPayment                             apijson.Field
+	InternalSource                              apijson.Field
+	CardRouteRefund                             apijson.Field
+	CardRouteSettlement                         apijson.Field
+	RealTimePaymentsTransferAcknowledgement     apijson.Field
+	SampleFunds                                 apijson.Field
+	WireDrawdownPaymentIntention                apijson.Field
+	WireDrawdownPaymentRejection                apijson.Field
+	WireTransferIntention                       apijson.Field
+	WireTransferRejection                       apijson.Field
 	raw                                         string
-	Extras                                      map[string]apijson.Metadata
+	Extras                                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSource using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -350,6 +363,8 @@ const (
 	WireTransferSimulationTransactionSourceCategoryOther                                       WireTransferSimulationTransactionSourceCategory = "other"
 )
 
+// A Account Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `account_transfer_intention`.
 type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -365,24 +380,23 @@ type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceAccountTransferIntentionJSON
+	JSON       wireTransferSimulationTransactionSourceAccountTransferIntentionJSON
 }
 
-type WireTransferSimulationTransactionSourceAccountTransferIntentionJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	Description          apijson.Metadata
-	DestinationAccountID apijson.Metadata
-	SourceAccountID      apijson.Metadata
-	TransferID           apijson.Metadata
+// wireTransferSimulationTransactionSourceAccountTransferIntentionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceAccountTransferIntention]
+type wireTransferSimulationTransactionSourceAccountTransferIntentionJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	Description          apijson.Field
+	DestinationAccountID apijson.Field
+	SourceAccountID      apijson.Field
+	TransferID           apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceAccountTransferIntention using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -398,53 +412,58 @@ const (
 	WireTransferSimulationTransactionSourceAccountTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
+// A ACH Check Conversion Return object. This field will be present in the JSON
+// response if and only if `category` is equal to `ach_check_conversion_return`.
 type WireTransferSimulationTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// Why the transfer was returned.
 	ReturnReasonCode string `json:"return_reason_code,required"`
-	JSON             WireTransferSimulationTransactionSourceACHCheckConversionReturnJSON
+	JSON             wireTransferSimulationTransactionSourceACHCheckConversionReturnJSON
 }
 
-type WireTransferSimulationTransactionSourceACHCheckConversionReturnJSON struct {
-	Amount           apijson.Metadata
-	ReturnReasonCode apijson.Metadata
+// wireTransferSimulationTransactionSourceACHCheckConversionReturnJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceACHCheckConversionReturn]
+type wireTransferSimulationTransactionSourceACHCheckConversionReturnJSON struct {
+	Amount           apijson.Field
+	ReturnReasonCode apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceACHCheckConversionReturn using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Check Conversion object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_check_conversion`.
 type WireTransferSimulationTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the File containing an image of the returned check.
 	FileID string `json:"file_id,required"`
-	JSON   WireTransferSimulationTransactionSourceACHCheckConversionJSON
+	JSON   wireTransferSimulationTransactionSourceACHCheckConversionJSON
 }
 
-type WireTransferSimulationTransactionSourceACHCheckConversionJSON struct {
-	Amount apijson.Metadata
-	FileID apijson.Metadata
+// wireTransferSimulationTransactionSourceACHCheckConversionJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceACHCheckConversion]
+type wireTransferSimulationTransactionSourceACHCheckConversionJSON struct {
+	Amount apijson.Field
+	FileID apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceACHCheckConversion using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Intention object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_transfer_intention`.
 type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -454,45 +473,49 @@ type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceACHTransferIntentionJSON
+	JSON       wireTransferSimulationTransactionSourceACHTransferIntentionJSON
 }
 
-type WireTransferSimulationTransactionSourceACHTransferIntentionJSON struct {
-	Amount              apijson.Metadata
-	AccountNumber       apijson.Metadata
-	RoutingNumber       apijson.Metadata
-	StatementDescriptor apijson.Metadata
-	TransferID          apijson.Metadata
+// wireTransferSimulationTransactionSourceACHTransferIntentionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceACHTransferIntention]
+type wireTransferSimulationTransactionSourceACHTransferIntentionJSON struct {
+	Amount              apijson.Field
+	AccountNumber       apijson.Field
+	RoutingNumber       apijson.Field
+	StatementDescriptor apijson.Field
+	TransferID          apijson.Field
 	raw                 string
-	Extras              map[string]apijson.Metadata
+	Extras              map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceACHTransferIntention using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Rejection object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_transfer_rejection`.
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceACHTransferRejectionJSON
+	JSON       wireTransferSimulationTransactionSourceACHTransferRejectionJSON
 }
 
-type WireTransferSimulationTransactionSourceACHTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// wireTransferSimulationTransactionSourceACHTransferRejectionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceACHTransferRejection]
+type wireTransferSimulationTransactionSourceACHTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceACHTransferRejection using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Return object. This field will be present in the JSON response if
+// and only if `category` is equal to `ach_transfer_return`.
 type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -503,21 +526,21 @@ type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          WireTransferSimulationTransactionSourceACHTransferReturnJSON
+	JSON          wireTransferSimulationTransactionSourceACHTransferReturnJSON
 }
 
-type WireTransferSimulationTransactionSourceACHTransferReturnJSON struct {
-	CreatedAt        apijson.Metadata
-	ReturnReasonCode apijson.Metadata
-	TransferID       apijson.Metadata
-	TransactionID    apijson.Metadata
+// wireTransferSimulationTransactionSourceACHTransferReturnJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceACHTransferReturn]
+type wireTransferSimulationTransactionSourceACHTransferReturnJSON struct {
+	CreatedAt        apijson.Field
+	ReturnReasonCode apijson.Field
+	TransferID       apijson.Field
+	TransactionID    apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceACHTransferReturn using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -550,6 +573,8 @@ const (
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
+// A Card Dispute Acceptance object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_dispute_acceptance`.
 type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -559,24 +584,26 @@ type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          WireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
+	JSON          wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
 }
 
-type WireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON struct {
-	AcceptedAt    apijson.Metadata
-	CardDisputeID apijson.Metadata
-	TransactionID apijson.Metadata
+// wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCardDisputeAcceptance]
+type wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON struct {
+	AcceptedAt    apijson.Field
+	CardDisputeID apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardDisputeAcceptance using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Card Refund object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_refund`.
 type WireTransferSimulationTransactionSourceCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
@@ -602,27 +629,26 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type WireTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
-	JSON WireTransferSimulationTransactionSourceCardRefundJSON
+	JSON wireTransferSimulationTransactionSourceCardRefundJSON
 }
 
-type WireTransferSimulationTransactionSourceCardRefundJSON struct {
-	ID                   apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantName         apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	Type                 apijson.Metadata
+// wireTransferSimulationTransactionSourceCardRefundJSON contains the JSON metadata
+// for the struct [WireTransferSimulationTransactionSourceCardRefund]
+type wireTransferSimulationTransactionSourceCardRefundJSON struct {
+	ID                   apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantState        apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantName         apijson.Field
+	MerchantCategoryCode apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardRefund using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -644,6 +670,8 @@ const (
 	WireTransferSimulationTransactionSourceCardRefundTypeCardRefund WireTransferSimulationTransactionSourceCardRefundType = "card_refund"
 )
 
+// A Card Settlement object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_settlement`.
 type WireTransferSimulationTransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
@@ -679,31 +707,30 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type WireTransferSimulationTransactionSourceCardSettlementType `json:"type,required"`
-	JSON WireTransferSimulationTransactionSourceCardSettlementJSON
+	JSON wireTransferSimulationTransactionSourceCardSettlementJSON
 }
 
-type WireTransferSimulationTransactionSourceCardSettlementJSON struct {
-	ID                   apijson.Metadata
-	CardAuthorization    apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	PresentmentAmount    apijson.Metadata
-	PresentmentCurrency  apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantName         apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	PendingTransactionID apijson.Metadata
-	Type                 apijson.Metadata
+// wireTransferSimulationTransactionSourceCardSettlementJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceCardSettlement]
+type wireTransferSimulationTransactionSourceCardSettlementJSON struct {
+	ID                   apijson.Field
+	CardAuthorization    apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantState        apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantName         apijson.Field
+	MerchantCategoryCode apijson.Field
+	PendingTransactionID apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardSettlement using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -725,6 +752,8 @@ const (
 	WireTransferSimulationTransactionSourceCardSettlementTypeCardSettlement WireTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
 )
 
+// A Card Revenue Payment object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_revenue_payment`.
 type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -738,22 +767,22 @@ type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The account the card belonged to.
 	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  WireTransferSimulationTransactionSourceCardRevenuePaymentJSON
+	JSON                  wireTransferSimulationTransactionSourceCardRevenuePaymentJSON
 }
 
-type WireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	PeriodStart           apijson.Metadata
-	PeriodEnd             apijson.Metadata
-	TransactedOnAccountID apijson.Metadata
+// wireTransferSimulationTransactionSourceCardRevenuePaymentJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceCardRevenuePayment]
+type wireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	PeriodStart           apijson.Field
+	PeriodEnd             apijson.Field
+	TransactedOnAccountID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardRevenuePayment using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -769,6 +798,8 @@ const (
 	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
+// A Check Deposit Acceptance object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_deposit_acceptance`.
 type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -788,24 +819,24 @@ type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	SerialNumber string `json:"serial_number,required,nullable"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           WireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
+	JSON           wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON struct {
-	Amount         apijson.Metadata
-	Currency       apijson.Metadata
-	AccountNumber  apijson.Metadata
-	RoutingNumber  apijson.Metadata
-	AuxiliaryOnUs  apijson.Metadata
-	SerialNumber   apijson.Metadata
-	CheckDepositID apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckDepositAcceptance]
+type wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON struct {
+	Amount         apijson.Field
+	Currency       apijson.Field
+	AccountNumber  apijson.Field
+	RoutingNumber  apijson.Field
+	AuxiliaryOnUs  apijson.Field
+	SerialNumber   apijson.Field
+	CheckDepositID apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckDepositAcceptance using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -821,6 +852,8 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyUsd WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
+// A Check Deposit Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_deposit_return`.
 type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -837,23 +870,23 @@ type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// transaction.
 	TransactionID string                                                                `json:"transaction_id,required"`
 	ReturnReason  WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
-	JSON          WireTransferSimulationTransactionSourceCheckDepositReturnJSON
+	JSON          wireTransferSimulationTransactionSourceCheckDepositReturnJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckDepositReturnJSON struct {
-	Amount         apijson.Metadata
-	ReturnedAt     apijson.Metadata
-	Currency       apijson.Metadata
-	CheckDepositID apijson.Metadata
-	TransactionID  apijson.Metadata
-	ReturnReason   apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckDepositReturnJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckDepositReturn]
+type wireTransferSimulationTransactionSourceCheckDepositReturnJSON struct {
+	Amount         apijson.Field
+	ReturnedAt     apijson.Field
+	Currency       apijson.Field
+	CheckDepositID apijson.Field
+	TransactionID  apijson.Field
+	ReturnReason   apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckDepositReturn using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -885,6 +918,8 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
+// A Check Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_intention`.
 type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1,required"`
@@ -905,26 +940,26 @@ type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	RecipientName string `json:"recipient_name,required"`
 	// The identifier of the Check Transfer with which this is associated.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceCheckTransferIntentionJSON
+	JSON       wireTransferSimulationTransactionSourceCheckTransferIntentionJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckTransferIntentionJSON struct {
-	AddressLine1  apijson.Metadata
-	AddressLine2  apijson.Metadata
-	AddressCity   apijson.Metadata
-	AddressState  apijson.Metadata
-	AddressZip    apijson.Metadata
-	Amount        apijson.Metadata
-	Currency      apijson.Metadata
-	RecipientName apijson.Metadata
-	TransferID    apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckTransferIntentionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferIntention]
+type wireTransferSimulationTransactionSourceCheckTransferIntentionJSON struct {
+	AddressLine1  apijson.Field
+	AddressLine2  apijson.Field
+	AddressCity   apijson.Field
+	AddressState  apijson.Field
+	AddressZip    apijson.Field
+	Amount        apijson.Field
+	Currency      apijson.Field
+	RecipientName apijson.Field
+	TransferID    apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckTransferIntention using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -940,6 +975,8 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+// A Check Transfer Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_transfer_return`.
 type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID string `json:"transfer_id,required"`
@@ -953,22 +990,22 @@ type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          WireTransferSimulationTransactionSourceCheckTransferReturnJSON
+	JSON          wireTransferSimulationTransactionSourceCheckTransferReturnJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckTransferReturnJSON struct {
-	TransferID    apijson.Metadata
-	ReturnedAt    apijson.Metadata
-	FileID        apijson.Metadata
-	Reason        apijson.Metadata
-	TransactionID apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckTransferReturnJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferReturn]
+type wireTransferSimulationTransactionSourceCheckTransferReturnJSON struct {
+	TransferID    apijson.Field
+	ReturnedAt    apijson.Field
+	FileID        apijson.Field
+	Reason        apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckTransferReturn using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -980,25 +1017,30 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient  WireTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
 )
 
+// A Check Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_rejection`.
 type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceCheckTransferRejectionJSON
+	JSON       wireTransferSimulationTransactionSourceCheckTransferRejectionJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckTransferRejectionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferRejection]
+type wireTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckTransferRejection using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Check Transfer Stop Payment Request object. This field will be present in the
+// JSON response if and only if `category` is equal to
+// `check_transfer_stop_payment_request`.
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID string `json:"transfer_id,required"`
@@ -1009,22 +1051,21 @@ type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest stru
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
+	JSON wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
 }
 
-type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Metadata
-	TransactionID apijson.Metadata
-	RequestedAt   apijson.Metadata
-	Type          apijson.Metadata
+// wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest]
+type wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON struct {
+	TransferID    apijson.Field
+	TransactionID apijson.Field
+	RequestedAt   apijson.Field
+	Type          apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1035,6 +1076,8 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
+// A Dispute Resolution object. This field will be present in the JSON response if
+// and only if `category` is equal to `dispute_resolution`.
 type WireTransferSimulationTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1044,20 +1087,20 @@ type WireTransferSimulationTransactionSourceDisputeResolution struct {
 	Currency WireTransferSimulationTransactionSourceDisputeResolutionCurrency `json:"currency,required"`
 	// The identifier of the Transaction that was disputed.
 	DisputedTransactionID string `json:"disputed_transaction_id,required"`
-	JSON                  WireTransferSimulationTransactionSourceDisputeResolutionJSON
+	JSON                  wireTransferSimulationTransactionSourceDisputeResolutionJSON
 }
 
-type WireTransferSimulationTransactionSourceDisputeResolutionJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	DisputedTransactionID apijson.Metadata
+// wireTransferSimulationTransactionSourceDisputeResolutionJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceDisputeResolution]
+type wireTransferSimulationTransactionSourceDisputeResolutionJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	DisputedTransactionID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceDisputeResolution using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1073,30 +1116,34 @@ const (
 	WireTransferSimulationTransactionSourceDisputeResolutionCurrencyUsd WireTransferSimulationTransactionSourceDisputeResolutionCurrency = "USD"
 )
 
+// A Empyreal Cash Deposit object. This field will be present in the JSON response
+// if and only if `category` is equal to `empyreal_cash_deposit`.
 type WireTransferSimulationTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount      int64     `json:"amount,required"`
 	BagID       string    `json:"bag_id,required"`
 	DepositDate time.Time `json:"deposit_date,required" format:"date-time"`
-	JSON        WireTransferSimulationTransactionSourceEmpyrealCashDepositJSON
+	JSON        wireTransferSimulationTransactionSourceEmpyrealCashDepositJSON
 }
 
-type WireTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
-	Amount      apijson.Metadata
-	BagID       apijson.Metadata
-	DepositDate apijson.Metadata
+// wireTransferSimulationTransactionSourceEmpyrealCashDepositJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceEmpyrealCashDeposit]
+type wireTransferSimulationTransactionSourceEmpyrealCashDepositJSON struct {
+	Amount      apijson.Field
+	BagID       apijson.Field
+	DepositDate apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceEmpyrealCashDeposit using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Fee Payment object. This field will be present in the JSON response if and
+// only if `category` is equal to `fee_payment`.
 type WireTransferSimulationTransactionSourceFeePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1104,19 +1151,18 @@ type WireTransferSimulationTransactionSourceFeePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency WireTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     WireTransferSimulationTransactionSourceFeePaymentJSON
+	JSON     wireTransferSimulationTransactionSourceFeePaymentJSON
 }
 
-type WireTransferSimulationTransactionSourceFeePaymentJSON struct {
-	Amount   apijson.Metadata
-	Currency apijson.Metadata
+// wireTransferSimulationTransactionSourceFeePaymentJSON contains the JSON metadata
+// for the struct [WireTransferSimulationTransactionSourceFeePayment]
+type wireTransferSimulationTransactionSourceFeePaymentJSON struct {
+	Amount   apijson.Field
+	Currency apijson.Field
 	raw      string
-	Extras   map[string]apijson.Metadata
+	Extras   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceFeePayment using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1132,6 +1178,8 @@ const (
 	WireTransferSimulationTransactionSourceFeePaymentCurrencyUsd WireTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
 )
 
+// A Inbound ACH Transfer object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_ach_transfer`.
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1144,30 +1192,32 @@ type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
 	ReceiverName                       string `json:"receiver_name,required,nullable"`
 	TraceNumber                        string `json:"trace_number,required"`
-	JSON                               WireTransferSimulationTransactionSourceInboundACHTransferJSON
+	JSON                               wireTransferSimulationTransactionSourceInboundACHTransferJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundACHTransferJSON struct {
-	Amount                             apijson.Metadata
-	OriginatorCompanyName              apijson.Metadata
-	OriginatorCompanyDescriptiveDate   apijson.Metadata
-	OriginatorCompanyDiscretionaryData apijson.Metadata
-	OriginatorCompanyEntryDescription  apijson.Metadata
-	OriginatorCompanyID                apijson.Metadata
-	ReceiverIDNumber                   apijson.Metadata
-	ReceiverName                       apijson.Metadata
-	TraceNumber                        apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundACHTransferJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundACHTransfer]
+type wireTransferSimulationTransactionSourceInboundACHTransferJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyName              apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyEntryDescription  apijson.Field
+	OriginatorCompanyID                apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundACHTransfer using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Check object. This field will be present in the JSON response if and
+// only if `category` is equal to `inbound_check`.
 type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1178,22 +1228,21 @@ type WireTransferSimulationTransactionSourceInboundCheck struct {
 	CheckNumber           string                                                      `json:"check_number,required,nullable"`
 	CheckFrontImageFileID string                                                      `json:"check_front_image_file_id,required,nullable"`
 	CheckRearImageFileID  string                                                      `json:"check_rear_image_file_id,required,nullable"`
-	JSON                  WireTransferSimulationTransactionSourceInboundCheckJSON
+	JSON                  wireTransferSimulationTransactionSourceInboundCheckJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundCheckJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	CheckNumber           apijson.Metadata
-	CheckFrontImageFileID apijson.Metadata
-	CheckRearImageFileID  apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundCheckJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceInboundCheck]
+type wireTransferSimulationTransactionSourceInboundCheckJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	CheckNumber           apijson.Field
+	CheckFrontImageFileID apijson.Field
+	CheckRearImageFileID  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundCheck using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1209,6 +1258,9 @@ const (
 	WireTransferSimulationTransactionSourceInboundCheckCurrencyUsd WireTransferSimulationTransactionSourceInboundCheckCurrency = "USD"
 )
 
+// A Inbound International ACH Transfer object. This field will be present in the
+// JSON response if and only if `category` is equal to
+// `inbound_international_ach_transfer`.
 type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1248,58 +1300,60 @@ type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer stru
 	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   WireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
+	JSON                                                   wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON struct {
-	Amount                                                 apijson.Metadata
-	ForeignExchangeIndicator                               apijson.Metadata
-	ForeignExchangeReferenceIndicator                      apijson.Metadata
-	ForeignExchangeReference                               apijson.Metadata
-	DestinationCountryCode                                 apijson.Metadata
-	DestinationCurrencyCode                                apijson.Metadata
-	ForeignPaymentAmount                                   apijson.Metadata
-	ForeignTraceNumber                                     apijson.Metadata
-	InternationalTransactionTypeCode                       apijson.Metadata
-	OriginatingCurrencyCode                                apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionName          apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionID            apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Metadata
-	OriginatorCity                                         apijson.Metadata
-	OriginatorCompanyEntryDescription                      apijson.Metadata
-	OriginatorCountry                                      apijson.Metadata
-	OriginatorIdentification                               apijson.Metadata
-	OriginatorName                                         apijson.Metadata
-	OriginatorPostalCode                                   apijson.Metadata
-	OriginatorStreetAddress                                apijson.Metadata
-	OriginatorStateOrProvince                              apijson.Metadata
-	PaymentRelatedInformation                              apijson.Metadata
-	PaymentRelatedInformation2                             apijson.Metadata
-	ReceiverIdentificationNumber                           apijson.Metadata
-	ReceiverStreetAddress                                  apijson.Metadata
-	ReceiverCity                                           apijson.Metadata
-	ReceiverStateOrProvince                                apijson.Metadata
-	ReceiverCountry                                        apijson.Metadata
-	ReceiverPostalCode                                     apijson.Metadata
-	ReceivingCompanyOrIndividualName                       apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionName            apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
-	TraceNumber                                            apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundInternationalACHTransfer]
+type wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON struct {
+	Amount                                                 apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Metadata
+	Extras                                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundInternationalACHTransfer using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Real Time Payments Transfer Confirmation object. This field will be
+// present in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_confirmation`.
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -1319,26 +1373,25 @@ type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfi
 	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	JSON                  wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
-	Amount                    apijson.Metadata
-	Currency                  apijson.Metadata
-	CreditorName              apijson.Metadata
-	DebtorName                apijson.Metadata
-	DebtorAccountNumber       apijson.Metadata
-	DebtorRoutingNumber       apijson.Metadata
-	TransactionIdentification apijson.Metadata
-	RemittanceInformation     apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation]
+type wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
+	Amount                    apijson.Field
+	Currency                  apijson.Field
+	CreditorName              apijson.Field
+	DebtorName                apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	TransactionIdentification apijson.Field
+	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Metadata
+	Extras                    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1354,6 +1407,9 @@ const (
 	WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
+// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `inbound_wire_drawdown_payment_reversal`.
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
@@ -1375,32 +1431,33 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal s
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
 	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
-	JSON                       WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
+	JSON                       wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
-	Amount                                        apijson.Metadata
-	Description                                   apijson.Metadata
-	InputCycleDate                                apijson.Metadata
-	InputSequenceNumber                           apijson.Metadata
-	InputSource                                   apijson.Metadata
-	InputMessageAccountabilityData                apijson.Metadata
-	PreviousMessageInputMessageAccountabilityData apijson.Metadata
-	PreviousMessageInputCycleDate                 apijson.Metadata
-	PreviousMessageInputSequenceNumber            apijson.Metadata
-	PreviousMessageInputSource                    apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal]
+type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
+	Amount                                        apijson.Field
+	Description                                   apijson.Field
+	InputCycleDate                                apijson.Field
+	InputSequenceNumber                           apijson.Field
+	InputSource                                   apijson.Field
+	InputMessageAccountabilityData                apijson.Field
+	PreviousMessageInputMessageAccountabilityData apijson.Field
+	PreviousMessageInputCycleDate                 apijson.Field
+	PreviousMessageInputSequenceNumber            apijson.Field
+	PreviousMessageInputSource                    apijson.Field
 	raw                                           string
-	Extras                                        map[string]apijson.Metadata
+	Extras                                        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1417,35 +1474,36 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
 	OriginatorName                     string `json:"originator_name,required,nullable"`
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
+	JSON                               wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Metadata
-	BeneficiaryAddressLine1            apijson.Metadata
-	BeneficiaryAddressLine2            apijson.Metadata
-	BeneficiaryAddressLine3            apijson.Metadata
-	BeneficiaryName                    apijson.Metadata
-	BeneficiaryReference               apijson.Metadata
-	Description                        apijson.Metadata
-	InputMessageAccountabilityData     apijson.Metadata
-	OriginatorAddressLine1             apijson.Metadata
-	OriginatorAddressLine2             apijson.Metadata
-	OriginatorAddressLine3             apijson.Metadata
-	OriginatorName                     apijson.Metadata
-	OriginatorToBeneficiaryInformation apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundWireDrawdownPayment]
+type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct {
+	Amount                             apijson.Field
+	BeneficiaryAddressLine1            apijson.Field
+	BeneficiaryAddressLine2            apijson.Field
+	BeneficiaryAddressLine3            apijson.Field
+	BeneficiaryName                    apijson.Field
+	BeneficiaryReference               apijson.Field
+	Description                        apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	OriginatorAddressLine1             apijson.Field
+	OriginatorAddressLine2             apijson.Field
+	OriginatorAddressLine3             apijson.Field
+	OriginatorName                     apijson.Field
+	OriginatorToBeneficiaryInformation apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundWireDrawdownPayment using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Reversal object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_wire_reversal`.
 type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
@@ -1479,36 +1537,38 @@ type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           WireTransferSimulationTransactionSourceInboundWireReversalJSON
+	JSON           wireTransferSimulationTransactionSourceInboundWireReversalJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundWireReversalJSON struct {
-	Amount                                                apijson.Metadata
-	CreatedAt                                             apijson.Metadata
-	Description                                           apijson.Metadata
-	InputCycleDate                                        apijson.Metadata
-	InputSequenceNumber                                   apijson.Metadata
-	InputSource                                           apijson.Metadata
-	InputMessageAccountabilityData                        apijson.Metadata
-	PreviousMessageInputMessageAccountabilityData         apijson.Metadata
-	PreviousMessageInputCycleDate                         apijson.Metadata
-	PreviousMessageInputSequenceNumber                    apijson.Metadata
-	PreviousMessageInputSource                            apijson.Metadata
-	ReceiverFinancialInstitutionInformation               apijson.Metadata
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
-	TransactionID                                         apijson.Metadata
-	WireTransferID                                        apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundWireReversalJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundWireReversal]
+type wireTransferSimulationTransactionSourceInboundWireReversalJSON struct {
+	Amount                                                apijson.Field
+	CreatedAt                                             apijson.Field
+	Description                                           apijson.Field
+	InputCycleDate                                        apijson.Field
+	InputSequenceNumber                                   apijson.Field
+	InputSource                                           apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
+	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputSequenceNumber                    apijson.Field
+	PreviousMessageInputSource                            apijson.Field
+	ReceiverFinancialInstitutionInformation               apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
+	TransactionID                                         apijson.Field
+	WireTransferID                                        apijson.Field
 	raw                                                   string
-	Extras                                                map[string]apijson.Metadata
+	Extras                                                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundWireReversal using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Transfer object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_wire_transfer`.
 type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1529,38 +1589,40 @@ type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                                    WireTransferSimulationTransactionSourceInboundWireTransferJSON
+	JSON                                    wireTransferSimulationTransactionSourceInboundWireTransferJSON
 }
 
-type WireTransferSimulationTransactionSourceInboundWireTransferJSON struct {
-	Amount                                  apijson.Metadata
-	BeneficiaryAddressLine1                 apijson.Metadata
-	BeneficiaryAddressLine2                 apijson.Metadata
-	BeneficiaryAddressLine3                 apijson.Metadata
-	BeneficiaryName                         apijson.Metadata
-	BeneficiaryReference                    apijson.Metadata
-	Description                             apijson.Metadata
-	InputMessageAccountabilityData          apijson.Metadata
-	OriginatorAddressLine1                  apijson.Metadata
-	OriginatorAddressLine2                  apijson.Metadata
-	OriginatorAddressLine3                  apijson.Metadata
-	OriginatorName                          apijson.Metadata
-	OriginatorToBeneficiaryInformationLine1 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine2 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
-	OriginatorToBeneficiaryInformation      apijson.Metadata
+// wireTransferSimulationTransactionSourceInboundWireTransferJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundWireTransfer]
+type wireTransferSimulationTransactionSourceInboundWireTransferJSON struct {
+	Amount                                  apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	OriginatorToBeneficiaryInformation      apijson.Field
 	raw                                     string
-	Extras                                  map[string]apijson.Metadata
+	Extras                                  map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInboundWireTransfer using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Interest Payment object. This field will be present in the JSON response if
+// and only if `category` is equal to `interest_payment`.
 type WireTransferSimulationTransactionSourceInterestPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1574,22 +1636,21 @@ type WireTransferSimulationTransactionSourceInterestPayment struct {
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The account on which the interest was accrued.
 	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
-	JSON               WireTransferSimulationTransactionSourceInterestPaymentJSON
+	JSON               wireTransferSimulationTransactionSourceInterestPaymentJSON
 }
 
-type WireTransferSimulationTransactionSourceInterestPaymentJSON struct {
-	Amount             apijson.Metadata
-	Currency           apijson.Metadata
-	PeriodStart        apijson.Metadata
-	PeriodEnd          apijson.Metadata
-	AccruedOnAccountID apijson.Metadata
+// wireTransferSimulationTransactionSourceInterestPaymentJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceInterestPayment]
+type wireTransferSimulationTransactionSourceInterestPaymentJSON struct {
+	Amount             apijson.Field
+	Currency           apijson.Field
+	PeriodStart        apijson.Field
+	PeriodEnd          apijson.Field
+	AccruedOnAccountID apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInterestPayment using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1605,6 +1666,8 @@ const (
 	WireTransferSimulationTransactionSourceInterestPaymentCurrencyUsd WireTransferSimulationTransactionSourceInterestPaymentCurrency = "USD"
 )
 
+// A Internal Source object. This field will be present in the JSON response if and
+// only if `category` is equal to `internal_source`.
 type WireTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1613,20 +1676,19 @@ type WireTransferSimulationTransactionSourceInternalSource struct {
 	// currency.
 	Currency WireTransferSimulationTransactionSourceInternalSourceCurrency `json:"currency,required"`
 	Reason   WireTransferSimulationTransactionSourceInternalSourceReason   `json:"reason,required"`
-	JSON     WireTransferSimulationTransactionSourceInternalSourceJSON
+	JSON     wireTransferSimulationTransactionSourceInternalSourceJSON
 }
 
-type WireTransferSimulationTransactionSourceInternalSourceJSON struct {
-	Amount   apijson.Metadata
-	Currency apijson.Metadata
-	Reason   apijson.Metadata
+// wireTransferSimulationTransactionSourceInternalSourceJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceInternalSource]
+type wireTransferSimulationTransactionSourceInternalSourceJSON struct {
+	Amount   apijson.Field
+	Currency apijson.Field
+	Reason   apijson.Field
 	raw      string
-	Extras   map[string]apijson.Metadata
+	Extras   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceInternalSource using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1656,6 +1718,8 @@ const (
 	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn  WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
+// A Deprecated Card Refund object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_route_refund`.
 type WireTransferSimulationTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
@@ -1669,25 +1733,24 @@ type WireTransferSimulationTransactionSourceCardRouteRefund struct {
 	MerchantDescriptor   string                                                         `json:"merchant_descriptor,required"`
 	MerchantState        string                                                         `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                                         `json:"merchant_category_code,required,nullable"`
-	JSON                 WireTransferSimulationTransactionSourceCardRouteRefundJSON
+	JSON                 wireTransferSimulationTransactionSourceCardRouteRefundJSON
 }
 
-type WireTransferSimulationTransactionSourceCardRouteRefundJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// wireTransferSimulationTransactionSourceCardRouteRefundJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceCardRouteRefund]
+type wireTransferSimulationTransactionSourceCardRouteRefundJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardRouteRefund using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1703,6 +1766,8 @@ const (
 	WireTransferSimulationTransactionSourceCardRouteRefundCurrencyUsd WireTransferSimulationTransactionSourceCardRouteRefundCurrency = "USD"
 )
 
+// A Deprecated Card Settlement object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_route_settlement`.
 type WireTransferSimulationTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
@@ -1716,25 +1781,25 @@ type WireTransferSimulationTransactionSourceCardRouteSettlement struct {
 	MerchantDescriptor   string                                                             `json:"merchant_descriptor,required"`
 	MerchantState        string                                                             `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                                             `json:"merchant_category_code,required,nullable"`
-	JSON                 WireTransferSimulationTransactionSourceCardRouteSettlementJSON
+	JSON                 wireTransferSimulationTransactionSourceCardRouteSettlementJSON
 }
 
-type WireTransferSimulationTransactionSourceCardRouteSettlementJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// wireTransferSimulationTransactionSourceCardRouteSettlementJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceCardRouteSettlement]
+type wireTransferSimulationTransactionSourceCardRouteSettlementJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceCardRouteSettlement using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1750,6 +1815,9 @@ const (
 	WireTransferSimulationTransactionSourceCardRouteSettlementCurrencyUsd WireTransferSimulationTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
+// A Real Time Payments Transfer Acknowledgement object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `real_time_payments_transfer_acknowledgement`.
 type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -1761,46 +1829,49 @@ type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgem
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real Time Payments Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+	JSON       wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
 }
 
-type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
-	Amount                   apijson.Metadata
-	DestinationAccountNumber apijson.Metadata
-	DestinationRoutingNumber apijson.Metadata
-	RemittanceInformation    apijson.Metadata
-	TransferID               apijson.Metadata
+// wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement]
+type wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
+	Amount                   apijson.Field
+	DestinationAccountNumber apijson.Field
+	DestinationRoutingNumber apijson.Field
+	RemittanceInformation    apijson.Field
+	TransferID               apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Sample Funds object. This field will be present in the JSON response if and
+// only if `category` is equal to `sample_funds`.
 type WireTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator string `json:"originator,required"`
-	JSON       WireTransferSimulationTransactionSourceSampleFundsJSON
+	JSON       wireTransferSimulationTransactionSourceSampleFundsJSON
 }
 
-type WireTransferSimulationTransactionSourceSampleFundsJSON struct {
-	Originator apijson.Metadata
+// wireTransferSimulationTransactionSourceSampleFundsJSON contains the JSON
+// metadata for the struct [WireTransferSimulationTransactionSourceSampleFunds]
+type wireTransferSimulationTransactionSourceSampleFundsJSON struct {
+	Originator apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceSampleFunds using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Drawdown Payment Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to
+// `wire_drawdown_payment_intention`.
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
 	Amount             int64  `json:"amount,required"`
@@ -1808,46 +1879,49 @@ type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention struct 
 	RoutingNumber      string `json:"routing_number,required"`
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	TransferID         string `json:"transfer_id,required"`
-	JSON               WireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON
+	JSON               wireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON
 }
 
-type WireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON struct {
-	Amount             apijson.Metadata
-	AccountNumber      apijson.Metadata
-	RoutingNumber      apijson.Metadata
-	MessageToRecipient apijson.Metadata
-	TransferID         apijson.Metadata
+// wireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention]
+type wireTransferSimulationTransactionSourceWireDrawdownPaymentIntentionJSON struct {
+	Amount             apijson.Field
+	AccountNumber      apijson.Field
+	RoutingNumber      apijson.Field
+	MessageToRecipient apijson.Field
+	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to
+// `wire_drawdown_payment_rejection`.
 type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection struct {
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON
+	JSON       wireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON
 }
 
-type WireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID apijson.Metadata
+// wireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection]
+type wireTransferSimulationTransactionSourceWireDrawdownPaymentRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireTransferSimulationTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `wire_transfer_intention`.
 type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -1858,40 +1932,42 @@ type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	TransferID         string `json:"transfer_id,required"`
-	JSON               WireTransferSimulationTransactionSourceWireTransferIntentionJSON
+	JSON               wireTransferSimulationTransactionSourceWireTransferIntentionJSON
 }
 
-type WireTransferSimulationTransactionSourceWireTransferIntentionJSON struct {
-	Amount             apijson.Metadata
-	AccountNumber      apijson.Metadata
-	RoutingNumber      apijson.Metadata
-	MessageToRecipient apijson.Metadata
-	TransferID         apijson.Metadata
+// wireTransferSimulationTransactionSourceWireTransferIntentionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceWireTransferIntention]
+type wireTransferSimulationTransactionSourceWireTransferIntentionJSON struct {
+	Amount             apijson.Field
+	AccountNumber      apijson.Field
+	RoutingNumber      apijson.Field
+	MessageToRecipient apijson.Field
+	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceWireTransferIntention using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `wire_transfer_rejection`.
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
 	TransferID string `json:"transfer_id,required"`
-	JSON       WireTransferSimulationTransactionSourceWireTransferRejectionJSON
+	JSON       wireTransferSimulationTransactionSourceWireTransferRejectionJSON
 }
 
-type WireTransferSimulationTransactionSourceWireTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// wireTransferSimulationTransactionSourceWireTransferRejectionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceWireTransferRejection]
+type wireTransferSimulationTransactionSourceWireTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireTransferSimulationTransactionSourceWireTransferRejection using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *WireTransferSimulationTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1954,9 +2030,6 @@ type SimulationWireTransferNewInboundParams struct {
 	OriginatorToBeneficiaryInformationLine4 field.Field[string] `json:"originator_to_beneficiary_information_line4"`
 }
 
-// MarshalJSON serializes SimulationWireTransferNewInboundParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
 func (r SimulationWireTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

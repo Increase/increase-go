@@ -10,10 +10,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationAccountStatementService contains methods and other services that help
+// with interacting with the increase API. Note, unlike clients, this service does
+// not read variables from the environment automatically. You should not
+// instantiate this service directly, and instead use the
+// [NewSimulationAccountStatementService] method instead.
 type SimulationAccountStatementService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationAccountStatementService generates a new service that applies the
+// given options to each request. These options are applied after the parent
+// client's options (if there is one), and before any request-specific options.
 func NewSimulationAccountStatementService(opts ...option.RequestOption) (r *SimulationAccountStatementService) {
 	r = &SimulationAccountStatementService{}
 	r.Options = opts
@@ -34,9 +42,6 @@ type SimulationAccountStatementNewParams struct {
 	AccountID field.Field[string] `json:"account_id,required"`
 }
 
-// MarshalJSON serializes SimulationAccountStatementNewParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
 func (r SimulationAccountStatementNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

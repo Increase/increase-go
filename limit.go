@@ -14,10 +14,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// LimitService contains methods and other services that help with interacting with
+// the increase API. Note, unlike clients, this service does not read variables
+// from the environment automatically. You should not instantiate this service
+// directly, and instead use the [NewLimitService] method instead.
 type LimitService struct {
 	Options []option.RequestOption
 }
 
+// NewLimitService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewLimitService(opts ...option.RequestOption) (r *LimitService) {
 	r = &LimitService{}
 	r.Options = opts
@@ -71,6 +78,11 @@ func (r *LimitService) ListAutoPaging(ctx context.Context, query LimitListParams
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// You can set limits at the Account, Account Number, or Card level. Limits applied
+// to Accounts will apply to all Account Numbers and Cards in the Account. You can
+// specify any number of Limits and they will all be applied to inbound debits and
+// card authorizations. Volume and count Limits are designed to prevent
+// unauthorized debits.
 type Limit struct {
 	// The Limit identifier.
 	ID string `json:"id,required"`
@@ -90,24 +102,23 @@ type Limit struct {
 	Type LimitType `json:"type,required"`
 	// The value to evaluate the Limit against.
 	Value int64 `json:"value,required"`
-	JSON  LimitJSON
+	JSON  limitJSON
 }
 
-type LimitJSON struct {
-	ID        apijson.Metadata
-	Interval  apijson.Metadata
-	Metric    apijson.Metadata
-	ModelID   apijson.Metadata
-	ModelType apijson.Metadata
-	Status    apijson.Metadata
-	Type      apijson.Metadata
-	Value     apijson.Metadata
+// limitJSON contains the JSON metadata for the struct [Limit]
+type limitJSON struct {
+	ID        apijson.Field
+	Interval  apijson.Field
+	Metric    apijson.Field
+	ModelID   apijson.Field
+	ModelType apijson.Field
+	Status    apijson.Field
+	Type      apijson.Field
+	Value     apijson.Field
 	raw       string
-	Extras    map[string]apijson.Metadata
+	Extras    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Limit using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Limit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -163,9 +174,6 @@ type LimitNewParams struct {
 	Value field.Field[int64] `json:"value,required"`
 }
 
-// MarshalJSON serializes LimitNewParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r LimitNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -193,9 +201,6 @@ type LimitUpdateParams struct {
 	Status field.Field[LimitUpdateParamsStatus] `json:"status,required"`
 }
 
-// MarshalJSON serializes LimitUpdateParams into an array of bytes using the gjson
-// library. Members of the `jsonFields` field are serialized into the top-level,
-// and will overwrite known members of the same name.
 func (r LimitUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -219,30 +224,29 @@ type LimitListParams struct {
 	Status field.Field[string] `query:"status"`
 }
 
-// URLQuery serializes LimitListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [LimitListParams]'s query parameters as `url.Values`.
 func (r LimitListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Limit objects
 type LimitListResponse struct {
 	// The contents of the list.
 	Data []Limit `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       LimitListResponseJSON
+	JSON       limitListResponseJSON
 }
 
-type LimitListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// limitListResponseJSON contains the JSON metadata for the struct
+// [LimitListResponse]
+type limitListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into LimitListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *LimitListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

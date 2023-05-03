@@ -9,6 +9,7 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 )
 
+// TODO
 type Error struct {
 	Type   ErrorType   `json:"type,required"`
 	Title  string      `json:"title,required"`
@@ -17,25 +18,24 @@ type Error struct {
 	// All errors related to parsing the request parameters.
 	Errors     []interface{} `json:"errors,required"`
 	RetryAfter int64         `json:"retry_after,nullable"`
-	JSON       ErrorJSON
+	JSON       errorJSON
 	StatusCode int
 	Request    *http.Request
 	Response   *http.Response
 }
 
-type ErrorJSON struct {
-	Type       apijson.Metadata
-	Title      apijson.Metadata
-	Detail     apijson.Metadata
-	Status     apijson.Metadata
-	Errors     apijson.Metadata
-	RetryAfter apijson.Metadata
+// errorJSON contains the JSON metadata for the struct [Error]
+type errorJSON struct {
+	Type       apijson.Field
+	Title      apijson.Field
+	Detail     apijson.Field
+	Status     apijson.Field
+	Errors     apijson.Field
+	RetryAfter apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Error using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Error) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

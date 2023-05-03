@@ -13,10 +13,19 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationRealTimePaymentsTransferService contains methods and other services
+// that help with interacting with the increase API. Note, unlike clients, this
+// service does not read variables from the environment automatically. You should
+// not instantiate this service directly, and instead use the
+// [NewSimulationRealTimePaymentsTransferService] method instead.
 type SimulationRealTimePaymentsTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationRealTimePaymentsTransferService generates a new service that
+// applies the given options to each request. These options are applied after the
+// parent client's options (if there is one), and before any request-specific
+// options.
 func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) (r *SimulationRealTimePaymentsTransferService) {
 	r = &SimulationRealTimePaymentsTransferService{}
 	r.Options = opts
@@ -42,6 +51,7 @@ func (r *SimulationRealTimePaymentsTransferService) NewInbound(ctx context.Conte
 	return
 }
 
+// The results of an inbound Real Time Payments Transfer simulation.
 type InboundRealTimePaymentsTransferSimulationResult struct {
 	// If the Real Time Payments Transfer attempt succeeds, this will contain the
 	// resulting [Transaction](#transactions) object. The Transaction's `source` will
@@ -55,24 +65,26 @@ type InboundRealTimePaymentsTransferSimulationResult struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_real_time_payments_transfer_simulation_result`.
 	Type InboundRealTimePaymentsTransferSimulationResultType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultJSON struct {
-	Transaction         apijson.Metadata
-	DeclinedTransaction apijson.Metadata
-	Type                apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultJSON contains the JSON metadata
+// for the struct [InboundRealTimePaymentsTransferSimulationResult]
+type inboundRealTimePaymentsTransferSimulationResultJSON struct {
+	Transaction         apijson.Field
+	DeclinedTransaction apijson.Field
+	Type                apijson.Field
 	raw                 string
-	Extras              map[string]apijson.Metadata
+	Extras              map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResult using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResult) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the Real Time Payments Transfer attempt succeeds, this will contain the
+// resulting [Transaction](#transactions) object. The Transaction's `source` will
+// be of `category: inbound_real_time_payments_transfer_confirmation`.
 type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// The identifier for the Account the Transaction belongs to.
 	AccountID string `json:"account_id,required"`
@@ -105,27 +117,27 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultTransactionJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionJSON struct {
-	AccountID   apijson.Metadata
-	Amount      apijson.Metadata
-	Currency    apijson.Metadata
-	CreatedAt   apijson.Metadata
-	Description apijson.Metadata
-	ID          apijson.Metadata
-	RouteID     apijson.Metadata
-	RouteType   apijson.Metadata
-	Source      apijson.Metadata
-	Type        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionJSON contains the JSON
+// metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransaction]
+type inboundRealTimePaymentsTransferSimulationResultTransactionJSON struct {
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	CreatedAt   apijson.Field
+	Description apijson.Field
+	ID          apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransaction using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -148,6 +160,10 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeCard          InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "card"
 )
 
+// This is an object giving more details on the network-level event that caused the
+// Transaction. Note that for backwards compatibility reasons, additional
+// undocumented keys may appear in this object. These should be treated as
+// deprecated and will be removed in the future.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// The type of transaction that took place. We may add additional possible values
 	// for this enum over time; your application should be able to handle such
@@ -271,56 +287,55 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
 	WireTransferRejection InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct {
-	Category                                    apijson.Metadata
-	AccountTransferIntention                    apijson.Metadata
-	ACHCheckConversionReturn                    apijson.Metadata
-	ACHCheckConversion                          apijson.Metadata
-	ACHTransferIntention                        apijson.Metadata
-	ACHTransferRejection                        apijson.Metadata
-	ACHTransferReturn                           apijson.Metadata
-	CardDisputeAcceptance                       apijson.Metadata
-	CardRefund                                  apijson.Metadata
-	CardSettlement                              apijson.Metadata
-	CardRevenuePayment                          apijson.Metadata
-	CheckDepositAcceptance                      apijson.Metadata
-	CheckDepositReturn                          apijson.Metadata
-	CheckTransferIntention                      apijson.Metadata
-	CheckTransferReturn                         apijson.Metadata
-	CheckTransferRejection                      apijson.Metadata
-	CheckTransferStopPaymentRequest             apijson.Metadata
-	DisputeResolution                           apijson.Metadata
-	EmpyrealCashDeposit                         apijson.Metadata
-	FeePayment                                  apijson.Metadata
-	InboundACHTransfer                          apijson.Metadata
-	InboundCheck                                apijson.Metadata
-	InboundInternationalACHTransfer             apijson.Metadata
-	InboundRealTimePaymentsTransferConfirmation apijson.Metadata
-	InboundWireDrawdownPaymentReversal          apijson.Metadata
-	InboundWireDrawdownPayment                  apijson.Metadata
-	InboundWireReversal                         apijson.Metadata
-	InboundWireTransfer                         apijson.Metadata
-	InterestPayment                             apijson.Metadata
-	InternalSource                              apijson.Metadata
-	CardRouteRefund                             apijson.Metadata
-	CardRouteSettlement                         apijson.Metadata
-	RealTimePaymentsTransferAcknowledgement     apijson.Metadata
-	SampleFunds                                 apijson.Metadata
-	WireDrawdownPaymentIntention                apijson.Metadata
-	WireDrawdownPaymentRejection                apijson.Metadata
-	WireTransferIntention                       apijson.Metadata
-	WireTransferRejection                       apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON contains
+// the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSource]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct {
+	Category                                    apijson.Field
+	AccountTransferIntention                    apijson.Field
+	ACHCheckConversionReturn                    apijson.Field
+	ACHCheckConversion                          apijson.Field
+	ACHTransferIntention                        apijson.Field
+	ACHTransferRejection                        apijson.Field
+	ACHTransferReturn                           apijson.Field
+	CardDisputeAcceptance                       apijson.Field
+	CardRefund                                  apijson.Field
+	CardSettlement                              apijson.Field
+	CardRevenuePayment                          apijson.Field
+	CheckDepositAcceptance                      apijson.Field
+	CheckDepositReturn                          apijson.Field
+	CheckTransferIntention                      apijson.Field
+	CheckTransferReturn                         apijson.Field
+	CheckTransferRejection                      apijson.Field
+	CheckTransferStopPaymentRequest             apijson.Field
+	DisputeResolution                           apijson.Field
+	EmpyrealCashDeposit                         apijson.Field
+	FeePayment                                  apijson.Field
+	InboundACHTransfer                          apijson.Field
+	InboundCheck                                apijson.Field
+	InboundInternationalACHTransfer             apijson.Field
+	InboundRealTimePaymentsTransferConfirmation apijson.Field
+	InboundWireDrawdownPaymentReversal          apijson.Field
+	InboundWireDrawdownPayment                  apijson.Field
+	InboundWireReversal                         apijson.Field
+	InboundWireTransfer                         apijson.Field
+	InterestPayment                             apijson.Field
+	InternalSource                              apijson.Field
+	CardRouteRefund                             apijson.Field
+	CardRouteSettlement                         apijson.Field
+	RealTimePaymentsTransferAcknowledgement     apijson.Field
+	SampleFunds                                 apijson.Field
+	WireDrawdownPaymentIntention                apijson.Field
+	WireDrawdownPaymentRejection                apijson.Field
+	WireTransferIntention                       apijson.Field
+	WireTransferRejection                       apijson.Field
 	raw                                         string
-	Extras                                      map[string]apijson.Metadata
+	Extras                                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSource using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -370,6 +385,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther                                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "other"
 )
 
+// A Account Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `account_transfer_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -385,24 +402,23 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTran
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	Description          apijson.Metadata
-	DestinationAccountID apijson.Metadata
-	SourceAccountID      apijson.Metadata
-	TransferID           apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	Description          apijson.Field
+	DestinationAccountID apijson.Field
+	SourceAccountID      apijson.Field
+	TransferID           apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -418,54 +434,58 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
+// A ACH Check Conversion Return object. This field will be present in the JSON
+// response if and only if `category` is equal to `ach_check_conversion_return`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// Why the transfer was returned.
 	ReturnReasonCode string `json:"return_reason_code,required"`
-	JSON             InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON
+	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON struct {
-	Amount           apijson.Metadata
-	ReturnReasonCode apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON struct {
+	Amount           apijson.Field
+	ReturnReasonCode apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Check Conversion object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_check_conversion`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the File containing an image of the returned check.
 	FileID string `json:"file_id,required"`
-	JSON   InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON struct {
-	Amount apijson.Metadata
-	FileID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON struct {
+	Amount apijson.Field
+	FileID apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Intention object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_transfer_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -475,47 +495,49 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON struct {
-	Amount              apijson.Metadata
-	AccountNumber       apijson.Metadata
-	RoutingNumber       apijson.Metadata
-	StatementDescriptor apijson.Metadata
-	TransferID          apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON struct {
+	Amount              apijson.Field
+	AccountNumber       apijson.Field
+	RoutingNumber       apijson.Field
+	StatementDescriptor apijson.Field
+	TransferID          apijson.Field
 	raw                 string
-	Extras              map[string]apijson.Metadata
+	Extras              map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Rejection object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A ACH Transfer Return object. This field will be present in the JSON response if
+// and only if `category` is equal to `ach_transfer_return`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -526,22 +548,21 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON struct {
-	CreatedAt        apijson.Metadata
-	ReturnReasonCode apijson.Metadata
-	TransferID       apijson.Metadata
-	TransactionID    apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON struct {
+	CreatedAt        apijson.Field
+	ReturnReasonCode apijson.Field
+	TransferID       apijson.Field
+	TransactionID    apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -574,6 +595,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "other"
 )
 
+// A Card Dispute Acceptance object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_dispute_acceptance`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -583,25 +606,26 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDispute
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON struct {
-	AcceptedAt    apijson.Metadata
-	CardDisputeID apijson.Metadata
-	TransactionID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON struct {
+	AcceptedAt    apijson.Field
+	CardDisputeID apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Card Refund object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_refund`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
@@ -627,28 +651,27 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON struct {
-	ID                   apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantName         apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	Type                 apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON struct {
+	ID                   apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantState        apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantName         apijson.Field
+	MerchantCategoryCode apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -670,6 +693,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundTypeCardRefund InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType = "card_refund"
 )
 
+// A Card Settlement object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_settlement`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
@@ -705,32 +730,31 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON struct {
-	ID                   apijson.Metadata
-	CardAuthorization    apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	PresentmentAmount    apijson.Metadata
-	PresentmentCurrency  apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantName         apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	PendingTransactionID apijson.Metadata
-	Type                 apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON struct {
+	ID                   apijson.Field
+	CardAuthorization    apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantState        apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantName         apijson.Field
+	MerchantCategoryCode apijson.Field
+	PendingTransactionID apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -752,6 +776,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementTypeCardSettlement InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType = "card_settlement"
 )
 
+// A Card Revenue Payment object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_revenue_payment`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -765,23 +791,22 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenue
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The account the card belonged to.
 	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	PeriodStart           apijson.Metadata
-	PeriodEnd             apijson.Metadata
-	TransactedOnAccountID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePayment]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	PeriodStart           apijson.Field
+	PeriodEnd             apijson.Field
+	TransactedOnAccountID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePayment
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -797,6 +822,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
+// A Check Deposit Acceptance object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_deposit_acceptance`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -816,25 +843,24 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	SerialNumber string `json:"serial_number,required,nullable"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON
+	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON struct {
-	Amount         apijson.Metadata
-	Currency       apijson.Metadata
-	AccountNumber  apijson.Metadata
-	RoutingNumber  apijson.Metadata
-	AuxiliaryOnUs  apijson.Metadata
-	SerialNumber   apijson.Metadata
-	CheckDepositID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON struct {
+	Amount         apijson.Field
+	Currency       apijson.Field
+	AccountNumber  apijson.Field
+	RoutingNumber  apijson.Field
+	AuxiliaryOnUs  apijson.Field
+	SerialNumber   apijson.Field
+	CheckDepositID apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -850,6 +876,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
+// A Check Deposit Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_deposit_return`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -866,24 +894,23 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	// transaction.
 	TransactionID string                                                                                         `json:"transaction_id,required"`
 	ReturnReason  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
-	JSON          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON struct {
-	Amount         apijson.Metadata
-	ReturnedAt     apijson.Metadata
-	Currency       apijson.Metadata
-	CheckDepositID apijson.Metadata
-	TransactionID  apijson.Metadata
-	ReturnReason   apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON struct {
+	Amount         apijson.Field
+	ReturnedAt     apijson.Field
+	Currency       apijson.Field
+	CheckDepositID apijson.Field
+	TransactionID  apijson.Field
+	ReturnReason   apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -915,6 +942,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 )
 
+// A Check Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1,required"`
@@ -935,27 +964,26 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	RecipientName string `json:"recipient_name,required"`
 	// The identifier of the Check Transfer with which this is associated.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON struct {
-	AddressLine1  apijson.Metadata
-	AddressLine2  apijson.Metadata
-	AddressCity   apijson.Metadata
-	AddressState  apijson.Metadata
-	AddressZip    apijson.Metadata
-	Amount        apijson.Metadata
-	Currency      apijson.Metadata
-	RecipientName apijson.Metadata
-	TransferID    apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON struct {
+	AddressLine1  apijson.Field
+	AddressLine2  apijson.Field
+	AddressCity   apijson.Field
+	AddressState  apijson.Field
+	AddressZip    apijson.Field
+	Amount        apijson.Field
+	Currency      apijson.Field
+	RecipientName apijson.Field
+	TransferID    apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -971,6 +999,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+// A Check Transfer Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_transfer_return`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn struct {
 	// The identifier of the returned Check Transfer.
 	TransferID string `json:"transfer_id,required"`
@@ -984,23 +1014,22 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnJSON
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnJSON struct {
-	TransferID    apijson.Metadata
-	ReturnedAt    apijson.Metadata
-	FileID        apijson.Metadata
-	Reason        apijson.Metadata
-	TransactionID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnJSON struct {
+	TransferID    apijson.Field
+	ReturnedAt    apijson.Field
+	FileID        apijson.Field
+	Reason        apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1012,26 +1041,30 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
 )
 
+// A Check Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection struct {
 	// The identifier of the Check Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Check Transfer Stop Payment Request object. This field will be present in the
+// JSON response if and only if `category` is equal to
+// `check_transfer_stop_payment_request`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
 	// The ID of the check transfer that was stopped.
 	TransferID string `json:"transfer_id,required"`
@@ -1042,22 +1075,21 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Metadata
-	TransactionID apijson.Metadata
-	RequestedAt   apijson.Metadata
-	Type          apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON struct {
+	TransferID    apijson.Field
+	TransactionID apijson.Field
+	RequestedAt   apijson.Field
+	Type          apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1068,6 +1100,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
 
+// A Dispute Resolution object. This field will be present in the JSON response if
+// and only if `category` is equal to `dispute_resolution`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1077,21 +1111,20 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeReso
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency `json:"currency,required"`
 	// The identifier of the Transaction that was disputed.
 	DisputedTransactionID string `json:"disputed_transaction_id,required"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	DisputedTransactionID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	DisputedTransactionID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1107,31 +1140,34 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "USD"
 )
 
+// A Empyreal Cash Deposit object. This field will be present in the JSON response
+// if and only if `category` is equal to `empyreal_cash_deposit`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount      int64     `json:"amount,required"`
 	BagID       string    `json:"bag_id,required"`
 	DepositDate time.Time `json:"deposit_date,required" format:"date-time"`
-	JSON        InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON struct {
-	Amount      apijson.Metadata
-	BagID       apijson.Metadata
-	DepositDate apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON struct {
+	Amount      apijson.Field
+	BagID       apijson.Field
+	DepositDate apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Fee Payment object. This field will be present in the JSON response if and
+// only if `category` is equal to `fee_payment`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1139,20 +1175,19 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment 
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
+	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON struct {
-	Amount   apijson.Metadata
-	Currency apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON struct {
+	Amount   apijson.Field
+	Currency apijson.Field
 	raw      string
-	Extras   map[string]apijson.Metadata
+	Extras   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1168,6 +1203,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentCurrency = "USD"
 )
 
+// A Inbound ACH Transfer object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_ach_transfer`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1180,31 +1217,32 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
 	ReceiverName                       string `json:"receiver_name,required,nullable"`
 	TraceNumber                        string `json:"trace_number,required"`
-	JSON                               InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON
+	JSON                               inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON struct {
-	Amount                             apijson.Metadata
-	OriginatorCompanyName              apijson.Metadata
-	OriginatorCompanyDescriptiveDate   apijson.Metadata
-	OriginatorCompanyDiscretionaryData apijson.Metadata
-	OriginatorCompanyEntryDescription  apijson.Metadata
-	OriginatorCompanyID                apijson.Metadata
-	ReceiverIDNumber                   apijson.Metadata
-	ReceiverName                       apijson.Metadata
-	TraceNumber                        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyName              apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyEntryDescription  apijson.Field
+	OriginatorCompanyID                apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Check object. This field will be present in the JSON response if and
+// only if `category` is equal to `inbound_check`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1215,23 +1253,22 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundChec
 	CheckNumber           string                                                                               `json:"check_number,required,nullable"`
 	CheckFrontImageFileID string                                                                               `json:"check_front_image_file_id,required,nullable"`
 	CheckRearImageFileID  string                                                                               `json:"check_rear_image_file_id,required,nullable"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON struct {
-	Amount                apijson.Metadata
-	Currency              apijson.Metadata
-	CheckNumber           apijson.Metadata
-	CheckFrontImageFileID apijson.Metadata
-	CheckRearImageFileID  apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	CheckNumber           apijson.Field
+	CheckFrontImageFileID apijson.Field
+	CheckRearImageFileID  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1247,6 +1284,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "USD"
 )
 
+// A Inbound International ACH Transfer object. This field will be present in the
+// JSON response if and only if `category` is equal to
+// `inbound_international_ach_transfer`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
@@ -1286,58 +1326,60 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
+	JSON                                                   inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON struct {
-	Amount                                                 apijson.Metadata
-	ForeignExchangeIndicator                               apijson.Metadata
-	ForeignExchangeReferenceIndicator                      apijson.Metadata
-	ForeignExchangeReference                               apijson.Metadata
-	DestinationCountryCode                                 apijson.Metadata
-	DestinationCurrencyCode                                apijson.Metadata
-	ForeignPaymentAmount                                   apijson.Metadata
-	ForeignTraceNumber                                     apijson.Metadata
-	InternationalTransactionTypeCode                       apijson.Metadata
-	OriginatingCurrencyCode                                apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionName          apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionID            apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Metadata
-	OriginatorCity                                         apijson.Metadata
-	OriginatorCompanyEntryDescription                      apijson.Metadata
-	OriginatorCountry                                      apijson.Metadata
-	OriginatorIdentification                               apijson.Metadata
-	OriginatorName                                         apijson.Metadata
-	OriginatorPostalCode                                   apijson.Metadata
-	OriginatorStreetAddress                                apijson.Metadata
-	OriginatorStateOrProvince                              apijson.Metadata
-	PaymentRelatedInformation                              apijson.Metadata
-	PaymentRelatedInformation2                             apijson.Metadata
-	ReceiverIdentificationNumber                           apijson.Metadata
-	ReceiverStreetAddress                                  apijson.Metadata
-	ReceiverCity                                           apijson.Metadata
-	ReceiverStateOrProvince                                apijson.Metadata
-	ReceiverCountry                                        apijson.Metadata
-	ReceiverPostalCode                                     apijson.Metadata
-	ReceivingCompanyOrIndividualName                       apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionName            apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
-	TraceNumber                                            apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON struct {
+	Amount                                                 apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Metadata
+	Extras                                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Real Time Payments Transfer Confirmation object. This field will be
+// present in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_confirmation`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -1357,26 +1399,25 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundReal
 	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
-	Amount                    apijson.Metadata
-	Currency                  apijson.Metadata
-	CreditorName              apijson.Metadata
-	DebtorName                apijson.Metadata
-	DebtorAccountNumber       apijson.Metadata
-	DebtorRoutingNumber       apijson.Metadata
-	TransactionIdentification apijson.Metadata
-	RemittanceInformation     apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
+	Amount                    apijson.Field
+	Currency                  apijson.Field
+	CreditorName              apijson.Field
+	DebtorName                apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	TransactionIdentification apijson.Field
+	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Metadata
+	Extras                    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1392,6 +1433,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
+// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `inbound_wire_drawdown_payment_reversal`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
@@ -1413,32 +1457,33 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
 	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
-	JSON                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
+	JSON                       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
-	Amount                                        apijson.Metadata
-	Description                                   apijson.Metadata
-	InputCycleDate                                apijson.Metadata
-	InputSequenceNumber                           apijson.Metadata
-	InputSource                                   apijson.Metadata
-	InputMessageAccountabilityData                apijson.Metadata
-	PreviousMessageInputMessageAccountabilityData apijson.Metadata
-	PreviousMessageInputCycleDate                 apijson.Metadata
-	PreviousMessageInputSequenceNumber            apijson.Metadata
-	PreviousMessageInputSource                    apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
+	Amount                                        apijson.Field
+	Description                                   apijson.Field
+	InputCycleDate                                apijson.Field
+	InputSequenceNumber                           apijson.Field
+	InputSource                                   apijson.Field
+	InputMessageAccountabilityData                apijson.Field
+	PreviousMessageInputMessageAccountabilityData apijson.Field
+	PreviousMessageInputCycleDate                 apijson.Field
+	PreviousMessageInputSequenceNumber            apijson.Field
+	PreviousMessageInputSource                    apijson.Field
 	raw                                           string
-	Extras                                        map[string]apijson.Metadata
+	Extras                                        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1455,35 +1500,36 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
 	OriginatorName                     string `json:"originator_name,required,nullable"`
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
+	JSON                               inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Metadata
-	BeneficiaryAddressLine1            apijson.Metadata
-	BeneficiaryAddressLine2            apijson.Metadata
-	BeneficiaryAddressLine3            apijson.Metadata
-	BeneficiaryName                    apijson.Metadata
-	BeneficiaryReference               apijson.Metadata
-	Description                        apijson.Metadata
-	InputMessageAccountabilityData     apijson.Metadata
-	OriginatorAddressLine1             apijson.Metadata
-	OriginatorAddressLine2             apijson.Metadata
-	OriginatorAddressLine3             apijson.Metadata
-	OriginatorName                     apijson.Metadata
-	OriginatorToBeneficiaryInformation apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON struct {
+	Amount                             apijson.Field
+	BeneficiaryAddressLine1            apijson.Field
+	BeneficiaryAddressLine2            apijson.Field
+	BeneficiaryAddressLine3            apijson.Field
+	BeneficiaryName                    apijson.Field
+	BeneficiaryReference               apijson.Field
+	Description                        apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	OriginatorAddressLine1             apijson.Field
+	OriginatorAddressLine2             apijson.Field
+	OriginatorAddressLine3             apijson.Field
+	OriginatorName                     apijson.Field
+	OriginatorToBeneficiaryInformation apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Reversal object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_wire_reversal`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
 	Amount int64 `json:"amount,required"`
@@ -1517,37 +1563,38 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
+	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON struct {
-	Amount                                                apijson.Metadata
-	CreatedAt                                             apijson.Metadata
-	Description                                           apijson.Metadata
-	InputCycleDate                                        apijson.Metadata
-	InputSequenceNumber                                   apijson.Metadata
-	InputSource                                           apijson.Metadata
-	InputMessageAccountabilityData                        apijson.Metadata
-	PreviousMessageInputMessageAccountabilityData         apijson.Metadata
-	PreviousMessageInputCycleDate                         apijson.Metadata
-	PreviousMessageInputSequenceNumber                    apijson.Metadata
-	PreviousMessageInputSource                            apijson.Metadata
-	ReceiverFinancialInstitutionInformation               apijson.Metadata
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Metadata
-	TransactionID                                         apijson.Metadata
-	WireTransferID                                        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON struct {
+	Amount                                                apijson.Field
+	CreatedAt                                             apijson.Field
+	Description                                           apijson.Field
+	InputCycleDate                                        apijson.Field
+	InputSequenceNumber                                   apijson.Field
+	InputSource                                           apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
+	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputSequenceNumber                    apijson.Field
+	PreviousMessageInputSource                            apijson.Field
+	ReceiverFinancialInstitutionInformation               apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
+	TransactionID                                         apijson.Field
+	WireTransferID                                        apijson.Field
 	raw                                                   string
-	Extras                                                map[string]apijson.Metadata
+	Extras                                                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Inbound Wire Transfer object. This field will be present in the JSON response
+// if and only if `category` is equal to `inbound_wire_transfer`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1568,39 +1615,40 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                                    InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON
+	JSON                                    inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON struct {
-	Amount                                  apijson.Metadata
-	BeneficiaryAddressLine1                 apijson.Metadata
-	BeneficiaryAddressLine2                 apijson.Metadata
-	BeneficiaryAddressLine3                 apijson.Metadata
-	BeneficiaryName                         apijson.Metadata
-	BeneficiaryReference                    apijson.Metadata
-	Description                             apijson.Metadata
-	InputMessageAccountabilityData          apijson.Metadata
-	OriginatorAddressLine1                  apijson.Metadata
-	OriginatorAddressLine2                  apijson.Metadata
-	OriginatorAddressLine3                  apijson.Metadata
-	OriginatorName                          apijson.Metadata
-	OriginatorToBeneficiaryInformationLine1 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine2 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine3 apijson.Metadata
-	OriginatorToBeneficiaryInformationLine4 apijson.Metadata
-	OriginatorToBeneficiaryInformation      apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON struct {
+	Amount                                  apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	OriginatorToBeneficiaryInformation      apijson.Field
 	raw                                     string
-	Extras                                  map[string]apijson.Metadata
+	Extras                                  map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Interest Payment object. This field will be present in the JSON response if
+// and only if `category` is equal to `interest_payment`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1614,23 +1662,22 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPay
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The account on which the interest was accrued.
 	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
-	JSON               InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON
+	JSON               inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON struct {
-	Amount             apijson.Metadata
-	Currency           apijson.Metadata
-	PeriodStart        apijson.Metadata
-	PeriodEnd          apijson.Metadata
-	AccruedOnAccountID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON struct {
+	Amount             apijson.Field
+	Currency           apijson.Field
+	PeriodStart        apijson.Field
+	PeriodEnd          apijson.Field
+	AccruedOnAccountID apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1646,6 +1693,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentCurrency = "USD"
 )
 
+// A Internal Source object. This field will be present in the JSON response if and
+// only if `category` is equal to `internal_source`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1654,21 +1703,20 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSou
 	// currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceCurrency `json:"currency,required"`
 	Reason   InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason   `json:"reason,required"`
-	JSON     InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON
+	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON struct {
-	Amount   apijson.Metadata
-	Currency apijson.Metadata
-	Reason   apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON struct {
+	Amount   apijson.Field
+	Currency apijson.Field
+	Reason   apijson.Field
 	raw      string
-	Extras   map[string]apijson.Metadata
+	Extras   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1698,6 +1746,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn  InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
+// A Deprecated Card Refund object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_route_refund`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund struct {
 	// The refunded amount in the minor unit of the refunded currency. For dollars, for
 	// example, this is cents.
@@ -1711,26 +1761,25 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRe
 	MerchantDescriptor   string                                                                                  `json:"merchant_descriptor,required"`
 	MerchantState        string                                                                                  `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                                                                  `json:"merchant_category_code,required,nullable"`
-	JSON                 InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON
+	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1746,6 +1795,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "USD"
 )
 
+// A Deprecated Card Settlement object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_route_settlement`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement struct {
 	// The settled amount in the minor unit of the settlement currency. For dollars,
 	// for example, this is cents.
@@ -1759,26 +1810,25 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSe
 	MerchantDescriptor   string                                                                                      `json:"merchant_descriptor,required"`
 	MerchantState        string                                                                                      `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                                                                      `json:"merchant_category_code,required,nullable"`
-	JSON                 InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON
+	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1794,6 +1844,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "USD"
 )
 
+// A Real Time Payments Transfer Acknowledgement object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `real_time_payments_transfer_acknowledgement`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -1805,47 +1858,50 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePay
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real Time Payments Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
-	Amount                   apijson.Metadata
-	DestinationAccountNumber apijson.Metadata
-	DestinationRoutingNumber apijson.Metadata
-	RemittanceInformation    apijson.Metadata
-	TransferID               apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
+	Amount                   apijson.Field
+	DestinationAccountNumber apijson.Field
+	DestinationRoutingNumber apijson.Field
+	RemittanceInformation    apijson.Field
+	TransferID               apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Sample Funds object. This field will be present in the JSON response if and
+// only if `category` is equal to `sample_funds`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator string `json:"originator,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON struct {
-	Originator apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON struct {
+	Originator apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Drawdown Payment Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to
+// `wire_drawdown_payment_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention struct {
 	// The transfer amount in USD cents.
 	Amount             int64  `json:"amount,required"`
@@ -1853,46 +1909,49 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdow
 	RoutingNumber      string `json:"routing_number,required"`
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	TransferID         string `json:"transfer_id,required"`
-	JSON               InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON
+	JSON               inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON struct {
-	Amount             apijson.Metadata
-	AccountNumber      apijson.Metadata
-	RoutingNumber      apijson.Metadata
-	MessageToRecipient apijson.Metadata
-	TransferID         apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON struct {
+	Amount             apijson.Field
+	AccountNumber      apijson.Field
+	RoutingNumber      apijson.Field
+	MessageToRecipient apijson.Field
+	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to
+// `wire_drawdown_payment_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `wire_transfer_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -1903,42 +1962,42 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	TransferID         string `json:"transfer_id,required"`
-	JSON               InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON
+	JSON               inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON struct {
-	Amount             apijson.Metadata
-	AccountNumber      apijson.Metadata
-	RoutingNumber      apijson.Metadata
-	MessageToRecipient apijson.Metadata
-	TransferID         apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON struct {
+	Amount             apijson.Field
+	AccountNumber      apijson.Field
+	RoutingNumber      apijson.Field
+	MessageToRecipient apijson.Field
+	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Wire Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `wire_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
 	TransferID string `json:"transfer_id,required"`
-	JSON       InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON struct {
-	TransferID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON struct {
+	TransferID apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -1949,6 +2008,10 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionTypeTransaction InboundRealTimePaymentsTransferSimulationResultTransactionType = "transaction"
 )
 
+// If the Real Time Payments Transfer attempt fails, this will contain the
+// resulting [Declined Transaction](#declined-transactions) object. The Declined
+// Transaction's `source` will be of
+// `category: inbound_real_time_payments_transfer_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID string `json:"account_id,required"`
@@ -1980,28 +2043,27 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionType `json:"type,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON struct {
-	AccountID   apijson.Metadata
-	Amount      apijson.Metadata
-	Currency    apijson.Metadata
-	CreatedAt   apijson.Metadata
-	Description apijson.Metadata
-	ID          apijson.Metadata
-	RouteID     apijson.Metadata
-	RouteType   apijson.Metadata
-	Source      apijson.Metadata
-	Type        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON contains
+// the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON struct {
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	CreatedAt   apijson.Field
+	Description apijson.Field
+	ID          apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2024,6 +2086,11 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeCard          InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "card"
 )
 
+// This is an object giving more details on the network-level event that caused the
+// Declined Transaction. For example, for a card transaction this lists the
+// merchant's industry and location. Note that for backwards compatibility reasons,
+// additional undocumented keys may appear in this object. These should be treated
+// as deprecated and will be removed in the future.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource struct {
 	// The type of decline that took place. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
@@ -2048,25 +2115,24 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
 	CardRouteDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
-	JSON             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON
+	JSON             inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON struct {
-	Category                               apijson.Metadata
-	ACHDecline                             apijson.Metadata
-	CardDecline                            apijson.Metadata
-	CheckDecline                           apijson.Metadata
-	InboundRealTimePaymentsTransferDecline apijson.Metadata
-	InternationalACHDecline                apijson.Metadata
-	CardRouteDecline                       apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON struct {
+	Category                               apijson.Field
+	ACHDecline                             apijson.Field
+	CardDecline                            apijson.Field
+	CheckDecline                           apijson.Field
+	InboundRealTimePaymentsTransferDecline apijson.Field
+	InternationalACHDecline                apijson.Field
+	CardRouteDecline                       apijson.Field
 	raw                                    string
-	Extras                                 map[string]apijson.Metadata
+	Extras                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2083,6 +2149,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther                                  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "other"
 )
 
+// A ACH Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `ach_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -2096,27 +2164,26 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	ReceiverIDNumber string                                                                                   `json:"receiver_id_number,required,nullable"`
 	ReceiverName     string                                                                                   `json:"receiver_name,required,nullable"`
 	TraceNumber      string                                                                                   `json:"trace_number,required"`
-	JSON             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
+	JSON             inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON struct {
-	Amount                             apijson.Metadata
-	OriginatorCompanyName              apijson.Metadata
-	OriginatorCompanyDescriptiveDate   apijson.Metadata
-	OriginatorCompanyDiscretionaryData apijson.Metadata
-	OriginatorCompanyID                apijson.Metadata
-	Reason                             apijson.Metadata
-	ReceiverIDNumber                   apijson.Metadata
-	ReceiverName                       apijson.Metadata
-	TraceNumber                        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyName              apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyID                apijson.Field
+	Reason                             apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Metadata
+	Extras                             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2138,6 +2205,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
+// A Card Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -2171,31 +2240,30 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// If the authorization was attempted using a Digital Wallet Token (such as an
 	// Apple Pay purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
+	JSON                 inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON struct {
-	MerchantAcceptorID   apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	Network              apijson.Metadata
-	NetworkDetails       apijson.Metadata
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	Reason               apijson.Metadata
-	MerchantState        apijson.Metadata
-	RealTimeDecisionID   apijson.Metadata
-	DigitalWalletTokenID apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON struct {
+	MerchantAcceptorID   apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	Network              apijson.Field
+	NetworkDetails       apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	Reason               apijson.Field
+	MerchantState        apijson.Field
+	RealTimeDecisionID   apijson.Field
+	DigitalWalletTokenID apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2206,26 +2274,27 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkVisa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
 
+// Fields specific to the `network`
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	// Fields specific to the `visa` network
 	Visa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
-	JSON InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa   apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Visa   apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Fields specific to the `visa` network
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
@@ -2234,20 +2303,19 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
 	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator apijson.Metadata
-	PointOfServiceEntryMode     apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Metadata
+	Extras                      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2294,6 +2362,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
+// A Check Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `check_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -2301,21 +2371,20 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
 	// Why the check was declined.
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount        apijson.Metadata
-	AuxiliaryOnUs apijson.Metadata
-	Reason        apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON struct {
+	Amount        apijson.Field
+	AuxiliaryOnUs apijson.Field
+	Reason        apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2338,6 +2407,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
 )
 
+// A Inbound Real Time Payments Transfer Decline object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -2360,27 +2432,26 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
-	Amount                    apijson.Metadata
-	Currency                  apijson.Metadata
-	Reason                    apijson.Metadata
-	CreditorName              apijson.Metadata
-	DebtorName                apijson.Metadata
-	DebtorAccountNumber       apijson.Metadata
-	DebtorRoutingNumber       apijson.Metadata
-	TransactionIdentification apijson.Metadata
-	RemittanceInformation     apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
+	Amount                    apijson.Field
+	Currency                  apijson.Field
+	Reason                    apijson.Field
+	CreditorName              apijson.Field
+	DebtorName                apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	TransactionIdentification apijson.Field
+	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Metadata
+	Extras                    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2407,6 +2478,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
+// A International ACH Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `international_ach_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -2446,58 +2519,59 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON
+	JSON                                                   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON struct {
-	Amount                                                 apijson.Metadata
-	ForeignExchangeIndicator                               apijson.Metadata
-	ForeignExchangeReferenceIndicator                      apijson.Metadata
-	ForeignExchangeReference                               apijson.Metadata
-	DestinationCountryCode                                 apijson.Metadata
-	DestinationCurrencyCode                                apijson.Metadata
-	ForeignPaymentAmount                                   apijson.Metadata
-	ForeignTraceNumber                                     apijson.Metadata
-	InternationalTransactionTypeCode                       apijson.Metadata
-	OriginatingCurrencyCode                                apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionName          apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionID            apijson.Metadata
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Metadata
-	OriginatorCity                                         apijson.Metadata
-	OriginatorCompanyEntryDescription                      apijson.Metadata
-	OriginatorCountry                                      apijson.Metadata
-	OriginatorIdentification                               apijson.Metadata
-	OriginatorName                                         apijson.Metadata
-	OriginatorPostalCode                                   apijson.Metadata
-	OriginatorStreetAddress                                apijson.Metadata
-	OriginatorStateOrProvince                              apijson.Metadata
-	PaymentRelatedInformation                              apijson.Metadata
-	PaymentRelatedInformation2                             apijson.Metadata
-	ReceiverIdentificationNumber                           apijson.Metadata
-	ReceiverStreetAddress                                  apijson.Metadata
-	ReceiverCity                                           apijson.Metadata
-	ReceiverStateOrProvince                                apijson.Metadata
-	ReceiverCountry                                        apijson.Metadata
-	ReceiverPostalCode                                     apijson.Metadata
-	ReceivingCompanyOrIndividualName                       apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionName            apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionID              apijson.Metadata
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Metadata
-	TraceNumber                                            apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON struct {
+	Amount                                                 apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Metadata
+	Extras                                                 map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A Deprecated Card Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_route_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -2511,26 +2585,25 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantDescriptor   string                                                                                           `json:"merchant_descriptor,required"`
 	MerchantState        string                                                                                           `json:"merchant_state,required,nullable"`
 	MerchantCategoryCode string                                                                                           `json:"merchant_category_code,required,nullable"`
-	JSON                 InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON
+	JSON                 inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON
 }
 
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON struct {
-	Amount               apijson.Metadata
-	Currency             apijson.Metadata
-	MerchantAcceptorID   apijson.Metadata
-	MerchantCity         apijson.Metadata
-	MerchantCountry      apijson.Metadata
-	MerchantDescriptor   apijson.Metadata
-	MerchantState        apijson.Metadata
-	MerchantCategoryCode apijson.Metadata
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -2563,14 +2636,11 @@ type SimulationRealTimePaymentsTransferCompleteParams struct {
 	Rejection field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejection] `json:"rejection"`
 }
 
-// MarshalJSON serializes SimulationRealTimePaymentsTransferCompleteParams into an
-// array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
 func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// If set, the simulation will reject the transfer.
 type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
 	// The reason code that the simulated rejection will have.
 	RejectReasonCode field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
@@ -2620,10 +2690,6 @@ type SimulationRealTimePaymentsTransferNewInboundParams struct {
 	RemittanceInformation field.Field[string] `json:"remittance_information"`
 }
 
-// MarshalJSON serializes SimulationRealTimePaymentsTransferNewInboundParams into
-// an array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
 func (r SimulationRealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

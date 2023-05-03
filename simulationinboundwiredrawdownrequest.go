@@ -10,10 +10,19 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationInboundWireDrawdownRequestService contains methods and other services
+// that help with interacting with the increase API. Note, unlike clients, this
+// service does not read variables from the environment automatically. You should
+// not instantiate this service directly, and instead use the
+// [NewSimulationInboundWireDrawdownRequestService] method instead.
 type SimulationInboundWireDrawdownRequestService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationInboundWireDrawdownRequestService generates a new service that
+// applies the given options to each request. These options are applied after the
+// parent client's options (if there is one), and before any request-specific
+// options.
 func NewSimulationInboundWireDrawdownRequestService(opts ...option.RequestOption) (r *SimulationInboundWireDrawdownRequestService) {
 	r = &SimulationInboundWireDrawdownRequestService{}
 	r.Options = opts
@@ -78,10 +87,6 @@ type SimulationInboundWireDrawdownRequestNewParams struct {
 	BeneficiaryAddressLine3 field.Field[string] `json:"beneficiary_address_line3"`
 }
 
-// MarshalJSON serializes SimulationInboundWireDrawdownRequestNewParams into an
-// array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
 func (r SimulationInboundWireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

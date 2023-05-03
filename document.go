@@ -15,10 +15,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// DocumentService contains methods and other services that help with interacting
+// with the increase API. Note, unlike clients, this service does not read
+// variables from the environment automatically. You should not instantiate this
+// service directly, and instead use the [NewDocumentService] method instead.
 type DocumentService struct {
 	Options []option.RequestOption
 }
 
+// NewDocumentService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 	r = &DocumentService{}
 	r.Options = opts
@@ -56,6 +63,9 @@ func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentList
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Increase generates certain documents / forms automatically for your application;
+// they can be listed here. Currently the only supported document type is IRS Form
+// 1099-INT.
 type Document struct {
 	// The Document identifier.
 	ID string `json:"id,required"`
@@ -71,22 +81,21 @@ type Document struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `document`.
 	Type DocumentType `json:"type,required"`
-	JSON DocumentJSON
+	JSON documentJSON
 }
 
-type DocumentJSON struct {
-	ID        apijson.Metadata
-	Category  apijson.Metadata
-	CreatedAt apijson.Metadata
-	EntityID  apijson.Metadata
-	FileID    apijson.Metadata
-	Type      apijson.Metadata
+// documentJSON contains the JSON metadata for the struct [Document]
+type documentJSON struct {
+	ID        apijson.Field
+	Category  apijson.Field
+	CreatedAt apijson.Field
+	EntityID  apijson.Field
+	FileID    apijson.Field
+	Type      apijson.Field
 	raw       string
-	Extras    map[string]apijson.Metadata
+	Extras    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Document using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Document) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -161,8 +170,7 @@ type DocumentListParams struct {
 	CreatedAt field.Field[DocumentListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes DocumentListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [DocumentListParams]'s query parameters as `url.Values`.
 func (r DocumentListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -174,8 +182,8 @@ type DocumentListParamsCategory struct {
 	In field.Field[[]DocumentListParamsCategoryIn] `query:"in"`
 }
 
-// URLQuery serializes DocumentListParamsCategory into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [DocumentListParamsCategory]'s query parameters as
+// `url.Values`.
 func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -247,30 +255,30 @@ type DocumentListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes DocumentListParamsCreatedAt into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [DocumentListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Document objects
 type DocumentListResponse struct {
 	// The contents of the list.
 	Data []Document `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       DocumentListResponseJSON
+	JSON       documentListResponseJSON
 }
 
-type DocumentListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// documentListResponseJSON contains the JSON metadata for the struct
+// [DocumentListResponse]
+type documentListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into DocumentListResponse using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *DocumentListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

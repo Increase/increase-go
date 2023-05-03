@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// CardDisputeService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewCardDisputeService] method
+// instead.
 type CardDisputeService struct {
 	Options []option.RequestOption
 }
 
+// NewCardDisputeService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewCardDisputeService(opts ...option.RequestOption) (r *CardDisputeService) {
 	r = &CardDisputeService{}
 	r.Options = opts
@@ -64,6 +72,8 @@ func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDispu
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// If unauthorized activity occurs on a card, you can create a Card Dispute and
+// we'll return the funds if appropriate.
 type CardDispute struct {
 	// The Card Dispute identifier.
 	ID string `json:"id,required"`
@@ -85,25 +95,23 @@ type CardDispute struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
 	Type CardDisputeType `json:"type,required"`
-	JSON CardDisputeJSON
+	JSON cardDisputeJSON
 }
 
-type CardDisputeJSON struct {
-	ID                    apijson.Metadata
-	Explanation           apijson.Metadata
-	Status                apijson.Metadata
-	CreatedAt             apijson.Metadata
-	DisputedTransactionID apijson.Metadata
-	Acceptance            apijson.Metadata
-	Rejection             apijson.Metadata
-	Type                  apijson.Metadata
+// cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
+type cardDisputeJSON struct {
+	ID                    apijson.Field
+	Explanation           apijson.Field
+	Status                apijson.Field
+	CreatedAt             apijson.Field
+	DisputedTransactionID apijson.Field
+	Acceptance            apijson.Field
+	Rejection             apijson.Field
+	Type                  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDispute using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -116,6 +124,8 @@ const (
 	CardDisputeStatusRejected         CardDisputeStatus = "rejected"
 )
 
+// If the Card Dispute's status is `accepted`, this will contain details of the
+// successful dispute.
 type CardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -125,24 +135,25 @@ type CardDisputeAcceptance struct {
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          CardDisputeAcceptanceJSON
+	JSON          cardDisputeAcceptanceJSON
 }
 
-type CardDisputeAcceptanceJSON struct {
-	AcceptedAt    apijson.Metadata
-	CardDisputeID apijson.Metadata
-	TransactionID apijson.Metadata
+// cardDisputeAcceptanceJSON contains the JSON metadata for the struct
+// [CardDisputeAcceptance]
+type cardDisputeAcceptanceJSON struct {
+	AcceptedAt    apijson.Field
+	CardDisputeID apijson.Field
+	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDisputeAcceptance using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the Card Dispute's status is `rejected`, this will contain details of the
+// unsuccessful dispute.
 type CardDisputeRejection struct {
 	// Why the Card Dispute was rejected.
 	Explanation string `json:"explanation,required"`
@@ -151,20 +162,19 @@ type CardDisputeRejection struct {
 	RejectedAt time.Time `json:"rejected_at,required" format:"date-time"`
 	// The identifier of the Card Dispute that was rejected.
 	CardDisputeID string `json:"card_dispute_id,required"`
-	JSON          CardDisputeRejectionJSON
+	JSON          cardDisputeRejectionJSON
 }
 
-type CardDisputeRejectionJSON struct {
-	Explanation   apijson.Metadata
-	RejectedAt    apijson.Metadata
-	CardDisputeID apijson.Metadata
+// cardDisputeRejectionJSON contains the JSON metadata for the struct
+// [CardDisputeRejection]
+type cardDisputeRejectionJSON struct {
+	Explanation   apijson.Field
+	RejectedAt    apijson.Field
+	CardDisputeID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDisputeRejection using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -183,9 +193,6 @@ type CardDisputeNewParams struct {
 	Explanation field.Field[string] `json:"explanation,required"`
 }
 
-// MarshalJSON serializes CardDisputeNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -200,8 +207,7 @@ type CardDisputeListParams struct {
 	Status    field.Field[CardDisputeListParamsStatus]    `query:"status"`
 }
 
-// URLQuery serializes CardDisputeListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CardDisputeListParams]'s query parameters as `url.Values`.
 func (r CardDisputeListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -221,8 +227,8 @@ type CardDisputeListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes CardDisputeListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [CardDisputeListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r CardDisputeListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -234,8 +240,8 @@ type CardDisputeListParamsStatus struct {
 	In field.Field[[]CardDisputeListParamsStatusIn] `query:"in"`
 }
 
-// URLQuery serializes CardDisputeListParamsStatus into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CardDisputeListParamsStatus]'s query parameters as
+// `url.Values`.
 func (r CardDisputeListParamsStatus) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -248,24 +254,24 @@ const (
 	CardDisputeListParamsStatusInRejected         CardDisputeListParamsStatusIn = "rejected"
 )
 
+// A list of Card Dispute objects
 type CardDisputeListResponse struct {
 	// The contents of the list.
 	Data []CardDispute `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CardDisputeListResponseJSON
+	JSON       cardDisputeListResponseJSON
 }
 
-type CardDisputeListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// cardDisputeListResponseJSON contains the JSON metadata for the struct
+// [CardDisputeListResponse]
+type cardDisputeListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardDisputeListResponse using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardDisputeListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

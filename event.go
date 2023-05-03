@@ -15,10 +15,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// EventService contains methods and other services that help with interacting with
+// the increase API. Note, unlike clients, this service does not read variables
+// from the environment automatically. You should not instantiate this service
+// directly, and instead use the [NewEventService] method instead.
 type EventService struct {
 	Options []option.RequestOption
 }
 
+// NewEventService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewEventService(opts ...option.RequestOption) (r *EventService) {
 	r = &EventService{}
 	r.Options = opts
@@ -56,6 +63,8 @@ func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Events are records of things that happened to objects in the API. They also
+// result in webhooks being generated.
 type Event struct {
 	// The identifier of the object that generated this Event.
 	AssociatedObjectID string `json:"associated_object_id,required"`
@@ -71,22 +80,21 @@ type Event struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
 	Type EventType `json:"type,required"`
-	JSON EventJSON
+	JSON eventJSON
 }
 
-type EventJSON struct {
-	AssociatedObjectID   apijson.Metadata
-	AssociatedObjectType apijson.Metadata
-	Category             apijson.Metadata
-	CreatedAt            apijson.Metadata
-	ID                   apijson.Metadata
-	Type                 apijson.Metadata
+// eventJSON contains the JSON metadata for the struct [Event]
+type eventJSON struct {
+	AssociatedObjectID   apijson.Field
+	AssociatedObjectType apijson.Field
+	Category             apijson.Field
+	CreatedAt            apijson.Field
+	ID                   apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Event using the internal json
-// library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Event) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -164,8 +172,7 @@ type EventListParams struct {
 	Category           field.Field[EventListParamsCategory]  `query:"category"`
 }
 
-// URLQuery serializes EventListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [EventListParams]'s query parameters as `url.Values`.
 func (r EventListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -185,8 +192,8 @@ type EventListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes EventListParamsCreatedAt into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [EventListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -198,8 +205,8 @@ type EventListParamsCategory struct {
 	In field.Field[[]EventListParamsCategoryIn] `query:"in"`
 }
 
-// URLQuery serializes EventListParamsCategory into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [EventListParamsCategory]'s query parameters as
+// `url.Values`.
 func (r EventListParamsCategory) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -259,24 +266,24 @@ const (
 	EventListParamsCategoryInWireTransferUpdated                                  EventListParamsCategoryIn = "wire_transfer.updated"
 )
 
+// A list of Event objects
 type EventListResponse struct {
 	// The contents of the list.
 	Data []Event `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       EventListResponseJSON
+	JSON       eventListResponseJSON
 }
 
-type EventListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// eventListResponseJSON contains the JSON metadata for the struct
+// [EventListResponse]
+type eventListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into EventListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *EventListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

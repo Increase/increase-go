@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// ACHTransferService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewACHTransferService] method
+// instead.
 type ACHTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewACHTransferService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewACHTransferService(opts ...option.RequestOption) (r *ACHTransferService) {
 	r = &ACHTransferService{}
 	r.Options = opts
@@ -80,6 +88,8 @@ func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string,
 	return
 }
 
+// ACH transfers move funds between your Increase account and any other account
+// accessible by the Automated Clearing House (ACH).
 type ACHTransfer struct {
 	// The Account to which the transfer belongs.
 	AccountID string `json:"account_id,required"`
@@ -148,45 +158,43 @@ type ACHTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
-	JSON ACHTransferJSON
+	JSON achTransferJSON
 }
 
-type ACHTransferJSON struct {
-	AccountID                apijson.Metadata
-	AccountNumber            apijson.Metadata
-	Addendum                 apijson.Metadata
-	Amount                   apijson.Metadata
-	Currency                 apijson.Metadata
-	Approval                 apijson.Metadata
-	Cancellation             apijson.Metadata
-	CreatedAt                apijson.Metadata
-	ExternalAccountID        apijson.Metadata
-	ID                       apijson.Metadata
-	Network                  apijson.Metadata
-	NotificationsOfChange    apijson.Metadata
-	Return                   apijson.Metadata
-	RoutingNumber            apijson.Metadata
-	StatementDescriptor      apijson.Metadata
-	Status                   apijson.Metadata
-	Submission               apijson.Metadata
-	TransactionID            apijson.Metadata
-	CompanyDescriptiveDate   apijson.Metadata
-	CompanyDiscretionaryData apijson.Metadata
-	CompanyEntryDescription  apijson.Metadata
-	CompanyName              apijson.Metadata
-	Funding                  apijson.Metadata
-	IndividualID             apijson.Metadata
-	IndividualName           apijson.Metadata
-	EffectiveDate            apijson.Metadata
-	StandardEntryClassCode   apijson.Metadata
-	Type                     apijson.Metadata
+// achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
+type achTransferJSON struct {
+	AccountID                apijson.Field
+	AccountNumber            apijson.Field
+	Addendum                 apijson.Field
+	Amount                   apijson.Field
+	Currency                 apijson.Field
+	Approval                 apijson.Field
+	Cancellation             apijson.Field
+	CreatedAt                apijson.Field
+	ExternalAccountID        apijson.Field
+	ID                       apijson.Field
+	Network                  apijson.Field
+	NotificationsOfChange    apijson.Field
+	Return                   apijson.Field
+	RoutingNumber            apijson.Field
+	StatementDescriptor      apijson.Field
+	Status                   apijson.Field
+	Submission               apijson.Field
+	TransactionID            apijson.Field
+	CompanyDescriptiveDate   apijson.Field
+	CompanyDiscretionaryData apijson.Field
+	CompanyEntryDescription  apijson.Field
+	CompanyName              apijson.Field
+	Funding                  apijson.Field
+	IndividualID             apijson.Field
+	IndividualName           apijson.Field
+	EffectiveDate            apijson.Field
+	StandardEntryClassCode   apijson.Field
+	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransfer using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -202,6 +210,8 @@ const (
 	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
 )
 
+// If your account requires approvals for transfers and the transfer was approved,
+// this will contain details of the approval.
 type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -209,23 +219,24 @@ type ACHTransferApproval struct {
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
 	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       ACHTransferApprovalJSON
+	JSON       achTransferApprovalJSON
 }
 
-type ACHTransferApprovalJSON struct {
-	ApprovedAt apijson.Metadata
-	ApprovedBy apijson.Metadata
+// achTransferApprovalJSON contains the JSON metadata for the struct
+// [ACHTransferApproval]
+type achTransferApprovalJSON struct {
+	ApprovedAt apijson.Field
+	ApprovedBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferApproval using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your account requires approvals for transfers and the transfer was not
+// approved, this will contain details of the cancellation.
 type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -233,19 +244,18 @@ type ACHTransferCancellation struct {
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
 	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       ACHTransferCancellationJSON
+	JSON       achTransferCancellationJSON
 }
 
-type ACHTransferCancellationJSON struct {
-	CanceledAt apijson.Metadata
-	CanceledBy apijson.Metadata
+// achTransferCancellationJSON contains the JSON metadata for the struct
+// [ACHTransferCancellation]
+type achTransferCancellationJSON struct {
+	CanceledAt apijson.Field
+	CanceledBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferCancellation using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -264,24 +274,24 @@ type ACHTransferNotificationsOfChange struct {
 	ChangeCode string `json:"change_code,required"`
 	// The corrected data.
 	CorrectedData string `json:"corrected_data,required"`
-	JSON          ACHTransferNotificationsOfChangeJSON
+	JSON          achTransferNotificationsOfChangeJSON
 }
 
-type ACHTransferNotificationsOfChangeJSON struct {
-	CreatedAt     apijson.Metadata
-	ChangeCode    apijson.Metadata
-	CorrectedData apijson.Metadata
+// achTransferNotificationsOfChangeJSON contains the JSON metadata for the struct
+// [ACHTransferNotificationsOfChange]
+type achTransferNotificationsOfChangeJSON struct {
+	CreatedAt     apijson.Field
+	ChangeCode    apijson.Field
+	CorrectedData apijson.Field
 	raw           string
-	Extras        map[string]apijson.Metadata
+	Extras        map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// ACHTransferNotificationsOfChange using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your transfer is returned, this will contain details of the return.
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -292,21 +302,20 @@ type ACHTransferReturn struct {
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          ACHTransferReturnJSON
+	JSON          achTransferReturnJSON
 }
 
-type ACHTransferReturnJSON struct {
-	CreatedAt        apijson.Metadata
-	ReturnReasonCode apijson.Metadata
-	TransferID       apijson.Metadata
-	TransactionID    apijson.Metadata
+// achTransferReturnJSON contains the JSON metadata for the struct
+// [ACHTransferReturn]
+type achTransferReturnJSON struct {
+	CreatedAt        apijson.Field
+	ReturnReasonCode apijson.Field
+	TransferID       apijson.Field
+	TransactionID    apijson.Field
 	raw              string
-	Extras           map[string]apijson.Metadata
+	Extras           map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferReturn using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -352,24 +361,25 @@ const (
 	ACHTransferStatusRejected          ACHTransferStatus = "rejected"
 )
 
+// After the transfer is submitted to FedACH, this will contain supplemental
+// details.
 type ACHTransferSubmission struct {
 	// The trace number for the submission.
 	TraceNumber string `json:"trace_number,required"`
 	// When the ACH transfer was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	JSON        ACHTransferSubmissionJSON
+	JSON        achTransferSubmissionJSON
 }
 
-type ACHTransferSubmissionJSON struct {
-	TraceNumber apijson.Metadata
-	SubmittedAt apijson.Metadata
+// achTransferSubmissionJSON contains the JSON metadata for the struct
+// [ACHTransferSubmission]
+type achTransferSubmissionJSON struct {
+	TraceNumber apijson.Field
+	SubmittedAt apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferSubmission using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -448,9 +458,6 @@ type ACHTransferNewParams struct {
 	StatementDescriptor field.Field[string] `json:"statement_descriptor,required"`
 }
 
-// MarshalJSON serializes ACHTransferNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -483,8 +490,7 @@ type ACHTransferListParams struct {
 	CreatedAt         field.Field[ACHTransferListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes ACHTransferListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.
 func (r ACHTransferListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -504,30 +510,30 @@ type ACHTransferListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes ACHTransferListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [ACHTransferListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r ACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of ACH Transfer objects
 type ACHTransferListResponse struct {
 	// The contents of the list.
 	Data []ACHTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ACHTransferListResponseJSON
+	JSON       achTransferListResponseJSON
 }
 
-type ACHTransferListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// achTransferListResponseJSON contains the JSON metadata for the struct
+// [ACHTransferListResponse]
+type achTransferListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ACHTransferListResponse using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ACHTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

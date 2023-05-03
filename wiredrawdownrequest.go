@@ -14,10 +14,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// WireDrawdownRequestService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewWireDrawdownRequestService]
+// method instead.
 type WireDrawdownRequestService struct {
 	Options []option.RequestOption
 }
 
+// NewWireDrawdownRequestService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewWireDrawdownRequestService(opts ...option.RequestOption) (r *WireDrawdownRequestService) {
 	r = &WireDrawdownRequestService{}
 	r.Options = opts
@@ -63,6 +71,9 @@ func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query W
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Wire drawdown requests enable you to request that someone else send you a wire.
+// This feature is in beta; reach out to
+// [support@increase.com](mailto:support@increase.com) to learn more.
 type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
@@ -99,32 +110,31 @@ type WireDrawdownRequest struct {
 	FulfillmentTransactionID string `json:"fulfillment_transaction_id,required,nullable"`
 	// The lifecycle status of the drawdown request.
 	Status WireDrawdownRequestStatus `json:"status,required"`
-	JSON   WireDrawdownRequestJSON
+	JSON   wireDrawdownRequestJSON
 }
 
-type WireDrawdownRequestJSON struct {
-	Type                     apijson.Metadata
-	ID                       apijson.Metadata
-	AccountNumberID          apijson.Metadata
-	RecipientAccountNumber   apijson.Metadata
-	RecipientRoutingNumber   apijson.Metadata
-	Amount                   apijson.Metadata
-	Currency                 apijson.Metadata
-	MessageToRecipient       apijson.Metadata
-	RecipientName            apijson.Metadata
-	RecipientAddressLine1    apijson.Metadata
-	RecipientAddressLine2    apijson.Metadata
-	RecipientAddressLine3    apijson.Metadata
-	Submission               apijson.Metadata
-	FulfillmentTransactionID apijson.Metadata
-	Status                   apijson.Metadata
+// wireDrawdownRequestJSON contains the JSON metadata for the struct
+// [WireDrawdownRequest]
+type wireDrawdownRequestJSON struct {
+	Type                     apijson.Field
+	ID                       apijson.Field
+	AccountNumberID          apijson.Field
+	RecipientAccountNumber   apijson.Field
+	RecipientRoutingNumber   apijson.Field
+	Amount                   apijson.Field
+	Currency                 apijson.Field
+	MessageToRecipient       apijson.Field
+	RecipientName            apijson.Field
+	RecipientAddressLine1    apijson.Field
+	RecipientAddressLine2    apijson.Field
+	RecipientAddressLine3    apijson.Field
+	Submission               apijson.Field
+	FulfillmentTransactionID apijson.Field
+	Status                   apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequest using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -135,22 +145,23 @@ const (
 	WireDrawdownRequestTypeWireDrawdownRequest WireDrawdownRequestType = "wire_drawdown_request"
 )
 
+// After the drawdown request is submitted to Fedwire, this will contain
+// supplemental details.
 type WireDrawdownRequestSubmission struct {
 	// The input message accountability data (IMAD) uniquely identifying the submission
 	// with Fedwire.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	JSON                           WireDrawdownRequestSubmissionJSON
+	JSON                           wireDrawdownRequestSubmissionJSON
 }
 
-type WireDrawdownRequestSubmissionJSON struct {
-	InputMessageAccountabilityData apijson.Metadata
+// wireDrawdownRequestSubmissionJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestSubmission]
+type wireDrawdownRequestSubmissionJSON struct {
+	InputMessageAccountabilityData apijson.Field
 	raw                            string
-	Extras                         map[string]apijson.Metadata
+	Extras                         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into WireDrawdownRequestSubmission
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *WireDrawdownRequestSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -185,9 +196,6 @@ type WireDrawdownRequestNewParams struct {
 	RecipientAddressLine3 field.Field[string] `json:"recipient_address_line3"`
 }
 
-// MarshalJSON serializes WireDrawdownRequestNewParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -200,30 +208,30 @@ type WireDrawdownRequestListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes WireDrawdownRequestListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [WireDrawdownRequestListParams]'s query parameters as
+// `url.Values`.
 func (r WireDrawdownRequestListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Wire Drawdown Request objects
 type WireDrawdownRequestListResponse struct {
 	// The contents of the list.
 	Data []WireDrawdownRequest `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       WireDrawdownRequestListResponseJSON
+	JSON       wireDrawdownRequestListResponseJSON
 }
 
-type WireDrawdownRequestListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// wireDrawdownRequestListResponseJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestListResponse]
+type wireDrawdownRequestListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// WireDrawdownRequestListResponse using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *WireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

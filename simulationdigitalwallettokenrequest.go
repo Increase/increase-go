@@ -10,10 +10,19 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationDigitalWalletTokenRequestService contains methods and other services
+// that help with interacting with the increase API. Note, unlike clients, this
+// service does not read variables from the environment automatically. You should
+// not instantiate this service directly, and instead use the
+// [NewSimulationDigitalWalletTokenRequestService] method instead.
 type SimulationDigitalWalletTokenRequestService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationDigitalWalletTokenRequestService generates a new service that
+// applies the given options to each request. These options are applied after the
+// parent client's options (if there is one), and before any request-specific
+// options.
 func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption) (r *SimulationDigitalWalletTokenRequestService) {
 	r = &SimulationDigitalWalletTokenRequestService{}
 	r.Options = opts
@@ -29,6 +38,7 @@ func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, bo
 	return
 }
 
+// The results of a Digital Wallet Token simulation.
 type DigitalWalletTokenRequestCreateResponse struct {
 	// If the simulated tokenization attempt was declined, this field contains details
 	// as to why.
@@ -39,20 +49,19 @@ type DigitalWalletTokenRequestCreateResponse struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
 	Type DigitalWalletTokenRequestCreateResponseType `json:"type,required"`
-	JSON DigitalWalletTokenRequestCreateResponseJSON
+	JSON digitalWalletTokenRequestCreateResponseJSON
 }
 
-type DigitalWalletTokenRequestCreateResponseJSON struct {
-	DeclineReason        apijson.Metadata
-	DigitalWalletTokenID apijson.Metadata
-	Type                 apijson.Metadata
+// digitalWalletTokenRequestCreateResponseJSON contains the JSON metadata for the
+// struct [DigitalWalletTokenRequestCreateResponse]
+type digitalWalletTokenRequestCreateResponseJSON struct {
+	DeclineReason        apijson.Field
+	DigitalWalletTokenID apijson.Field
+	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Metadata
+	Extras               map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// DigitalWalletTokenRequestCreateResponse using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -77,10 +86,6 @@ type SimulationDigitalWalletTokenRequestNewParams struct {
 	CardID field.Field[string] `json:"card_id,required"`
 }
 
-// MarshalJSON serializes SimulationDigitalWalletTokenRequestNewParams into an
-// array of bytes using the gjson library. Members of the `jsonFields` field are
-// serialized into the top-level, and will overwrite known members of the same
-// name.
 func (r SimulationDigitalWalletTokenRequestNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

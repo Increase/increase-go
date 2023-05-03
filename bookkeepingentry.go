@@ -13,10 +13,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// BookkeepingEntryService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewBookkeepingEntryService] method
+// instead.
 type BookkeepingEntryService struct {
 	Options []option.RequestOption
 }
 
+// NewBookkeepingEntryService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewBookkeepingEntryService(opts ...option.RequestOption) (r *BookkeepingEntryService) {
 	r = &BookkeepingEntryService{}
 	r.Options = opts
@@ -46,6 +54,7 @@ func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query Book
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Entries are T-account entries recording debits and credits.
 type BookkeepingEntry struct {
 	// The identifier for the Account the Entry belongs to.
 	AccountID string `json:"account_id,required"`
@@ -59,22 +68,21 @@ type BookkeepingEntry struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry`.
 	Type BookkeepingEntryType `json:"type,required"`
-	JSON BookkeepingEntryJSON
+	JSON bookkeepingEntryJSON
 }
 
-type BookkeepingEntryJSON struct {
-	AccountID  apijson.Metadata
-	Amount     apijson.Metadata
-	EntrySetID apijson.Metadata
-	ID         apijson.Metadata
-	Type       apijson.Metadata
+// bookkeepingEntryJSON contains the JSON metadata for the struct
+// [BookkeepingEntry]
+type bookkeepingEntryJSON struct {
+	AccountID  apijson.Field
+	Amount     apijson.Field
+	EntrySetID apijson.Field
+	ID         apijson.Field
+	Type       apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into BookkeepingEntry using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *BookkeepingEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -93,30 +101,30 @@ type BookkeepingEntryListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes BookkeepingEntryListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [BookkeepingEntryListParams]'s query parameters as
+// `url.Values`.
 func (r BookkeepingEntryListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Bookkeeping Entry objects
 type BookkeepingEntryListResponse struct {
 	// The contents of the list.
 	Data []BookkeepingEntry `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       BookkeepingEntryListResponseJSON
+	JSON       bookkeepingEntryListResponseJSON
 }
 
-type BookkeepingEntryListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// bookkeepingEntryListResponseJSON contains the JSON metadata for the struct
+// [BookkeepingEntryListResponse]
+type bookkeepingEntryListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into BookkeepingEntryListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *BookkeepingEntryListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

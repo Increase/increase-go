@@ -11,10 +11,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// SimulationCheckTransferService contains methods and other services that help
+// with interacting with the increase API. Note, unlike clients, this service does
+// not read variables from the environment automatically. You should not
+// instantiate this service directly, and instead use the
+// [NewSimulationCheckTransferService] method instead.
 type SimulationCheckTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewSimulationCheckTransferService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
 func NewSimulationCheckTransferService(opts ...option.RequestOption) (r *SimulationCheckTransferService) {
 	r = &SimulationCheckTransferService{}
 	r.Options = opts
@@ -54,9 +62,6 @@ type SimulationCheckTransferReturnParams struct {
 	Reason field.Field[SimulationCheckTransferReturnParamsReason] `json:"reason,required"`
 }
 
-// MarshalJSON serializes SimulationCheckTransferReturnParams into an array of
-// bytes using the gjson library. Members of the `jsonFields` field are serialized
-// into the top-level, and will overwrite known members of the same name.
 func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

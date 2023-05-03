@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// ExternalAccountService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewExternalAccountService] method
+// instead.
 type ExternalAccountService struct {
 	Options []option.RequestOption
 }
 
+// NewExternalAccountService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewExternalAccountService(opts ...option.RequestOption) (r *ExternalAccountService) {
 	r = &ExternalAccountService{}
 	r.Options = opts
@@ -72,6 +80,8 @@ func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query Exter
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// External Accounts represent accounts at financial institutions other than
+// Increase. You can use this API to store their details for reuse.
 type ExternalAccount struct {
 	// The External Account's identifier.
 	ID string `json:"id,required"`
@@ -93,26 +103,24 @@ type ExternalAccount struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
 	Type ExternalAccountType `json:"type,required"`
-	JSON ExternalAccountJSON
+	JSON externalAccountJSON
 }
 
-type ExternalAccountJSON struct {
-	ID                 apijson.Metadata
-	CreatedAt          apijson.Metadata
-	Description        apijson.Metadata
-	Status             apijson.Metadata
-	RoutingNumber      apijson.Metadata
-	AccountNumber      apijson.Metadata
-	Funding            apijson.Metadata
-	VerificationStatus apijson.Metadata
-	Type               apijson.Metadata
+// externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]
+type externalAccountJSON struct {
+	ID                 apijson.Field
+	CreatedAt          apijson.Field
+	Description        apijson.Field
+	Status             apijson.Field
+	RoutingNumber      apijson.Field
+	AccountNumber      apijson.Field
+	Funding            apijson.Field
+	VerificationStatus apijson.Field
+	Type               apijson.Field
 	raw                string
-	Extras             map[string]apijson.Metadata
+	Extras             map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ExternalAccount using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -158,9 +166,6 @@ type ExternalAccountNewParams struct {
 	Description field.Field[string] `json:"description,required"`
 }
 
-// MarshalJSON serializes ExternalAccountNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -180,9 +185,6 @@ type ExternalAccountUpdateParams struct {
 	Status field.Field[ExternalAccountUpdateParamsStatus] `json:"status"`
 }
 
-// MarshalJSON serializes ExternalAccountUpdateParams into an array of bytes using
-// the gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -203,8 +205,8 @@ type ExternalAccountListParams struct {
 	Status field.Field[ExternalAccountListParamsStatus] `query:"status"`
 }
 
-// URLQuery serializes ExternalAccountListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [ExternalAccountListParams]'s query parameters as
+// `url.Values`.
 func (r ExternalAccountListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -216,8 +218,8 @@ type ExternalAccountListParamsStatus struct {
 	In field.Field[[]ExternalAccountListParamsStatusIn] `query:"in"`
 }
 
-// URLQuery serializes ExternalAccountListParamsStatus into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [ExternalAccountListParamsStatus]'s query parameters as
+// `url.Values`.
 func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -229,24 +231,24 @@ const (
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )
 
+// A list of External Account objects
 type ExternalAccountListResponse struct {
 	// The contents of the list.
 	Data []ExternalAccount `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ExternalAccountListResponseJSON
+	JSON       externalAccountListResponseJSON
 }
 
-type ExternalAccountListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// externalAccountListResponseJSON contains the JSON metadata for the struct
+// [ExternalAccountListResponse]
+type externalAccountListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ExternalAccountListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *ExternalAccountListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

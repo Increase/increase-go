@@ -15,10 +15,17 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// ProgramService contains methods and other services that help with interacting
+// with the increase API. Note, unlike clients, this service does not read
+// variables from the environment automatically. You should not instantiate this
+// service directly, and instead use the [NewProgramService] method instead.
 type ProgramService struct {
 	Options []option.RequestOption
 }
 
+// NewProgramService generates a new service that applies the given options to each
+// request. These options are applied after the parent client's options (if there
+// is one), and before any request-specific options.
 func NewProgramService(opts ...option.RequestOption) (r *ProgramService) {
 	r = &ProgramService{}
 	r.Options = opts
@@ -56,6 +63,10 @@ func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListPa
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Programs determine the compliance and commercial terms of Accounts. By default,
+// you have a Commercial Banking program for managing your own funds. If you are
+// lending or managing funds on behalf of your customers, or otherwise engaged in
+// regulated activity, we will work together to create additional Programs for you.
 type Program struct {
 	// The name of the Program.
 	Name string `json:"name,required"`
@@ -70,21 +81,20 @@ type Program struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `program`.
 	Type ProgramType `json:"type,required"`
-	JSON ProgramJSON
+	JSON programJSON
 }
 
-type ProgramJSON struct {
-	Name      apijson.Metadata
-	CreatedAt apijson.Metadata
-	UpdatedAt apijson.Metadata
-	ID        apijson.Metadata
-	Type      apijson.Metadata
+// programJSON contains the JSON metadata for the struct [Program]
+type programJSON struct {
+	Name      apijson.Field
+	CreatedAt apijson.Field
+	UpdatedAt apijson.Field
+	ID        apijson.Field
+	Type      apijson.Field
 	raw       string
-	Extras    map[string]apijson.Metadata
+	Extras    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into Program using the internal
-// json library. Unrecognized fields are stored in the `jsonFields` property.
 func (r *Program) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -103,30 +113,29 @@ type ProgramListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes ProgramListParams into a url.Values of the query parameters
-// associated with this value
+// URLQuery serializes [ProgramListParams]'s query parameters as `url.Values`.
 func (r ProgramListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Program objects
 type ProgramListResponse struct {
 	// The contents of the list.
 	Data []Program `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       ProgramListResponseJSON
+	JSON       programListResponseJSON
 }
 
-type ProgramListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// programListResponseJSON contains the JSON metadata for the struct
+// [ProgramListResponse]
+type programListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into ProgramListResponse using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *ProgramListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

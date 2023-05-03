@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// InboundACHTransferReturnService contains methods and other services that help
+// with interacting with the increase API. Note, unlike clients, this service does
+// not read variables from the environment automatically. You should not
+// instantiate this service directly, and instead use the
+// [NewInboundACHTransferReturnService] method instead.
 type InboundACHTransferReturnService struct {
 	Options []option.RequestOption
 }
 
+// NewInboundACHTransferReturnService generates a new service that applies the
+// given options to each request. These options are applied after the parent
+// client's options (if there is one), and before any request-specific options.
 func NewInboundACHTransferReturnService(opts ...option.RequestOption) (r *InboundACHTransferReturnService) {
 	r = &InboundACHTransferReturnService{}
 	r.Options = opts
@@ -64,6 +72,9 @@ func (r *InboundACHTransferReturnService) ListAutoPaging(ctx context.Context, qu
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// If unauthorized activity occurs via ACH, you can create an Inbound ACH Transfer
+// Return and we'll reverse the transaction. You can create an Inbound ACH Transfer
+// return the first two days after receiving an Inbound ACH Transfer.
 type InboundACHTransferReturn struct {
 	// The ID of the Inbound ACH Transfer Return.
 	ID string `json:"id,required"`
@@ -81,24 +92,23 @@ type InboundACHTransferReturn struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_return`.
 	Type InboundACHTransferReturnType `json:"type,required"`
-	JSON InboundACHTransferReturnJSON
+	JSON inboundACHTransferReturnJSON
 }
 
-type InboundACHTransferReturnJSON struct {
-	ID                              apijson.Metadata
-	InboundACHTransferTransactionID apijson.Metadata
-	TransactionID                   apijson.Metadata
-	Status                          apijson.Metadata
-	Reason                          apijson.Metadata
-	Submission                      apijson.Metadata
-	Type                            apijson.Metadata
+// inboundACHTransferReturnJSON contains the JSON metadata for the struct
+// [InboundACHTransferReturn]
+type inboundACHTransferReturnJSON struct {
+	ID                              apijson.Field
+	InboundACHTransferTransactionID apijson.Field
+	TransactionID                   apijson.Field
+	Status                          apijson.Field
+	Reason                          apijson.Field
+	Submission                      apijson.Field
+	Type                            apijson.Field
 	raw                             string
-	Extras                          map[string]apijson.Metadata
+	Extras                          map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into InboundACHTransferReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -123,24 +133,24 @@ const (
 	InboundACHTransferReturnReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferReturnReason = "corporate_customer_advised_not_authorized"
 )
 
+// After the return is submitted to FedACH, this will contain supplemental details.
 type InboundACHTransferReturnSubmission struct {
 	// The trace number for the submission.
 	TraceNumber string `json:"trace_number,required"`
 	// When the ACH transfer return was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	JSON        InboundACHTransferReturnSubmissionJSON
+	JSON        inboundACHTransferReturnSubmissionJSON
 }
 
-type InboundACHTransferReturnSubmissionJSON struct {
-	TraceNumber apijson.Metadata
-	SubmittedAt apijson.Metadata
+// inboundACHTransferReturnSubmissionJSON contains the JSON metadata for the struct
+// [InboundACHTransferReturnSubmission]
+type inboundACHTransferReturnSubmissionJSON struct {
+	TraceNumber apijson.Field
+	SubmittedAt apijson.Field
 	raw         string
-	Extras      map[string]apijson.Metadata
+	Extras      map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundACHTransferReturnSubmission using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *InboundACHTransferReturnSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -160,9 +170,6 @@ type InboundACHTransferReturnNewParams struct {
 	Reason field.Field[InboundACHTransferReturnNewParamsReason] `json:"reason,required"`
 }
 
-// MarshalJSON serializes InboundACHTransferReturnNewParams into an array of bytes
-// using the gjson library. Members of the `jsonFields` field are serialized into
-// the top-level, and will overwrite known members of the same name.
 func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -188,30 +195,30 @@ type InboundACHTransferReturnListParams struct {
 	Limit field.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes InboundACHTransferReturnListParams into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [InboundACHTransferReturnListParams]'s query parameters as
+// `url.Values`.
 func (r InboundACHTransferReturnListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Inbound ACH Transfer Return objects
 type InboundACHTransferReturnListResponse struct {
 	// The contents of the list.
 	Data []InboundACHTransferReturn `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       InboundACHTransferReturnListResponseJSON
+	JSON       inboundACHTransferReturnListResponseJSON
 }
 
-type InboundACHTransferReturnListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// inboundACHTransferReturnListResponseJSON contains the JSON metadata for the
+// struct [InboundACHTransferReturnListResponse]
+type inboundACHTransferReturnListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// InboundACHTransferReturnListResponse using the internal json library.
-// Unrecognized fields are stored in the `jsonFields` property.
 func (r *InboundACHTransferReturnListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// AccountTransferService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewAccountTransferService] method
+// instead.
 type AccountTransferService struct {
 	Options []option.RequestOption
 }
 
+// NewAccountTransferService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewAccountTransferService(opts ...option.RequestOption) (r *AccountTransferService) {
 	r = &AccountTransferService{}
 	r.Options = opts
@@ -80,6 +88,7 @@ func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id
 	return
 }
 
+// Account transfers move funds between your own accounts at Increase.
 type AccountTransfer struct {
 	// The account transfer's identifier.
 	ID string `json:"id,required"`
@@ -115,31 +124,29 @@ type AccountTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
 	Type AccountTransferType `json:"type,required"`
-	JSON AccountTransferJSON
+	JSON accountTransferJSON
 }
 
-type AccountTransferJSON struct {
-	ID                       apijson.Metadata
-	Amount                   apijson.Metadata
-	AccountID                apijson.Metadata
-	Currency                 apijson.Metadata
-	DestinationAccountID     apijson.Metadata
-	DestinationTransactionID apijson.Metadata
-	CreatedAt                apijson.Metadata
-	Description              apijson.Metadata
-	Network                  apijson.Metadata
-	Status                   apijson.Metadata
-	TransactionID            apijson.Metadata
-	Approval                 apijson.Metadata
-	Cancellation             apijson.Metadata
-	Type                     apijson.Metadata
+// accountTransferJSON contains the JSON metadata for the struct [AccountTransfer]
+type accountTransferJSON struct {
+	ID                       apijson.Field
+	Amount                   apijson.Field
+	AccountID                apijson.Field
+	Currency                 apijson.Field
+	DestinationAccountID     apijson.Field
+	DestinationTransactionID apijson.Field
+	CreatedAt                apijson.Field
+	Description              apijson.Field
+	Network                  apijson.Field
+	Status                   apijson.Field
+	TransactionID            apijson.Field
+	Approval                 apijson.Field
+	Cancellation             apijson.Field
+	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Metadata
+	Extras                   map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountTransfer using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -169,6 +176,8 @@ const (
 	AccountTransferStatusComplete        AccountTransferStatus = "complete"
 )
 
+// If your account requires approvals for transfers and the transfer was approved,
+// this will contain details of the approval.
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
@@ -176,23 +185,24 @@ type AccountTransferApproval struct {
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
 	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       AccountTransferApprovalJSON
+	JSON       accountTransferApprovalJSON
 }
 
-type AccountTransferApprovalJSON struct {
-	ApprovedAt apijson.Metadata
-	ApprovedBy apijson.Metadata
+// accountTransferApprovalJSON contains the JSON metadata for the struct
+// [AccountTransferApproval]
+type accountTransferApprovalJSON struct {
+	ApprovedAt apijson.Field
+	ApprovedBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountTransferApproval using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *AccountTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If your account requires approvals for transfers and the transfer was not
+// approved, this will contain details of the cancellation.
 type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
@@ -200,19 +210,18 @@ type AccountTransferCancellation struct {
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
 	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       AccountTransferCancellationJSON
+	JSON       accountTransferCancellationJSON
 }
 
-type AccountTransferCancellationJSON struct {
-	CanceledAt apijson.Metadata
-	CanceledBy apijson.Metadata
+// accountTransferCancellationJSON contains the JSON metadata for the struct
+// [AccountTransferCancellation]
+type accountTransferCancellationJSON struct {
+	CanceledAt apijson.Field
+	CanceledBy apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountTransferCancellation
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -237,9 +246,6 @@ type AccountTransferNewParams struct {
 	RequireApproval field.Field[bool] `json:"require_approval"`
 }
 
-// MarshalJSON serializes AccountTransferNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r AccountTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -255,8 +261,8 @@ type AccountTransferListParams struct {
 	CreatedAt field.Field[AccountTransferListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes AccountTransferListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [AccountTransferListParams]'s query parameters as
+// `url.Values`.
 func (r AccountTransferListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -276,30 +282,30 @@ type AccountTransferListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes AccountTransferListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [AccountTransferListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r AccountTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Account Transfer objects
 type AccountTransferListResponse struct {
 	// The contents of the list.
 	Data []AccountTransfer `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       AccountTransferListResponseJSON
+	JSON       accountTransferListResponseJSON
 }
 
-type AccountTransferListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// accountTransferListResponseJSON contains the JSON metadata for the struct
+// [AccountTransferListResponse]
+type accountTransferListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into AccountTransferListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *AccountTransferListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

@@ -13,10 +13,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// RoutingNumberService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewRoutingNumberService] method
+// instead.
 type RoutingNumberService struct {
 	Options []option.RequestOption
 }
 
+// NewRoutingNumberService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewRoutingNumberService(opts ...option.RequestOption) (r *RoutingNumberService) {
 	r = &RoutingNumberService{}
 	r.Options = opts
@@ -52,6 +60,7 @@ func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query Routing
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Routing numbers are used to identify your bank in a financial transaction.
 type RoutingNumber struct {
 	// The name of the financial institution belonging to a routing number.
 	Name string `json:"name,required"`
@@ -66,23 +75,21 @@ type RoutingNumber struct {
 	RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
 	// This routing number's support for Wire Transfers.
 	WireTransfers RoutingNumberWireTransfers `json:"wire_transfers,required"`
-	JSON          RoutingNumberJSON
+	JSON          routingNumberJSON
 }
 
-type RoutingNumberJSON struct {
-	Name                      apijson.Metadata
-	RoutingNumber             apijson.Metadata
-	Type                      apijson.Metadata
-	ACHTransfers              apijson.Metadata
-	RealTimePaymentsTransfers apijson.Metadata
-	WireTransfers             apijson.Metadata
+// routingNumberJSON contains the JSON metadata for the struct [RoutingNumber]
+type routingNumberJSON struct {
+	Name                      apijson.Field
+	RoutingNumber             apijson.Field
+	Type                      apijson.Field
+	ACHTransfers              apijson.Field
+	RealTimePaymentsTransfers apijson.Field
+	WireTransfers             apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Metadata
+	Extras                    map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into RoutingNumber using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -124,30 +131,30 @@ type RoutingNumberListParams struct {
 	RoutingNumber field.Field[string] `query:"routing_number,required"`
 }
 
-// URLQuery serializes RoutingNumberListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [RoutingNumberListParams]'s query parameters as
+// `url.Values`.
 func (r RoutingNumberListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Routing Number objects
 type RoutingNumberListResponse struct {
 	// The contents of the list.
 	Data []RoutingNumber `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       RoutingNumberListResponseJSON
+	JSON       routingNumberListResponseJSON
 }
 
-type RoutingNumberListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// routingNumberListResponseJSON contains the JSON metadata for the struct
+// [RoutingNumberListResponse]
+type routingNumberListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into RoutingNumberListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

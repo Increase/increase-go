@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// CardProfileService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewCardProfileService] method
+// instead.
 type CardProfileService struct {
 	Options []option.RequestOption
 }
 
+// NewCardProfileService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewCardProfileService(opts ...option.RequestOption) (r *CardProfileService) {
 	r = &CardProfileService{}
 	r.Options = opts
@@ -64,6 +72,9 @@ func (r *CardProfileService) ListAutoPaging(ctx context.Context, query CardProfi
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// This contains artwork and metadata relating to a Card's appearance in digital
+// wallet apps like Apple Pay and Google Pay. For more information, see our guide
+// on [digital card artwork](https://increase.com/documentation/card-art)
 type CardProfile struct {
 	// The Card Profile identifier.
 	ID string `json:"id,required"`
@@ -80,23 +91,21 @@ type CardProfile struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_profile`.
 	Type CardProfileType `json:"type,required"`
-	JSON CardProfileJSON
+	JSON cardProfileJSON
 }
 
-type CardProfileJSON struct {
-	ID             apijson.Metadata
-	CreatedAt      apijson.Metadata
-	Status         apijson.Metadata
-	Description    apijson.Metadata
-	DigitalWallets apijson.Metadata
-	Type           apijson.Metadata
+// cardProfileJSON contains the JSON metadata for the struct [CardProfile]
+type cardProfileJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Status         apijson.Field
+	Description    apijson.Field
+	DigitalWallets apijson.Field
+	Type           apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardProfile using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -110,6 +119,8 @@ const (
 	CardProfileStatusArchived CardProfileStatus = "archived"
 )
 
+// How Cards should appear in digital wallets such as Apple Pay. Different wallets
+// will use these values to render card artwork appropriately for their app.
 type CardProfileDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple.
 	TextColor CardProfileDigitalWalletsTextColor `json:"text_color,required"`
@@ -127,29 +138,29 @@ type CardProfileDigitalWallets struct {
 	BackgroundImageFileID string `json:"background_image_file_id,required"`
 	// The identifier of the File containing the card's icon image.
 	AppIconFileID string `json:"app_icon_file_id,required"`
-	JSON          CardProfileDigitalWalletsJSON
+	JSON          cardProfileDigitalWalletsJSON
 }
 
-type CardProfileDigitalWalletsJSON struct {
-	TextColor             apijson.Metadata
-	IssuerName            apijson.Metadata
-	CardDescription       apijson.Metadata
-	ContactWebsite        apijson.Metadata
-	ContactEmail          apijson.Metadata
-	ContactPhone          apijson.Metadata
-	BackgroundImageFileID apijson.Metadata
-	AppIconFileID         apijson.Metadata
+// cardProfileDigitalWalletsJSON contains the JSON metadata for the struct
+// [CardProfileDigitalWallets]
+type cardProfileDigitalWalletsJSON struct {
+	TextColor             apijson.Field
+	IssuerName            apijson.Field
+	CardDescription       apijson.Field
+	ContactWebsite        apijson.Field
+	ContactEmail          apijson.Field
+	ContactPhone          apijson.Field
+	BackgroundImageFileID apijson.Field
+	AppIconFileID         apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Metadata
+	Extras                map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardProfileDigitalWallets
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The Card's text color, specified as an RGB triple.
 type CardProfileDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
 	Red int64 `json:"red,required"`
@@ -157,20 +168,19 @@ type CardProfileDigitalWalletsTextColor struct {
 	Green int64 `json:"green,required"`
 	// The value of the blue channel in the RGB color.
 	Blue int64 `json:"blue,required"`
-	JSON CardProfileDigitalWalletsTextColorJSON
+	JSON cardProfileDigitalWalletsTextColorJSON
 }
 
-type CardProfileDigitalWalletsTextColorJSON struct {
-	Red    apijson.Metadata
-	Green  apijson.Metadata
-	Blue   apijson.Metadata
+// cardProfileDigitalWalletsTextColorJSON contains the JSON metadata for the struct
+// [CardProfileDigitalWalletsTextColor]
+type cardProfileDigitalWalletsTextColorJSON struct {
+	Red    apijson.Field
+	Green  apijson.Field
+	Blue   apijson.Field
 	raw    string
-	Extras map[string]apijson.Metadata
+	Extras map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into
-// CardProfileDigitalWalletsTextColor using the internal json library. Unrecognized
-// fields are stored in the `jsonFields` property.
 func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -189,13 +199,12 @@ type CardProfileNewParams struct {
 	DigitalWallets field.Field[CardProfileNewParamsDigitalWallets] `json:"digital_wallets,required"`
 }
 
-// MarshalJSON serializes CardProfileNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// How Cards should appear in digital wallets such as Apple Pay. Different wallets
+// will use these values to render card artwork appropriately for their app.
 type CardProfileNewParamsDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple. The default is white.
 	TextColor field.Field[CardProfileNewParamsDigitalWalletsTextColor] `json:"text_color"`
@@ -215,6 +224,7 @@ type CardProfileNewParamsDigitalWallets struct {
 	AppIconFileID field.Field[string] `json:"app_icon_file_id,required"`
 }
 
+// The Card's text color, specified as an RGB triple. The default is white.
 type CardProfileNewParamsDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
 	Red field.Field[int64] `json:"red,required"`
@@ -233,8 +243,7 @@ type CardProfileListParams struct {
 	Status field.Field[CardProfileListParamsStatus] `query:"status"`
 }
 
-// URLQuery serializes CardProfileListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CardProfileListParams]'s query parameters as `url.Values`.
 func (r CardProfileListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -246,8 +255,8 @@ type CardProfileListParamsStatus struct {
 	In field.Field[[]CardProfileListParamsStatusIn] `query:"in"`
 }
 
-// URLQuery serializes CardProfileListParamsStatus into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CardProfileListParamsStatus]'s query parameters as
+// `url.Values`.
 func (r CardProfileListParamsStatus) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -261,24 +270,24 @@ const (
 	CardProfileListParamsStatusInArchived CardProfileListParamsStatusIn = "archived"
 )
 
+// A list of Card Profile objects
 type CardProfileListResponse struct {
 	// The contents of the list.
 	Data []CardProfile `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CardProfileListResponseJSON
+	JSON       cardProfileListResponseJSON
 }
 
-type CardProfileListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// cardProfileListResponseJSON contains the JSON metadata for the struct
+// [CardProfileListResponse]
+type cardProfileListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CardProfileListResponse using
-// the internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CardProfileListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }

@@ -15,10 +15,18 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
+// CheckDepositService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewCheckDepositService] method
+// instead.
 type CheckDepositService struct {
 	Options []option.RequestOption
 }
 
+// NewCheckDepositService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
 func NewCheckDepositService(opts ...option.RequestOption) (r *CheckDepositService) {
 	r = &CheckDepositService{}
 	r.Options = opts
@@ -64,6 +72,7 @@ func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDep
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Check Deposits allow you to deposit images of paper checks into your account.
 type CheckDeposit struct {
 	// The deposit's identifier.
 	ID string `json:"id,required"`
@@ -97,30 +106,28 @@ type CheckDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
 	Type CheckDepositType `json:"type,required"`
-	JSON CheckDepositJSON
+	JSON checkDepositJSON
 }
 
-type CheckDepositJSON struct {
-	ID                apijson.Metadata
-	Amount            apijson.Metadata
-	CreatedAt         apijson.Metadata
-	Currency          apijson.Metadata
-	Status            apijson.Metadata
-	AccountID         apijson.Metadata
-	FrontImageFileID  apijson.Metadata
-	BackImageFileID   apijson.Metadata
-	TransactionID     apijson.Metadata
-	DepositAcceptance apijson.Metadata
-	DepositRejection  apijson.Metadata
-	DepositReturn     apijson.Metadata
-	Type              apijson.Metadata
+// checkDepositJSON contains the JSON metadata for the struct [CheckDeposit]
+type checkDepositJSON struct {
+	ID                apijson.Field
+	Amount            apijson.Field
+	CreatedAt         apijson.Field
+	Currency          apijson.Field
+	Status            apijson.Field
+	AccountID         apijson.Field
+	FrontImageFileID  apijson.Field
+	BackImageFileID   apijson.Field
+	TransactionID     apijson.Field
+	DepositAcceptance apijson.Field
+	DepositRejection  apijson.Field
+	DepositReturn     apijson.Field
+	Type              apijson.Field
 	raw               string
-	Extras            map[string]apijson.Metadata
+	Extras            map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDeposit using the
-// internal json library. Unrecognized fields are stored in the `jsonFields`
-// property.
 func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -145,6 +152,8 @@ const (
 	CheckDepositStatusReturned  CheckDepositStatus = "returned"
 )
 
+// If your deposit is successfully parsed and accepted by Increase, this will
+// contain details of the parsed check.
 type CheckDepositDepositAcceptance struct {
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -164,24 +173,23 @@ type CheckDepositDepositAcceptance struct {
 	SerialNumber string `json:"serial_number,required,nullable"`
 	// The ID of the Check Deposit that was accepted.
 	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           CheckDepositDepositAcceptanceJSON
+	JSON           checkDepositDepositAcceptanceJSON
 }
 
-type CheckDepositDepositAcceptanceJSON struct {
-	Amount         apijson.Metadata
-	Currency       apijson.Metadata
-	AccountNumber  apijson.Metadata
-	RoutingNumber  apijson.Metadata
-	AuxiliaryOnUs  apijson.Metadata
-	SerialNumber   apijson.Metadata
-	CheckDepositID apijson.Metadata
+// checkDepositDepositAcceptanceJSON contains the JSON metadata for the struct
+// [CheckDepositDepositAcceptance]
+type checkDepositDepositAcceptanceJSON struct {
+	Amount         apijson.Field
+	Currency       apijson.Field
+	AccountNumber  apijson.Field
+	RoutingNumber  apijson.Field
+	AuxiliaryOnUs  apijson.Field
+	SerialNumber   apijson.Field
+	CheckDepositID apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositAcceptance
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -197,6 +205,8 @@ const (
 	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
 )
 
+// If your deposit is rejected by Increase, this will contain details as to why it
+// was rejected.
 type CheckDepositDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
@@ -209,21 +219,20 @@ type CheckDepositDepositRejection struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
 	RejectedAt time.Time `json:"rejected_at,required" format:"date-time"`
-	JSON       CheckDepositDepositRejectionJSON
+	JSON       checkDepositDepositRejectionJSON
 }
 
-type CheckDepositDepositRejectionJSON struct {
-	Amount     apijson.Metadata
-	Currency   apijson.Metadata
-	Reason     apijson.Metadata
-	RejectedAt apijson.Metadata
+// checkDepositDepositRejectionJSON contains the JSON metadata for the struct
+// [CheckDepositDepositRejection]
+type checkDepositDepositRejectionJSON struct {
+	Amount     apijson.Field
+	Currency   apijson.Field
+	Reason     apijson.Field
+	RejectedAt apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositRejection
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -252,6 +261,8 @@ const (
 	CheckDepositDepositRejectionReasonUnknown                     CheckDepositDepositRejectionReason = "unknown"
 )
 
+// If your deposit is returned, this will contain details as to why it was
+// returned.
 type CheckDepositDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -268,23 +279,22 @@ type CheckDepositDepositReturn struct {
 	// transaction.
 	TransactionID string                                `json:"transaction_id,required"`
 	ReturnReason  CheckDepositDepositReturnReturnReason `json:"return_reason,required"`
-	JSON          CheckDepositDepositReturnJSON
+	JSON          checkDepositDepositReturnJSON
 }
 
-type CheckDepositDepositReturnJSON struct {
-	Amount         apijson.Metadata
-	ReturnedAt     apijson.Metadata
-	Currency       apijson.Metadata
-	CheckDepositID apijson.Metadata
-	TransactionID  apijson.Metadata
-	ReturnReason   apijson.Metadata
+// checkDepositDepositReturnJSON contains the JSON metadata for the struct
+// [CheckDepositDepositReturn]
+type checkDepositDepositReturnJSON struct {
+	Amount         apijson.Field
+	ReturnedAt     apijson.Field
+	Currency       apijson.Field
+	CheckDepositID apijson.Field
+	TransactionID  apijson.Field
+	ReturnReason   apijson.Field
 	raw            string
-	Extras         map[string]apijson.Metadata
+	Extras         map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDepositDepositReturn
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -336,9 +346,6 @@ type CheckDepositNewParams struct {
 	BackImageFileID field.Field[string] `json:"back_image_file_id,required"`
 }
 
-// MarshalJSON serializes CheckDepositNewParams into an array of bytes using the
-// gjson library. Members of the `jsonFields` field are serialized into the
-// top-level, and will overwrite known members of the same name.
 func (r CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
@@ -354,8 +361,7 @@ type CheckDepositListParams struct {
 	CreatedAt field.Field[CheckDepositListParamsCreatedAt] `query:"created_at"`
 }
 
-// URLQuery serializes CheckDepositListParams into a url.Values of the query
-// parameters associated with this value
+// URLQuery serializes [CheckDepositListParams]'s query parameters as `url.Values`.
 func (r CheckDepositListParams) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
@@ -375,30 +381,30 @@ type CheckDepositListParamsCreatedAt struct {
 	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
-// URLQuery serializes CheckDepositListParamsCreatedAt into a url.Values of the
-// query parameters associated with this value
+// URLQuery serializes [CheckDepositListParamsCreatedAt]'s query parameters as
+// `url.Values`.
 func (r CheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.Marshal(r)
 }
 
+// A list of Check Deposit objects
 type CheckDepositListResponse struct {
 	// The contents of the list.
 	Data []CheckDeposit `json:"data,required"`
 	// A pointer to a place in the list.
 	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       CheckDepositListResponseJSON
+	JSON       checkDepositListResponseJSON
 }
 
-type CheckDepositListResponseJSON struct {
-	Data       apijson.Metadata
-	NextCursor apijson.Metadata
+// checkDepositListResponseJSON contains the JSON metadata for the struct
+// [CheckDepositListResponse]
+type checkDepositListResponseJSON struct {
+	Data       apijson.Field
+	NextCursor apijson.Field
 	raw        string
-	Extras     map[string]apijson.Metadata
+	Extras     map[string]apijson.Field
 }
 
-// UnmarshalJSON deserializes the provided bytes into CheckDepositListResponse
-// using the internal json library. Unrecognized fields are stored in the
-// `jsonFields` property.
 func (r *CheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
