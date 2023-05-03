@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -39,7 +39,7 @@ func (r *EntitySupplementalDocumentService) New(ctx context.Context, entity_id s
 
 type EntitySupplementalDocumentNewParams struct {
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 func (r EntitySupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {

@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -165,14 +165,14 @@ const (
 
 type AccountNewParams struct {
 	// The identifier for the Entity that will own the Account.
-	EntityID field.Field[string] `json:"entity_id"`
+	EntityID param.Field[string] `json:"entity_id"`
 	// The identifier for the Program that this Account falls under.
-	ProgramID field.Field[string] `json:"program_id"`
+	ProgramID param.Field[string] `json:"program_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
-	InformationalEntityID field.Field[string] `json:"informational_entity_id"`
+	InformationalEntityID param.Field[string] `json:"informational_entity_id"`
 	// The name you choose for the Account.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 }
 
 func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
@@ -181,7 +181,7 @@ func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
 
 type AccountUpdateParams struct {
 	// The new name of the Account.
-	Name field.Field[string] `json:"name"`
+	Name param.Field[string] `json:"name"`
 }
 
 func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -190,15 +190,15 @@ func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
 
 type AccountListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter Accounts for those belonging to the specified Entity.
-	EntityID field.Field[string] `query:"entity_id"`
+	EntityID param.Field[string] `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status    field.Field[AccountListParamsStatus]    `query:"status"`
-	CreatedAt field.Field[AccountListParamsCreatedAt] `query:"created_at"`
+	Status    param.Field[AccountListParamsStatus]    `query:"status"`
+	CreatedAt param.Field[AccountListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [AccountListParams]'s query parameters as `url.Values`.
@@ -216,16 +216,16 @@ const (
 type AccountListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [AccountListParamsCreatedAt]'s query parameters as

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -360,13 +360,13 @@ const (
 type RealTimeDecisionActionParams struct {
 	// If the Real-Time Decision relates to a card authorization attempt, this object
 	// contains your response to the authorization.
-	CardAuthorization field.Field[RealTimeDecisionActionParamsCardAuthorization] `json:"card_authorization"`
+	CardAuthorization param.Field[RealTimeDecisionActionParamsCardAuthorization] `json:"card_authorization"`
 	// If the Real-Time Decision relates to a digital wallet token provisioning
 	// attempt, this object contains your response to the attempt.
-	DigitalWalletToken field.Field[RealTimeDecisionActionParamsDigitalWalletToken] `json:"digital_wallet_token"`
+	DigitalWalletToken param.Field[RealTimeDecisionActionParamsDigitalWalletToken] `json:"digital_wallet_token"`
 	// If the Real-Time Decision relates to a digital wallet authentication attempt,
 	// this object contains your response to the authentication.
-	DigitalWalletAuthentication field.Field[RealTimeDecisionActionParamsDigitalWalletAuthentication] `json:"digital_wallet_authentication"`
+	DigitalWalletAuthentication param.Field[RealTimeDecisionActionParamsDigitalWalletAuthentication] `json:"digital_wallet_authentication"`
 }
 
 func (r RealTimeDecisionActionParams) MarshalJSON() (data []byte, err error) {
@@ -377,7 +377,7 @@ func (r RealTimeDecisionActionParams) MarshalJSON() (data []byte, err error) {
 // contains your response to the authorization.
 type RealTimeDecisionActionParamsCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
-	Decision field.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
+	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
 }
 
 type RealTimeDecisionActionParamsCardAuthorizationDecision string
@@ -392,23 +392,23 @@ const (
 type RealTimeDecisionActionParamsDigitalWalletToken struct {
 	// If your application approves the provisioning attempt, this contains metadata
 	// about the digital wallet token that will be generated.
-	Approval field.Field[RealTimeDecisionActionParamsDigitalWalletTokenApproval] `json:"approval"`
+	Approval param.Field[RealTimeDecisionActionParamsDigitalWalletTokenApproval] `json:"approval"`
 	// If your application declines the provisioning attempt, this contains details
 	// about the decline.
-	Decline field.Field[RealTimeDecisionActionParamsDigitalWalletTokenDecline] `json:"decline"`
+	Decline param.Field[RealTimeDecisionActionParamsDigitalWalletTokenDecline] `json:"decline"`
 }
 
 // If your application approves the provisioning attempt, this contains metadata
 // about the digital wallet token that will be generated.
 type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
-	CardProfileID field.Field[string] `json:"card_profile_id,required"`
+	CardProfileID param.Field[string] `json:"card_profile_id,required"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone field.Field[string] `json:"phone"`
+	Phone param.Field[string] `json:"phone"`
 	// An email address that can be used to verify the cardholder via one-time
 	// passcode.
-	Email field.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email"`
 }
 
 // If your application declines the provisioning attempt, this contains details
@@ -416,14 +416,14 @@ type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 type RealTimeDecisionActionParamsDigitalWalletTokenDecline struct {
 	// Why the tokenization attempt was declined. This is for logging purposes only and
 	// is not displayed to the end-user.
-	Reason field.Field[string] `json:"reason"`
+	Reason param.Field[string] `json:"reason"`
 }
 
 // If the Real-Time Decision relates to a digital wallet authentication attempt,
 // this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
-	Result field.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
 }
 
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string

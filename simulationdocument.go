@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -38,7 +38,7 @@ func (r *SimulationDocumentService) New(ctx context.Context, body SimulationDocu
 
 type SimulationDocumentNewParams struct {
 	// The identifier of the Account the tax document is for.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 }
 
 func (r SimulationDocumentNewParams) MarshalJSON() (data []byte, err error) {

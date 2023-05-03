@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -196,13 +196,13 @@ const (
 
 type EventSubscriptionNewParams struct {
 	// The URL you'd like us to send webhooks to.
-	URL field.Field[string] `json:"url,required"`
+	URL param.Field[string] `json:"url,required"`
 	// The key that will be used to sign webhooks. If no value is passed, a random
 	// string will be used as default.
-	SharedSecret field.Field[string] `json:"shared_secret"`
+	SharedSecret param.Field[string] `json:"shared_secret"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory field.Field[EventSubscriptionNewParamsSelectedEventCategory] `json:"selected_event_category"`
+	SelectedEventCategory param.Field[EventSubscriptionNewParamsSelectedEventCategory] `json:"selected_event_category"`
 }
 
 func (r EventSubscriptionNewParams) MarshalJSON() (data []byte, err error) {
@@ -266,7 +266,7 @@ const (
 
 type EventSubscriptionUpdateParams struct {
 	// The status to update the Event Subscription with.
-	Status field.Field[EventSubscriptionUpdateParamsStatus] `json:"status"`
+	Status param.Field[EventSubscriptionUpdateParamsStatus] `json:"status"`
 }
 
 func (r EventSubscriptionUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -283,10 +283,10 @@ const (
 
 type EventSubscriptionListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [EventSubscriptionListParams]'s query parameters as

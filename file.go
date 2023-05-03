@@ -12,7 +12,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -156,11 +156,11 @@ type FileNewParams struct {
 	// The file contents. This should follow the specifications of
 	// [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file
 	// transfers for the multipart/form-data protocol.
-	File field.Field[io.Reader] `form:"file,required" format:"binary"`
+	File param.Field[io.Reader] `form:"file,required" format:"binary"`
 	// The description you choose to give the File.
-	Description field.Field[string] `form:"description"`
+	Description param.Field[string] `form:"description"`
 	// What the File will be used for in Increase's systems.
-	Purpose field.Field[FileNewParamsPurpose] `form:"purpose,required"`
+	Purpose param.Field[FileNewParamsPurpose] `form:"purpose,required"`
 }
 
 func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
@@ -212,12 +212,12 @@ const (
 
 type FileListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     field.Field[int64]                   `query:"limit"`
-	CreatedAt field.Field[FileListParamsCreatedAt] `query:"created_at"`
-	Purpose   field.Field[FileListParamsPurpose]   `query:"purpose"`
+	Limit     param.Field[int64]                   `query:"limit"`
+	CreatedAt param.Field[FileListParamsCreatedAt] `query:"created_at"`
+	Purpose   param.Field[FileListParamsPurpose]   `query:"purpose"`
 }
 
 // URLQuery serializes [FileListParams]'s query parameters as `url.Values`.
@@ -228,16 +228,16 @@ func (r FileListParams) URLQuery() (v url.Values) {
 type FileListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [FileListParamsCreatedAt]'s query parameters as
@@ -249,7 +249,7 @@ func (r FileListParamsCreatedAt) URLQuery() (v url.Values) {
 type FileListParamsPurpose struct {
 	// Filter Files for those with the specified purpose or purposes. For GET requests,
 	// this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In field.Field[[]FileListParamsPurposeIn] `query:"in"`
+	In param.Field[[]FileListParamsPurposeIn] `query:"in"`
 }
 
 // URLQuery serializes [FileListParamsPurpose]'s query parameters as `url.Values`.

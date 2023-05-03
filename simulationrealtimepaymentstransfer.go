@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -2633,7 +2633,7 @@ const (
 
 type SimulationRealTimePaymentsTransferCompleteParams struct {
 	// If set, the simulation will reject the transfer.
-	Rejection field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejection] `json:"rejection"`
+	Rejection param.Field[SimulationRealTimePaymentsTransferCompleteParamsRejection] `json:"rejection"`
 }
 
 func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []byte, err error) {
@@ -2643,7 +2643,7 @@ func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []
 // If set, the simulation will reject the transfer.
 type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
 	// The reason code that the simulated rejection will have.
-	RejectReasonCode field.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
+	RejectReasonCode param.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
 }
 
 type SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
@@ -2675,19 +2675,19 @@ const (
 type SimulationRealTimePaymentsTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound Real Time Payments Transfer is
 	// for.
-	AccountNumberID field.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in USD cents. Must be positive.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// The identifier of a pending Request for Payment that this transfer will fulfill.
-	RequestForPaymentID field.Field[string] `json:"request_for_payment_id"`
+	RequestForPaymentID param.Field[string] `json:"request_for_payment_id"`
 	// The name provided by the sender of the transfer.
-	DebtorName field.Field[string] `json:"debtor_name"`
+	DebtorName param.Field[string] `json:"debtor_name"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber field.Field[string] `json:"debtor_account_number"`
+	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber field.Field[string] `json:"debtor_routing_number"`
+	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
 	// Additional information included with the transfer.
-	RemittanceInformation field.Field[string] `json:"remittance_information"`
+	RemittanceInformation param.Field[string] `json:"remittance_information"`
 }
 
 func (r SimulationRealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {

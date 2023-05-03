@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -137,13 +137,13 @@ const (
 
 type ExportNewParams struct {
 	// The type of Export to create.
-	Category field.Field[ExportNewParamsCategory] `json:"category,required"`
+	Category param.Field[ExportNewParamsCategory] `json:"category,required"`
 	// Options for the created export. Required if `category` is equal to
 	// `transaction_csv`.
-	TransactionCsv field.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
+	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
 	// Options for the created export. Required if `category` is equal to
 	// `balance_csv`.
-	BalanceCsv field.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
+	BalanceCsv param.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
 }
 
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
@@ -161,58 +161,58 @@ const (
 // `transaction_csv`.
 type ExportNewParamsTransactionCsv struct {
 	// Filter exported Transactions to the specified Account.
-	AccountID field.Field[string] `json:"account_id"`
+	AccountID param.Field[string] `json:"account_id"`
 	// Filter results by time range on the `created_at` attribute.
-	CreatedAt field.Field[ExportNewParamsTransactionCsvCreatedAt] `json:"created_at"`
+	CreatedAt param.Field[ExportNewParamsTransactionCsvCreatedAt] `json:"created_at"`
 }
 
 // Filter results by time range on the `created_at` attribute.
 type ExportNewParamsTransactionCsvCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `json:"after" format:"date-time"`
+	After param.Field[time.Time] `json:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `json:"before" format:"date-time"`
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `json:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
 }
 
 // Options for the created export. Required if `category` is equal to
 // `balance_csv`.
 type ExportNewParamsBalanceCsv struct {
 	// Filter exported Transactions to the specified Account.
-	AccountID field.Field[string] `json:"account_id"`
+	AccountID param.Field[string] `json:"account_id"`
 	// Filter results by time range on the `created_at` attribute.
-	CreatedAt field.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
+	CreatedAt param.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
 }
 
 // Filter results by time range on the `created_at` attribute.
 type ExportNewParamsBalanceCsvCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `json:"after" format:"date-time"`
+	After param.Field[time.Time] `json:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `json:"before" format:"date-time"`
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `json:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
 }
 
 type ExportListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [ExportListParams]'s query parameters as `url.Values`.

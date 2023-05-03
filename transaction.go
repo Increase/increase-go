@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -1953,16 +1953,16 @@ const (
 
 type TransactionListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter Transactions for those belonging to the specified Account.
-	AccountID field.Field[string] `query:"account_id"`
+	AccountID param.Field[string] `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route.
-	RouteID   field.Field[string]                         `query:"route_id"`
-	CreatedAt field.Field[TransactionListParamsCreatedAt] `query:"created_at"`
-	Category  field.Field[TransactionListParamsCategory]  `query:"category"`
+	RouteID   param.Field[string]                         `query:"route_id"`
+	CreatedAt param.Field[TransactionListParamsCreatedAt] `query:"created_at"`
+	Category  param.Field[TransactionListParamsCategory]  `query:"category"`
 }
 
 // URLQuery serializes [TransactionListParams]'s query parameters as `url.Values`.
@@ -1973,16 +1973,16 @@ func (r TransactionListParams) URLQuery() (v url.Values) {
 type TransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [TransactionListParamsCreatedAt]'s query parameters as
@@ -1994,7 +1994,7 @@ func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 type TransactionListParamsCategory struct {
 	// Return results whose value is in the provided list. For GET requests, this
 	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In field.Field[[]TransactionListParamsCategoryIn] `query:"in"`
+	In param.Field[[]TransactionListParamsCategoryIn] `query:"in"`
 }
 
 // URLQuery serializes [TransactionListParamsCategory]'s query parameters as

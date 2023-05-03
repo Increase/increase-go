@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -102,11 +102,11 @@ const (
 type BookkeepingEntrySetNewParams struct {
 	// The date of the transaction. If `transaction_id` is provided, this must match
 	// the `created_at` field on that resource.
-	Date field.Field[time.Time] `json:"date" format:"date-time"`
+	Date param.Field[time.Time] `json:"date" format:"date-time"`
 	// The identifier of the Transaction related to this entry set, if any.
-	TransactionID field.Field[string] `json:"transaction_id"`
+	TransactionID param.Field[string] `json:"transaction_id"`
 	// The bookkeeping entries.
-	Entries field.Field[[]BookkeepingEntrySetNewParamsEntries] `json:"entries,required"`
+	Entries param.Field[[]BookkeepingEntrySetNewParamsEntries] `json:"entries,required"`
 }
 
 func (r BookkeepingEntrySetNewParams) MarshalJSON() (data []byte, err error) {
@@ -115,9 +115,9 @@ func (r BookkeepingEntrySetNewParams) MarshalJSON() (data []byte, err error) {
 
 type BookkeepingEntrySetNewParamsEntries struct {
 	// The identifier for the Bookkeeping Account impacted by this entry.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The entry amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents. Debit entries have positive amounts; credit entries have
 	// negative amounts.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 }

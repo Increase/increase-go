@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -2635,21 +2635,21 @@ const (
 
 type SimulationACHTransferNewInboundParams struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
-	AccountNumberID field.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate field.Field[string] `json:"company_descriptive_date"`
+	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
 	// Data associated with the transfer set by the sender.
-	CompanyDiscretionaryData field.Field[string] `json:"company_discretionary_data"`
+	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
 	// The description of the transfer set by the sender.
-	CompanyEntryDescription field.Field[string] `json:"company_entry_description"`
+	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The name of the sender.
-	CompanyName field.Field[string] `json:"company_name"`
+	CompanyName param.Field[string] `json:"company_name"`
 	// The sender's company id.
-	CompanyID field.Field[string] `json:"company_id"`
+	CompanyID param.Field[string] `json:"company_id"`
 }
 
 func (r SimulationACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
@@ -2659,7 +2659,7 @@ func (r SimulationACHTransferNewInboundParams) MarshalJSON() (data []byte, err e
 type SimulationACHTransferReturnParams struct {
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
-	Reason field.Field[SimulationACHTransferReturnParamsReason] `json:"reason"`
+	Reason param.Field[SimulationACHTransferReturnParamsReason] `json:"reason"`
 }
 
 func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error) {

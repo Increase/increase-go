@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -162,14 +162,14 @@ const (
 
 type EventListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID field.Field[string]                   `query:"associated_object_id"`
-	CreatedAt          field.Field[EventListParamsCreatedAt] `query:"created_at"`
-	Category           field.Field[EventListParamsCategory]  `query:"category"`
+	AssociatedObjectID param.Field[string]                   `query:"associated_object_id"`
+	CreatedAt          param.Field[EventListParamsCreatedAt] `query:"created_at"`
+	Category           param.Field[EventListParamsCategory]  `query:"category"`
 }
 
 // URLQuery serializes [EventListParams]'s query parameters as `url.Values`.
@@ -180,16 +180,16 @@ func (r EventListParams) URLQuery() (v url.Values) {
 type EventListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [EventListParamsCreatedAt]'s query parameters as
@@ -202,7 +202,7 @@ type EventListParamsCategory struct {
 	// Filter Events for those with the specified category or categories. For GET
 	// requests, this should be encoded as a comma-delimited string, such as
 	// `?in=one,two,three`.
-	In field.Field[[]EventListParamsCategoryIn] `query:"in"`
+	In param.Field[[]EventListParamsCategoryIn] `query:"in"`
 }
 
 // URLQuery serializes [EventListParamsCategory]'s query parameters as

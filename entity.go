@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -860,27 +860,27 @@ func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 
 type EntityNewParams struct {
 	// The type of Entity to create.
-	Structure field.Field[EntityNewParamsStructure] `json:"structure,required"`
+	Structure param.Field[EntityNewParamsStructure] `json:"structure,required"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
-	Corporation field.Field[EntityNewParamsCorporation] `json:"corporation"`
+	Corporation param.Field[EntityNewParamsCorporation] `json:"corporation"`
 	// Details of the natural person entity to create. Required if `structure` is equal
 	// to `natural_person`. Natural people entities should be submitted with
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
-	NaturalPerson field.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
+	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
-	Joint field.Field[EntityNewParamsJoint] `json:"joint"`
+	Joint param.Field[EntityNewParamsJoint] `json:"joint"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
-	Trust field.Field[EntityNewParamsTrust] `json:"trust"`
+	Trust param.Field[EntityNewParamsTrust] `json:"trust"`
 	// The description you choose to give the entity.
-	Description field.Field[string] `json:"description"`
+	Description param.Field[string] `json:"description"`
 	// The relationship between your group and the entity.
-	Relationship field.Field[EntityNewParamsRelationship] `json:"relationship,required"`
+	Relationship param.Field[EntityNewParamsRelationship] `json:"relationship,required"`
 	// Additional documentation associated with the entity.
-	SupplementalDocuments field.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
+	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
 }
 
 func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
@@ -900,93 +900,93 @@ const (
 // `corporation`.
 type EntityNewParamsCorporation struct {
 	// The legal name of the corporation.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The website of the corporation.
-	Website field.Field[string] `json:"website"`
+	Website param.Field[string] `json:"website"`
 	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier field.Field[string] `json:"tax_identifier,required"`
+	TaxIdentifier param.Field[string] `json:"tax_identifier,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
-	IncorporationState field.Field[string] `json:"incorporation_state"`
+	IncorporationState param.Field[string] `json:"incorporation_state"`
 	// The corporation's address.
-	Address field.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners field.Field[[]EntityNewParamsCorporationBeneficialOwners] `json:"beneficial_owners,required"`
+	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwners] `json:"beneficial_owners,required"`
 }
 
 // The corporation's address.
 type EntityNewParamsCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 type EntityNewParamsCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
-	Individual field.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
+	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
 	// This person's role or title within the entity.
-	CompanyTitle field.Field[string] `json:"company_title"`
+	CompanyTitle param.Field[string] `json:"company_title"`
 	// Why this person is considered a beneficial owner of the entity.
-	Prong field.Field[EntityNewParamsCorporationBeneficialOwnersProng] `json:"prong,required"`
+	Prong param.Field[EntityNewParamsCorporationBeneficialOwnersProng] `json:"prong,required"`
 }
 
 // Personal details for the beneficial owner.
 type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
 	// The person's legal name.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth field.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
 	// The individual's address.
-	Address field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualAddress] `json:"address,required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
-	ConfirmedNoUsTaxID field.Field[bool] `json:"confirmed_no_us_tax_id"`
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification,required"`
 }
 
 // The individual's address.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 // A means of verifying the person's identity.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method,required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number field.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number,required"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport] `json:"passport"`
+	Passport param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport] `json:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense] `json:"drivers_license"`
+	DriversLicense param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense] `json:"drivers_license"`
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
-	Other field.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther] `json:"other"`
+	Other param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther] `json:"other"`
 }
 
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -1003,22 +1003,22 @@ const (
 // equal to `passport`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The country that issued the passport.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 }
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1026,13 +1026,13 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLi
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 type EntityNewParamsCorporationBeneficialOwnersProng string
@@ -1048,51 +1048,51 @@ const (
 // identification methods.
 type EntityNewParamsNaturalPerson struct {
 	// The person's legal name.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth field.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
 	// The individual's address.
-	Address field.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
-	ConfirmedNoUsTaxID field.Field[bool] `json:"confirmed_no_us_tax_id"`
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification field.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
 }
 
 // The individual's address.
 type EntityNewParamsNaturalPersonAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 // A means of verifying the person's identity.
 type EntityNewParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method field.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number field.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number,required"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport field.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
+	Passport param.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense field.Field[EntityNewParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
+	DriversLicense param.Field[EntityNewParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
-	Other field.Field[EntityNewParamsNaturalPersonIdentificationOther] `json:"other"`
+	Other param.Field[EntityNewParamsNaturalPersonIdentificationOther] `json:"other"`
 }
 
 type EntityNewParamsNaturalPersonIdentificationMethod string
@@ -1109,22 +1109,22 @@ const (
 // equal to `passport`.
 type EntityNewParamsNaturalPersonIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The country that issued the passport.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 }
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1132,71 +1132,71 @@ type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 type EntityNewParamsNaturalPersonIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 // Details of the joint entity to create. Required if `structure` is equal to
 // `joint`.
 type EntityNewParamsJoint struct {
 	// The name of the joint entity.
-	Name field.Field[string] `json:"name"`
+	Name param.Field[string] `json:"name"`
 	// The two individuals that share control of the entity.
-	Individuals field.Field[[]EntityNewParamsJointIndividuals] `json:"individuals,required"`
+	Individuals param.Field[[]EntityNewParamsJointIndividuals] `json:"individuals,required"`
 }
 
 type EntityNewParamsJointIndividuals struct {
 	// The person's legal name.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth field.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
 	// The individual's address.
-	Address field.Field[EntityNewParamsJointIndividualsAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsJointIndividualsAddress] `json:"address,required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
-	ConfirmedNoUsTaxID field.Field[bool] `json:"confirmed_no_us_tax_id"`
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification field.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification,required"`
 }
 
 // The individual's address.
 type EntityNewParamsJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 // A means of verifying the person's identity.
 type EntityNewParamsJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method field.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method,required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number field.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number,required"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport field.Field[EntityNewParamsJointIndividualsIdentificationPassport] `json:"passport"`
+	Passport param.Field[EntityNewParamsJointIndividualsIdentificationPassport] `json:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense field.Field[EntityNewParamsJointIndividualsIdentificationDriversLicense] `json:"drivers_license"`
+	DriversLicense param.Field[EntityNewParamsJointIndividualsIdentificationDriversLicense] `json:"drivers_license"`
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
-	Other field.Field[EntityNewParamsJointIndividualsIdentificationOther] `json:"other"`
+	Other param.Field[EntityNewParamsJointIndividualsIdentificationOther] `json:"other"`
 }
 
 type EntityNewParamsJointIndividualsIdentificationMethod string
@@ -1213,22 +1213,22 @@ const (
 // equal to `passport`.
 type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The country that issued the passport.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 }
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1236,38 +1236,38 @@ type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 type EntityNewParamsJointIndividualsIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 // Details of the trust entity to create. Required if `structure` is equal to
 // `trust`.
 type EntityNewParamsTrust struct {
 	// The legal name of the trust.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
 	// their own Employer Identification Number. Revocable trusts require information
 	// about the individual `grantor` who created the trust.
-	Category field.Field[EntityNewParamsTrustCategory] `json:"category,required"`
+	Category param.Field[EntityNewParamsTrustCategory] `json:"category,required"`
 	// The Employer Identification Number (EIN) for the trust. Required if `category`
 	// is equal to `irrevocable`.
-	TaxIdentifier field.Field[string] `json:"tax_identifier"`
+	TaxIdentifier param.Field[string] `json:"tax_identifier"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
 	// which the trust was formed.
-	FormationState field.Field[string] `json:"formation_state"`
+	FormationState param.Field[string] `json:"formation_state"`
 	// The trust's address.
-	Address field.Field[EntityNewParamsTrustAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustAddress] `json:"address,required"`
 	// The identifier of the File containing the formation document of the trust.
-	FormationDocumentFileID field.Field[string] `json:"formation_document_file_id"`
+	FormationDocumentFileID param.Field[string] `json:"formation_document_file_id"`
 	// The trustees of the trust.
-	Trustees field.Field[[]EntityNewParamsTrustTrustees] `json:"trustees,required"`
+	Trustees param.Field[[]EntityNewParamsTrustTrustees] `json:"trustees,required"`
 	// The grantor of the trust. Required if `category` is equal to `revocable`.
-	Grantor field.Field[EntityNewParamsTrustGrantor] `json:"grantor"`
+	Grantor param.Field[EntityNewParamsTrustGrantor] `json:"grantor"`
 }
 
 type EntityNewParamsTrustCategory string
@@ -1280,24 +1280,24 @@ const (
 // The trust's address.
 type EntityNewParamsTrustAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 type EntityNewParamsTrustTrustees struct {
 	// The structure of the trustee.
-	Structure field.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
+	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
 	// Details of the individual trustee. Required when the trustee `structure` is
 	// equal to `individual`.
-	Individual field.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
+	Individual param.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
 }
 
 type EntityNewParamsTrustTrusteesStructure string
@@ -1310,51 +1310,51 @@ const (
 // equal to `individual`.
 type EntityNewParamsTrustTrusteesIndividual struct {
 	// The person's legal name.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth field.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
 	// The individual's address.
-	Address field.Field[EntityNewParamsTrustTrusteesIndividualAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustTrusteesIndividualAddress] `json:"address,required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
-	ConfirmedNoUsTaxID field.Field[bool] `json:"confirmed_no_us_tax_id"`
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification field.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification,required"`
 }
 
 // The individual's address.
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 // A means of verifying the person's identity.
 type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method field.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method,required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number field.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number,required"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport field.Field[EntityNewParamsTrustTrusteesIndividualIdentificationPassport] `json:"passport"`
+	Passport param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationPassport] `json:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense field.Field[EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense] `json:"drivers_license"`
+	DriversLicense param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense] `json:"drivers_license"`
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
-	Other field.Field[EntityNewParamsTrustTrusteesIndividualIdentificationOther] `json:"other"`
+	Other param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationOther] `json:"other"`
 }
 
 type EntityNewParamsTrustTrusteesIndividualIdentificationMethod string
@@ -1371,22 +1371,22 @@ const (
 // equal to `passport`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The country that issued the passport.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 }
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1394,63 +1394,63 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 // The grantor of the trust. Required if `category` is equal to `revocable`.
 type EntityNewParamsTrustGrantor struct {
 	// The person's legal name.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth field.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
 	// The individual's address.
-	Address field.Field[EntityNewParamsTrustGrantorAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustGrantorAddress] `json:"address,required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
-	ConfirmedNoUsTaxID field.Field[bool] `json:"confirmed_no_us_tax_id"`
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
-	Identification field.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification,required"`
 }
 
 // The individual's address.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the address. This might be the floor or room number.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 // A means of verifying the person's identity.
 type EntityNewParamsTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method field.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method,required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number field.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number,required"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport field.Field[EntityNewParamsTrustGrantorIdentificationPassport] `json:"passport"`
+	Passport param.Field[EntityNewParamsTrustGrantorIdentificationPassport] `json:"passport"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
-	DriversLicense field.Field[EntityNewParamsTrustGrantorIdentificationDriversLicense] `json:"drivers_license"`
+	DriversLicense param.Field[EntityNewParamsTrustGrantorIdentificationDriversLicense] `json:"drivers_license"`
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
-	Other field.Field[EntityNewParamsTrustGrantorIdentificationOther] `json:"other"`
+	Other param.Field[EntityNewParamsTrustGrantorIdentificationOther] `json:"other"`
 }
 
 type EntityNewParamsTrustGrantorIdentificationMethod string
@@ -1467,22 +1467,22 @@ const (
 // equal to `passport`.
 type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	// The identifier of the File containing the passport.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The country that issued the passport.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 }
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	// The identifier of the File containing the driver's license.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1490,13 +1490,13 @@ type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 type EntityNewParamsTrustGrantorIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document.
-	Country field.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate field.Field[time.Time] `json:"expiration_date" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 type EntityNewParamsRelationship string
@@ -1509,16 +1509,16 @@ const (
 
 type EntityNewParamsSupplementalDocuments struct {
 	// The identifier of the File containing the document.
-	FileID field.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id,required"`
 }
 
 type EntityListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     field.Field[int64]                     `query:"limit"`
-	CreatedAt field.Field[EntityListParamsCreatedAt] `query:"created_at"`
+	Limit     param.Field[int64]                     `query:"limit"`
+	CreatedAt param.Field[EntityListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.
@@ -1529,16 +1529,16 @@ func (r EntityListParams) URLQuery() (v url.Values) {
 type EntityListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [EntityListParamsCreatedAt]'s query parameters as

@@ -7,7 +7,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -112,13 +112,13 @@ const (
 
 type BookkeepingAccountNewParams struct {
 	// The account compliance category.
-	ComplianceCategory field.Field[BookkeepingAccountNewParamsComplianceCategory] `json:"compliance_category"`
+	ComplianceCategory param.Field[BookkeepingAccountNewParamsComplianceCategory] `json:"compliance_category"`
 	// The entity, if `compliance_category` is `customer_balance`.
-	EntityID field.Field[string] `json:"entity_id"`
+	EntityID param.Field[string] `json:"entity_id"`
 	// The entity, if `compliance_category` is `commingled_cash`.
-	AccountID field.Field[string] `json:"account_id"`
+	AccountID param.Field[string] `json:"account_id"`
 	// The name you choose for the account.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 }
 
 func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {
@@ -134,10 +134,10 @@ const (
 
 type BookkeepingAccountListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [BookkeepingAccountListParams]'s query parameters as

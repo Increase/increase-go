@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -141,9 +141,9 @@ const (
 
 type AccountNumberNewParams struct {
 	// The Account the Account Number should belong to.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The name you choose for the Account Number.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
@@ -152,9 +152,9 @@ func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 
 type AccountNumberUpdateParams struct {
 	// The name you choose for the Account Number.
-	Name field.Field[string] `json:"name"`
+	Name param.Field[string] `json:"name"`
 	// This indicates if transfers can be made to the Account Number.
-	Status field.Field[AccountNumberUpdateParamsStatus] `json:"status"`
+	Status param.Field[AccountNumberUpdateParamsStatus] `json:"status"`
 }
 
 func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -171,15 +171,15 @@ const (
 
 type AccountNumberListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// The status to retrieve Account Numbers for.
-	Status field.Field[AccountNumberListParamsStatus] `query:"status"`
+	Status param.Field[AccountNumberListParamsStatus] `query:"status"`
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID field.Field[string]                           `query:"account_id"`
-	CreatedAt field.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string]                           `query:"account_id"`
+	CreatedAt param.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [AccountNumberListParams]'s query parameters as
@@ -199,16 +199,16 @@ const (
 type AccountNumberListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [AccountNumberListParamsCreatedAt]'s query parameters as

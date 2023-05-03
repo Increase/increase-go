@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -1384,16 +1384,16 @@ const (
 
 type SimulationCardAuthorizeParams struct {
 	// The authorization amount in cents.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// The identifier of the Card to be authorized.
-	CardID field.Field[string] `json:"card_id"`
+	CardID param.Field[string] `json:"card_id"`
 	// The identifier of the Digital Wallet Token to be authorized.
-	DigitalWalletTokenID field.Field[string] `json:"digital_wallet_token_id"`
+	DigitalWalletTokenID param.Field[string] `json:"digital_wallet_token_id"`
 	// The identifier of the Event Subscription to use. If provided, will override the
 	// default real time event subscription. Because you can only create one real time
 	// decision event subscription, you can use this field to route events to any
 	// specified event subscription for testing purposes.
-	EventSubscriptionID field.Field[string] `json:"event_subscription_id"`
+	EventSubscriptionID param.Field[string] `json:"event_subscription_id"`
 }
 
 func (r SimulationCardAuthorizeParams) MarshalJSON() (data []byte, err error) {
@@ -1402,13 +1402,13 @@ func (r SimulationCardAuthorizeParams) MarshalJSON() (data []byte, err error) {
 
 type SimulationCardSettlementParams struct {
 	// The identifier of the Card to create a settlement on.
-	CardID field.Field[string] `json:"card_id,required"`
+	CardID param.Field[string] `json:"card_id,required"`
 	// The identifier of the Pending Transaction for the Card Authorization you wish to
 	// settle.
-	PendingTransactionID field.Field[string] `json:"pending_transaction_id,required"`
+	PendingTransactionID param.Field[string] `json:"pending_transaction_id,required"`
 	// The amount to be settled. This defaults to the amount of the Pending Transaction
 	// being settled.
-	Amount field.Field[int64] `json:"amount"`
+	Amount param.Field[int64] `json:"amount"`
 }
 
 func (r SimulationCardSettlementParams) MarshalJSON() (data []byte, err error) {

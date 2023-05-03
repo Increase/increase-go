@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -180,32 +180,32 @@ const (
 
 type ACHPrenotificationNewParams struct {
 	// The account number for the destination account.
-	AccountNumber field.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number,required"`
 	// Additional information that will be sent to the recipient.
-	Addendum field.Field[string] `json:"addendum"`
+	Addendum param.Field[string] `json:"addendum"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate field.Field[string] `json:"company_descriptive_date"`
+	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
 	// The data you choose to associate with the transfer.
-	CompanyDiscretionaryData field.Field[string] `json:"company_discretionary_data"`
+	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
 	// The description of the transfer you wish to be shown to the recipient.
-	CompanyEntryDescription field.Field[string] `json:"company_entry_description"`
+	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The name by which the recipient knows you.
-	CompanyName field.Field[string] `json:"company_name"`
+	CompanyName param.Field[string] `json:"company_name"`
 	// Whether the Prenotification is for a future debit or credit.
-	CreditDebitIndicator field.Field[ACHPrenotificationNewParamsCreditDebitIndicator] `json:"credit_debit_indicator"`
+	CreditDebitIndicator param.Field[ACHPrenotificationNewParamsCreditDebitIndicator] `json:"credit_debit_indicator"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate field.Field[time.Time] `json:"effective_date" format:"date"`
+	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
 	// Your identifer for the transfer recipient.
-	IndividualID field.Field[string] `json:"individual_id"`
+	IndividualID param.Field[string] `json:"individual_id"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
-	IndividualName field.Field[string] `json:"individual_name"`
+	IndividualName param.Field[string] `json:"individual_name"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber field.Field[string] `json:"routing_number,required"`
+	RoutingNumber param.Field[string] `json:"routing_number,required"`
 	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
-	StandardEntryClassCode field.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
+	StandardEntryClassCode param.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 }
 
 func (r ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
@@ -229,11 +229,11 @@ const (
 
 type ACHPrenotificationListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     field.Field[int64]                                 `query:"limit"`
-	CreatedAt field.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
+	Limit     param.Field[int64]                                 `query:"limit"`
+	CreatedAt param.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [ACHPrenotificationListParams]'s query parameters as
@@ -245,16 +245,16 @@ func (r ACHPrenotificationListParams) URLQuery() (v url.Values) {
 type ACHPrenotificationListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [ACHPrenotificationListParamsCreatedAt]'s query parameters

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -42,9 +42,9 @@ func (r *SimulationCardDisputeService) Action(ctx context.Context, card_dispute_
 
 type SimulationCardDisputeActionParams struct {
 	// The status to move the dispute to.
-	Status field.Field[SimulationCardDisputeActionParamsStatus] `json:"status,required"`
+	Status param.Field[SimulationCardDisputeActionParamsStatus] `json:"status,required"`
 	// Why the dispute was rejected. Not required for accepting disputes.
-	Explanation field.Field[string] `json:"explanation"`
+	Explanation param.Field[string] `json:"explanation"`
 }
 
 func (r SimulationCardDisputeActionParams) MarshalJSON() (data []byte, err error) {

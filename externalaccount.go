@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -157,13 +157,13 @@ const (
 type ExternalAccountNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber field.Field[string] `json:"routing_number,required"`
+	RoutingNumber param.Field[string] `json:"routing_number,required"`
 	// The account number for the destination account.
-	AccountNumber field.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number,required"`
 	// The type of the destination account. Defaults to `checking`.
-	Funding field.Field[ExternalAccountNewParamsFunding] `json:"funding"`
+	Funding param.Field[ExternalAccountNewParamsFunding] `json:"funding"`
 	// The name you choose for the Account.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 }
 
 func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
@@ -180,9 +180,9 @@ const (
 
 type ExternalAccountUpdateParams struct {
 	// The description you choose to give the external account.
-	Description field.Field[string] `json:"description"`
+	Description param.Field[string] `json:"description"`
 	// The status of the External Account.
-	Status field.Field[ExternalAccountUpdateParamsStatus] `json:"status"`
+	Status param.Field[ExternalAccountUpdateParamsStatus] `json:"status"`
 }
 
 func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -198,11 +198,11 @@ const (
 
 type ExternalAccountListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  field.Field[int64]                           `query:"limit"`
-	Status field.Field[ExternalAccountListParamsStatus] `query:"status"`
+	Limit  param.Field[int64]                           `query:"limit"`
+	Status param.Field[ExternalAccountListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [ExternalAccountListParams]'s query parameters as
@@ -215,7 +215,7 @@ type ExternalAccountListParamsStatus struct {
 	// Filter External Accounts for those with the specified status or statuses. For
 	// GET requests, this should be encoded as a comma-delimited string, such as
 	// `?in=one,two,three`.
-	In field.Field[[]ExternalAccountListParamsStatusIn] `query:"in"`
+	In param.Field[[]ExternalAccountListParamsStatusIn] `query:"in"`
 }
 
 // URLQuery serializes [ExternalAccountListParamsStatus]'s query parameters as

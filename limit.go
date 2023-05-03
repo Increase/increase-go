@@ -8,7 +8,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -164,14 +164,14 @@ const (
 
 type LimitNewParams struct {
 	// The metric for the limit.
-	Metric field.Field[LimitNewParamsMetric] `json:"metric,required"`
+	Metric param.Field[LimitNewParamsMetric] `json:"metric,required"`
 	// The interval for the metric. Required if `metric` is `count` or `volume`.
-	Interval field.Field[LimitNewParamsInterval] `json:"interval"`
+	Interval param.Field[LimitNewParamsInterval] `json:"interval"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
-	ModelID field.Field[string] `json:"model_id,required"`
+	ModelID param.Field[string] `json:"model_id,required"`
 	// The value to test the limit against.
-	Value field.Field[int64] `json:"value,required"`
+	Value param.Field[int64] `json:"value,required"`
 }
 
 func (r LimitNewParams) MarshalJSON() (data []byte, err error) {
@@ -198,7 +198,7 @@ const (
 
 type LimitUpdateParams struct {
 	// The status to update the limit with.
-	Status field.Field[LimitUpdateParamsStatus] `json:"status,required"`
+	Status param.Field[LimitUpdateParamsStatus] `json:"status,required"`
 }
 
 func (r LimitUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -214,14 +214,14 @@ const (
 
 type LimitListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// The model to retrieve limits for.
-	ModelID field.Field[string] `query:"model_id"`
+	ModelID param.Field[string] `query:"model_id"`
 	// The status to retrieve limits for.
-	Status field.Field[string] `query:"status"`
+	Status param.Field[string] `query:"status"`
 }
 
 // URLQuery serializes [LimitListParams]'s query parameters as `url.Values`.

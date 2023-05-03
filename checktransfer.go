@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -451,30 +451,30 @@ const (
 
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The street address of the check's destination.
-	AddressLine1 field.Field[string] `json:"address_line1,required"`
+	AddressLine1 param.Field[string] `json:"address_line1,required"`
 	// The second line of the address of the check's destination.
-	AddressLine2 field.Field[string] `json:"address_line2"`
+	AddressLine2 param.Field[string] `json:"address_line2"`
 	// The city of the check's destination.
-	AddressCity field.Field[string] `json:"address_city,required"`
+	AddressCity param.Field[string] `json:"address_city,required"`
 	// The state of the check's destination.
-	AddressState field.Field[string] `json:"address_state,required"`
+	AddressState param.Field[string] `json:"address_state,required"`
 	// The postal code of the check's destination.
-	AddressZip field.Field[string] `json:"address_zip,required"`
+	AddressZip param.Field[string] `json:"address_zip,required"`
 	// The return address to be printed on the check. If omitted this will default to
 	// the address of the Entity of the Account used to make the Check Transfer.
-	ReturnAddress field.Field[CheckTransferNewParamsReturnAddress] `json:"return_address"`
+	ReturnAddress param.Field[CheckTransferNewParamsReturnAddress] `json:"return_address"`
 	// The transfer amount in cents.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// The descriptor that will be printed on the memo field on the check.
-	Message field.Field[string] `json:"message,required"`
+	Message param.Field[string] `json:"message,required"`
 	// The descriptor that will be printed on the letter included with the check.
-	Note field.Field[string] `json:"note"`
+	Note param.Field[string] `json:"note"`
 	// The name that will be printed on the check.
-	RecipientName field.Field[string] `json:"recipient_name,required"`
+	RecipientName param.Field[string] `json:"recipient_name,required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
-	RequireApproval field.Field[bool] `json:"require_approval"`
+	RequireApproval param.Field[bool] `json:"require_approval"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -485,28 +485,28 @@ func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 // the address of the Entity of the Account used to make the Check Transfer.
 type CheckTransferNewParamsReturnAddress struct {
 	// The name of the return address.
-	Name field.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name,required"`
 	// The first line of the return address.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the return address.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the return address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The US state of the return address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The postal code of the return address.
-	Zip field.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip,required"`
 }
 
 type CheckTransferListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID field.Field[string]                           `query:"account_id"`
-	CreatedAt field.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string]                           `query:"account_id"`
+	CreatedAt param.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [CheckTransferListParams]'s query parameters as
@@ -518,16 +518,16 @@ func (r CheckTransferListParams) URLQuery() (v url.Values) {
 type CheckTransferListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [CheckTransferListParamsCreatedAt]'s query parameters as

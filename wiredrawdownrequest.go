@@ -8,7 +8,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -177,23 +177,23 @@ const (
 
 type WireDrawdownRequestNewParams struct {
 	// The Account Number to which the recipient should send funds.
-	AccountNumberID field.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The amount requested from the recipient, in cents.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// A message the recipient will see as part of the request.
-	MessageToRecipient field.Field[string] `json:"message_to_recipient,required"`
+	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
 	// The drawdown request's recipient's account number.
-	RecipientAccountNumber field.Field[string] `json:"recipient_account_number,required"`
+	RecipientAccountNumber param.Field[string] `json:"recipient_account_number,required"`
 	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber field.Field[string] `json:"recipient_routing_number,required"`
+	RecipientRoutingNumber param.Field[string] `json:"recipient_routing_number,required"`
 	// The drawdown request's recipient's name.
-	RecipientName field.Field[string] `json:"recipient_name,required"`
+	RecipientName param.Field[string] `json:"recipient_name,required"`
 	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 field.Field[string] `json:"recipient_address_line1"`
+	RecipientAddressLine1 param.Field[string] `json:"recipient_address_line1"`
 	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 field.Field[string] `json:"recipient_address_line2"`
+	RecipientAddressLine2 param.Field[string] `json:"recipient_address_line2"`
 	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 field.Field[string] `json:"recipient_address_line3"`
+	RecipientAddressLine3 param.Field[string] `json:"recipient_address_line3"`
 }
 
 func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
@@ -202,10 +202,10 @@ func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
 
 type WireDrawdownRequestListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [WireDrawdownRequestListParams]'s query parameters as

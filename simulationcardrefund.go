@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -40,7 +40,7 @@ func (r *SimulationCardRefundService) New(ctx context.Context, body SimulationCa
 type SimulationCardRefundNewParams struct {
 	// The identifier for the Transaction to refund. The Transaction's source must have
 	// a category of card_settlement.
-	TransactionID field.Field[string] `json:"transaction_id,required"`
+	TransactionID param.Field[string] `json:"transaction_id,required"`
 }
 
 func (r SimulationCardRefundNewParams) MarshalJSON() (data []byte, err error) {

@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -193,10 +193,10 @@ const (
 
 type CardProfileNewParams struct {
 	// A description you can use to identify the Card Profile.
-	Description field.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description,required"`
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
-	DigitalWallets field.Field[CardProfileNewParamsDigitalWallets] `json:"digital_wallets,required"`
+	DigitalWallets param.Field[CardProfileNewParamsDigitalWallets] `json:"digital_wallets,required"`
 }
 
 func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
@@ -207,40 +207,40 @@ func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
 // will use these values to render card artwork appropriately for their app.
 type CardProfileNewParamsDigitalWallets struct {
 	// The Card's text color, specified as an RGB triple. The default is white.
-	TextColor field.Field[CardProfileNewParamsDigitalWalletsTextColor] `json:"text_color"`
+	TextColor param.Field[CardProfileNewParamsDigitalWalletsTextColor] `json:"text_color"`
 	// A user-facing description for whoever is issuing the card.
-	IssuerName field.Field[string] `json:"issuer_name,required"`
+	IssuerName param.Field[string] `json:"issuer_name,required"`
 	// A user-facing description for the card itself.
-	CardDescription field.Field[string] `json:"card_description,required"`
+	CardDescription param.Field[string] `json:"card_description,required"`
 	// A website the user can visit to view and receive support for their card.
-	ContactWebsite field.Field[string] `json:"contact_website"`
+	ContactWebsite param.Field[string] `json:"contact_website"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail field.Field[string] `json:"contact_email"`
+	ContactEmail param.Field[string] `json:"contact_email"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone field.Field[string] `json:"contact_phone"`
+	ContactPhone param.Field[string] `json:"contact_phone"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID field.Field[string] `json:"background_image_file_id,required"`
+	BackgroundImageFileID param.Field[string] `json:"background_image_file_id,required"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileID field.Field[string] `json:"app_icon_file_id,required"`
+	AppIconFileID param.Field[string] `json:"app_icon_file_id,required"`
 }
 
 // The Card's text color, specified as an RGB triple. The default is white.
 type CardProfileNewParamsDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
-	Red field.Field[int64] `json:"red,required"`
+	Red param.Field[int64] `json:"red,required"`
 	// The value of the green channel in the RGB color.
-	Green field.Field[int64] `json:"green,required"`
+	Green param.Field[int64] `json:"green,required"`
 	// The value of the blue channel in the RGB color.
-	Blue field.Field[int64] `json:"blue,required"`
+	Blue param.Field[int64] `json:"blue,required"`
 }
 
 type CardProfileListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  field.Field[int64]                       `query:"limit"`
-	Status field.Field[CardProfileListParamsStatus] `query:"status"`
+	Limit  param.Field[int64]                       `query:"limit"`
+	Status param.Field[CardProfileListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [CardProfileListParams]'s query parameters as `url.Values`.
@@ -252,7 +252,7 @@ type CardProfileListParamsStatus struct {
 	// Filter Card Profiles for those with the specified status or statuses. For GET
 	// requests, this should be encoded as a comma-delimited string, such as
 	// `?in=one,two,three`.
-	In field.Field[[]CardProfileListParamsStatusIn] `query:"in"`
+	In param.Field[[]CardProfileListParamsStatusIn] `query:"in"`
 }
 
 // URLQuery serializes [CardProfileListParamsStatus]'s query parameters as

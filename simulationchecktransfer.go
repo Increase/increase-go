@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -59,7 +59,7 @@ func (r *SimulationCheckTransferService) Return(ctx context.Context, check_trans
 
 type SimulationCheckTransferReturnParams struct {
 	// The reason why the Check Transfer was returned to Increase.
-	Reason field.Field[SimulationCheckTransferReturnParamsReason] `json:"reason,required"`
+	Reason param.Field[SimulationCheckTransferReturnParamsReason] `json:"reason,required"`
 }
 
 func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err error) {

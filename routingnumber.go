@@ -7,7 +7,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -123,12 +123,12 @@ const (
 
 type RoutingNumberListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter financial institutions by routing number.
-	RoutingNumber field.Field[string] `query:"routing_number,required"`
+	RoutingNumber param.Field[string] `query:"routing_number,required"`
 }
 
 // URLQuery serializes [RoutingNumberListParams]'s query parameters as

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -1993,9 +1993,9 @@ const (
 
 type SimulationInterestPaymentNewParams struct {
 	// The identifier of the Account Number the Interest Payment is for.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The interest amount in cents. Must be positive.
-	Amount field.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount,required"`
 }
 
 func (r SimulationInterestPaymentNewParams) MarshalJSON() (data []byte, err error) {

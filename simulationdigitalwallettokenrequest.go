@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -83,7 +83,7 @@ const (
 
 type SimulationDigitalWalletTokenRequestNewParams struct {
 	// The identifier of the Card to be authorized.
-	CardID field.Field[string] `json:"card_id,required"`
+	CardID param.Field[string] `json:"card_id,required"`
 }
 
 func (r SimulationDigitalWalletTokenRequestNewParams) MarshalJSON() (data []byte, err error) {

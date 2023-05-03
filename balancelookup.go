@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -76,7 +76,7 @@ const (
 
 type BalanceLookupLookupParams struct {
 	// The Account to query the balance for.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 }
 
 func (r BalanceLookupLookupParams) MarshalJSON() (data []byte, err error) {

@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -164,10 +164,10 @@ const (
 type InboundACHTransferReturnNewParams struct {
 	// The transaction identifier of the Inbound ACH Transfer to return to the
 	// originating financial institution.
-	TransactionID field.Field[string] `json:"transaction_id,required"`
+	TransactionID param.Field[string] `json:"transaction_id,required"`
 	// The reason why this transfer will be returned. The most usual return codes are
 	// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
-	Reason field.Field[InboundACHTransferReturnNewParamsReason] `json:"reason,required"`
+	Reason param.Field[InboundACHTransferReturnNewParamsReason] `json:"reason,required"`
 }
 
 func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {
@@ -189,10 +189,10 @@ const (
 
 type InboundACHTransferReturnListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [InboundACHTransferReturnListParams]'s query parameters as

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -39,7 +39,7 @@ func (r *SimulationAccountStatementService) New(ctx context.Context, body Simula
 
 type SimulationAccountStatementNewParams struct {
 	// The identifier of the Account the statement is for.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 }
 
 func (r SimulationAccountStatementNewParams) MarshalJSON() (data []byte, err error) {

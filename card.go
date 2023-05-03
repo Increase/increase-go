@@ -9,7 +9,7 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
-	"github.com/increase/increase-go/internal/field"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
@@ -261,17 +261,17 @@ const (
 
 type CardNewParams struct {
 	// The Account the card should belong to.
-	AccountID field.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The description you choose to give the card.
-	Description field.Field[string] `json:"description"`
+	Description param.Field[string] `json:"description"`
 	// The card's billing address.
-	BillingAddress field.Field[CardNewParamsBillingAddress] `json:"billing_address"`
+	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. To add the card to a digital wallet, you may supply an email or phone
 	// number with this request. Otherwise, subscribe and then action a Real Time
 	// Decision with the category `digital_wallet_token_requested` or
 	// `digital_wallet_authentication_requested`.
-	DigitalWallet field.Field[CardNewParamsDigitalWallet] `json:"digital_wallet"`
+	DigitalWallet param.Field[CardNewParamsDigitalWallet] `json:"digital_wallet"`
 }
 
 func (r CardNewParams) MarshalJSON() (data []byte, err error) {
@@ -281,15 +281,15 @@ func (r CardNewParams) MarshalJSON() (data []byte, err error) {
 // The card's billing address.
 type CardNewParamsBillingAddress struct {
 	// The first line of the billing address.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the billing address.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the billing address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The US state of the billing address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The postal code of the billing address.
-	PostalCode field.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code,required"`
 }
 
 // The contact information used in the two-factor steps for digital wallet card
@@ -300,26 +300,26 @@ type CardNewParamsBillingAddress struct {
 type CardNewParamsDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email field.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone field.Field[string] `json:"phone"`
+	Phone param.Field[string] `json:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID field.Field[string] `json:"card_profile_id"`
+	CardProfileID param.Field[string] `json:"card_profile_id"`
 }
 
 type CardUpdateParams struct {
 	// The description you choose to give the card.
-	Description field.Field[string] `json:"description"`
+	Description param.Field[string] `json:"description"`
 	// The status to update the Card with.
-	Status field.Field[CardUpdateParamsStatus] `json:"status"`
+	Status param.Field[CardUpdateParamsStatus] `json:"status"`
 	// The card's updated billing address.
-	BillingAddress field.Field[CardUpdateParamsBillingAddress] `json:"billing_address"`
+	BillingAddress param.Field[CardUpdateParamsBillingAddress] `json:"billing_address"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet field.Field[CardUpdateParamsDigitalWallet] `json:"digital_wallet"`
+	DigitalWallet param.Field[CardUpdateParamsDigitalWallet] `json:"digital_wallet"`
 }
 
 func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -337,15 +337,15 @@ const (
 // The card's updated billing address.
 type CardUpdateParamsBillingAddress struct {
 	// The first line of the billing address.
-	Line1 field.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// The second line of the billing address.
-	Line2 field.Field[string] `json:"line2"`
+	Line2 param.Field[string] `json:"line2"`
 	// The city of the billing address.
-	City field.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city,required"`
 	// The US state of the billing address.
-	State field.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state,required"`
 	// The postal code of the billing address.
-	PostalCode field.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code,required"`
 }
 
 // The contact information used in the two-factor steps for digital wallet card
@@ -354,24 +354,24 @@ type CardUpdateParamsBillingAddress struct {
 type CardUpdateParamsDigitalWallet struct {
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email field.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone field.Field[string] `json:"phone"`
+	Phone param.Field[string] `json:"phone"`
 	// The card profile assigned to this digital card. Card profiles may also be
 	// assigned at the program level.
-	CardProfileID field.Field[string] `json:"card_profile_id"`
+	CardProfileID param.Field[string] `json:"card_profile_id"`
 }
 
 type CardListParams struct {
 	// Return the page of entries after this one.
-	Cursor field.Field[string] `query:"cursor"`
+	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit field.Field[int64] `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
 	// Filter Cards to ones belonging to the specified Account.
-	AccountID field.Field[string]                  `query:"account_id"`
-	CreatedAt field.Field[CardListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string]                  `query:"account_id"`
+	CreatedAt param.Field[CardListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [CardListParams]'s query parameters as `url.Values`.
@@ -382,16 +382,16 @@ func (r CardListParams) URLQuery() (v url.Values) {
 type CardListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	After field.Field[time.Time] `query:"after" format:"date-time"`
+	After param.Field[time.Time] `query:"after" format:"date-time"`
 	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
-	Before field.Field[time.Time] `query:"before" format:"date-time"`
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
 	// Return results on or after this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter field.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
 	// Return results on or before this
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore field.Field[time.Time] `query:"on_or_before" format:"date-time"`
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
 }
 
 // URLQuery serializes [CardListParamsCreatedAt]'s query parameters as
