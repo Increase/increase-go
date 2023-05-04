@@ -61,7 +61,7 @@ type balanceLookupLookupResponseJSON struct {
 	AvailableBalance apijson.Field
 	Type             apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *BalanceLookupLookupResponse) UnmarshalJSON(data []byte) (err error) {

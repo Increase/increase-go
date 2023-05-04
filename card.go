@@ -135,7 +135,7 @@ type cardJSON struct {
 	DigitalWallet   apijson.Field
 	Type            apijson.Field
 	raw             string
-	Extras          map[string]apijson.Field
+	ExtraFields     map[string]apijson.Field
 }
 
 func (r *Card) UnmarshalJSON(data []byte) (err error) {
@@ -168,13 +168,13 @@ type CardBillingAddress struct {
 // cardBillingAddressJSON contains the JSON metadata for the struct
 // [CardBillingAddress]
 type cardBillingAddressJSON struct {
-	Line1      apijson.Field
-	Line2      apijson.Field
-	City       apijson.Field
-	State      apijson.Field
-	PostalCode apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	PostalCode  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
@@ -204,7 +204,7 @@ type cardDigitalWalletJSON struct {
 	Phone         apijson.Field
 	CardProfileID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
@@ -246,7 +246,7 @@ type cardDetailsJSON struct {
 	VerificationCode     apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
@@ -412,10 +412,10 @@ type CardListResponse struct {
 // cardListResponseJSON contains the JSON metadata for the struct
 // [CardListResponse]
 type cardListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {

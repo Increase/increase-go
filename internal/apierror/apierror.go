@@ -26,14 +26,14 @@ type Error struct {
 
 // errorJSON contains the JSON metadata for the struct [Error]
 type errorJSON struct {
-	Type       apijson.Field
-	Title      apijson.Field
-	Detail     apijson.Field
-	Status     apijson.Field
-	Errors     apijson.Field
-	RetryAfter apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Type        apijson.Field
+	Title       apijson.Field
+	Detail      apijson.Field
+	Status      apijson.Field
+	Errors      apijson.Field
+	RetryAfter  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Error) UnmarshalJSON(data []byte) (err error) {

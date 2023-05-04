@@ -147,7 +147,7 @@ type inboundWireDrawdownRequestJSON struct {
 	BeneficiaryAddressLine2                 apijson.Field
 	BeneficiaryAddressLine3                 apijson.Field
 	raw                                     string
-	Extras                                  map[string]apijson.Field
+	ExtraFields                             map[string]apijson.Field
 }
 
 func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
@@ -186,10 +186,10 @@ type InboundWireDrawdownRequestListResponse struct {
 // inboundWireDrawdownRequestListResponseJSON contains the JSON metadata for the
 // struct [InboundWireDrawdownRequestListResponse]
 type inboundWireDrawdownRequestListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *InboundWireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {

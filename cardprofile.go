@@ -103,7 +103,7 @@ type cardProfileJSON struct {
 	DigitalWallets apijson.Field
 	Type           apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
@@ -153,7 +153,7 @@ type cardProfileDigitalWalletsJSON struct {
 	BackgroundImageFileID apijson.Field
 	AppIconFileID         apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
@@ -174,11 +174,11 @@ type CardProfileDigitalWalletsTextColor struct {
 // cardProfileDigitalWalletsTextColorJSON contains the JSON metadata for the struct
 // [CardProfileDigitalWalletsTextColor]
 type cardProfileDigitalWalletsTextColorJSON struct {
-	Red    apijson.Field
-	Green  apijson.Field
-	Blue   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Red         apijson.Field
+	Green       apijson.Field
+	Blue        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
@@ -282,10 +282,10 @@ type CardProfileListResponse struct {
 // cardProfileListResponseJSON contains the JSON metadata for the struct
 // [CardProfileListResponse]
 type cardProfileListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardProfileListResponse) UnmarshalJSON(data []byte) (err error) {

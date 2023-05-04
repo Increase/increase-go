@@ -115,7 +115,7 @@ type entityJSON struct {
 	Relationship          apijson.Field
 	SupplementalDocuments apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
@@ -161,7 +161,7 @@ type entityCorporationJSON struct {
 	Address            apijson.Field
 	BeneficialOwners   apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
@@ -187,13 +187,13 @@ type EntityCorporationAddress struct {
 // entityCorporationAddressJSON contains the JSON metadata for the struct
 // [EntityCorporationAddress]
 type entityCorporationAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
@@ -217,7 +217,7 @@ type entityCorporationBeneficialOwnersJSON struct {
 	CompanyTitle apijson.Field
 	Prong        apijson.Field
 	raw          string
-	Extras       map[string]apijson.Field
+	ExtraFields  map[string]apijson.Field
 }
 
 func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
@@ -245,7 +245,7 @@ type entityCorporationBeneficialOwnersIndividualJSON struct {
 	Address        apijson.Field
 	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
@@ -271,13 +271,13 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 // entityCorporationBeneficialOwnersIndividualAddressJSON contains the JSON
 // metadata for the struct [EntityCorporationBeneficialOwnersIndividualAddress]
 type entityCorporationBeneficialOwnersIndividualAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data []byte) (err error) {
@@ -301,7 +301,7 @@ type entityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
 	Method      apijson.Field
 	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
@@ -347,7 +347,7 @@ type entityNaturalPersonJSON struct {
 	Address        apijson.Field
 	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
@@ -373,13 +373,13 @@ type EntityNaturalPersonAddress struct {
 // entityNaturalPersonAddressJSON contains the JSON metadata for the struct
 // [EntityNaturalPersonAddress]
 type entityNaturalPersonAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
@@ -402,7 +402,7 @@ type entityNaturalPersonIdentificationJSON struct {
 	Method      apijson.Field
 	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
@@ -433,7 +433,7 @@ type entityJointJSON struct {
 	Name        apijson.Field
 	Individuals apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
@@ -460,7 +460,7 @@ type entityJointIndividualsJSON struct {
 	Address        apijson.Field
 	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
@@ -486,13 +486,13 @@ type EntityJointIndividualsAddress struct {
 // entityJointIndividualsAddressJSON contains the JSON metadata for the struct
 // [EntityJointIndividualsAddress]
 type entityJointIndividualsAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
@@ -515,7 +515,7 @@ type entityJointIndividualsIdentificationJSON struct {
 	Method      apijson.Field
 	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
@@ -565,7 +565,7 @@ type entityTrustJSON struct {
 	Grantor                 apijson.Field
 	FormationDocumentFileID apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Field
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
@@ -598,13 +598,13 @@ type EntityTrustAddress struct {
 // entityTrustAddressJSON contains the JSON metadata for the struct
 // [EntityTrustAddress]
 type entityTrustAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
@@ -623,10 +623,10 @@ type EntityTrustTrustees struct {
 // entityTrustTrusteesJSON contains the JSON metadata for the struct
 // [EntityTrustTrustees]
 type entityTrustTrusteesJSON struct {
-	Structure  apijson.Field
-	Individual apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Structure   apijson.Field
+	Individual  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
@@ -661,7 +661,7 @@ type entityTrustTrusteesIndividualJSON struct {
 	Address        apijson.Field
 	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
@@ -687,13 +687,13 @@ type EntityTrustTrusteesIndividualAddress struct {
 // entityTrustTrusteesIndividualAddressJSON contains the JSON metadata for the
 // struct [EntityTrustTrusteesIndividualAddress]
 type entityTrustTrusteesIndividualAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err error) {
@@ -716,7 +716,7 @@ type entityTrustTrusteesIndividualIdentificationJSON struct {
 	Method      apijson.Field
 	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
@@ -754,7 +754,7 @@ type entityTrustGrantorJSON struct {
 	Address        apijson.Field
 	Identification apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
@@ -780,13 +780,13 @@ type EntityTrustGrantorAddress struct {
 // entityTrustGrantorAddressJSON contains the JSON metadata for the struct
 // [EntityTrustGrantorAddress]
 type entityTrustGrantorAddressJSON struct {
-	Line1  apijson.Field
-	Line2  apijson.Field
-	City   apijson.Field
-	State  apijson.Field
-	Zip    apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	City        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
@@ -809,7 +809,7 @@ type entityTrustGrantorIdentificationJSON struct {
 	Method      apijson.Field
 	NumberLast4 apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
@@ -849,9 +849,9 @@ type EntitySupplementalDocuments struct {
 // entitySupplementalDocumentsJSON contains the JSON metadata for the struct
 // [EntitySupplementalDocuments]
 type entitySupplementalDocumentsJSON struct {
-	FileID apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	FileID      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
@@ -1559,10 +1559,10 @@ type EntityListResponse struct {
 // entityListResponseJSON contains the JSON metadata for the struct
 // [EntityListResponse]
 type entityListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EntityListResponse) UnmarshalJSON(data []byte) (err error) {

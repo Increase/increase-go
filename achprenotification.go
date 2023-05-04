@@ -126,7 +126,7 @@ type achPrenotificationJSON struct {
 	Status                   apijson.Field
 	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
@@ -156,7 +156,7 @@ type achPrenotificationPrenotificationReturnJSON struct {
 	CreatedAt        apijson.Field
 	ReturnReasonCode apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
@@ -275,10 +275,10 @@ type ACHPrenotificationListResponse struct {
 // achPrenotificationListResponseJSON contains the JSON metadata for the struct
 // [ACHPrenotificationListResponse]
 type achPrenotificationListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {

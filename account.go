@@ -132,7 +132,7 @@ type accountJSON struct {
 	Status                apijson.Field
 	Type                  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *Account) UnmarshalJSON(data []byte) (err error) {
@@ -246,10 +246,10 @@ type AccountListResponse struct {
 // accountListResponseJSON contains the JSON metadata for the struct
 // [AccountListResponse]
 type accountListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *AccountListResponse) UnmarshalJSON(data []byte) (err error) {

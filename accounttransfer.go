@@ -144,7 +144,7 @@ type accountTransferJSON struct {
 	Cancellation             apijson.Field
 	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -191,10 +191,10 @@ type AccountTransferApproval struct {
 // accountTransferApprovalJSON contains the JSON metadata for the struct
 // [AccountTransferApproval]
 type accountTransferApprovalJSON struct {
-	ApprovedAt apijson.Field
-	ApprovedBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	ApprovedAt  apijson.Field
+	ApprovedBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *AccountTransferApproval) UnmarshalJSON(data []byte) (err error) {
@@ -216,10 +216,10 @@ type AccountTransferCancellation struct {
 // accountTransferCancellationJSON contains the JSON metadata for the struct
 // [AccountTransferCancellation]
 type accountTransferCancellationJSON struct {
-	CanceledAt apijson.Field
-	CanceledBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	CanceledAt  apijson.Field
+	CanceledBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
@@ -300,10 +300,10 @@ type AccountTransferListResponse struct {
 // accountTransferListResponseJSON contains the JSON metadata for the struct
 // [AccountTransferListResponse]
 type accountTransferListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *AccountTransferListResponse) UnmarshalJSON(data []byte) (err error) {

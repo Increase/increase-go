@@ -89,7 +89,7 @@ type realTimeDecisionJSON struct {
 	DigitalWalletAuthentication apijson.Field
 	Type                        apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
@@ -170,7 +170,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	SettlementAmount     apijson.Field
 	SettlementCurrency   apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -193,9 +193,9 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 // realTimeDecisionCardAuthorizationNetworkDetailsJSON contains the JSON metadata
 // for the struct [RealTimeDecisionCardAuthorizationNetworkDetails]
 type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
-	Visa   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
@@ -220,7 +220,7 @@ type realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
@@ -271,7 +271,7 @@ type realTimeDecisionDigitalWalletTokenJSON struct {
 	DigitalWallet apijson.Field
 	CardProfileID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
@@ -323,7 +323,7 @@ type realTimeDecisionDigitalWalletAuthenticationJSON struct {
 	Phone           apijson.Field
 	Email           apijson.Field
 	raw             string
-	Extras          map[string]apijson.Field
+	ExtraFields     map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte) (err error) {

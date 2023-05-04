@@ -87,7 +87,7 @@ type routingNumberJSON struct {
 	RealTimePaymentsTransfers apijson.Field
 	WireTransfers             apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Field
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
@@ -149,10 +149,10 @@ type RoutingNumberListResponse struct {
 // routingNumberListResponseJSON contains the JSON metadata for the struct
 // [RoutingNumberListResponse]
 type routingNumberListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {

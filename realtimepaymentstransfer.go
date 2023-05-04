@@ -144,7 +144,7 @@ type realTimePaymentsTransferJSON struct {
 	Submission               apijson.Field
 	Rejection                apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -172,10 +172,10 @@ type RealTimePaymentsTransferApproval struct {
 // realTimePaymentsTransferApprovalJSON contains the JSON metadata for the struct
 // [RealTimePaymentsTransferApproval]
 type realTimePaymentsTransferApprovalJSON struct {
-	ApprovedAt apijson.Field
-	ApprovedBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	ApprovedAt  apijson.Field
+	ApprovedBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransferApproval) UnmarshalJSON(data []byte) (err error) {
@@ -197,10 +197,10 @@ type RealTimePaymentsTransferCancellation struct {
 // realTimePaymentsTransferCancellationJSON contains the JSON metadata for the
 // struct [RealTimePaymentsTransferCancellation]
 type realTimePaymentsTransferCancellationJSON struct {
-	CanceledAt apijson.Field
-	CanceledBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	CanceledAt  apijson.Field
+	CanceledBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err error) {
@@ -247,7 +247,7 @@ type realTimePaymentsTransferSubmissionJSON struct {
 	SubmittedAt               apijson.Field
 	TransactionIdentification apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Field
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransferSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -276,7 +276,7 @@ type realTimePaymentsTransferRejectionJSON struct {
 	RejectReasonCode                  apijson.Field
 	RejectReasonAdditionalInformation apijson.Field
 	raw                               string
-	Extras                            map[string]apijson.Field
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransferRejection) UnmarshalJSON(data []byte) (err error) {
@@ -389,10 +389,10 @@ type RealTimePaymentsTransferListResponse struct {
 // realTimePaymentsTransferListResponseJSON contains the JSON metadata for the
 // struct [RealTimePaymentsTransferListResponse]
 type realTimePaymentsTransferListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransferListResponse) UnmarshalJSON(data []byte) (err error) {

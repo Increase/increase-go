@@ -62,7 +62,7 @@ type groupJSON struct {
 	ID               apijson.Field
 	Type             apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *Group) UnmarshalJSON(data []byte) (err error) {

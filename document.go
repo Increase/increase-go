@@ -86,14 +86,14 @@ type Document struct {
 
 // documentJSON contains the JSON metadata for the struct [Document]
 type documentJSON struct {
-	ID        apijson.Field
-	Category  apijson.Field
-	CreatedAt apijson.Field
-	EntityID  apijson.Field
-	FileID    apijson.Field
-	Type      apijson.Field
-	raw       string
-	Extras    map[string]apijson.Field
+	ID          apijson.Field
+	Category    apijson.Field
+	CreatedAt   apijson.Field
+	EntityID    apijson.Field
+	FileID      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Document) UnmarshalJSON(data []byte) (err error) {
@@ -273,10 +273,10 @@ type DocumentListResponse struct {
 // documentListResponseJSON contains the JSON metadata for the struct
 // [DocumentListResponse]
 type documentListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *DocumentListResponse) UnmarshalJSON(data []byte) (err error) {

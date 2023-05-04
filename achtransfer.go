@@ -192,7 +192,7 @@ type achTransferJSON struct {
 	StandardEntryClassCode   apijson.Field
 	Type                     apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -225,10 +225,10 @@ type ACHTransferApproval struct {
 // achTransferApprovalJSON contains the JSON metadata for the struct
 // [ACHTransferApproval]
 type achTransferApprovalJSON struct {
-	ApprovedAt apijson.Field
-	ApprovedBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	ApprovedAt  apijson.Field
+	ApprovedBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ACHTransferApproval) UnmarshalJSON(data []byte) (err error) {
@@ -250,10 +250,10 @@ type ACHTransferCancellation struct {
 // achTransferCancellationJSON contains the JSON metadata for the struct
 // [ACHTransferCancellation]
 type achTransferCancellationJSON struct {
-	CanceledAt apijson.Field
-	CanceledBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	CanceledAt  apijson.Field
+	CanceledBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
@@ -284,7 +284,7 @@ type achTransferNotificationsOfChangeJSON struct {
 	ChangeCode    apijson.Field
 	CorrectedData apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
@@ -313,7 +313,7 @@ type achTransferReturnJSON struct {
 	TransferID       apijson.Field
 	TransactionID    apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -377,7 +377,7 @@ type achTransferSubmissionJSON struct {
 	TraceNumber apijson.Field
 	SubmittedAt apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -528,10 +528,10 @@ type ACHTransferListResponse struct {
 // achTransferListResponseJSON contains the JSON metadata for the struct
 // [ACHTransferListResponse]
 type achTransferListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ACHTransferListResponse) UnmarshalJSON(data []byte) (err error) {

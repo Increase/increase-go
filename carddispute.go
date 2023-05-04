@@ -109,7 +109,7 @@ type cardDisputeJSON struct {
 	Rejection             apijson.Field
 	Type                  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
@@ -145,7 +145,7 @@ type cardDisputeAcceptanceJSON struct {
 	CardDisputeID apijson.Field
 	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
@@ -172,7 +172,7 @@ type cardDisputeRejectionJSON struct {
 	RejectedAt    apijson.Field
 	CardDisputeID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
@@ -266,10 +266,10 @@ type CardDisputeListResponse struct {
 // cardDisputeListResponseJSON contains the JSON metadata for the struct
 // [CardDisputeListResponse]
 type cardDisputeListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardDisputeListResponse) UnmarshalJSON(data []byte) (err error) {

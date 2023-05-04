@@ -107,16 +107,16 @@ type Limit struct {
 
 // limitJSON contains the JSON metadata for the struct [Limit]
 type limitJSON struct {
-	ID        apijson.Field
-	Interval  apijson.Field
-	Metric    apijson.Field
-	ModelID   apijson.Field
-	ModelType apijson.Field
-	Status    apijson.Field
-	Type      apijson.Field
-	Value     apijson.Field
-	raw       string
-	Extras    map[string]apijson.Field
+	ID          apijson.Field
+	Interval    apijson.Field
+	Metric      apijson.Field
+	ModelID     apijson.Field
+	ModelType   apijson.Field
+	Status      apijson.Field
+	Type        apijson.Field
+	Value       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Limit) UnmarshalJSON(data []byte) (err error) {
@@ -241,10 +241,10 @@ type LimitListResponse struct {
 // limitListResponseJSON contains the JSON metadata for the struct
 // [LimitListResponse]
 type limitListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *LimitListResponse) UnmarshalJSON(data []byte) (err error) {

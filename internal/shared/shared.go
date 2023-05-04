@@ -20,10 +20,10 @@ type Page[T any] struct {
 
 // pageJSON contains the JSON metadata for the struct [Page[T]]
 type pageJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Page[T]) UnmarshalJSON(data []byte) (err error) {

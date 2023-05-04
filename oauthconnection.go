@@ -84,13 +84,13 @@ type OauthConnection struct {
 
 // oauthConnectionJSON contains the JSON metadata for the struct [OauthConnection]
 type oauthConnectionJSON struct {
-	ID        apijson.Field
-	CreatedAt apijson.Field
-	GroupID   apijson.Field
-	Status    apijson.Field
-	Type      apijson.Field
-	raw       string
-	Extras    map[string]apijson.Field
+	ID          apijson.Field
+	CreatedAt   apijson.Field
+	GroupID     apijson.Field
+	Status      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
@@ -136,10 +136,10 @@ type OauthConnectionListResponse struct {
 // oauthConnectionListResponseJSON contains the JSON metadata for the struct
 // [OauthConnectionListResponse]
 type oauthConnectionListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *OauthConnectionListResponse) UnmarshalJSON(data []byte) (err error) {

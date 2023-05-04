@@ -125,7 +125,7 @@ type checkDepositJSON struct {
 	DepositReturn     apijson.Field
 	Type              apijson.Field
 	raw               string
-	Extras            map[string]apijson.Field
+	ExtraFields       map[string]apijson.Field
 }
 
 func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
@@ -187,7 +187,7 @@ type checkDepositDepositAcceptanceJSON struct {
 	SerialNumber   apijson.Field
 	CheckDepositID apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
@@ -225,12 +225,12 @@ type CheckDepositDepositRejection struct {
 // checkDepositDepositRejectionJSON contains the JSON metadata for the struct
 // [CheckDepositDepositRejection]
 type checkDepositDepositRejectionJSON struct {
-	Amount     apijson.Field
-	Currency   apijson.Field
-	Reason     apijson.Field
-	RejectedAt apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	Reason      apijson.Field
+	RejectedAt  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
@@ -292,7 +292,7 @@ type checkDepositDepositReturnJSON struct {
 	TransactionID  apijson.Field
 	ReturnReason   apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
@@ -399,10 +399,10 @@ type CheckDepositListResponse struct {
 // checkDepositListResponseJSON contains the JSON metadata for the struct
 // [CheckDepositListResponse]
 type checkDepositListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {

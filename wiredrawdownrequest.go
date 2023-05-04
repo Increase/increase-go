@@ -132,7 +132,7 @@ type wireDrawdownRequestJSON struct {
 	FulfillmentTransactionID apijson.Field
 	Status                   apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
@@ -159,7 +159,7 @@ type WireDrawdownRequestSubmission struct {
 type wireDrawdownRequestSubmissionJSON struct {
 	InputMessageAccountabilityData apijson.Field
 	raw                            string
-	Extras                         map[string]apijson.Field
+	ExtraFields                    map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequestSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -226,10 +226,10 @@ type WireDrawdownRequestListResponse struct {
 // wireDrawdownRequestListResponseJSON contains the JSON metadata for the struct
 // [WireDrawdownRequestListResponse]
 type wireDrawdownRequestListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {

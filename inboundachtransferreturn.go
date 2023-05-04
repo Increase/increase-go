@@ -106,7 +106,7 @@ type inboundACHTransferReturnJSON struct {
 	Submission                      apijson.Field
 	Type                            apijson.Field
 	raw                             string
-	Extras                          map[string]apijson.Field
+	ExtraFields                     map[string]apijson.Field
 }
 
 func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -148,7 +148,7 @@ type inboundACHTransferReturnSubmissionJSON struct {
 	TraceNumber apijson.Field
 	SubmittedAt apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *InboundACHTransferReturnSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -213,10 +213,10 @@ type InboundACHTransferReturnListResponse struct {
 // inboundACHTransferReturnListResponseJSON contains the JSON metadata for the
 // struct [InboundACHTransferReturnListResponse]
 type inboundACHTransferReturnListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *InboundACHTransferReturnListResponse) UnmarshalJSON(data []byte) (err error) {

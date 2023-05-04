@@ -86,13 +86,13 @@ type Program struct {
 
 // programJSON contains the JSON metadata for the struct [Program]
 type programJSON struct {
-	Name      apijson.Field
-	CreatedAt apijson.Field
-	UpdatedAt apijson.Field
-	ID        apijson.Field
-	Type      apijson.Field
-	raw       string
-	Extras    map[string]apijson.Field
+	Name        apijson.Field
+	CreatedAt   apijson.Field
+	UpdatedAt   apijson.Field
+	ID          apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Program) UnmarshalJSON(data []byte) (err error) {
@@ -130,10 +130,10 @@ type ProgramListResponse struct {
 // programListResponseJSON contains the JSON metadata for the struct
 // [ProgramListResponse]
 type programListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *ProgramListResponse) UnmarshalJSON(data []byte) (err error) {

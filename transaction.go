@@ -114,7 +114,7 @@ type transactionJSON struct {
 	Source      apijson.Field
 	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
@@ -311,7 +311,7 @@ type transactionSourceJSON struct {
 	WireTransferIntention                       apijson.Field
 	WireTransferRejection                       apijson.Field
 	raw                                         string
-	Extras                                      map[string]apijson.Field
+	ExtraFields                                 map[string]apijson.Field
 }
 
 func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -393,7 +393,7 @@ type transactionSourceAccountTransferIntentionJSON struct {
 	SourceAccountID      apijson.Field
 	TransferID           apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
@@ -428,7 +428,7 @@ type transactionSourceACHCheckConversionReturnJSON struct {
 	Amount           apijson.Field
 	ReturnReasonCode apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
@@ -449,10 +449,10 @@ type TransactionSourceACHCheckConversion struct {
 // transactionSourceACHCheckConversionJSON contains the JSON metadata for the
 // struct [TransactionSourceACHCheckConversion]
 type transactionSourceACHCheckConversionJSON struct {
-	Amount apijson.Field
-	FileID apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Amount      apijson.Field
+	FileID      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
@@ -482,7 +482,7 @@ type transactionSourceACHTransferIntentionJSON struct {
 	StatementDescriptor apijson.Field
 	TransferID          apijson.Field
 	raw                 string
-	Extras              map[string]apijson.Field
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHTransferIntention) UnmarshalJSON(data []byte) (err error) {
@@ -500,9 +500,9 @@ type TransactionSourceACHTransferRejection struct {
 // transactionSourceACHTransferRejectionJSON contains the JSON metadata for the
 // struct [TransactionSourceACHTransferRejection]
 type transactionSourceACHTransferRejectionJSON struct {
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
@@ -532,7 +532,7 @@ type transactionSourceACHTransferReturnJSON struct {
 	TransferID       apijson.Field
 	TransactionID    apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -588,7 +588,7 @@ type transactionSourceCardDisputeAcceptanceJSON struct {
 	CardDisputeID apijson.Field
 	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
@@ -639,7 +639,7 @@ type transactionSourceCardRefundJSON struct {
 	MerchantCategoryCode apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
@@ -721,7 +721,7 @@ type transactionSourceCardSettlementJSON struct {
 	PendingTransactionID apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error) {
@@ -772,7 +772,7 @@ type transactionSourceCardRevenuePaymentJSON struct {
 	PeriodEnd             apijson.Field
 	TransactedOnAccountID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
@@ -825,7 +825,7 @@ type transactionSourceCheckDepositAcceptanceJSON struct {
 	SerialNumber   apijson.Field
 	CheckDepositID apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
@@ -874,7 +874,7 @@ type transactionSourceCheckDepositReturnJSON struct {
 	TransactionID  apijson.Field
 	ReturnReason   apijson.Field
 	raw            string
-	Extras         map[string]apijson.Field
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
@@ -946,7 +946,7 @@ type transactionSourceCheckTransferIntentionJSON struct {
 	RecipientName apijson.Field
 	TransferID    apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
@@ -991,7 +991,7 @@ type transactionSourceCheckTransferReturnJSON struct {
 	Reason        apijson.Field
 	TransactionID apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -1016,9 +1016,9 @@ type TransactionSourceCheckTransferRejection struct {
 // transactionSourceCheckTransferRejectionJSON contains the JSON metadata for the
 // struct [TransactionSourceCheckTransferRejection]
 type transactionSourceCheckTransferRejectionJSON struct {
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
@@ -1049,7 +1049,7 @@ type transactionSourceCheckTransferStopPaymentRequestJSON struct {
 	RequestedAt   apijson.Field
 	Type          apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
@@ -1083,7 +1083,7 @@ type transactionSourceDisputeResolutionJSON struct {
 	Currency              apijson.Field
 	DisputedTransactionID apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
@@ -1119,7 +1119,7 @@ type transactionSourceEmpyrealCashDepositJSON struct {
 	BagID       apijson.Field
 	DepositDate apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
@@ -1141,10 +1141,10 @@ type TransactionSourceFeePayment struct {
 // transactionSourceFeePaymentJSON contains the JSON metadata for the struct
 // [TransactionSourceFeePayment]
 type transactionSourceFeePaymentJSON struct {
-	Amount   apijson.Field
-	Currency apijson.Field
-	raw      string
-	Extras   map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
@@ -1192,7 +1192,7 @@ type transactionSourceInboundACHTransferJSON struct {
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Field
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -1223,7 +1223,7 @@ type transactionSourceInboundCheckJSON struct {
 	CheckFrontImageFileID apijson.Field
 	CheckRearImageFileID  apijson.Field
 	raw                   string
-	Extras                map[string]apijson.Field
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
@@ -1326,7 +1326,7 @@ type transactionSourceInboundInternationalACHTransferJSON struct {
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Field
+	ExtraFields                                            map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -1371,7 +1371,7 @@ type transactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
 	TransactionIdentification apijson.Field
 	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Field
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
@@ -1430,7 +1430,7 @@ type transactionSourceInboundWireDrawdownPaymentReversalJSON struct {
 	PreviousMessageInputSequenceNumber            apijson.Field
 	PreviousMessageInputSource                    apijson.Field
 	raw                                           string
-	Extras                                        map[string]apijson.Field
+	ExtraFields                                   map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
@@ -1475,7 +1475,7 @@ type transactionSourceInboundWireDrawdownPaymentJSON struct {
 	OriginatorName                     apijson.Field
 	OriginatorToBeneficiaryInformation apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Field
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
@@ -1539,7 +1539,7 @@ type transactionSourceInboundWireReversalJSON struct {
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
-	Extras                                                map[string]apijson.Field
+	ExtraFields                                           map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
@@ -1592,7 +1592,7 @@ type transactionSourceInboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
 	OriginatorToBeneficiaryInformation      apijson.Field
 	raw                                     string
-	Extras                                  map[string]apijson.Field
+	ExtraFields                             map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -1626,7 +1626,7 @@ type transactionSourceInterestPaymentJSON struct {
 	PeriodEnd          apijson.Field
 	AccruedOnAccountID apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *TransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
@@ -1660,11 +1660,11 @@ type TransactionSourceInternalSource struct {
 // transactionSourceInternalSourceJSON contains the JSON metadata for the struct
 // [TransactionSourceInternalSource]
 type transactionSourceInternalSourceJSON struct {
-	Amount   apijson.Field
-	Currency apijson.Field
-	Reason   apijson.Field
-	raw      string
-	Extras   map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	Reason      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
@@ -1726,7 +1726,7 @@ type transactionSourceCardRouteRefundJSON struct {
 	MerchantState        apijson.Field
 	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
@@ -1774,7 +1774,7 @@ type transactionSourceCardRouteSettlementJSON struct {
 	MerchantState        apijson.Field
 	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
@@ -1819,7 +1819,7 @@ type transactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
 	RemittanceInformation    apijson.Field
 	TransferID               apijson.Field
 	raw                      string
-	Extras                   map[string]apijson.Field
+	ExtraFields              map[string]apijson.Field
 }
 
 func (r *TransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
@@ -1837,9 +1837,9 @@ type TransactionSourceSampleFunds struct {
 // transactionSourceSampleFundsJSON contains the JSON metadata for the struct
 // [TransactionSourceSampleFunds]
 type transactionSourceSampleFundsJSON struct {
-	Originator apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Originator  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
@@ -1868,7 +1868,7 @@ type transactionSourceWireDrawdownPaymentIntentionJSON struct {
 	MessageToRecipient apijson.Field
 	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *TransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
@@ -1886,9 +1886,9 @@ type TransactionSourceWireDrawdownPaymentRejection struct {
 // transactionSourceWireDrawdownPaymentRejectionJSON contains the JSON metadata for
 // the struct [TransactionSourceWireDrawdownPaymentRejection]
 type transactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
@@ -1919,7 +1919,7 @@ type transactionSourceWireTransferIntentionJSON struct {
 	MessageToRecipient apijson.Field
 	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *TransactionSourceWireTransferIntention) UnmarshalJSON(data []byte) (err error) {
@@ -1936,9 +1936,9 @@ type TransactionSourceWireTransferRejection struct {
 // transactionSourceWireTransferRejectionJSON contains the JSON metadata for the
 // struct [TransactionSourceWireTransferRejection]
 type transactionSourceWireTransferRejectionJSON struct {
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
@@ -2060,10 +2060,10 @@ type TransactionListResponse struct {
 // transactionListResponseJSON contains the JSON metadata for the struct
 // [TransactionListResponse]
 type transactionListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionListResponse) UnmarshalJSON(data []byte) (err error) {

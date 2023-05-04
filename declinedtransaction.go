@@ -115,7 +115,7 @@ type declinedTransactionJSON struct {
 	Source      apijson.Field
 	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
@@ -183,7 +183,7 @@ type declinedTransactionSourceJSON struct {
 	InternationalACHDecline                apijson.Field
 	CardRouteDecline                       apijson.Field
 	raw                                    string
-	Extras                                 map[string]apijson.Field
+	ExtraFields                            map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -233,7 +233,7 @@ type declinedTransactionSourceACHDeclineJSON struct {
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Field
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
@@ -312,7 +312,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	RealTimeDecisionID   apijson.Field
 	DigitalWalletTokenID apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -335,9 +335,9 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 // declinedTransactionSourceCardDeclineNetworkDetailsJSON contains the JSON
 // metadata for the struct [DeclinedTransactionSourceCardDeclineNetworkDetails]
 type declinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
@@ -362,7 +362,7 @@ type declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
@@ -430,7 +430,7 @@ type declinedTransactionSourceCheckDeclineJSON struct {
 	AuxiliaryOnUs apijson.Field
 	Reason        apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
@@ -497,7 +497,7 @@ type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct 
 	TransactionIdentification apijson.Field
 	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Field
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
@@ -610,7 +610,7 @@ type declinedTransactionSourceInternationalACHDeclineJSON struct {
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Field
+	ExtraFields                                            map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
@@ -647,7 +647,7 @@ type declinedTransactionSourceCardRouteDeclineJSON struct {
 	MerchantState        apijson.Field
 	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
@@ -723,10 +723,10 @@ type DeclinedTransactionListResponse struct {
 // declinedTransactionListResponseJSON contains the JSON metadata for the struct
 // [DeclinedTransactionListResponse]
 type declinedTransactionListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionListResponse) UnmarshalJSON(data []byte) (err error) {

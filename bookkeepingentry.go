@@ -74,13 +74,13 @@ type BookkeepingEntry struct {
 // bookkeepingEntryJSON contains the JSON metadata for the struct
 // [BookkeepingEntry]
 type bookkeepingEntryJSON struct {
-	AccountID  apijson.Field
-	Amount     apijson.Field
-	EntrySetID apijson.Field
-	ID         apijson.Field
-	Type       apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	EntrySetID  apijson.Field
+	ID          apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *BookkeepingEntry) UnmarshalJSON(data []byte) (err error) {
@@ -119,10 +119,10 @@ type BookkeepingEntryListResponse struct {
 // bookkeepingEntryListResponseJSON contains the JSON metadata for the struct
 // [BookkeepingEntryListResponse]
 type bookkeepingEntryListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *BookkeepingEntryListResponse) UnmarshalJSON(data []byte) (err error) {

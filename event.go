@@ -92,7 +92,7 @@ type eventJSON struct {
 	ID                   apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *Event) UnmarshalJSON(data []byte) (err error) {
@@ -278,10 +278,10 @@ type EventListResponse struct {
 // eventListResponseJSON contains the JSON metadata for the struct
 // [EventListResponse]
 type eventListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *EventListResponse) UnmarshalJSON(data []byte) (err error) {

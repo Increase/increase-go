@@ -122,7 +122,7 @@ type pendingTransactionJSON struct {
 	Status      apijson.Field
 	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
@@ -205,7 +205,7 @@ type pendingTransactionSourceJSON struct {
 	WireDrawdownPaymentInstruction      apijson.Field
 	WireTransferInstruction             apijson.Field
 	raw                                 string
-	Extras                              map[string]apijson.Field
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -245,11 +245,11 @@ type PendingTransactionSourceAccountTransferInstruction struct {
 // pendingTransactionSourceAccountTransferInstructionJSON contains the JSON
 // metadata for the struct [PendingTransactionSourceAccountTransferInstruction]
 type pendingTransactionSourceAccountTransferInstructionJSON struct {
-	Amount     apijson.Field
-	Currency   apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -281,10 +281,10 @@ type PendingTransactionSourceACHTransferInstruction struct {
 // pendingTransactionSourceACHTransferInstructionJSON contains the JSON metadata
 // for the struct [PendingTransactionSourceACHTransferInstruction]
 type pendingTransactionSourceACHTransferInstructionJSON struct {
-	Amount     apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -347,7 +347,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	DigitalWalletTokenID apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -371,9 +371,9 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 // metadata for the struct
 // [PendingTransactionSourceCardAuthorizationNetworkDetails]
 type pendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
-	Visa   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
@@ -399,7 +399,7 @@ type pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
@@ -465,7 +465,7 @@ type pendingTransactionSourceCheckDepositInstructionJSON struct {
 	BackImageFileID  apijson.Field
 	CheckDepositID   apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -500,11 +500,11 @@ type PendingTransactionSourceCheckTransferInstruction struct {
 // pendingTransactionSourceCheckTransferInstructionJSON contains the JSON metadata
 // for the struct [PendingTransactionSourceCheckTransferInstruction]
 type pendingTransactionSourceCheckTransferInstructionJSON struct {
-	Amount     apijson.Field
-	Currency   apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -560,7 +560,7 @@ type pendingTransactionSourceInboundFundsHoldJSON struct {
 	HeldTransactionID       apijson.Field
 	PendingTransactionID    apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Field
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
@@ -615,7 +615,7 @@ type pendingTransactionSourceCardRouteAuthorizationJSON struct {
 	MerchantCategoryCode apijson.Field
 	MerchantState        apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -650,10 +650,10 @@ type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 // JSON metadata for the struct
 // [PendingTransactionSourceRealTimePaymentsTransferInstruction]
 type pendingTransactionSourceRealTimePaymentsTransferInstructionJSON struct {
-	Amount     apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -681,7 +681,7 @@ type pendingTransactionSourceWireDrawdownPaymentInstructionJSON struct {
 	RoutingNumber      apijson.Field
 	MessageToRecipient apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -710,7 +710,7 @@ type pendingTransactionSourceWireTransferInstructionJSON struct {
 	MessageToRecipient apijson.Field
 	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -806,10 +806,10 @@ type PendingTransactionListResponse struct {
 // pendingTransactionListResponseJSON contains the JSON metadata for the struct
 // [PendingTransactionListResponse]
 type pendingTransactionListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *PendingTransactionListResponse) UnmarshalJSON(data []byte) (err error) {

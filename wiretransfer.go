@@ -187,7 +187,7 @@ type wireTransferJSON struct {
 	TransactionID           apijson.Field
 	Type                    apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Field
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -220,10 +220,10 @@ type WireTransferApproval struct {
 // wireTransferApprovalJSON contains the JSON metadata for the struct
 // [WireTransferApproval]
 type wireTransferApprovalJSON struct {
-	ApprovedAt apijson.Field
-	ApprovedBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	ApprovedAt  apijson.Field
+	ApprovedBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *WireTransferApproval) UnmarshalJSON(data []byte) (err error) {
@@ -245,10 +245,10 @@ type WireTransferCancellation struct {
 // wireTransferCancellationJSON contains the JSON metadata for the struct
 // [WireTransferCancellation]
 type wireTransferCancellationJSON struct {
-	CanceledAt apijson.Field
-	CanceledBy apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	CanceledAt  apijson.Field
+	CanceledBy  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
@@ -311,7 +311,7 @@ type wireTransferReversalJSON struct {
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
-	Extras                                                map[string]apijson.Field
+	ExtraFields                                           map[string]apijson.Field
 }
 
 func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
@@ -352,7 +352,7 @@ type wireTransferSubmissionJSON struct {
 	InputMessageAccountabilityData apijson.Field
 	SubmittedAt                    apijson.Field
 	raw                            string
-	Extras                         map[string]apijson.Field
+	ExtraFields                    map[string]apijson.Field
 }
 
 func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -447,10 +447,10 @@ type WireTransferListResponse struct {
 // wireTransferListResponseJSON contains the JSON metadata for the struct
 // [WireTransferListResponse]
 type wireTransferListResponseJSON struct {
-	Data       apijson.Field
-	NextCursor apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *WireTransferListResponse) UnmarshalJSON(data []byte) (err error) {

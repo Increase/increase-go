@@ -79,7 +79,7 @@ type cardAuthorizationSimulationJSON struct {
 	DeclinedTransaction apijson.Field
 	Type                apijson.Field
 	raw                 string
-	Extras              map[string]apijson.Field
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulation) UnmarshalJSON(data []byte) (err error) {
@@ -145,7 +145,7 @@ type cardAuthorizationSimulationPendingTransactionJSON struct {
 	Status      apijson.Field
 	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byte) (err error) {
@@ -228,7 +228,7 @@ type cardAuthorizationSimulationPendingTransactionSourceJSON struct {
 	WireDrawdownPaymentInstruction      apijson.Field
 	WireTransferInstruction             apijson.Field
 	raw                                 string
-	Extras                              map[string]apijson.Field
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -269,11 +269,11 @@ type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionJSON struct {
-	Amount     apijson.Field
-	Currency   apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -306,10 +306,10 @@ type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction s
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON struct {
-	Amount     apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -373,7 +373,7 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 	DigitalWalletTokenID apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -397,9 +397,9 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails]
 type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
-	Visa   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
@@ -425,7 +425,7 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
@@ -492,7 +492,7 @@ type cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJ
 	BackImageFileID  apijson.Field
 	CheckDepositID   apijson.Field
 	raw              string
-	Extras           map[string]apijson.Field
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -528,11 +528,11 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionJSON struct {
-	Amount     apijson.Field
-	Currency   apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	Currency    apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -589,7 +589,7 @@ type cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON str
 	HeldTransactionID       apijson.Field
 	PendingTransactionID    apijson.Field
 	raw                     string
-	Extras                  map[string]apijson.Field
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
@@ -645,7 +645,7 @@ type cardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJS
 	MerchantCategoryCode apijson.Field
 	MerchantState        apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -680,10 +680,10 @@ type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransfer
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON struct {
-	Amount     apijson.Field
-	TransferID apijson.Field
-	raw        string
-	Extras     map[string]apijson.Field
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -712,7 +712,7 @@ type cardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstr
 	RoutingNumber      apijson.Field
 	MessageToRecipient apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -742,7 +742,7 @@ type cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJ
 	MessageToRecipient apijson.Field
 	TransferID         apijson.Field
 	raw                string
-	Extras             map[string]apijson.Field
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
@@ -813,7 +813,7 @@ type cardAuthorizationSimulationDeclinedTransactionJSON struct {
 	Source      apijson.Field
 	Type        apijson.Field
 	raw         string
-	Extras      map[string]apijson.Field
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
@@ -881,7 +881,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
 	InternationalACHDecline                apijson.Field
 	CardRouteDecline                       apijson.Field
 	raw                                    string
-	Extras                                 map[string]apijson.Field
+	ExtraFields                            map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -932,7 +932,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
 	raw                                string
-	Extras                             map[string]apijson.Field
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1012,7 +1012,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct 
 	RealTimeDecisionID   apijson.Field
 	DigitalWalletTokenID apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1036,9 +1036,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
 type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa   apijson.Field
-	raw    string
-	Extras map[string]apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
@@ -1064,7 +1064,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	raw                         string
-	Extras                      map[string]apijson.Field
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
@@ -1133,7 +1133,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct
 	AuxiliaryOnUs apijson.Field
 	Reason        apijson.Field
 	raw           string
-	Extras        map[string]apijson.Field
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1200,7 +1200,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	TransactionIdentification apijson.Field
 	RemittanceInformation     apijson.Field
 	raw                       string
-	Extras                    map[string]apijson.Field
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1314,7 +1314,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
-	Extras                                                 map[string]apijson.Field
+	ExtraFields                                            map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1352,7 +1352,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON st
 	MerchantState        apijson.Field
 	MerchantCategoryCode apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {

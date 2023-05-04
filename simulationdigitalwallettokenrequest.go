@@ -59,7 +59,7 @@ type digitalWalletTokenRequestCreateResponseJSON struct {
 	DigitalWalletTokenID apijson.Field
 	Type                 apijson.Field
 	raw                  string
-	Extras               map[string]apijson.Field
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
