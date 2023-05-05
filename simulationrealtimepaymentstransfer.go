@@ -359,6 +359,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferReturn                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferRejection                      InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCollectionReceivable                        InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "collection_receivable"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryDisputeResolution                           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "dispute_resolution"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment                                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "fee_payment"

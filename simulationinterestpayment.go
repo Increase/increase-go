@@ -336,6 +336,7 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
+	InterestPaymentSimulationResultTransactionSourceCategoryCollectionReceivable                        InterestPaymentSimulationResultTransactionSourceCategory = "collection_receivable"
 	InterestPaymentSimulationResultTransactionSourceCategoryDisputeResolution                           InterestPaymentSimulationResultTransactionSourceCategory = "dispute_resolution"
 	InterestPaymentSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InterestPaymentSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"

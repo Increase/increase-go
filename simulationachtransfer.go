@@ -372,6 +372,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn                         ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
+	ACHTransferSimulationTransactionSourceCategoryCollectionReceivable                        ACHTransferSimulationTransactionSourceCategory = "collection_receivable"
 	ACHTransferSimulationTransactionSourceCategoryDisputeResolution                           ACHTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	ACHTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         ACHTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
 	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"

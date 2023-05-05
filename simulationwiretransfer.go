@@ -337,6 +337,7 @@ const (
 	WireTransferSimulationTransactionSourceCategoryCheckTransferReturn                         WireTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferRejection                      WireTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             WireTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
+	WireTransferSimulationTransactionSourceCategoryCollectionReceivable                        WireTransferSimulationTransactionSourceCategory = "collection_receivable"
 	WireTransferSimulationTransactionSourceCategoryDisputeResolution                           WireTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	WireTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         WireTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
 	WireTransferSimulationTransactionSourceCategoryFeePayment                                  WireTransferSimulationTransactionSourceCategory = "fee_payment"
