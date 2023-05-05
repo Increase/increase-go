@@ -69,6 +69,7 @@ func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err err
 type SimulationCheckTransferReturnParamsReason string
 
 const (
-	SimulationCheckTransferReturnParamsReasonMailDeliveryFailure SimulationCheckTransferReturnParamsReason = "mail_delivery_failure"
-	SimulationCheckTransferReturnParamsReasonRefusedByRecipient  SimulationCheckTransferReturnParamsReason = "refused_by_recipient"
+	SimulationCheckTransferReturnParamsReasonMailDeliveryFailure   SimulationCheckTransferReturnParamsReason = "mail_delivery_failure"
+	SimulationCheckTransferReturnParamsReasonRefusedByRecipient    SimulationCheckTransferReturnParamsReason = "refused_by_recipient"
+	SimulationCheckTransferReturnParamsReasonReturnedNotAuthorized SimulationCheckTransferReturnParamsReason = "returned_not_authorized"
 )

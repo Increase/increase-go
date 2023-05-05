@@ -439,8 +439,9 @@ func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
 type CheckTransferReturnDetailsReason string
 
 const (
-	CheckTransferReturnDetailsReasonMailDeliveryFailure CheckTransferReturnDetailsReason = "mail_delivery_failure"
-	CheckTransferReturnDetailsReasonRefusedByRecipient  CheckTransferReturnDetailsReason = "refused_by_recipient"
+	CheckTransferReturnDetailsReasonMailDeliveryFailure   CheckTransferReturnDetailsReason = "mail_delivery_failure"
+	CheckTransferReturnDetailsReasonRefusedByRecipient    CheckTransferReturnDetailsReason = "refused_by_recipient"
+	CheckTransferReturnDetailsReasonReturnedNotAuthorized CheckTransferReturnDetailsReason = "returned_not_authorized"
 )
 
 type CheckTransferType string

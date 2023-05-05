@@ -453,6 +453,7 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonReturned              DeclinedTransactionSourceCheckDeclineReason = "returned"
 	DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  DeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized         DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
 // A Inbound Real Time Payments Transfer Decline object. This field will be present

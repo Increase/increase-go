@@ -1048,8 +1048,9 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSO
 type ACHTransferSimulationTransactionSourceCheckTransferReturnReason string
 
 const (
-	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient  ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure   ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient    ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
 
 // A Check Transfer Rejection object. This field will be present in the JSON
@@ -2407,6 +2408,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
 // A Inbound Real Time Payments Transfer Decline object. This field will be present

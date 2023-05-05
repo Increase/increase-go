@@ -1156,6 +1156,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
 // A Inbound Real Time Payments Transfer Decline object. This field will be present

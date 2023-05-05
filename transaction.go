@@ -1001,8 +1001,9 @@ func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err e
 type TransactionSourceCheckTransferReturnReason string
 
 const (
-	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	TransactionSourceCheckTransferReturnReasonRefusedByRecipient  TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure   TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	TransactionSourceCheckTransferReturnReasonRefusedByRecipient    TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	TransactionSourceCheckTransferReturnReasonReturnedNotAuthorized TransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
 
 // A Check Transfer Rejection object. This field will be present in the JSON
