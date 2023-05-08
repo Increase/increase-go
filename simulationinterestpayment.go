@@ -336,7 +336,6 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
-	InterestPaymentSimulationResultTransactionSourceCategoryCollectionReceivable                        InterestPaymentSimulationResultTransactionSourceCategory = "collection_receivable"
 	InterestPaymentSimulationResultTransactionSourceCategoryDisputeResolution                           InterestPaymentSimulationResultTransactionSourceCategory = "dispute_resolution"
 	InterestPaymentSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InterestPaymentSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
@@ -1714,15 +1713,17 @@ const (
 type InterestPaymentSimulationResultTransactionSourceInternalSourceReason string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration      InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback           InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonError              InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonErrorCorrection    InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error_correction"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonFees               InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "fees"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonInterest           InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "interest"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFunds        InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn  InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration              InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback                   InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable       InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment         InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonError                      InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonErrorCorrection            InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error_correction"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonFees                       InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "fees"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonInterest                   InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "interest"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonNegativeBalanceForgiveness InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFunds                InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn          InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Deprecated Card Refund object. This field will be present in the JSON response
