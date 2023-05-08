@@ -169,7 +169,10 @@ type DeclinedTransactionSource struct {
 	// A Deprecated Card Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_route_decline`.
 	CardRouteDecline DeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
-	JSON             declinedTransactionSourceJSON
+	// A Wire Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `wire_decline`.
+	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
+	JSON        declinedTransactionSourceJSON
 }
 
 // declinedTransactionSourceJSON contains the JSON metadata for the struct
@@ -182,6 +185,7 @@ type declinedTransactionSourceJSON struct {
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
 	CardRouteDecline                       apijson.Field
+	WireDecline                            apijson.Field
 	raw                                    string
 	ExtraFields                            map[string]apijson.Field
 }
@@ -199,6 +203,7 @@ const (
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	DeclinedTransactionSourceCategoryInternationalACHDecline                DeclinedTransactionSourceCategory = "international_ach_decline"
 	DeclinedTransactionSourceCategoryCardRouteDecline                       DeclinedTransactionSourceCategory = "card_route_decline"
+	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
 	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
 
@@ -664,6 +669,71 @@ const (
 	DeclinedTransactionSourceCardRouteDeclineCurrencyGbp DeclinedTransactionSourceCardRouteDeclineCurrency = "GBP"
 	DeclinedTransactionSourceCardRouteDeclineCurrencyJpy DeclinedTransactionSourceCardRouteDeclineCurrency = "JPY"
 	DeclinedTransactionSourceCardRouteDeclineCurrencyUsd DeclinedTransactionSourceCardRouteDeclineCurrency = "USD"
+)
+
+// A Wire Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `wire_decline`.
+type DeclinedTransactionSourceWireDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// Why the wire transfer was declined.
+	Reason                                  DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
+	Description                             string                                     `json:"description,required"`
+	BeneficiaryAddressLine1                 string                                     `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2                 string                                     `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3                 string                                     `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                         string                                     `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference                    string                                     `json:"beneficiary_reference,required,nullable"`
+	InputMessageAccountabilityData          string                                     `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1                  string                                     `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2                  string                                     `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3                  string                                     `json:"originator_address_line3,required,nullable"`
+	OriginatorName                          string                                     `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformationLine1 string                                     `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	OriginatorToBeneficiaryInformationLine2 string                                     `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	OriginatorToBeneficiaryInformationLine3 string                                     `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	OriginatorToBeneficiaryInformationLine4 string                                     `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    declinedTransactionSourceWireDeclineJSON
+}
+
+// declinedTransactionSourceWireDeclineJSON contains the JSON metadata for the
+// struct [DeclinedTransactionSourceWireDecline]
+type declinedTransactionSourceWireDeclineJSON struct {
+	Amount                                  apijson.Field
+	Reason                                  apijson.Field
+	Description                             apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	raw                                     string
+	ExtraFields                             map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type DeclinedTransactionSourceWireDeclineReason string
+
+const (
+	DeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled DeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
+	DeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled DeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
+	DeclinedTransactionSourceWireDeclineReasonEntityNotActive       DeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceWireDeclineReasonGroupLocked           DeclinedTransactionSourceWireDeclineReason = "group_locked"
+	DeclinedTransactionSourceWireDeclineReasonNoAccountNumber       DeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	DeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed DeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
 type DeclinedTransactionType string
