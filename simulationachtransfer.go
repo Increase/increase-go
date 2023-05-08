@@ -372,7 +372,6 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn                         ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
-	ACHTransferSimulationTransactionSourceCategoryCollectionReceivable                        ACHTransferSimulationTransactionSourceCategory = "collection_receivable"
 	ACHTransferSimulationTransactionSourceCategoryDisputeResolution                           ACHTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	ACHTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         ACHTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
 	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"
@@ -1744,15 +1743,17 @@ const (
 type ACHTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
-	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration      ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback           ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment ACHTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonError              ACHTransferSimulationTransactionSourceInternalSourceReason = "error"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection    ACHTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonFees               ACHTransferSimulationTransactionSourceInternalSourceReason = "fees"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonInterest           ACHTransferSimulationTransactionSourceInternalSourceReason = "interest"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFunds        ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn  ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration              ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback                   ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable       ACHTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment         ACHTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonError                      ACHTransferSimulationTransactionSourceInternalSourceReason = "error"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection            ACHTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonFees                       ACHTransferSimulationTransactionSourceInternalSourceReason = "fees"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonInterest                   ACHTransferSimulationTransactionSourceInternalSourceReason = "interest"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonNegativeBalanceForgiveness ACHTransferSimulationTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFunds                ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
+	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn          ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Deprecated Card Refund object. This field will be present in the JSON response

@@ -337,7 +337,6 @@ const (
 	WireTransferSimulationTransactionSourceCategoryCheckTransferReturn                         WireTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferRejection                      WireTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             WireTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
-	WireTransferSimulationTransactionSourceCategoryCollectionReceivable                        WireTransferSimulationTransactionSourceCategory = "collection_receivable"
 	WireTransferSimulationTransactionSourceCategoryDisputeResolution                           WireTransferSimulationTransactionSourceCategory = "dispute_resolution"
 	WireTransferSimulationTransactionSourceCategoryEmpyrealCashDeposit                         WireTransferSimulationTransactionSourceCategory = "empyreal_cash_deposit"
 	WireTransferSimulationTransactionSourceCategoryFeePayment                                  WireTransferSimulationTransactionSourceCategory = "fee_payment"
@@ -1709,15 +1708,17 @@ const (
 type WireTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
-	WireTransferSimulationTransactionSourceInternalSourceReasonBankMigration      WireTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
-	WireTransferSimulationTransactionSourceInternalSourceReasonCashback           WireTransferSimulationTransactionSourceInternalSourceReason = "cashback"
-	WireTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment WireTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	WireTransferSimulationTransactionSourceInternalSourceReasonError              WireTransferSimulationTransactionSourceInternalSourceReason = "error"
-	WireTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection    WireTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
-	WireTransferSimulationTransactionSourceInternalSourceReasonFees               WireTransferSimulationTransactionSourceInternalSourceReason = "fees"
-	WireTransferSimulationTransactionSourceInternalSourceReasonInterest           WireTransferSimulationTransactionSourceInternalSourceReason = "interest"
-	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFunds        WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
-	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn  WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
+	WireTransferSimulationTransactionSourceInternalSourceReasonBankMigration              WireTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
+	WireTransferSimulationTransactionSourceInternalSourceReasonCashback                   WireTransferSimulationTransactionSourceInternalSourceReason = "cashback"
+	WireTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable       WireTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"
+	WireTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment         WireTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	WireTransferSimulationTransactionSourceInternalSourceReasonError                      WireTransferSimulationTransactionSourceInternalSourceReason = "error"
+	WireTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection            WireTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
+	WireTransferSimulationTransactionSourceInternalSourceReasonFees                       WireTransferSimulationTransactionSourceInternalSourceReason = "fees"
+	WireTransferSimulationTransactionSourceInternalSourceReasonInterest                   WireTransferSimulationTransactionSourceInternalSourceReason = "interest"
+	WireTransferSimulationTransactionSourceInternalSourceReasonNegativeBalanceForgiveness WireTransferSimulationTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFunds                WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
+	WireTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn          WireTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Deprecated Card Refund object. This field will be present in the JSON response

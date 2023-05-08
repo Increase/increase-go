@@ -359,7 +359,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferReturn                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferRejection                      InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCollectionReceivable                        InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "collection_receivable"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryDisputeResolution                           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "dispute_resolution"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment                                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "fee_payment"
@@ -1737,15 +1736,17 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason string
 
 const (
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonBankMigration      InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonCashback           InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "cashback"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonError              InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "error"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonErrorCorrection    InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "error_correction"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonFees               InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "fees"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonInterest           InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "interest"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFunds        InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn  InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonBankMigration              InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonCashback                   InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "cashback"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable       InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment         InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonError                      InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "error"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonErrorCorrection            InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "error_correction"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonFees                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "fees"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonInterest                   InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "interest"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonNegativeBalanceForgiveness InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFunds                InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn          InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Deprecated Card Refund object. This field will be present in the JSON response

@@ -337,7 +337,6 @@ const (
 	TransactionSourceCategoryCheckTransferReturn                         TransactionSourceCategory = "check_transfer_return"
 	TransactionSourceCategoryCheckTransferRejection                      TransactionSourceCategory = "check_transfer_rejection"
 	TransactionSourceCategoryCheckTransferStopPaymentRequest             TransactionSourceCategory = "check_transfer_stop_payment_request"
-	TransactionSourceCategoryCollectionReceivable                        TransactionSourceCategory = "collection_receivable"
 	TransactionSourceCategoryDisputeResolution                           TransactionSourceCategory = "dispute_resolution"
 	TransactionSourceCategoryEmpyrealCashDeposit                         TransactionSourceCategory = "empyreal_cash_deposit"
 	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
@@ -1687,15 +1686,17 @@ const (
 type TransactionSourceInternalSourceReason string
 
 const (
-	TransactionSourceInternalSourceReasonBankMigration      TransactionSourceInternalSourceReason = "bank_migration"
-	TransactionSourceInternalSourceReasonCashback           TransactionSourceInternalSourceReason = "cashback"
-	TransactionSourceInternalSourceReasonEmpyrealAdjustment TransactionSourceInternalSourceReason = "empyreal_adjustment"
-	TransactionSourceInternalSourceReasonError              TransactionSourceInternalSourceReason = "error"
-	TransactionSourceInternalSourceReasonErrorCorrection    TransactionSourceInternalSourceReason = "error_correction"
-	TransactionSourceInternalSourceReasonFees               TransactionSourceInternalSourceReason = "fees"
-	TransactionSourceInternalSourceReasonInterest           TransactionSourceInternalSourceReason = "interest"
-	TransactionSourceInternalSourceReasonSampleFunds        TransactionSourceInternalSourceReason = "sample_funds"
-	TransactionSourceInternalSourceReasonSampleFundsReturn  TransactionSourceInternalSourceReason = "sample_funds_return"
+	TransactionSourceInternalSourceReasonBankMigration              TransactionSourceInternalSourceReason = "bank_migration"
+	TransactionSourceInternalSourceReasonCashback                   TransactionSourceInternalSourceReason = "cashback"
+	TransactionSourceInternalSourceReasonCollectionReceivable       TransactionSourceInternalSourceReason = "collection_receivable"
+	TransactionSourceInternalSourceReasonEmpyrealAdjustment         TransactionSourceInternalSourceReason = "empyreal_adjustment"
+	TransactionSourceInternalSourceReasonError                      TransactionSourceInternalSourceReason = "error"
+	TransactionSourceInternalSourceReasonErrorCorrection            TransactionSourceInternalSourceReason = "error_correction"
+	TransactionSourceInternalSourceReasonFees                       TransactionSourceInternalSourceReason = "fees"
+	TransactionSourceInternalSourceReasonInterest                   TransactionSourceInternalSourceReason = "interest"
+	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	TransactionSourceInternalSourceReasonSampleFunds                TransactionSourceInternalSourceReason = "sample_funds"
+	TransactionSourceInternalSourceReasonSampleFundsReturn          TransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Deprecated Card Refund object. This field will be present in the JSON response
@@ -2024,7 +2025,6 @@ const (
 	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
 	TransactionListParamsCategoryInCheckTransferRejection                      TransactionListParamsCategoryIn = "check_transfer_rejection"
 	TransactionListParamsCategoryInCheckTransferStopPaymentRequest             TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
-	TransactionListParamsCategoryInCollectionReceivable                        TransactionListParamsCategoryIn = "collection_receivable"
 	TransactionListParamsCategoryInDisputeResolution                           TransactionListParamsCategoryIn = "dispute_resolution"
 	TransactionListParamsCategoryInEmpyrealCashDeposit                         TransactionListParamsCategoryIn = "empyreal_cash_deposit"
 	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
