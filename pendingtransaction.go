@@ -324,6 +324,8 @@ type PendingTransactionSourceCardAuthorization struct {
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The identifier of the Pending Transaction associated with this Transaction.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
 	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
@@ -345,6 +347,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	Currency             apijson.Field
 	RealTimeDecisionID   apijson.Field
 	DigitalWalletTokenID apijson.Field
+	PendingTransactionID apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
