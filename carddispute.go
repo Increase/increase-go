@@ -209,7 +209,10 @@ type CardDisputeListParams struct {
 
 // URLQuery serializes [CardDisputeListParams]'s query parameters as `url.Values`.
 func (r CardDisputeListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CardDisputeListParamsCreatedAt struct {
@@ -230,7 +233,10 @@ type CardDisputeListParamsCreatedAt struct {
 // URLQuery serializes [CardDisputeListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r CardDisputeListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CardDisputeListParamsStatus struct {
@@ -243,7 +249,10 @@ type CardDisputeListParamsStatus struct {
 // URLQuery serializes [CardDisputeListParamsStatus]'s query parameters as
 // `url.Values`.
 func (r CardDisputeListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CardDisputeListParamsStatusIn string

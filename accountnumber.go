@@ -185,7 +185,10 @@ type AccountNumberListParams struct {
 // URLQuery serializes [AccountNumberListParams]'s query parameters as
 // `url.Values`.
 func (r AccountNumberListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type AccountNumberListParamsStatus string
@@ -214,7 +217,10 @@ type AccountNumberListParamsCreatedAt struct {
 // URLQuery serializes [AccountNumberListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Account Number objects

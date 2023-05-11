@@ -134,7 +134,10 @@ type RoutingNumberListParams struct {
 // URLQuery serializes [RoutingNumberListParams]'s query parameters as
 // `url.Values`.
 func (r RoutingNumberListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Routing Number objects

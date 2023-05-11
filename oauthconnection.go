@@ -121,7 +121,10 @@ type OauthConnectionListParams struct {
 // URLQuery serializes [OauthConnectionListParams]'s query parameters as
 // `url.Values`.
 func (r OauthConnectionListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of OAuth Connection objects

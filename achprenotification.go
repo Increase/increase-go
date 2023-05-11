@@ -239,7 +239,10 @@ type ACHPrenotificationListParams struct {
 // URLQuery serializes [ACHPrenotificationListParams]'s query parameters as
 // `url.Values`.
 func (r ACHPrenotificationListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type ACHPrenotificationListParamsCreatedAt struct {
@@ -260,7 +263,10 @@ type ACHPrenotificationListParamsCreatedAt struct {
 // URLQuery serializes [ACHPrenotificationListParamsCreatedAt]'s query parameters
 // as `url.Values`.
 func (r ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of ACH Prenotification objects

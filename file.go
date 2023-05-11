@@ -222,7 +222,10 @@ type FileListParams struct {
 
 // URLQuery serializes [FileListParams]'s query parameters as `url.Values`.
 func (r FileListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type FileListParamsCreatedAt struct {
@@ -243,7 +246,10 @@ type FileListParamsCreatedAt struct {
 // URLQuery serializes [FileListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r FileListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type FileListParamsPurpose struct {
@@ -254,7 +260,10 @@ type FileListParamsPurpose struct {
 
 // URLQuery serializes [FileListParamsPurpose]'s query parameters as `url.Values`.
 func (r FileListParamsPurpose) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type FileListParamsPurposeIn string

@@ -174,7 +174,10 @@ type EventListParams struct {
 
 // URLQuery serializes [EventListParams]'s query parameters as `url.Values`.
 func (r EventListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type EventListParamsCreatedAt struct {
@@ -195,7 +198,10 @@ type EventListParamsCreatedAt struct {
 // URLQuery serializes [EventListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type EventListParamsCategory struct {
@@ -208,7 +214,10 @@ type EventListParamsCategory struct {
 // URLQuery serializes [EventListParamsCategory]'s query parameters as
 // `url.Values`.
 func (r EventListParamsCategory) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type EventListParamsCategoryIn string

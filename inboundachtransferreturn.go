@@ -198,7 +198,10 @@ type InboundACHTransferReturnListParams struct {
 // URLQuery serializes [InboundACHTransferReturnListParams]'s query parameters as
 // `url.Values`.
 func (r InboundACHTransferReturnListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Inbound ACH Transfer Return objects

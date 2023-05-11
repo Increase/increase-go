@@ -758,7 +758,10 @@ type DeclinedTransactionListParams struct {
 // URLQuery serializes [DeclinedTransactionListParams]'s query parameters as
 // `url.Values`.
 func (r DeclinedTransactionListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type DeclinedTransactionListParamsCreatedAt struct {
@@ -779,7 +782,10 @@ type DeclinedTransactionListParamsCreatedAt struct {
 // URLQuery serializes [DeclinedTransactionListParamsCreatedAt]'s query parameters
 // as `url.Values`.
 func (r DeclinedTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Declined Transaction objects

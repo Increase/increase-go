@@ -492,7 +492,10 @@ type ACHTransferListParams struct {
 
 // URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.
 func (r ACHTransferListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type ACHTransferListParamsCreatedAt struct {
@@ -513,7 +516,10 @@ type ACHTransferListParamsCreatedAt struct {
 // URLQuery serializes [ACHTransferListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r ACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of ACH Transfer objects
