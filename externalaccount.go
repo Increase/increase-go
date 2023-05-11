@@ -208,7 +208,10 @@ type ExternalAccountListParams struct {
 // URLQuery serializes [ExternalAccountListParams]'s query parameters as
 // `url.Values`.
 func (r ExternalAccountListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type ExternalAccountListParamsStatus struct {
@@ -221,7 +224,10 @@ type ExternalAccountListParamsStatus struct {
 // URLQuery serializes [ExternalAccountListParamsStatus]'s query parameters as
 // `url.Values`.
 func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type ExternalAccountListParamsStatusIn string

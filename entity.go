@@ -1523,7 +1523,10 @@ type EntityListParams struct {
 
 // URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.
 func (r EntityListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type EntityListParamsCreatedAt struct {
@@ -1544,7 +1547,10 @@ type EntityListParamsCreatedAt struct {
 // URLQuery serializes [EntityListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r EntityListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Entity objects

@@ -245,7 +245,10 @@ type CardProfileListParams struct {
 
 // URLQuery serializes [CardProfileListParams]'s query parameters as `url.Values`.
 func (r CardProfileListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CardProfileListParamsStatus struct {
@@ -258,7 +261,10 @@ type CardProfileListParamsStatus struct {
 // URLQuery serializes [CardProfileListParamsStatus]'s query parameters as
 // `url.Values`.
 func (r CardProfileListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CardProfileListParamsStatusIn string

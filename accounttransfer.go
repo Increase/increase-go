@@ -264,7 +264,10 @@ type AccountTransferListParams struct {
 // URLQuery serializes [AccountTransferListParams]'s query parameters as
 // `url.Values`.
 func (r AccountTransferListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type AccountTransferListParamsCreatedAt struct {
@@ -285,7 +288,10 @@ type AccountTransferListParamsCreatedAt struct {
 // URLQuery serializes [AccountTransferListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r AccountTransferListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Account Transfer objects

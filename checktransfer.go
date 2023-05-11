@@ -513,7 +513,10 @@ type CheckTransferListParams struct {
 // URLQuery serializes [CheckTransferListParams]'s query parameters as
 // `url.Values`.
 func (r CheckTransferListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type CheckTransferListParamsCreatedAt struct {
@@ -534,7 +537,10 @@ type CheckTransferListParamsCreatedAt struct {
 // URLQuery serializes [CheckTransferListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Check Transfer objects

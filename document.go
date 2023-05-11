@@ -174,7 +174,10 @@ type DocumentListParams struct {
 
 // URLQuery serializes [DocumentListParams]'s query parameters as `url.Values`.
 func (r DocumentListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type DocumentListParamsCategory struct {
@@ -187,7 +190,10 @@ type DocumentListParamsCategory struct {
 // URLQuery serializes [DocumentListParamsCategory]'s query parameters as
 // `url.Values`.
 func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type DocumentListParamsCategoryIn string
@@ -262,7 +268,10 @@ type DocumentListParamsCreatedAt struct {
 // URLQuery serializes [DocumentListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Document objects

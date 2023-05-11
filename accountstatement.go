@@ -133,7 +133,10 @@ type AccountStatementListParams struct {
 // URLQuery serializes [AccountStatementListParams]'s query parameters as
 // `url.Values`.
 func (r AccountStatementListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type AccountStatementListParamsStatementPeriodStart struct {
@@ -154,7 +157,10 @@ type AccountStatementListParamsStatementPeriodStart struct {
 // URLQuery serializes [AccountStatementListParamsStatementPeriodStart]'s query
 // parameters as `url.Values`.
 func (r AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Account Statement objects

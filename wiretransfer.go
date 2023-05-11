@@ -411,7 +411,10 @@ type WireTransferListParams struct {
 
 // URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.
 func (r WireTransferListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type WireTransferListParamsCreatedAt struct {
@@ -432,7 +435,10 @@ type WireTransferListParamsCreatedAt struct {
 // URLQuery serializes [WireTransferListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Wire Transfer objects

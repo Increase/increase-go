@@ -752,7 +752,10 @@ type PendingTransactionListParams struct {
 // URLQuery serializes [PendingTransactionListParams]'s query parameters as
 // `url.Values`.
 func (r PendingTransactionListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type PendingTransactionListParamsStatus struct {
@@ -766,7 +769,10 @@ type PendingTransactionListParamsStatus struct {
 // URLQuery serializes [PendingTransactionListParamsStatus]'s query parameters as
 // `url.Values`.
 func (r PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type PendingTransactionListParamsStatusIn string
@@ -794,7 +800,10 @@ type PendingTransactionListParamsCreatedAt struct {
 // URLQuery serializes [PendingTransactionListParamsCreatedAt]'s query parameters
 // as `url.Values`.
 func (r PendingTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Pending Transaction objects

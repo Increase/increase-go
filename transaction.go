@@ -1970,7 +1970,10 @@ type TransactionListParams struct {
 
 // URLQuery serializes [TransactionListParams]'s query parameters as `url.Values`.
 func (r TransactionListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type TransactionListParamsCreatedAt struct {
@@ -1991,7 +1994,10 @@ type TransactionListParamsCreatedAt struct {
 // URLQuery serializes [TransactionListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type TransactionListParamsCategory struct {
@@ -2003,7 +2009,10 @@ type TransactionListParamsCategory struct {
 // URLQuery serializes [TransactionListParamsCategory]'s query parameters as
 // `url.Values`.
 func (r TransactionListParamsCategory) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type TransactionListParamsCategoryIn string

@@ -104,7 +104,10 @@ type BookkeepingEntryListParams struct {
 // URLQuery serializes [BookkeepingEntryListParams]'s query parameters as
 // `url.Values`.
 func (r BookkeepingEntryListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Bookkeeping Entry objects

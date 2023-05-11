@@ -353,7 +353,10 @@ type RealTimePaymentsTransferListParams struct {
 // URLQuery serializes [RealTimePaymentsTransferListParams]'s query parameters as
 // `url.Values`.
 func (r RealTimePaymentsTransferListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 type RealTimePaymentsTransferListParamsCreatedAt struct {
@@ -374,7 +377,10 @@ type RealTimePaymentsTransferListParamsCreatedAt struct {
 // URLQuery serializes [RealTimePaymentsTransferListParamsCreatedAt]'s query
 // parameters as `url.Values`.
 func (r RealTimePaymentsTransferListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Real Time Payments Transfer objects

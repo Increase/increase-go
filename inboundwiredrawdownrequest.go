@@ -171,7 +171,10 @@ type InboundWireDrawdownRequestListParams struct {
 // URLQuery serializes [InboundWireDrawdownRequestListParams]'s query parameters as
 // `url.Values`.
 func (r InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
-	return apiquery.Marshal(r)
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
 // A list of Inbound Wire Drawdown Request objects
