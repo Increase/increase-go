@@ -1962,7 +1962,8 @@ type TransactionListParams struct {
 	Limit param.Field[int64] `query:"limit"`
 	// Filter Transactions for those belonging to the specified Account.
 	AccountID param.Field[string] `query:"account_id"`
-	// Filter Transactions for those belonging to the specified route.
+	// Filter Transactions for those belonging to the specified route. This could be a
+	// Card ID or an Account Number ID.
 	RouteID   param.Field[string]                         `query:"route_id"`
 	CreatedAt param.Field[TransactionListParamsCreatedAt] `query:"created_at"`
 	Category  param.Field[TransactionListParamsCategory]  `query:"category"`
