@@ -318,6 +318,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
+	// will expire and the pending transaction will be released.
+	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -345,6 +348,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	NetworkDetails       apijson.Field
 	Amount               apijson.Field
 	Currency             apijson.Field
+	ExpiresAt            apijson.Field
 	RealTimeDecisionID   apijson.Field
 	DigitalWalletTokenID apijson.Field
 	PendingTransactionID apijson.Field
