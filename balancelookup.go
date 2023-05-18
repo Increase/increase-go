@@ -36,8 +36,7 @@ func (r *BalanceLookupService) Lookup(ctx context.Context, body BalanceLookupLoo
 	return
 }
 
-// Represents a request to lookup the balance of an Account at a given point in
-// time.
+// Represents a request to lookup the balance of an Account.
 type BalanceLookupLookupResponse struct {
 	// The identifier for the account for which the balance was queried.
 	AccountID string `json:"account_id,required"`
