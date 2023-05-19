@@ -3,6 +3,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/param"
@@ -36,7 +37,8 @@ func (r *BalanceLookupService) Lookup(ctx context.Context, body BalanceLookupLoo
 	return
 }
 
-// Represents a request to lookup the balance of an Account.
+// Represents a request to lookup the balance of an Account at a given point in
+// time.
 type BalanceLookupLookupResponse struct {
 	// The identifier for the account for which the balance was queried.
 	AccountID string `json:"account_id,required"`
@@ -76,6 +78,8 @@ const (
 type BalanceLookupLookupParams struct {
 	// The Account to query the balance for.
 	AccountID param.Field[string] `json:"account_id,required"`
+	// The moment to query the balance at. If not set, returns the current balances.
+	AtTime param.Field[time.Time] `json:"at_time" format:"date-time"`
 }
 
 func (r BalanceLookupLookupParams) MarshalJSON() (data []byte, err error) {
