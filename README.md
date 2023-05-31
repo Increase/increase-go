@@ -7,17 +7,25 @@ API](https://increase.com/documentation) from applications written in Go.
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
 	"github.com/increase/increase-go" // imported as increase
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
+
+<!-- x-release-please-start-version -->
 
 ```sh
 go get -u 'github.com/increase/increase-go@v0.0.1'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
