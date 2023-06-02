@@ -100,13 +100,13 @@ const (
 )
 
 type BookkeepingEntrySetNewParams struct {
+	// The bookkeeping entries.
+	Entries param.Field[[]BookkeepingEntrySetNewParamsEntries] `json:"entries,required"`
 	// The date of the transaction. If `transaction_id` is provided, this must match
 	// the `created_at` field on that resource.
 	Date param.Field[time.Time] `json:"date" format:"date-time"`
 	// The identifier of the Transaction related to this entry set, if any.
 	TransactionID param.Field[string] `json:"transaction_id"`
-	// The bookkeeping entries.
-	Entries param.Field[[]BookkeepingEntrySetNewParamsEntries] `json:"entries,required"`
 }
 
 func (r BookkeepingEntrySetNewParams) MarshalJSON() (data []byte, err error) {
@@ -120,4 +120,8 @@ type BookkeepingEntrySetNewParamsEntries struct {
 	// example, this is cents. Debit entries have positive amounts; credit entries have
 	// negative amounts.
 	Amount param.Field[int64] `json:"amount,required"`
+}
+
+func (r BookkeepingEntrySetNewParamsEntries) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

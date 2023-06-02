@@ -42,9 +42,9 @@ func (r *ACHTransferService) New(ctx context.Context, body ACHTransferNewParams,
 }
 
 // Retrieve an ACH Transfer
-func (r *ACHTransferService) Get(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ach_transfers/%s", ach_transfer_id)
+	path := fmt.Sprintf("ach_transfers/%s", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -73,17 +73,17 @@ func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query ACHTransf
 }
 
 // Approves an ACH Transfer in a pending_approval state.
-func (r *ACHTransferService) Approve(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ach_transfers/%s/approve", ach_transfer_id)
+	path := fmt.Sprintf("ach_transfers/%s/approve", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
 // Cancels an ACH Transfer in a pending_approval state.
-func (r *ACHTransferService) Cancel(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ach_transfers/%s/cancel", ach_transfer_id)
+	path := fmt.Sprintf("ach_transfers/%s/cancel", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -408,15 +408,22 @@ const (
 type ACHTransferNewParams struct {
 	// The Increase identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
+	// The transfer amount in cents. A positive amount originates a credit transfer
+	// pushing funds to the receiving account. A negative amount originates a debit
+	// transfer pulling funds from the receiving account.
+	Amount param.Field[int64] `json:"amount,required"`
+	// A description you choose to give the transfer. This will be saved with the
+	// transfer details, displayed in the dashboard, and returned by the API. If
+	// `individual_name` and `company_name` are not explicitly set by this API, the
+	// `statement_descriptor` will be sent in those fields to the receiving bank to
+	// help the customer recognize the transfer. You are highly encouraged to pass
+	// `individual_name` and `company_name` instead of relying on this fallback.
+	StatementDescriptor param.Field[string] `json:"statement_descriptor,required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number"`
 	// Additional information that will be sent to the recipient. This is included in
 	// the transfer data sent to the receiving bank.
 	Addendum param.Field[string] `json:"addendum"`
-	// The transfer amount in cents. A positive amount originates a credit transfer
-	// pushing funds to the receiving account. A negative amount originates a debit
-	// transfer pulling funds from the receiving account.
-	Amount param.Field[int64] `json:"amount,required"`
 	// The description of the date of the transfer, usually in the format `YYMMDD`.
 	// This is included in the transfer data sent to the receiving bank.
 	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
@@ -449,13 +456,6 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
-	// A description you choose to give the transfer. This will be saved with the
-	// transfer details, displayed in the dashboard, and returned by the API. If
-	// `individual_name` and `company_name` are not explicitly set by this API, the
-	// `statement_descriptor` will be sent in those fields to the receiving bank to
-	// help the customer recognize the transfer. You are highly encouraged to pass
-	// `individual_name` and `company_name` instead of relying on this fallback.
-	StatementDescriptor param.Field[string] `json:"statement_descriptor,required"`
 }
 
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -478,16 +478,16 @@ const (
 )
 
 type ACHTransferListParams struct {
+	// Filter ACH Transfers to those that originated from the specified Account.
+	AccountID param.Field[string]                         `query:"account_id"`
+	CreatedAt param.Field[ACHTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter ACH Transfers to those made to the specified External Account.
+	ExternalAccountID param.Field[string] `query:"external_account_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter ACH Transfers to those that originated from the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
-	// Filter ACH Transfers to those made to the specified External Account.
-	ExternalAccountID param.Field[string]                         `query:"external_account_id"`
-	CreatedAt         param.Field[ACHTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.

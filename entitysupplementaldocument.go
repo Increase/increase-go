@@ -30,9 +30,9 @@ func NewEntitySupplementalDocumentService(opts ...option.RequestOption) (r *Enti
 }
 
 // Create a supplemental document for an Entity
-func (r *EntitySupplementalDocumentService) New(ctx context.Context, entity_id string, body EntitySupplementalDocumentNewParams, opts ...option.RequestOption) (res *Entity, err error) {
+func (r *EntitySupplementalDocumentService) New(ctx context.Context, entityID string, body EntitySupplementalDocumentNewParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("entities/%s/supplemental_documents", entity_id)
+	path := fmt.Sprintf("entities/%s/supplemental_documents", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

@@ -41,9 +41,9 @@ func (r *WireDrawdownRequestService) New(ctx context.Context, body WireDrawdownR
 }
 
 // Retrieve a Wire Drawdown Request
-func (r *WireDrawdownRequestService) Get(ctx context.Context, wire_drawdown_request_id string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
+func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownRequestID string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("wire_drawdown_requests/%s", wire_drawdown_request_id)
+	path := fmt.Sprintf("wire_drawdown_requests/%s", wireDrawdownRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -184,10 +184,10 @@ type WireDrawdownRequestNewParams struct {
 	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
 	// The drawdown request's recipient's account number.
 	RecipientAccountNumber param.Field[string] `json:"recipient_account_number,required"`
-	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber param.Field[string] `json:"recipient_routing_number,required"`
 	// The drawdown request's recipient's name.
 	RecipientName param.Field[string] `json:"recipient_name,required"`
+	// The drawdown request's recipient's routing number.
+	RecipientRoutingNumber param.Field[string] `json:"recipient_routing_number,required"`
 	// Line 1 of the drawdown request's recipient's address.
 	RecipientAddressLine1 param.Field[string] `json:"recipient_address_line1"`
 	// Line 2 of the drawdown request's recipient's address.

@@ -42,9 +42,9 @@ func (r *CheckDepositService) New(ctx context.Context, body CheckDepositNewParam
 }
 
 // Retrieve a Check Deposit
-func (r *CheckDepositService) Get(ctx context.Context, check_deposit_id string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
+func (r *CheckDepositService) Get(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("check_deposits/%s", check_deposit_id)
+	path := fmt.Sprintf("check_deposits/%s", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -338,12 +338,12 @@ type CheckDepositNewParams struct {
 	// The deposit amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
 	Amount param.Field[int64] `json:"amount,required"`
+	// The File containing the check's back image.
+	BackImageFileID param.Field[string] `json:"back_image_file_id,required"`
 	// The currency to use for the deposit.
 	Currency param.Field[string] `json:"currency,required"`
 	// The File containing the check's front image.
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
-	// The File containing the check's back image.
-	BackImageFileID param.Field[string] `json:"back_image_file_id,required"`
 }
 
 func (r CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
@@ -351,14 +351,14 @@ func (r CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type CheckDepositListParams struct {
+	// Filter Check Deposits to those belonging to the specified Account.
+	AccountID param.Field[string]                          `query:"account_id"`
+	CreatedAt param.Field[CheckDepositListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Check Deposits to those belonging to the specified Account.
-	AccountID param.Field[string]                          `query:"account_id"`
-	CreatedAt param.Field[CheckDepositListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [CheckDepositListParams]'s query parameters as `url.Values`.

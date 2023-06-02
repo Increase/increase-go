@@ -34,9 +34,9 @@ func NewTransactionService(opts ...option.RequestOption) (r *TransactionService)
 }
 
 // Retrieve a Transaction
-func (r *TransactionService) Get(ctx context.Context, transaction_id string, opts ...option.RequestOption) (res *Transaction, err error) {
+func (r *TransactionService) Get(ctx context.Context, transactionID string, opts ...option.RequestOption) (res *Transaction, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("transactions/%s", transaction_id)
+	path := fmt.Sprintf("transactions/%s", transactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -1955,46 +1955,22 @@ const (
 )
 
 type TransactionListParams struct {
+	// Filter Transactions for those belonging to the specified Account.
+	AccountID param.Field[string]                         `query:"account_id"`
+	Category  param.Field[TransactionListParamsCategory]  `query:"category"`
+	CreatedAt param.Field[TransactionListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Transactions for those belonging to the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
 	// Filter Transactions for those belonging to the specified route. This could be a
 	// Card ID or an Account Number ID.
-	RouteID   param.Field[string]                         `query:"route_id"`
-	CreatedAt param.Field[TransactionListParamsCreatedAt] `query:"created_at"`
-	Category  param.Field[TransactionListParamsCategory]  `query:"category"`
+	RouteID param.Field[string] `query:"route_id"`
 }
 
 // URLQuery serializes [TransactionListParams]'s query parameters as `url.Values`.
 func (r TransactionListParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type TransactionListParamsCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `query:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	Before param.Field[time.Time] `query:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
-}
-
-// URLQuery serializes [TransactionListParamsCreatedAt]'s query parameters as
-// `url.Values`.
-func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
@@ -2060,6 +2036,30 @@ const (
 	TransactionListParamsCategoryInWireTransferRejection                       TransactionListParamsCategoryIn = "wire_transfer_rejection"
 	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
 )
+
+type TransactionListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [TransactionListParamsCreatedAt]'s query parameters as
+// `url.Values`.
+func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
 
 // A list of Transaction objects
 type TransactionListResponse struct {

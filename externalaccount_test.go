@@ -11,7 +11,12 @@ import (
 
 func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.New(context.TODO(), increase.ExternalAccountNewParams{RoutingNumber: increase.F("101050001"), AccountNumber: increase.F("987654321"), Funding: increase.F(increase.ExternalAccountNewParamsFundingChecking), Description: increase.F("Landlord")})
+	_, err := c.ExternalAccounts.New(context.TODO(), increase.ExternalAccountNewParams{
+		AccountNumber: increase.F("x"),
+		Description:   increase.F("x"),
+		RoutingNumber: increase.F("xxxxxxxxx"),
+		Funding:       increase.F(increase.ExternalAccountNewParamsFundingChecking),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -41,7 +46,10 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.ExternalAccounts.Update(
 		context.TODO(),
 		"external_account_ukk55lr923a3ac0pp7iv",
-		increase.ExternalAccountUpdateParams{Description: increase.F("New description"), Status: increase.F(increase.ExternalAccountUpdateParamsStatusActive)},
+		increase.ExternalAccountUpdateParams{
+			Description: increase.F("x"),
+			Status:      increase.F(increase.ExternalAccountUpdateParamsStatusActive),
+		},
 	)
 	if err != nil {
 		var apierr *increase.Error
@@ -54,7 +62,11 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 
 func TestExternalAccountListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(increase.ExternalAccountListParamsStatus{In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive})})})
+	_, err := c.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
+		Status: increase.F(increase.ExternalAccountListParamsStatus{In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive})}),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

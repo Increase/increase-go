@@ -11,7 +11,12 @@ import (
 
 func TestBookkeepingAccountNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingAccounts.New(context.TODO(), increase.BookkeepingAccountNewParams{ComplianceCategory: increase.F(increase.BookkeepingAccountNewParamsComplianceCategoryCommingledCash), EntityID: increase.F("string"), AccountID: increase.F("string"), Name: increase.F("New Account!")})
+	_, err := c.BookkeepingAccounts.New(context.TODO(), increase.BookkeepingAccountNewParams{
+		Name:               increase.F("x"),
+		AccountID:          increase.F("string"),
+		ComplianceCategory: increase.F(increase.BookkeepingAccountNewParamsComplianceCategoryCommingledCash),
+		EntityID:           increase.F("string"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -23,7 +28,10 @@ func TestBookkeepingAccountNewWithOptionalParams(t *testing.T) {
 
 func TestBookkeepingAccountListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingAccounts.List(context.TODO(), increase.BookkeepingAccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0))})
+	_, err := c.BookkeepingAccounts.List(context.TODO(), increase.BookkeepingAccountListParams{
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

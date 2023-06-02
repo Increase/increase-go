@@ -42,17 +42,17 @@ func (r *ExternalAccountService) New(ctx context.Context, body ExternalAccountNe
 }
 
 // Retrieve an External Account
-func (r *ExternalAccountService) Get(ctx context.Context, external_account_id string, opts ...option.RequestOption) (res *ExternalAccount, err error) {
+func (r *ExternalAccountService) Get(ctx context.Context, externalAccountID string, opts ...option.RequestOption) (res *ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("external_accounts/%s", external_account_id)
+	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update an External Account
-func (r *ExternalAccountService) Update(ctx context.Context, external_account_id string, body ExternalAccountUpdateParams, opts ...option.RequestOption) (res *ExternalAccount, err error) {
+func (r *ExternalAccountService) Update(ctx context.Context, externalAccountID string, body ExternalAccountUpdateParams, opts ...option.RequestOption) (res *ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("external_accounts/%s", external_account_id)
+	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -155,15 +155,15 @@ const (
 )
 
 type ExternalAccountNewParams struct {
+	// The account number for the destination account.
+	AccountNumber param.Field[string] `json:"account_number,required"`
+	// The name you choose for the Account.
+	Description param.Field[string] `json:"description,required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number,required"`
-	// The account number for the destination account.
-	AccountNumber param.Field[string] `json:"account_number,required"`
 	// The type of the destination account. Defaults to `checking`.
 	Funding param.Field[ExternalAccountNewParamsFunding] `json:"funding"`
-	// The name you choose for the Account.
-	Description param.Field[string] `json:"description,required"`
 }
 
 func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {

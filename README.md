@@ -198,7 +198,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-	Naem: "Oops",
+	Name: increase.F("x"),
 })
 if err != nil {
 	var apierr *increase.Error

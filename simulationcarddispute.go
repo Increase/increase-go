@@ -33,9 +33,9 @@ func NewSimulationCardDisputeService(opts ...option.RequestOption) (r *Simulatio
 // will be reviewed. Since no review happens in sandbox, this endpoint simulates
 // moving a Card Dispute into a rejected or accepted state. A Card Dispute can only
 // be actioned one time and must have a status of `pending_reviewing`.
-func (r *SimulationCardDisputeService) Action(ctx context.Context, card_dispute_id string, body SimulationCardDisputeActionParams, opts ...option.RequestOption) (res *CardDispute, err error) {
+func (r *SimulationCardDisputeService) Action(ctx context.Context, cardDisputeID string, body SimulationCardDisputeActionParams, opts ...option.RequestOption) (res *CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/card_disputes/%s/action", card_dispute_id)
+	path := fmt.Sprintf("simulations/card_disputes/%s/action", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

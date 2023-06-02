@@ -33,9 +33,9 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 }
 
 // Retrieve a Document
-func (r *DocumentService) Get(ctx context.Context, document_id string, opts ...option.RequestOption) (res *Document, err error) {
+func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...option.RequestOption) (res *Document, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("documents/%s", document_id)
+	path := fmt.Sprintf("documents/%s", documentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -161,15 +161,15 @@ const (
 )
 
 type DocumentListParams struct {
+	Category  param.Field[DocumentListParamsCategory]  `query:"category"`
+	CreatedAt param.Field[DocumentListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter Documents to ones belonging to the specified Entity.
+	EntityID param.Field[string] `query:"entity_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Documents to ones belonging to the specified Entity.
-	EntityID  param.Field[string]                      `query:"entity_id"`
-	Category  param.Field[DocumentListParamsCategory]  `query:"category"`
-	CreatedAt param.Field[DocumentListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [DocumentListParams]'s query parameters as `url.Values`.

@@ -12,7 +12,20 @@ import (
 
 func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky"), AddressLine1: increase.F("33 Liberty Street"), AddressLine2: increase.F("x"), AddressCity: increase.F("New York"), AddressState: increase.F("NY"), AddressZip: increase.F("10045"), ReturnAddress: increase.F(increase.CheckTransferNewParamsReturnAddress{Name: increase.F("x"), Line1: increase.F("x"), Line2: increase.F("x"), City: increase.F("x"), State: increase.F("x"), Zip: increase.F("x")}), Amount: increase.F(int64(1000)), Message: increase.F("Check payment"), Note: increase.F("x"), RecipientName: increase.F("Ian Crease"), RequireApproval: increase.F(true)})
+	_, err := c.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
+		AccountID:       increase.F("string"),
+		AddressCity:     increase.F("x"),
+		AddressLine1:    increase.F("x"),
+		AddressState:    increase.F("x"),
+		AddressZip:      increase.F("x"),
+		Amount:          increase.F(int64(1)),
+		Message:         increase.F("x"),
+		RecipientName:   increase.F("x"),
+		AddressLine2:    increase.F("x"),
+		Note:            increase.F("x"),
+		RequireApproval: increase.F(true),
+		ReturnAddress:   increase.F(increase.CheckTransferNewParamsReturnAddress{Name: increase.F("x"), Line1: increase.F("x"), Line2: increase.F("x"), City: increase.F("x"), State: increase.F("x"), Zip: increase.F("x")}),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -39,7 +52,12 @@ func TestCheckTransferGet(t *testing.T) {
 
 func TestCheckTransferListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), CreatedAt: increase.F(increase.CheckTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
+		AccountID: increase.F("string"),
+		CreatedAt: increase.F(increase.CheckTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:    increase.F("string"),
+		Limit:     increase.F(int64(0)),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

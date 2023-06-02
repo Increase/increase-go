@@ -46,9 +46,9 @@ func (r *FileService) New(ctx context.Context, body FileNewParams, opts ...optio
 }
 
 // Retrieve a File
-func (r *FileService) Get(ctx context.Context, file_id string, opts ...option.RequestOption) (res *File, err error) {
+func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.RequestOption) (res *File, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("files/%s", file_id)
+	path := fmt.Sprintf("files/%s", fileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -156,11 +156,11 @@ type FileNewParams struct {
 	// The file contents. This should follow the specifications of
 	// [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file
 	// transfers for the multipart/form-data protocol.
-	File param.Field[io.Reader] `form:"file,required" format:"binary"`
-	// The description you choose to give the File.
-	Description param.Field[string] `form:"description"`
+	File param.Field[io.Reader] `json:"file,required" format:"binary"`
 	// What the File will be used for in Increase's systems.
-	Purpose param.Field[FileNewParamsPurpose] `form:"purpose,required"`
+	Purpose param.Field[FileNewParamsPurpose] `json:"purpose,required"`
+	// The description you choose to give the File.
+	Description param.Field[string] `json:"description"`
 }
 
 func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
@@ -179,18 +179,18 @@ func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
 		io.Copy(part, r.File.Value)
 	}
 	{
-		bdy, err := apijson.Marshal(r.Description)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("description", string(bdy))
-	}
-	{
 		bdy, err := apijson.Marshal(r.Purpose)
 		if err != nil {
 			return nil, err
 		}
 		writer.WriteField("purpose", string(bdy))
+	}
+	{
+		bdy, err := apijson.Marshal(r.Description)
+		if err != nil {
+			return nil, err
+		}
+		writer.WriteField("description", string(bdy))
 	}
 	return body.Bytes(), nil
 }
@@ -211,13 +211,13 @@ const (
 )
 
 type FileListParams struct {
+	CreatedAt param.Field[FileListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     param.Field[int64]                   `query:"limit"`
-	CreatedAt param.Field[FileListParamsCreatedAt] `query:"created_at"`
-	Purpose   param.Field[FileListParamsPurpose]   `query:"purpose"`
+	Limit   param.Field[int64]                 `query:"limit"`
+	Purpose param.Field[FileListParamsPurpose] `query:"purpose"`
 }
 
 // URLQuery serializes [FileListParams]'s query parameters as `url.Values`.

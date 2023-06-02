@@ -35,9 +35,9 @@ func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) 
 // Simulates submission of a Real Time Payments transfer and handling the response
 // from the destination financial institution. This transfer must first have a
 // `status` of `pending_submission`.
-func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, real_time_payments_transfer_id string, body SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
+func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, realTimePaymentsTransferID string, body SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/real_time_payments_transfers/%s/complete", real_time_payments_transfer_id)
+	path := fmt.Sprintf("simulations/real_time_payments_transfers/%s/complete", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -2721,6 +2721,10 @@ type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
 	RejectReasonCode param.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
 }
 
+func (r SimulationRealTimePaymentsTransferCompleteParamsRejection) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
 
 const (
@@ -2753,16 +2757,16 @@ type SimulationRealTimePaymentsTransferNewInboundParams struct {
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in USD cents. Must be positive.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The identifier of a pending Request for Payment that this transfer will fulfill.
-	RequestForPaymentID param.Field[string] `json:"request_for_payment_id"`
-	// The name provided by the sender of the transfer.
-	DebtorName param.Field[string] `json:"debtor_name"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
+	// The name provided by the sender of the transfer.
+	DebtorName param.Field[string] `json:"debtor_name"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
 	// Additional information included with the transfer.
 	RemittanceInformation param.Field[string] `json:"remittance_information"`
+	// The identifier of a pending Request for Payment that this transfer will fulfill.
+	RequestForPaymentID param.Field[string] `json:"request_for_payment_id"`
 }
 
 func (r SimulationRealTimePaymentsTransferNewInboundParams) MarshalJSON() (data []byte, err error) {

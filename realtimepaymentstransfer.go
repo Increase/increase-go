@@ -42,9 +42,9 @@ func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTime
 }
 
 // Retrieve a Real Time Payments Transfer
-func (r *RealTimePaymentsTransferService) Get(ctx context.Context, real_time_payments_transfer_id string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
+func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("real_time_payments_transfers/%s", real_time_payments_transfer_id)
+	path := fmt.Sprintf("real_time_payments_transfers/%s", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -310,6 +310,13 @@ const (
 )
 
 type RealTimePaymentsTransferNewParams struct {
+	// The transfer amount in USD cents. For Real Time Payments transfers, must be
+	// positive.
+	Amount param.Field[int64] `json:"amount,required"`
+	// The name of the transfer's recipient.
+	CreditorName param.Field[string] `json:"creditor_name,required"`
+	// Unstructured information that will show on the recipient's bank statement.
+	RemittanceInformation param.Field[string] `json:"remittance_information,required"`
 	// The identifier of the Account Number from which to send the transfer.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
 	// The destination account number.
@@ -321,13 +328,6 @@ type RealTimePaymentsTransferNewParams struct {
 	// provided, `destination_account_number` and `destination_routing_number` must be
 	// absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
-	// The transfer amount in USD cents. For Real Time Payments transfers, must be
-	// positive.
-	Amount param.Field[int64] `json:"amount,required"`
-	// The name of the transfer's recipient.
-	CreditorName param.Field[string] `json:"creditor_name,required"`
-	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation param.Field[string] `json:"remittance_information,required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 }
@@ -337,17 +337,17 @@ func (r RealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error
 }
 
 type RealTimePaymentsTransferListParams struct {
+	// Filter Real Time Payments Transfers to those belonging to the specified Account.
+	AccountID param.Field[string]                                      `query:"account_id"`
+	CreatedAt param.Field[RealTimePaymentsTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter Real Time Payments Transfers to those made to the specified External
+	// Account.
+	ExternalAccountID param.Field[string] `query:"external_account_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Real Time Payments Transfers to those belonging to the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
-	// Filter Real Time Payments Transfers to those made to the specified External
-	// Account.
-	ExternalAccountID param.Field[string]                                      `query:"external_account_id"`
-	CreatedAt         param.Field[RealTimePaymentsTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [RealTimePaymentsTransferListParams]'s query parameters as

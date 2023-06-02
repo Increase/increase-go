@@ -41,9 +41,9 @@ func (r *ExportService) New(ctx context.Context, body ExportNewParams, opts ...o
 }
 
 // Retrieve an Export
-func (r *ExportService) Get(ctx context.Context, export_id string, opts ...option.RequestOption) (res *Export, err error) {
+func (r *ExportService) Get(ctx context.Context, exportID string, opts ...option.RequestOption) (res *Export, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("exports/%s", export_id)
+	path := fmt.Sprintf("exports/%s", exportID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -139,11 +139,11 @@ type ExportNewParams struct {
 	// The type of Export to create.
 	Category param.Field[ExportNewParamsCategory] `json:"category,required"`
 	// Options for the created export. Required if `category` is equal to
-	// `transaction_csv`.
-	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
-	// Options for the created export. Required if `category` is equal to
 	// `balance_csv`.
 	BalanceCsv param.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
+	// Options for the created export. Required if `category` is equal to
+	// `transaction_csv`.
+	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
 }
 
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
@@ -158,12 +158,49 @@ const (
 )
 
 // Options for the created export. Required if `category` is equal to
+// `balance_csv`.
+type ExportNewParamsBalanceCsv struct {
+	// Filter exported Transactions to the specified Account.
+	AccountID param.Field[string] `json:"account_id"`
+	// Filter results by time range on the `created_at` attribute.
+	CreatedAt param.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
+}
+
+func (r ExportNewParamsBalanceCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Filter results by time range on the `created_at` attribute.
+type ExportNewParamsBalanceCsvCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `json:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+}
+
+func (r ExportNewParamsBalanceCsvCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Options for the created export. Required if `category` is equal to
 // `transaction_csv`.
 type ExportNewParamsTransactionCsv struct {
 	// Filter exported Transactions to the specified Account.
 	AccountID param.Field[string] `json:"account_id"`
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsTransactionCsvCreatedAt] `json:"created_at"`
+}
+
+func (r ExportNewParamsTransactionCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Filter results by time range on the `created_at` attribute.
@@ -182,29 +219,8 @@ type ExportNewParamsTransactionCsvCreatedAt struct {
 	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
 }
 
-// Options for the created export. Required if `category` is equal to
-// `balance_csv`.
-type ExportNewParamsBalanceCsv struct {
-	// Filter exported Transactions to the specified Account.
-	AccountID param.Field[string] `json:"account_id"`
-	// Filter results by time range on the `created_at` attribute.
-	CreatedAt param.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
-}
-
-// Filter results by time range on the `created_at` attribute.
-type ExportNewParamsBalanceCsvCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `json:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	Before param.Field[time.Time] `json:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+func (r ExportNewParamsTransactionCsvCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type ExportListParams struct {

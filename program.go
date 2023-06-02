@@ -33,9 +33,9 @@ func NewProgramService(opts ...option.RequestOption) (r *ProgramService) {
 }
 
 // Retrieve a Program
-func (r *ProgramService) Get(ctx context.Context, program_id string, opts ...option.RequestOption) (res *Program, err error) {
+func (r *ProgramService) Get(ctx context.Context, programID string, opts ...option.RequestOption) (res *Program, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("programs/%s", program_id)
+	path := fmt.Sprintf("programs/%s", programID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

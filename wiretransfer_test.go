@@ -12,7 +12,19 @@ import (
 
 func TestWireTransferNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky"), AccountNumber: increase.F("987654321"), RoutingNumber: increase.F("101050001"), ExternalAccountID: increase.F("string"), Amount: increase.F(int64(100)), MessageToRecipient: increase.F("New account transfer"), BeneficiaryName: increase.F("Ian Crease"), BeneficiaryAddressLine1: increase.F("33 Liberty Street"), BeneficiaryAddressLine2: increase.F("New York"), BeneficiaryAddressLine3: increase.F("NY 10045"), RequireApproval: increase.F(true)})
+	_, err := c.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
+		AccountID:               increase.F("string"),
+		Amount:                  increase.F(int64(1)),
+		BeneficiaryName:         increase.F("x"),
+		MessageToRecipient:      increase.F("x"),
+		AccountNumber:           increase.F("x"),
+		BeneficiaryAddressLine1: increase.F("x"),
+		BeneficiaryAddressLine2: increase.F("x"),
+		BeneficiaryAddressLine3: increase.F("x"),
+		ExternalAccountID:       increase.F("string"),
+		RequireApproval:         increase.F(true),
+		RoutingNumber:           increase.F("xxxxxxxxx"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -39,7 +51,13 @@ func TestWireTransferGet(t *testing.T) {
 
 func TestWireTransferListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.List(context.TODO(), increase.WireTransferListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), ExternalAccountID: increase.F("string"), CreatedAt: increase.F(increase.WireTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
+		AccountID:         increase.F("string"),
+		CreatedAt:         increase.F(increase.WireTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:            increase.F("string"),
+		ExternalAccountID: increase.F("string"),
+		Limit:             increase.F(int64(0)),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

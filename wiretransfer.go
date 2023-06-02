@@ -42,9 +42,9 @@ func (r *WireTransferService) New(ctx context.Context, body WireTransferNewParam
 }
 
 // Retrieve a Wire Transfer
-func (r *WireTransferService) Get(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+func (r *WireTransferService) Get(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("wire_transfers/%s", wire_transfer_id)
+	path := fmt.Sprintf("wire_transfers/%s", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -73,17 +73,17 @@ func (r *WireTransferService) ListAutoPaging(ctx context.Context, query WireTran
 }
 
 // Approve a Wire Transfer
-func (r *WireTransferService) Approve(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("wire_transfers/%s/approve", wire_transfer_id)
+	path := fmt.Sprintf("wire_transfers/%s/approve", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
 // Cancel a pending Wire Transfer
-func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("wire_transfers/%s/cancel", wire_transfer_id)
+	path := fmt.Sprintf("wire_transfers/%s/cancel", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -92,9 +92,9 @@ func (r *WireTransferService) Cancel(ctx context.Context, wire_transfer_id strin
 // Reserve due to error conditions. This will also create a
 // [Transaction](#transaction) to account for the returned funds. This Wire
 // Transfer must first have a `status` of `complete`.'
-func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+func (r *WireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wire_transfer_id)
+	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -102,9 +102,9 @@ func (r *WireTransferService) Reverse(ctx context.Context, wire_transfer_id stri
 // Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
 // Reserve. This transfer must first have a `status` of `pending_approval` or
 // `pending_creating`.
-func (r *WireTransferService) Submit(ctx context.Context, wire_transfer_id string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+func (r *WireTransferService) Submit(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wire_transfer_id)
+	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -368,28 +368,28 @@ const (
 type WireTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The account number for the destination account.
-	AccountNumber param.Field[string] `json:"account_number"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
-	// destination account.
-	RoutingNumber param.Field[string] `json:"routing_number"`
-	// The ID of an External Account to initiate a transfer to. If this parameter is
-	// provided, `account_number` and `routing_number` must be absent.
-	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// The transfer amount in cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The message that will show on the recipient's bank statement.
-	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
 	// The beneficiary's name.
 	BeneficiaryName param.Field[string] `json:"beneficiary_name,required"`
+	// The message that will show on the recipient's bank statement.
+	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
+	// The account number for the destination account.
+	AccountNumber param.Field[string] `json:"account_number"`
 	// The beneficiary's address line 1.
 	BeneficiaryAddressLine1 param.Field[string] `json:"beneficiary_address_line1"`
 	// The beneficiary's address line 2.
 	BeneficiaryAddressLine2 param.Field[string] `json:"beneficiary_address_line2"`
 	// The beneficiary's address line 3.
 	BeneficiaryAddressLine3 param.Field[string] `json:"beneficiary_address_line3"`
+	// The ID of an External Account to initiate a transfer to. If this parameter is
+	// provided, `account_number` and `routing_number` must be absent.
+	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// destination account.
+	RoutingNumber param.Field[string] `json:"routing_number"`
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -397,16 +397,16 @@ func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type WireTransferListParams struct {
+	// Filter Wire Transfers to those belonging to the specified Account.
+	AccountID param.Field[string]                          `query:"account_id"`
+	CreatedAt param.Field[WireTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter Wire Transfers to those made to the specified External Account.
+	ExternalAccountID param.Field[string] `query:"external_account_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Wire Transfers to those belonging to the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
-	// Filter Wire Transfers to those made to the specified External Account.
-	ExternalAccountID param.Field[string]                          `query:"external_account_id"`
-	CreatedAt         param.Field[WireTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.

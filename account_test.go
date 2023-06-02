@@ -12,7 +12,12 @@ import (
 
 func TestAccountNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.New(context.TODO(), increase.AccountNewParams{EntityID: increase.F("string"), ProgramID: increase.F("string"), InformationalEntityID: increase.F("string"), Name: increase.F("New Account!")})
+	_, err := c.Accounts.New(context.TODO(), increase.AccountNewParams{
+		Name:                  increase.F("x"),
+		EntityID:              increase.F("string"),
+		InformationalEntityID: increase.F("string"),
+		ProgramID:             increase.F("string"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -42,7 +47,9 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 	_, err := c.Accounts.Update(
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
-		increase.AccountUpdateParams{Name: increase.F("My renamed account")},
+		increase.AccountUpdateParams{
+			Name: increase.F("x"),
+		},
 	)
 	if err != nil {
 		var apierr *increase.Error
@@ -55,7 +62,13 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 
 func TestAccountListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Accounts.List(context.TODO(), increase.AccountListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), EntityID: increase.F("string"), Status: increase.F(increase.AccountListParamsStatusOpen), CreatedAt: increase.F(increase.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.Accounts.List(context.TODO(), increase.AccountListParams{
+		CreatedAt: increase.F(increase.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:    increase.F("string"),
+		EntityID:  increase.F("string"),
+		Limit:     increase.F(int64(0)),
+		Status:    increase.F(increase.AccountListParamsStatusOpen),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

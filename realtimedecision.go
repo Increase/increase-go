@@ -32,17 +32,17 @@ func NewRealTimeDecisionService(opts ...option.RequestOption) (r *RealTimeDecisi
 }
 
 // Retrieve a Real-Time Decision
-func (r *RealTimeDecisionService) Get(ctx context.Context, real_time_decision_id string, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
+func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID string, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("real_time_decisions/%s", real_time_decision_id)
+	path := fmt.Sprintf("real_time_decisions/%s", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Action a Real-Time Decision
-func (r *RealTimeDecisionService) Action(ctx context.Context, real_time_decision_id string, body RealTimeDecisionActionParams, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
+func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID string, body RealTimeDecisionActionParams, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("real_time_decisions/%s/action", real_time_decision_id)
+	path := fmt.Sprintf("real_time_decisions/%s/action", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -361,12 +361,12 @@ type RealTimeDecisionActionParams struct {
 	// If the Real-Time Decision relates to a card authorization attempt, this object
 	// contains your response to the authorization.
 	CardAuthorization param.Field[RealTimeDecisionActionParamsCardAuthorization] `json:"card_authorization"`
-	// If the Real-Time Decision relates to a digital wallet token provisioning
-	// attempt, this object contains your response to the attempt.
-	DigitalWalletToken param.Field[RealTimeDecisionActionParamsDigitalWalletToken] `json:"digital_wallet_token"`
 	// If the Real-Time Decision relates to a digital wallet authentication attempt,
 	// this object contains your response to the authentication.
 	DigitalWalletAuthentication param.Field[RealTimeDecisionActionParamsDigitalWalletAuthentication] `json:"digital_wallet_authentication"`
+	// If the Real-Time Decision relates to a digital wallet token provisioning
+	// attempt, this object contains your response to the attempt.
+	DigitalWalletToken param.Field[RealTimeDecisionActionParamsDigitalWalletToken] `json:"digital_wallet_token"`
 }
 
 func (r RealTimeDecisionActionParams) MarshalJSON() (data []byte, err error) {
@@ -380,11 +380,33 @@ type RealTimeDecisionActionParamsCardAuthorization struct {
 	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
 }
 
+func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type RealTimeDecisionActionParamsCardAuthorizationDecision string
 
 const (
 	RealTimeDecisionActionParamsCardAuthorizationDecisionApprove RealTimeDecisionActionParamsCardAuthorizationDecision = "approve"
 	RealTimeDecisionActionParamsCardAuthorizationDecisionDecline RealTimeDecisionActionParamsCardAuthorizationDecision = "decline"
+)
+
+// If the Real-Time Decision relates to a digital wallet authentication attempt,
+// this object contains your response to the authentication.
+type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
+	// Whether your application was able to deliver the one-time passcode.
+	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+}
+
+func (r RealTimeDecisionActionParamsDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string
+
+const (
+	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "success"
+	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "failure"
 )
 
 // If the Real-Time Decision relates to a digital wallet token provisioning
@@ -396,6 +418,10 @@ type RealTimeDecisionActionParamsDigitalWalletToken struct {
 	// If your application declines the provisioning attempt, this contains details
 	// about the decline.
 	Decline param.Field[RealTimeDecisionActionParamsDigitalWalletTokenDecline] `json:"decline"`
+}
+
+func (r RealTimeDecisionActionParamsDigitalWalletToken) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // If your application approves the provisioning attempt, this contains metadata
@@ -411,6 +437,10 @@ type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	Email param.Field[string] `json:"email"`
 }
 
+func (r RealTimeDecisionActionParamsDigitalWalletTokenApproval) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // If your application declines the provisioning attempt, this contains details
 // about the decline.
 type RealTimeDecisionActionParamsDigitalWalletTokenDecline struct {
@@ -419,16 +449,6 @@ type RealTimeDecisionActionParamsDigitalWalletTokenDecline struct {
 	Reason param.Field[string] `json:"reason"`
 }
 
-// If the Real-Time Decision relates to a digital wallet authentication attempt,
-// this object contains your response to the authentication.
-type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
-	// Whether your application was able to deliver the one-time passcode.
-	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+func (r RealTimeDecisionActionParamsDigitalWalletTokenDecline) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
-
-type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string
-
-const (
-	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "success"
-	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "failure"
-)
