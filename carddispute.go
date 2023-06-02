@@ -42,9 +42,9 @@ func (r *CardDisputeService) New(ctx context.Context, body CardDisputeNewParams,
 }
 
 // Retrieve a Card Dispute
-func (r *CardDisputeService) Get(ctx context.Context, card_dispute_id string, opts ...option.RequestOption) (res *CardDispute, err error) {
+func (r *CardDisputeService) Get(ctx context.Context, cardDisputeID string, opts ...option.RequestOption) (res *CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("card_disputes/%s", card_dispute_id)
+	path := fmt.Sprintf("card_disputes/%s", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -198,13 +198,13 @@ func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type CardDisputeListParams struct {
+	CreatedAt param.Field[CardDisputeListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     param.Field[int64]                          `query:"limit"`
-	CreatedAt param.Field[CardDisputeListParamsCreatedAt] `query:"created_at"`
-	Status    param.Field[CardDisputeListParamsStatus]    `query:"status"`
+	Limit  param.Field[int64]                       `query:"limit"`
+	Status param.Field[CardDisputeListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [CardDisputeListParams]'s query parameters as `url.Values`.

@@ -40,17 +40,17 @@ func (r *LimitService) New(ctx context.Context, body LimitNewParams, opts ...opt
 }
 
 // Retrieve a Limit
-func (r *LimitService) Get(ctx context.Context, limit_id string, opts ...option.RequestOption) (res *Limit, err error) {
+func (r *LimitService) Get(ctx context.Context, limitID string, opts ...option.RequestOption) (res *Limit, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("limits/%s", limit_id)
+	path := fmt.Sprintf("limits/%s", limitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update a Limit
-func (r *LimitService) Update(ctx context.Context, limit_id string, body LimitUpdateParams, opts ...option.RequestOption) (res *Limit, err error) {
+func (r *LimitService) Update(ctx context.Context, limitID string, body LimitUpdateParams, opts ...option.RequestOption) (res *Limit, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("limits/%s", limit_id)
+	path := fmt.Sprintf("limits/%s", limitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -165,13 +165,13 @@ const (
 type LimitNewParams struct {
 	// The metric for the limit.
 	Metric param.Field[LimitNewParamsMetric] `json:"metric,required"`
-	// The interval for the metric. Required if `metric` is `count` or `volume`.
-	Interval param.Field[LimitNewParamsInterval] `json:"interval"`
 	// The identifier of the Account or Account Number you wish to associate the limit
 	// with.
 	ModelID param.Field[string] `json:"model_id,required"`
 	// The value to test the limit against.
 	Value param.Field[int64] `json:"value,required"`
+	// The interval for the metric. Required if `metric` is `count` or `volume`.
+	Interval param.Field[LimitNewParamsInterval] `json:"interval"`
 }
 
 func (r LimitNewParams) MarshalJSON() (data []byte, err error) {

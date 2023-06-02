@@ -11,7 +11,12 @@ import (
 
 func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{Amount: increase.F(int64(1000)), CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), DigitalWalletTokenID: increase.F("string"), EventSubscriptionID: increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g")})
+	_, err := c.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{
+		Amount:               increase.F(int64(1)),
+		CardID:               increase.F("string"),
+		DigitalWalletTokenID: increase.F("string"),
+		EventSubscriptionID:  increase.F("string"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -23,7 +28,11 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 
 func TestSimulationCardSettlementWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.Cards.Settlement(context.TODO(), increase.SimulationCardSettlementParams{CardID: increase.F("card_oubs0hwk5rn6knuecxg2"), PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"), Amount: increase.F(int64(1))})
+	_, err := c.Simulations.Cards.Settlement(context.TODO(), increase.SimulationCardSettlementParams{
+		CardID:               increase.F("string"),
+		PendingTransactionID: increase.F("string"),
+		Amount:               increase.F(int64(1)),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

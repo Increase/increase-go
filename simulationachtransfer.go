@@ -47,9 +47,9 @@ func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body Simu
 // Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
-func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_id string, body SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID string, body SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/ach_transfers/%s/return", ach_transfer_id)
+	path := fmt.Sprintf("simulations/ach_transfers/%s/return", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -60,9 +60,9 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, ach_transfer_
 // Federal Reserve three times per day on weekdays. Since sandbox ACH Transfers are
 // not submitted to the Federal Reserve, this endpoint allows you to skip that
 // delay and transition the ACH Transfer to a status of `submitted`.
-func (r *SimulationACHTransferService) Submit(ctx context.Context, ach_transfer_id string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", ach_transfer_id)
+	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -2721,10 +2721,10 @@ type SimulationACHTransferNewInboundParams struct {
 	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
 	// The description of the transfer set by the sender.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
-	// The name of the sender.
-	CompanyName param.Field[string] `json:"company_name"`
 	// The sender's company id.
 	CompanyID param.Field[string] `json:"company_id"`
+	// The name of the sender.
+	CompanyName param.Field[string] `json:"company_name"`
 }
 
 func (r SimulationACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {

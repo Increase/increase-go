@@ -33,9 +33,9 @@ func NewInboundWireDrawdownRequestService(opts ...option.RequestOption) (r *Inbo
 }
 
 // Retrieve an Inbound Wire Drawdown Request
-func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inbound_wire_drawdown_request_id string, opts ...option.RequestOption) (res *InboundWireDrawdownRequest, err error) {
+func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inboundWireDrawdownRequestID string, opts ...option.RequestOption) (res *InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("inbound_wire_drawdown_requests/%s", inbound_wire_drawdown_request_id)
+	path := fmt.Sprintf("inbound_wire_drawdown_requests/%s", inboundWireDrawdownRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

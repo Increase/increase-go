@@ -41,17 +41,17 @@ func (r *AccountService) New(ctx context.Context, body AccountNewParams, opts ..
 }
 
 // Retrieve an Account
-func (r *AccountService) Get(ctx context.Context, account_id string, opts ...option.RequestOption) (res *Account, err error) {
+func (r *AccountService) Get(ctx context.Context, accountID string, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("accounts/%s", account_id)
+	path := fmt.Sprintf("accounts/%s", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update an Account
-func (r *AccountService) Update(ctx context.Context, account_id string, body AccountUpdateParams, opts ...option.RequestOption) (res *Account, err error) {
+func (r *AccountService) Update(ctx context.Context, accountID string, body AccountUpdateParams, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("accounts/%s", account_id)
+	path := fmt.Sprintf("accounts/%s", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -80,9 +80,9 @@ func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListPa
 }
 
 // Close an Account
-func (r *AccountService) Close(ctx context.Context, account_id string, opts ...option.RequestOption) (res *Account, err error) {
+func (r *AccountService) Close(ctx context.Context, accountID string, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("accounts/%s/close", account_id)
+	path := fmt.Sprintf("accounts/%s/close", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -164,15 +164,15 @@ const (
 )
 
 type AccountNewParams struct {
+	// The name you choose for the Account.
+	Name param.Field[string] `json:"name,required"`
 	// The identifier for the Entity that will own the Account.
 	EntityID param.Field[string] `json:"entity_id"`
-	// The identifier for the Program that this Account falls under.
-	ProgramID param.Field[string] `json:"program_id"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
 	InformationalEntityID param.Field[string] `json:"informational_entity_id"`
-	// The name you choose for the Account.
-	Name param.Field[string] `json:"name,required"`
+	// The identifier for the Program that this Account falls under.
+	ProgramID param.Field[string] `json:"program_id"`
 }
 
 func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
@@ -189,16 +189,16 @@ func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
 }
 
 type AccountListParams struct {
+	CreatedAt param.Field[AccountListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter Accounts for those belonging to the specified Entity.
+	EntityID param.Field[string] `query:"entity_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Accounts for those belonging to the specified Entity.
-	EntityID param.Field[string] `query:"entity_id"`
 	// Filter Accounts for those with the specified status.
-	Status    param.Field[AccountListParamsStatus]    `query:"status"`
-	CreatedAt param.Field[AccountListParamsCreatedAt] `query:"created_at"`
+	Status param.Field[AccountListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [AccountListParams]'s query parameters as `url.Values`.
@@ -208,13 +208,6 @@ func (r AccountListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-type AccountListParamsStatus string
-
-const (
-	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
-	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
-)
 
 type AccountListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -239,6 +232,13 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type AccountListParamsStatus string
+
+const (
+	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
+	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
+)
 
 // A list of Account objects
 type AccountListResponse struct {

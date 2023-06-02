@@ -122,13 +122,13 @@ const (
 )
 
 type RoutingNumberListParams struct {
+	// Filter financial institutions by routing number.
+	RoutingNumber param.Field[string] `query:"routing_number,required"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter financial institutions by routing number.
-	RoutingNumber param.Field[string] `query:"routing_number,required"`
 }
 
 // URLQuery serializes [RoutingNumberListParams]'s query parameters as

@@ -42,9 +42,9 @@ func (r *CardProfileService) New(ctx context.Context, body CardProfileNewParams,
 }
 
 // Retrieve a Card Profile
-func (r *CardProfileService) Get(ctx context.Context, card_profile_id string, opts ...option.RequestOption) (res *CardProfile, err error) {
+func (r *CardProfileService) Get(ctx context.Context, cardProfileID string, opts ...option.RequestOption) (res *CardProfile, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("card_profiles/%s", card_profile_id)
+	path := fmt.Sprintf("card_profiles/%s", cardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -224,6 +224,10 @@ type CardProfileNewParamsDigitalWallets struct {
 	AppIconFileID param.Field[string] `json:"app_icon_file_id,required"`
 }
 
+func (r CardProfileNewParamsDigitalWallets) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The Card's text color, specified as an RGB triple. The default is white.
 type CardProfileNewParamsDigitalWalletsTextColor struct {
 	// The value of the red channel in the RGB color.
@@ -232,6 +236,10 @@ type CardProfileNewParamsDigitalWalletsTextColor struct {
 	Green param.Field[int64] `json:"green,required"`
 	// The value of the blue channel in the RGB color.
 	Blue param.Field[int64] `json:"blue,required"`
+}
+
+func (r CardProfileNewParamsDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type CardProfileListParams struct {

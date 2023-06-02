@@ -42,9 +42,9 @@ func (r *AccountTransferService) New(ctx context.Context, body AccountTransferNe
 }
 
 // Retrieve an Account Transfer
-func (r *AccountTransferService) Get(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
+func (r *AccountTransferService) Get(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_transfers/%s", account_transfer_id)
+	path := fmt.Sprintf("account_transfers/%s", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -73,17 +73,17 @@ func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query Accou
 }
 
 // Approve an Account Transfer
-func (r *AccountTransferService) Approve(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
+func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_transfers/%s/approve", account_transfer_id)
+	path := fmt.Sprintf("account_transfers/%s/approve", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
 // Cancel an Account Transfer
-func (r *AccountTransferService) Cancel(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
+func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_transfers/%s/cancel", account_transfer_id)
+	path := fmt.Sprintf("account_transfers/%s/cancel", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -251,14 +251,14 @@ func (r AccountTransferNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type AccountTransferListParams struct {
+	// Filter Account Transfers to those that originated from the specified Account.
+	AccountID param.Field[string]                             `query:"account_id"`
+	CreatedAt param.Field[AccountTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Account Transfers to those that originated from the specified Account.
-	AccountID param.Field[string]                             `query:"account_id"`
-	CreatedAt param.Field[AccountTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [AccountTransferListParams]'s query parameters as

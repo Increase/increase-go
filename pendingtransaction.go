@@ -34,9 +34,9 @@ func NewPendingTransactionService(opts ...option.RequestOption) (r *PendingTrans
 }
 
 // Retrieve a Pending Transaction
-func (r *PendingTransactionService) Get(ctx context.Context, pending_transaction_id string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
+func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionID string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("pending_transactions/%s", pending_transaction_id)
+	path := fmt.Sprintf("pending_transactions/%s", pendingTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -738,24 +738,48 @@ const (
 )
 
 type PendingTransactionListParams struct {
+	// Filter pending transactions to those belonging to the specified Account.
+	AccountID param.Field[string]                                `query:"account_id"`
+	CreatedAt param.Field[PendingTransactionListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter pending transactions to those belonging to the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
 	// Filter pending transactions to those belonging to the specified Route.
 	RouteID param.Field[string] `query:"route_id"`
 	// Filter pending transactions to those caused by the specified source.
-	SourceID  param.Field[string]                                `query:"source_id"`
-	Status    param.Field[PendingTransactionListParamsStatus]    `query:"status"`
-	CreatedAt param.Field[PendingTransactionListParamsCreatedAt] `query:"created_at"`
+	SourceID param.Field[string]                             `query:"source_id"`
+	Status   param.Field[PendingTransactionListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [PendingTransactionListParams]'s query parameters as
 // `url.Values`.
 func (r PendingTransactionListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type PendingTransactionListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [PendingTransactionListParamsCreatedAt]'s query parameters
+// as `url.Values`.
+func (r PendingTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
@@ -785,30 +809,6 @@ const (
 	PendingTransactionListParamsStatusInPending  PendingTransactionListParamsStatusIn = "pending"
 	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )
-
-type PendingTransactionListParamsCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `query:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	Before param.Field[time.Time] `query:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
-}
-
-// URLQuery serializes [PendingTransactionListParamsCreatedAt]'s query parameters
-// as `url.Values`.
-func (r PendingTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
 
 // A list of Pending Transaction objects
 type PendingTransactionListResponse struct {

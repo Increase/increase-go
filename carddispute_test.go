@@ -12,7 +12,10 @@ import (
 
 func TestCardDisputeNew(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{DisputedTransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"), Explanation: increase.F("Unauthorized recurring transaction.")})
+	_, err := c.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{
+		DisputedTransactionID: increase.F("string"),
+		Explanation:           increase.F("x"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -39,7 +42,12 @@ func TestCardDisputeGet(t *testing.T) {
 
 func TestCardDisputeListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardDisputes.List(context.TODO(), increase.CardDisputeListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), CreatedAt: increase.F(increase.CardDisputeListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}), Status: increase.F(increase.CardDisputeListParamsStatus{In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing})})})
+	_, err := c.CardDisputes.List(context.TODO(), increase.CardDisputeListParams{
+		CreatedAt: increase.F(increase.CardDisputeListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:    increase.F("string"),
+		Limit:     increase.F(int64(0)),
+		Status:    increase.F(increase.CardDisputeListParamsStatus{In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing})}),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

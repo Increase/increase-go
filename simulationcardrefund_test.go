@@ -11,7 +11,9 @@ import (
 
 func TestSimulationCardRefundNew(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi")})
+	_, err := c.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{
+		TransactionID: increase.F("string"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

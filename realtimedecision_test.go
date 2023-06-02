@@ -29,7 +29,11 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 	_, err := c.RealTimeDecisions.Action(
 		context.TODO(),
 		"real_time_decision_j76n2e810ezcg3zh5qtn",
-		increase.RealTimeDecisionActionParams{CardAuthorization: increase.F(increase.RealTimeDecisionActionParamsCardAuthorization{Decision: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecisionApprove)}), DigitalWalletToken: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletToken{Approval: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenApproval{CardProfileID: increase.F("string"), Phone: increase.F("x"), Email: increase.F("x")}), Decline: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenDecline{Reason: increase.F("x")})}), DigitalWalletAuthentication: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthentication{Result: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess)})},
+		increase.RealTimeDecisionActionParams{
+			CardAuthorization:           increase.F(increase.RealTimeDecisionActionParamsCardAuthorization{Decision: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecisionApprove)}),
+			DigitalWalletAuthentication: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthentication{Result: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess)}),
+			DigitalWalletToken:          increase.F(increase.RealTimeDecisionActionParamsDigitalWalletToken{Approval: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenApproval{CardProfileID: increase.F("string"), Phone: increase.F("x"), Email: increase.F("x")}), Decline: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenDecline{Reason: increase.F("x")})}),
+		},
 	)
 	if err != nil {
 		var apierr *increase.Error

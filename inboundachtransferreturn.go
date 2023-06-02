@@ -42,9 +42,9 @@ func (r *InboundACHTransferReturnService) New(ctx context.Context, body InboundA
 }
 
 // Retrieve an Inbound ACH Transfer Return
-func (r *InboundACHTransferReturnService) Get(ctx context.Context, inbound_ach_transfer_return_id string, opts ...option.RequestOption) (res *InboundACHTransferReturn, err error) {
+func (r *InboundACHTransferReturnService) Get(ctx context.Context, inboundACHTransferReturnID string, opts ...option.RequestOption) (res *InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("inbound_ach_transfer_returns/%s", inbound_ach_transfer_return_id)
+	path := fmt.Sprintf("inbound_ach_transfer_returns/%s", inboundACHTransferReturnID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -162,12 +162,12 @@ const (
 )
 
 type InboundACHTransferReturnNewParams struct {
-	// The transaction identifier of the Inbound ACH Transfer to return to the
-	// originating financial institution.
-	TransactionID param.Field[string] `json:"transaction_id,required"`
 	// The reason why this transfer will be returned. The most usual return codes are
 	// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
 	Reason param.Field[InboundACHTransferReturnNewParamsReason] `json:"reason,required"`
+	// The transaction identifier of the Inbound ACH Transfer to return to the
+	// originating financial institution.
+	TransactionID param.Field[string] `json:"transaction_id,required"`
 }
 
 func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {

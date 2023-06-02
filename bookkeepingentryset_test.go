@@ -12,7 +12,11 @@ import (
 
 func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{Date: increase.F(time.Now()), TransactionID: increase.F("string"), Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntries{})})
+	_, err := c.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
+		Entries:       increase.F([]increase.BookkeepingEntrySetNewParamsEntries{{AccountID: increase.F("string"), Amount: increase.F(int64(0))}, {AccountID: increase.F("string"), Amount: increase.F(int64(0))}, {AccountID: increase.F("string"), Amount: increase.F(int64(0))}}),
+		Date:          increase.F(time.Now()),
+		TransactionID: increase.F("string"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
