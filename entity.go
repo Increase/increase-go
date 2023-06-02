@@ -43,9 +43,9 @@ func (r *EntityService) New(ctx context.Context, body EntityNewParams, opts ...o
 }
 
 // Retrieve an Entity
-func (r *EntityService) Get(ctx context.Context, entity_id string, opts ...option.RequestOption) (res *Entity, err error) {
+func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("entities/%s", entity_id)
+	path := fmt.Sprintf("entities/%s", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -859,33 +859,41 @@ func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 }
 
 type EntityNewParams struct {
+	// The relationship between your group and the entity.
+	Relationship param.Field[EntityNewParamsRelationship] `json:"relationship,required"`
 	// The type of Entity to create.
 	Structure param.Field[EntityNewParamsStructure] `json:"structure,required"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
 	Corporation param.Field[EntityNewParamsCorporation] `json:"corporation"`
+	// The description you choose to give the entity.
+	Description param.Field[string] `json:"description"`
+	// Details of the joint entity to create. Required if `structure` is equal to
+	// `joint`.
+	Joint param.Field[EntityNewParamsJoint] `json:"joint"`
 	// Details of the natural person entity to create. Required if `structure` is equal
 	// to `natural_person`. Natural people entities should be submitted with
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
-	// Details of the joint entity to create. Required if `structure` is equal to
-	// `joint`.
-	Joint param.Field[EntityNewParamsJoint] `json:"joint"`
+	// Additional documentation associated with the entity.
+	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
 	Trust param.Field[EntityNewParamsTrust] `json:"trust"`
-	// The description you choose to give the entity.
-	Description param.Field[string] `json:"description"`
-	// The relationship between your group and the entity.
-	Relationship param.Field[EntityNewParamsRelationship] `json:"relationship,required"`
-	// Additional documentation associated with the entity.
-	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
 }
 
 func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+type EntityNewParamsRelationship string
+
+const (
+	EntityNewParamsRelationshipAffiliated    EntityNewParamsRelationship = "affiliated"
+	EntityNewParamsRelationshipInformational EntityNewParamsRelationship = "informational"
+	EntityNewParamsRelationshipUnaffiliated  EntityNewParamsRelationship = "unaffiliated"
+)
 
 type EntityNewParamsStructure string
 
@@ -915,6 +923,10 @@ type EntityNewParamsCorporation struct {
 	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwners] `json:"beneficial_owners,required"`
 }
 
+func (r EntityNewParamsCorporation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The corporation's address.
 type EntityNewParamsCorporationAddress struct {
 	// The first line of the address. This is usually the street number and street.
@@ -930,6 +942,10 @@ type EntityNewParamsCorporationAddress struct {
 	Zip param.Field[string] `json:"zip,required"`
 }
 
+func (r EntityNewParamsCorporationAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type EntityNewParamsCorporationBeneficialOwners struct {
 	// Personal details for the beneficial owner.
 	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
@@ -937,6 +953,10 @@ type EntityNewParamsCorporationBeneficialOwners struct {
 	CompanyTitle param.Field[string] `json:"company_title"`
 	// Why this person is considered a beneficial owner of the entity.
 	Prong param.Field[EntityNewParamsCorporationBeneficialOwnersProng] `json:"prong,required"`
+}
+
+func (r EntityNewParamsCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Personal details for the beneficial owner.
@@ -956,6 +976,10 @@ type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
 	Identification param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification,required"`
 }
 
+func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The individual's address.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
@@ -969,6 +993,10 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
 	Zip param.Field[string] `json:"zip,required"`
+}
+
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // A means of verifying the person's identity.
@@ -987,6 +1015,10 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
 	Other param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther] `json:"other"`
+}
+
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod string
@@ -1010,6 +1042,10 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport 
 	Country param.Field[string] `json:"country,required"`
 }
 
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
@@ -1019,6 +1055,10 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLi
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+}
+
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1035,111 +1075,16 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther str
 	FileID param.Field[string] `json:"file_id,required"`
 }
 
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type EntityNewParamsCorporationBeneficialOwnersProng string
 
 const (
 	EntityNewParamsCorporationBeneficialOwnersProngOwnership EntityNewParamsCorporationBeneficialOwnersProng = "ownership"
 	EntityNewParamsCorporationBeneficialOwnersProngControl   EntityNewParamsCorporationBeneficialOwnersProng = "control"
 )
-
-// Details of the natural person entity to create. Required if `structure` is equal
-// to `natural_person`. Natural people entities should be submitted with
-// `social_security_number` or `individual_taxpayer_identification_number`
-// identification methods.
-type EntityNewParamsNaturalPerson struct {
-	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
-	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
-	// The individual's address.
-	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
-	// The identification method for an individual can only be a passport, driver's
-	// license, or other document if you've confirmed the individual does not have a US
-	// tax id (either a Social Security Number or Individual Taxpayer Identification
-	// Number).
-	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
-	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
-}
-
-// The individual's address.
-type EntityNewParamsNaturalPersonAddress struct {
-	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
-	// The second line of the address. This might be the floor or room number.
-	Line2 param.Field[string] `json:"line2"`
-	// The city of the address.
-	City param.Field[string] `json:"city,required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state,required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
-}
-
-// A means of verifying the person's identity.
-type EntityNewParamsNaturalPersonIdentification struct {
-	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
-	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
-	// Information about the passport used for identification. Required if `method` is
-	// equal to `passport`.
-	Passport param.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
-	// Information about the United States driver's license used for identification.
-	// Required if `method` is equal to `drivers_license`.
-	DriversLicense param.Field[EntityNewParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
-	// Information about the identification document provided. Required if `method` is
-	// equal to `other`.
-	Other param.Field[EntityNewParamsNaturalPersonIdentificationOther] `json:"other"`
-}
-
-type EntityNewParamsNaturalPersonIdentificationMethod string
-
-const (
-	EntityNewParamsNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityNewParamsNaturalPersonIdentificationMethod = "social_security_number"
-	EntityNewParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
-	EntityNewParamsNaturalPersonIdentificationMethodPassport                               EntityNewParamsNaturalPersonIdentificationMethod = "passport"
-	EntityNewParamsNaturalPersonIdentificationMethodDriversLicense                         EntityNewParamsNaturalPersonIdentificationMethod = "drivers_license"
-	EntityNewParamsNaturalPersonIdentificationMethodOther                                  EntityNewParamsNaturalPersonIdentificationMethod = "other"
-)
-
-// Information about the passport used for identification. Required if `method` is
-// equal to `passport`.
-type EntityNewParamsNaturalPersonIdentificationPassport struct {
-	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
-	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The country that issued the passport.
-	Country param.Field[string] `json:"country,required"`
-}
-
-// Information about the United States driver's license used for identification.
-// Required if `method` is equal to `drivers_license`.
-type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
-	// The identifier of the File containing the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
-	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
-}
-
-// Information about the identification document provided. Required if `method` is
-// equal to `other`.
-type EntityNewParamsNaturalPersonIdentificationOther struct {
-	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
-	Country param.Field[string] `json:"country,required"`
-	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
-	// The document's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
-	// The identifier of the File containing the document.
-	FileID param.Field[string] `json:"file_id,required"`
-}
 
 // Details of the joint entity to create. Required if `structure` is equal to
 // `joint`.
@@ -1148,6 +1093,10 @@ type EntityNewParamsJoint struct {
 	Name param.Field[string] `json:"name"`
 	// The two individuals that share control of the entity.
 	Individuals param.Field[[]EntityNewParamsJointIndividuals] `json:"individuals,required"`
+}
+
+func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsJointIndividuals struct {
@@ -1166,6 +1115,10 @@ type EntityNewParamsJointIndividuals struct {
 	Identification param.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification,required"`
 }
 
+func (r EntityNewParamsJointIndividuals) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The individual's address.
 type EntityNewParamsJointIndividualsAddress struct {
 	// The first line of the address. This is usually the street number and street.
@@ -1179,6 +1132,10 @@ type EntityNewParamsJointIndividualsAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
 	Zip param.Field[string] `json:"zip,required"`
+}
+
+func (r EntityNewParamsJointIndividualsAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // A means of verifying the person's identity.
@@ -1197,6 +1154,10 @@ type EntityNewParamsJointIndividualsIdentification struct {
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
 	Other param.Field[EntityNewParamsJointIndividualsIdentificationOther] `json:"other"`
+}
+
+func (r EntityNewParamsJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsJointIndividualsIdentificationMethod string
@@ -1220,6 +1181,10 @@ type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	Country param.Field[string] `json:"country,required"`
 }
 
+func (r EntityNewParamsJointIndividualsIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
@@ -1229,6 +1194,10 @@ type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+}
+
+func (r EntityNewParamsJointIndividualsIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1243,6 +1212,142 @@ type EntityNewParamsJointIndividualsIdentificationOther struct {
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`
+}
+
+func (r EntityNewParamsJointIndividualsIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Details of the natural person entity to create. Required if `structure` is equal
+// to `natural_person`. Natural people entities should be submitted with
+// `social_security_number` or `individual_taxpayer_identification_number`
+// identification methods.
+type EntityNewParamsNaturalPerson struct {
+	// The person's legal name.
+	Name param.Field[string] `json:"name,required"`
+	// The person's date of birth in YYYY-MM-DD format.
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	// The individual's address.
+	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
+	// A means of verifying the person's identity.
+	Identification param.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
+}
+
+func (r EntityNewParamsNaturalPerson) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual's address.
+type EntityNewParamsNaturalPersonAddress struct {
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+}
+
+func (r EntityNewParamsNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A means of verifying the person's identity.
+type EntityNewParamsNaturalPersonIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
+	// An identification number that can be used to verify the individual's identity,
+	// such as a social security number.
+	Number param.Field[string] `json:"number,required"`
+	// Information about the passport used for identification. Required if `method` is
+	// equal to `passport`.
+	Passport param.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
+	// Information about the United States driver's license used for identification.
+	// Required if `method` is equal to `drivers_license`.
+	DriversLicense param.Field[EntityNewParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other param.Field[EntityNewParamsNaturalPersonIdentificationOther] `json:"other"`
+}
+
+func (r EntityNewParamsNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type EntityNewParamsNaturalPersonIdentificationMethod string
+
+const (
+	EntityNewParamsNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityNewParamsNaturalPersonIdentificationMethod = "social_security_number"
+	EntityNewParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
+	EntityNewParamsNaturalPersonIdentificationMethodPassport                               EntityNewParamsNaturalPersonIdentificationMethod = "passport"
+	EntityNewParamsNaturalPersonIdentificationMethodDriversLicense                         EntityNewParamsNaturalPersonIdentificationMethod = "drivers_license"
+	EntityNewParamsNaturalPersonIdentificationMethodOther                                  EntityNewParamsNaturalPersonIdentificationMethod = "other"
+)
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+type EntityNewParamsNaturalPersonIdentificationPassport struct {
+	// The identifier of the File containing the passport.
+	FileID param.Field[string] `json:"file_id,required"`
+	// The passport's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	// The country that issued the passport.
+	Country param.Field[string] `json:"country,required"`
+}
+
+func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
+type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
+	// The identifier of the File containing the driver's license.
+	FileID param.Field[string] `json:"file_id,required"`
+	// The driver's license's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	// The state that issued the provided driver's license.
+	State param.Field[string] `json:"state,required"`
+}
+
+func (r EntityNewParamsNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+type EntityNewParamsNaturalPersonIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country param.Field[string] `json:"country,required"`
+	// A description of the document submitted.
+	Description param.Field[string] `json:"description,required"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
+	// The identifier of the File containing the document.
+	FileID param.Field[string] `json:"file_id,required"`
+}
+
+func (r EntityNewParamsNaturalPersonIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type EntityNewParamsSupplementalDocuments struct {
+	// The identifier of the File containing the document.
+	FileID param.Field[string] `json:"file_id,required"`
+}
+
+func (r EntityNewParamsSupplementalDocuments) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Details of the trust entity to create. Required if `structure` is equal to
@@ -1270,6 +1375,10 @@ type EntityNewParamsTrust struct {
 	Grantor param.Field[EntityNewParamsTrustGrantor] `json:"grantor"`
 }
 
+func (r EntityNewParamsTrust) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type EntityNewParamsTrustCategory string
 
 const (
@@ -1292,12 +1401,20 @@ type EntityNewParamsTrustAddress struct {
 	Zip param.Field[string] `json:"zip,required"`
 }
 
+func (r EntityNewParamsTrustAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type EntityNewParamsTrustTrustees struct {
 	// The structure of the trustee.
 	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
 	// Details of the individual trustee. Required when the trustee `structure` is
 	// equal to `individual`.
 	Individual param.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
+}
+
+func (r EntityNewParamsTrustTrustees) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsTrustTrusteesStructure string
@@ -1324,6 +1441,10 @@ type EntityNewParamsTrustTrusteesIndividual struct {
 	Identification param.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification,required"`
 }
 
+func (r EntityNewParamsTrustTrusteesIndividual) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The individual's address.
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The first line of the address. This is usually the street number and street.
@@ -1337,6 +1458,10 @@ type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
 	Zip param.Field[string] `json:"zip,required"`
+}
+
+func (r EntityNewParamsTrustTrusteesIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // A means of verifying the person's identity.
@@ -1355,6 +1480,10 @@ type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
 	Other param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationOther] `json:"other"`
+}
+
+func (r EntityNewParamsTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsTrustTrusteesIndividualIdentificationMethod string
@@ -1378,6 +1507,10 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	Country param.Field[string] `json:"country,required"`
 }
 
+func (r EntityNewParamsTrustTrusteesIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
@@ -1387,6 +1520,10 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+}
+
+func (r EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1401,6 +1538,10 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`
+}
+
+func (r EntityNewParamsTrustTrusteesIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // The grantor of the trust. Required if `category` is equal to `revocable`.
@@ -1420,6 +1561,10 @@ type EntityNewParamsTrustGrantor struct {
 	Identification param.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification,required"`
 }
 
+func (r EntityNewParamsTrustGrantor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The individual's address.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The first line of the address. This is usually the street number and street.
@@ -1433,6 +1578,10 @@ type EntityNewParamsTrustGrantorAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The ZIP code of the address.
 	Zip param.Field[string] `json:"zip,required"`
+}
+
+func (r EntityNewParamsTrustGrantorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // A means of verifying the person's identity.
@@ -1451,6 +1600,10 @@ type EntityNewParamsTrustGrantorIdentification struct {
 	// Information about the identification document provided. Required if `method` is
 	// equal to `other`.
 	Other param.Field[EntityNewParamsTrustGrantorIdentificationOther] `json:"other"`
+}
+
+func (r EntityNewParamsTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityNewParamsTrustGrantorIdentificationMethod string
@@ -1474,6 +1627,10 @@ type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	Country param.Field[string] `json:"country,required"`
 }
 
+func (r EntityNewParamsTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
@@ -1483,6 +1640,10 @@ type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+}
+
+func (r EntityNewParamsTrustGrantorIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Information about the identification document provided. Required if `method` is
@@ -1499,26 +1660,17 @@ type EntityNewParamsTrustGrantorIdentificationOther struct {
 	FileID param.Field[string] `json:"file_id,required"`
 }
 
-type EntityNewParamsRelationship string
-
-const (
-	EntityNewParamsRelationshipAffiliated    EntityNewParamsRelationship = "affiliated"
-	EntityNewParamsRelationshipInformational EntityNewParamsRelationship = "informational"
-	EntityNewParamsRelationshipUnaffiliated  EntityNewParamsRelationship = "unaffiliated"
-)
-
-type EntityNewParamsSupplementalDocuments struct {
-	// The identifier of the File containing the document.
-	FileID param.Field[string] `json:"file_id,required"`
+func (r EntityNewParamsTrustGrantorIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type EntityListParams struct {
+	CreatedAt param.Field[EntityListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     param.Field[int64]                     `query:"limit"`
-	CreatedAt param.Field[EntityListParamsCreatedAt] `query:"created_at"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.

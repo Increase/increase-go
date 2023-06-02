@@ -111,14 +111,14 @@ const (
 )
 
 type BookkeepingAccountNewParams struct {
+	// The name you choose for the account.
+	Name param.Field[string] `json:"name,required"`
+	// The entity, if `compliance_category` is `commingled_cash`.
+	AccountID param.Field[string] `json:"account_id"`
 	// The account compliance category.
 	ComplianceCategory param.Field[BookkeepingAccountNewParamsComplianceCategory] `json:"compliance_category"`
 	// The entity, if `compliance_category` is `customer_balance`.
 	EntityID param.Field[string] `json:"entity_id"`
-	// The entity, if `compliance_category` is `commingled_cash`.
-	AccountID param.Field[string] `json:"account_id"`
-	// The name you choose for the account.
-	Name param.Field[string] `json:"name,required"`
 }
 
 func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {

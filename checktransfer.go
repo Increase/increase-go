@@ -42,9 +42,9 @@ func (r *CheckTransferService) New(ctx context.Context, body CheckTransferNewPar
 }
 
 // Retrieve a Check Transfer
-func (r *CheckTransferService) Get(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
+func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("check_transfers/%s", check_transfer_id)
+	path := fmt.Sprintf("check_transfers/%s", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -73,25 +73,25 @@ func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTr
 }
 
 // Approve a Check Transfer
-func (r *CheckTransferService) Approve(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
+func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("check_transfers/%s/approve", check_transfer_id)
+	path := fmt.Sprintf("check_transfers/%s/approve", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
 // Cancel a pending Check Transfer
-func (r *CheckTransferService) Cancel(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
+func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("check_transfers/%s/cancel", check_transfer_id)
+	path := fmt.Sprintf("check_transfers/%s/cancel", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
 // Request a stop payment on a Check Transfer
-func (r *CheckTransferService) StopPayment(ctx context.Context, check_transfer_id string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
+func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("check_transfers/%s/stop_payment", check_transfer_id)
+	path := fmt.Sprintf("check_transfers/%s/stop_payment", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
@@ -453,29 +453,29 @@ const (
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The street address of the check's destination.
-	AddressLine1 param.Field[string] `json:"address_line1,required"`
-	// The second line of the address of the check's destination.
-	AddressLine2 param.Field[string] `json:"address_line2"`
 	// The city of the check's destination.
 	AddressCity param.Field[string] `json:"address_city,required"`
+	// The street address of the check's destination.
+	AddressLine1 param.Field[string] `json:"address_line1,required"`
 	// The state of the check's destination.
 	AddressState param.Field[string] `json:"address_state,required"`
 	// The postal code of the check's destination.
 	AddressZip param.Field[string] `json:"address_zip,required"`
-	// The return address to be printed on the check. If omitted this will default to
-	// the address of the Entity of the Account used to make the Check Transfer.
-	ReturnAddress param.Field[CheckTransferNewParamsReturnAddress] `json:"return_address"`
 	// The transfer amount in cents.
 	Amount param.Field[int64] `json:"amount,required"`
 	// The descriptor that will be printed on the memo field on the check.
 	Message param.Field[string] `json:"message,required"`
-	// The descriptor that will be printed on the letter included with the check.
-	Note param.Field[string] `json:"note"`
 	// The name that will be printed on the check.
 	RecipientName param.Field[string] `json:"recipient_name,required"`
+	// The second line of the address of the check's destination.
+	AddressLine2 param.Field[string] `json:"address_line2"`
+	// The descriptor that will be printed on the letter included with the check.
+	Note param.Field[string] `json:"note"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// The return address to be printed on the check. If omitted this will default to
+	// the address of the Entity of the Account used to make the Check Transfer.
+	ReturnAddress param.Field[CheckTransferNewParamsReturnAddress] `json:"return_address"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -499,15 +499,19 @@ type CheckTransferNewParamsReturnAddress struct {
 	Zip param.Field[string] `json:"zip,required"`
 }
 
+func (r CheckTransferNewParamsReturnAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type CheckTransferListParams struct {
+	// Filter Check Transfers to those that originated from the specified Account.
+	AccountID param.Field[string]                           `query:"account_id"`
+	CreatedAt param.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Check Transfers to those that originated from the specified Account.
-	AccountID param.Field[string]                           `query:"account_id"`
-	CreatedAt param.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [CheckTransferListParams]'s query parameters as

@@ -33,9 +33,9 @@ func NewEventService(opts ...option.RequestOption) (r *EventService) {
 }
 
 // Retrieve an Event
-func (r *EventService) Get(ctx context.Context, event_id string, opts ...option.RequestOption) (res *Event, err error) {
+func (r *EventService) Get(ctx context.Context, eventID string, opts ...option.RequestOption) (res *Event, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("events/%s", event_id)
+	path := fmt.Sprintf("events/%s", eventID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -161,43 +161,19 @@ const (
 )
 
 type EventListParams struct {
+	// Filter Events to those belonging to the object with the provided identifier.
+	AssociatedObjectID param.Field[string]                   `query:"associated_object_id"`
+	Category           param.Field[EventListParamsCategory]  `query:"category"`
+	CreatedAt          param.Field[EventListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Events to those belonging to the object with the provided identifier.
-	AssociatedObjectID param.Field[string]                   `query:"associated_object_id"`
-	CreatedAt          param.Field[EventListParamsCreatedAt] `query:"created_at"`
-	Category           param.Field[EventListParamsCategory]  `query:"category"`
 }
 
 // URLQuery serializes [EventListParams]'s query parameters as `url.Values`.
 func (r EventListParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type EventListParamsCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `query:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	Before param.Field[time.Time] `query:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
-}
-
-// URLQuery serializes [EventListParamsCreatedAt]'s query parameters as
-// `url.Values`.
-func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
@@ -274,6 +250,30 @@ const (
 	EventListParamsCategoryInWireTransferCreated                                  EventListParamsCategoryIn = "wire_transfer.created"
 	EventListParamsCategoryInWireTransferUpdated                                  EventListParamsCategoryIn = "wire_transfer.updated"
 )
+
+type EventListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [EventListParamsCreatedAt]'s query parameters as
+// `url.Values`.
+func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
 
 // A list of Event objects
 type EventListResponse struct {

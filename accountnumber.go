@@ -42,17 +42,17 @@ func (r *AccountNumberService) New(ctx context.Context, body AccountNumberNewPar
 }
 
 // Retrieve an Account Number
-func (r *AccountNumberService) Get(ctx context.Context, account_number_id string, opts ...option.RequestOption) (res *AccountNumber, err error) {
+func (r *AccountNumberService) Get(ctx context.Context, accountNumberID string, opts ...option.RequestOption) (res *AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_numbers/%s", account_number_id)
+	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update an Account Number
-func (r *AccountNumberService) Update(ctx context.Context, account_number_id string, body AccountNumberUpdateParams, opts ...option.RequestOption) (res *AccountNumber, err error) {
+func (r *AccountNumberService) Update(ctx context.Context, accountNumberID string, body AccountNumberUpdateParams, opts ...option.RequestOption) (res *AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_numbers/%s", account_number_id)
+	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -170,6 +170,9 @@ const (
 )
 
 type AccountNumberListParams struct {
+	// Filter Account Numbers to those belonging to the specified Account.
+	AccountID param.Field[string]                           `query:"account_id"`
+	CreatedAt param.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -177,9 +180,6 @@ type AccountNumberListParams struct {
 	Limit param.Field[int64] `query:"limit"`
 	// The status to retrieve Account Numbers for.
 	Status param.Field[AccountNumberListParamsStatus] `query:"status"`
-	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID param.Field[string]                           `query:"account_id"`
-	CreatedAt param.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [AccountNumberListParams]'s query parameters as
@@ -190,14 +190,6 @@ func (r AccountNumberListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-type AccountNumberListParamsStatus string
-
-const (
-	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
-	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
-	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
-)
 
 type AccountNumberListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -222,6 +214,14 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type AccountNumberListParamsStatus string
+
+const (
+	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
+	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
+	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
+)
 
 // A list of Account Number objects
 type AccountNumberListResponse struct {

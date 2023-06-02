@@ -12,7 +12,13 @@ import (
 
 func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{AccountID: increase.F("account_in71c4amph0vgo2qllky"), Amount: increase.F(int64(100)), Description: increase.F("Creating liquidity"), DestinationAccountID: increase.F("account_uf16sut2ct5bevmq3eh"), RequireApproval: increase.F(true)})
+	_, err := c.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{
+		AccountID:            increase.F("string"),
+		Amount:               increase.F(int64(1)),
+		Description:          increase.F("x"),
+		DestinationAccountID: increase.F("string"),
+		RequireApproval:      increase.F(true),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -39,7 +45,12 @@ func TestAccountTransferGet(t *testing.T) {
 
 func TestAccountTransferListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), AccountID: increase.F("string"), CreatedAt: increase.F(increase.AccountTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())})})
+	_, err := c.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{
+		AccountID: increase.F("string"),
+		CreatedAt: increase.F(increase.AccountTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:    increase.F("string"),
+		Limit:     increase.F(int64(0)),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

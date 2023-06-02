@@ -34,9 +34,9 @@ func NewOauthConnectionService(opts ...option.RequestOption) (r *OauthConnection
 }
 
 // Retrieve an OAuth Connection
-func (r *OauthConnectionService) Get(ctx context.Context, oauth_connection_id string, opts ...option.RequestOption) (res *OauthConnection, err error) {
+func (r *OauthConnectionService) Get(ctx context.Context, oauthConnectionID string, opts ...option.RequestOption) (res *OauthConnection, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("oauth_connections/%s", oauth_connection_id)
+	path := fmt.Sprintf("oauth_connections/%s", oauthConnectionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

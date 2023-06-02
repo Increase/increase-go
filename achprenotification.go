@@ -42,9 +42,9 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body ACHPrenotifica
 }
 
 // Retrieve an ACH Prenotification
-func (r *ACHPrenotificationService) Get(ctx context.Context, ach_prenotification_id string, opts ...option.RequestOption) (res *ACHPrenotification, err error) {
+func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationID string, opts ...option.RequestOption) (res *ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ach_prenotifications/%s", ach_prenotification_id)
+	path := fmt.Sprintf("ach_prenotifications/%s", achPrenotificationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -181,6 +181,9 @@ const (
 type ACHPrenotificationNewParams struct {
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// destination account.
+	RoutingNumber param.Field[string] `json:"routing_number,required"`
 	// Additional information that will be sent to the recipient.
 	Addendum param.Field[string] `json:"addendum"`
 	// The description of the date of the transfer.
@@ -201,9 +204,6 @@ type ACHPrenotificationNewParams struct {
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
 	IndividualName param.Field[string] `json:"individual_name"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
-	// destination account.
-	RoutingNumber param.Field[string] `json:"routing_number,required"`
 	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
 	StandardEntryClassCode param.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 }
@@ -228,12 +228,12 @@ const (
 )
 
 type ACHPrenotificationListParams struct {
+	CreatedAt param.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit     param.Field[int64]                                 `query:"limit"`
-	CreatedAt param.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
+	Limit param.Field[int64] `query:"limit"`
 }
 
 // URLQuery serializes [ACHPrenotificationListParams]'s query parameters as

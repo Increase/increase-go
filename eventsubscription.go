@@ -42,17 +42,17 @@ func (r *EventSubscriptionService) New(ctx context.Context, body EventSubscripti
 }
 
 // Retrieve an Event Subscription
-func (r *EventSubscriptionService) Get(ctx context.Context, event_subscription_id string, opts ...option.RequestOption) (res *EventSubscription, err error) {
+func (r *EventSubscriptionService) Get(ctx context.Context, eventSubscriptionID string, opts ...option.RequestOption) (res *EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("event_subscriptions/%s", event_subscription_id)
+	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update an Event Subscription
-func (r *EventSubscriptionService) Update(ctx context.Context, event_subscription_id string, body EventSubscriptionUpdateParams, opts ...option.RequestOption) (res *EventSubscription, err error) {
+func (r *EventSubscriptionService) Update(ctx context.Context, eventSubscriptionID string, body EventSubscriptionUpdateParams, opts ...option.RequestOption) (res *EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("event_subscriptions/%s", event_subscription_id)
+	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -197,12 +197,12 @@ const (
 type EventSubscriptionNewParams struct {
 	// The URL you'd like us to send webhooks to.
 	URL param.Field[string] `json:"url,required"`
-	// The key that will be used to sign webhooks. If no value is passed, a random
-	// string will be used as default.
-	SharedSecret param.Field[string] `json:"shared_secret"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategory param.Field[EventSubscriptionNewParamsSelectedEventCategory] `json:"selected_event_category"`
+	// The key that will be used to sign webhooks. If no value is passed, a random
+	// string will be used as default.
+	SharedSecret param.Field[string] `json:"shared_secret"`
 }
 
 func (r EventSubscriptionNewParams) MarshalJSON() (data []byte, err error) {

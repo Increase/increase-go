@@ -34,9 +34,9 @@ func NewDeclinedTransactionService(opts ...option.RequestOption) (r *DeclinedTra
 }
 
 // Retrieve a Declined Transaction
-func (r *DeclinedTransactionService) Get(ctx context.Context, declined_transaction_id string, opts ...option.RequestOption) (res *DeclinedTransaction, err error) {
+func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactionID string, opts ...option.RequestOption) (res *DeclinedTransaction, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("declined_transactions/%s", declined_transaction_id)
+	path := fmt.Sprintf("declined_transactions/%s", declinedTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -743,16 +743,16 @@ const (
 )
 
 type DeclinedTransactionListParams struct {
+	// Filter Declined Transactions to ones belonging to the specified Account.
+	AccountID param.Field[string]                                 `query:"account_id"`
+	CreatedAt param.Field[DeclinedTransactionListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Declined Transactions to ones belonging to the specified Account.
-	AccountID param.Field[string] `query:"account_id"`
 	// Filter Declined Transactions to those belonging to the specified route.
-	RouteID   param.Field[string]                                 `query:"route_id"`
-	CreatedAt param.Field[DeclinedTransactionListParamsCreatedAt] `query:"created_at"`
+	RouteID param.Field[string] `query:"route_id"`
 }
 
 // URLQuery serializes [DeclinedTransactionListParams]'s query parameters as

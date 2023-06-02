@@ -9,9 +9,12 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestCardProfileNew(t *testing.T) {
+func TestCardProfileNewWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.New(context.TODO(), increase.CardProfileNewParams{Description: increase.F("My Card Profile"), DigitalWallets: increase.F(increase.CardProfileNewParamsDigitalWallets{TextColor: increase.F(increase.CardProfileNewParamsDigitalWalletsTextColor{Red: increase.F(int64(26)), Green: increase.F(int64(43)), Blue: increase.F(int64(59))}), IssuerName: increase.F("MyBank"), CardDescription: increase.F("MyBank Signature Card"), ContactWebsite: increase.F("https://example.com"), ContactEmail: increase.F("user@example.com"), ContactPhone: increase.F("+18885551212"), BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"), AppIconFileID: increase.F("file_8zxqkwlh43wo144u8yec")})})
+	_, err := c.CardProfiles.New(context.TODO(), increase.CardProfileNewParams{
+		Description:    increase.F("x"),
+		DigitalWallets: increase.F(increase.CardProfileNewParamsDigitalWallets{TextColor: increase.F(increase.CardProfileNewParamsDigitalWalletsTextColor{Red: increase.F(int64(0)), Green: increase.F(int64(0)), Blue: increase.F(int64(0))}), IssuerName: increase.F("x"), CardDescription: increase.F("x"), ContactWebsite: increase.F("string"), ContactEmail: increase.F("x"), ContactPhone: increase.F("x"), BackgroundImageFileID: increase.F("string"), AppIconFileID: increase.F("string")}),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -38,7 +41,11 @@ func TestCardProfileGet(t *testing.T) {
 
 func TestCardProfileListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.List(context.TODO(), increase.CardProfileListParams{Cursor: increase.F("string"), Limit: increase.F(int64(0)), Status: increase.F(increase.CardProfileListParamsStatus{In: increase.F([]increase.CardProfileListParamsStatusIn{increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending})})})
+	_, err := c.CardProfiles.List(context.TODO(), increase.CardProfileListParams{
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
+		Status: increase.F(increase.CardProfileListParamsStatus{In: increase.F([]increase.CardProfileListParamsStatusIn{increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending})}),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

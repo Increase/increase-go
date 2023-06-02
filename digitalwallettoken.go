@@ -34,9 +34,9 @@ func NewDigitalWalletTokenService(opts ...option.RequestOption) (r *DigitalWalle
 }
 
 // Retrieve a Digital Wallet Token
-func (r *DigitalWalletTokenService) Get(ctx context.Context, digital_wallet_token_id string, opts ...option.RequestOption) (res *DigitalWalletToken, err error) {
+func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenID string, opts ...option.RequestOption) (res *DigitalWalletToken, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("digital_wallet_tokens/%s", digital_wallet_token_id)
+	path := fmt.Sprintf("digital_wallet_tokens/%s", digitalWalletTokenID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -125,14 +125,14 @@ const (
 )
 
 type DigitalWalletTokenListParams struct {
+	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
+	CardID    param.Field[string]                                `query:"card_id"`
+	CreatedAt param.Field[DigitalWalletTokenListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Digital Wallet Tokens to ones belonging to the specified Card.
-	CardID    param.Field[string]                                `query:"card_id"`
-	CreatedAt param.Field[DigitalWalletTokenListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [DigitalWalletTokenListParams]'s query parameters as

@@ -45,7 +45,9 @@ func TestSimulationCheckTransferReturn(t *testing.T) {
 	_, err := c.Simulations.CheckTransfers.Return(
 		context.TODO(),
 		"check_transfer_30b43acfu9vw8fyc4f5",
-		increase.SimulationCheckTransferReturnParams{Reason: increase.F(increase.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure)},
+		increase.SimulationCheckTransferReturnParams{
+			Reason: increase.F(increase.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure),
+		},
 	)
 	if err != nil {
 		var apierr *increase.Error

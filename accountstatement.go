@@ -34,9 +34,9 @@ func NewAccountStatementService(opts ...option.RequestOption) (r *AccountStateme
 }
 
 // Retrieve an Account Statement
-func (r *AccountStatementService) Get(ctx context.Context, account_statement_id string, opts ...option.RequestOption) (res *AccountStatement, err error) {
+func (r *AccountStatementService) Get(ctx context.Context, accountStatementID string, opts ...option.RequestOption) (res *AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("account_statements/%s", account_statement_id)
+	path := fmt.Sprintf("account_statements/%s", accountStatementID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -120,13 +120,13 @@ const (
 )
 
 type AccountStatementListParams struct {
+	// Filter Account Statements to those belonging to the specified Account.
+	AccountID param.Field[string] `query:"account_id"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
-	// Filter Account Statements to those belonging to the specified Account.
-	AccountID            param.Field[string]                                         `query:"account_id"`
+	Limit                param.Field[int64]                                          `query:"limit"`
 	StatementPeriodStart param.Field[AccountStatementListParamsStatementPeriodStart] `query:"statement_period_start"`
 }
 

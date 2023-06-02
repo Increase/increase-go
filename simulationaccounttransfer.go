@@ -31,9 +31,9 @@ func NewSimulationAccountTransferService(opts ...option.RequestOption) (r *Simul
 // endpoint simulates the approval of an [Account Transfer](#account-transfers).
 // You can also approve sandbox Account Transfers in the dashboard. This transfer
 // must first have a `status` of `pending_approval`.
-func (r *SimulationAccountTransferService) Complete(ctx context.Context, account_transfer_id string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
+func (r *SimulationAccountTransferService) Complete(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/account_transfers/%s/complete", account_transfer_id)
+	path := fmt.Sprintf("simulations/account_transfers/%s/complete", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }

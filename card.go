@@ -41,17 +41,17 @@ func (r *CardService) New(ctx context.Context, body CardNewParams, opts ...optio
 }
 
 // Retrieve a Card
-func (r *CardService) Get(ctx context.Context, card_id string, opts ...option.RequestOption) (res *Card, err error) {
+func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.RequestOption) (res *Card, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("cards/%s", card_id)
+	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
 // Update a Card
-func (r *CardService) Update(ctx context.Context, card_id string, body CardUpdateParams, opts ...option.RequestOption) (res *Card, err error) {
+func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdateParams, opts ...option.RequestOption) (res *Card, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("cards/%s", card_id)
+	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
@@ -80,9 +80,9 @@ func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, 
 }
 
 // Retrieve sensitive details for a Card
-func (r *CardService) GetSensitiveDetails(ctx context.Context, card_id string, opts ...option.RequestOption) (res *CardDetails, err error) {
+func (r *CardService) GetSensitiveDetails(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("cards/%s/details", card_id)
+	path := fmt.Sprintf("cards/%s/details", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -262,10 +262,10 @@ const (
 type CardNewParams struct {
 	// The Account the card should belong to.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The description you choose to give the card.
-	Description param.Field[string] `json:"description"`
 	// The card's billing address.
 	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
+	// The description you choose to give the card.
+	Description param.Field[string] `json:"description"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. To add the card to a digital wallet, you may supply an email or phone
 	// number with this request. Otherwise, subscribe and then action a Real Time
@@ -292,6 +292,10 @@ type CardNewParamsBillingAddress struct {
 	PostalCode param.Field[string] `json:"postal_code,required"`
 }
 
+func (r CardNewParamsBillingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The contact information used in the two-factor steps for digital wallet card
 // creation. To add the card to a digital wallet, you may supply an email or phone
 // number with this request. Otherwise, subscribe and then action a Real Time
@@ -309,30 +313,26 @@ type CardNewParamsDigitalWallet struct {
 	CardProfileID param.Field[string] `json:"card_profile_id"`
 }
 
+func (r CardNewParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type CardUpdateParams struct {
-	// The description you choose to give the card.
-	Description param.Field[string] `json:"description"`
-	// The status to update the Card with.
-	Status param.Field[CardUpdateParamsStatus] `json:"status"`
 	// The card's updated billing address.
 	BillingAddress param.Field[CardUpdateParamsBillingAddress] `json:"billing_address"`
+	// The description you choose to give the card.
+	Description param.Field[string] `json:"description"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
 	DigitalWallet param.Field[CardUpdateParamsDigitalWallet] `json:"digital_wallet"`
+	// The status to update the Card with.
+	Status param.Field[CardUpdateParamsStatus] `json:"status"`
 }
 
 func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
-
-type CardUpdateParamsStatus string
-
-const (
-	CardUpdateParamsStatusActive   CardUpdateParamsStatus = "active"
-	CardUpdateParamsStatusDisabled CardUpdateParamsStatus = "disabled"
-	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
-)
 
 // The card's updated billing address.
 type CardUpdateParamsBillingAddress struct {
@@ -346,6 +346,10 @@ type CardUpdateParamsBillingAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The postal code of the billing address.
 	PostalCode param.Field[string] `json:"postal_code,required"`
+}
+
+func (r CardUpdateParamsBillingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // The contact information used in the two-factor steps for digital wallet card
@@ -363,15 +367,27 @@ type CardUpdateParamsDigitalWallet struct {
 	CardProfileID param.Field[string] `json:"card_profile_id"`
 }
 
+func (r CardUpdateParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsStatus string
+
+const (
+	CardUpdateParamsStatusActive   CardUpdateParamsStatus = "active"
+	CardUpdateParamsStatusDisabled CardUpdateParamsStatus = "disabled"
+	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
+)
+
 type CardListParams struct {
+	// Filter Cards to ones belonging to the specified Account.
+	AccountID param.Field[string]                  `query:"account_id"`
+	CreatedAt param.Field[CardListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Cards to ones belonging to the specified Account.
-	AccountID param.Field[string]                  `query:"account_id"`
-	CreatedAt param.Field[CardListParamsCreatedAt] `query:"created_at"`
 }
 
 // URLQuery serializes [CardListParams]'s query parameters as `url.Values`.

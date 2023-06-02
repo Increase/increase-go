@@ -11,7 +11,15 @@ import (
 
 func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"), Amount: increase.F(int64(1000)), CompanyDescriptiveDate: increase.F("x"), CompanyDiscretionaryData: increase.F("x"), CompanyEntryDescription: increase.F("x"), CompanyName: increase.F("x"), CompanyID: increase.F("x")})
+	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
+		AccountNumberID:          increase.F("string"),
+		Amount:                   increase.F(int64(0)),
+		CompanyDescriptiveDate:   increase.F("x"),
+		CompanyDiscretionaryData: increase.F("x"),
+		CompanyEntryDescription:  increase.F("x"),
+		CompanyID:                increase.F("x"),
+		CompanyName:              increase.F("x"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -27,7 +35,9 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 	_, err := c.Simulations.ACHTransfers.Return(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
-		increase.SimulationACHTransferReturnParams{Reason: increase.F(increase.SimulationACHTransferReturnParamsReasonInsufficientFund)},
+		increase.SimulationACHTransferReturnParams{
+			Reason: increase.F(increase.SimulationACHTransferReturnParamsReasonInsufficientFund),
+		},
 	)
 	if err != nil {
 		var apierr *increase.Error
