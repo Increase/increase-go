@@ -522,6 +522,8 @@ type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
+	// The three character ACH return code, in the range R01 to R85.
+	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
@@ -533,12 +535,13 @@ type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 // metadata for the struct
 // [WireTransferSimulationTransactionSourceACHTransferReturn]
 type wireTransferSimulationTransactionSourceACHTransferReturnJSON struct {
-	CreatedAt        apijson.Field
-	ReturnReasonCode apijson.Field
-	TransferID       apijson.Field
-	TransactionID    apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	CreatedAt           apijson.Field
+	ReturnReasonCode    apijson.Field
+	RawReturnReasonCode apijson.Field
+	TransferID          apijson.Field
+	TransactionID       apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -548,29 +551,77 @@ func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON
 type WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                 WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                    WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                    WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "other"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeOther                                                       WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "other"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCheckTruncationEntryReturn                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "check_truncation_entry_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -1708,6 +1759,7 @@ const (
 type WireTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
+	WireTransferSimulationTransactionSourceInternalSourceReasonAccountClosure             WireTransferSimulationTransactionSourceInternalSourceReason = "account_closure"
 	WireTransferSimulationTransactionSourceInternalSourceReasonBankMigration              WireTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
 	WireTransferSimulationTransactionSourceInternalSourceReasonCashback                   WireTransferSimulationTransactionSourceInternalSourceReason = "cashback"
 	WireTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable       WireTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"

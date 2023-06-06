@@ -517,6 +517,8 @@ type TransactionSourceACHTransferReturn struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode TransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
+	// The three character ACH return code, in the range R01 to R85.
+	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
@@ -527,12 +529,13 @@ type TransactionSourceACHTransferReturn struct {
 // transactionSourceACHTransferReturnJSON contains the JSON metadata for the struct
 // [TransactionSourceACHTransferReturn]
 type transactionSourceACHTransferReturnJSON struct {
-	CreatedAt        apijson.Field
-	ReturnReasonCode apijson.Field
-	TransferID       apijson.Field
-	TransactionID    apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	CreatedAt           apijson.Field
+	ReturnReasonCode    apijson.Field
+	RawReturnReasonCode apijson.Field
+	TransferID          apijson.Field
+	TransactionID       apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -542,29 +545,77 @@ func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err err
 type TransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                          TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                 TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                             TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                             TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction              TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                              TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                     TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                            TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                     TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                          TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                              TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                          TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                            TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                   TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                    TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                  TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                    TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                              TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                   TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment              TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	TransactionSourceACHTransferReturnReturnReasonCodeOther                                                     TransactionSourceACHTransferReturnReturnReasonCode = "other"
+	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeOther                                                       TransactionSourceACHTransferReturnReturnReasonCode = "other"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	TransactionSourceACHTransferReturnReturnReasonCodeCheckTruncationEntryReturn                                  TransactionSourceACHTransferReturnReturnReasonCode = "check_truncation_entry_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         TransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             TransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  TransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	TransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  TransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           TransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         TransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  TransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               TransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            TransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    TransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   TransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          TransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           TransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         TransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               TransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          TransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  TransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	TransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity TransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         TransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           TransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            TransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           TransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              TransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        TransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            TransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    TransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -1686,6 +1737,7 @@ const (
 type TransactionSourceInternalSourceReason string
 
 const (
+	TransactionSourceInternalSourceReasonAccountClosure             TransactionSourceInternalSourceReason = "account_closure"
 	TransactionSourceInternalSourceReasonBankMigration              TransactionSourceInternalSourceReason = "bank_migration"
 	TransactionSourceInternalSourceReasonCashback                   TransactionSourceInternalSourceReason = "cashback"
 	TransactionSourceInternalSourceReasonCollectionReceivable       TransactionSourceInternalSourceReason = "collection_receivable"

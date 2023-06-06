@@ -19,6 +19,7 @@ type SimulationService struct {
 	Documents                   *SimulationDocumentService
 	DigitalWalletTokenRequests  *SimulationDigitalWalletTokenRequestService
 	CheckDeposits               *SimulationCheckDepositService
+	Programs                    *SimulationProgramService
 	InboundWireDrawdownRequests *SimulationInboundWireDrawdownRequestService
 	InterestPayments            *SimulationInterestPaymentService
 	WireTransfers               *SimulationWireTransferService
@@ -41,6 +42,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.Documents = NewSimulationDocumentService(opts...)
 	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
 	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
+	r.Programs = NewSimulationProgramService(opts...)
 	r.InboundWireDrawdownRequests = NewSimulationInboundWireDrawdownRequestService(opts...)
 	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
 	r.WireTransfers = NewSimulationWireTransferService(opts...)

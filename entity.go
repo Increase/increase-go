@@ -97,7 +97,9 @@ type Entity struct {
 	Description string `json:"description,required,nullable"`
 	// The relationship between your group and the entity.
 	Relationship EntityRelationship `json:"relationship,required"`
-	// Additional documentation associated with the entity.
+	// Additional documentation associated with the entity. This is limited to the
+	// first 10 documents for an entity. If an entity has more than 10 documents, use
+	// the GET /entity_supplemental_documents list endpoint to retrieve them.
 	SupplementalDocuments []EntitySupplementalDocuments `json:"supplemental_documents,required"`
 	JSON                  entityJSON
 }
@@ -840,16 +842,26 @@ const (
 	EntityRelationshipUnaffiliated  EntityRelationship = "unaffiliated"
 )
 
+// Supplemental Documents are uploaded files connected to an Entity during
+// onboarding.
 type EntitySupplementalDocuments struct {
 	// The File containing the document.
 	FileID string `json:"file_id,required"`
-	JSON   entitySupplementalDocumentsJSON
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
+	// Supplemental Document was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// A constant representing the object's type. For this resource it will always be
+	// `entity_supplemental_document`.
+	Type EntitySupplementalDocumentsType `json:"type,required"`
+	JSON entitySupplementalDocumentsJSON
 }
 
 // entitySupplementalDocumentsJSON contains the JSON metadata for the struct
 // [EntitySupplementalDocuments]
 type entitySupplementalDocumentsJSON struct {
 	FileID      apijson.Field
+	CreatedAt   apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -857,6 +869,12 @@ type entitySupplementalDocumentsJSON struct {
 func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+type EntitySupplementalDocumentsType string
+
+const (
+	EntitySupplementalDocumentsTypeEntitySupplementalDocument EntitySupplementalDocumentsType = "entity_supplemental_document"
+)
 
 type EntityNewParams struct {
 	// The relationship between your group and the entity.

@@ -109,6 +109,10 @@ type Account struct {
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
 	InterestAccruedAt time.Time `json:"interest_accrued_at,required,nullable" format:"date"`
+	// The Interest Rate currently being earned on the account, as a string containing
+	// a decimal number. For example, a 1% interest rate would be represented as
+	// "0.01".
+	InterestRate string `json:"interest_rate,required"`
 	// The name you choose for the Account.
 	Name string `json:"name,required"`
 	// The status of the Account.
@@ -128,6 +132,7 @@ type accountJSON struct {
 	ID                    apijson.Field
 	InterestAccrued       apijson.Field
 	InterestAccruedAt     apijson.Field
+	InterestRate          apijson.Field
 	Name                  apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
@@ -171,7 +176,8 @@ type AccountNewParams struct {
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. Its relationship to your group must be `informational`.
 	InformationalEntityID param.Field[string] `json:"informational_entity_id"`
-	// The identifier for the Program that this Account falls under.
+	// The identifier for the Program that this Account falls under. Required if you
+	// operate more than one Program.
 	ProgramID param.Field[string] `json:"program_id"`
 }
 
@@ -194,6 +200,8 @@ type AccountListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID param.Field[string] `query:"entity_id"`
+	// Filter Accounts for those belonging to the specified Entity as informational.
+	InformationalEntityID param.Field[string] `query:"informational_entity_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
