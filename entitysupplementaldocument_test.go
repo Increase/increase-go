@@ -26,3 +26,19 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
+
+func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
+	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	_, err := c.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
+		EntityID: increase.F("string"),
+		Cursor:   increase.F("string"),
+		Limit:    increase.F(int64(0)),
+	})
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			println(apierr.DumpRequest(true))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}

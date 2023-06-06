@@ -63,11 +63,12 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 func TestAccountListWithOptionalParams(t *testing.T) {
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.List(context.TODO(), increase.AccountListParams{
-		CreatedAt: increase.F(increase.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
-		Cursor:    increase.F("string"),
-		EntityID:  increase.F("string"),
-		Limit:     increase.F(int64(0)),
-		Status:    increase.F(increase.AccountListParamsStatusOpen),
+		CreatedAt:             increase.F(increase.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+		Cursor:                increase.F("string"),
+		EntityID:              increase.F("string"),
+		InformationalEntityID: increase.F("string"),
+		Limit:                 increase.F(int64(0)),
+		Status:                increase.F(increase.AccountListParamsStatusOpen),
 	})
 	if err != nil {
 		var apierr *increase.Error
