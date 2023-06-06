@@ -521,6 +521,8 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
+	// The three character ACH return code, in the range R01 to R85.
+	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
 	// The identifier of the Tranasaction associated with this return.
@@ -532,12 +534,13 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 // the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceACHTransferReturn]
 type interestPaymentSimulationResultTransactionSourceACHTransferReturnJSON struct {
-	CreatedAt        apijson.Field
-	ReturnReasonCode apijson.Field
-	TransferID       apijson.Field
-	TransactionID    apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	CreatedAt           apijson.Field
+	ReturnReasonCode    apijson.Field
+	RawReturnReasonCode apijson.Field
+	TransferID          apijson.Field
+	TransactionID       apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
@@ -547,29 +550,77 @@ func (r *InterestPaymentSimulationResultTransactionSourceACHTransferReturn) Unma
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                 InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeOther                                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "other"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeOther                                                       InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "other"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCheckTruncationEntryReturn                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "check_truncation_entry_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -1713,6 +1764,7 @@ const (
 type InterestPaymentSimulationResultTransactionSourceInternalSourceReason string
 
 const (
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonAccountClosure             InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "account_closure"
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration              InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback                   InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable       InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
