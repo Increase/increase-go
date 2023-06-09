@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationCheckTransferDeposit(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Deposit(
 		context.TODO(),
@@ -27,6 +31,9 @@ func TestSimulationCheckTransferDeposit(t *testing.T) {
 }
 
 func TestSimulationCheckTransferMail(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Mail(
@@ -43,6 +50,9 @@ func TestSimulationCheckTransferMail(t *testing.T) {
 }
 
 func TestSimulationCheckTransferReturn(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckTransfers.Return(
 		context.TODO(),

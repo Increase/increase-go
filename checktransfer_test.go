@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestCheckTransferNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
 		AccountID:       increase.F("string"),
@@ -38,6 +42,9 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 }
 
 func TestCheckTransferGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.Get(
 		context.TODO(),
@@ -53,6 +60,9 @@ func TestCheckTransferGet(t *testing.T) {
 }
 
 func TestCheckTransferListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
 		AccountID: increase.F("string"),
@@ -70,6 +80,9 @@ func TestCheckTransferListWithOptionalParams(t *testing.T) {
 }
 
 func TestCheckTransferApprove(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.Approve(
 		context.TODO(),
@@ -85,6 +98,9 @@ func TestCheckTransferApprove(t *testing.T) {
 }
 
 func TestCheckTransferCancel(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.Cancel(
 		context.TODO(),
@@ -100,6 +116,9 @@ func TestCheckTransferCancel(t *testing.T) {
 }
 
 func TestCheckTransferStopPayment(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism doesn't accept no request body being sent but returns 415 if it is sent")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckTransfers.StopPayment(

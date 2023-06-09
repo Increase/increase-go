@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestAccountNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:                  increase.F("x"),
@@ -30,6 +34,9 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Get(
 		context.TODO(),
@@ -45,6 +52,9 @@ func TestAccountGet(t *testing.T) {
 }
 
 func TestAccountUpdateWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Update(
 		context.TODO(),
@@ -63,6 +73,9 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.List(context.TODO(), increase.AccountListParams{
 		CreatedAt:             increase.F(increase.AccountListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
@@ -82,6 +95,9 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountClose(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism tests are broken")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Accounts.Close(

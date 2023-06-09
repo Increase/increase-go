@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestCardProfileNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardProfiles.New(context.TODO(), increase.CardProfileNewParams{
 		Description:    increase.F("x"),
@@ -27,6 +31,9 @@ func TestCardProfileNewWithOptionalParams(t *testing.T) {
 }
 
 func TestCardProfileGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardProfiles.Get(
 		context.TODO(),
@@ -42,6 +49,9 @@ func TestCardProfileGet(t *testing.T) {
 }
 
 func TestCardProfileListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardProfiles.List(context.TODO(), increase.CardProfileListParams{
 		Cursor: increase.F("string"),

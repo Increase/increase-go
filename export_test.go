@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestExportNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Exports.New(context.TODO(), increase.ExportNewParams{
 		Category:       increase.F(increase.ExportNewParamsCategoryTransactionCsv),
@@ -29,6 +33,9 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 }
 
 func TestExportGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Exports.Get(
 		context.TODO(),
@@ -44,6 +51,9 @@ func TestExportGet(t *testing.T) {
 }
 
 func TestExportListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Exports.List(context.TODO(), increase.ExportListParams{
 		Cursor: increase.F("string"),

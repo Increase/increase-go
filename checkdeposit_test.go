@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestCheckDepositNew(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckDeposits.New(context.TODO(), increase.CheckDepositNewParams{
 		AccountID:        increase.F("string"),
@@ -31,6 +35,9 @@ func TestCheckDepositNew(t *testing.T) {
 }
 
 func TestCheckDepositGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckDeposits.Get(
 		context.TODO(),
@@ -46,6 +53,9 @@ func TestCheckDepositGet(t *testing.T) {
 }
 
 func TestCheckDepositListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CheckDeposits.List(context.TODO(), increase.CheckDepositListParams{
 		AccountID: increase.F("string"),

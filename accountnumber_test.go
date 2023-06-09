@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestAccountNumberNew(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.New(context.TODO(), increase.AccountNumberNewParams{
 		AccountID: increase.F("string"),
@@ -28,6 +32,9 @@ func TestAccountNumberNew(t *testing.T) {
 }
 
 func TestAccountNumberGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.Get(
 		context.TODO(),
@@ -43,6 +50,9 @@ func TestAccountNumberGet(t *testing.T) {
 }
 
 func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.Update(
 		context.TODO(),
@@ -62,6 +72,9 @@ func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountNumberListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountNumbers.List(context.TODO(), increase.AccountNumberListParams{
 		AccountID: increase.F("string"),

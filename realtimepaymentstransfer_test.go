@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.RealTimePaymentsTransfers.New(context.TODO(), increase.RealTimePaymentsTransferNewParams{
 		Amount:                   increase.F(int64(1)),
@@ -34,6 +38,9 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 }
 
 func TestRealTimePaymentsTransferGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.RealTimePaymentsTransfers.Get(
 		context.TODO(),
@@ -49,6 +56,9 @@ func TestRealTimePaymentsTransferGet(t *testing.T) {
 }
 
 func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.RealTimePaymentsTransfers.List(context.TODO(), increase.RealTimePaymentsTransferListParams{
 		AccountID:         increase.F("string"),
