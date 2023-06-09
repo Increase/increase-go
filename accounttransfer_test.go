@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestAccountTransferNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{
 		AccountID:            increase.F("string"),
@@ -31,6 +35,9 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountTransferGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountTransfers.Get(
 		context.TODO(),
@@ -46,6 +53,9 @@ func TestAccountTransferGet(t *testing.T) {
 }
 
 func TestAccountTransferListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{
 		AccountID: increase.F("string"),
@@ -63,6 +73,9 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 }
 
 func TestAccountTransferApprove(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountTransfers.Approve(
 		context.TODO(),
@@ -78,6 +91,9 @@ func TestAccountTransferApprove(t *testing.T) {
 }
 
 func TestAccountTransferCancel(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.AccountTransfers.Cancel(
 		context.TODO(),

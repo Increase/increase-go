@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
 		URL:                   increase.F("string"),
@@ -28,6 +32,9 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 }
 
 func TestEventSubscriptionGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.Get(
 		context.TODO(),
@@ -43,6 +50,9 @@ func TestEventSubscriptionGet(t *testing.T) {
 }
 
 func TestEventSubscriptionUpdateWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.Update(
 		context.TODO(),
@@ -61,6 +71,9 @@ func TestEventSubscriptionUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.EventSubscriptions.List(context.TODO(), increase.EventSubscriptionListParams{
 		Cursor: increase.F("string"),

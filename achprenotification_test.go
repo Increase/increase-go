@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHPrenotifications.New(context.TODO(), increase.ACHPrenotificationNewParams{
 		AccountNumber:            increase.F("x"),
@@ -38,6 +42,9 @@ func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
 }
 
 func TestACHPrenotificationGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHPrenotifications.Get(
 		context.TODO(),
@@ -53,6 +60,9 @@ func TestACHPrenotificationGet(t *testing.T) {
 }
 
 func TestACHPrenotificationListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHPrenotifications.List(context.TODO(), increase.ACHPrenotificationListParams{
 		CreatedAt: increase.F(increase.ACHPrenotificationListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),

@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism tests are broken")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
@@ -35,6 +39,9 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 }
 
 func TestWireDrawdownRequestGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.WireDrawdownRequests.Get(
 		context.TODO(),
@@ -50,6 +57,9 @@ func TestWireDrawdownRequestGet(t *testing.T) {
 }
 
 func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{
 		Cursor: increase.F("string"),

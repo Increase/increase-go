@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestCardDisputeNew(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{
 		DisputedTransactionID: increase.F("string"),
@@ -28,6 +32,9 @@ func TestCardDisputeNew(t *testing.T) {
 }
 
 func TestCardDisputeGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardDisputes.Get(
 		context.TODO(),
@@ -43,6 +50,9 @@ func TestCardDisputeGet(t *testing.T) {
 }
 
 func TestCardDisputeListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.CardDisputes.List(context.TODO(), increase.CardDisputeListParams{
 		CreatedAt: increase.F(increase.CardDisputeListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),

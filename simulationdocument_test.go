@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationDocumentNew(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.Documents.New(context.TODO(), increase.SimulationDocumentNewParams{
 		AccountID: increase.F("string"),
