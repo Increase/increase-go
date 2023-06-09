@@ -196,6 +196,8 @@ func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency. For wire transfers this is always equal to `usd`.
 type WireTransferCurrency string
 
 const (
@@ -320,12 +322,14 @@ func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The transfer's network.
 type WireTransferNetwork string
 
 const (
 	WireTransferNetworkWire WireTransferNetwork = "wire"
 )
 
+// The lifecycle status of the transfer.
 type WireTransferStatus string
 
 const (
@@ -361,6 +365,8 @@ func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `wire_transfer`.
 type WireTransferType string
 
 const (

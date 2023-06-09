@@ -53,6 +53,7 @@ func (r SimulationCardDisputeActionParams) MarshalJSON() (data []byte, err error
 	return apijson.MarshalRoot(r)
 }
 
+// The status to move the dispute to.
 type SimulationCardDisputeActionParamsStatus string
 
 const (

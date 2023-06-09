@@ -135,6 +135,7 @@ func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the notification is for a future credit or debit.
 type ACHPrenotificationCreditDebitIndicator string
 
 const (
@@ -165,6 +166,7 @@ func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The lifecycle status of the ACH Prenotification.
 type ACHPrenotificationStatus string
 
 const (
@@ -174,6 +176,8 @@ const (
 	ACHPrenotificationStatusSubmitted         ACHPrenotificationStatus = "submitted"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `ach_prenotification`.
 type ACHPrenotificationType string
 
 const (
@@ -214,6 +218,7 @@ func (r ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Whether the Prenotification is for a future debit or credit.
 type ACHPrenotificationNewParamsCreditDebitIndicator string
 
 const (
@@ -221,6 +226,7 @@ const (
 	ACHPrenotificationNewParamsCreditDebitIndicatorDebit  ACHPrenotificationNewParamsCreditDebitIndicator = "debit"
 )
 
+// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
 type ACHPrenotificationNewParamsStandardEntryClassCode string
 
 const (

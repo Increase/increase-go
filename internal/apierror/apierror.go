@@ -11,7 +11,9 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 )
 
-// TODO
+// Error represents an error that originates from the API, i.e. when a request is
+// made and the API returns a response with a HTTP status code. Other errors are
+// not wrapped by this SDK.
 type Error struct {
 	Type   ErrorType   `json:"type,required"`
 	Title  string      `json:"title,required"`

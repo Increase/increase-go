@@ -134,6 +134,7 @@ func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
 type CheckDepositCurrency string
 
 const (
@@ -145,6 +146,7 @@ const (
 	CheckDepositCurrencyUsd CheckDepositCurrency = "USD"
 )
 
+// The status of the Check Deposit.
 type CheckDepositStatus string
 
 const (
@@ -196,6 +198,8 @@ func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type CheckDepositDepositAcceptanceCurrency string
 
 const (
@@ -239,6 +243,8 @@ func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type CheckDepositDepositRejectionCurrency string
 
 const (
@@ -250,6 +256,7 @@ const (
 	CheckDepositDepositRejectionCurrencyUsd CheckDepositDepositRejectionCurrency = "USD"
 )
 
+// Why the check deposit was rejected.
 type CheckDepositDepositRejectionReason string
 
 const (
@@ -301,6 +308,8 @@ func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type CheckDepositDepositReturnCurrency string
 
 const (
@@ -328,6 +337,8 @@ const (
 	CheckDepositDepositReturnReturnReasonUnreadableImage           CheckDepositDepositReturnReturnReason = "unreadable_image"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `check_deposit`.
 type CheckDepositType string
 
 const (

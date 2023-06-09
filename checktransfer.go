@@ -233,6 +233,8 @@ func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type CheckTransferCurrency string
 
 const (
@@ -294,6 +296,7 @@ func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The lifecycle status of the transfer.
 type CheckTransferStatus string
 
 const (
@@ -362,6 +365,8 @@ func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
 type CheckTransferStopPaymentRequestType string
 
 const (
@@ -397,6 +402,8 @@ func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_deposit`.
 type CheckTransferDepositType string
 
 const (
@@ -438,6 +445,7 @@ func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason why the check was returned.
 type CheckTransferReturnDetailsReason string
 
 const (
@@ -446,6 +454,8 @@ const (
 	CheckTransferReturnDetailsReasonReturnedNotAuthorized CheckTransferReturnDetailsReason = "returned_not_authorized"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer`.
 type CheckTransferType string
 
 const (

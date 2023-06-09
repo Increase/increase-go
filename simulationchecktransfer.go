@@ -68,6 +68,7 @@ func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err err
 	return apijson.MarshalRoot(r)
 }
 
+// The reason why the Check Transfer was returned to Increase.
 type SimulationCheckTransferReturnParamsReason string
 
 const (

@@ -101,6 +101,8 @@ func (r *Event) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The category of the Event. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type EventCategory string
 
 const (
@@ -156,6 +158,8 @@ const (
 	EventCategoryWireTransferUpdated                                  EventCategory = "wire_transfer.updated"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `event`.
 type EventType string
 
 const (

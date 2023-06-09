@@ -96,12 +96,15 @@ func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `routing_number`.
 type RoutingNumberType string
 
 const (
 	RoutingNumberTypeRoutingNumber RoutingNumberType = "routing_number"
 )
 
+// This routing number's support for ACH Transfers.
 type RoutingNumberACHTransfers string
 
 const (
@@ -109,6 +112,7 @@ const (
 	RoutingNumberACHTransfersNotSupported RoutingNumberACHTransfers = "not_supported"
 )
 
+// This routing number's support for Real Time Payments Transfers.
 type RoutingNumberRealTimePaymentsTransfers string
 
 const (
@@ -116,6 +120,7 @@ const (
 	RoutingNumberRealTimePaymentsTransfersNotSupported RoutingNumberRealTimePaymentsTransfers = "not_supported"
 )
 
+// This routing number's support for Wire Transfers.
 type RoutingNumberWireTransfers string
 
 const (

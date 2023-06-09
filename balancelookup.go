@@ -71,6 +71,8 @@ func (r *BalanceLookupLookupResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `balance_lookup`.
 type BalanceLookupLookupResponseType string
 
 const (
