@@ -131,6 +131,9 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
+// Transaction's currency. This will match the currency on the Pending
+// Transcation's Account.
 type PendingTransactionCurrency string
 
 const (
@@ -142,6 +145,7 @@ const (
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
+// The type of the route this Pending Transaction came through.
 type PendingTransactionRouteType string
 
 const (
@@ -214,6 +218,9 @@ func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type PendingTransactionSourceCategory string
 
 const (
@@ -258,6 +265,8 @@ func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type PendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
@@ -363,6 +372,7 @@ func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type PendingTransactionSourceCardAuthorizationNetwork string
 
 const (
@@ -415,6 +425,9 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -428,6 +441,8 @@ const (
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type PendingTransactionSourceCardAuthorizationCurrency string
 
 const (
@@ -439,6 +454,8 @@ const (
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_authorization`.
 type PendingTransactionSourceCardAuthorizationType string
 
 const (
@@ -481,6 +498,8 @@ func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type PendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
@@ -520,6 +539,8 @@ func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type PendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
@@ -576,6 +597,8 @@ func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+// currency.
 type PendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
@@ -587,6 +610,7 @@ const (
 	PendingTransactionSourceInboundFundsHoldCurrencyUsd PendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
+// The status of the hold.
 type PendingTransactionSourceInboundFundsHoldStatus string
 
 const (
@@ -631,6 +655,8 @@ func (r *PendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []by
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type PendingTransactionSourceCardRouteAuthorizationCurrency string
 
 const (
@@ -726,6 +752,8 @@ func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether the Pending Transaction has been confirmed and has an associated
+// Transaction.
 type PendingTransactionStatus string
 
 const (
@@ -733,6 +761,8 @@ const (
 	PendingTransactionStatusComplete PendingTransactionStatus = "complete"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `pending_transaction`.
 type PendingTransactionType string
 
 const (

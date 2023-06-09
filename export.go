@@ -117,6 +117,8 @@ func (r *Export) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The category of the Export. We may add additional possible values for this enum
+// over time; your application should be able to handle that gracefully.
 type ExportCategory string
 
 const (
@@ -124,6 +126,7 @@ const (
 	ExportCategoryBalanceCsv     ExportCategory = "balance_csv"
 )
 
+// The status of the Export.
 type ExportStatus string
 
 const (
@@ -131,6 +134,8 @@ const (
 	ExportStatusComplete ExportStatus = "complete"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `export`.
 type ExportType string
 
 const (
@@ -152,6 +157,7 @@ func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The type of Export to create.
 type ExportNewParamsCategory string
 
 const (

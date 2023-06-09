@@ -102,6 +102,7 @@ func (r *Document) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of document.
 type DocumentCategory string
 
 const (
@@ -156,6 +157,8 @@ const (
 	DocumentCategoryVolumeForecast                              DocumentCategory = "volume_forecast"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `document`.
 type DocumentType string
 
 const (

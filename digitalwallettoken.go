@@ -104,6 +104,7 @@ func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// This indicates if payments can be made with the Digital Wallet Token.
 type DigitalWalletTokenStatus string
 
 const (
@@ -113,6 +114,7 @@ const (
 	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
 )
 
+// The digital wallet app being used.
 type DigitalWalletTokenTokenRequestor string
 
 const (
@@ -120,6 +122,8 @@ const (
 	DigitalWalletTokenTokenRequestorGooglePay DigitalWalletTokenTokenRequestor = "google_pay"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `digital_wallet_token`.
 type DigitalWalletTokenType string
 
 const (

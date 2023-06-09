@@ -112,6 +112,7 @@ func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The status of the Card Profile.
 type CardProfileStatus string
 
 const (
@@ -187,6 +188,8 @@ func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `card_profile`.
 type CardProfileType string
 
 const (

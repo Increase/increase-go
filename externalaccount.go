@@ -127,6 +127,7 @@ func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The External Account's status.
 type ExternalAccountStatus string
 
 const (
@@ -134,6 +135,7 @@ const (
 	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
 )
 
+// The type of the account to which the transfer will be sent.
 type ExternalAccountFunding string
 
 const (
@@ -142,6 +144,7 @@ const (
 	ExternalAccountFundingOther    ExternalAccountFunding = "other"
 )
 
+// If you have verified ownership of the External Account.
 type ExternalAccountVerificationStatus string
 
 const (
@@ -150,6 +153,8 @@ const (
 	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `external_account`.
 type ExternalAccountType string
 
 const (
@@ -172,6 +177,7 @@ func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The type of the destination account. Defaults to `checking`.
 type ExternalAccountNewParamsFunding string
 
 const (
@@ -191,6 +197,7 @@ func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The status of the External Account.
 type ExternalAccountUpdateParamsStatus string
 
 const (

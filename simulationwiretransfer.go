@@ -123,6 +123,9 @@ func (r *WireTransferSimulationTransaction) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// Transaction's currency. This will match the currency on the Transcation's
+// Account.
 type WireTransferSimulationTransactionCurrency string
 
 const (
@@ -134,6 +137,7 @@ const (
 	WireTransferSimulationTransactionCurrencyUsd WireTransferSimulationTransactionCurrency = "USD"
 )
 
+// The type of the route this Transaction came through.
 type WireTransferSimulationTransactionRouteType string
 
 const (
@@ -320,6 +324,9 @@ func (r *WireTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type WireTransferSimulationTransactionSourceCategory string
 
 const (
@@ -403,6 +410,8 @@ func (r *WireTransferSimulationTransactionSourceAccountTransferIntention) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -550,6 +559,7 @@ func (r *WireTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH Transfer was returned.
 type WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -706,6 +716,8 @@ func (r *WireTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data [
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type WireTransferSimulationTransactionSourceCardRefundCurrency string
 
 const (
@@ -717,6 +729,8 @@ const (
 	WireTransferSimulationTransactionSourceCardRefundCurrencyUsd WireTransferSimulationTransactionSourceCardRefundCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_refund`.
 type WireTransferSimulationTransactionSourceCardRefundType string
 
 const (
@@ -788,6 +802,8 @@ func (r *WireTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(da
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's settlement currency.
 type WireTransferSimulationTransactionSourceCardSettlementCurrency string
 
 const (
@@ -799,6 +815,8 @@ const (
 	WireTransferSimulationTransactionSourceCardSettlementCurrencyUsd WireTransferSimulationTransactionSourceCardSettlementCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_settlement`.
 type WireTransferSimulationTransactionSourceCardSettlementType string
 
 const (
@@ -840,6 +858,8 @@ func (r *WireTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
 
 const (
@@ -894,6 +914,8 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositAcceptance) Unmarsha
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type WireTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -944,6 +966,8 @@ func (r *WireTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type WireTransferSimulationTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -1017,6 +1041,8 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferIntention) Unmarsha
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -1063,6 +1089,7 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason why the check was returned.
 type WireTransferSimulationTransactionSourceCheckTransferReturnReason string
 
 const (
@@ -1124,6 +1151,8 @@ func (r *WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
 type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
@@ -1159,6 +1188,8 @@ func (r *WireTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type WireTransferSimulationTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -1221,6 +1252,8 @@ func (r *WireTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data [
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type WireTransferSimulationTransactionSourceFeePaymentCurrency string
 
 const (
@@ -1301,6 +1334,8 @@ func (r *WireTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type WireTransferSimulationTransactionSourceInboundCheckCurrency string
 
 const (
@@ -1450,6 +1485,8 @@ func (r *WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferC
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
+// currency. This will always be "USD" for a Real Time Payments transfer.
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -1709,6 +1746,8 @@ func (r *WireTransferSimulationTransactionSourceInterestPayment) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type WireTransferSimulationTransactionSourceInterestPaymentCurrency string
 
 const (
@@ -1747,6 +1786,8 @@ func (r *WireTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(da
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type WireTransferSimulationTransactionSourceInternalSourceCurrency string
 
 const (
@@ -1812,6 +1853,8 @@ func (r *WireTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
+// currency.
 type WireTransferSimulationTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -1861,6 +1904,8 @@ func (r *WireTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
+// currency.
 type WireTransferSimulationTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -2029,12 +2074,16 @@ func (r *WireTransferSimulationTransactionSourceWireTransferRejection) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `transaction`.
 type WireTransferSimulationTransactionType string
 
 const (
 	WireTransferSimulationTransactionTypeTransaction WireTransferSimulationTransactionType = "transaction"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `inbound_wire_transfer_simulation_result`.
 type WireTransferSimulationType string
 
 const (

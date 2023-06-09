@@ -125,6 +125,8 @@ func (r *Limit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The interval for the metric. This is required if `metric` is `count` or
+// `volume`.
 type LimitInterval string
 
 const (
@@ -136,6 +138,7 @@ const (
 	LimitIntervalAllTime     LimitInterval = "all_time"
 )
 
+// The metric for the Limit.
 type LimitMetric string
 
 const (
@@ -143,6 +146,7 @@ const (
 	LimitMetricVolume LimitMetric = "volume"
 )
 
+// The type of the model you wish to associate the Limit with.
 type LimitModelType string
 
 const (
@@ -151,6 +155,7 @@ const (
 	LimitModelTypeCard          LimitModelType = "card"
 )
 
+// The current status of the Limit.
 type LimitStatus string
 
 const (
@@ -158,6 +163,8 @@ const (
 	LimitStatusInactive LimitStatus = "inactive"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `limit`.
 type LimitType string
 
 const (
@@ -180,6 +187,7 @@ func (r LimitNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The metric for the limit.
 type LimitNewParamsMetric string
 
 const (
@@ -187,6 +195,7 @@ const (
 	LimitNewParamsMetricVolume LimitNewParamsMetric = "volume"
 )
 
+// The interval for the metric. Required if `metric` is `count` or `volume`.
 type LimitNewParamsInterval string
 
 const (
@@ -207,6 +216,7 @@ func (r LimitUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The status to update the limit with.
 type LimitUpdateParamsStatus string
 
 const (

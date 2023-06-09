@@ -127,6 +127,7 @@ func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// This indicates if payments can be made to the Account Number.
 type AccountNumberStatus string
 
 const (
@@ -135,6 +136,8 @@ const (
 	AccountNumberStatusCanceled AccountNumberStatus = "canceled"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `account_number`.
 type AccountNumberType string
 
 const (
@@ -163,6 +166,7 @@ func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// This indicates if transfers can be made to the Account Number.
 type AccountNumberUpdateParamsStatus string
 
 const (
@@ -217,6 +221,7 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
+// The status to retrieve Account Numbers for.
 type AccountNumberListParamsStatus string
 
 const (

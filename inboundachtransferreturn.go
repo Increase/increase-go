@@ -115,6 +115,7 @@ func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The lifecycle status of the transfer.
 type InboundACHTransferReturnStatus string
 
 const (
@@ -122,6 +123,8 @@ const (
 	InboundACHTransferReturnStatusSubmitted         InboundACHTransferReturnStatus = "submitted"
 )
 
+// The reason why this transfer will be returned. This is sent to the initiating
+// bank.
 type InboundACHTransferReturnReason string
 
 const (
@@ -157,6 +160,8 @@ func (r *InboundACHTransferReturnSubmission) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `inbound_ach_transfer_return`.
 type InboundACHTransferReturnType string
 
 const (
@@ -176,6 +181,8 @@ func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error
 	return apijson.MarshalRoot(r)
 }
 
+// The reason why this transfer will be returned. The most usual return codes are
+// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
 type InboundACHTransferReturnNewParamsReason string
 
 const (

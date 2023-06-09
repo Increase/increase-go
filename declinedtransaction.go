@@ -124,6 +124,9 @@ func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+// Transaction's currency. This will match the currency on the Declined
+// Transcation's Account.
 type DeclinedTransactionCurrency string
 
 const (
@@ -135,6 +138,7 @@ const (
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
 )
 
+// The type of the route this Declined Transaction came through.
 type DeclinedTransactionRouteType string
 
 const (
@@ -196,6 +200,9 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
 type DeclinedTransactionSourceCategory string
 
 const (
@@ -247,6 +254,7 @@ func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH transfer was declined.
 type DeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -326,6 +334,7 @@ func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type DeclinedTransactionSourceCardDeclineNetwork string
 
 const (
@@ -376,6 +385,9 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -389,6 +401,8 @@ const (
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type DeclinedTransactionSourceCardDeclineCurrency string
 
 const (
@@ -400,6 +414,7 @@ const (
 	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
+// Why the transaction was declined.
 type DeclinedTransactionSourceCardDeclineReason string
 
 const (
@@ -444,6 +459,7 @@ func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the check was declined.
 type DeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -513,6 +529,9 @@ func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -524,6 +543,7 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
+// Why the transfer was declined.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
@@ -663,6 +683,8 @@ func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type DeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -728,6 +750,7 @@ func (r *DeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the wire transfer was declined.
 type DeclinedTransactionSourceWireDeclineReason string
 
 const (
@@ -739,6 +762,8 @@ const (
 	DeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed DeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `declined_transaction`.
 type DeclinedTransactionType string
 
 const (

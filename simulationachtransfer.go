@@ -158,6 +158,9 @@ func (r *ACHTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// Transaction's currency. This will match the currency on the Transcation's
+// Account.
 type ACHTransferSimulationTransactionCurrency string
 
 const (
@@ -169,6 +172,7 @@ const (
 	ACHTransferSimulationTransactionCurrencyUsd ACHTransferSimulationTransactionCurrency = "USD"
 )
 
+// The type of the route this Transaction came through.
 type ACHTransferSimulationTransactionRouteType string
 
 const (
@@ -355,6 +359,9 @@ func (r *ACHTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type ACHTransferSimulationTransactionSourceCategory string
 
 const (
@@ -438,6 +445,8 @@ func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -585,6 +594,7 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH Transfer was returned.
 type ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -741,6 +751,8 @@ func (r *ACHTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type ACHTransferSimulationTransactionSourceCardRefundCurrency string
 
 const (
@@ -752,6 +764,8 @@ const (
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyUsd ACHTransferSimulationTransactionSourceCardRefundCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_refund`.
 type ACHTransferSimulationTransactionSourceCardRefundType string
 
 const (
@@ -823,6 +837,8 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(dat
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's settlement currency.
 type ACHTransferSimulationTransactionSourceCardSettlementCurrency string
 
 const (
@@ -834,6 +850,8 @@ const (
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyUsd ACHTransferSimulationTransactionSourceCardSettlementCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_settlement`.
 type ACHTransferSimulationTransactionSourceCardSettlementType string
 
 const (
@@ -875,6 +893,8 @@ func (r *ACHTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
 
 const (
@@ -929,6 +949,8 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -979,6 +1001,8 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -1052,6 +1076,8 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -1098,6 +1124,7 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason why the check was returned.
 type ACHTransferSimulationTransactionSourceCheckTransferReturnReason string
 
 const (
@@ -1159,6 +1186,8 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
@@ -1194,6 +1223,8 @@ func (r *ACHTransferSimulationTransactionSourceDisputeResolution) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type ACHTransferSimulationTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -1256,6 +1287,8 @@ func (r *ACHTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type ACHTransferSimulationTransactionSourceFeePaymentCurrency string
 
 const (
@@ -1336,6 +1369,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type ACHTransferSimulationTransactionSourceInboundCheckCurrency string
 
 const (
@@ -1485,6 +1520,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferCo
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
+// currency. This will always be "USD" for a Real Time Payments transfer.
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -1744,6 +1781,8 @@ func (r *ACHTransferSimulationTransactionSourceInterestPayment) UnmarshalJSON(da
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type ACHTransferSimulationTransactionSourceInterestPaymentCurrency string
 
 const (
@@ -1782,6 +1821,8 @@ func (r *ACHTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(dat
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type ACHTransferSimulationTransactionSourceInternalSourceCurrency string
 
 const (
@@ -1847,6 +1888,8 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteRefund) UnmarshalJSON(da
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
+// currency.
 type ACHTransferSimulationTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -1896,6 +1939,8 @@ func (r *ACHTransferSimulationTransactionSourceCardRouteSettlement) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
+// currency.
 type ACHTransferSimulationTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -2064,6 +2109,8 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferRejection) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `transaction`.
 type ACHTransferSimulationTransactionType string
 
 const (
@@ -2128,6 +2175,9 @@ func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+// Transaction's currency. This will match the currency on the Declined
+// Transcation's Account.
 type ACHTransferSimulationDeclinedTransactionCurrency string
 
 const (
@@ -2139,6 +2189,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
 )
 
+// The type of the route this Declined Transaction came through.
 type ACHTransferSimulationDeclinedTransactionRouteType string
 
 const (
@@ -2200,6 +2251,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSource) UnmarshalJSON(data []by
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
 type ACHTransferSimulationDeclinedTransactionSourceCategory string
 
 const (
@@ -2252,6 +2306,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH transfer was declined.
 type ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -2332,6 +2387,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
@@ -2384,6 +2440,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -2397,6 +2456,8 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
 const (
@@ -2408,6 +2469,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
+// Why the transaction was declined.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
@@ -2453,6 +2515,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the check was declined.
 type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -2522,6 +2585,9 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTr
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer.
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -2533,6 +2599,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
+// Why the transfer was declined.
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
@@ -2674,6 +2741,8 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardRouteDecline) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type ACHTransferSimulationDeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -2740,6 +2809,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the wire transfer was declined.
 type ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason string
 
 const (
@@ -2751,12 +2821,16 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `declined_transaction`.
 type ACHTransferSimulationDeclinedTransactionType string
 
 const (
 	ACHTransferSimulationDeclinedTransactionTypeDeclinedTransaction ACHTransferSimulationDeclinedTransactionType = "declined_transaction"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `inbound_ach_transfer_simulation_result`.
 type ACHTransferSimulationType string
 
 const (
@@ -2796,6 +2870,8 @@ func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error
 	return apijson.MarshalRoot(r)
 }
 
+// The reason why the Federal Reserve or destination bank returned this transfer.
+// Defaults to `no_account`.
 type SimulationACHTransferReturnParamsReason string
 
 const (

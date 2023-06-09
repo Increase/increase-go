@@ -201,6 +201,8 @@ func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency. For ACH transfers this is always equal to `usd`.
 type ACHTransferCurrency string
 
 const (
@@ -262,6 +264,7 @@ func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The transfer's network.
 type ACHTransferNetwork string
 
 const (
@@ -325,6 +328,7 @@ func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH Transfer was returned.
 type ACHTransferReturnReturnReasonCode string
 
 const (
@@ -401,6 +405,7 @@ const (
 	ACHTransferReturnReturnReasonCodeUntimelyReturn                                              ACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
+// The lifecycle status of the transfer.
 type ACHTransferStatus string
 
 const (
@@ -437,6 +442,7 @@ func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of the account to which the transfer will be sent.
 type ACHTransferFunding string
 
 const (
@@ -444,6 +450,7 @@ const (
 	ACHTransferFundingSavings  ACHTransferFunding = "savings"
 )
 
+// The Standard Entry Class (SEC) code to use for the transfer.
 type ACHTransferStandardEntryClassCode string
 
 const (
@@ -452,6 +459,8 @@ const (
 	ACHTransferStandardEntryClassCodeInternetInitiated             ACHTransferStandardEntryClassCode = "internet_initiated"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `ach_transfer`.
 type ACHTransferType string
 
 const (
@@ -515,6 +524,7 @@ func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The type of the account to which the transfer will be sent.
 type ACHTransferNewParamsFunding string
 
 const (
@@ -522,6 +532,7 @@ const (
 	ACHTransferNewParamsFundingSavings  ACHTransferNewParamsFunding = "savings"
 )
 
+// The Standard Entry Class (SEC) code to use for the transfer.
 type ACHTransferNewParamsStandardEntryClassCode string
 
 const (

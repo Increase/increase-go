@@ -98,6 +98,7 @@ func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The status of the Real-Time Decision.
 type RealTimeDecisionStatus string
 
 const (
@@ -106,6 +107,7 @@ const (
 	RealTimeDecisionStatusTimedOut  RealTimeDecisionStatus = "timed_out"
 )
 
+// The category of the Real-Time Decision.
 type RealTimeDecisionCategory string
 
 const (
@@ -179,6 +181,7 @@ func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type RealTimeDecisionCardAuthorizationNetwork string
 
 const (
@@ -229,6 +232,9 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -242,6 +248,7 @@ const (
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// Whether or not the authorization was approved.
 type RealTimeDecisionCardAuthorizationDecision string
 
 const (
@@ -280,6 +287,8 @@ func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether or not the provisioning request was approved. This will be null until
+// the real time decision is responded to.
 type RealTimeDecisionDigitalWalletTokenDecision string
 
 const (
@@ -287,6 +296,7 @@ const (
 	RealTimeDecisionDigitalWalletTokenDecisionDecline RealTimeDecisionDigitalWalletTokenDecision = "decline"
 )
 
+// The digital wallet app being used.
 type RealTimeDecisionDigitalWalletTokenDigitalWallet string
 
 const (
@@ -332,6 +342,7 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether your application successfully delivered the one-time passcode.
 type RealTimeDecisionDigitalWalletAuthenticationResult string
 
 const (
@@ -339,6 +350,7 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationResultFailure RealTimeDecisionDigitalWalletAuthenticationResult = "failure"
 )
 
+// The digital wallet app being used.
 type RealTimeDecisionDigitalWalletAuthenticationDigitalWallet string
 
 const (
@@ -346,6 +358,7 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
 )
 
+// The channel to send the card user their one-time passcode.
 type RealTimeDecisionDigitalWalletAuthenticationChannel string
 
 const (
@@ -353,6 +366,8 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationChannelEmail RealTimeDecisionDigitalWalletAuthenticationChannel = "email"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `real_time_decision`.
 type RealTimeDecisionType string
 
 const (
@@ -386,6 +401,7 @@ func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byt
 	return apijson.MarshalRoot(r)
 }
 
+// Whether the card authorization should be approved or declined.
 type RealTimeDecisionActionParamsCardAuthorizationDecision string
 
 const (
@@ -404,6 +420,7 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthentication) MarshalJSON() (
 	return apijson.MarshalRoot(r)
 }
 
+// Whether your application was able to deliver the one-time passcode.
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string
 
 const (

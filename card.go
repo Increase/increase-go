@@ -144,6 +144,7 @@ func (r *Card) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// This indicates if payments can be made with the card.
 type CardStatus string
 
 const (
@@ -213,6 +214,8 @@ func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `card`.
 type CardType string
 
 const (
@@ -255,6 +258,8 @@ func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `card_details`.
 type CardDetailsType string
 
 const (
@@ -373,6 +378,7 @@ func (r CardUpdateParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The status to update the Card with.
 type CardUpdateParamsStatus string
 
 const (

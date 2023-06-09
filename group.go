@@ -71,6 +71,7 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the Group is activated or not.
 type GroupActivationStatus string
 
 const (
@@ -78,6 +79,7 @@ const (
 	GroupActivationStatusActivated   GroupActivationStatus = "activated"
 )
 
+// If the Group is allowed to create ACH debits.
 type GroupACHDebitStatus string
 
 const (
@@ -85,6 +87,8 @@ const (
 	GroupACHDebitStatusEnabled  GroupACHDebitStatus = "enabled"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `group`.
 type GroupType string
 
 const (

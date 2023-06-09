@@ -2,6 +2,8 @@
 
 package shared
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
 type PointOfServiceEntryMode string
 
 const (
