@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/Increase/increase-go/compare/v0.1.0...v0.1.1) (2023-06-09)
+
+
+### Features
+
+* **api:** add new endpoints + properties + enums ([#7](https://github.com/Increase/increase-go/issues/7)) ([52481ec](https://github.com/Increase/increase-go/commit/52481ecdf53674a35b7fbbfaab432e7b74be1468))
+
 ## [0.1.0](https://github.com/Increase/increase-go/compare/v0.0.1...v0.1.0) (2023-05-31)
 
 
