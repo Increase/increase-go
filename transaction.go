@@ -123,6 +123,9 @@ func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// Transaction's currency. This will match the currency on the Transcation's
+// Account.
 type TransactionCurrency string
 
 const (
@@ -134,6 +137,7 @@ const (
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
+// The type of the route this Transaction came through.
 type TransactionRouteType string
 
 const (
@@ -320,6 +324,9 @@ func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type TransactionSourceCategory string
 
 const (
@@ -402,6 +409,8 @@ func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type TransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -544,6 +553,7 @@ func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH Transfer was returned.
 type TransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -699,6 +709,8 @@ func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type TransactionSourceCardRefundCurrency string
 
 const (
@@ -710,6 +722,8 @@ const (
 	TransactionSourceCardRefundCurrencyUsd TransactionSourceCardRefundCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_refund`.
 type TransactionSourceCardRefundType string
 
 const (
@@ -781,6 +795,8 @@ func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's settlement currency.
 type TransactionSourceCardSettlementCurrency string
 
 const (
@@ -792,6 +808,8 @@ const (
 	TransactionSourceCardSettlementCurrencyUsd TransactionSourceCardSettlementCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_settlement`.
 type TransactionSourceCardSettlementType string
 
 const (
@@ -832,6 +850,8 @@ func (r *TransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type TransactionSourceCardRevenuePaymentCurrency string
 
 const (
@@ -885,6 +905,8 @@ func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type TransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -934,6 +956,8 @@ func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type TransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -1006,6 +1030,8 @@ func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type TransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -1051,6 +1077,7 @@ func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason why the check was returned.
 type TransactionSourceCheckTransferReturnReason string
 
 const (
@@ -1110,6 +1137,8 @@ func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
 type TransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
@@ -1144,6 +1173,8 @@ func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type TransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -1205,6 +1236,8 @@ func (r *TransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type TransactionSourceFeePaymentCurrency string
 
 const (
@@ -1284,6 +1317,8 @@ func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type TransactionSourceInboundCheckCurrency string
 
 const (
@@ -1432,6 +1467,8 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
+// currency. This will always be "USD" for a Real Time Payments transfer.
 type TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -1687,6 +1724,8 @@ func (r *TransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type TransactionSourceInterestPaymentCurrency string
 
 const (
@@ -1725,6 +1764,8 @@ func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type TransactionSourceInternalSourceCurrency string
 
 const (
@@ -1790,6 +1831,8 @@ func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
+// currency.
 type TransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -1838,6 +1881,8 @@ func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
+// currency.
 type TransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -2002,6 +2047,8 @@ func (r *TransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `transaction`.
 type TransactionType string
 
 const (

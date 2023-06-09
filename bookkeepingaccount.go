@@ -99,6 +99,7 @@ func (r *BookkeepingAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The compliance category of the account.
 type BookkeepingAccountComplianceCategory string
 
 const (
@@ -106,6 +107,8 @@ const (
 	BookkeepingAccountComplianceCategoryCustomerBalance BookkeepingAccountComplianceCategory = "customer_balance"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `bookkeeping_account`.
 type BookkeepingAccountType string
 
 const (
@@ -127,6 +130,7 @@ func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The account compliance category.
 type BookkeepingAccountNewParamsComplianceCategory string
 
 const (

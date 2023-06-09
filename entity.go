@@ -126,6 +126,7 @@ func (r *Entity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The entity's legal structure.
 type EntityStructure string
 
 const (
@@ -312,6 +313,7 @@ func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
@@ -322,6 +324,7 @@ const (
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
+// Why this person is considered a beneficial owner of the entity.
 type EntityCorporationBeneficialOwnersProng string
 
 const (
@@ -413,6 +416,7 @@ func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNaturalPersonIdentificationMethod string
 
 const (
@@ -526,6 +530,7 @@ func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityJointIndividualsIdentificationMethod string
 
 const (
@@ -576,6 +581,7 @@ func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether the trust is `revocable` or `irrevocable`.
 type EntityTrustCategory string
 
 const (
@@ -637,6 +643,7 @@ func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The structure of the trustee. Will always be equal to `individual`.
 type EntityTrustTrusteesStructure string
 
 const (
@@ -727,6 +734,7 @@ func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityTrustTrusteesIndividualIdentificationMethod string
 
 const (
@@ -820,6 +828,7 @@ func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityTrustGrantorIdentificationMethod string
 
 const (
@@ -830,12 +839,15 @@ const (
 	EntityTrustGrantorIdentificationMethodOther                                  EntityTrustGrantorIdentificationMethod = "other"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `entity`.
 type EntityType string
 
 const (
 	EntityTypeEntity EntityType = "entity"
 )
 
+// The relationship between your group and the entity.
 type EntityRelationship string
 
 const (
@@ -872,6 +884,8 @@ func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `entity_supplemental_document`.
 type EntitySupplementalDocumentsType string
 
 const (
@@ -907,6 +921,7 @@ func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The relationship between your group and the entity.
 type EntityNewParamsRelationship string
 
 const (
@@ -915,6 +930,7 @@ const (
 	EntityNewParamsRelationshipUnaffiliated  EntityNewParamsRelationship = "unaffiliated"
 )
 
+// The type of Entity to create.
 type EntityNewParamsStructure string
 
 const (
@@ -1041,6 +1057,7 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentification) Mars
 	return apijson.MarshalRoot(r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
@@ -1099,6 +1116,7 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther)
 	return apijson.MarshalRoot(r)
 }
 
+// Why this person is considered a beneficial owner of the entity.
 type EntityNewParamsCorporationBeneficialOwnersProng string
 
 const (
@@ -1180,6 +1198,7 @@ func (r EntityNewParamsJointIndividualsIdentification) MarshalJSON() (data []byt
 	return apijson.MarshalRoot(r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNewParamsJointIndividualsIdentificationMethod string
 
 const (
@@ -1303,6 +1322,7 @@ func (r EntityNewParamsNaturalPersonIdentification) MarshalJSON() (data []byte, 
 	return apijson.MarshalRoot(r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNewParamsNaturalPersonIdentificationMethod string
 
 const (
@@ -1399,6 +1419,9 @@ func (r EntityNewParamsTrust) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
+// their own Employer Identification Number. Revocable trusts require information
+// about the individual `grantor` who created the trust.
 type EntityNewParamsTrustCategory string
 
 const (
@@ -1437,6 +1460,7 @@ func (r EntityNewParamsTrustTrustees) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The structure of the trustee.
 type EntityNewParamsTrustTrusteesStructure string
 
 const (
@@ -1506,6 +1530,7 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentification) MarshalJSON() (dat
 	return apijson.MarshalRoot(r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNewParamsTrustTrusteesIndividualIdentificationMethod string
 
 const (
@@ -1626,6 +1651,7 @@ func (r EntityNewParamsTrustGrantorIdentification) MarshalJSON() (data []byte, e
 	return apijson.MarshalRoot(r)
 }
 
+// A method that can be used to verify the individual's identity.
 type EntityNewParamsTrustGrantorIdentificationMethod string
 
 const (

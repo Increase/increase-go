@@ -154,6 +154,9 @@ func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byt
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
+// Transaction's currency. This will match the currency on the Pending
+// Transcation's Account.
 type CardAuthorizationSimulationPendingTransactionCurrency string
 
 const (
@@ -165,6 +168,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionCurrencyUsd CardAuthorizationSimulationPendingTransactionCurrency = "USD"
 )
 
+// The type of the route this Pending Transaction came through.
 type CardAuthorizationSimulationPendingTransactionRouteType string
 
 const (
@@ -237,6 +241,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type CardAuthorizationSimulationPendingTransactionSourceCategory string
 
 const (
@@ -282,6 +289,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
@@ -389,6 +398,7 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) U
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork string
 
 const (
@@ -441,6 +451,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -454,6 +467,8 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
 
 const (
@@ -465,6 +480,8 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_authorization`.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType string
 
 const (
@@ -508,6 +525,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
@@ -548,6 +567,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
@@ -605,6 +626,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Un
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+// currency.
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
@@ -616,6 +639,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
+// The status of the hold.
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus string
 
 const (
@@ -661,6 +685,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizati
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency string
 
 const (
@@ -758,6 +784,8 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether the Pending Transaction has been confirmed and has an associated
+// Transaction.
 type CardAuthorizationSimulationPendingTransactionStatus string
 
 const (
@@ -765,6 +793,8 @@ const (
 	CardAuthorizationSimulationPendingTransactionStatusComplete CardAuthorizationSimulationPendingTransactionStatus = "complete"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `pending_transaction`.
 type CardAuthorizationSimulationPendingTransactionType string
 
 const (
@@ -829,6 +859,9 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []by
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+// Transaction's currency. This will match the currency on the Declined
+// Transcation's Account.
 type CardAuthorizationSimulationDeclinedTransactionCurrency string
 
 const (
@@ -840,6 +873,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
 )
 
+// The type of the route this Declined Transaction came through.
 type CardAuthorizationSimulationDeclinedTransactionRouteType string
 
 const (
@@ -901,6 +935,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(dat
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
 type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
 
 const (
@@ -953,6 +990,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH transfer was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
@@ -1033,6 +1071,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The payment network used to process this card authorization
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
@@ -1085,6 +1124,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
@@ -1098,6 +1140,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
 const (
@@ -1109,6 +1153,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
+// Why the transaction was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
@@ -1154,6 +1199,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) Unmar
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the check was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
@@ -1223,6 +1269,9 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer.
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
@@ -1234,6 +1283,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
+// Why the transfer was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
@@ -1375,6 +1425,8 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) U
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency string
 
 const (
@@ -1441,6 +1493,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceWireDecline) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the wire transfer was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason string
 
 const (
@@ -1452,12 +1505,16 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `declined_transaction`.
 type CardAuthorizationSimulationDeclinedTransactionType string
 
 const (
 	CardAuthorizationSimulationDeclinedTransactionTypeDeclinedTransaction CardAuthorizationSimulationDeclinedTransactionType = "declined_transaction"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `inbound_card_authorization_simulation_result`.
 type CardAuthorizationSimulationType string
 
 const (

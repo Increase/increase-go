@@ -153,6 +153,8 @@ func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type AccountTransferCurrency string
 
 const (
@@ -164,12 +166,14 @@ const (
 	AccountTransferCurrencyUsd AccountTransferCurrency = "USD"
 )
 
+// The transfer's network.
 type AccountTransferNetwork string
 
 const (
 	AccountTransferNetworkAccount AccountTransferNetwork = "account"
 )
 
+// The lifecycle status of the transfer.
 type AccountTransferStatus string
 
 const (
@@ -228,6 +232,8 @@ func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `account_transfer`.
 type AccountTransferType string
 
 const (

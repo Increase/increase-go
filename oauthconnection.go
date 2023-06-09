@@ -99,6 +99,7 @@ func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Whether the connection is active.
 type OauthConnectionStatus string
 
 const (
@@ -106,6 +107,8 @@ const (
 	OauthConnectionStatusInactive OauthConnectionStatus = "inactive"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `oauth_connection`.
 type OauthConnectionType string
 
 const (

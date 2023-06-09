@@ -153,6 +153,8 @@ func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `real_time_payments_transfer`.
 type RealTimePaymentsTransferType string
 
 const (
@@ -209,6 +211,7 @@ func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The lifecycle status of the transfer.
 type RealTimePaymentsTransferStatus string
 
 const (
@@ -221,6 +224,8 @@ const (
 	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
 )
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency. For real time payments transfers this is always equal to `USD`.
 type RealTimePaymentsTransferCurrency string
 
 const (
@@ -285,6 +290,8 @@ func (r *RealTimePaymentsTransferRejection) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason the transfer was rejected as provided by the recipient bank or the
+// Real Time Payments network.
 type RealTimePaymentsTransferRejectionRejectReasonCode string
 
 const (

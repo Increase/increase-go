@@ -146,6 +146,8 @@ func (r *Account) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
+// currency.
 type AccountCurrency string
 
 const (
@@ -157,6 +159,7 @@ const (
 	AccountCurrencyUsd AccountCurrency = "USD"
 )
 
+// The status of the Account.
 type AccountStatus string
 
 const (
@@ -164,6 +167,8 @@ const (
 	AccountStatusClosed AccountStatus = "closed"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `account`.
 type AccountType string
 
 const (
@@ -243,6 +248,7 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
+// Filter Accounts for those with the specified status.
 type AccountListParamsStatus string
 
 const (

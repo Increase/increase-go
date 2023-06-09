@@ -122,6 +122,9 @@ func (r *InterestPaymentSimulationResultTransaction) UnmarshalJSON(data []byte) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// Transaction's currency. This will match the currency on the Transcation's
+// Account.
 type InterestPaymentSimulationResultTransactionCurrency string
 
 const (
@@ -133,6 +136,7 @@ const (
 	InterestPaymentSimulationResultTransactionCurrencyUsd InterestPaymentSimulationResultTransactionCurrency = "USD"
 )
 
+// The type of the route this Transaction came through.
 type InterestPaymentSimulationResultTransactionRouteType string
 
 const (
@@ -319,6 +323,9 @@ func (r *InterestPaymentSimulationResultTransactionSource) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
 type InterestPaymentSimulationResultTransactionSourceCategory string
 
 const (
@@ -402,6 +409,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceAccountTransferIntentio
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
 type InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency string
 
 const (
@@ -549,6 +558,7 @@ func (r *InterestPaymentSimulationResultTransactionSourceACHTransferReturn) Unma
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Why the ACH Transfer was returned.
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
@@ -706,6 +716,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRefund) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type InterestPaymentSimulationResultTransactionSourceCardRefundCurrency string
 
 const (
@@ -717,6 +729,8 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_refund`.
 type InterestPaymentSimulationResultTransactionSourceCardRefundType string
 
 const (
@@ -789,6 +803,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardSettlement) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's settlement currency.
 type InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency string
 
 const (
@@ -800,6 +816,8 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "USD"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `card_settlement`.
 type InterestPaymentSimulationResultTransactionSourceCardSettlementType string
 
 const (
@@ -841,6 +859,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRevenuePayment) Unm
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency string
 
 const (
@@ -895,6 +915,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
@@ -945,6 +967,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositReturn) Unm
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency string
 
 const (
@@ -1018,6 +1042,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferIntention)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency string
 
 const (
@@ -1064,6 +1090,7 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferReturn) Un
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The reason why the check was returned.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason string
 
 const (
@@ -1125,6 +1152,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymen
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestType string
 
 const (
@@ -1160,6 +1189,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceDisputeResolution) Unma
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type InterestPaymentSimulationResultTransactionSourceDisputeResolutionCurrency string
 
 const (
@@ -1223,6 +1254,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceFeePayment) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency string
 
 const (
@@ -1304,6 +1337,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundCheck) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
 type InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency string
 
 const (
@@ -1453,6 +1488,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundRealTimePayments
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
+// currency. This will always be "USD" for a Real Time Payments transfer.
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -1713,6 +1750,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceInterestPayment) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency string
 
 const (
@@ -1752,6 +1791,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceInternalSource) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
 type InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency string
 
 const (
@@ -1818,6 +1859,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRouteRefund) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
+// currency.
 type InterestPaymentSimulationResultTransactionSourceCardRouteRefundCurrency string
 
 const (
@@ -1867,6 +1910,8 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRouteSettlement) Un
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
+// currency.
 type InterestPaymentSimulationResultTransactionSourceCardRouteSettlementCurrency string
 
 const (
@@ -2036,12 +2081,16 @@ func (r *InterestPaymentSimulationResultTransactionSourceWireTransferRejection) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `transaction`.
 type InterestPaymentSimulationResultTransactionType string
 
 const (
 	InterestPaymentSimulationResultTransactionTypeTransaction InterestPaymentSimulationResultTransactionType = "transaction"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `interest_payment_simulation_result`.
 type InterestPaymentSimulationResultType string
 
 const (

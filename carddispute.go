@@ -118,6 +118,7 @@ func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The results of the Dispute investigation.
 type CardDisputeStatus string
 
 const (
@@ -181,6 +182,8 @@ func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A constant representing the object's type. For this resource it will always be
+// `card_dispute`.
 type CardDisputeType string
 
 const (

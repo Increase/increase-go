@@ -126,6 +126,7 @@ func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// This indicates if we'll send notifications to this subscription.
 type EventSubscriptionStatus string
 
 const (
@@ -135,6 +136,8 @@ const (
 	EventSubscriptionStatusRequiresAttention EventSubscriptionStatus = "requires_attention"
 )
 
+// If specified, this subscription will only receive webhooks for Events with the
+// specified `category`.
 type EventSubscriptionSelectedEventCategory string
 
 const (
@@ -190,6 +193,8 @@ const (
 	EventSubscriptionSelectedEventCategoryWireTransferUpdated                                  EventSubscriptionSelectedEventCategory = "wire_transfer.updated"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `event_subscription`.
 type EventSubscriptionType string
 
 const (
@@ -211,6 +216,8 @@ func (r EventSubscriptionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// If specified, this subscription will only receive webhooks for Events with the
+// specified `category`.
 type EventSubscriptionNewParamsSelectedEventCategory string
 
 const (
@@ -275,6 +282,7 @@ func (r EventSubscriptionUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The status to update the Event Subscription with.
 type EventSubscriptionUpdateParamsStatus string
 
 const (

@@ -68,6 +68,8 @@ func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the simulated tokenization attempt was declined, this field contains details
+// as to why.
 type DigitalWalletTokenRequestCreateResponseDeclineReason string
 
 const (
@@ -77,6 +79,8 @@ const (
 	DigitalWalletTokenRequestCreateResponseDeclineReasonWebhookDeclined      DigitalWalletTokenRequestCreateResponseDeclineReason = "webhook_declined"
 )
 
+// A constant representing the object's type. For this resource it will always be
+// `inbound_digital_wallet_token_request_simulation_result`.
 type DigitalWalletTokenRequestCreateResponseType string
 
 const (
