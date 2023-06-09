@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{
 		Amount:               increase.F(int64(1)),
@@ -29,6 +33,9 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 }
 
 func TestSimulationCardSettlementWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.Cards.Settlement(context.TODO(), increase.SimulationCardSettlementParams{
 		CardID:               increase.F("string"),

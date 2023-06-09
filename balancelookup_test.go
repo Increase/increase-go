@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestBalanceLookupLookupWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.BalanceLookups.Lookup(context.TODO(), increase.BalanceLookupLookupParams{
 		AccountID: increase.F("string"),

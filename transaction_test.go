@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestTransactionGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Transactions.Get(
 		context.TODO(),
@@ -28,6 +32,9 @@ func TestTransactionGet(t *testing.T) {
 }
 
 func TestTransactionListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Transactions.List(context.TODO(), increase.TransactionListParams{
 		AccountID: increase.F("string"),

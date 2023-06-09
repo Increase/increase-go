@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestCardNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Cards.New(context.TODO(), increase.CardNewParams{
 		AccountID:      increase.F("string"),
@@ -30,6 +34,9 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 }
 
 func TestCardGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Cards.Get(
 		context.TODO(),
@@ -45,6 +52,9 @@ func TestCardGet(t *testing.T) {
 }
 
 func TestCardUpdateWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Cards.Update(
 		context.TODO(),
@@ -66,6 +76,9 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestCardListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Cards.List(context.TODO(), increase.CardListParams{
 		AccountID: increase.F("string"),
@@ -83,6 +96,9 @@ func TestCardListWithOptionalParams(t *testing.T) {
 }
 
 func TestCardGetSensitiveDetails(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Cards.GetSensitiveDetails(
 		context.TODO(),

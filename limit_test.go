@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestLimitNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.New(context.TODO(), increase.LimitNewParams{
 		Metric:   increase.F(increase.LimitNewParamsMetricCount),
@@ -29,6 +33,9 @@ func TestLimitNewWithOptionalParams(t *testing.T) {
 }
 
 func TestLimitGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Get(
 		context.TODO(),
@@ -44,6 +51,9 @@ func TestLimitGet(t *testing.T) {
 }
 
 func TestLimitUpdate(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.Update(
 		context.TODO(),
@@ -62,6 +72,9 @@ func TestLimitUpdate(t *testing.T) {
 }
 
 func TestLimitListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Limits.List(context.TODO(), increase.LimitListParams{
 		Cursor:  increase.F("string"),

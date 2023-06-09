@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestACHTransferNewWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
 		AccountID:                increase.F("string"),
@@ -43,6 +47,9 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 }
 
 func TestACHTransferGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHTransfers.Get(
 		context.TODO(),
@@ -58,6 +65,9 @@ func TestACHTransferGet(t *testing.T) {
 }
 
 func TestACHTransferListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHTransfers.List(context.TODO(), increase.ACHTransferListParams{
 		AccountID:         increase.F("string"),
@@ -76,6 +86,9 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 }
 
 func TestACHTransferApprove(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHTransfers.Approve(
 		context.TODO(),
@@ -91,6 +104,9 @@ func TestACHTransferApprove(t *testing.T) {
 }
 
 func TestACHTransferCancel(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ACHTransfers.Cancel(
 		context.TODO(),

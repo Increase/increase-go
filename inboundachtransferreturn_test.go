@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestInboundACHTransferReturnNew(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.InboundACHTransferReturns.New(context.TODO(), increase.InboundACHTransferReturnNewParams{
 		Reason:        increase.F(increase.InboundACHTransferReturnNewParamsReasonAuthorizationRevokedByCustomer),
@@ -27,6 +31,9 @@ func TestInboundACHTransferReturnNew(t *testing.T) {
 }
 
 func TestInboundACHTransferReturnGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.InboundACHTransferReturns.Get(
 		context.TODO(),
@@ -42,6 +49,9 @@ func TestInboundACHTransferReturnGet(t *testing.T) {
 }
 
 func TestInboundACHTransferReturnListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.InboundACHTransferReturns.List(context.TODO(), increase.InboundACHTransferReturnListParams{
 		Cursor: increase.F("string"),

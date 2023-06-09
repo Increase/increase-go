@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestManualPagination(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	client := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	page, err := client.Accounts.List(context.TODO(), increase.AccountListParams{})
 	if err != nil {

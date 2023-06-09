@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
 		AccountNumberID:          increase.F("string"),
@@ -32,6 +36,9 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 }
 
 func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.ACHTransfers.Return(
@@ -51,6 +58,9 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 }
 
 func TestSimulationACHTransferSubmit(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.ACHTransfers.Submit(

@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationCheckDepositReject(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckDeposits.Reject(
@@ -28,6 +32,9 @@ func TestSimulationCheckDepositReject(t *testing.T) {
 }
 
 func TestSimulationCheckDepositReturn(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckDeposits.Return(
 		context.TODO(),
@@ -43,6 +50,9 @@ func TestSimulationCheckDepositReturn(t *testing.T) {
 }
 
 func TestSimulationCheckDepositSubmit(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.Simulations.CheckDeposits.Submit(
