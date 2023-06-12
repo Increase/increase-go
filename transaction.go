@@ -582,7 +582,7 @@ const (
 	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
 	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
 	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
-	TransactionSourceACHTransferReturnReturnReasonCodeCheckTruncationEntryReturn                                  TransactionSourceACHTransferReturnReturnReasonCode = "check_truncation_entry_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms                  TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
 	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
 	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
 	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
