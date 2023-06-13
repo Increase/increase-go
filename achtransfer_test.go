@@ -40,7 +40,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -58,7 +58,7 @@ func TestACHTransferGet(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -79,7 +79,7 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -97,7 +97,7 @@ func TestACHTransferApprove(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -115,7 +115,7 @@ func TestACHTransferCancel(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
