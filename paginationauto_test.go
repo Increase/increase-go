@@ -4,7 +4,6 @@ package increase_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/increase/increase-go"
@@ -21,7 +20,7 @@ func TestAutoPagination(t *testing.T) {
 	// Prism mock isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		account := iter.Current()
-		fmt.Printf("%+v\n", account)
+		t.Logf("%+v\n", account)
 	}
 	if err := iter.Err(); err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

@@ -4,7 +4,6 @@ package increase_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/increase/increase-go"
@@ -23,5 +22,5 @@ func TestUsage(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", account)
+	t.Logf("%+v\n", account)
 }

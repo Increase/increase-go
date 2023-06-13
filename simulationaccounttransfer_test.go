@@ -25,7 +25,7 @@ func TestSimulationAccountTransferComplete(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

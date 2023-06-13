@@ -28,7 +28,7 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -46,7 +46,7 @@ func TestAccountTransferGet(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -66,7 +66,7 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -84,7 +84,7 @@ func TestAccountTransferApprove(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -102,7 +102,7 @@ func TestAccountTransferCancel(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
