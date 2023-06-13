@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.2.0](https://github.com/Increase/increase-go/compare/v0.1.1...v0.2.0) (2023-06-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** rename return reason enum member ([#16](https://github.com/Increase/increase-go/issues/16))
+
+### Features
+
+* implement middleware ([#17](https://github.com/Increase/increase-go/issues/17)) ([a2e8992](https://github.com/Increase/increase-go/commit/a2e8992e0f603921eace035b57673e7f2fe657f8))
+* make tests give better error message on missing prism server ([#14](https://github.com/Increase/increase-go/issues/14)) ([092b4e3](https://github.com/Increase/increase-go/commit/092b4e3d5e779662a438ab12fd54caa7de2be553))
+
+
+### Chores
+
+* add docstrings to field helpers, error struct, enums, and more ([#12](https://github.com/Increase/increase-go/issues/12)) ([89fc73e](https://github.com/Increase/increase-go/commit/89fc73ea340d8e49625cac6f180f57e50e60c242))
+* **internal:** add more comments ([#10](https://github.com/Increase/increase-go/issues/10)) ([33a658b](https://github.com/Increase/increase-go/commit/33a658b232891c9ef4af1416a1768942d943ebe9))
+* **internal:** remove unused check-test-server script ([#13](https://github.com/Increase/increase-go/issues/13)) ([f67f682](https://github.com/Increase/increase-go/commit/f67f682c55ad09bbd2a7322d9f7b6a96a10cfae6))
+
+
+### Refactors
+
+* **api:** rename return reason enum member ([#16](https://github.com/Increase/increase-go/issues/16)) ([5fe33f5](https://github.com/Increase/increase-go/commit/5fe33f518020a3a6d22327d443b0507a7ffea412))
+
+
+### Documentation
+
+* point to github repo instead of email contact ([#18](https://github.com/Increase/increase-go/issues/18)) ([a945477](https://github.com/Increase/increase-go/commit/a9454774268c89988317484fb9b0207675de34e1))
+
 ## [0.1.1](https://github.com/Increase/increase-go/compare/v0.1.0...v0.1.1) (2023-06-09)
 
 
