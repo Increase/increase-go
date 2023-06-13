@@ -26,7 +26,7 @@ func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -44,7 +44,7 @@ func TestExternalAccountGet(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -66,7 +66,7 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -85,7 +85,7 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

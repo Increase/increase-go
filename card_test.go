@@ -27,7 +27,7 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -45,7 +45,7 @@ func TestCardGet(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -69,7 +69,7 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -89,7 +89,7 @@ func TestCardListWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -107,7 +107,7 @@ func TestCardGetSensitiveDetails(t *testing.T) {
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
