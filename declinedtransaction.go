@@ -172,9 +172,6 @@ type DeclinedTransactionSource struct {
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
 	InternationalACHDecline DeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
-	// A Deprecated Card Decline object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline DeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
@@ -190,7 +187,6 @@ type declinedTransactionSourceJSON struct {
 	CheckDecline                           apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
-	CardRouteDecline                       apijson.Field
 	WireDecline                            apijson.Field
 	raw                                    string
 	ExtraFields                            map[string]apijson.Field
@@ -211,7 +207,6 @@ const (
 	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	DeclinedTransactionSourceCategoryInternationalACHDecline                DeclinedTransactionSourceCategory = "international_ach_decline"
-	DeclinedTransactionSourceCategoryCardRouteDecline                       DeclinedTransactionSourceCategory = "card_route_decline"
 	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
 	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
@@ -645,56 +640,6 @@ type declinedTransactionSourceInternationalACHDeclineJSON struct {
 func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// A Deprecated Card Decline object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_decline`.
-type DeclinedTransactionSourceCardRouteDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency             DeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                            `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                            `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                            `json:"merchant_country,required"`
-	MerchantDescriptor   string                                            `json:"merchant_descriptor,required"`
-	MerchantState        string                                            `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                            `json:"merchant_category_code,required,nullable"`
-	JSON                 declinedTransactionSourceCardRouteDeclineJSON
-}
-
-// declinedTransactionSourceCardRouteDeclineJSON contains the JSON metadata for the
-// struct [DeclinedTransactionSourceCardRouteDecline]
-type declinedTransactionSourceCardRouteDeclineJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *DeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type DeclinedTransactionSourceCardRouteDeclineCurrency string
-
-const (
-	DeclinedTransactionSourceCardRouteDeclineCurrencyCad DeclinedTransactionSourceCardRouteDeclineCurrency = "CAD"
-	DeclinedTransactionSourceCardRouteDeclineCurrencyChf DeclinedTransactionSourceCardRouteDeclineCurrency = "CHF"
-	DeclinedTransactionSourceCardRouteDeclineCurrencyEur DeclinedTransactionSourceCardRouteDeclineCurrency = "EUR"
-	DeclinedTransactionSourceCardRouteDeclineCurrencyGbp DeclinedTransactionSourceCardRouteDeclineCurrency = "GBP"
-	DeclinedTransactionSourceCardRouteDeclineCurrencyJpy DeclinedTransactionSourceCardRouteDeclineCurrency = "JPY"
-	DeclinedTransactionSourceCardRouteDeclineCurrencyUsd DeclinedTransactionSourceCardRouteDeclineCurrency = "USD"
-)
 
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.

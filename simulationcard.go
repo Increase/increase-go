@@ -202,17 +202,10 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// A Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
-	// A Deprecated Card Authorization object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_authorization`.
-	CardRouteAuthorization CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization `json:"card_route_authorization,required,nullable"`
 	// A Real Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
 	RealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
-	// A Wire Drawdown Payment Instruction object. This field will be present in the
-	// JSON response if and only if `category` is equal to
-	// `wire_drawdown_payment_instruction`.
-	WireDrawdownPaymentInstruction CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction `json:"wire_drawdown_payment_instruction,required,nullable"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
 	WireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
@@ -229,9 +222,7 @@ type cardAuthorizationSimulationPendingTransactionSourceJSON struct {
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
-	CardRouteAuthorization              apijson.Field
 	RealTimePaymentsTransferInstruction apijson.Field
-	WireDrawdownPaymentInstruction      apijson.Field
 	WireTransferInstruction             apijson.Field
 	raw                                 string
 	ExtraFields                         map[string]apijson.Field
@@ -253,9 +244,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
 	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction            CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
 	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold                    CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCardRouteAuthorization              CardAuthorizationSimulationPendingTransactionSourceCategory = "card_route_authorization"
 	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryWireDrawdownPaymentInstruction      CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_drawdown_payment_instruction"
 	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
 	CardAuthorizationSimulationPendingTransactionSourceCategoryOther                               CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
 )
@@ -647,57 +636,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusComplete CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
-// A Deprecated Card Authorization object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_authorization`.
-type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency             CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                                                            `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                                                            `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                                                            `json:"merchant_country,required"`
-	MerchantDescriptor   string                                                                            `json:"merchant_descriptor,required"`
-	MerchantCategoryCode string                                                                            `json:"merchant_category_code,required"`
-	MerchantState        string                                                                            `json:"merchant_state,required,nullable"`
-	JSON                 cardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJSON
-}
-
-// cardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization]
-type cardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantState        apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorization) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency string
-
-const (
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "CAD"
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "CHF"
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "EUR"
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "GBP"
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "JPY"
-	CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardRouteAuthorizationCurrency = "USD"
-)
-
 // A Real Time Payments Transfer Instruction object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_instruction`.
@@ -722,35 +660,6 @@ type cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransfer
 }
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Drawdown Payment Instruction object. This field will be present in the
-// JSON response if and only if `category` is equal to
-// `wire_drawdown_payment_instruction`.
-type CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
-	Amount             int64  `json:"amount,required"`
-	AccountNumber      string `json:"account_number,required"`
-	RoutingNumber      string `json:"routing_number,required"`
-	MessageToRecipient string `json:"message_to_recipient,required"`
-	JSON               cardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstructionJSON
-}
-
-// cardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstructionJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction]
-type cardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstructionJSON struct {
-	Amount             apijson.Field
-	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
-	MessageToRecipient apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationPendingTransactionSourceWireDrawdownPaymentInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -907,9 +816,6 @@ type CardAuthorizationSimulationDeclinedTransactionSource struct {
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
 	InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
-	// A Deprecated Card Decline object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline CardAuthorizationSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
@@ -925,7 +831,6 @@ type cardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
 	CheckDecline                           apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
-	CardRouteDecline                       apijson.Field
 	WireDecline                            apijson.Field
 	raw                                    string
 	ExtraFields                            map[string]apijson.Field
@@ -946,7 +851,6 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline                           CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardRouteDecline                       CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_route_decline"
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther                                  CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
 )
@@ -1386,57 +1290,6 @@ type cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// A Deprecated Card Decline object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency             CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                                                       `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                                                       `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                                                       `json:"merchant_country,required"`
-	MerchantDescriptor   string                                                                       `json:"merchant_descriptor,required"`
-	MerchantState        string                                                                       `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                                                       `json:"merchant_category_code,required,nullable"`
-	JSON                 cardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "CAD"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "CHF"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "EUR"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "GBP"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "JPY"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceCardRouteDeclineCurrency = "USD"
-)
 
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.

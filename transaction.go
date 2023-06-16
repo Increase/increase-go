@@ -157,12 +157,6 @@ type TransactionSource struct {
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
 	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
-	// A ACH Check Conversion Return object. This field will be present in the JSON
-	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn TransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return,required,nullable"`
-	// A ACH Check Conversion object. This field will be present in the JSON response
-	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion TransactionSourceACHCheckConversion `json:"ach_check_conversion,required,nullable"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
 	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention,required,nullable"`
@@ -203,12 +197,6 @@ type TransactionSource struct {
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
 	CheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request,required,nullable"`
-	// A Dispute Resolution object. This field will be present in the JSON response if
-	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution TransactionSourceDisputeResolution `json:"dispute_resolution,required,nullable"`
-	// A Empyreal Cash Deposit object. This field will be present in the JSON response
-	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit TransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit,required,nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`.
 	FeePayment TransactionSourceFeePayment `json:"fee_payment,required,nullable"`
@@ -245,12 +233,6 @@ type TransactionSource struct {
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
 	InternalSource TransactionSourceInternalSource `json:"internal_source,required,nullable"`
-	// A Deprecated Card Refund object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund TransactionSourceCardRouteRefund `json:"card_route_refund,required,nullable"`
-	// A Deprecated Card Settlement object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement TransactionSourceCardRouteSettlement `json:"card_route_settlement,required,nullable"`
 	// A Real Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
@@ -258,14 +240,6 @@ type TransactionSource struct {
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
 	SampleFunds TransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
-	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to
-	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention TransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention,required,nullable"`
-	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to
-	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection TransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection,required,nullable"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
 	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
@@ -280,8 +254,6 @@ type TransactionSource struct {
 type transactionSourceJSON struct {
 	Category                                    apijson.Field
 	AccountTransferIntention                    apijson.Field
-	ACHCheckConversionReturn                    apijson.Field
-	ACHCheckConversion                          apijson.Field
 	ACHTransferIntention                        apijson.Field
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
@@ -295,8 +267,6 @@ type transactionSourceJSON struct {
 	CheckTransferReturn                         apijson.Field
 	CheckTransferRejection                      apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
-	DisputeResolution                           apijson.Field
-	EmpyrealCashDeposit                         apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundCheck                                apijson.Field
@@ -308,12 +278,8 @@ type transactionSourceJSON struct {
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
 	InternalSource                              apijson.Field
-	CardRouteRefund                             apijson.Field
-	CardRouteSettlement                         apijson.Field
 	RealTimePaymentsTransferAcknowledgement     apijson.Field
 	SampleFunds                                 apijson.Field
-	WireDrawdownPaymentIntention                apijson.Field
-	WireDrawdownPaymentRejection                apijson.Field
 	WireTransferIntention                       apijson.Field
 	WireTransferRejection                       apijson.Field
 	raw                                         string
@@ -331,8 +297,6 @@ type TransactionSourceCategory string
 
 const (
 	TransactionSourceCategoryAccountTransferIntention                    TransactionSourceCategory = "account_transfer_intention"
-	TransactionSourceCategoryACHCheckConversionReturn                    TransactionSourceCategory = "ach_check_conversion_return"
-	TransactionSourceCategoryACHCheckConversion                          TransactionSourceCategory = "ach_check_conversion"
 	TransactionSourceCategoryACHTransferIntention                        TransactionSourceCategory = "ach_transfer_intention"
 	TransactionSourceCategoryACHTransferRejection                        TransactionSourceCategory = "ach_transfer_rejection"
 	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
@@ -346,8 +310,6 @@ const (
 	TransactionSourceCategoryCheckTransferReturn                         TransactionSourceCategory = "check_transfer_return"
 	TransactionSourceCategoryCheckTransferRejection                      TransactionSourceCategory = "check_transfer_rejection"
 	TransactionSourceCategoryCheckTransferStopPaymentRequest             TransactionSourceCategory = "check_transfer_stop_payment_request"
-	TransactionSourceCategoryDisputeResolution                           TransactionSourceCategory = "dispute_resolution"
-	TransactionSourceCategoryEmpyrealCashDeposit                         TransactionSourceCategory = "empyreal_cash_deposit"
 	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
 	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
 	TransactionSourceCategoryInboundACHTransferReturnIntention           TransactionSourceCategory = "inbound_ach_transfer_return_intention"
@@ -359,14 +321,9 @@ const (
 	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
 	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
 	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
-	TransactionSourceCategoryInternalGeneralLedgerTransaction            TransactionSourceCategory = "internal_general_ledger_transaction"
 	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
-	TransactionSourceCategoryCardRouteRefund                             TransactionSourceCategory = "card_route_refund"
-	TransactionSourceCategoryCardRouteSettlement                         TransactionSourceCategory = "card_route_settlement"
 	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
 	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
-	TransactionSourceCategoryWireDrawdownPaymentIntention                TransactionSourceCategory = "wire_drawdown_payment_intention"
-	TransactionSourceCategoryWireDrawdownPaymentRejection                TransactionSourceCategory = "wire_drawdown_payment_rejection"
 	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
 	TransactionSourceCategoryWireTransferRejection                       TransactionSourceCategory = "wire_transfer_rejection"
 	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
@@ -421,54 +378,6 @@ const (
 	TransactionSourceAccountTransferIntentionCurrencyJpy TransactionSourceAccountTransferIntentionCurrency = "JPY"
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
-
-// A ACH Check Conversion Return object. This field will be present in the JSON
-// response if and only if `category` is equal to `ach_check_conversion_return`.
-type TransactionSourceACHCheckConversionReturn struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// Why the transfer was returned.
-	ReturnReasonCode string `json:"return_reason_code,required"`
-	JSON             transactionSourceACHCheckConversionReturnJSON
-}
-
-// transactionSourceACHCheckConversionReturnJSON contains the JSON metadata for the
-// struct [TransactionSourceACHCheckConversionReturn]
-type transactionSourceACHCheckConversionReturnJSON struct {
-	Amount           apijson.Field
-	ReturnReasonCode apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
-}
-
-func (r *TransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A ACH Check Conversion object. This field will be present in the JSON response
-// if and only if `category` is equal to `ach_check_conversion`.
-type TransactionSourceACHCheckConversion struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The identifier of the File containing an image of the returned check.
-	FileID string `json:"file_id,required"`
-	JSON   transactionSourceACHCheckConversionJSON
-}
-
-// transactionSourceACHCheckConversionJSON contains the JSON metadata for the
-// struct [TransactionSourceACHCheckConversion]
-type transactionSourceACHCheckConversionJSON struct {
-	Amount      apijson.Field
-	FileID      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A ACH Transfer Intention object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_intention`.
@@ -983,6 +892,7 @@ const (
 	TransactionSourceCheckDepositReturnReturnReasonUnknownReason             TransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
 	TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          TransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
 	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage           TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A Check Transfer Intention object. This field will be present in the JSON
@@ -1144,72 +1054,6 @@ type TransactionSourceCheckTransferStopPaymentRequestType string
 const (
 	TransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
-
-// A Dispute Resolution object. This field will be present in the JSON response if
-// and only if `category` is equal to `dispute_resolution`.
-type TransactionSourceDisputeResolution struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency TransactionSourceDisputeResolutionCurrency `json:"currency,required"`
-	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID string `json:"disputed_transaction_id,required"`
-	JSON                  transactionSourceDisputeResolutionJSON
-}
-
-// transactionSourceDisputeResolutionJSON contains the JSON metadata for the struct
-// [TransactionSourceDisputeResolution]
-type transactionSourceDisputeResolutionJSON struct {
-	Amount                apijson.Field
-	Currency              apijson.Field
-	DisputedTransactionID apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *TransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type TransactionSourceDisputeResolutionCurrency string
-
-const (
-	TransactionSourceDisputeResolutionCurrencyCad TransactionSourceDisputeResolutionCurrency = "CAD"
-	TransactionSourceDisputeResolutionCurrencyChf TransactionSourceDisputeResolutionCurrency = "CHF"
-	TransactionSourceDisputeResolutionCurrencyEur TransactionSourceDisputeResolutionCurrency = "EUR"
-	TransactionSourceDisputeResolutionCurrencyGbp TransactionSourceDisputeResolutionCurrency = "GBP"
-	TransactionSourceDisputeResolutionCurrencyJpy TransactionSourceDisputeResolutionCurrency = "JPY"
-	TransactionSourceDisputeResolutionCurrencyUsd TransactionSourceDisputeResolutionCurrency = "USD"
-)
-
-// A Empyreal Cash Deposit object. This field will be present in the JSON response
-// if and only if `category` is equal to `empyreal_cash_deposit`.
-type TransactionSourceEmpyrealCashDeposit struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount      int64     `json:"amount,required"`
-	BagID       string    `json:"bag_id,required"`
-	DepositDate time.Time `json:"deposit_date,required" format:"date-time"`
-	JSON        transactionSourceEmpyrealCashDepositJSON
-}
-
-// transactionSourceEmpyrealCashDepositJSON contains the JSON metadata for the
-// struct [TransactionSourceEmpyrealCashDeposit]
-type transactionSourceEmpyrealCashDepositJSON struct {
-	Amount      apijson.Field
-	BagID       apijson.Field
-	DepositDate apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A Fee Payment object. This field will be present in the JSON response if and
 // only if `category` is equal to `fee_payment`.
@@ -1794,106 +1638,6 @@ const (
 	TransactionSourceInternalSourceReasonSampleFundsReturn          TransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-// A Deprecated Card Refund object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_route_refund`.
-type TransactionSourceCardRouteRefund struct {
-	// The refunded amount in the minor unit of the refunded currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
-	// currency.
-	Currency             TransactionSourceCardRouteRefundCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                   `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                   `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                   `json:"merchant_country,required"`
-	MerchantDescriptor   string                                   `json:"merchant_descriptor,required"`
-	MerchantState        string                                   `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                   `json:"merchant_category_code,required,nullable"`
-	JSON                 transactionSourceCardRouteRefundJSON
-}
-
-// transactionSourceCardRouteRefundJSON contains the JSON metadata for the struct
-// [TransactionSourceCardRouteRefund]
-type transactionSourceCardRouteRefundJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *TransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
-// currency.
-type TransactionSourceCardRouteRefundCurrency string
-
-const (
-	TransactionSourceCardRouteRefundCurrencyCad TransactionSourceCardRouteRefundCurrency = "CAD"
-	TransactionSourceCardRouteRefundCurrencyChf TransactionSourceCardRouteRefundCurrency = "CHF"
-	TransactionSourceCardRouteRefundCurrencyEur TransactionSourceCardRouteRefundCurrency = "EUR"
-	TransactionSourceCardRouteRefundCurrencyGbp TransactionSourceCardRouteRefundCurrency = "GBP"
-	TransactionSourceCardRouteRefundCurrencyJpy TransactionSourceCardRouteRefundCurrency = "JPY"
-	TransactionSourceCardRouteRefundCurrencyUsd TransactionSourceCardRouteRefundCurrency = "USD"
-)
-
-// A Deprecated Card Settlement object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_settlement`.
-type TransactionSourceCardRouteSettlement struct {
-	// The settled amount in the minor unit of the settlement currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
-	// currency.
-	Currency             TransactionSourceCardRouteSettlementCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                       `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                       `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                       `json:"merchant_country,required,nullable"`
-	MerchantDescriptor   string                                       `json:"merchant_descriptor,required"`
-	MerchantState        string                                       `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                       `json:"merchant_category_code,required,nullable"`
-	JSON                 transactionSourceCardRouteSettlementJSON
-}
-
-// transactionSourceCardRouteSettlementJSON contains the JSON metadata for the
-// struct [TransactionSourceCardRouteSettlement]
-type transactionSourceCardRouteSettlementJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *TransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
-// currency.
-type TransactionSourceCardRouteSettlementCurrency string
-
-const (
-	TransactionSourceCardRouteSettlementCurrencyCad TransactionSourceCardRouteSettlementCurrency = "CAD"
-	TransactionSourceCardRouteSettlementCurrencyChf TransactionSourceCardRouteSettlementCurrency = "CHF"
-	TransactionSourceCardRouteSettlementCurrencyEur TransactionSourceCardRouteSettlementCurrency = "EUR"
-	TransactionSourceCardRouteSettlementCurrencyGbp TransactionSourceCardRouteSettlementCurrency = "GBP"
-	TransactionSourceCardRouteSettlementCurrencyJpy TransactionSourceCardRouteSettlementCurrency = "JPY"
-	TransactionSourceCardRouteSettlementCurrencyUsd TransactionSourceCardRouteSettlementCurrency = "USD"
-)
-
 // A Real Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`.
@@ -1945,55 +1689,6 @@ type transactionSourceSampleFundsJSON struct {
 }
 
 func (r *TransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Drawdown Payment Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to
-// `wire_drawdown_payment_intention`.
-type TransactionSourceWireDrawdownPaymentIntention struct {
-	// The transfer amount in USD cents.
-	Amount             int64  `json:"amount,required"`
-	AccountNumber      string `json:"account_number,required"`
-	RoutingNumber      string `json:"routing_number,required"`
-	MessageToRecipient string `json:"message_to_recipient,required"`
-	TransferID         string `json:"transfer_id,required"`
-	JSON               transactionSourceWireDrawdownPaymentIntentionJSON
-}
-
-// transactionSourceWireDrawdownPaymentIntentionJSON contains the JSON metadata for
-// the struct [TransactionSourceWireDrawdownPaymentIntention]
-type transactionSourceWireDrawdownPaymentIntentionJSON struct {
-	Amount             apijson.Field
-	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
-	MessageToRecipient apijson.Field
-	TransferID         apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *TransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to
-// `wire_drawdown_payment_rejection`.
-type TransactionSourceWireDrawdownPaymentRejection struct {
-	TransferID string `json:"transfer_id,required"`
-	JSON       transactionSourceWireDrawdownPaymentRejectionJSON
-}
-
-// transactionSourceWireDrawdownPaymentRejectionJSON contains the JSON metadata for
-// the struct [TransactionSourceWireDrawdownPaymentRejection]
-type transactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -2097,8 +1792,6 @@ type TransactionListParamsCategoryIn string
 
 const (
 	TransactionListParamsCategoryInAccountTransferIntention                    TransactionListParamsCategoryIn = "account_transfer_intention"
-	TransactionListParamsCategoryInACHCheckConversionReturn                    TransactionListParamsCategoryIn = "ach_check_conversion_return"
-	TransactionListParamsCategoryInACHCheckConversion                          TransactionListParamsCategoryIn = "ach_check_conversion"
 	TransactionListParamsCategoryInACHTransferIntention                        TransactionListParamsCategoryIn = "ach_transfer_intention"
 	TransactionListParamsCategoryInACHTransferRejection                        TransactionListParamsCategoryIn = "ach_transfer_rejection"
 	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
@@ -2112,8 +1805,6 @@ const (
 	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
 	TransactionListParamsCategoryInCheckTransferRejection                      TransactionListParamsCategoryIn = "check_transfer_rejection"
 	TransactionListParamsCategoryInCheckTransferStopPaymentRequest             TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
-	TransactionListParamsCategoryInDisputeResolution                           TransactionListParamsCategoryIn = "dispute_resolution"
-	TransactionListParamsCategoryInEmpyrealCashDeposit                         TransactionListParamsCategoryIn = "empyreal_cash_deposit"
 	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
 	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
 	TransactionListParamsCategoryInInboundACHTransferReturnIntention           TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
@@ -2125,14 +1816,9 @@ const (
 	TransactionListParamsCategoryInInboundWireReversal                         TransactionListParamsCategoryIn = "inbound_wire_reversal"
 	TransactionListParamsCategoryInInboundWireTransfer                         TransactionListParamsCategoryIn = "inbound_wire_transfer"
 	TransactionListParamsCategoryInInterestPayment                             TransactionListParamsCategoryIn = "interest_payment"
-	TransactionListParamsCategoryInInternalGeneralLedgerTransaction            TransactionListParamsCategoryIn = "internal_general_ledger_transaction"
 	TransactionListParamsCategoryInInternalSource                              TransactionListParamsCategoryIn = "internal_source"
-	TransactionListParamsCategoryInCardRouteRefund                             TransactionListParamsCategoryIn = "card_route_refund"
-	TransactionListParamsCategoryInCardRouteSettlement                         TransactionListParamsCategoryIn = "card_route_settlement"
 	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
 	TransactionListParamsCategoryInSampleFunds                                 TransactionListParamsCategoryIn = "sample_funds"
-	TransactionListParamsCategoryInWireDrawdownPaymentIntention                TransactionListParamsCategoryIn = "wire_drawdown_payment_intention"
-	TransactionListParamsCategoryInWireDrawdownPaymentRejection                TransactionListParamsCategoryIn = "wire_drawdown_payment_rejection"
 	TransactionListParamsCategoryInWireTransferIntention                       TransactionListParamsCategoryIn = "wire_transfer_intention"
 	TransactionListParamsCategoryInWireTransferRejection                       TransactionListParamsCategoryIn = "wire_transfer_rejection"
 	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
