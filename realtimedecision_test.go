@@ -17,10 +17,7 @@ func TestRealTimeDecisionGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimeDecisions.Get(
-		context.TODO(),
-		"real_time_decision_j76n2e810ezcg3zh5qtn",
-	)
+	_, err := c.RealTimeDecisions.Get(context.TODO(), "real_time_decision_j76n2e810ezcg3zh5qtn")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

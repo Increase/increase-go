@@ -43,10 +43,7 @@ func TestWireDrawdownRequestGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireDrawdownRequests.Get(
-		context.TODO(),
-		"wire_drawdown_request_q6lmocus3glo0lr2bfv3",
-	)
+	_, err := c.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

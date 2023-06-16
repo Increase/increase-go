@@ -18,10 +18,7 @@ func TestTransactionGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Transactions.Get(
-		context.TODO(),
-		"transaction_uyrp7fld2ium70oa7oi",
-	)
+	_, err := c.Transactions.Get(context.TODO(), "transaction_uyrp7fld2ium70oa7oi")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

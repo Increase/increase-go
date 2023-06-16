@@ -46,10 +46,7 @@ func TestACHPrenotificationGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHPrenotifications.Get(
-		context.TODO(),
-		"ach_prenotification_ubjf9qqsxl3obbcn1u34",
-	)
+	_, err := c.ACHPrenotifications.Get(context.TODO(), "ach_prenotification_ubjf9qqsxl3obbcn1u34")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

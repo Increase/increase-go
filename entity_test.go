@@ -42,10 +42,7 @@ func TestEntityGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Entities.Get(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-	)
+	_, err := c.Entities.Get(context.TODO(), "entity_n8y8tnk2p9339ti393yi")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

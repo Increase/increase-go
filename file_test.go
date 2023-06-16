@@ -40,10 +40,7 @@ func TestFileGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Files.Get(
-		context.TODO(),
-		"file_makxrc67oh9l6sg7w9yc",
-	)
+	_, err := c.Files.Get(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

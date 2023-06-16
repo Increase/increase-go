@@ -38,10 +38,7 @@ func TestCardGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Cards.Get(
-		context.TODO(),
-		"card_oubs0hwk5rn6knuecxg2",
-	)
+	_, err := c.Cards.Get(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -100,10 +97,7 @@ func TestCardGetSensitiveDetails(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Cards.GetSensitiveDetails(
-		context.TODO(),
-		"card_oubs0hwk5rn6knuecxg2",
-	)
+	_, err := c.Cards.GetSensitiveDetails(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

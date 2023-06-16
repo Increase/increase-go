@@ -197,9 +197,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-	Name: increase.F("x"),
-})
+_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{})
 if err != nil {
 	var apierr *increase.Error
 	if errors.As(err, &apierr) {

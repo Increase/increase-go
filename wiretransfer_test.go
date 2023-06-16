@@ -45,10 +45,7 @@ func TestWireTransferGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Get(
-		context.TODO(),
-		"wire_transfer_5akynk7dqsq25qwk9q2u",
-	)
+	_, err := c.WireTransfers.Get(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -84,10 +81,7 @@ func TestWireTransferApprove(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Approve(
-		context.TODO(),
-		"wire_transfer_5akynk7dqsq25qwk9q2u",
-	)
+	_, err := c.WireTransfers.Approve(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -102,10 +96,7 @@ func TestWireTransferCancel(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Cancel(
-		context.TODO(),
-		"wire_transfer_5akynk7dqsq25qwk9q2u",
-	)
+	_, err := c.WireTransfers.Cancel(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -121,10 +112,7 @@ func TestWireTransferReverse(t *testing.T) {
 	}
 	t.Skip("Prism tests are broken")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Reverse(
-		context.TODO(),
-		"wire_transfer_5akynk7dqsq25qwk9q2u",
-	)
+	_, err := c.WireTransfers.Reverse(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -140,10 +128,7 @@ func TestWireTransferSubmit(t *testing.T) {
 	}
 	t.Skip("Prism tests are broken")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Submit(
-		context.TODO(),
-		"wire_transfer_5akynk7dqsq25qwk9q2u",
-	)
+	_, err := c.WireTransfers.Submit(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

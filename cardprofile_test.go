@@ -35,10 +35,7 @@ func TestCardProfileGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardProfiles.Get(
-		context.TODO(),
-		"card_profile_cox5y73lob2eqly18piy",
-	)
+	_, err := c.CardProfiles.Get(context.TODO(), "card_profile_cox5y73lob2eqly18piy")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
