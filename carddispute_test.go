@@ -36,10 +36,7 @@ func TestCardDisputeGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CardDisputes.Get(
-		context.TODO(),
-		"card_dispute_h9sc95nbl1cgltpp7men",
-	)
+	_, err := c.CardDisputes.Get(context.TODO(), "card_dispute_h9sc95nbl1cgltpp7men")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

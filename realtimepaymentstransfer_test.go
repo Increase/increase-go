@@ -42,10 +42,7 @@ func TestRealTimePaymentsTransferGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RealTimePaymentsTransfers.Get(
-		context.TODO(),
-		"real_time_payments_transfer_iyuhl5kdn7ssmup83mvq",
-	)
+	_, err := c.RealTimePaymentsTransfers.Get(context.TODO(), "real_time_payments_transfer_iyuhl5kdn7ssmup83mvq")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

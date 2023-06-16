@@ -37,10 +37,7 @@ func TestExportGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Exports.Get(
-		context.TODO(),
-		"export_8s4m48qz3bclzje0zwh9",
-	)
+	_, err := c.Exports.Get(context.TODO(), "export_8s4m48qz3bclzje0zwh9")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

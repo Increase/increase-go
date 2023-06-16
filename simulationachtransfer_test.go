@@ -63,10 +63,7 @@ func TestSimulationACHTransferSubmit(t *testing.T) {
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.Submit(
-		context.TODO(),
-		"ach_transfer_uoxatyh3lt5evrsdvo7q",
-	)
+	_, err := c.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
