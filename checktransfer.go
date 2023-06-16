@@ -300,17 +300,18 @@ func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 type CheckTransferStatus string
 
 const (
-	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
-	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
-	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
-	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
-	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
-	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
-	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
-	CheckTransferStatusReturned          CheckTransferStatus = "returned"
-	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
-	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
+	CheckTransferStatusPendingApproval          CheckTransferStatus = "pending_approval"
+	CheckTransferStatusPendingSubmission        CheckTransferStatus = "pending_submission"
+	CheckTransferStatusSubmitted                CheckTransferStatus = "submitted"
+	CheckTransferStatusPendingMailing           CheckTransferStatus = "pending_mailing"
+	CheckTransferStatusStoppedAndPendingMailing CheckTransferStatus = "stopped_and_pending_mailing"
+	CheckTransferStatusMailed                   CheckTransferStatus = "mailed"
+	CheckTransferStatusCanceled                 CheckTransferStatus = "canceled"
+	CheckTransferStatusDeposited                CheckTransferStatus = "deposited"
+	CheckTransferStatusStopped                  CheckTransferStatus = "stopped"
+	CheckTransferStatusReturned                 CheckTransferStatus = "returned"
+	CheckTransferStatusRejected                 CheckTransferStatus = "rejected"
+	CheckTransferStatusRequiresAttention        CheckTransferStatus = "requires_attention"
 )
 
 // After the transfer is submitted, this will contain supplemental details.

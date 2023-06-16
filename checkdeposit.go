@@ -335,6 +335,7 @@ const (
 	CheckDepositDepositReturnReturnReasonUnknownReason             CheckDepositDepositReturnReturnReason = "unknown_reason"
 	CheckDepositDepositReturnReturnReasonUnmatchedDetails          CheckDepositDepositReturnReturnReason = "unmatched_details"
 	CheckDepositDepositReturnReturnReasonUnreadableImage           CheckDepositDepositReturnReturnReason = "unreadable_image"
+	CheckDepositDepositReturnReturnReasonEndorsementIrregular      CheckDepositDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A constant representing the object's type. For this resource it will always be

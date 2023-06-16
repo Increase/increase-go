@@ -178,12 +178,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
 	AccountTransferIntention InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
-	// A ACH Check Conversion Return object. This field will be present in the JSON
-	// response if and only if `category` is equal to `ach_check_conversion_return`.
-	ACHCheckConversionReturn InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn `json:"ach_check_conversion_return,required,nullable"`
-	// A ACH Check Conversion object. This field will be present in the JSON response
-	// if and only if `category` is equal to `ach_check_conversion`.
-	ACHCheckConversion InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion `json:"ach_check_conversion,required,nullable"`
 	// A ACH Transfer Intention object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_intention`.
 	ACHTransferIntention InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntention `json:"ach_transfer_intention,required,nullable"`
@@ -224,12 +218,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
 	CheckTransferStopPaymentRequest InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest `json:"check_transfer_stop_payment_request,required,nullable"`
-	// A Dispute Resolution object. This field will be present in the JSON response if
-	// and only if `category` is equal to `dispute_resolution`.
-	DisputeResolution InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution `json:"dispute_resolution,required,nullable"`
-	// A Empyreal Cash Deposit object. This field will be present in the JSON response
-	// if and only if `category` is equal to `empyreal_cash_deposit`.
-	EmpyrealCashDeposit InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit `json:"empyreal_cash_deposit,required,nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`.
 	FeePayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment `json:"fee_payment,required,nullable"`
@@ -266,12 +254,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Internal Source object. This field will be present in the JSON response if and
 	// only if `category` is equal to `internal_source`.
 	InternalSource InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource `json:"internal_source,required,nullable"`
-	// A Deprecated Card Refund object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_route_refund`.
-	CardRouteRefund InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund `json:"card_route_refund,required,nullable"`
-	// A Deprecated Card Settlement object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_settlement`.
-	CardRouteSettlement InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement `json:"card_route_settlement,required,nullable"`
 	// A Real Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
@@ -279,14 +261,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`.
 	SampleFunds InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
-	// A Wire Drawdown Payment Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to
-	// `wire_drawdown_payment_intention`.
-	WireDrawdownPaymentIntention InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention `json:"wire_drawdown_payment_intention,required,nullable"`
-	// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to
-	// `wire_drawdown_payment_rejection`.
-	WireDrawdownPaymentRejection InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection `json:"wire_drawdown_payment_rejection,required,nullable"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
 	WireTransferIntention InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
@@ -302,8 +276,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct {
 	Category                                    apijson.Field
 	AccountTransferIntention                    apijson.Field
-	ACHCheckConversionReturn                    apijson.Field
-	ACHCheckConversion                          apijson.Field
 	ACHTransferIntention                        apijson.Field
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
@@ -317,8 +289,6 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	CheckTransferReturn                         apijson.Field
 	CheckTransferRejection                      apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
-	DisputeResolution                           apijson.Field
-	EmpyrealCashDeposit                         apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundCheck                                apijson.Field
@@ -330,12 +300,8 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
 	InternalSource                              apijson.Field
-	CardRouteRefund                             apijson.Field
-	CardRouteSettlement                         apijson.Field
 	RealTimePaymentsTransferAcknowledgement     apijson.Field
 	SampleFunds                                 apijson.Field
-	WireDrawdownPaymentIntention                apijson.Field
-	WireDrawdownPaymentRejection                apijson.Field
 	WireTransferIntention                       apijson.Field
 	WireTransferRejection                       apijson.Field
 	raw                                         string
@@ -353,8 +319,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory st
 
 const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention                    InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "account_transfer_intention"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHCheckConversionReturn                    InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_check_conversion_return"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHCheckConversion                          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_check_conversion"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention                        InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_transfer_intention"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection                        InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn                           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_transfer_return"
@@ -368,8 +332,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferReturn                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferRejection                      InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryDisputeResolution                           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "dispute_resolution"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryEmpyrealCashDeposit                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "empyreal_cash_deposit"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment                                  InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "fee_payment"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer                          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
@@ -381,14 +343,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment                             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "interest_payment"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalGeneralLedgerTransaction            InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_general_ledger_transaction"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource                              InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_source"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRouteRefund                             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_route_refund"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRouteSettlement                         InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_route_settlement"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds                                 InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "sample_funds"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireDrawdownPaymentIntention                InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "wire_drawdown_payment_intention"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireDrawdownPaymentRejection                InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "wire_drawdown_payment_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "wire_transfer_intention"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "wire_transfer_rejection"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther                                       InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "other"
@@ -444,56 +401,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency = "JPY"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
-
-// A ACH Check Conversion Return object. This field will be present in the JSON
-// response if and only if `category` is equal to `ach_check_conversion_return`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// Why the transfer was returned.
-	ReturnReasonCode string `json:"return_reason_code,required"`
-	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturnJSON struct {
-	Amount           apijson.Field
-	ReturnReasonCode apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionReturn) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A ACH Check Conversion object. This field will be present in the JSON response
-// if and only if `category` is equal to `ach_check_conversion`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The identifier of the File containing an image of the returned check.
-	FileID string `json:"file_id,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversionJSON struct {
-	Amount      apijson.Field
-	FileID      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHCheckConversion) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A ACH Transfer Intention object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_intention`.
@@ -1017,6 +924,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnknownReason             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A Check Transfer Intention object. This field will be present in the JSON
@@ -1182,74 +1090,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
-
-// A Dispute Resolution object. This field will be present in the JSON response if
-// and only if `category` is equal to `dispute_resolution`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency `json:"currency,required"`
-	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID string `json:"disputed_transaction_id,required"`
-	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionJSON struct {
-	Amount                apijson.Field
-	Currency              apijson.Field
-	DisputedTransactionID apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolution) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency string
-
-const (
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "CAD"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "CHF"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "EUR"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "GBP"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "JPY"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceDisputeResolutionCurrency = "USD"
-)
-
-// A Empyreal Cash Deposit object. This field will be present in the JSON response
-// if and only if `category` is equal to `empyreal_cash_deposit`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount      int64     `json:"amount,required"`
-	BagID       string    `json:"bag_id,required"`
-	DepositDate time.Time `json:"deposit_date,required" format:"date-time"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDepositJSON struct {
-	Amount      apijson.Field
-	BagID       apijson.Field
-	DepositDate apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceEmpyrealCashDeposit) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A Fee Payment object. This field will be present in the JSON response if and
 // only if `category` is equal to `fee_payment`.
@@ -1844,108 +1684,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn          InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-// A Deprecated Card Refund object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_route_refund`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund struct {
-	// The refunded amount in the minor unit of the refunded currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
-	// currency.
-	Currency             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                                                                  `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                                                                  `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                                                                  `json:"merchant_country,required"`
-	MerchantDescriptor   string                                                                                  `json:"merchant_descriptor,required"`
-	MerchantState        string                                                                                  `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                                                                  `json:"merchant_category_code,required,nullable"`
-	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefund) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the refund
-// currency.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency string
-
-const (
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "CAD"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "CHF"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "EUR"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "GBP"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "JPY"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteRefundCurrency = "USD"
-)
-
-// A Deprecated Card Settlement object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_settlement`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement struct {
-	// The settled amount in the minor unit of the settlement currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
-	// currency.
-	Currency             InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                                                                      `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                                                                      `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                                                                      `json:"merchant_country,required,nullable"`
-	MerchantDescriptor   string                                                                                      `json:"merchant_descriptor,required"`
-	MerchantState        string                                                                                      `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                                                                      `json:"merchant_category_code,required,nullable"`
-	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlement) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the settlement
-// currency.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency string
-
-const (
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "CAD"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "CHF"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "EUR"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "GBP"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "JPY"
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRouteSettlementCurrency = "USD"
-)
-
 // A Real Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`.
@@ -1998,57 +1736,6 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Drawdown Payment Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to
-// `wire_drawdown_payment_intention`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention struct {
-	// The transfer amount in USD cents.
-	Amount             int64  `json:"amount,required"`
-	AccountNumber      string `json:"account_number,required"`
-	RoutingNumber      string `json:"routing_number,required"`
-	MessageToRecipient string `json:"message_to_recipient,required"`
-	TransferID         string `json:"transfer_id,required"`
-	JSON               inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntentionJSON struct {
-	Amount             apijson.Field
-	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
-	MessageToRecipient apijson.Field
-	TransferID         apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentIntention) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Drawdown Payment Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to
-// `wire_drawdown_payment_rejection`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection struct {
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireDrawdownPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -2220,9 +1907,6 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// A International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
 	InternationalACHDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
-	// A Deprecated Card Decline object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_route_decline`.
-	CardRouteDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline `json:"card_route_decline,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
@@ -2239,7 +1923,6 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSO
 	CheckDecline                           apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
-	CardRouteDecline                       apijson.Field
 	WireDecline                            apijson.Field
 	raw                                    string
 	ExtraFields                            map[string]apijson.Field
@@ -2260,7 +1943,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDecline                           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "check_decline"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInternationalACHDecline                InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "international_ach_decline"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCardRouteDecline                       InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "card_route_decline"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryWireDecline                            InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "wire_decline"
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther                                  InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "other"
 )
@@ -2700,57 +2382,6 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// A Deprecated Card Decline object. This field will be present in the JSON
-// response if and only if `category` is equal to `card_route_decline`.
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency             InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency `json:"currency,required"`
-	MerchantAcceptorID   string                                                                                           `json:"merchant_acceptor_id,required"`
-	MerchantCity         string                                                                                           `json:"merchant_city,required,nullable"`
-	MerchantCountry      string                                                                                           `json:"merchant_country,required"`
-	MerchantDescriptor   string                                                                                           `json:"merchant_descriptor,required"`
-	MerchantState        string                                                                                           `json:"merchant_state,required,nullable"`
-	MerchantCategoryCode string                                                                                           `json:"merchant_category_code,required,nullable"`
-	JSON                 inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline]
-type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineJSON struct {
-	Amount               apijson.Field
-	Currency             apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	MerchantCategoryCode apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency string
-
-const (
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyCad InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "CAD"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyChf InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "CHF"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyEur InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "EUR"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyGbp InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "GBP"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyJpy InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "JPY"
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrencyUsd InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardRouteDeclineCurrency = "USD"
-)
 
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.
