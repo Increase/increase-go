@@ -35,10 +35,7 @@ func TestInboundACHTransferReturnGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.InboundACHTransferReturns.Get(
-		context.TODO(),
-		"inbound_ach_transfer_return_fhcxk5huskwhmt7iz0gk",
-	)
+	_, err := c.InboundACHTransferReturns.Get(context.TODO(), "inbound_ach_transfer_return_fhcxk5huskwhmt7iz0gk")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

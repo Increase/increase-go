@@ -17,10 +17,7 @@ func TestProgramGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Programs.Get(
-		context.TODO(),
-		"program_i2v2os4mwza1oetokh9i",
-	)
+	_, err := c.Programs.Get(context.TODO(), "program_i2v2os4mwza1oetokh9i")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

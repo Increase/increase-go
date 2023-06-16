@@ -37,10 +37,7 @@ func TestExternalAccountGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ExternalAccounts.Get(
-		context.TODO(),
-		"external_account_ukk55lr923a3ac0pp7iv",
-	)
+	_, err := c.ExternalAccounts.Get(context.TODO(), "external_account_ukk55lr923a3ac0pp7iv")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

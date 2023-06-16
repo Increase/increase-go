@@ -36,10 +36,7 @@ func TestEventSubscriptionGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.EventSubscriptions.Get(
-		context.TODO(),
-		"event_subscription_001dzz0r20rcdxgb013zqb8m04g",
-	)
+	_, err := c.EventSubscriptions.Get(context.TODO(), "event_subscription_001dzz0r20rcdxgb013zqb8m04g")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

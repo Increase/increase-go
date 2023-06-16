@@ -39,10 +39,7 @@ func TestCheckDepositGet(t *testing.T) {
 		return
 	}
 	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckDeposits.Get(
-		context.TODO(),
-		"check_deposit_instruction_q2shv7x9qhevfm71kor8",
-	)
+	_, err := c.CheckDeposits.Get(context.TODO(), "check_deposit_instruction_q2shv7x9qhevfm71kor8")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
