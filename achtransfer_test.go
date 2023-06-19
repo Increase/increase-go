@@ -17,8 +17,11 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
 		AccountID:                increase.F("string"),
 		Amount:                   increase.F(int64(0)),
 		StatementDescriptor:      increase.F("x"),
@@ -50,8 +53,11 @@ func TestACHTransferGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHTransfers.Get(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ACHTransfers.Get(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -65,10 +71,18 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHTransfers.List(context.TODO(), increase.ACHTransferListParams{
-		AccountID:         increase.F("string"),
-		CreatedAt:         increase.F(increase.ACHTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ACHTransfers.List(context.TODO(), increase.ACHTransferListParams{
+		AccountID: increase.F("string"),
+		CreatedAt: increase.F(increase.ACHTransferListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
 		Limit:             increase.F(int64(0)),
@@ -86,8 +100,11 @@ func TestACHTransferApprove(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHTransfers.Approve(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ACHTransfers.Approve(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -101,8 +118,11 @@ func TestACHTransferCancel(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ACHTransfers.Cancel(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ACHTransfers.Cancel(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

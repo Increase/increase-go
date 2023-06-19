@@ -16,8 +16,11 @@ func TestBookkeepingEntryListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingEntries.List(context.TODO(), increase.BookkeepingEntryListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.BookkeepingEntries.List(context.TODO(), increase.BookkeepingEntryListParams{
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 	})

@@ -16,8 +16,11 @@ func TestGroupGetDetails(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Groups.GetDetails(context.TODO())
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Groups.GetDetails(context.TODO())
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

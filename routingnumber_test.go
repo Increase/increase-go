@@ -16,8 +16,11 @@ func TestRoutingNumberListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.RoutingNumbers.List(context.TODO(), increase.RoutingNumberListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.RoutingNumbers.List(context.TODO(), increase.RoutingNumberListParams{
 		RoutingNumber: increase.F("xxxxxxxxx"),
 		Cursor:        increase.F("string"),
 		Limit:         increase.F(int64(0)),

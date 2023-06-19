@@ -16,8 +16,11 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
 		URL:                   increase.F("string"),
 		SelectedEventCategory: increase.F(increase.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          increase.F("x"),
@@ -35,8 +38,11 @@ func TestEventSubscriptionGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.EventSubscriptions.Get(context.TODO(), "event_subscription_001dzz0r20rcdxgb013zqb8m04g")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.EventSubscriptions.Get(context.TODO(), "event_subscription_001dzz0r20rcdxgb013zqb8m04g")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -50,8 +56,11 @@ func TestEventSubscriptionUpdateWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.EventSubscriptions.Update(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.EventSubscriptions.Update(
 		context.TODO(),
 		"event_subscription_001dzz0r20rcdxgb013zqb8m04g",
 		increase.EventSubscriptionUpdateParams{
@@ -71,8 +80,11 @@ func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.EventSubscriptions.List(context.TODO(), increase.EventSubscriptionListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.EventSubscriptions.List(context.TODO(), increase.EventSubscriptionListParams{
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 	})

@@ -16,8 +16,11 @@ func TestSimulationCardDisputeActionWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.CardDisputes.Action(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.CardDisputes.Action(
 		context.TODO(),
 		"card_dispute_h9sc95nbl1cgltpp7men",
 		increase.SimulationCardDisputeActionParams{
