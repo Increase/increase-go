@@ -17,8 +17,11 @@ func TestAccountNumberNew(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.New(context.TODO(), increase.AccountNumberNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.AccountNumbers.New(context.TODO(), increase.AccountNumberNewParams{
 		AccountID: increase.F("string"),
 		Name:      increase.F("x"),
 	})
@@ -35,8 +38,11 @@ func TestAccountNumberGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.Get(context.TODO(), "account_number_v18nkfqm6afpsrvy82b2")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.AccountNumbers.Get(context.TODO(), "account_number_v18nkfqm6afpsrvy82b2")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -50,8 +56,11 @@ func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.Update(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.AccountNumbers.Update(
 		context.TODO(),
 		"account_number_v18nkfqm6afpsrvy82b2",
 		increase.AccountNumberUpdateParams{
@@ -72,13 +81,21 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.AccountNumbers.List(context.TODO(), increase.AccountNumberListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.AccountNumbers.List(context.TODO(), increase.AccountNumberListParams{
 		AccountID: increase.F("string"),
-		CreatedAt: increase.F(increase.AccountNumberListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
-		Cursor:    increase.F("string"),
-		Limit:     increase.F(int64(0)),
-		Status:    increase.F(increase.AccountNumberListParamsStatusActive),
+		CreatedAt: increase.F(increase.AccountNumberListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
+		Status: increase.F(increase.AccountNumberListParamsStatusActive),
 	})
 	if err != nil {
 		var apierr *increase.Error

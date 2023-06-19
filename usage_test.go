@@ -15,12 +15,15 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	client := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name: increase.F("My First Increase Account"),
 	})
 	if err != nil {
-		panic(err.Error())
+		t.Error(err)
 	}
-	t.Logf("%+v\n", account)
+	t.Logf("%+v\n", account.ID)
 }

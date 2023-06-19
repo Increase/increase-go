@@ -16,8 +16,11 @@ func TestLimitNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.New(context.TODO(), increase.LimitNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Limits.New(context.TODO(), increase.LimitNewParams{
 		Metric:   increase.F(increase.LimitNewParamsMetricCount),
 		ModelID:  increase.F("x"),
 		Value:    increase.F(int64(0)),
@@ -36,8 +39,11 @@ func TestLimitGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.Get(context.TODO(), "limit_fku42k0qtc8ulsuas38q")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Limits.Get(context.TODO(), "limit_fku42k0qtc8ulsuas38q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -51,8 +57,11 @@ func TestLimitUpdate(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.Update(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Limits.Update(
 		context.TODO(),
 		"limit_fku42k0qtc8ulsuas38q",
 		increase.LimitUpdateParams{
@@ -72,8 +81,11 @@ func TestLimitListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Limits.List(context.TODO(), increase.LimitListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Limits.List(context.TODO(), increase.LimitListParams{
 		Cursor:  increase.F("string"),
 		Limit:   increase.F(int64(0)),
 		ModelID: increase.F("x"),

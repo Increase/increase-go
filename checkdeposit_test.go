@@ -17,8 +17,11 @@ func TestCheckDepositNew(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckDeposits.New(context.TODO(), increase.CheckDepositNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckDeposits.New(context.TODO(), increase.CheckDepositNewParams{
 		AccountID:        increase.F("string"),
 		Amount:           increase.F(int64(0)),
 		BackImageFileID:  increase.F("string"),
@@ -38,8 +41,11 @@ func TestCheckDepositGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckDeposits.Get(context.TODO(), "check_deposit_instruction_q2shv7x9qhevfm71kor8")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckDeposits.Get(context.TODO(), "check_deposit_instruction_q2shv7x9qhevfm71kor8")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -53,12 +59,20 @@ func TestCheckDepositListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckDeposits.List(context.TODO(), increase.CheckDepositListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckDeposits.List(context.TODO(), increase.CheckDepositListParams{
 		AccountID: increase.F("string"),
-		CreatedAt: increase.F(increase.CheckDepositListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
-		Cursor:    increase.F("string"),
-		Limit:     increase.F(int64(0)),
+		CreatedAt: increase.F(increase.CheckDepositListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
 	})
 	if err != nil {
 		var apierr *increase.Error

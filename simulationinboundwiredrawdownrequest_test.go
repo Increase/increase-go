@@ -16,8 +16,11 @@ func TestSimulationInboundWireDrawdownRequestNewWithOptionalParams(t *testing.T)
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.InboundWireDrawdownRequests.New(context.TODO(), increase.SimulationInboundWireDrawdownRequestNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.InboundWireDrawdownRequests.New(context.TODO(), increase.SimulationInboundWireDrawdownRequestNewParams{
 		Amount:                                  increase.F(int64(0)),
 		BeneficiaryAccountNumber:                increase.F("x"),
 		BeneficiaryRoutingNumber:                increase.F("x"),

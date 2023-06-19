@@ -16,8 +16,11 @@ func TestSimulationDigitalWalletTokenRequestNew(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.DigitalWalletTokenRequests.New(context.TODO(), increase.SimulationDigitalWalletTokenRequestNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.DigitalWalletTokenRequests.New(context.TODO(), increase.SimulationDigitalWalletTokenRequestNewParams{
 		CardID: increase.F("string"),
 	})
 	if err != nil {

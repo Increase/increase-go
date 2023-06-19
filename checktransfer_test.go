@@ -17,8 +17,11 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
 		AccountID:       increase.F("string"),
 		AddressCity:     increase.F("x"),
 		AddressLine1:    increase.F("x"),
@@ -30,7 +33,14 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		AddressLine2:    increase.F("x"),
 		Note:            increase.F("x"),
 		RequireApproval: increase.F(true),
-		ReturnAddress:   increase.F(increase.CheckTransferNewParamsReturnAddress{Name: increase.F("x"), Line1: increase.F("x"), Line2: increase.F("x"), City: increase.F("x"), State: increase.F("x"), Zip: increase.F("x")}),
+		ReturnAddress: increase.F(increase.CheckTransferNewParamsReturnAddress{
+			Name:  increase.F("x"),
+			Line1: increase.F("x"),
+			Line2: increase.F("x"),
+			City:  increase.F("x"),
+			State: increase.F("x"),
+			Zip:   increase.F("x"),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -45,8 +55,11 @@ func TestCheckTransferGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.Get(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.Get(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -60,12 +73,20 @@ func TestCheckTransferListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
 		AccountID: increase.F("string"),
-		CreatedAt: increase.F(increase.CheckTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
-		Cursor:    increase.F("string"),
-		Limit:     increase.F(int64(0)),
+		CreatedAt: increase.F(increase.CheckTransferListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
+		Cursor: increase.F("string"),
+		Limit:  increase.F(int64(0)),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -80,8 +101,11 @@ func TestCheckTransferApprove(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.Approve(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.Approve(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -95,8 +119,11 @@ func TestCheckTransferCancel(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.Cancel(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.Cancel(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -111,8 +138,11 @@ func TestCheckTransferStopPayment(t *testing.T) {
 		return
 	}
 	t.Skip("Prism doesn't accept no request body being sent but returns 415 if it is sent")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.CheckTransfers.StopPayment(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.CheckTransfers.StopPayment(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
