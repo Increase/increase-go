@@ -16,8 +16,11 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
 		AccountNumberID:          increase.F("string"),
 		Amount:                   increase.F(int64(0)),
 		CompanyDescriptiveDate:   increase.F("x"),
@@ -40,8 +43,11 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 		return
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.Return(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.ACHTransfers.Return(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 		increase.SimulationACHTransferReturnParams{
@@ -62,8 +68,11 @@ func TestSimulationACHTransferSubmit(t *testing.T) {
 		return
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

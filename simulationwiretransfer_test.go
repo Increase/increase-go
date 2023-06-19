@@ -16,8 +16,11 @@ func TestSimulationWireTransferNewInboundWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Simulations.WireTransfers.NewInbound(context.TODO(), increase.SimulationWireTransferNewInboundParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Simulations.WireTransfers.NewInbound(context.TODO(), increase.SimulationWireTransferNewInboundParams{
 		AccountNumberID:                         increase.F("string"),
 		Amount:                                  increase.F(int64(1)),
 		BeneficiaryAddressLine1:                 increase.F("x"),

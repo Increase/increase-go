@@ -17,8 +17,11 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
 		AccountID:               increase.F("string"),
 		Amount:                  increase.F(int64(1)),
 		BeneficiaryName:         increase.F("x"),
@@ -44,8 +47,11 @@ func TestWireTransferGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Get(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.Get(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -59,10 +65,18 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
-		AccountID:         increase.F("string"),
-		CreatedAt:         increase.F(increase.WireTransferListParamsCreatedAt{After: increase.F(time.Now()), Before: increase.F(time.Now()), OnOrAfter: increase.F(time.Now()), OnOrBefore: increase.F(time.Now())}),
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
+		AccountID: increase.F("string"),
+		CreatedAt: increase.F(increase.WireTransferListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
 		Limit:             increase.F(int64(0)),
@@ -80,8 +94,11 @@ func TestWireTransferApprove(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Approve(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.Approve(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -95,8 +112,11 @@ func TestWireTransferCancel(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Cancel(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.Cancel(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -111,8 +131,11 @@ func TestWireTransferReverse(t *testing.T) {
 		return
 	}
 	t.Skip("Prism tests are broken")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Reverse(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.Reverse(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -127,8 +150,11 @@ func TestWireTransferSubmit(t *testing.T) {
 		return
 	}
 	t.Skip("Prism tests are broken")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireTransfers.Submit(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireTransfers.Submit(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

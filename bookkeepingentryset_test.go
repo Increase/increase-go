@@ -17,9 +17,21 @@ func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
-		Entries:       increase.F([]increase.BookkeepingEntrySetNewParamsEntries{{AccountID: increase.F("string"), Amount: increase.F(int64(0))}, {AccountID: increase.F("string"), Amount: increase.F(int64(0))}, {AccountID: increase.F("string"), Amount: increase.F(int64(0))}}),
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
+		Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntries{{
+			AccountID: increase.F("string"),
+			Amount:    increase.F(int64(0)),
+		}, {
+			AccountID: increase.F("string"),
+			Amount:    increase.F(int64(0)),
+		}, {
+			AccountID: increase.F("string"),
+			Amount:    increase.F(int64(0)),
+		}}),
 		Date:          increase.F(time.Now()),
 		TransactionID: increase.F("string"),
 	})

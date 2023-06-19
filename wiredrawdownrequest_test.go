@@ -17,8 +17,11 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	t.Skip("Prism tests are broken")
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
 		AccountNumberID:        increase.F("string"),
 		Amount:                 increase.F(int64(1)),
 		MessageToRecipient:     increase.F("x"),
@@ -42,8 +45,11 @@ func TestWireDrawdownRequestGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -57,8 +63,11 @@ func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 	})

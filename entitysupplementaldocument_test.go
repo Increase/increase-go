@@ -16,8 +16,11 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Entities.SupplementalDocuments.New(
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Entities.SupplementalDocuments.New(
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntitySupplementalDocumentNewParams{
@@ -37,8 +40,11 @@ func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := increase.NewClient(option.WithAPIKey("APIKey"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
+	client := increase.NewClient(
+		option.WithAPIKey("APIKey"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
 		EntityID: increase.F("string"),
 		Cursor:   increase.F("string"),
 		Limit:    increase.F(int64(0)),
