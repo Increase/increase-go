@@ -353,7 +353,6 @@ const (
 	ACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      ACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
 	ACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     ACHTransferReturnReturnReasonCode = "limited_participation_dfi"
 	ACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                ACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	ACHTransferReturnReturnReasonCodeOther                                                       ACHTransferReturnReturnReasonCode = "other"
 	ACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     ACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
 	ACHTransferReturnReturnReasonCodeAddendaError                                                ACHTransferReturnReturnReasonCode = "addenda_error"
 	ACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          ACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"

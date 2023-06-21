@@ -487,7 +487,6 @@ const (
 	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
 	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
 	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	TransactionSourceACHTransferReturnReturnReasonCodeOther                                                       TransactionSourceACHTransferReturnReturnReasonCode = "other"
 	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
 	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
 	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
