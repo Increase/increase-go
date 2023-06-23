@@ -369,8 +369,8 @@ type CardUpdateParamsDigitalWallet struct {
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
 	Phone param.Field[string] `json:"phone"`
-	// The card profile assigned to this digital card. Card profiles may also be
-	// assigned at the program level.
+	// The card profile assigned to this card. Card profiles may also be assigned at
+	// the program level.
 	CardProfileID param.Field[string] `json:"card_profile_id"`
 }
 

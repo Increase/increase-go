@@ -104,15 +104,15 @@ type CheckTransfer struct {
 	// The identifier of the Account from which funds will be transferred.
 	AccountID string `json:"account_id,required"`
 	// The street address of the check's destination.
-	AddressLine1 string `json:"address_line1,required"`
+	AddressLine1 string `json:"address_line1,required,nullable"`
 	// The second line of the address of the check's destination.
 	AddressLine2 string `json:"address_line2,required,nullable"`
 	// The city of the check's destination.
-	AddressCity string `json:"address_city,required"`
+	AddressCity string `json:"address_city,required,nullable"`
 	// The state of the check's destination.
-	AddressState string `json:"address_state,required"`
+	AddressState string `json:"address_state,required,nullable"`
 	// The postal code of the check's destination.
-	AddressZip string `json:"address_zip,required"`
+	AddressZip string `json:"address_zip,required,nullable"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferReturnAddress `json:"return_address,required,nullable"`
 	// The transfer amount in USD cents.
@@ -135,11 +135,11 @@ type CheckTransfer struct {
 	// the check was mailed.
 	MailedAt time.Time `json:"mailed_at,required,nullable" format:"date-time"`
 	// The descriptor that will be printed on the memo field on the check.
-	Message string `json:"message,required"`
+	Message string `json:"message,required,nullable"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note,required,nullable"`
 	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required"`
+	RecipientName string `json:"recipient_name,required,nullable"`
 	// The lifecycle status of the transfer.
 	Status CheckTransferStatus `json:"status,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -300,18 +300,17 @@ func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 type CheckTransferStatus string
 
 const (
-	CheckTransferStatusPendingApproval          CheckTransferStatus = "pending_approval"
-	CheckTransferStatusPendingSubmission        CheckTransferStatus = "pending_submission"
-	CheckTransferStatusSubmitted                CheckTransferStatus = "submitted"
-	CheckTransferStatusPendingMailing           CheckTransferStatus = "pending_mailing"
-	CheckTransferStatusStoppedAndPendingMailing CheckTransferStatus = "stopped_and_pending_mailing"
-	CheckTransferStatusMailed                   CheckTransferStatus = "mailed"
-	CheckTransferStatusCanceled                 CheckTransferStatus = "canceled"
-	CheckTransferStatusDeposited                CheckTransferStatus = "deposited"
-	CheckTransferStatusStopped                  CheckTransferStatus = "stopped"
-	CheckTransferStatusReturned                 CheckTransferStatus = "returned"
-	CheckTransferStatusRejected                 CheckTransferStatus = "rejected"
-	CheckTransferStatusRequiresAttention        CheckTransferStatus = "requires_attention"
+	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
+	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
+	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
+	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
+	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
+	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
+	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
+	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
+	CheckTransferStatusReturned          CheckTransferStatus = "returned"
+	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
+	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 )
 
 // After the transfer is submitted, this will contain supplemental details.

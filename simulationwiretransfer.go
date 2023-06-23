@@ -906,22 +906,22 @@ const (
 // response if and only if `category` is equal to `check_transfer_intention`.
 type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The street address of the check's destination.
-	AddressLine1 string `json:"address_line1,required"`
+	AddressLine1 string `json:"address_line1,required,nullable"`
 	// The second line of the address of the check's destination.
 	AddressLine2 string `json:"address_line2,required,nullable"`
 	// The city of the check's destination.
-	AddressCity string `json:"address_city,required"`
+	AddressCity string `json:"address_city,required,nullable"`
 	// The state of the check's destination.
-	AddressState string `json:"address_state,required"`
+	AddressState string `json:"address_state,required,nullable"`
 	// The postal code of the check's destination.
-	AddressZip string `json:"address_zip,required"`
+	AddressZip string `json:"address_zip,required,nullable"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency `json:"currency,required"`
 	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required"`
+	RecipientName string `json:"recipient_name,required,nullable"`
 	// The identifier of the Check Transfer with which this is associated.
 	TransferID string `json:"transfer_id,required"`
 	JSON       wireTransferSimulationTransactionSourceCheckTransferIntentionJSON
