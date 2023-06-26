@@ -171,27 +171,30 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
 	CardRefund InterestPaymentSimulationResultTransactionSourceCardRefund `json:"card_refund,required,nullable"`
-	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`.
-	CardSettlement InterestPaymentSimulationResultTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_revenue_payment`.
 	CardRevenuePayment InterestPaymentSimulationResultTransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
+	// A Card Settlement object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_settlement`.
+	CardSettlement InterestPaymentSimulationResultTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
 	CheckDepositReturn InterestPaymentSimulationResultTransactionSourceCheckDepositReturn `json:"check_deposit_return,required,nullable"`
+	// A Check Transfer Deposit object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_deposit`.
+	CheckTransferDeposit InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
 	CheckTransferIntention InterestPaymentSimulationResultTransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
-	// A Check Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn InterestPaymentSimulationResultTransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
 	CheckTransferRejection InterestPaymentSimulationResultTransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
+	// A Check Transfer Return object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_return`.
+	CheckTransferReturn InterestPaymentSimulationResultTransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -213,13 +216,13 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
+	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+	InboundWireDrawdownPayment InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
 	InboundWireDrawdownPaymentReversal InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal,required,nullable"`
-	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal InterestPaymentSimulationResultTransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -258,21 +261,22 @@ type interestPaymentSimulationResultTransactionSourceJSON struct {
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
 	CardRefund                                  apijson.Field
-	CardSettlement                              apijson.Field
 	CardRevenuePayment                          apijson.Field
+	CardSettlement                              apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
+	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
-	CheckTransferReturn                         apijson.Field
 	CheckTransferRejection                      apijson.Field
+	CheckTransferReturn                         apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundCheck                                apijson.Field
 	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
-	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
+	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -301,13 +305,14 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferReturn                           InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_return"
 	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance                       InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
 	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund                                  InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement                              InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
 	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment                          InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement                              InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance                      InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositReturn                          InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_return"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferDeposit                        InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_deposit"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
 	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransfer                          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
@@ -315,8 +320,8 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundCheck                                InterestPaymentSimulationResultTransactionSourceCategory = "inbound_check"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer             InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireTransfer                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
 	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment                             InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
@@ -643,6 +648,54 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardRefundTypeCardRefund InterestPaymentSimulationResultTransactionSourceCardRefundType = "card_refund"
 )
 
+// A Card Revenue Payment object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_revenue_payment`.
+type InterestPaymentSimulationResultTransactionSourceCardRevenuePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The account the card belonged to.
+	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
+	JSON                  interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON contains
+// the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRevenuePayment]
+type interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	PeriodStart           apijson.Field
+	PeriodEnd             apijson.Field
+	TransactedOnAccountID apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency string
+
+const (
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyCad InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyChf InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyEur InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyGbp InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "USD"
+)
+
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
 type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
@@ -728,54 +781,6 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlementType string
 
 const (
 	InterestPaymentSimulationResultTransactionSourceCardSettlementTypeCardSettlement InterestPaymentSimulationResultTransactionSourceCardSettlementType = "card_settlement"
-)
-
-// A Card Revenue Payment object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_revenue_payment`.
-type InterestPaymentSimulationResultTransactionSourceCardRevenuePayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-	// currency.
-	Currency InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	// The end of the period for which this transaction paid interest.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
-	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON
-}
-
-// interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON contains
-// the JSON metadata for the struct
-// [InterestPaymentSimulationResultTransactionSourceCardRevenuePayment]
-type interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
-	Amount                apijson.Field
-	Currency              apijson.Field
-	PeriodStart           apijson.Field
-	PeriodEnd             apijson.Field
-	TransactedOnAccountID apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *InterestPaymentSimulationResultTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-// currency.
-type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency string
-
-const (
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyCad InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CAD"
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyChf InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CHF"
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyEur InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "EUR"
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyGbp InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "GBP"
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "JPY"
-	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -903,6 +908,47 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
+// A Check Transfer Deposit object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_transfer_deposit`.
+type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct {
+	// When the check was deposited.
+	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
+	// The identifier of the API File object containing an image of the front of the
+	// deposited check.
+	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// A constant representing the object's type. For this resource it will always be
+	// `check_transfer_deposit`.
+	Type InterestPaymentSimulationResultTransactionSourceCheckTransferDepositType `json:"type,required"`
+	JSON interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit]
+type interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON struct {
+	DepositedAt      apijson.Field
+	FrontImageFileID apijson.Field
+	BackImageFileID  apijson.Field
+	Type             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_deposit`.
+type InterestPaymentSimulationResultTransactionSourceCheckTransferDepositType string
+
+const (
+	InterestPaymentSimulationResultTransactionSourceCheckTransferDepositTypeCheckTransferDeposit InterestPaymentSimulationResultTransactionSourceCheckTransferDepositType = "check_transfer_deposit"
+)
+
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntention struct {
@@ -962,6 +1008,27 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyUsd InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+// A Check Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_rejection`.
+type InterestPaymentSimulationResultTransactionSourceCheckTransferRejection struct {
+	// The identifier of the Check Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCheckTransferRejection]
+type interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturn struct {
@@ -1005,27 +1072,6 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient    InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
 	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
-
-// A Check Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_rejection`.
-type InterestPaymentSimulationResultTransactionSourceCheckTransferRejection struct {
-	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
-}
-
-// interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
-// contains the JSON metadata for the struct
-// [InterestPaymentSimulationResultTransactionSourceCheckTransferRejection]
-type interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
@@ -1340,6 +1386,52 @@ const (
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
+// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount                             int64  `json:"amount,required"`
+	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
+	Description                        string `json:"description,required"`
+	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                     string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
+	JSON                               interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment]
+type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON struct {
+	Amount                             apijson.Field
+	BeneficiaryAddressLine1            apijson.Field
+	BeneficiaryAddressLine2            apijson.Field
+	BeneficiaryAddressLine3            apijson.Field
+	BeneficiaryName                    apijson.Field
+	BeneficiaryReference               apijson.Field
+	Description                        apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	OriginatorAddressLine1             apijson.Field
+	OriginatorAddressLine2             apijson.Field
+	OriginatorAddressLine3             apijson.Field
+	OriginatorName                     apijson.Field
+	OriginatorToBeneficiaryInformation apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
@@ -1386,52 +1478,6 @@ type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
-	Description                        string `json:"description,required"`
-	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                     string `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
-}
-
-// interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
-// contains the JSON metadata for the struct
-// [InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment]
-type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Field
-	BeneficiaryAddressLine1            apijson.Field
-	BeneficiaryAddressLine2            apijson.Field
-	BeneficiaryAddressLine3            apijson.Field
-	BeneficiaryName                    apijson.Field
-	BeneficiaryReference               apijson.Field
-	Description                        apijson.Field
-	InputMessageAccountabilityData     apijson.Field
-	OriginatorAddressLine1             apijson.Field
-	OriginatorAddressLine2             apijson.Field
-	OriginatorAddressLine3             apijson.Field
-	OriginatorName                     apijson.Field
-	OriginatorToBeneficiaryInformation apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
-}
-
-func (r *InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

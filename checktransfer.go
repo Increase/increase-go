@@ -377,9 +377,11 @@ const (
 type CheckTransferDeposit struct {
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
-	// The ID for the File containing the image of the front of the check.
+	// The identifier of the API File object containing an image of the front of the
+	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
-	// The ID for the File containing the image of the rear of the check.
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
