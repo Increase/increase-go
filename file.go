@@ -298,25 +298,3 @@ const (
 	FileListParamsPurposeInEntitySupplementalDocument FileListParamsPurposeIn = "entity_supplemental_document"
 	FileListParamsPurposeInExport                     FileListParamsPurposeIn = "export"
 )
-
-// A list of File objects
-type FileListResponse struct {
-	// The contents of the list.
-	Data []File `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       fileListResponseJSON
-}
-
-// fileListResponseJSON contains the JSON metadata for the struct
-// [FileListResponse]
-type fileListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

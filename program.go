@@ -124,25 +124,3 @@ func (r ProgramListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Program objects
-type ProgramListResponse struct {
-	// The contents of the list.
-	Data []Program `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       programListResponseJSON
-}
-
-// programListResponseJSON contains the JSON metadata for the struct
-// [ProgramListResponse]
-type programListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ProgramListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

@@ -448,25 +448,3 @@ func (r WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Wire Transfer objects
-type WireTransferListResponse struct {
-	// The contents of the list.
-	Data []WireTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       wireTransferListResponseJSON
-}
-
-// wireTransferListResponseJSON contains the JSON metadata for the struct
-// [WireTransferListResponse]
-type wireTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *WireTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
