@@ -429,25 +429,3 @@ func (r CardListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Card objects
-type CardListResponse struct {
-	// The contents of the list.
-	Data []Card `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       cardListResponseJSON
-}
-
-// cardListResponseJSON contains the JSON metadata for the struct
-// [CardListResponse]
-type cardListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

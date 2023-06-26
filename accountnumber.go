@@ -229,25 +229,3 @@ const (
 	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
 	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )
-
-// A list of Account Number objects
-type AccountNumberListResponse struct {
-	// The contents of the list.
-	Data []AccountNumber `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       accountNumberListResponseJSON
-}
-
-// accountNumberListResponseJSON contains the JSON metadata for the struct
-// [AccountNumberListResponse]
-type accountNumberListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountNumberListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

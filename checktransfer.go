@@ -560,25 +560,3 @@ func (r CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Check Transfer objects
-type CheckTransferListResponse struct {
-	// The contents of the list.
-	Data []CheckTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       checkTransferListResponseJSON
-}
-
-// checkTransferListResponseJSON contains the JSON metadata for the struct
-// [CheckTransferListResponse]
-type checkTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CheckTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

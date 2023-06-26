@@ -276,25 +276,3 @@ func (r ACHPrenotificationListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of ACH Prenotification objects
-type ACHPrenotificationListResponse struct {
-	// The contents of the list.
-	Data []ACHPrenotification `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       achPrenotificationListResponseJSON
-}
-
-// achPrenotificationListResponseJSON contains the JSON metadata for the struct
-// [ACHPrenotificationListResponse]
-type achPrenotificationListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

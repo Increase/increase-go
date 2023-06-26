@@ -186,25 +186,3 @@ func (r DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Document objects
-type DocumentListResponse struct {
-	// The contents of the list.
-	Data []Document `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       documentListResponseJSON
-}
-
-// documentListResponseJSON contains the JSON metadata for the struct
-// [DocumentListResponse]
-type documentListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *DocumentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

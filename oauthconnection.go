@@ -131,25 +131,3 @@ func (r OauthConnectionListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of OAuth Connection objects
-type OauthConnectionListResponse struct {
-	// The contents of the list.
-	Data []OauthConnection `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       oauthConnectionListResponseJSON
-}
-
-// oauthConnectionListResponseJSON contains the JSON metadata for the struct
-// [OauthConnectionListResponse]
-type oauthConnectionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *OauthConnectionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

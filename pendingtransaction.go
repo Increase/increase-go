@@ -752,25 +752,3 @@ const (
 	PendingTransactionListParamsStatusInPending  PendingTransactionListParamsStatusIn = "pending"
 	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )
-
-// A list of Pending Transaction objects
-type PendingTransactionListResponse struct {
-	// The contents of the list.
-	Data []PendingTransaction `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       pendingTransactionListResponseJSON
-}
-
-// pendingTransactionListResponseJSON contains the JSON metadata for the struct
-// [PendingTransactionListResponse]
-type pendingTransactionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PendingTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

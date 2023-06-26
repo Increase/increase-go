@@ -146,25 +146,3 @@ func (r RoutingNumberListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Routing Number objects
-type RoutingNumberListResponse struct {
-	// The contents of the list.
-	Data []RoutingNumber `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       routingNumberListResponseJSON
-}
-
-// routingNumberListResponseJSON contains the JSON metadata for the struct
-// [RoutingNumberListResponse]
-type routingNumberListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

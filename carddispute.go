@@ -267,25 +267,3 @@ const (
 	CardDisputeListParamsStatusInAccepted         CardDisputeListParamsStatusIn = "accepted"
 	CardDisputeListParamsStatusInRejected         CardDisputeListParamsStatusIn = "rejected"
 )
-
-// A list of Card Dispute objects
-type CardDisputeListResponse struct {
-	// The contents of the list.
-	Data []CardDispute `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       cardDisputeListResponseJSON
-}
-
-// cardDisputeListResponseJSON contains the JSON metadata for the struct
-// [CardDisputeListResponse]
-type cardDisputeListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardDisputeListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

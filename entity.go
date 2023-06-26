@@ -1750,25 +1750,3 @@ func (r EntityListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Entity objects
-type EntityListResponse struct {
-	// The contents of the list.
-	Data []Entity `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       entityListResponseJSON
-}
-
-// entityListResponseJSON contains the JSON metadata for the struct
-// [EntityListResponse]
-type entityListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EntityListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
