@@ -172,27 +172,30 @@ type TransactionSource struct {
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
 	CardRefund TransactionSourceCardRefund `json:"card_refund,required,nullable"`
-	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`.
-	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_revenue_payment`.
 	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
+	// A Card Settlement object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_settlement`.
+	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
 	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return,required,nullable"`
+	// A Check Transfer Deposit object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_deposit`.
+	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
 	CheckTransferIntention TransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
-	// A Check Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn TransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
 	CheckTransferRejection TransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
+	// A Check Transfer Return object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_return`.
+	CheckTransferReturn TransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -214,13 +217,13 @@ type TransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
+	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+	InboundWireDrawdownPayment TransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
 	InboundWireDrawdownPaymentReversal TransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal,required,nullable"`
-	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment TransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -259,21 +262,22 @@ type transactionSourceJSON struct {
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
 	CardRefund                                  apijson.Field
-	CardSettlement                              apijson.Field
 	CardRevenuePayment                          apijson.Field
+	CardSettlement                              apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
+	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
-	CheckTransferReturn                         apijson.Field
 	CheckTransferRejection                      apijson.Field
+	CheckTransferReturn                         apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundCheck                                apijson.Field
 	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
-	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
+	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -302,13 +306,14 @@ const (
 	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
 	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
 	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
-	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
 	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
+	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
 	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
 	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
+	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
 	TransactionSourceCategoryCheckTransferIntention                      TransactionSourceCategory = "check_transfer_intention"
-	TransactionSourceCategoryCheckTransferReturn                         TransactionSourceCategory = "check_transfer_return"
 	TransactionSourceCategoryCheckTransferRejection                      TransactionSourceCategory = "check_transfer_rejection"
+	TransactionSourceCategoryCheckTransferReturn                         TransactionSourceCategory = "check_transfer_return"
 	TransactionSourceCategoryCheckTransferStopPaymentRequest             TransactionSourceCategory = "check_transfer_stop_payment_request"
 	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
 	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
@@ -316,8 +321,8 @@ const (
 	TransactionSourceCategoryInboundCheck                                TransactionSourceCategory = "inbound_check"
 	TransactionSourceCategoryInboundInternationalACHTransfer             TransactionSourceCategory = "inbound_international_ach_transfer"
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	TransactionSourceCategoryInboundWireDrawdownPaymentReversal          TransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	TransactionSourceCategoryInboundWireDrawdownPayment                  TransactionSourceCategory = "inbound_wire_drawdown_payment"
+	TransactionSourceCategoryInboundWireDrawdownPaymentReversal          TransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
 	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
 	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
@@ -638,6 +643,53 @@ const (
 	TransactionSourceCardRefundTypeCardRefund TransactionSourceCardRefundType = "card_refund"
 )
 
+// A Card Revenue Payment object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_revenue_payment`.
+type TransactionSourceCardRevenuePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency TransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The account the card belonged to.
+	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
+	JSON                  transactionSourceCardRevenuePaymentJSON
+}
+
+// transactionSourceCardRevenuePaymentJSON contains the JSON metadata for the
+// struct [TransactionSourceCardRevenuePayment]
+type transactionSourceCardRevenuePaymentJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	PeriodStart           apijson.Field
+	PeriodEnd             apijson.Field
+	TransactedOnAccountID apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+type TransactionSourceCardRevenuePaymentCurrency string
+
+const (
+	TransactionSourceCardRevenuePaymentCurrencyCad TransactionSourceCardRevenuePaymentCurrency = "CAD"
+	TransactionSourceCardRevenuePaymentCurrencyChf TransactionSourceCardRevenuePaymentCurrency = "CHF"
+	TransactionSourceCardRevenuePaymentCurrencyEur TransactionSourceCardRevenuePaymentCurrency = "EUR"
+	TransactionSourceCardRevenuePaymentCurrencyGbp TransactionSourceCardRevenuePaymentCurrency = "GBP"
+	TransactionSourceCardRevenuePaymentCurrencyJpy TransactionSourceCardRevenuePaymentCurrency = "JPY"
+	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
+)
+
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
 type TransactionSourceCardSettlement struct {
@@ -722,53 +774,6 @@ type TransactionSourceCardSettlementType string
 
 const (
 	TransactionSourceCardSettlementTypeCardSettlement TransactionSourceCardSettlementType = "card_settlement"
-)
-
-// A Card Revenue Payment object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_revenue_payment`.
-type TransactionSourceCardRevenuePayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-	// currency.
-	Currency TransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	// The end of the period for which this transaction paid interest.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
-	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  transactionSourceCardRevenuePaymentJSON
-}
-
-// transactionSourceCardRevenuePaymentJSON contains the JSON metadata for the
-// struct [TransactionSourceCardRevenuePayment]
-type transactionSourceCardRevenuePaymentJSON struct {
-	Amount                apijson.Field
-	Currency              apijson.Field
-	PeriodStart           apijson.Field
-	PeriodEnd             apijson.Field
-	TransactedOnAccountID apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *TransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-// currency.
-type TransactionSourceCardRevenuePaymentCurrency string
-
-const (
-	TransactionSourceCardRevenuePaymentCurrencyCad TransactionSourceCardRevenuePaymentCurrency = "CAD"
-	TransactionSourceCardRevenuePaymentCurrencyChf TransactionSourceCardRevenuePaymentCurrency = "CHF"
-	TransactionSourceCardRevenuePaymentCurrencyEur TransactionSourceCardRevenuePaymentCurrency = "EUR"
-	TransactionSourceCardRevenuePaymentCurrencyGbp TransactionSourceCardRevenuePaymentCurrency = "GBP"
-	TransactionSourceCardRevenuePaymentCurrencyJpy TransactionSourceCardRevenuePaymentCurrency = "JPY"
-	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -894,6 +899,46 @@ const (
 	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
+// A Check Transfer Deposit object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_transfer_deposit`.
+type TransactionSourceCheckTransferDeposit struct {
+	// When the check was deposited.
+	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
+	// The identifier of the API File object containing an image of the front of the
+	// deposited check.
+	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// A constant representing the object's type. For this resource it will always be
+	// `check_transfer_deposit`.
+	Type TransactionSourceCheckTransferDepositType `json:"type,required"`
+	JSON transactionSourceCheckTransferDepositJSON
+}
+
+// transactionSourceCheckTransferDepositJSON contains the JSON metadata for the
+// struct [TransactionSourceCheckTransferDeposit]
+type transactionSourceCheckTransferDepositJSON struct {
+	DepositedAt      apijson.Field
+	FrontImageFileID apijson.Field
+	BackImageFileID  apijson.Field
+	Type             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *TransactionSourceCheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_deposit`.
+type TransactionSourceCheckTransferDepositType string
+
+const (
+	TransactionSourceCheckTransferDepositTypeCheckTransferDeposit TransactionSourceCheckTransferDepositType = "check_transfer_deposit"
+)
+
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
 type TransactionSourceCheckTransferIntention struct {
@@ -952,6 +997,26 @@ const (
 	TransactionSourceCheckTransferIntentionCurrencyUsd TransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+// A Check Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_rejection`.
+type TransactionSourceCheckTransferRejection struct {
+	// The identifier of the Check Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       transactionSourceCheckTransferRejectionJSON
+}
+
+// transactionSourceCheckTransferRejectionJSON contains the JSON metadata for the
+// struct [TransactionSourceCheckTransferRejection]
+type transactionSourceCheckTransferRejectionJSON struct {
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
 type TransactionSourceCheckTransferReturn struct {
@@ -994,26 +1059,6 @@ const (
 	TransactionSourceCheckTransferReturnReasonRefusedByRecipient    TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
 	TransactionSourceCheckTransferReturnReasonReturnedNotAuthorized TransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
-
-// A Check Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_rejection`.
-type TransactionSourceCheckTransferRejection struct {
-	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       transactionSourceCheckTransferRejectionJSON
-}
-
-// transactionSourceCheckTransferRejectionJSON contains the JSON metadata for the
-// struct [TransactionSourceCheckTransferRejection]
-type transactionSourceCheckTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
@@ -1323,6 +1368,51 @@ const (
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
+// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+type TransactionSourceInboundWireDrawdownPayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount                             int64  `json:"amount,required"`
+	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
+	Description                        string `json:"description,required"`
+	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                     string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
+	JSON                               transactionSourceInboundWireDrawdownPaymentJSON
+}
+
+// transactionSourceInboundWireDrawdownPaymentJSON contains the JSON metadata for
+// the struct [TransactionSourceInboundWireDrawdownPayment]
+type transactionSourceInboundWireDrawdownPaymentJSON struct {
+	Amount                             apijson.Field
+	BeneficiaryAddressLine1            apijson.Field
+	BeneficiaryAddressLine2            apijson.Field
+	BeneficiaryAddressLine3            apijson.Field
+	BeneficiaryName                    apijson.Field
+	BeneficiaryReference               apijson.Field
+	Description                        apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	OriginatorAddressLine1             apijson.Field
+	OriginatorAddressLine2             apijson.Field
+	OriginatorAddressLine3             apijson.Field
+	OriginatorName                     apijson.Field
+	OriginatorToBeneficiaryInformation apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
@@ -1368,51 +1458,6 @@ type transactionSourceInboundWireDrawdownPaymentReversalJSON struct {
 }
 
 func (r *TransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-type TransactionSourceInboundWireDrawdownPayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
-	Description                        string `json:"description,required"`
-	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                     string `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               transactionSourceInboundWireDrawdownPaymentJSON
-}
-
-// transactionSourceInboundWireDrawdownPaymentJSON contains the JSON metadata for
-// the struct [TransactionSourceInboundWireDrawdownPayment]
-type transactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Field
-	BeneficiaryAddressLine1            apijson.Field
-	BeneficiaryAddressLine2            apijson.Field
-	BeneficiaryAddressLine3            apijson.Field
-	BeneficiaryName                    apijson.Field
-	BeneficiaryReference               apijson.Field
-	Description                        apijson.Field
-	InputMessageAccountabilityData     apijson.Field
-	OriginatorAddressLine1             apijson.Field
-	OriginatorAddressLine2             apijson.Field
-	OriginatorAddressLine3             apijson.Field
-	OriginatorName                     apijson.Field
-	OriginatorToBeneficiaryInformation apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
-}
-
-func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -1796,13 +1841,14 @@ const (
 	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
 	TransactionListParamsCategoryInCardDisputeAcceptance                       TransactionListParamsCategoryIn = "card_dispute_acceptance"
 	TransactionListParamsCategoryInCardRefund                                  TransactionListParamsCategoryIn = "card_refund"
-	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
 	TransactionListParamsCategoryInCardRevenuePayment                          TransactionListParamsCategoryIn = "card_revenue_payment"
+	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
 	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
 	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
+	TransactionListParamsCategoryInCheckTransferDeposit                        TransactionListParamsCategoryIn = "check_transfer_deposit"
 	TransactionListParamsCategoryInCheckTransferIntention                      TransactionListParamsCategoryIn = "check_transfer_intention"
-	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
 	TransactionListParamsCategoryInCheckTransferRejection                      TransactionListParamsCategoryIn = "check_transfer_rejection"
+	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
 	TransactionListParamsCategoryInCheckTransferStopPaymentRequest             TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
 	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
 	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
@@ -1810,8 +1856,8 @@ const (
 	TransactionListParamsCategoryInInboundCheck                                TransactionListParamsCategoryIn = "inbound_check"
 	TransactionListParamsCategoryInInboundInternationalACHTransfer             TransactionListParamsCategoryIn = "inbound_international_ach_transfer"
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
 	TransactionListParamsCategoryInInboundWireDrawdownPayment                  TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
+	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
 	TransactionListParamsCategoryInInboundWireReversal                         TransactionListParamsCategoryIn = "inbound_wire_reversal"
 	TransactionListParamsCategoryInInboundWireTransfer                         TransactionListParamsCategoryIn = "inbound_wire_transfer"
 	TransactionListParamsCategoryInInterestPayment                             TransactionListParamsCategoryIn = "interest_payment"

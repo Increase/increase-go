@@ -172,27 +172,30 @@ type WireTransferSimulationTransactionSource struct {
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
 	CardRefund WireTransferSimulationTransactionSourceCardRefund `json:"card_refund,required,nullable"`
-	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`.
-	CardSettlement WireTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_revenue_payment`.
 	CardRevenuePayment WireTransferSimulationTransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
+	// A Card Settlement object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_settlement`.
+	CardSettlement WireTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance WireTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`.
 	CheckDepositReturn WireTransferSimulationTransactionSourceCheckDepositReturn `json:"check_deposit_return,required,nullable"`
+	// A Check Transfer Deposit object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_deposit`.
+	CheckTransferDeposit WireTransferSimulationTransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
 	CheckTransferIntention WireTransferSimulationTransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
-	// A Check Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn WireTransferSimulationTransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
 	CheckTransferRejection WireTransferSimulationTransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
+	// A Check Transfer Return object. This field will be present in the JSON response
+	// if and only if `category` is equal to `check_transfer_return`.
+	CheckTransferReturn WireTransferSimulationTransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -214,13 +217,13 @@ type WireTransferSimulationTransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
+	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+	InboundWireDrawdownPayment WireTransferSimulationTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
 	InboundWireDrawdownPaymentReversal WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal,required,nullable"`
-	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment WireTransferSimulationTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// A Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal WireTransferSimulationTransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -259,21 +262,22 @@ type wireTransferSimulationTransactionSourceJSON struct {
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
 	CardRefund                                  apijson.Field
-	CardSettlement                              apijson.Field
 	CardRevenuePayment                          apijson.Field
+	CardSettlement                              apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
+	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
-	CheckTransferReturn                         apijson.Field
 	CheckTransferRejection                      apijson.Field
+	CheckTransferReturn                         apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundCheck                                apijson.Field
 	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
-	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
+	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -302,13 +306,14 @@ const (
 	WireTransferSimulationTransactionSourceCategoryACHTransferReturn                           WireTransferSimulationTransactionSourceCategory = "ach_transfer_return"
 	WireTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       WireTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
 	WireTransferSimulationTransactionSourceCategoryCardRefund                                  WireTransferSimulationTransactionSourceCategory = "card_refund"
-	WireTransferSimulationTransactionSourceCategoryCardSettlement                              WireTransferSimulationTransactionSourceCategory = "card_settlement"
 	WireTransferSimulationTransactionSourceCategoryCardRevenuePayment                          WireTransferSimulationTransactionSourceCategory = "card_revenue_payment"
+	WireTransferSimulationTransactionSourceCategoryCardSettlement                              WireTransferSimulationTransactionSourceCategory = "card_settlement"
 	WireTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      WireTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
 	WireTransferSimulationTransactionSourceCategoryCheckDepositReturn                          WireTransferSimulationTransactionSourceCategory = "check_deposit_return"
+	WireTransferSimulationTransactionSourceCategoryCheckTransferDeposit                        WireTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferIntention                      WireTransferSimulationTransactionSourceCategory = "check_transfer_intention"
-	WireTransferSimulationTransactionSourceCategoryCheckTransferReturn                         WireTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferRejection                      WireTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
+	WireTransferSimulationTransactionSourceCategoryCheckTransferReturn                         WireTransferSimulationTransactionSourceCategory = "check_transfer_return"
 	WireTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             WireTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
 	WireTransferSimulationTransactionSourceCategoryFeePayment                                  WireTransferSimulationTransactionSourceCategory = "fee_payment"
 	WireTransferSimulationTransactionSourceCategoryInboundACHTransfer                          WireTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
@@ -316,8 +321,8 @@ const (
 	WireTransferSimulationTransactionSourceCategoryInboundCheck                                WireTransferSimulationTransactionSourceCategory = "inbound_check"
 	WireTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer             WireTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
 	WireTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation WireTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal          WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal          WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	WireTransferSimulationTransactionSourceCategoryInboundWireReversal                         WireTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
 	WireTransferSimulationTransactionSourceCategoryInboundWireTransfer                         WireTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
 	WireTransferSimulationTransactionSourceCategoryInterestPayment                             WireTransferSimulationTransactionSourceCategory = "interest_payment"
@@ -643,6 +648,54 @@ const (
 	WireTransferSimulationTransactionSourceCardRefundTypeCardRefund WireTransferSimulationTransactionSourceCardRefundType = "card_refund"
 )
 
+// A Card Revenue Payment object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_revenue_payment`.
+type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	// The end of the period for which this transaction paid interest.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The account the card belonged to.
+	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
+	JSON                  wireTransferSimulationTransactionSourceCardRevenuePaymentJSON
+}
+
+// wireTransferSimulationTransactionSourceCardRevenuePaymentJSON contains the JSON
+// metadata for the struct
+// [WireTransferSimulationTransactionSourceCardRevenuePayment]
+type wireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
+	Amount                apijson.Field
+	Currency              apijson.Field
+	PeriodStart           apijson.Field
+	PeriodEnd             apijson.Field
+	TransactedOnAccountID apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+type WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
+
+const (
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyCad WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyChf WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyEur WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyGbp WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyJpy WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
+)
+
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
 type WireTransferSimulationTransactionSourceCardSettlement struct {
@@ -727,54 +780,6 @@ type WireTransferSimulationTransactionSourceCardSettlementType string
 
 const (
 	WireTransferSimulationTransactionSourceCardSettlementTypeCardSettlement WireTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
-)
-
-// A Card Revenue Payment object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_revenue_payment`.
-type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-	// currency.
-	Currency WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	// The end of the period for which this transaction paid interest.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
-	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  wireTransferSimulationTransactionSourceCardRevenuePaymentJSON
-}
-
-// wireTransferSimulationTransactionSourceCardRevenuePaymentJSON contains the JSON
-// metadata for the struct
-// [WireTransferSimulationTransactionSourceCardRevenuePayment]
-type wireTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
-	Amount                apijson.Field
-	Currency              apijson.Field
-	PeriodStart           apijson.Field
-	PeriodEnd             apijson.Field
-	TransactedOnAccountID apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *WireTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
-// currency.
-type WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
-
-const (
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyCad WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CAD"
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyChf WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CHF"
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyEur WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "EUR"
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyGbp WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "GBP"
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyJpy WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "JPY"
-	WireTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd WireTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -902,6 +907,47 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
+// A Check Transfer Deposit object. This field will be present in the JSON response
+// if and only if `category` is equal to `check_transfer_deposit`.
+type WireTransferSimulationTransactionSourceCheckTransferDeposit struct {
+	// When the check was deposited.
+	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
+	// The identifier of the API File object containing an image of the front of the
+	// deposited check.
+	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// A constant representing the object's type. For this resource it will always be
+	// `check_transfer_deposit`.
+	Type WireTransferSimulationTransactionSourceCheckTransferDepositType `json:"type,required"`
+	JSON wireTransferSimulationTransactionSourceCheckTransferDepositJSON
+}
+
+// wireTransferSimulationTransactionSourceCheckTransferDepositJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferDeposit]
+type wireTransferSimulationTransactionSourceCheckTransferDepositJSON struct {
+	DepositedAt      apijson.Field
+	FrontImageFileID apijson.Field
+	BackImageFileID  apijson.Field
+	Type             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceCheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_deposit`.
+type WireTransferSimulationTransactionSourceCheckTransferDepositType string
+
+const (
+	WireTransferSimulationTransactionSourceCheckTransferDepositTypeCheckTransferDeposit WireTransferSimulationTransactionSourceCheckTransferDepositType = "check_transfer_deposit"
+)
+
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
 type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
@@ -961,6 +1007,27 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+// A Check Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_transfer_rejection`.
+type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
+	// The identifier of the Check Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceCheckTransferRejectionJSON
+}
+
+// wireTransferSimulationTransactionSourceCheckTransferRejectionJSON contains the
+// JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCheckTransferRejection]
+type wireTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
 type WireTransferSimulationTransactionSourceCheckTransferReturn struct {
@@ -1004,27 +1071,6 @@ const (
 	WireTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient    WireTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
 	WireTransferSimulationTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized WireTransferSimulationTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
-
-// A Check Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_rejection`.
-type WireTransferSimulationTransactionSourceCheckTransferRejection struct {
-	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceCheckTransferRejectionJSON
-}
-
-// wireTransferSimulationTransactionSourceCheckTransferRejectionJSON contains the
-// JSON metadata for the struct
-// [WireTransferSimulationTransactionSourceCheckTransferRejection]
-type wireTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *WireTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
@@ -1337,6 +1383,52 @@ const (
 	WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
+// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
+type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount                             int64  `json:"amount,required"`
+	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
+	Description                        string `json:"description,required"`
+	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                     string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
+	JSON                               wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
+}
+
+// wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundWireDrawdownPayment]
+type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct {
+	Amount                             apijson.Field
+	BeneficiaryAddressLine1            apijson.Field
+	BeneficiaryAddressLine2            apijson.Field
+	BeneficiaryAddressLine3            apijson.Field
+	BeneficiaryName                    apijson.Field
+	BeneficiaryReference               apijson.Field
+	Description                        apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	OriginatorAddressLine1             apijson.Field
+	OriginatorAddressLine2             apijson.Field
+	OriginatorAddressLine3             apijson.Field
+	OriginatorName                     apijson.Field
+	OriginatorToBeneficiaryInformation apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // A Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
@@ -1383,52 +1475,6 @@ type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJS
 }
 
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
-	Description                        string `json:"description,required"`
-	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                     string `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
-}
-
-// wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
-// the JSON metadata for the struct
-// [WireTransferSimulationTransactionSourceInboundWireDrawdownPayment]
-type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Field
-	BeneficiaryAddressLine1            apijson.Field
-	BeneficiaryAddressLine2            apijson.Field
-	BeneficiaryAddressLine3            apijson.Field
-	BeneficiaryName                    apijson.Field
-	BeneficiaryReference               apijson.Field
-	Description                        apijson.Field
-	InputMessageAccountabilityData     apijson.Field
-	OriginatorAddressLine1             apijson.Field
-	OriginatorAddressLine2             apijson.Field
-	OriginatorAddressLine3             apijson.Field
-	OriginatorName                     apijson.Field
-	OriginatorToBeneficiaryInformation apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
-}
-
-func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
