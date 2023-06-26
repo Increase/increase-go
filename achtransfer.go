@@ -584,25 +584,3 @@ func (r ACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of ACH Transfer objects
-type ACHTransferListResponse struct {
-	// The contents of the list.
-	Data []ACHTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       achTransferListResponseJSON
-}
-
-// achTransferListResponseJSON contains the JSON metadata for the struct
-// [ACHTransferListResponse]
-type achTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

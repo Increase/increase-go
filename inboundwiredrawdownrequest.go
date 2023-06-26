@@ -180,25 +180,3 @@ func (r InboundWireDrawdownRequestListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Inbound Wire Drawdown Request objects
-type InboundWireDrawdownRequestListResponse struct {
-	// The contents of the list.
-	Data []InboundWireDrawdownRequest `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       inboundWireDrawdownRequestListResponseJSON
-}
-
-// inboundWireDrawdownRequestListResponseJSON contains the JSON metadata for the
-// struct [InboundWireDrawdownRequestListResponse]
-type inboundWireDrawdownRequestListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundWireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

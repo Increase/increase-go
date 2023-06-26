@@ -129,25 +129,3 @@ func (r EntitySupplementalDocumentListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Supplemental Document objects
-type EntitySupplementalDocumentListResponse struct {
-	// The contents of the list.
-	Data []SupplementalDocument `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       entitySupplementalDocumentListResponseJSON
-}
-
-// entitySupplementalDocumentListResponseJSON contains the JSON metadata for the
-// struct [EntitySupplementalDocumentListResponse]
-type entitySupplementalDocumentListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EntitySupplementalDocumentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

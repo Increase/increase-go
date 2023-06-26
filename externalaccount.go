@@ -245,25 +245,3 @@ const (
 	ExternalAccountListParamsStatusInActive   ExternalAccountListParamsStatusIn = "active"
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )
-
-// A list of External Account objects
-type ExternalAccountListResponse struct {
-	// The contents of the list.
-	Data []ExternalAccount `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       externalAccountListResponseJSON
-}
-
-// externalAccountListResponseJSON contains the JSON metadata for the struct
-// [ExternalAccountListResponse]
-type externalAccountListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExternalAccountListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

@@ -33,7 +33,7 @@ func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption)
 
 // Simulates a user attempting add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
-func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *DigitalWalletTokenRequestCreateResponse, err error) {
+func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *SimulationDigitalWalletTokenRequestNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/digital_wallet_token_requests"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -41,22 +41,22 @@ func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, bo
 }
 
 // The results of a Digital Wallet Token simulation.
-type DigitalWalletTokenRequestCreateResponse struct {
+type SimulationDigitalWalletTokenRequestNewResponse struct {
 	// If the simulated tokenization attempt was declined, this field contains details
 	// as to why.
-	DeclineReason DigitalWalletTokenRequestCreateResponseDeclineReason `json:"decline_reason,required,nullable"`
+	DeclineReason SimulationDigitalWalletTokenRequestNewResponseDeclineReason `json:"decline_reason,required,nullable"`
 	// If the simulated tokenization attempt was accepted, this field contains the id
 	// of the Digital Wallet Token that was created.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
-	Type DigitalWalletTokenRequestCreateResponseType `json:"type,required"`
-	JSON digitalWalletTokenRequestCreateResponseJSON
+	Type SimulationDigitalWalletTokenRequestNewResponseType `json:"type,required"`
+	JSON simulationDigitalWalletTokenRequestNewResponseJSON
 }
 
-// digitalWalletTokenRequestCreateResponseJSON contains the JSON metadata for the
-// struct [DigitalWalletTokenRequestCreateResponse]
-type digitalWalletTokenRequestCreateResponseJSON struct {
+// simulationDigitalWalletTokenRequestNewResponseJSON contains the JSON metadata
+// for the struct [SimulationDigitalWalletTokenRequestNewResponse]
+type simulationDigitalWalletTokenRequestNewResponseJSON struct {
 	DeclineReason        apijson.Field
 	DigitalWalletTokenID apijson.Field
 	Type                 apijson.Field
@@ -64,27 +64,27 @@ type digitalWalletTokenRequestCreateResponseJSON struct {
 	ExtraFields          map[string]apijson.Field
 }
 
-func (r *DigitalWalletTokenRequestCreateResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *SimulationDigitalWalletTokenRequestNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // If the simulated tokenization attempt was declined, this field contains details
 // as to why.
-type DigitalWalletTokenRequestCreateResponseDeclineReason string
+type SimulationDigitalWalletTokenRequestNewResponseDeclineReason string
 
 const (
-	DigitalWalletTokenRequestCreateResponseDeclineReasonCardNotActive        DigitalWalletTokenRequestCreateResponseDeclineReason = "card_not_active"
-	DigitalWalletTokenRequestCreateResponseDeclineReasonNoVerificationMethod DigitalWalletTokenRequestCreateResponseDeclineReason = "no_verification_method"
-	DigitalWalletTokenRequestCreateResponseDeclineReasonWebhookTimedOut      DigitalWalletTokenRequestCreateResponseDeclineReason = "webhook_timed_out"
-	DigitalWalletTokenRequestCreateResponseDeclineReasonWebhookDeclined      DigitalWalletTokenRequestCreateResponseDeclineReason = "webhook_declined"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive        SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "card_not_active"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonNoVerificationMethod SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "no_verification_method"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_timed_out"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
 )
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_digital_wallet_token_request_simulation_result`.
-type DigitalWalletTokenRequestCreateResponseType string
+type SimulationDigitalWalletTokenRequestNewResponseType string
 
 const (
-	DigitalWalletTokenRequestCreateResponseTypeInboundDigitalWalletTokenRequestSimulationResult DigitalWalletTokenRequestCreateResponseType = "inbound_digital_wallet_token_request_simulation_result"
+	SimulationDigitalWalletTokenRequestNewResponseTypeInboundDigitalWalletTokenRequestSimulationResult SimulationDigitalWalletTokenRequestNewResponseType = "inbound_digital_wallet_token_request_simulation_result"
 )
 
 type SimulationDigitalWalletTokenRequestNewParams struct {

@@ -173,25 +173,3 @@ func (r DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Digital Wallet Token objects
-type DigitalWalletTokenListResponse struct {
-	// The contents of the list.
-	Data []DigitalWalletToken `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       digitalWalletTokenListResponseJSON
-}
-
-// digitalWalletTokenListResponseJSON contains the JSON metadata for the struct
-// [DigitalWalletTokenListResponse]
-type digitalWalletTokenListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *DigitalWalletTokenListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

@@ -166,25 +166,3 @@ func (r AccountStatementListParamsStatementPeriodStart) URLQuery() (v url.Values
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Account Statement objects
-type AccountStatementListResponse struct {
-	// The contents of the list.
-	Data []AccountStatement `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       accountStatementListResponseJSON
-}
-
-// accountStatementListResponseJSON contains the JSON metadata for the struct
-// [AccountStatementListResponse]
-type accountStatementListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountStatementListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

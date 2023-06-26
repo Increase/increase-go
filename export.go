@@ -246,25 +246,3 @@ func (r ExportListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Export objects
-type ExportListResponse struct {
-	// The contents of the list.
-	Data []Export `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       exportListResponseJSON
-}
-
-// exportListResponseJSON contains the JSON metadata for the struct
-// [ExportListResponse]
-type exportListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExportListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

@@ -1892,25 +1892,3 @@ func (r TransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
-
-// A list of Transaction objects
-type TransactionListResponse struct {
-	// The contents of the list.
-	Data []Transaction `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       transactionListResponseJSON
-}
-
-// transactionListResponseJSON contains the JSON metadata for the struct
-// [TransactionListResponse]
-type transactionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
