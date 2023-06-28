@@ -77,18 +77,18 @@ type AccountStatement struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The Account's balance at the start of its statement period.
+	EndingBalance int64 `json:"ending_balance,required"`
 	// The identifier of the File containing a PDF of the statement.
 	FileID string `json:"file_id,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
-	// start of the period the Account Statement covers.
-	StatementPeriodStart time.Time `json:"statement_period_start,required" format:"date-time"`
+	// The Account's balance at the start of its statement period.
+	StartingBalance int64 `json:"starting_balance,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 	// of the period the Account Statement covers.
 	StatementPeriodEnd time.Time `json:"statement_period_end,required" format:"date-time"`
-	// The Account's balance at the start of its statement period.
-	StartingBalance int64 `json:"starting_balance,required"`
-	// The Account's balance at the start of its statement period.
-	EndingBalance int64 `json:"ending_balance,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
+	// start of the period the Account Statement covers.
+	StatementPeriodStart time.Time `json:"statement_period_start,required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
 	Type AccountStatementType `json:"type,required"`
@@ -101,11 +101,11 @@ type accountStatementJSON struct {
 	ID                   apijson.Field
 	AccountID            apijson.Field
 	CreatedAt            apijson.Field
-	FileID               apijson.Field
-	StatementPeriodStart apijson.Field
-	StatementPeriodEnd   apijson.Field
-	StartingBalance      apijson.Field
 	EndingBalance        apijson.Field
+	FileID               apijson.Field
+	StartingBalance      apijson.Field
+	StatementPeriodEnd   apijson.Field
+	StatementPeriodStart apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field

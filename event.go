@@ -68,6 +68,8 @@ func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams
 // Events are records of things that happened to objects in the API. They also
 // result in webhooks being generated.
 type Event struct {
+	// The Event identifier.
+	ID string `json:"id,required"`
 	// The identifier of the object that generated this Event.
 	AssociatedObjectID string `json:"associated_object_id,required"`
 	// The type of the object that generated this Event.
@@ -77,8 +79,6 @@ type Event struct {
 	Category EventCategory `json:"category,required"`
 	// The time the Event was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The Event identifier.
-	ID string `json:"id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
 	Type EventType `json:"type,required"`
@@ -87,11 +87,11 @@ type Event struct {
 
 // eventJSON contains the JSON metadata for the struct [Event]
 type eventJSON struct {
+	ID                   apijson.Field
 	AssociatedObjectID   apijson.Field
 	AssociatedObjectType apijson.Field
 	Category             apijson.Field
 	CreatedAt            apijson.Field
-	ID                   apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field

@@ -79,21 +79,21 @@ func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDispu
 type CardDispute struct {
 	// The Card Dispute identifier.
 	ID string `json:"id,required"`
-	// Why you disputed the Transaction in question.
-	Explanation string `json:"explanation,required"`
-	// The results of the Dispute investigation.
-	Status CardDisputeStatus `json:"status,required"`
+	// If the Card Dispute's status is `accepted`, this will contain details of the
+	// successful dispute.
+	Acceptance CardDisputeAcceptance `json:"acceptance,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The identifier of the Transaction that was disputed.
 	DisputedTransactionID string `json:"disputed_transaction_id,required"`
-	// If the Card Dispute's status is `accepted`, this will contain details of the
-	// successful dispute.
-	Acceptance CardDisputeAcceptance `json:"acceptance,required,nullable"`
+	// Why you disputed the Transaction in question.
+	Explanation string `json:"explanation,required"`
 	// If the Card Dispute's status is `rejected`, this will contain details of the
 	// unsuccessful dispute.
 	Rejection CardDisputeRejection `json:"rejection,required,nullable"`
+	// The results of the Dispute investigation.
+	Status CardDisputeStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
 	Type CardDisputeType `json:"type,required"`
@@ -103,12 +103,12 @@ type CardDispute struct {
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
 type cardDisputeJSON struct {
 	ID                    apijson.Field
-	Explanation           apijson.Field
-	Status                apijson.Field
+	Acceptance            apijson.Field
 	CreatedAt             apijson.Field
 	DisputedTransactionID apijson.Field
-	Acceptance            apijson.Field
+	Explanation           apijson.Field
 	Rejection             apijson.Field
+	Status                apijson.Field
 	Type                  apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
@@ -117,15 +117,6 @@ type cardDisputeJSON struct {
 func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The results of the Dispute investigation.
-type CardDisputeStatus string
-
-const (
-	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
-	CardDisputeStatusAccepted         CardDisputeStatus = "accepted"
-	CardDisputeStatusRejected         CardDisputeStatus = "rejected"
-)
 
 // If the Card Dispute's status is `accepted`, this will contain details of the
 // successful dispute.
@@ -158,22 +149,22 @@ func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 // If the Card Dispute's status is `rejected`, this will contain details of the
 // unsuccessful dispute.
 type CardDisputeRejection struct {
+	// The identifier of the Card Dispute that was rejected.
+	CardDisputeID string `json:"card_dispute_id,required"`
 	// Why the Card Dispute was rejected.
 	Explanation string `json:"explanation,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was rejected.
 	RejectedAt time.Time `json:"rejected_at,required" format:"date-time"`
-	// The identifier of the Card Dispute that was rejected.
-	CardDisputeID string `json:"card_dispute_id,required"`
-	JSON          cardDisputeRejectionJSON
+	JSON       cardDisputeRejectionJSON
 }
 
 // cardDisputeRejectionJSON contains the JSON metadata for the struct
 // [CardDisputeRejection]
 type cardDisputeRejectionJSON struct {
+	CardDisputeID apijson.Field
 	Explanation   apijson.Field
 	RejectedAt    apijson.Field
-	CardDisputeID apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -181,6 +172,15 @@ type cardDisputeRejectionJSON struct {
 func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The results of the Dispute investigation.
+type CardDisputeStatus string
+
+const (
+	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
+	CardDisputeStatusAccepted         CardDisputeStatus = "accepted"
+	CardDisputeStatusRejected         CardDisputeStatus = "rejected"
+)
 
 // A constant representing the object's type. For this resource it will always be
 // `card_dispute`.

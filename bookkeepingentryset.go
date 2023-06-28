@@ -43,12 +43,12 @@ func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEn
 type BookkeepingEntrySet struct {
 	// The entry set identifier.
 	ID string `json:"id,required"`
-	// The transaction identifier, if any.
-	TransactionID string `json:"transaction_id,required,nullable"`
 	// The timestamp of the entry set.
 	Date time.Time `json:"date,required" format:"date-time"`
 	// The entries
 	Entries []BookkeepingEntrySetEntries `json:"entries,required"`
+	// The transaction identifier, if any.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry_set`.
 	Type BookkeepingEntrySetType `json:"type,required"`
@@ -59,9 +59,9 @@ type BookkeepingEntrySet struct {
 // [BookkeepingEntrySet]
 type bookkeepingEntrySetJSON struct {
 	ID            apijson.Field
-	TransactionID apijson.Field
 	Date          apijson.Field
 	Entries       apijson.Field
+	TransactionID apijson.Field
 	Type          apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -72,21 +72,21 @@ func (r *BookkeepingEntrySet) UnmarshalJSON(data []byte) (err error) {
 }
 
 type BookkeepingEntrySetEntries struct {
+	// The entry identifier.
+	ID string `json:"id,required"`
 	// The bookkeeping account impacted by the entry.
 	AccountID string `json:"account_id,required"`
 	// The amount of the entry in minor units.
 	Amount int64 `json:"amount,required"`
-	// The entry identifier.
-	ID   string `json:"id,required"`
-	JSON bookkeepingEntrySetEntriesJSON
+	JSON   bookkeepingEntrySetEntriesJSON
 }
 
 // bookkeepingEntrySetEntriesJSON contains the JSON metadata for the struct
 // [BookkeepingEntrySetEntries]
 type bookkeepingEntrySetEntriesJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	ID          apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

@@ -64,17 +64,17 @@ func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query Routing
 
 // Routing numbers are used to identify your bank in a financial transaction.
 type RoutingNumber struct {
+	// This routing number's support for ACH Transfers.
+	ACHTransfers RoutingNumberACHTransfers `json:"ach_transfers,required"`
 	// The name of the financial institution belonging to a routing number.
 	Name string `json:"name,required"`
+	// This routing number's support for Real Time Payments Transfers.
+	RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
 	// The nine digit routing number identifier.
 	RoutingNumber string `json:"routing_number,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `routing_number`.
 	Type RoutingNumberType `json:"type,required"`
-	// This routing number's support for ACH Transfers.
-	ACHTransfers RoutingNumberACHTransfers `json:"ach_transfers,required"`
-	// This routing number's support for Real Time Payments Transfers.
-	RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
 	// This routing number's support for Wire Transfers.
 	WireTransfers RoutingNumberWireTransfers `json:"wire_transfers,required"`
 	JSON          routingNumberJSON
@@ -82,11 +82,11 @@ type RoutingNumber struct {
 
 // routingNumberJSON contains the JSON metadata for the struct [RoutingNumber]
 type routingNumberJSON struct {
+	ACHTransfers              apijson.Field
 	Name                      apijson.Field
+	RealTimePaymentsTransfers apijson.Field
 	RoutingNumber             apijson.Field
 	Type                      apijson.Field
-	ACHTransfers              apijson.Field
-	RealTimePaymentsTransfers apijson.Field
 	WireTransfers             apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
@@ -95,14 +95,6 @@ type routingNumberJSON struct {
 func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// A constant representing the object's type. For this resource it will always be
-// `routing_number`.
-type RoutingNumberType string
-
-const (
-	RoutingNumberTypeRoutingNumber RoutingNumberType = "routing_number"
-)
 
 // This routing number's support for ACH Transfers.
 type RoutingNumberACHTransfers string
@@ -118,6 +110,14 @@ type RoutingNumberRealTimePaymentsTransfers string
 const (
 	RoutingNumberRealTimePaymentsTransfersSupported    RoutingNumberRealTimePaymentsTransfers = "supported"
 	RoutingNumberRealTimePaymentsTransfersNotSupported RoutingNumberRealTimePaymentsTransfers = "not_supported"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `routing_number`.
+type RoutingNumberType string
+
+const (
+	RoutingNumberTypeRoutingNumber RoutingNumberType = "routing_number"
 )
 
 // This routing number's support for Wire Transfers.

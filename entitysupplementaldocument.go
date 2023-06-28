@@ -69,11 +69,11 @@ func (r *EntitySupplementalDocumentService) ListAutoPaging(ctx context.Context, 
 // Supplemental Documents are uploaded files connected to an Entity during
 // onboarding.
 type SupplementalDocument struct {
-	// The File containing the document.
-	FileID string `json:"file_id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Supplemental Document was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The File containing the document.
+	FileID string `json:"file_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type SupplementalDocumentType `json:"type,required"`
@@ -83,8 +83,8 @@ type SupplementalDocument struct {
 // supplementalDocumentJSON contains the JSON metadata for the struct
 // [SupplementalDocument]
 type supplementalDocumentJSON struct {
-	FileID      apijson.Field
 	CreatedAt   apijson.Field
+	FileID      apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field

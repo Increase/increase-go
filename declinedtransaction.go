@@ -70,22 +70,22 @@ func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query D
 // account. For example, Declined Transactions are caused when your Account has an
 // insufficient balance or your Limits are triggered.
 type DeclinedTransaction struct {
+	// The Declined Transaction identifier.
+	ID string `json:"id,required"`
 	// The identifier for the Account the Declined Transaction belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+	// Transaction occured.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transcation's Account.
 	Currency DeclinedTransactionCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// This is the description the vendor provides.
 	Description string `json:"description,required"`
-	// The Declined Transaction identifier.
-	ID string `json:"id,required"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
@@ -106,12 +106,12 @@ type DeclinedTransaction struct {
 // declinedTransactionJSON contains the JSON metadata for the struct
 // [DeclinedTransaction]
 type declinedTransactionJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	Currency    apijson.Field
 	CreatedAt   apijson.Field
+	Currency    apijson.Field
 	Description apijson.Field
-	ID          apijson.Field
 	RouteID     apijson.Field
 	RouteType   apijson.Field
 	Source      apijson.Field
@@ -152,16 +152,16 @@ const (
 // additional undocumented keys may appear in this object. These should be treated
 // as deprecated and will be removed in the future.
 type DeclinedTransactionSource struct {
-	// The type of decline that took place. We may add additional possible values for
-	// this enum over time; your application should be able to handle such additions
-	// gracefully.
-	Category DeclinedTransactionSourceCategory `json:"category,required"`
 	// A ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
 	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
+	// The type of decline that took place. We may add additional possible values for
+	// this enum over time; your application should be able to handle such additions
+	// gracefully.
+	Category DeclinedTransactionSourceCategory `json:"category,required"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
@@ -181,9 +181,9 @@ type DeclinedTransactionSource struct {
 // declinedTransactionSourceJSON contains the JSON metadata for the struct
 // [DeclinedTransactionSource]
 type declinedTransactionSourceJSON struct {
-	Category                               apijson.Field
 	ACHDecline                             apijson.Field
 	CardDecline                            apijson.Field
+	Category                               apijson.Field
 	CheckDecline                           apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
@@ -196,31 +196,16 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The type of decline that took place. We may add additional possible values for
-// this enum over time; your application should be able to handle such additions
-// gracefully.
-type DeclinedTransactionSourceCategory string
-
-const (
-	DeclinedTransactionSourceCategoryACHDecline                             DeclinedTransactionSourceCategory = "ach_decline"
-	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
-	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
-	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	DeclinedTransactionSourceCategoryInternationalACHDecline                DeclinedTransactionSourceCategory = "international_ach_decline"
-	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
-	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
-)
-
 // A ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type DeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
 	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
 	OriginatorCompanyID                string `json:"originator_company_id,required"`
+	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	// Why the ACH transfer was declined.
 	Reason           DeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
 	ReceiverIDNumber string                                    `json:"receiver_id_number,required,nullable"`
@@ -233,10 +218,10 @@ type DeclinedTransactionSourceACHDecline struct {
 // struct [DeclinedTransactionSourceACHDecline]
 type declinedTransactionSourceACHDeclineJSON struct {
 	Amount                             apijson.Field
-	OriginatorCompanyName              apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
 	Reason                             apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
@@ -270,11 +255,18 @@ const (
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
 type DeclinedTransactionSourceCardDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+	// account currency.
+	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// If the authorization was attempted using a Digital Wallet Token (such as an
+	// Apple Pay purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
@@ -282,45 +274,38 @@ type DeclinedTransactionSourceCardDecline struct {
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required,nullable"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// The payment network used to process this card authorization
 	Network DeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails DeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
-	// Why the transaction was declined.
-	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
-	// If the authorization was attempted using a Digital Wallet Token (such as an
-	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 declinedTransactionSourceCardDeclineJSON
+	// Why the transaction was declined.
+	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
+	JSON   declinedTransactionSourceCardDeclineJSON
 }
 
 // declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
 // struct [DeclinedTransactionSourceCardDecline]
 type declinedTransactionSourceCardDeclineJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
-	MerchantDescriptor   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
-	Amount               apijson.Field
-	Currency             apijson.Field
-	Reason               apijson.Field
-	MerchantState        apijson.Field
 	RealTimeDecisionID   apijson.Field
-	DigitalWalletTokenID apijson.Field
+	Reason               apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -328,6 +313,19 @@ type declinedTransactionSourceCardDeclineJSON struct {
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
+type DeclinedTransactionSourceCardDeclineCurrency string
+
+const (
+	DeclinedTransactionSourceCardDeclineCurrencyCad DeclinedTransactionSourceCardDeclineCurrency = "CAD"
+	DeclinedTransactionSourceCardDeclineCurrencyChf DeclinedTransactionSourceCardDeclineCurrency = "CHF"
+	DeclinedTransactionSourceCardDeclineCurrencyEur DeclinedTransactionSourceCardDeclineCurrency = "EUR"
+	DeclinedTransactionSourceCardDeclineCurrencyGbp DeclinedTransactionSourceCardDeclineCurrency = "GBP"
+	DeclinedTransactionSourceCardDeclineCurrencyJpy DeclinedTransactionSourceCardDeclineCurrency = "JPY"
+	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
+)
 
 // The payment network used to process this card authorization
 type DeclinedTransactionSourceCardDeclineNetwork string
@@ -396,19 +394,6 @@ const (
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type DeclinedTransactionSourceCardDeclineCurrency string
-
-const (
-	DeclinedTransactionSourceCardDeclineCurrencyCad DeclinedTransactionSourceCardDeclineCurrency = "CAD"
-	DeclinedTransactionSourceCardDeclineCurrencyChf DeclinedTransactionSourceCardDeclineCurrency = "CHF"
-	DeclinedTransactionSourceCardDeclineCurrencyEur DeclinedTransactionSourceCardDeclineCurrency = "EUR"
-	DeclinedTransactionSourceCardDeclineCurrencyGbp DeclinedTransactionSourceCardDeclineCurrency = "GBP"
-	DeclinedTransactionSourceCardDeclineCurrencyJpy DeclinedTransactionSourceCardDeclineCurrency = "JPY"
-	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
-)
-
 // Why the transaction was declined.
 type DeclinedTransactionSourceCardDeclineReason string
 
@@ -426,6 +411,21 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
 	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+)
+
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
+type DeclinedTransactionSourceCategory string
+
+const (
+	DeclinedTransactionSourceCategoryACHDecline                             DeclinedTransactionSourceCategory = "ach_decline"
+	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
+	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
+	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	DeclinedTransactionSourceCategoryInternationalACHDecline                DeclinedTransactionSourceCategory = "international_ach_decline"
+	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
+	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
 
 // A Check Decline object. This field will be present in the JSON response if and
@@ -482,25 +482,25 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real Time Payments
 	// transfer.
 	Currency DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
-	// Why the transfer was declined.
-	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
-	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
-	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
-	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
+	// Why the transfer was declined.
+	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	// The Real Time Payments network identification of the declined transfer.
+	TransactionIdentification string `json:"transaction_identification,required"`
+	JSON                      declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
 
 // declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the
@@ -508,14 +508,14 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 // [DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
 type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
 	Amount                    apijson.Field
-	Currency                  apijson.Field
-	Reason                    apijson.Field
 	CreditorName              apijson.Field
-	DebtorName                apijson.Field
+	Currency                  apijson.Field
 	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
 	DebtorRoutingNumber       apijson.Field
-	TransactionIdentification apijson.Field
+	Reason                    apijson.Field
 	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
@@ -556,40 +556,40 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount                                                 int64  `json:"amount,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
 	DestinationCountryCode                                 string `json:"destination_country_code,required"`
 	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
+	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
 	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
 	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
 	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
 	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
 	OriginatorCity                                         string `json:"originator_city,required"`
 	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
 	OriginatorCountry                                      string `json:"originator_country,required"`
 	OriginatorIdentification                               string `json:"originator_identification,required"`
 	OriginatorName                                         string `json:"originator_name,required"`
 	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
 	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
 	ReceiverCountry                                        string `json:"receiver_country,required"`
+	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
 	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
+	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
 	JSON                                                   declinedTransactionSourceInternationalACHDeclineJSON
 }
@@ -598,40 +598,40 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 // for the struct [DeclinedTransactionSourceInternationalACHDecline]
 type declinedTransactionSourceInternationalACHDeclineJSON struct {
 	Amount                                                 apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignExchangeReference                               apijson.Field
 	DestinationCountryCode                                 apijson.Field
 	DestinationCurrencyCode                                apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
 	ForeignPaymentAmount                                   apijson.Field
 	ForeignTraceNumber                                     apijson.Field
 	InternationalTransactionTypeCode                       apijson.Field
 	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
 	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
 	OriginatorCity                                         apijson.Field
 	OriginatorCompanyEntryDescription                      apijson.Field
 	OriginatorCountry                                      apijson.Field
 	OriginatorIdentification                               apijson.Field
 	OriginatorName                                         apijson.Field
 	OriginatorPostalCode                                   apijson.Field
-	OriginatorStreetAddress                                apijson.Field
 	OriginatorStateOrProvince                              apijson.Field
+	OriginatorStreetAddress                                apijson.Field
 	PaymentRelatedInformation                              apijson.Field
 	PaymentRelatedInformation2                             apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
 	ReceiverCity                                           apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
 	ReceiverCountry                                        apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
 	ReceiverPostalCode                                     apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
 	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
 	ExtraFields                                            map[string]apijson.Field
@@ -646,38 +646,37 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []
 type DeclinedTransactionSourceWireDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount                                  int64  `json:"amount,required"`
+	BeneficiaryAddressLine1                 string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2                 string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3                 string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                         string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference                    string `json:"beneficiary_reference,required,nullable"`
+	Description                             string `json:"description,required"`
+	InputMessageAccountabilityData          string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1                  string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                          string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
-	Reason                                  DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	Description                             string                                     `json:"description,required"`
-	BeneficiaryAddressLine1                 string                                     `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2                 string                                     `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3                 string                                     `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                         string                                     `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference                    string                                     `json:"beneficiary_reference,required,nullable"`
-	InputMessageAccountabilityData          string                                     `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1                  string                                     `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2                  string                                     `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3                  string                                     `json:"originator_address_line3,required,nullable"`
-	OriginatorName                          string                                     `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformationLine1 string                                     `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	OriginatorToBeneficiaryInformationLine2 string                                     `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	OriginatorToBeneficiaryInformationLine3 string                                     `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	OriginatorToBeneficiaryInformationLine4 string                                     `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    declinedTransactionSourceWireDeclineJSON
+	Reason DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
+	JSON   declinedTransactionSourceWireDeclineJSON
 }
 
 // declinedTransactionSourceWireDeclineJSON contains the JSON metadata for the
 // struct [DeclinedTransactionSourceWireDecline]
 type declinedTransactionSourceWireDeclineJSON struct {
 	Amount                                  apijson.Field
-	Reason                                  apijson.Field
-	Description                             apijson.Field
 	BeneficiaryAddressLine1                 apijson.Field
 	BeneficiaryAddressLine2                 apijson.Field
 	BeneficiaryAddressLine3                 apijson.Field
 	BeneficiaryName                         apijson.Field
 	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
 	InputMessageAccountabilityData          apijson.Field
 	OriginatorAddressLine1                  apijson.Field
 	OriginatorAddressLine2                  apijson.Field
@@ -687,6 +686,7 @@ type declinedTransactionSourceWireDeclineJSON struct {
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	Reason                                  apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }

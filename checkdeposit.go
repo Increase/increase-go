@@ -78,24 +78,18 @@ func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDep
 type CheckDeposit struct {
 	// The deposit's identifier.
 	ID string `json:"id,required"`
+	// The Account the check was deposited into.
+	AccountID string `json:"account_id,required"`
 	// The deposited amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID for the File containing the image of the back of the check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
 	Currency CheckDepositCurrency `json:"currency,required"`
-	// The status of the Check Deposit.
-	Status CheckDepositStatus `json:"status,required"`
-	// The Account the check was deposited into.
-	AccountID string `json:"account_id,required"`
-	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID string `json:"front_image_file_id,required"`
-	// The ID for the File containing the image of the back of the check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
-	// The ID for the Transaction created by the deposit.
-	TransactionID string `json:"transaction_id,required,nullable"`
 	// If your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
 	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance,required,nullable"`
@@ -105,6 +99,12 @@ type CheckDeposit struct {
 	// If your deposit is returned, this will contain details as to why it was
 	// returned.
 	DepositReturn CheckDepositDepositReturn `json:"deposit_return,required,nullable"`
+	// The ID for the File containing the image of the front of the check.
+	FrontImageFileID string `json:"front_image_file_id,required"`
+	// The status of the Check Deposit.
+	Status CheckDepositStatus `json:"status,required"`
+	// The ID for the Transaction created by the deposit.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
 	Type CheckDepositType `json:"type,required"`
@@ -114,17 +114,17 @@ type CheckDeposit struct {
 // checkDepositJSON contains the JSON metadata for the struct [CheckDeposit]
 type checkDepositJSON struct {
 	ID                apijson.Field
+	AccountID         apijson.Field
 	Amount            apijson.Field
+	BackImageFileID   apijson.Field
 	CreatedAt         apijson.Field
 	Currency          apijson.Field
-	Status            apijson.Field
-	AccountID         apijson.Field
-	FrontImageFileID  apijson.Field
-	BackImageFileID   apijson.Field
-	TransactionID     apijson.Field
 	DepositAcceptance apijson.Field
 	DepositRejection  apijson.Field
 	DepositReturn     apijson.Field
+	FrontImageFileID  apijson.Field
+	Status            apijson.Field
+	TransactionID     apijson.Field
 	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
@@ -146,50 +146,40 @@ const (
 	CheckDepositCurrencyUsd CheckDepositCurrency = "USD"
 )
 
-// The status of the Check Deposit.
-type CheckDepositStatus string
-
-const (
-	CheckDepositStatusPending   CheckDepositStatus = "pending"
-	CheckDepositStatusSubmitted CheckDepositStatus = "submitted"
-	CheckDepositStatusRejected  CheckDepositStatus = "rejected"
-	CheckDepositStatusReturned  CheckDepositStatus = "returned"
-)
-
 // If your deposit is successfully parsed and accepted by Increase, this will
 // contain details of the parsed check.
 type CheckDepositDepositAcceptance struct {
+	// The account number printed on the check.
+	AccountNumber string `json:"account_number,required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency CheckDepositDepositAcceptanceCurrency `json:"currency,required"`
-	// The account number printed on the check.
-	AccountNumber string `json:"account_number,required"`
-	// The routing number printed on the check.
-	RoutingNumber string `json:"routing_number,required"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number for business checks.
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// The ID of the Check Deposit that was accepted.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency CheckDepositDepositAcceptanceCurrency `json:"currency,required"`
+	// The routing number printed on the check.
+	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
 	SerialNumber string `json:"serial_number,required,nullable"`
-	// The ID of the Check Deposit that was accepted.
-	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           checkDepositDepositAcceptanceJSON
+	JSON         checkDepositDepositAcceptanceJSON
 }
 
 // checkDepositDepositAcceptanceJSON contains the JSON metadata for the struct
 // [CheckDepositDepositAcceptance]
 type checkDepositDepositAcceptanceJSON struct {
-	Amount         apijson.Field
-	Currency       apijson.Field
 	AccountNumber  apijson.Field
-	RoutingNumber  apijson.Field
+	Amount         apijson.Field
 	AuxiliaryOnUs  apijson.Field
-	SerialNumber   apijson.Field
 	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	RoutingNumber  apijson.Field
+	SerialNumber   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -276,18 +266,18 @@ type CheckDepositDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was returned.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency     CheckDepositDepositReturnCurrency     `json:"currency,required"`
+	ReturnReason CheckDepositDepositReturnReturnReason `json:"return_reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency CheckDepositDepositReturnCurrency `json:"currency,required"`
-	// The identifier of the Check Deposit that was returned.
-	CheckDepositID string `json:"check_deposit_id,required"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string                                `json:"transaction_id,required"`
-	ReturnReason  CheckDepositDepositReturnReturnReason `json:"return_reason,required"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          checkDepositDepositReturnJSON
 }
 
@@ -295,11 +285,11 @@ type CheckDepositDepositReturn struct {
 // [CheckDepositDepositReturn]
 type checkDepositDepositReturnJSON struct {
 	Amount         apijson.Field
-	ReturnedAt     apijson.Field
-	Currency       apijson.Field
 	CheckDepositID apijson.Field
-	TransactionID  apijson.Field
+	Currency       apijson.Field
 	ReturnReason   apijson.Field
+	ReturnedAt     apijson.Field
+	TransactionID  apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -336,6 +326,16 @@ const (
 	CheckDepositDepositReturnReturnReasonUnmatchedDetails          CheckDepositDepositReturnReturnReason = "unmatched_details"
 	CheckDepositDepositReturnReturnReasonUnreadableImage           CheckDepositDepositReturnReturnReason = "unreadable_image"
 	CheckDepositDepositReturnReturnReasonEndorsementIrregular      CheckDepositDepositReturnReturnReason = "endorsement_irregular"
+)
+
+// The status of the Check Deposit.
+type CheckDepositStatus string
+
+const (
+	CheckDepositStatusPending   CheckDepositStatus = "pending"
+	CheckDepositStatusSubmitted CheckDepositStatus = "submitted"
+	CheckDepositStatusRejected  CheckDepositStatus = "rejected"
+	CheckDepositStatusReturned  CheckDepositStatus = "returned"
 )
 
 // A constant representing the object's type. For this resource it will always be

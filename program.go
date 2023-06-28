@@ -70,29 +70,29 @@ func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListPa
 // lending or managing funds on behalf of your customers, or otherwise engaged in
 // regulated activity, we will work together to create additional Programs for you.
 type Program struct {
-	// The name of the Program.
-	Name string `json:"name,required"`
+	// The Program identifier.
+	ID string `json:"id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
-	// was last updated.
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
-	// The Program identifier.
-	ID string `json:"id,required"`
+	// The name of the Program.
+	Name string `json:"name,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `program`.
 	Type ProgramType `json:"type,required"`
-	JSON programJSON
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
+	// was last updated.
+	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	JSON      programJSON
 }
 
 // programJSON contains the JSON metadata for the struct [Program]
 type programJSON struct {
-	Name        apijson.Field
-	CreatedAt   apijson.Field
-	UpdatedAt   apijson.Field
 	ID          apijson.Field
+	CreatedAt   apijson.Field
+	Name        apijson.Field
 	Type        apijson.Field
+	UpdatedAt   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
