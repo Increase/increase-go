@@ -69,27 +69,27 @@ func (r *PendingTransactionService) ListAutoPaging(ctx context.Context, query Pe
 // Pending Transactions are potential future additions and removals of money from
 // your bank account.
 type PendingTransaction struct {
+	// The Pending Transaction identifier.
+	ID string `json:"id,required"`
 	// The identifier for the account this Pending Transaction belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
-	// Transaction's currency. This will match the currency on the Pending
-	// Transcation's Account.
-	Currency PendingTransactionCurrency `json:"currency,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction was completed.
 	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
+	// Transaction's currency. This will match the currency on the Pending
+	// Transcation's Account.
+	Currency PendingTransactionCurrency `json:"currency,required"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
 	Description string `json:"description,required"`
-	// The Pending Transaction identifier.
-	ID string `json:"id,required"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
@@ -111,13 +111,13 @@ type PendingTransaction struct {
 // pendingTransactionJSON contains the JSON metadata for the struct
 // [PendingTransaction]
 type pendingTransactionJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	Currency    apijson.Field
 	CompletedAt apijson.Field
 	CreatedAt   apijson.Field
+	Currency    apijson.Field
 	Description apijson.Field
-	ID          apijson.Field
 	RouteID     apijson.Field
 	RouteType   apijson.Field
 	Source      apijson.Field
@@ -157,10 +157,6 @@ const (
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
 type PendingTransactionSource struct {
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
-	Category PendingTransactionSourceCategory `json:"category,required"`
 	// A Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
 	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,required,nullable"`
@@ -170,6 +166,10 @@ type PendingTransactionSource struct {
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
 	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
+	// The type of transaction that took place. We may add additional possible values
+	// for this enum over time; your application should be able to handle such
+	// additions gracefully.
+	Category PendingTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
 	CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction,required,nullable"`
@@ -192,10 +192,10 @@ type PendingTransactionSource struct {
 // pendingTransactionSourceJSON contains the JSON metadata for the struct
 // [PendingTransactionSource]
 type pendingTransactionSourceJSON struct {
-	Category                            apijson.Field
 	AccountTransferInstruction          apijson.Field
 	ACHTransferInstruction              apijson.Field
 	CardAuthorization                   apijson.Field
+	Category                            apijson.Field
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
@@ -208,23 +208,6 @@ type pendingTransactionSourceJSON struct {
 func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
-type PendingTransactionSourceCategory string
-
-const (
-	PendingTransactionSourceCategoryAccountTransferInstruction          PendingTransactionSourceCategory = "account_transfer_instruction"
-	PendingTransactionSourceCategoryACHTransferInstruction              PendingTransactionSourceCategory = "ach_transfer_instruction"
-	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
-	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
-	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
-	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
-	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
-	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
-)
 
 // A Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
@@ -296,11 +279,21 @@ func (r *PendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []by
 type PendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
+	// The pending amount in the minor unit of the transaction's currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
+	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+	// purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
+	// will expire and the pending transaction will be released.
+	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
@@ -308,27 +301,17 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required,nullable"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The payment network used to process this card authorization
 	Network PendingTransactionSourceCardAuthorizationNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
-	// will expire and the pending transaction will be released.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	// The identifier of the Pending Transaction associated with this Transaction.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
-	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
-	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
 	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
@@ -339,19 +322,19 @@ type PendingTransactionSourceCardAuthorization struct {
 // struct [PendingTransactionSourceCardAuthorization]
 type pendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
+	ExpiresAt            apijson.Field
 	MerchantAcceptorID   apijson.Field
-	MerchantDescriptor   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
-	Amount               apijson.Field
-	Currency             apijson.Field
-	ExpiresAt            apijson.Field
-	RealTimeDecisionID   apijson.Field
-	DigitalWalletTokenID apijson.Field
 	PendingTransactionID apijson.Field
+	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -360,6 +343,19 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
+type PendingTransactionSourceCardAuthorizationCurrency string
+
+const (
+	PendingTransactionSourceCardAuthorizationCurrencyCad PendingTransactionSourceCardAuthorizationCurrency = "CAD"
+	PendingTransactionSourceCardAuthorizationCurrencyChf PendingTransactionSourceCardAuthorizationCurrency = "CHF"
+	PendingTransactionSourceCardAuthorizationCurrencyEur PendingTransactionSourceCardAuthorizationCurrency = "EUR"
+	PendingTransactionSourceCardAuthorizationCurrencyGbp PendingTransactionSourceCardAuthorizationCurrency = "GBP"
+	PendingTransactionSourceCardAuthorizationCurrencyJpy PendingTransactionSourceCardAuthorizationCurrency = "JPY"
+	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
+)
 
 // The payment network used to process this card authorization
 type PendingTransactionSourceCardAuthorizationNetwork string
@@ -430,19 +426,6 @@ const (
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type PendingTransactionSourceCardAuthorizationCurrency string
-
-const (
-	PendingTransactionSourceCardAuthorizationCurrencyCad PendingTransactionSourceCardAuthorizationCurrency = "CAD"
-	PendingTransactionSourceCardAuthorizationCurrencyChf PendingTransactionSourceCardAuthorizationCurrency = "CHF"
-	PendingTransactionSourceCardAuthorizationCurrencyEur PendingTransactionSourceCardAuthorizationCurrency = "EUR"
-	PendingTransactionSourceCardAuthorizationCurrencyGbp PendingTransactionSourceCardAuthorizationCurrency = "GBP"
-	PendingTransactionSourceCardAuthorizationCurrencyJpy PendingTransactionSourceCardAuthorizationCurrency = "JPY"
-	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
-)
-
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type PendingTransactionSourceCardAuthorizationType string
@@ -451,34 +434,51 @@ const (
 	PendingTransactionSourceCardAuthorizationTypeCardAuthorization PendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
+type PendingTransactionSourceCategory string
+
+const (
+	PendingTransactionSourceCategoryAccountTransferInstruction          PendingTransactionSourceCategory = "account_transfer_instruction"
+	PendingTransactionSourceCategoryACHTransferInstruction              PendingTransactionSourceCategory = "ach_transfer_instruction"
+	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
+	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
+	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
+	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
+	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
+	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
+	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
+)
+
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
 type PendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the File containing the image of the back of the check that
+	// was deposited.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The identifier of the Check Deposit.
+	CheckDepositID string `json:"check_deposit_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency,required"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
 	FrontImageFileID string `json:"front_image_file_id,required"`
-	// The identifier of the File containing the image of the back of the check that
-	// was deposited.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
-	// The identifier of the Check Deposit.
-	CheckDepositID string `json:"check_deposit_id,required,nullable"`
-	JSON           pendingTransactionSourceCheckDepositInstructionJSON
+	JSON             pendingTransactionSourceCheckDepositInstructionJSON
 }
 
 // pendingTransactionSourceCheckDepositInstructionJSON contains the JSON metadata
 // for the struct [PendingTransactionSourceCheckDepositInstruction]
 type pendingTransactionSourceCheckDepositInstructionJSON struct {
 	Amount           apijson.Field
-	Currency         apijson.Field
-	FrontImageFileID apijson.Field
 	BackImageFileID  apijson.Field
 	CheckDepositID   apijson.Field
+	Currency         apijson.Field
+	FrontImageFileID apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
@@ -547,37 +547,37 @@ type PendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// When the hold will be released automatically. Certain conditions may cause it to
+	// be released before this time.
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
 	Currency PendingTransactionSourceInboundFundsHoldCurrency `json:"currency,required"`
-	// When the hold will be released automatically. Certain conditions may cause it to
-	// be released before this time.
-	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
-	// When the hold was released (if it has been released).
-	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
-	// The status of the hold.
-	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
 	// The ID of the Transaction for which funds were held.
 	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
 	// The ID of the Pending Transaction representing the held funds.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
-	JSON                 pendingTransactionSourceInboundFundsHoldJSON
+	// When the hold was released (if it has been released).
+	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	// The status of the hold.
+	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
+	JSON   pendingTransactionSourceInboundFundsHoldJSON
 }
 
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
 // struct [PendingTransactionSourceInboundFundsHold]
 type pendingTransactionSourceInboundFundsHoldJSON struct {
 	Amount                  apijson.Field
+	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field
 	Currency                apijson.Field
-	AutomaticallyReleasesAt apijson.Field
-	ReleasedAt              apijson.Field
-	Status                  apijson.Field
 	HeldTransactionID       apijson.Field
 	PendingTransactionID    apijson.Field
+	ReleasedAt              apijson.Field
+	Status                  apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -637,12 +637,12 @@ func (r *PendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJ
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type PendingTransactionSourceWireTransferInstruction struct {
+	AccountNumber string `json:"account_number,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount             int64  `json:"amount,required"`
-	AccountNumber      string `json:"account_number,required"`
-	RoutingNumber      string `json:"routing_number,required"`
 	MessageToRecipient string `json:"message_to_recipient,required"`
+	RoutingNumber      string `json:"routing_number,required"`
 	TransferID         string `json:"transfer_id,required"`
 	JSON               pendingTransactionSourceWireTransferInstructionJSON
 }
@@ -650,10 +650,10 @@ type PendingTransactionSourceWireTransferInstruction struct {
 // pendingTransactionSourceWireTransferInstructionJSON contains the JSON metadata
 // for the struct [PendingTransactionSourceWireTransferInstruction]
 type pendingTransactionSourceWireTransferInstructionJSON struct {
-	Amount             apijson.Field
 	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
+	Amount             apijson.Field
 	MessageToRecipient apijson.Field
+	RoutingNumber      apijson.Field
 	TransferID         apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field

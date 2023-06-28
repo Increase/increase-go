@@ -93,18 +93,18 @@ type EventSubscription struct {
 	ID string `json:"id,required"`
 	// The time the event subscription was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// This indicates if we'll send notifications to this subscription.
-	Status EventSubscriptionStatus `json:"status,required"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category,required,nullable"`
-	// The webhook url where we'll send notifications.
-	URL string `json:"url,required"`
 	// The key that will be used to sign webhooks.
 	SharedSecret string `json:"shared_secret,required"`
+	// This indicates if we'll send notifications to this subscription.
+	Status EventSubscriptionStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
 	Type EventSubscriptionType `json:"type,required"`
+	// The webhook url where we'll send notifications.
+	URL  string `json:"url,required"`
 	JSON eventSubscriptionJSON
 }
 
@@ -113,11 +113,11 @@ type EventSubscription struct {
 type eventSubscriptionJSON struct {
 	ID                    apijson.Field
 	CreatedAt             apijson.Field
-	Status                apijson.Field
 	SelectedEventCategory apijson.Field
-	URL                   apijson.Field
 	SharedSecret          apijson.Field
+	Status                apijson.Field
 	Type                  apijson.Field
+	URL                   apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -125,16 +125,6 @@ type eventSubscriptionJSON struct {
 func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// This indicates if we'll send notifications to this subscription.
-type EventSubscriptionStatus string
-
-const (
-	EventSubscriptionStatusActive            EventSubscriptionStatus = "active"
-	EventSubscriptionStatusDisabled          EventSubscriptionStatus = "disabled"
-	EventSubscriptionStatusDeleted           EventSubscriptionStatus = "deleted"
-	EventSubscriptionStatusRequiresAttention EventSubscriptionStatus = "requires_attention"
-)
 
 // If specified, this subscription will only receive webhooks for Events with the
 // specified `category`.
@@ -191,6 +181,16 @@ const (
 	EventSubscriptionSelectedEventCategoryWireDrawdownRequestUpdated                           EventSubscriptionSelectedEventCategory = "wire_drawdown_request.updated"
 	EventSubscriptionSelectedEventCategoryWireTransferCreated                                  EventSubscriptionSelectedEventCategory = "wire_transfer.created"
 	EventSubscriptionSelectedEventCategoryWireTransferUpdated                                  EventSubscriptionSelectedEventCategory = "wire_transfer.updated"
+)
+
+// This indicates if we'll send notifications to this subscription.
+type EventSubscriptionStatus string
+
+const (
+	EventSubscriptionStatusActive            EventSubscriptionStatus = "active"
+	EventSubscriptionStatusDisabled          EventSubscriptionStatus = "disabled"
+	EventSubscriptionStatusDeleted           EventSubscriptionStatus = "deleted"
+	EventSubscriptionStatusRequiresAttention EventSubscriptionStatus = "requires_attention"
 )
 
 // A constant representing the object's type. For this resource it will always be

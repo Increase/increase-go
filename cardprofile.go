@@ -83,13 +83,13 @@ type CardProfile struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The status of the Card Profile.
-	Status CardProfileStatus `json:"status,required"`
 	// A description you can use to identify the Card Profile.
 	Description string `json:"description,required"`
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
 	DigitalWallets CardProfileDigitalWallets `json:"digital_wallets,required"`
+	// The status of the Card Profile.
+	Status CardProfileStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_profile`.
 	Type CardProfileType `json:"type,required"`
@@ -100,15 +100,81 @@ type CardProfile struct {
 type cardProfileJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
-	Status         apijson.Field
 	Description    apijson.Field
 	DigitalWallets apijson.Field
+	Status         apijson.Field
 	Type           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CardProfile) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// How Cards should appear in digital wallets such as Apple Pay. Different wallets
+// will use these values to render card artwork appropriately for their app.
+type CardProfileDigitalWallets struct {
+	// The identifier of the File containing the card's icon image.
+	AppIconFileID string `json:"app_icon_file_id,required"`
+	// The identifier of the File containing the card's front image.
+	BackgroundImageFileID string `json:"background_image_file_id,required"`
+	// A user-facing description for the card itself.
+	CardDescription string `json:"card_description,required"`
+	// An email address the user can contact to receive support for their card.
+	ContactEmail string `json:"contact_email,required,nullable"`
+	// A phone number the user can contact to receive support for their card.
+	ContactPhone string `json:"contact_phone,required,nullable"`
+	// A website the user can visit to view and receive support for their card.
+	ContactWebsite string `json:"contact_website,required,nullable"`
+	// A user-facing description for whoever is issuing the card.
+	IssuerName string `json:"issuer_name,required"`
+	// The Card's text color, specified as an RGB triple.
+	TextColor CardProfileDigitalWalletsTextColor `json:"text_color,required"`
+	JSON      cardProfileDigitalWalletsJSON
+}
+
+// cardProfileDigitalWalletsJSON contains the JSON metadata for the struct
+// [CardProfileDigitalWallets]
+type cardProfileDigitalWalletsJSON struct {
+	AppIconFileID         apijson.Field
+	BackgroundImageFileID apijson.Field
+	CardDescription       apijson.Field
+	ContactEmail          apijson.Field
+	ContactPhone          apijson.Field
+	ContactWebsite        apijson.Field
+	IssuerName            apijson.Field
+	TextColor             apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The Card's text color, specified as an RGB triple.
+type CardProfileDigitalWalletsTextColor struct {
+	// The value of the blue channel in the RGB color.
+	Blue int64 `json:"blue,required"`
+	// The value of the green channel in the RGB color.
+	Green int64 `json:"green,required"`
+	// The value of the red channel in the RGB color.
+	Red  int64 `json:"red,required"`
+	JSON cardProfileDigitalWalletsTextColorJSON
+}
+
+// cardProfileDigitalWalletsTextColorJSON contains the JSON metadata for the struct
+// [CardProfileDigitalWalletsTextColor]
+type cardProfileDigitalWalletsTextColorJSON struct {
+	Blue        apijson.Field
+	Green       apijson.Field
+	Red         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -121,72 +187,6 @@ const (
 	CardProfileStatusActive   CardProfileStatus = "active"
 	CardProfileStatusArchived CardProfileStatus = "archived"
 )
-
-// How Cards should appear in digital wallets such as Apple Pay. Different wallets
-// will use these values to render card artwork appropriately for their app.
-type CardProfileDigitalWallets struct {
-	// The Card's text color, specified as an RGB triple.
-	TextColor CardProfileDigitalWalletsTextColor `json:"text_color,required"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName string `json:"issuer_name,required"`
-	// A user-facing description for the card itself.
-	CardDescription string `json:"card_description,required"`
-	// A website the user can visit to view and receive support for their card.
-	ContactWebsite string `json:"contact_website,required,nullable"`
-	// An email address the user can contact to receive support for their card.
-	ContactEmail string `json:"contact_email,required,nullable"`
-	// A phone number the user can contact to receive support for their card.
-	ContactPhone string `json:"contact_phone,required,nullable"`
-	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID string `json:"background_image_file_id,required"`
-	// The identifier of the File containing the card's icon image.
-	AppIconFileID string `json:"app_icon_file_id,required"`
-	JSON          cardProfileDigitalWalletsJSON
-}
-
-// cardProfileDigitalWalletsJSON contains the JSON metadata for the struct
-// [CardProfileDigitalWallets]
-type cardProfileDigitalWalletsJSON struct {
-	TextColor             apijson.Field
-	IssuerName            apijson.Field
-	CardDescription       apijson.Field
-	ContactWebsite        apijson.Field
-	ContactEmail          apijson.Field
-	ContactPhone          apijson.Field
-	BackgroundImageFileID apijson.Field
-	AppIconFileID         apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
-}
-
-func (r *CardProfileDigitalWallets) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The Card's text color, specified as an RGB triple.
-type CardProfileDigitalWalletsTextColor struct {
-	// The value of the red channel in the RGB color.
-	Red int64 `json:"red,required"`
-	// The value of the green channel in the RGB color.
-	Green int64 `json:"green,required"`
-	// The value of the blue channel in the RGB color.
-	Blue int64 `json:"blue,required"`
-	JSON cardProfileDigitalWalletsTextColorJSON
-}
-
-// cardProfileDigitalWalletsTextColorJSON contains the JSON metadata for the struct
-// [CardProfileDigitalWalletsTextColor]
-type cardProfileDigitalWalletsTextColorJSON struct {
-	Red         apijson.Field
-	Green       apijson.Field
-	Blue        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
 
 // A constant representing the object's type. For this resource it will always be
 // `card_profile`.
@@ -211,22 +211,22 @@ func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
 // How Cards should appear in digital wallets such as Apple Pay. Different wallets
 // will use these values to render card artwork appropriately for their app.
 type CardProfileNewParamsDigitalWallets struct {
-	// The Card's text color, specified as an RGB triple. The default is white.
-	TextColor param.Field[CardProfileNewParamsDigitalWalletsTextColor] `json:"text_color"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName param.Field[string] `json:"issuer_name,required"`
+	// The identifier of the File containing the card's icon image.
+	AppIconFileID param.Field[string] `json:"app_icon_file_id,required"`
+	// The identifier of the File containing the card's front image.
+	BackgroundImageFileID param.Field[string] `json:"background_image_file_id,required"`
 	// A user-facing description for the card itself.
 	CardDescription param.Field[string] `json:"card_description,required"`
-	// A website the user can visit to view and receive support for their card.
-	ContactWebsite param.Field[string] `json:"contact_website"`
+	// A user-facing description for whoever is issuing the card.
+	IssuerName param.Field[string] `json:"issuer_name,required"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
-	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID param.Field[string] `json:"background_image_file_id,required"`
-	// The identifier of the File containing the card's icon image.
-	AppIconFileID param.Field[string] `json:"app_icon_file_id,required"`
+	// A website the user can visit to view and receive support for their card.
+	ContactWebsite param.Field[string] `json:"contact_website"`
+	// The Card's text color, specified as an RGB triple. The default is white.
+	TextColor param.Field[CardProfileNewParamsDigitalWalletsTextColor] `json:"text_color"`
 }
 
 func (r CardProfileNewParamsDigitalWallets) MarshalJSON() (data []byte, err error) {
@@ -235,12 +235,12 @@ func (r CardProfileNewParamsDigitalWallets) MarshalJSON() (data []byte, err erro
 
 // The Card's text color, specified as an RGB triple. The default is white.
 type CardProfileNewParamsDigitalWalletsTextColor struct {
-	// The value of the red channel in the RGB color.
-	Red param.Field[int64] `json:"red,required"`
-	// The value of the green channel in the RGB color.
-	Green param.Field[int64] `json:"green,required"`
 	// The value of the blue channel in the RGB color.
 	Blue param.Field[int64] `json:"blue,required"`
+	// The value of the green channel in the RGB color.
+	Green param.Field[int64] `json:"green,required"`
+	// The value of the red channel in the RGB color.
+	Red param.Field[int64] `json:"red,required"`
 }
 
 func (r CardProfileNewParamsDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {

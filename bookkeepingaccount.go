@@ -68,10 +68,10 @@ func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query Bo
 type BookkeepingAccount struct {
 	// The account identifier.
 	ID string `json:"id,required"`
-	// The compliance category of the account.
-	ComplianceCategory BookkeepingAccountComplianceCategory `json:"compliance_category,required,nullable"`
 	// The API Account associated with this bookkeeping account.
 	AccountID string `json:"account_id,required,nullable"`
+	// The compliance category of the account.
+	ComplianceCategory BookkeepingAccountComplianceCategory `json:"compliance_category,required,nullable"`
 	// The Entity associated with this bookkeeping account.
 	EntityID string `json:"entity_id,required,nullable"`
 	// The name you choose for the account.
@@ -86,8 +86,8 @@ type BookkeepingAccount struct {
 // [BookkeepingAccount]
 type bookkeepingAccountJSON struct {
 	ID                 apijson.Field
-	ComplianceCategory apijson.Field
 	AccountID          apijson.Field
+	ComplianceCategory apijson.Field
 	EntityID           apijson.Field
 	Name               apijson.Field
 	Type               apijson.Field

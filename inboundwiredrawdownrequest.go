@@ -69,29 +69,39 @@ func (r *InboundWireDrawdownRequestService) ListAutoPaging(ctx context.Context, 
 // wire. This feature is in beta; reach out to
 // [support@increase.com](mailto:support@increase.com) to learn more.
 type InboundWireDrawdownRequest struct {
-	// A constant representing the object's type. For this resource it will always be
-	// `inbound_wire_drawdown_request`.
-	Type InboundWireDrawdownRequestType `json:"type,required"`
 	// The Wire drawdown request identifier.
 	ID string `json:"id,required"`
-	// The Account Number from which the recipient of this request is being requested
-	// to send funds.
-	RecipientAccountNumberID string `json:"recipient_account_number_id,required"`
-	// The drawdown request's originator's account number.
-	OriginatorAccountNumber string `json:"originator_account_number,required"`
-	// The drawdown request's originator's routing number.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required"`
-	// The drawdown request's beneficiary's account number.
-	BeneficiaryAccountNumber string `json:"beneficiary_account_number,required"`
-	// The drawdown request's beneficiary's routing number.
-	BeneficiaryRoutingNumber string `json:"beneficiary_routing_number,required"`
 	// The amount being requested in cents.
 	Amount int64 `json:"amount,required"`
+	// The drawdown request's beneficiary's account number.
+	BeneficiaryAccountNumber string `json:"beneficiary_account_number,required"`
+	// Line 1 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
+	// Line 2 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
+	// Line 3 of the drawdown request's beneficiary's address.
+	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
+	// The drawdown request's beneficiary's name.
+	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
+	// The drawdown request's beneficiary's routing number.
+	BeneficiaryRoutingNumber string `json:"beneficiary_routing_number,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency string `json:"currency,required"`
 	// A message from the drawdown request's originator.
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
+	// The drawdown request's originator's account number.
+	OriginatorAccountNumber string `json:"originator_account_number,required"`
+	// Line 1 of the drawdown request's originator's address.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// Line 2 of the drawdown request's originator's address.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// Line 3 of the drawdown request's originator's address.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The drawdown request's originator's name.
+	OriginatorName string `json:"originator_name,required,nullable"`
+	// The drawdown request's originator's routing number.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required"`
 	// Line 1 of the information conveyed from the originator of the message to the
 	// beneficiary.
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
@@ -104,50 +114,40 @@ type InboundWireDrawdownRequest struct {
 	// Line 4 of the information conveyed from the originator of the message to the
 	// beneficiary.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	// The drawdown request's originator's name.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// Line 1 of the drawdown request's originator's address.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// Line 2 of the drawdown request's originator's address.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// Line 3 of the drawdown request's originator's address.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The drawdown request's beneficiary's name.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
-	// Line 1 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
-	// Line 2 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
-	// Line 3 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	JSON                    inboundWireDrawdownRequestJSON
+	// The Account Number from which the recipient of this request is being requested
+	// to send funds.
+	RecipientAccountNumberID string `json:"recipient_account_number_id,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_wire_drawdown_request`.
+	Type InboundWireDrawdownRequestType `json:"type,required"`
+	JSON inboundWireDrawdownRequestJSON
 }
 
 // inboundWireDrawdownRequestJSON contains the JSON metadata for the struct
 // [InboundWireDrawdownRequest]
 type inboundWireDrawdownRequestJSON struct {
-	Type                                    apijson.Field
 	ID                                      apijson.Field
-	RecipientAccountNumberID                apijson.Field
-	OriginatorAccountNumber                 apijson.Field
-	OriginatorRoutingNumber                 apijson.Field
-	BeneficiaryAccountNumber                apijson.Field
-	BeneficiaryRoutingNumber                apijson.Field
 	Amount                                  apijson.Field
+	BeneficiaryAccountNumber                apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryRoutingNumber                apijson.Field
 	Currency                                apijson.Field
 	MessageToRecipient                      apijson.Field
+	OriginatorAccountNumber                 apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
+	RecipientAccountNumberID                apijson.Field
+	Type                                    apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }

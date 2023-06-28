@@ -67,24 +67,24 @@ func (r *InterestPaymentSimulationResult) UnmarshalJSON(data []byte) (err error)
 // This will contain the resulting [Transaction](#transactions) object. The
 // Transaction's `source` will be of `category: interest_payment`.
 type InterestPaymentSimulationResultTransaction struct {
+	// The Transaction identifier.
+	ID string `json:"id,required"`
 	// The identifier for the Account the Transaction belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+	// Transaction occured.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
 	Currency InterestPaymentSimulationResultTransactionCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
 	Description string `json:"description,required"`
-	// The Transaction identifier.
-	ID string `json:"id,required"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
@@ -104,12 +104,12 @@ type InterestPaymentSimulationResultTransaction struct {
 // interestPaymentSimulationResultTransactionJSON contains the JSON metadata for
 // the struct [InterestPaymentSimulationResultTransaction]
 type interestPaymentSimulationResultTransactionJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	Currency    apijson.Field
 	CreatedAt   apijson.Field
+	Currency    apijson.Field
 	Description apijson.Field
-	ID          apijson.Field
 	RouteID     apijson.Field
 	RouteType   apijson.Field
 	Source      apijson.Field
@@ -149,10 +149,6 @@ const (
 // undocumented keys may appear in this object. These should be treated as
 // deprecated and will be removed in the future.
 type InterestPaymentSimulationResultTransactionSource struct {
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
-	Category InterestPaymentSimulationResultTransactionSourceCategory `json:"category,required"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
 	AccountTransferIntention InterestPaymentSimulationResultTransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
@@ -177,6 +173,10 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement InterestPaymentSimulationResultTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	// The type of transaction that took place. We may add additional possible values
+	// for this enum over time; your application should be able to handle such
+	// additions gracefully.
+	Category InterestPaymentSimulationResultTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
@@ -254,7 +254,6 @@ type InterestPaymentSimulationResultTransactionSource struct {
 // interestPaymentSimulationResultTransactionSourceJSON contains the JSON metadata
 // for the struct [InterestPaymentSimulationResultTransactionSource]
 type interestPaymentSimulationResultTransactionSourceJSON struct {
-	Category                                    apijson.Field
 	AccountTransferIntention                    apijson.Field
 	ACHTransferIntention                        apijson.Field
 	ACHTransferRejection                        apijson.Field
@@ -263,6 +262,7 @@ type interestPaymentSimulationResultTransactionSourceJSON struct {
 	CardRefund                                  apijson.Field
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
+	Category                                    apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
@@ -292,46 +292,6 @@ type interestPaymentSimulationResultTransactionSourceJSON struct {
 func (r *InterestPaymentSimulationResultTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
-type InterestPaymentSimulationResultTransactionSourceCategory string
-
-const (
-	InterestPaymentSimulationResultTransactionSourceCategoryAccountTransferIntention                    InterestPaymentSimulationResultTransactionSourceCategory = "account_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferIntention                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferRejection                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferReturn                           InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance                       InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund                                  InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment                          InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement                              InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance                      InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositReturn                          InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferDeposit                        InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_deposit"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
-	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransfer                          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention           InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundCheck                                InterestPaymentSimulationResultTransactionSourceCategory = "inbound_check"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer             InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireTransfer                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
-	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment                             InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInternalSource                              InterestPaymentSimulationResultTransactionSourceCategory = "internal_source"
-	InterestPaymentSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     InterestPaymentSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	InterestPaymentSimulationResultTransactionSourceCategorySampleFunds                                 InterestPaymentSimulationResultTransactionSourceCategory = "sample_funds"
-	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferIntention                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferRejection                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryOther                                       InterestPaymentSimulationResultTransactionSourceCategory = "other"
-)
 
 // A Account Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_intention`.
@@ -387,10 +347,10 @@ const (
 // A ACH Transfer Intention object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_intention`.
 type InterestPaymentSimulationResultTransactionSourceACHTransferIntention struct {
+	AccountNumber string `json:"account_number,required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount              int64  `json:"amount,required"`
-	AccountNumber       string `json:"account_number,required"`
 	RoutingNumber       string `json:"routing_number,required"`
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
@@ -402,8 +362,8 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferIntention struct
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceACHTransferIntention]
 type interestPaymentSimulationResultTransactionSourceACHTransferIntentionJSON struct {
-	Amount              apijson.Field
 	AccountNumber       apijson.Field
+	Amount              apijson.Field
 	RoutingNumber       apijson.Field
 	StatementDescriptor apijson.Field
 	TransferID          apijson.Field
@@ -442,15 +402,15 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Why the ACH Transfer was returned.
-	ReturnReasonCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The three character ACH return code, in the range R01 to R85.
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
-	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
+	// Why the ACH Transfer was returned.
+	ReturnReasonCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          interestPaymentSimulationResultTransactionSourceACHTransferReturnJSON
+	// The identifier of the ACH Transfer associated with this return.
+	TransferID string `json:"transfer_id,required"`
+	JSON       interestPaymentSimulationResultTransactionSourceACHTransferReturnJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceACHTransferReturnJSON contains
@@ -458,10 +418,10 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 // [InterestPaymentSimulationResultTransactionSourceACHTransferReturn]
 type interestPaymentSimulationResultTransactionSourceACHTransferReturnJSON struct {
 	CreatedAt           apijson.Field
-	ReturnReasonCode    apijson.Field
 	RawReturnReasonCode apijson.Field
-	TransferID          apijson.Field
+	ReturnReasonCode    apijson.Field
 	TransactionID       apijson.Field
+	TransferID          apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
 }
@@ -589,16 +549,16 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name,required,nullable"`
-	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type InterestPaymentSimulationResultTransactionSourceCardRefundType `json:"type,required"`
@@ -613,11 +573,11 @@ type interestPaymentSimulationResultTransactionSourceCardRefundJSON struct {
 	Amount               apijson.Field
 	Currency             apijson.Field
 	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
-	MerchantState        apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
-	MerchantCategoryCode apijson.Field
+	MerchantState        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -657,10 +617,10 @@ type InterestPaymentSimulationResultTransactionSourceCardRevenuePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
 	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
 	JSON                  interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON
@@ -672,8 +632,8 @@ type InterestPaymentSimulationResultTransactionSourceCardRevenuePayment struct {
 type interestPaymentSimulationResultTransactionSourceCardRevenuePaymentJSON struct {
 	Amount                apijson.Field
 	Currency              apijson.Field
-	PeriodStart           apijson.Field
 	PeriodEnd             apijson.Field
+	PeriodStart           apijson.Field
 	TransactedOnAccountID apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
@@ -701,35 +661,35 @@ const (
 type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
-	// The Card Authorization that was created prior to this Card Settlement, if on
-	// exists.
-	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The Card Authorization that was created prior to this Card Settlement, if on
+	// exists.
+	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency `json:"currency,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The identifier of the Pending Transaction associated with this Transaction.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
 	PresentmentAmount int64 `json:"presentment_amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
-	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
-	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
-	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
-	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required,nullable"`
-	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
-	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type InterestPaymentSimulationResultTransactionSourceCardSettlementType `json:"type,required"`
@@ -741,18 +701,18 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
 // [InterestPaymentSimulationResultTransactionSourceCardSettlement]
 type interestPaymentSimulationResultTransactionSourceCardSettlementJSON struct {
 	ID                   apijson.Field
-	CardAuthorization    apijson.Field
 	Amount               apijson.Field
+	CardAuthorization    apijson.Field
 	Currency             apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
 	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
-	MerchantState        apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
-	MerchantCategoryCode apijson.Field
+	MerchantState        apijson.Field
 	PendingTransactionID apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -783,41 +743,81 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardSettlementTypeCardSettlement InterestPaymentSimulationResultTransactionSourceCardSettlementType = "card_settlement"
 )
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
+type InterestPaymentSimulationResultTransactionSourceCategory string
+
+const (
+	InterestPaymentSimulationResultTransactionSourceCategoryAccountTransferIntention                    InterestPaymentSimulationResultTransactionSourceCategory = "account_transfer_intention"
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferIntention                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_intention"
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferRejection                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferReturn                           InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_return"
+	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance                       InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
+	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund                                  InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
+	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment                          InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement                              InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance                      InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositReturn                          InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_return"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferDeposit                        InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_deposit"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
+	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransfer                          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention           InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundCheck                                InterestPaymentSimulationResultTransactionSourceCategory = "inbound_check"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer             InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireTransfer                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
+	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment                             InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
+	InterestPaymentSimulationResultTransactionSourceCategoryInternalSource                              InterestPaymentSimulationResultTransactionSourceCategory = "internal_source"
+	InterestPaymentSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     InterestPaymentSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	InterestPaymentSimulationResultTransactionSourceCategorySampleFunds                                 InterestPaymentSimulationResultTransactionSourceCategory = "sample_funds"
+	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferIntention                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_intention"
+	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferRejection                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_rejection"
+	InterestPaymentSimulationResultTransactionSourceCategoryOther                                       InterestPaymentSimulationResultTransactionSourceCategory = "other"
+)
+
 // A Check Deposit Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_acceptance`.
 type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance struct {
+	// The account number printed on the check.
+	AccountNumber string `json:"account_number,required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
-	// The account number printed on the check.
-	AccountNumber string `json:"account_number,required"`
-	// The routing number printed on the check.
-	RoutingNumber string `json:"routing_number,required"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number for business checks.
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// The ID of the Check Deposit that was accepted.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
+	// The routing number printed on the check.
+	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
 	SerialNumber string `json:"serial_number,required,nullable"`
-	// The ID of the Check Deposit that was accepted.
-	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           interestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceJSON
+	JSON         interestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceJSON
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance]
 type interestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceJSON struct {
-	Amount         apijson.Field
-	Currency       apijson.Field
 	AccountNumber  apijson.Field
-	RoutingNumber  apijson.Field
+	Amount         apijson.Field
 	AuxiliaryOnUs  apijson.Field
-	SerialNumber   apijson.Field
 	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	RoutingNumber  apijson.Field
+	SerialNumber   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -845,18 +845,18 @@ type InterestPaymentSimulationResultTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was returned.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency     InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency     `json:"currency,required"`
+	ReturnReason InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency `json:"currency,required"`
-	// The identifier of the Check Deposit that was returned.
-	CheckDepositID string `json:"check_deposit_id,required"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string                                                                         `json:"transaction_id,required"`
-	ReturnReason  InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          interestPaymentSimulationResultTransactionSourceCheckDepositReturnJSON
 }
 
@@ -865,11 +865,11 @@ type InterestPaymentSimulationResultTransactionSourceCheckDepositReturn struct {
 // [InterestPaymentSimulationResultTransactionSourceCheckDepositReturn]
 type interestPaymentSimulationResultTransactionSourceCheckDepositReturnJSON struct {
 	Amount         apijson.Field
-	ReturnedAt     apijson.Field
-	Currency       apijson.Field
 	CheckDepositID apijson.Field
-	TransactionID  apijson.Field
+	Currency       apijson.Field
 	ReturnReason   apijson.Field
+	ReturnedAt     apijson.Field
+	TransactionID  apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -911,14 +911,14 @@ const (
 // A Check Transfer Deposit object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_deposit`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct {
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
-	// The identifier of the API File object containing an image of the back of the
-	// deposited check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type InterestPaymentSimulationResultTransactionSourceCheckTransferDepositType `json:"type,required"`
@@ -929,9 +929,9 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit]
 type interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON struct {
+	BackImageFileID  apijson.Field
 	DepositedAt      apijson.Field
 	FrontImageFileID apijson.Field
-	BackImageFileID  apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -952,12 +952,12 @@ const (
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntention struct {
+	// The city of the check's destination.
+	AddressCity string `json:"address_city,required,nullable"`
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1,required,nullable"`
 	// The second line of the address of the check's destination.
 	AddressLine2 string `json:"address_line2,required,nullable"`
-	// The city of the check's destination.
-	AddressCity string `json:"address_city,required,nullable"`
 	// The state of the check's destination.
 	AddressState string `json:"address_state,required,nullable"`
 	// The postal code of the check's destination.
@@ -978,9 +978,9 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferIntention stru
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferIntention]
 type interestPaymentSimulationResultTransactionSourceCheckTransferIntentionJSON struct {
+	AddressCity   apijson.Field
 	AddressLine1  apijson.Field
 	AddressLine2  apijson.Field
-	AddressCity   apijson.Field
 	AddressState  apijson.Field
 	AddressZip    apijson.Field
 	Amount        apijson.Field
@@ -1032,30 +1032,30 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection)
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturn struct {
-	// The identifier of the returned Check Transfer.
-	TransferID string `json:"transfer_id,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// If available, a document with additional information about the return.
 	FileID string `json:"file_id,required,nullable"`
 	// The reason why the check was returned.
 	Reason InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON
+	// The identifier of the returned Check Transfer.
+	TransferID string `json:"transfer_id,required"`
+	JSON       interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON contains
 // the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferReturn]
 type interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON struct {
-	TransferID    apijson.Field
-	ReturnedAt    apijson.Field
 	FileID        apijson.Field
 	Reason        apijson.Field
+	ReturnedAt    apijson.Field
 	TransactionID apijson.Field
+	TransferID    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -1077,12 +1077,12 @@ const (
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
-	// The ID of the check transfer that was stopped.
-	TransferID string `json:"transfer_id,required"`
-	// The transaction ID of the corresponding credit transaction.
-	TransactionID string `json:"transaction_id,required"`
 	// The time the stop-payment was requested.
 	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
+	// The transaction ID of the corresponding credit transaction.
+	TransactionID string `json:"transaction_id,required"`
+	// The ID of the check transfer that was stopped.
+	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
@@ -1093,9 +1093,9 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentReq
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest]
 type interestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Field
-	TransactionID apijson.Field
 	RequestedAt   apijson.Field
+	TransactionID apijson.Field
+	TransferID    apijson.Field
 	Type          apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -1158,11 +1158,11 @@ type InterestPaymentSimulationResultTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
 	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
 	OriginatorCompanyEntryDescription  string `json:"originator_company_entry_description,required"`
 	OriginatorCompanyID                string `json:"originator_company_id,required"`
+	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
 	ReceiverName                       string `json:"receiver_name,required,nullable"`
 	TraceNumber                        string `json:"trace_number,required"`
@@ -1174,11 +1174,11 @@ type InterestPaymentSimulationResultTransactionSourceInboundACHTransfer struct {
 // [InterestPaymentSimulationResultTransactionSourceInboundACHTransfer]
 type interestPaymentSimulationResultTransactionSourceInboundACHTransferJSON struct {
 	Amount                             apijson.Field
-	OriginatorCompanyName              apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyEntryDescription  apijson.Field
 	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
@@ -1195,14 +1195,14 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundACHTransfer) Unm
 type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount                int64  `json:"amount,required"`
+	CheckFrontImageFileID string `json:"check_front_image_file_id,required,nullable"`
+	CheckNumber           string `json:"check_number,required,nullable"`
+	CheckRearImageFileID  string `json:"check_rear_image_file_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency              InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	CheckNumber           string                                                               `json:"check_number,required,nullable"`
-	CheckFrontImageFileID string                                                               `json:"check_front_image_file_id,required,nullable"`
-	CheckRearImageFileID  string                                                               `json:"check_rear_image_file_id,required,nullable"`
-	JSON                  interestPaymentSimulationResultTransactionSourceInboundCheckJSON
+	Currency InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency `json:"currency,required"`
+	JSON     interestPaymentSimulationResultTransactionSourceInboundCheckJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceInboundCheckJSON contains the
@@ -1210,10 +1210,10 @@ type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
 // [InterestPaymentSimulationResultTransactionSourceInboundCheck]
 type interestPaymentSimulationResultTransactionSourceInboundCheckJSON struct {
 	Amount                apijson.Field
-	Currency              apijson.Field
-	CheckNumber           apijson.Field
 	CheckFrontImageFileID apijson.Field
+	CheckNumber           apijson.Field
 	CheckRearImageFileID  apijson.Field
+	Currency              apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -1242,40 +1242,40 @@ type InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTran
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount                                                 int64  `json:"amount,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
 	DestinationCountryCode                                 string `json:"destination_country_code,required"`
 	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
+	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
 	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
 	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
 	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
 	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
 	OriginatorCity                                         string `json:"originator_city,required"`
 	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
 	OriginatorCountry                                      string `json:"originator_country,required"`
 	OriginatorIdentification                               string `json:"originator_identification,required"`
 	OriginatorName                                         string `json:"originator_name,required"`
 	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
 	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
 	ReceiverCountry                                        string `json:"receiver_country,required"`
+	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
 	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
+	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
 	JSON                                                   interestPaymentSimulationResultTransactionSourceInboundInternationalACHTransferJSON
 }
@@ -1285,40 +1285,40 @@ type InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTran
 // [InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTransfer]
 type interestPaymentSimulationResultTransactionSourceInboundInternationalACHTransferJSON struct {
 	Amount                                                 apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignExchangeReference                               apijson.Field
 	DestinationCountryCode                                 apijson.Field
 	DestinationCurrencyCode                                apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
 	ForeignPaymentAmount                                   apijson.Field
 	ForeignTraceNumber                                     apijson.Field
 	InternationalTransactionTypeCode                       apijson.Field
 	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
 	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
 	OriginatorCity                                         apijson.Field
 	OriginatorCompanyEntryDescription                      apijson.Field
 	OriginatorCountry                                      apijson.Field
 	OriginatorIdentification                               apijson.Field
 	OriginatorName                                         apijson.Field
 	OriginatorPostalCode                                   apijson.Field
-	OriginatorStreetAddress                                apijson.Field
 	OriginatorStateOrProvince                              apijson.Field
+	OriginatorStreetAddress                                apijson.Field
 	PaymentRelatedInformation                              apijson.Field
 	PaymentRelatedInformation2                             apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
 	ReceiverCity                                           apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
 	ReceiverCountry                                        apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
 	ReceiverPostalCode                                     apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
 	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
 	ExtraFields                                            map[string]apijson.Field
@@ -1335,22 +1335,22 @@ type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTran
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
 	Currency InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
-	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
-	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
-	// The Real Time Payments network identification of the transfer
-	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  interestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	// The Real Time Payments network identification of the transfer
+	TransactionIdentification string `json:"transaction_identification,required"`
+	JSON                      interestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
@@ -1358,13 +1358,13 @@ type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTran
 // [InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation]
 type interestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
 	Amount                    apijson.Field
-	Currency                  apijson.Field
 	CreditorName              apijson.Field
-	DebtorName                apijson.Field
+	Currency                  apijson.Field
 	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
 	DebtorRoutingNumber       apijson.Field
-	TransactionIdentification apijson.Field
 	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
@@ -1442,16 +1442,16 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 	Description string `json:"description,required"`
 	// The Fedwire cycle date for the wire reversal.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// The Fedwire sequence number.
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier for the wire transfer that was reversed.
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -1466,11 +1466,11 @@ type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 	Amount                                        apijson.Field
 	Description                                   apijson.Field
 	InputCycleDate                                apijson.Field
+	InputMessageAccountabilityData                apijson.Field
 	InputSequenceNumber                           apijson.Field
 	InputSource                                   apijson.Field
-	InputMessageAccountabilityData                apijson.Field
-	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputCycleDate                 apijson.Field
+	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputSequenceNumber            apijson.Field
 	PreviousMessageInputSource                    apijson.Field
 	raw                                           string
@@ -1491,18 +1491,20 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The description on the reversal message from Fedwire.
 	Description string `json:"description,required"`
+	// Additional financial institution information included in the wire reversal.
+	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The Fedwire cycle date for the wire reversal.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// The Fedwire sequence number.
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier for the wire transfer that was reversed.
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -1510,8 +1512,6 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 	// Information included in the wire reversal for the receiving financial
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
-	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -1526,16 +1526,16 @@ type interestPaymentSimulationResultTransactionSourceInboundWireReversalJSON str
 	Amount                                                apijson.Field
 	CreatedAt                                             apijson.Field
 	Description                                           apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	InputCycleDate                                        apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
-	InputMessageAccountabilityData                        apijson.Field
-	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
 	PreviousMessageInputSource                            apijson.Field
 	ReceiverFinancialInstitutionInformation               apijson.Field
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
@@ -1563,11 +1563,11 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireTransfer struct 
 	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
 	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
 	OriginatorName                          string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
 	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
 	JSON                                    interestPaymentSimulationResultTransactionSourceInboundWireTransferJSON
 }
 
@@ -1587,11 +1587,11 @@ type interestPaymentSimulationResultTransactionSourceInboundWireTransferJSON str
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	OriginatorToBeneficiaryInformation      apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -1603,30 +1603,30 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundWireTransfer) Un
 // A Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
 type InterestPaymentSimulationResultTransactionSourceInterestPayment struct {
+	// The account on which the interest was accrued.
+	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
-	// The account on which the interest was accrued.
-	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
-	JSON               interestPaymentSimulationResultTransactionSourceInterestPaymentJSON
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	JSON        interestPaymentSimulationResultTransactionSourceInterestPaymentJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceInterestPaymentJSON contains the
 // JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceInterestPayment]
 type interestPaymentSimulationResultTransactionSourceInterestPaymentJSON struct {
+	AccruedOnAccountID apijson.Field
 	Amount             apijson.Field
 	Currency           apijson.Field
-	PeriodStart        apijson.Field
 	PeriodEnd          apijson.Field
-	AccruedOnAccountID apijson.Field
+	PeriodStart        apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -1764,26 +1764,26 @@ func (r *InterestPaymentSimulationResultTransactionSourceSampleFunds) UnmarshalJ
 // A Wire Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_intention`.
 type InterestPaymentSimulationResultTransactionSourceWireTransferIntention struct {
-	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`
-	TransferID         string `json:"transfer_id,required"`
-	JSON               interestPaymentSimulationResultTransactionSourceWireTransferIntentionJSON
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	RoutingNumber string `json:"routing_number,required"`
+	TransferID    string `json:"transfer_id,required"`
+	JSON          interestPaymentSimulationResultTransactionSourceWireTransferIntentionJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceWireTransferIntentionJSON
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceWireTransferIntention]
 type interestPaymentSimulationResultTransactionSourceWireTransferIntentionJSON struct {
-	Amount             apijson.Field
 	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
+	Amount             apijson.Field
 	MessageToRecipient apijson.Field
+	RoutingNumber      apijson.Field
 	TransferID         apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field

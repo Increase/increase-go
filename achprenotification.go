@@ -91,17 +91,17 @@ type ACHPrenotification struct {
 	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
 	// The name by which you know the company.
 	CompanyName string `json:"company_name,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the prenotification was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// If the notification is for a future credit or debit.
 	CreditDebitIndicator ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator,required,nullable"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date-time"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
 	// If your prenotification is returned, this will contain details of the return.
 	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return,required,nullable"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the prenotification was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	RoutingNumber string `json:"routing_number,required"`
 	// The lifecycle status of the ACH Prenotification.
 	Status ACHPrenotificationStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -120,11 +120,11 @@ type achPrenotificationJSON struct {
 	CompanyDiscretionaryData apijson.Field
 	CompanyEntryDescription  apijson.Field
 	CompanyName              apijson.Field
+	CreatedAt                apijson.Field
 	CreditDebitIndicator     apijson.Field
 	EffectiveDate            apijson.Field
-	RoutingNumber            apijson.Field
 	PrenotificationReturn    apijson.Field
-	CreatedAt                apijson.Field
+	RoutingNumber            apijson.Field
 	Status                   apijson.Field
 	Type                     apijson.Field
 	raw                      string

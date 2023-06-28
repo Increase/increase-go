@@ -81,19 +81,19 @@ func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListPara
 type Export struct {
 	// The Export identifier.
 	ID string `json:"id,required"`
-	// The time the Export was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The category of the Export. We may add additional possible values for this enum
 	// over time; your application should be able to handle that gracefully.
 	Category ExportCategory `json:"category,required"`
-	// The status of the Export.
-	Status ExportStatus `json:"status,required"`
-	// The File containing the contents of the Export. This will be present when the
-	// Export's status transitions to `complete`.
-	FileID string `json:"file_id,required,nullable"`
+	// The time the Export was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// A URL at which the Export's file can be downloaded. This will be present when
 	// the Export's status transitions to `complete`.
 	FileDownloadURL string `json:"file_download_url,required,nullable"`
+	// The File containing the contents of the Export. This will be present when the
+	// Export's status transitions to `complete`.
+	FileID string `json:"file_id,required,nullable"`
+	// The status of the Export.
+	Status ExportStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `export`.
 	Type ExportType `json:"type,required"`
@@ -103,11 +103,11 @@ type Export struct {
 // exportJSON contains the JSON metadata for the struct [Export]
 type exportJSON struct {
 	ID              apijson.Field
-	CreatedAt       apijson.Field
 	Category        apijson.Field
-	Status          apijson.Field
-	FileID          apijson.Field
+	CreatedAt       apijson.Field
 	FileDownloadURL apijson.Field
+	FileID          apijson.Field
+	Status          apijson.Field
 	Type            apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field

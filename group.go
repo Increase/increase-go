@@ -41,15 +41,15 @@ func (r *GroupService) GetDetails(ctx context.Context, opts ...option.RequestOpt
 // about your own organization via the API, or (more commonly) OAuth platforms can
 // retrieve information about the organizations that have granted them access.
 type Group struct {
-	// If the Group is activated or not.
-	ActivationStatus GroupActivationStatus `json:"activation_status,required"`
+	// The Group identifier.
+	ID string `json:"id,required"`
 	// If the Group is allowed to create ACH debits.
 	ACHDebitStatus GroupACHDebitStatus `json:"ach_debit_status,required"`
+	// If the Group is activated or not.
+	ActivationStatus GroupActivationStatus `json:"activation_status,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The Group identifier.
-	ID string `json:"id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
 	Type GroupType `json:"type,required"`
@@ -58,10 +58,10 @@ type Group struct {
 
 // groupJSON contains the JSON metadata for the struct [Group]
 type groupJSON struct {
-	ActivationStatus apijson.Field
-	ACHDebitStatus   apijson.Field
-	CreatedAt        apijson.Field
 	ID               apijson.Field
+	ACHDebitStatus   apijson.Field
+	ActivationStatus apijson.Field
+	CreatedAt        apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -71,20 +71,20 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// If the Group is activated or not.
-type GroupActivationStatus string
-
-const (
-	GroupActivationStatusUnactivated GroupActivationStatus = "unactivated"
-	GroupActivationStatusActivated   GroupActivationStatus = "activated"
-)
-
 // If the Group is allowed to create ACH debits.
 type GroupACHDebitStatus string
 
 const (
 	GroupACHDebitStatusDisabled GroupACHDebitStatus = "disabled"
 	GroupACHDebitStatusEnabled  GroupACHDebitStatus = "enabled"
+)
+
+// If the Group is activated or not.
+type GroupActivationStatus string
+
+const (
+	GroupActivationStatusUnactivated GroupActivationStatus = "unactivated"
+	GroupActivationStatusActivated   GroupActivationStatus = "activated"
 )
 
 // A constant representing the object's type. For this resource it will always be

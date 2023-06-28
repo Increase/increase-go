@@ -87,38 +87,38 @@ func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query Exter
 type ExternalAccount struct {
 	// The External Account's identifier.
 	ID string `json:"id,required"`
+	// The destination account number.
+	AccountNumber string `json:"account_number,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the External Account was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The External Account's description for display purposes.
 	Description string `json:"description,required"`
-	// The External Account's status.
-	Status ExternalAccountStatus `json:"status,required"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
-	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
 	// The type of the account to which the transfer will be sent.
 	Funding ExternalAccountFunding `json:"funding,required"`
-	// If you have verified ownership of the External Account.
-	VerificationStatus ExternalAccountVerificationStatus `json:"verification_status,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	RoutingNumber string `json:"routing_number,required"`
+	// The External Account's status.
+	Status ExternalAccountStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
 	Type ExternalAccountType `json:"type,required"`
-	JSON externalAccountJSON
+	// If you have verified ownership of the External Account.
+	VerificationStatus ExternalAccountVerificationStatus `json:"verification_status,required"`
+	JSON               externalAccountJSON
 }
 
 // externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]
 type externalAccountJSON struct {
 	ID                 apijson.Field
+	AccountNumber      apijson.Field
 	CreatedAt          apijson.Field
 	Description        apijson.Field
-	Status             apijson.Field
-	RoutingNumber      apijson.Field
-	AccountNumber      apijson.Field
 	Funding            apijson.Field
-	VerificationStatus apijson.Field
+	RoutingNumber      apijson.Field
+	Status             apijson.Field
 	Type               apijson.Field
+	VerificationStatus apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -126,14 +126,6 @@ type externalAccountJSON struct {
 func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The External Account's status.
-type ExternalAccountStatus string
-
-const (
-	ExternalAccountStatusActive   ExternalAccountStatus = "active"
-	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
-)
 
 // The type of the account to which the transfer will be sent.
 type ExternalAccountFunding string
@@ -144,13 +136,12 @@ const (
 	ExternalAccountFundingOther    ExternalAccountFunding = "other"
 )
 
-// If you have verified ownership of the External Account.
-type ExternalAccountVerificationStatus string
+// The External Account's status.
+type ExternalAccountStatus string
 
 const (
-	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
-	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
-	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
+	ExternalAccountStatusActive   ExternalAccountStatus = "active"
+	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -159,6 +150,15 @@ type ExternalAccountType string
 
 const (
 	ExternalAccountTypeExternalAccount ExternalAccountType = "external_account"
+)
+
+// If you have verified ownership of the External Account.
+type ExternalAccountVerificationStatus string
+
+const (
+	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
+	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
+	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
 )
 
 type ExternalAccountNewParams struct {
