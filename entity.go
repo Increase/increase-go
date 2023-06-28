@@ -97,7 +97,7 @@ type Entity struct {
 	// Additional documentation associated with the entity. This is limited to the
 	// first 10 documents for an entity. If an entity has more than 10 documents, use
 	// the GET /entity_supplemental_documents list endpoint to retrieve them.
-	SupplementalDocuments []EntitySupplementalDocuments `json:"supplemental_documents,required"`
+	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents,required"`
 	// Details of the trust entity. Will be present if `structure` is equal to `trust`.
 	Trust EntityTrust `json:"trust,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -133,7 +133,7 @@ type EntityCorporation struct {
 	Address EntityCorporationAddress `json:"address,required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners []EntityCorporationBeneficialOwners `json:"beneficial_owners,required"`
+	BeneficialOwners []EntityCorporationBeneficialOwner `json:"beneficial_owners,required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState string `json:"incorporation_state,required,nullable"`
@@ -195,19 +195,19 @@ func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type EntityCorporationBeneficialOwners struct {
+type EntityCorporationBeneficialOwner struct {
 	// This person's role or title within the entity.
 	CompanyTitle string `json:"company_title,required,nullable"`
 	// Personal details for the beneficial owner.
 	Individual EntityCorporationBeneficialOwnersIndividual `json:"individual,required"`
 	// Why this person is considered a beneficial owner of the entity.
 	Prong EntityCorporationBeneficialOwnersProng `json:"prong,required"`
-	JSON  entityCorporationBeneficialOwnersJSON
+	JSON  entityCorporationBeneficialOwnerJSON
 }
 
-// entityCorporationBeneficialOwnersJSON contains the JSON metadata for the struct
-// [EntityCorporationBeneficialOwners]
-type entityCorporationBeneficialOwnersJSON struct {
+// entityCorporationBeneficialOwnerJSON contains the JSON metadata for the struct
+// [EntityCorporationBeneficialOwner]
+type entityCorporationBeneficialOwnerJSON struct {
 	CompanyTitle apijson.Field
 	Individual   apijson.Field
 	Prong        apijson.Field
@@ -215,7 +215,7 @@ type entityCorporationBeneficialOwnersJSON struct {
 	ExtraFields  map[string]apijson.Field
 }
 
-func (r *EntityCorporationBeneficialOwners) UnmarshalJSON(data []byte) (err error) {
+func (r *EntityCorporationBeneficialOwner) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -325,7 +325,7 @@ const (
 // Details of the joint entity. Will be present if `structure` is equal to `joint`.
 type EntityJoint struct {
 	// The two individuals that share control of the entity.
-	Individuals []EntityJointIndividuals `json:"individuals,required"`
+	Individuals []EntityJointIndividual `json:"individuals,required"`
 	// The entity's name.
 	Name string `json:"name,required"`
 	JSON entityJointJSON
@@ -343,7 +343,7 @@ func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type EntityJointIndividuals struct {
+type EntityJointIndividual struct {
 	// The person's address.
 	Address EntityJointIndividualsAddress `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
@@ -352,12 +352,12 @@ type EntityJointIndividuals struct {
 	Identification EntityJointIndividualsIdentification `json:"identification,required"`
 	// The person's legal name.
 	Name string `json:"name,required"`
-	JSON entityJointIndividualsJSON
+	JSON entityJointIndividualJSON
 }
 
-// entityJointIndividualsJSON contains the JSON metadata for the struct
-// [EntityJointIndividuals]
-type entityJointIndividualsJSON struct {
+// entityJointIndividualJSON contains the JSON metadata for the struct
+// [EntityJointIndividual]
+type entityJointIndividualJSON struct {
 	Address        apijson.Field
 	DateOfBirth    apijson.Field
 	Identification apijson.Field
@@ -366,7 +366,7 @@ type entityJointIndividualsJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *EntityJointIndividuals) UnmarshalJSON(data []byte) (err error) {
+func (r *EntityJointIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -552,7 +552,7 @@ const (
 
 // Supplemental Documents are uploaded files connected to an Entity during
 // onboarding.
-type EntitySupplementalDocuments struct {
+type EntitySupplementalDocument struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Supplemental Document was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -561,12 +561,12 @@ type EntitySupplementalDocuments struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type EntitySupplementalDocumentsType `json:"type,required"`
-	JSON entitySupplementalDocumentsJSON
+	JSON entitySupplementalDocumentJSON
 }
 
-// entitySupplementalDocumentsJSON contains the JSON metadata for the struct
-// [EntitySupplementalDocuments]
-type entitySupplementalDocumentsJSON struct {
+// entitySupplementalDocumentJSON contains the JSON metadata for the struct
+// [EntitySupplementalDocument]
+type entitySupplementalDocumentJSON struct {
 	CreatedAt   apijson.Field
 	FileID      apijson.Field
 	Type        apijson.Field
@@ -574,7 +574,7 @@ type entitySupplementalDocumentsJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EntitySupplementalDocuments) UnmarshalJSON(data []byte) (err error) {
+func (r *EntitySupplementalDocument) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -604,7 +604,7 @@ type EntityTrust struct {
 	// The Employer Identification Number (EIN) of the trust itself.
 	TaxIdentifier string `json:"tax_identifier,required,nullable"`
 	// The trustees of the trust.
-	Trustees []EntityTrustTrustees `json:"trustees,required"`
+	Trustees []EntityTrustTrustee `json:"trustees,required"`
 	JSON     entityTrustJSON
 }
 
@@ -760,25 +760,25 @@ const (
 	EntityTrustGrantorIdentificationMethodOther                                  EntityTrustGrantorIdentificationMethod = "other"
 )
 
-type EntityTrustTrustees struct {
+type EntityTrustTrustee struct {
 	// The individual trustee of the trust. Will be present if the trustee's
 	// `structure` is equal to `individual`.
 	Individual EntityTrustTrusteesIndividual `json:"individual,required,nullable"`
 	// The structure of the trustee. Will always be equal to `individual`.
 	Structure EntityTrustTrusteesStructure `json:"structure,required"`
-	JSON      entityTrustTrusteesJSON
+	JSON      entityTrustTrusteeJSON
 }
 
-// entityTrustTrusteesJSON contains the JSON metadata for the struct
-// [EntityTrustTrustees]
-type entityTrustTrusteesJSON struct {
+// entityTrustTrusteeJSON contains the JSON metadata for the struct
+// [EntityTrustTrustee]
+type entityTrustTrusteeJSON struct {
 	Individual  apijson.Field
 	Structure   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EntityTrustTrustees) UnmarshalJSON(data []byte) (err error) {
+func (r *EntityTrustTrustee) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -911,7 +911,7 @@ type EntityNewParams struct {
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
 	// Additional documentation associated with the entity.
-	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocuments] `json:"supplemental_documents"`
+	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
 	Trust param.Field[EntityNewParamsTrust] `json:"trust"`
@@ -947,7 +947,7 @@ type EntityNewParamsCorporation struct {
 	Address param.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwners] `json:"beneficial_owners,required"`
+	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners,required"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name,required"`
 	// The Employer Identification Number (EIN) for the corporation.
@@ -982,7 +982,7 @@ func (r EntityNewParamsCorporationAddress) MarshalJSON() (data []byte, err error
 	return apijson.MarshalRoot(r)
 }
 
-type EntityNewParamsCorporationBeneficialOwners struct {
+type EntityNewParamsCorporationBeneficialOwner struct {
 	// Personal details for the beneficial owner.
 	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
 	// Why this person is considered a beneficial owner of the entity.
@@ -991,7 +991,7 @@ type EntityNewParamsCorporationBeneficialOwners struct {
 	CompanyTitle param.Field[string] `json:"company_title"`
 }
 
-func (r EntityNewParamsCorporationBeneficialOwners) MarshalJSON() (data []byte, err error) {
+func (r EntityNewParamsCorporationBeneficialOwner) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -1128,7 +1128,7 @@ const (
 // `joint`.
 type EntityNewParamsJoint struct {
 	// The two individuals that share control of the entity.
-	Individuals param.Field[[]EntityNewParamsJointIndividuals] `json:"individuals,required"`
+	Individuals param.Field[[]EntityNewParamsJointIndividual] `json:"individuals,required"`
 	// The name of the joint entity.
 	Name param.Field[string] `json:"name"`
 }
@@ -1137,7 +1137,7 @@ func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type EntityNewParamsJointIndividuals struct {
+type EntityNewParamsJointIndividual struct {
 	// The individual's address.
 	Address param.Field[EntityNewParamsJointIndividualsAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
@@ -1153,7 +1153,7 @@ type EntityNewParamsJointIndividuals struct {
 	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 }
 
-func (r EntityNewParamsJointIndividuals) MarshalJSON() (data []byte, err error) {
+func (r EntityNewParamsJointIndividual) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -1381,12 +1381,12 @@ func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data 
 	return apijson.MarshalRoot(r)
 }
 
-type EntityNewParamsSupplementalDocuments struct {
+type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`
 }
 
-func (r EntityNewParamsSupplementalDocuments) MarshalJSON() (data []byte, err error) {
+func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -1402,7 +1402,7 @@ type EntityNewParamsTrust struct {
 	// The legal name of the trust.
 	Name param.Field[string] `json:"name,required"`
 	// The trustees of the trust.
-	Trustees param.Field[[]EntityNewParamsTrustTrustees] `json:"trustees,required"`
+	Trustees param.Field[[]EntityNewParamsTrustTrustee] `json:"trustees,required"`
 	// The identifier of the File containing the formation document of the trust.
 	FormationDocumentFileID param.Field[string] `json:"formation_document_file_id"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
@@ -1448,7 +1448,7 @@ const (
 	EntityNewParamsTrustCategoryIrrevocable EntityNewParamsTrustCategory = "irrevocable"
 )
 
-type EntityNewParamsTrustTrustees struct {
+type EntityNewParamsTrustTrustee struct {
 	// The structure of the trustee.
 	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
 	// Details of the individual trustee. Required when the trustee `structure` is
@@ -1456,7 +1456,7 @@ type EntityNewParamsTrustTrustees struct {
 	Individual param.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
 }
 
-func (r EntityNewParamsTrustTrustees) MarshalJSON() (data []byte, err error) {
+func (r EntityNewParamsTrustTrustee) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

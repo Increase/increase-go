@@ -36,7 +36,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				State: increase.F("x"),
 				Zip:   increase.F("x"),
 			}),
-			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwners{{
+			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwner{{
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Name:        increase.F("x"),
 					DateOfBirth: increase.F(time.Now()),
@@ -146,7 +146,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		Description: increase.F("x"),
 		Joint: increase.F(increase.EntityNewParamsJoint{
 			Name: increase.F("x"),
-			Individuals: increase.F([]increase.EntityNewParamsJointIndividuals{{
+			Individuals: increase.F([]increase.EntityNewParamsJointIndividual{{
 				Name:        increase.F("x"),
 				DateOfBirth: increase.F(time.Now()),
 				Address: increase.F(increase.EntityNewParamsJointIndividualsAddress{
@@ -273,7 +273,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				}),
 			}),
 		}),
-		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocuments{{
+		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("string"),
 		}, {
 			FileID: increase.F("string"),
@@ -293,7 +293,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Zip:   increase.F("x"),
 			}),
 			FormationDocumentFileID: increase.F("string"),
-			Trustees: increase.F([]increase.EntityNewParamsTrustTrustees{{
+			Trustees: increase.F([]increase.EntityNewParamsTrustTrustee{{
 				Structure: increase.F(increase.EntityNewParamsTrustTrusteesStructureIndividual),
 				Individual: increase.F(increase.EntityNewParamsTrustTrusteesIndividual{
 					Name:        increase.F("x"),
