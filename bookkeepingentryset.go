@@ -46,7 +46,7 @@ type BookkeepingEntrySet struct {
 	// The timestamp of the entry set.
 	Date time.Time `json:"date,required" format:"date-time"`
 	// The entries
-	Entries []BookkeepingEntrySetEntries `json:"entries,required"`
+	Entries []BookkeepingEntrySetEntry `json:"entries,required"`
 	// The transaction identifier, if any.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -71,19 +71,19 @@ func (r *BookkeepingEntrySet) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type BookkeepingEntrySetEntries struct {
+type BookkeepingEntrySetEntry struct {
 	// The entry identifier.
 	ID string `json:"id,required"`
 	// The bookkeeping account impacted by the entry.
 	AccountID string `json:"account_id,required"`
 	// The amount of the entry in minor units.
 	Amount int64 `json:"amount,required"`
-	JSON   bookkeepingEntrySetEntriesJSON
+	JSON   bookkeepingEntrySetEntryJSON
 }
 
-// bookkeepingEntrySetEntriesJSON contains the JSON metadata for the struct
-// [BookkeepingEntrySetEntries]
-type bookkeepingEntrySetEntriesJSON struct {
+// bookkeepingEntrySetEntryJSON contains the JSON metadata for the struct
+// [BookkeepingEntrySetEntry]
+type bookkeepingEntrySetEntryJSON struct {
 	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
@@ -91,7 +91,7 @@ type bookkeepingEntrySetEntriesJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *BookkeepingEntrySetEntries) UnmarshalJSON(data []byte) (err error) {
+func (r *BookkeepingEntrySetEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -105,7 +105,7 @@ const (
 
 type BookkeepingEntrySetNewParams struct {
 	// The bookkeeping entries.
-	Entries param.Field[[]BookkeepingEntrySetNewParamsEntries] `json:"entries,required"`
+	Entries param.Field[[]BookkeepingEntrySetNewParamsEntry] `json:"entries,required"`
 	// The date of the transaction. If `transaction_id` is provided, this must match
 	// the `created_at` field on that resource.
 	Date param.Field[time.Time] `json:"date" format:"date-time"`
@@ -117,7 +117,7 @@ func (r BookkeepingEntrySetNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type BookkeepingEntrySetNewParamsEntries struct {
+type BookkeepingEntrySetNewParamsEntry struct {
 	// The identifier for the Bookkeeping Account impacted by this entry.
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The entry amount in the minor unit of the account currency. For dollars, for
@@ -126,6 +126,6 @@ type BookkeepingEntrySetNewParamsEntries struct {
 	Amount param.Field[int64] `json:"amount,required"`
 }
 
-func (r BookkeepingEntrySetNewParamsEntries) MarshalJSON() (data []byte, err error) {
+func (r BookkeepingEntrySetNewParamsEntry) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

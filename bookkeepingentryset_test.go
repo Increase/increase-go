@@ -22,7 +22,7 @@ func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 	)
 	_, err := client.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
-		Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntries{{
+		Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntry{{
 			AccountID: increase.F("string"),
 			Amount:    increase.F(int64(0)),
 		}, {
