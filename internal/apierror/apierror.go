@@ -15,12 +15,12 @@ import (
 // made and the API returns a response with a HTTP status code. Other errors are
 // not wrapped by this SDK.
 type Error struct {
-	Type   ErrorType   `json:"type,required"`
-	Title  string      `json:"title,required"`
-	Detail string      `json:"detail,required,nullable"`
-	Status ErrorStatus `json:"status,required"`
+	Detail string `json:"detail,required,nullable"`
 	// All errors related to parsing the request parameters.
 	Errors     []interface{} `json:"errors,required"`
+	Status     ErrorStatus   `json:"status,required"`
+	Title      string        `json:"title,required"`
+	Type       ErrorType     `json:"type,required"`
 	RetryAfter int64         `json:"retry_after,nullable"`
 	JSON       errorJSON
 	StatusCode int
@@ -30,11 +30,11 @@ type Error struct {
 
 // errorJSON contains the JSON metadata for the struct [Error]
 type errorJSON struct {
-	Type        apijson.Field
-	Title       apijson.Field
 	Detail      apijson.Field
-	Status      apijson.Field
 	Errors      apijson.Field
+	Status      apijson.Field
+	Title       apijson.Field
+	Type        apijson.Field
 	RetryAfter  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -59,14 +59,14 @@ func (r *Error) DumpResponse(body bool) []byte {
 	return out
 }
 
-type ErrorType string
-
-const (
-	ErrorTypeRateLimitedError ErrorType = "rate_limited_error"
-)
-
 type ErrorStatus int64
 
 const (
 	ErrorStatus429 ErrorStatus = 429
+)
+
+type ErrorType string
+
+const (
+	ErrorTypeRateLimitedError ErrorType = "rate_limited_error"
 )

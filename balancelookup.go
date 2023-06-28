@@ -44,12 +44,12 @@ func (r *BalanceLookupService) Lookup(ctx context.Context, body BalanceLookupLoo
 type BalanceLookupLookupResponse struct {
 	// The identifier for the account for which the balance was queried.
 	AccountID string `json:"account_id,required"`
-	// The Account's current balance, representing the sum of all posted Transactions
-	// on the Account.
-	CurrentBalance int64 `json:"current_balance,required"`
 	// The Account's available balance, representing the current balance less any open
 	// Pending Transactions on the Account.
 	AvailableBalance int64 `json:"available_balance,required"`
+	// The Account's current balance, representing the sum of all posted Transactions
+	// on the Account.
+	CurrentBalance int64 `json:"current_balance,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
 	Type BalanceLookupLookupResponseType `json:"type,required"`
@@ -60,8 +60,8 @@ type BalanceLookupLookupResponse struct {
 // [BalanceLookupLookupResponse]
 type balanceLookupLookupResponseJSON struct {
 	AccountID        apijson.Field
-	CurrentBalance   apijson.Field
 	AvailableBalance apijson.Field
+	CurrentBalance   apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field

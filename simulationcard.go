@@ -60,14 +60,14 @@ func (r *SimulationCardService) Settlement(ctx context.Context, body SimulationC
 
 // The results of a Card Authorization simulation.
 type CardAuthorizationSimulation struct {
-	// If the authorization attempt succeeds, this will contain the resulting Pending
-	// Transaction object. The Pending Transaction's `source` will be of
-	// `category: card_authorization`.
-	PendingTransaction CardAuthorizationSimulationPendingTransaction `json:"pending_transaction,required,nullable"`
 	// If the authorization attempt fails, this will contain the resulting
 	// [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of `category: card_decline`.
 	DeclinedTransaction CardAuthorizationSimulationDeclinedTransaction `json:"declined_transaction,required,nullable"`
+	// If the authorization attempt succeeds, this will contain the resulting Pending
+	// Transaction object. The Pending Transaction's `source` will be of
+	// `category: card_authorization`.
+	PendingTransaction CardAuthorizationSimulationPendingTransaction `json:"pending_transaction,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_card_authorization_simulation_result`.
 	Type CardAuthorizationSimulationType `json:"type,required"`
@@ -77,8 +77,8 @@ type CardAuthorizationSimulation struct {
 // cardAuthorizationSimulationJSON contains the JSON metadata for the struct
 // [CardAuthorizationSimulation]
 type cardAuthorizationSimulationJSON struct {
-	PendingTransaction  apijson.Field
 	DeclinedTransaction apijson.Field
+	PendingTransaction  apijson.Field
 	Type                apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
@@ -88,31 +88,687 @@ func (r *CardAuthorizationSimulation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the authorization attempt fails, this will contain the resulting
+// [Declined Transaction](#declined-transactions) object. The Declined
+// Transaction's `source` will be of `category: card_decline`.
+type CardAuthorizationSimulationDeclinedTransaction struct {
+	// The Declined Transaction identifier.
+	ID string `json:"id,required"`
+	// The identifier for the Account the Declined Transaction belongs to.
+	AccountID string `json:"account_id,required"`
+	// The Declined Transaction amount in the minor unit of its currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+	// Transaction occured.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+	// Transaction's currency. This will match the currency on the Declined
+	// Transcation's Account.
+	Currency CardAuthorizationSimulationDeclinedTransactionCurrency `json:"currency,required"`
+	// This is the description the vendor provides.
+	Description string `json:"description,required"`
+	// The identifier for the route this Declined Transaction came through. Routes are
+	// things like cards and ACH details.
+	RouteID string `json:"route_id,required,nullable"`
+	// The type of the route this Declined Transaction came through.
+	RouteType CardAuthorizationSimulationDeclinedTransactionRouteType `json:"route_type,required,nullable"`
+	// This is an object giving more details on the network-level event that caused the
+	// Declined Transaction. For example, for a card transaction this lists the
+	// merchant's industry and location. Note that for backwards compatibility reasons,
+	// additional undocumented keys may appear in this object. These should be treated
+	// as deprecated and will be removed in the future.
+	Source CardAuthorizationSimulationDeclinedTransactionSource `json:"source,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `declined_transaction`.
+	Type CardAuthorizationSimulationDeclinedTransactionType `json:"type,required"`
+	JSON cardAuthorizationSimulationDeclinedTransactionJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionJSON contains the JSON metadata
+// for the struct [CardAuthorizationSimulationDeclinedTransaction]
+type cardAuthorizationSimulationDeclinedTransactionJSON struct {
+	ID          apijson.Field
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	CreatedAt   apijson.Field
+	Currency    apijson.Field
+	Description apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+// Transaction's currency. This will match the currency on the Declined
+// Transcation's Account.
+type CardAuthorizationSimulationDeclinedTransactionCurrency string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionCurrencyCad CardAuthorizationSimulationDeclinedTransactionCurrency = "CAD"
+	CardAuthorizationSimulationDeclinedTransactionCurrencyChf CardAuthorizationSimulationDeclinedTransactionCurrency = "CHF"
+	CardAuthorizationSimulationDeclinedTransactionCurrencyEur CardAuthorizationSimulationDeclinedTransactionCurrency = "EUR"
+	CardAuthorizationSimulationDeclinedTransactionCurrencyGbp CardAuthorizationSimulationDeclinedTransactionCurrency = "GBP"
+	CardAuthorizationSimulationDeclinedTransactionCurrencyJpy CardAuthorizationSimulationDeclinedTransactionCurrency = "JPY"
+	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
+)
+
+// The type of the route this Declined Transaction came through.
+type CardAuthorizationSimulationDeclinedTransactionRouteType string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber CardAuthorizationSimulationDeclinedTransactionRouteType = "account_number"
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard          CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
+)
+
+// This is an object giving more details on the network-level event that caused the
+// Declined Transaction. For example, for a card transaction this lists the
+// merchant's industry and location. Note that for backwards compatibility reasons,
+// additional undocumented keys may appear in this object. These should be treated
+// as deprecated and will be removed in the future.
+type CardAuthorizationSimulationDeclinedTransactionSource struct {
+	// A ACH Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `ach_decline`.
+	ACHDecline CardAuthorizationSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
+	// A Card Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_decline`.
+	CardDecline CardAuthorizationSimulationDeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
+	// The type of decline that took place. We may add additional possible values for
+	// this enum over time; your application should be able to handle such additions
+	// gracefully.
+	Category CardAuthorizationSimulationDeclinedTransactionSourceCategory `json:"category,required"`
+	// A Check Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `check_decline`.
+	CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
+	// A Inbound Real Time Payments Transfer Decline object. This field will be present
+	// in the JSON response if and only if `category` is equal to
+	// `inbound_real_time_payments_transfer_decline`.
+	InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
+	// A International ACH Decline object. This field will be present in the JSON
+	// response if and only if `category` is equal to `international_ach_decline`.
+	InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
+	// A Wire Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `wire_decline`.
+	WireDecline CardAuthorizationSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
+	JSON        cardAuthorizationSimulationDeclinedTransactionSourceJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceJSON contains the JSON
+// metadata for the struct [CardAuthorizationSimulationDeclinedTransactionSource]
+type cardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
+	ACHDecline                             apijson.Field
+	CardDecline                            apijson.Field
+	Category                               apijson.Field
+	CheckDecline                           apijson.Field
+	InboundRealTimePaymentsTransferDecline apijson.Field
+	InternationalACHDecline                apijson.Field
+	WireDecline                            apijson.Field
+	raw                                    string
+	ExtraFields                            map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A ACH Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `ach_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                             int64  `json:"amount,required"`
+	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	OriginatorCompanyID                string `json:"originator_company_id,required"`
+	OriginatorCompanyName              string `json:"originator_company_name,required"`
+	// Why the ACH transfer was declined.
+	Reason           CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
+	ReceiverIDNumber string                                                               `json:"receiver_id_number,required,nullable"`
+	ReceiverName     string                                                               `json:"receiver_name,required,nullable"`
+	TraceNumber      string                                                               `json:"trace_number,required"`
+	JSON             cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON contains the
+// JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceACHDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
+	Reason                             apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the ACH transfer was declined.
+type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+)
+
+// A Card Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+	// account currency.
+	Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// If the authorization was attempted using a Digital Wallet Token (such as an
+	// Apple Pay purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required,nullable"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The payment network used to process this card authorization
+	Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
+	// Fields specific to the `network`
+	NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
+	// The identifier of the Real-Time Decision sent to approve or decline this
+	// transaction.
+	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// Why the transaction was declined.
+	Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON contains the
+// JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceCardDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	Network              apijson.Field
+	NetworkDetails       apijson.Field
+	RealTimeDecisionID   apijson.Field
+	Reason               apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
+)
+
+// The payment network used to process this card authorization
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkVisa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
+)
+
+// Fields specific to the `network`
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
+	JSON cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+// contains the JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
+type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to the `visa` network
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	JSON                    cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+// contains the JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
+type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
+
+// Why the transaction was declined.
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+)
+
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
+type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryACHDecline                             CardAuthorizationSimulationDeclinedTransactionSourceCategory = "ach_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline                           CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther                                  CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
+)
+
+// A Check Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `check_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount        int64  `json:"amount,required"`
+	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// Why the check was declined.
+	Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON contains
+// the JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
+	Amount        apijson.Field
+	AuxiliaryOnUs apijson.Field
+	Reason        apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the check was declined.
+type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+)
+
+// A Inbound Real Time Payments Transfer Decline object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer.
+	Currency CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
+	// The account number of the account that sent the transfer.
+	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
+	// The routing number of the account that sent the transfer.
+	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	// Why the transfer was declined.
+	Reason CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	// Additional information included with the transfer.
+	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	// The Real Time Payments network identification of the declined transfer.
+	TransactionIdentification string `json:"transaction_identification,required"`
+	JSON                      cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+// contains the JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
+	Amount                    apijson.Field
+	CreditorName              apijson.Field
+	Currency                  apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	Reason                    apijson.Field
+	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer.
+type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
+)
+
+// Why the transfer was declined.
+type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
+)
+
+// A International ACH Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `international_ach_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                                                 int64  `json:"amount,required"`
+	DestinationCountryCode                                 string `json:"destination_country_code,required"`
+	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
+	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
+	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
+	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
+	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
+	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
+	OriginatorCity                                         string `json:"originator_city,required"`
+	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
+	OriginatorCountry                                      string `json:"originator_country,required"`
+	OriginatorIdentification                               string `json:"originator_identification,required"`
+	OriginatorName                                         string `json:"originator_name,required"`
+	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
+	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
+	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
+	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
+	ReceiverCity                                           string `json:"receiver_city,required"`
+	ReceiverCountry                                        string `json:"receiver_country,required"`
+	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
+	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
+	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
+	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
+	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
+	TraceNumber                                            string `json:"trace_number,required"`
+	JSON                                                   cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+// contains the JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON struct {
+	Amount                                                 apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	TraceNumber                                            apijson.Field
+	raw                                                    string
+	ExtraFields                                            map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A Wire Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `wire_decline`.
+type CardAuthorizationSimulationDeclinedTransactionSourceWireDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                                  int64  `json:"amount,required"`
+	BeneficiaryAddressLine1                 string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2                 string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3                 string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                         string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference                    string `json:"beneficiary_reference,required,nullable"`
+	Description                             string `json:"description,required"`
+	InputMessageAccountabilityData          string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1                  string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                          string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// Why the wire transfer was declined.
+	Reason CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON
+}
+
+// cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON contains the
+// JSON metadata for the struct
+// [CardAuthorizationSimulationDeclinedTransactionSourceWireDecline]
+type cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON struct {
+	Amount                                  apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	Reason                                  apijson.Field
+	raw                                     string
+	ExtraFields                             map[string]apijson.Field
+}
+
+func (r *CardAuthorizationSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the wire transfer was declined.
+type CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `declined_transaction`.
+type CardAuthorizationSimulationDeclinedTransactionType string
+
+const (
+	CardAuthorizationSimulationDeclinedTransactionTypeDeclinedTransaction CardAuthorizationSimulationDeclinedTransactionType = "declined_transaction"
+)
+
 // If the authorization attempt succeeds, this will contain the resulting Pending
 // Transaction object. The Pending Transaction's `source` will be of
 // `category: card_authorization`.
 type CardAuthorizationSimulationPendingTransaction struct {
+	// The Pending Transaction identifier.
+	ID string `json:"id,required"`
 	// The identifier for the account this Pending Transaction belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
-	// Transaction's currency. This will match the currency on the Pending
-	// Transcation's Account.
-	Currency CardAuthorizationSimulationPendingTransactionCurrency `json:"currency,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction was completed.
 	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occured.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
+	// Transaction's currency. This will match the currency on the Pending
+	// Transcation's Account.
+	Currency CardAuthorizationSimulationPendingTransactionCurrency `json:"currency,required"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
 	Description string `json:"description,required"`
-	// The Pending Transaction identifier.
-	ID string `json:"id,required"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
@@ -134,13 +790,13 @@ type CardAuthorizationSimulationPendingTransaction struct {
 // cardAuthorizationSimulationPendingTransactionJSON contains the JSON metadata for
 // the struct [CardAuthorizationSimulationPendingTransaction]
 type cardAuthorizationSimulationPendingTransactionJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	Currency    apijson.Field
 	CompletedAt apijson.Field
 	CreatedAt   apijson.Field
+	Currency    apijson.Field
 	Description apijson.Field
-	ID          apijson.Field
 	RouteID     apijson.Field
 	RouteType   apijson.Field
 	Source      apijson.Field
@@ -180,10 +836,6 @@ const (
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
 type CardAuthorizationSimulationPendingTransactionSource struct {
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
-	Category CardAuthorizationSimulationPendingTransactionSourceCategory `json:"category,required"`
 	// A Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
 	AccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,required,nullable"`
@@ -193,6 +845,10 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
 	CardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
+	// The type of transaction that took place. We may add additional possible values
+	// for this enum over time; your application should be able to handle such
+	// additions gracefully.
+	Category CardAuthorizationSimulationPendingTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
 	CheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction,required,nullable"`
@@ -215,10 +871,10 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 // cardAuthorizationSimulationPendingTransactionSourceJSON contains the JSON
 // metadata for the struct [CardAuthorizationSimulationPendingTransactionSource]
 type cardAuthorizationSimulationPendingTransactionSourceJSON struct {
-	Category                            apijson.Field
 	AccountTransferInstruction          apijson.Field
 	ACHTransferInstruction              apijson.Field
 	CardAuthorization                   apijson.Field
+	Category                            apijson.Field
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
@@ -231,23 +887,6 @@ type cardAuthorizationSimulationPendingTransactionSourceJSON struct {
 func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
-type CardAuthorizationSimulationPendingTransactionSourceCategory string
-
-const (
-	CardAuthorizationSimulationPendingTransactionSourceCategoryAccountTransferInstruction          CardAuthorizationSimulationPendingTransactionSourceCategory = "account_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction              CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization                   CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction            CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold                    CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryOther                               CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
-)
 
 // A Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
@@ -321,11 +960,21 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
+	// The pending amount in the minor unit of the transaction's currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
+	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+	// purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
+	// will expire and the pending transaction will be released.
+	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
@@ -333,27 +982,17 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required,nullable"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The payment network used to process this card authorization
 	Network CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
-	// will expire and the pending transaction will be released.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	// The identifier of the Pending Transaction associated with this Transaction.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
-	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
-	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
 	Type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType `json:"type,required"`
@@ -365,19 +1004,19 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 // [CardAuthorizationSimulationPendingTransactionSourceCardAuthorization]
 type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
+	Amount               apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
+	ExpiresAt            apijson.Field
 	MerchantAcceptorID   apijson.Field
-	MerchantDescriptor   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
-	Amount               apijson.Field
-	Currency             apijson.Field
-	ExpiresAt            apijson.Field
-	RealTimeDecisionID   apijson.Field
-	DigitalWalletTokenID apijson.Field
 	PendingTransactionID apijson.Field
+	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -386,6 +1025,19 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CAD"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CHF"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "EUR"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "GBP"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "JPY"
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
+)
 
 // The payment network used to process this card authorization
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork string
@@ -456,19 +1108,6 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
-
-const (
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CAD"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CHF"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "EUR"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "GBP"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "JPY"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
-)
-
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType string
@@ -477,24 +1116,41 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationTypeCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
+type CardAuthorizationSimulationPendingTransactionSourceCategory string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceCategoryAccountTransferInstruction          CardAuthorizationSimulationPendingTransactionSourceCategory = "account_transfer_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction              CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization                   CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction            CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold                    CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
+	CardAuthorizationSimulationPendingTransactionSourceCategoryOther                               CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
+)
+
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the File containing the image of the back of the check that
+	// was deposited.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The identifier of the Check Deposit.
+	CheckDepositID string `json:"check_deposit_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency `json:"currency,required"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
 	FrontImageFileID string `json:"front_image_file_id,required"`
-	// The identifier of the File containing the image of the back of the check that
-	// was deposited.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
-	// The identifier of the Check Deposit.
-	CheckDepositID string `json:"check_deposit_id,required,nullable"`
-	JSON           cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON
+	JSON             cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON
@@ -502,10 +1158,10 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction 
 // [CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON struct {
 	Amount           apijson.Field
-	Currency         apijson.Field
-	FrontImageFileID apijson.Field
 	BackImageFileID  apijson.Field
 	CheckDepositID   apijson.Field
+	Currency         apijson.Field
+	FrontImageFileID apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
@@ -575,24 +1231,24 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// When the hold will be released automatically. Certain conditions may cause it to
+	// be released before this time.
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency `json:"currency,required"`
-	// When the hold will be released automatically. Certain conditions may cause it to
-	// be released before this time.
-	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
-	// When the hold was released (if it has been released).
-	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
-	// The status of the hold.
-	Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
 	// The ID of the Transaction for which funds were held.
 	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
 	// The ID of the Pending Transaction representing the held funds.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
-	JSON                 cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
+	// When the hold was released (if it has been released).
+	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	// The status of the hold.
+	Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
+	JSON   cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON contains
@@ -600,13 +1256,13 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 // [CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold]
 type cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON struct {
 	Amount                  apijson.Field
+	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field
 	Currency                apijson.Field
-	AutomaticallyReleasesAt apijson.Field
-	ReleasedAt              apijson.Field
-	Status                  apijson.Field
 	HeldTransactionID       apijson.Field
 	PendingTransactionID    apijson.Field
+	ReleasedAt              apijson.Field
+	Status                  apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -666,12 +1322,12 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTran
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction struct {
+	AccountNumber string `json:"account_number,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount             int64  `json:"amount,required"`
-	AccountNumber      string `json:"account_number,required"`
-	RoutingNumber      string `json:"routing_number,required"`
 	MessageToRecipient string `json:"message_to_recipient,required"`
+	RoutingNumber      string `json:"routing_number,required"`
 	TransferID         string `json:"transfer_id,required"`
 	JSON               cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON
 }
@@ -680,10 +1336,10 @@ type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction 
 // contains the JSON metadata for the struct
 // [CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction]
 type cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON struct {
-	Amount             apijson.Field
 	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
+	Amount             apijson.Field
 	MessageToRecipient apijson.Field
+	RoutingNumber      apijson.Field
 	TransferID         apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
@@ -708,662 +1364,6 @@ type CardAuthorizationSimulationPendingTransactionType string
 
 const (
 	CardAuthorizationSimulationPendingTransactionTypePendingTransaction CardAuthorizationSimulationPendingTransactionType = "pending_transaction"
-)
-
-// If the authorization attempt fails, this will contain the resulting
-// [Declined Transaction](#declined-transactions) object. The Declined
-// Transaction's `source` will be of `category: card_decline`.
-type CardAuthorizationSimulationDeclinedTransaction struct {
-	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID string `json:"account_id,required"`
-	// The Declined Transaction amount in the minor unit of its currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
-	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
-	Currency CardAuthorizationSimulationDeclinedTransactionCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// This is the description the vendor provides.
-	Description string `json:"description,required"`
-	// The Declined Transaction identifier.
-	ID string `json:"id,required"`
-	// The identifier for the route this Declined Transaction came through. Routes are
-	// things like cards and ACH details.
-	RouteID string `json:"route_id,required,nullable"`
-	// The type of the route this Declined Transaction came through.
-	RouteType CardAuthorizationSimulationDeclinedTransactionRouteType `json:"route_type,required,nullable"`
-	// This is an object giving more details on the network-level event that caused the
-	// Declined Transaction. For example, for a card transaction this lists the
-	// merchant's industry and location. Note that for backwards compatibility reasons,
-	// additional undocumented keys may appear in this object. These should be treated
-	// as deprecated and will be removed in the future.
-	Source CardAuthorizationSimulationDeclinedTransactionSource `json:"source,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `declined_transaction`.
-	Type CardAuthorizationSimulationDeclinedTransactionType `json:"type,required"`
-	JSON cardAuthorizationSimulationDeclinedTransactionJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionJSON contains the JSON metadata
-// for the struct [CardAuthorizationSimulationDeclinedTransaction]
-type cardAuthorizationSimulationDeclinedTransactionJSON struct {
-	AccountID   apijson.Field
-	Amount      apijson.Field
-	Currency    apijson.Field
-	CreatedAt   apijson.Field
-	Description apijson.Field
-	ID          apijson.Field
-	RouteID     apijson.Field
-	RouteType   apijson.Field
-	Source      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
-// Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
-type CardAuthorizationSimulationDeclinedTransactionCurrency string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionCurrencyCad CardAuthorizationSimulationDeclinedTransactionCurrency = "CAD"
-	CardAuthorizationSimulationDeclinedTransactionCurrencyChf CardAuthorizationSimulationDeclinedTransactionCurrency = "CHF"
-	CardAuthorizationSimulationDeclinedTransactionCurrencyEur CardAuthorizationSimulationDeclinedTransactionCurrency = "EUR"
-	CardAuthorizationSimulationDeclinedTransactionCurrencyGbp CardAuthorizationSimulationDeclinedTransactionCurrency = "GBP"
-	CardAuthorizationSimulationDeclinedTransactionCurrencyJpy CardAuthorizationSimulationDeclinedTransactionCurrency = "JPY"
-	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
-)
-
-// The type of the route this Declined Transaction came through.
-type CardAuthorizationSimulationDeclinedTransactionRouteType string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber CardAuthorizationSimulationDeclinedTransactionRouteType = "account_number"
-	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard          CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
-)
-
-// This is an object giving more details on the network-level event that caused the
-// Declined Transaction. For example, for a card transaction this lists the
-// merchant's industry and location. Note that for backwards compatibility reasons,
-// additional undocumented keys may appear in this object. These should be treated
-// as deprecated and will be removed in the future.
-type CardAuthorizationSimulationDeclinedTransactionSource struct {
-	// The type of decline that took place. We may add additional possible values for
-	// this enum over time; your application should be able to handle such additions
-	// gracefully.
-	Category CardAuthorizationSimulationDeclinedTransactionSourceCategory `json:"category,required"`
-	// A ACH Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `ach_decline`.
-	ACHDecline CardAuthorizationSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
-	// A Card Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_decline`.
-	CardDecline CardAuthorizationSimulationDeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
-	// A Check Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `check_decline`.
-	CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// A Inbound Real Time Payments Transfer Decline object. This field will be present
-	// in the JSON response if and only if `category` is equal to
-	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
-	// A International ACH Decline object. This field will be present in the JSON
-	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
-	// A Wire Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `wire_decline`.
-	WireDecline CardAuthorizationSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        cardAuthorizationSimulationDeclinedTransactionSourceJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceJSON contains the JSON
-// metadata for the struct [CardAuthorizationSimulationDeclinedTransactionSource]
-type cardAuthorizationSimulationDeclinedTransactionSourceJSON struct {
-	Category                               apijson.Field
-	ACHDecline                             apijson.Field
-	CardDecline                            apijson.Field
-	CheckDecline                           apijson.Field
-	InboundRealTimePaymentsTransferDecline apijson.Field
-	InternationalACHDecline                apijson.Field
-	WireDecline                            apijson.Field
-	raw                                    string
-	ExtraFields                            map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The type of decline that took place. We may add additional possible values for
-// this enum over time; your application should be able to handle such additions
-// gracefully.
-type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryACHDecline                             CardAuthorizationSimulationDeclinedTransactionSourceCategory = "ach_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline                           CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther                                  CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
-)
-
-// A ACH Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `ach_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
-	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
-	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
-	OriginatorCompanyID                string `json:"originator_company_id,required"`
-	// Why the ACH transfer was declined.
-	Reason           CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
-	ReceiverIDNumber string                                                               `json:"receiver_id_number,required,nullable"`
-	ReceiverName     string                                                               `json:"receiver_name,required,nullable"`
-	TraceNumber      string                                                               `json:"trace_number,required"`
-	JSON             cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON contains the
-// JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceACHDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
-	Amount                             apijson.Field
-	OriginatorCompanyName              apijson.Field
-	OriginatorCompanyDescriptiveDate   apijson.Field
-	OriginatorCompanyDiscretionaryData apijson.Field
-	OriginatorCompanyID                apijson.Field
-	Reason                             apijson.Field
-	ReceiverIDNumber                   apijson.Field
-	ReceiverName                       apijson.Field
-	TraceNumber                        apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the ACH transfer was declined.
-type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
-)
-
-// A Card Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
-	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
-	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
-	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required,nullable"`
-	// The payment network used to process this card authorization
-	Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
-	// Fields specific to the `network`
-	NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
-	// Why the transaction was declined.
-	Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
-	// The identifier of the Real-Time Decision sent to approve or decline this
-	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
-	// If the authorization was attempted using a Digital Wallet Token (such as an
-	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON contains the
-// JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceCardDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct {
-	MerchantAcceptorID   apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	Network              apijson.Field
-	NetworkDetails       apijson.Field
-	Amount               apijson.Field
-	Currency             apijson.Field
-	Reason               apijson.Field
-	MerchantState        apijson.Field
-	RealTimeDecisionID   apijson.Field
-	DigitalWalletTokenID apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The payment network used to process this card authorization
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkVisa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
-)
-
-// Fields specific to the `network`
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
-	// Fields specific to the `visa` network
-	Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
-	JSON cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
-type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Fields specific to the `visa` network
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
-	// For electronic commerce transactions, this identifies the level of security used
-	// in obtaining the customer's payment credential. For mail or telephone order
-	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
-type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator apijson.Field
-	PointOfServiceEntryMode     apijson.Field
-	raw                         string
-	ExtraFields                 map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// For electronic commerce transactions, this identifies the level of security used
-// in obtaining the customer's payment credential. For mail or telephone order
-// transactions, identifies the type of mail or telephone order.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
-)
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
-)
-
-// Why the transaction was declined.
-type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
-)
-
-// A Check Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `check_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount        int64  `json:"amount,required"`
-	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
-	// Why the check was declined.
-	Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON contains
-// the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount        apijson.Field
-	AuxiliaryOnUs apijson.Field
-	Reason        apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the check was declined.
-type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
-)
-
-// A Inbound Real Time Payments Transfer Decline object. This field will be present
-// in the JSON response if and only if `category` is equal to
-// `inbound_real_time_payments_transfer_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
-	// transfer.
-	Currency CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
-	// Why the transfer was declined.
-	Reason CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
-	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
-	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
-	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
-	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
-	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
-	Amount                    apijson.Field
-	Currency                  apijson.Field
-	Reason                    apijson.Field
-	CreditorName              apijson.Field
-	DebtorName                apijson.Field
-	DebtorAccountNumber       apijson.Field
-	DebtorRoutingNumber       apijson.Field
-	TransactionIdentification apijson.Field
-	RemittanceInformation     apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
-// transfer.
-type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
-)
-
-// Why the transfer was declined.
-type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
-)
-
-// A International ACH Decline object. This field will be present in the JSON
-// response if and only if `category` is equal to `international_ach_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount                                                 int64  `json:"amount,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
-	DestinationCountryCode                                 string `json:"destination_country_code,required"`
-	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
-	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
-	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
-	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
-	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
-	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
-	OriginatorCity                                         string `json:"originator_city,required"`
-	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
-	OriginatorCountry                                      string `json:"originator_country,required"`
-	OriginatorIdentification                               string `json:"originator_identification,required"`
-	OriginatorName                                         string `json:"originator_name,required"`
-	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
-	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
-	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
-	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
-	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
-	ReceiverCountry                                        string `json:"receiver_country,required"`
-	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
-	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
-	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
-	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
-// contains the JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON struct {
-	Amount                                                 apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignExchangeReference                               apijson.Field
-	DestinationCountryCode                                 apijson.Field
-	DestinationCurrencyCode                                apijson.Field
-	ForeignPaymentAmount                                   apijson.Field
-	ForeignTraceNumber                                     apijson.Field
-	InternationalTransactionTypeCode                       apijson.Field
-	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
-	OriginatorCity                                         apijson.Field
-	OriginatorCompanyEntryDescription                      apijson.Field
-	OriginatorCountry                                      apijson.Field
-	OriginatorIdentification                               apijson.Field
-	OriginatorName                                         apijson.Field
-	OriginatorPostalCode                                   apijson.Field
-	OriginatorStreetAddress                                apijson.Field
-	OriginatorStateOrProvince                              apijson.Field
-	PaymentRelatedInformation                              apijson.Field
-	PaymentRelatedInformation2                             apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
-	ReceiverCity                                           apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
-	ReceiverCountry                                        apijson.Field
-	ReceiverPostalCode                                     apijson.Field
-	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
-	TraceNumber                                            apijson.Field
-	raw                                                    string
-	ExtraFields                                            map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `wire_decline`.
-type CardAuthorizationSimulationDeclinedTransactionSourceWireDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// Why the wire transfer was declined.
-	Reason                                  CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	Description                             string                                                                `json:"description,required"`
-	BeneficiaryAddressLine1                 string                                                                `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2                 string                                                                `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3                 string                                                                `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                         string                                                                `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference                    string                                                                `json:"beneficiary_reference,required,nullable"`
-	InputMessageAccountabilityData          string                                                                `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1                  string                                                                `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2                  string                                                                `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3                  string                                                                `json:"originator_address_line3,required,nullable"`
-	OriginatorName                          string                                                                `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformationLine1 string                                                                `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	OriginatorToBeneficiaryInformationLine2 string                                                                `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	OriginatorToBeneficiaryInformationLine3 string                                                                `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	OriginatorToBeneficiaryInformationLine4 string                                                                `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON
-}
-
-// cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON contains the
-// JSON metadata for the struct
-// [CardAuthorizationSimulationDeclinedTransactionSourceWireDecline]
-type cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON struct {
-	Amount                                  apijson.Field
-	Reason                                  apijson.Field
-	Description                             apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryReference                    apijson.Field
-	InputMessageAccountabilityData          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
-}
-
-func (r *CardAuthorizationSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the wire transfer was declined.
-type CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
-)
-
-// A constant representing the object's type. For this resource it will always be
-// `declined_transaction`.
-type CardAuthorizationSimulationDeclinedTransactionType string
-
-const (
-	CardAuthorizationSimulationDeclinedTransactionTypeDeclinedTransaction CardAuthorizationSimulationDeclinedTransactionType = "declined_transaction"
 )
 
 // A constant representing the object's type. For this resource it will always be

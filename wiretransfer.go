@@ -116,42 +116,42 @@ func (r *WireTransferService) Submit(ctx context.Context, wireTransferID string,
 type WireTransfer struct {
 	// The wire transfer's identifier.
 	ID string `json:"id,required"`
-	// The message that will show on the recipient's bank statement.
-	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
-	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-	// currency. For wire transfers this is always equal to `usd`.
-	Currency WireTransferCurrency `json:"currency,required"`
+	// The Account to which the transfer belongs.
+	AccountID string `json:"account_id,required"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
-	// The beneficiary's name.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// If your account requires approvals for transfers and the transfer was approved,
+	// this will contain details of the approval.
+	Approval WireTransferApproval `json:"approval,required,nullable"`
 	// The beneficiary's address line 1.
 	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
 	// The beneficiary's address line 2.
 	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
 	// The beneficiary's address line 3.
 	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
-	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID string `json:"external_account_id,required,nullable"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
-	// If your account requires approvals for transfers and the transfer was approved,
-	// this will contain details of the approval.
-	Approval WireTransferApproval `json:"approval,required,nullable"`
+	// The beneficiary's name.
+	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation WireTransferCancellation `json:"cancellation,required,nullable"`
-	// If your transfer is reversed, this will contain details of the reversal.
-	Reversal WireTransferReversal `json:"reversal,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+	// currency. For wire transfers this is always equal to `usd`.
+	Currency WireTransferCurrency `json:"currency,required"`
+	// The identifier of the External Account the transfer was made to, if any.
+	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	// The message that will show on the recipient's bank statement.
+	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The transfer's network.
 	Network WireTransferNetwork `json:"network,required"`
+	// If your transfer is reversed, this will contain details of the reversal.
+	Reversal WireTransferReversal `json:"reversal,required,nullable"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	RoutingNumber string `json:"routing_number,required"`
 	// The lifecycle status of the transfer.
 	Status WireTransferStatus `json:"status,required"`
 	// After the transfer is submitted to Fedwire, this will contain supplemental
@@ -168,22 +168,22 @@ type WireTransfer struct {
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
 type wireTransferJSON struct {
 	ID                      apijson.Field
-	MessageToRecipient      apijson.Field
-	Amount                  apijson.Field
-	Currency                apijson.Field
+	AccountID               apijson.Field
 	AccountNumber           apijson.Field
-	BeneficiaryName         apijson.Field
+	Amount                  apijson.Field
+	Approval                apijson.Field
 	BeneficiaryAddressLine1 apijson.Field
 	BeneficiaryAddressLine2 apijson.Field
 	BeneficiaryAddressLine3 apijson.Field
-	AccountID               apijson.Field
-	ExternalAccountID       apijson.Field
-	RoutingNumber           apijson.Field
-	Approval                apijson.Field
+	BeneficiaryName         apijson.Field
 	Cancellation            apijson.Field
-	Reversal                apijson.Field
 	CreatedAt               apijson.Field
+	Currency                apijson.Field
+	ExternalAccountID       apijson.Field
+	MessageToRecipient      apijson.Field
 	Network                 apijson.Field
+	Reversal                apijson.Field
+	RoutingNumber           apijson.Field
 	Status                  apijson.Field
 	Submission              apijson.Field
 	TransactionID           apijson.Field
@@ -195,19 +195,6 @@ type wireTransferJSON struct {
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-// currency. For wire transfers this is always equal to `usd`.
-type WireTransferCurrency string
-
-const (
-	WireTransferCurrencyCad WireTransferCurrency = "CAD"
-	WireTransferCurrencyChf WireTransferCurrency = "CHF"
-	WireTransferCurrencyEur WireTransferCurrency = "EUR"
-	WireTransferCurrencyGbp WireTransferCurrency = "GBP"
-	WireTransferCurrencyJpy WireTransferCurrency = "JPY"
-	WireTransferCurrencyUsd WireTransferCurrency = "USD"
-)
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
@@ -259,6 +246,26 @@ func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency. For wire transfers this is always equal to `usd`.
+type WireTransferCurrency string
+
+const (
+	WireTransferCurrencyCad WireTransferCurrency = "CAD"
+	WireTransferCurrencyChf WireTransferCurrency = "CHF"
+	WireTransferCurrencyEur WireTransferCurrency = "EUR"
+	WireTransferCurrencyGbp WireTransferCurrency = "GBP"
+	WireTransferCurrencyJpy WireTransferCurrency = "JPY"
+	WireTransferCurrencyUsd WireTransferCurrency = "USD"
+)
+
+// The transfer's network.
+type WireTransferNetwork string
+
+const (
+	WireTransferNetworkWire WireTransferNetwork = "wire"
+)
+
 // If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
 	// The amount that was reversed.
@@ -268,18 +275,20 @@ type WireTransferReversal struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The description on the reversal message from Fedwire.
 	Description string `json:"description,required"`
+	// Additional financial institution information included in the wire reversal.
+	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The Fedwire cycle date for the wire reversal.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// The Fedwire sequence number.
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier for the wire transfer that was reversed.
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -287,8 +296,6 @@ type WireTransferReversal struct {
 	// Information included in the wire reversal for the receiving financial
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
-	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -302,16 +309,16 @@ type wireTransferReversalJSON struct {
 	Amount                                                apijson.Field
 	CreatedAt                                             apijson.Field
 	Description                                           apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	InputCycleDate                                        apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
-	InputMessageAccountabilityData                        apijson.Field
-	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
 	PreviousMessageInputSource                            apijson.Field
 	ReceiverFinancialInstitutionInformation               apijson.Field
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
@@ -321,13 +328,6 @@ type wireTransferReversalJSON struct {
 func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The transfer's network.
-type WireTransferNetwork string
-
-const (
-	WireTransferNetworkWire WireTransferNetwork = "wire"
-)
 
 // The lifecycle status of the transfer.
 type WireTransferStatus string

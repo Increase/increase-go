@@ -93,6 +93,8 @@ func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, o
 // ACH transfers move funds between your Increase account and any other account
 // accessible by the Automated Clearing House (ACH).
 type ACHTransfer struct {
+	// The ACH transfer's identifier.
+	ID string `json:"id,required"`
 	// The Account to which the transfer belongs.
 	AccountID string `json:"account_id,required"`
 	// The destination account number.
@@ -103,22 +105,38 @@ type ACHTransfer struct {
 	// pushing funds to the receiving account. A negative amount indicates a debit
 	// transfer pulling funds from the receiving account.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-	// currency. For ACH transfers this is always equal to `usd`.
-	Currency ACHTransferCurrency `json:"currency,required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
 	Approval ACHTransferApproval `json:"approval,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation ACHTransferCancellation `json:"cancellation,required,nullable"`
+	// The description of the date of the transfer.
+	CompanyDescriptiveDate string `json:"company_descriptive_date,required,nullable"`
+	// The data you chose to associate with the transfer.
+	CompanyDiscretionaryData string `json:"company_discretionary_data,required,nullable"`
+	// The description of the transfer you set to be shown to the recipient.
+	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
+	// The name by which the recipient knows you.
+	CompanyName string `json:"company_name,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+	// currency. For ACH transfers this is always equal to `usd`.
+	Currency ACHTransferCurrency `json:"currency,required"`
+	// The transfer effective date in
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
-	// The ACH transfer's identifier.
-	ID string `json:"id,required"`
+	// The type of the account to which the transfer will be sent.
+	Funding ACHTransferFunding `json:"funding,required"`
+	// Your identifer for the transfer recipient.
+	IndividualID string `json:"individual_id,required,nullable"`
+	// The name of the transfer recipient. This value is information and not verified
+	// by the recipient's bank.
+	IndividualName string `json:"individual_name,required,nullable"`
 	// The transfer's network.
 	Network ACHTransferNetwork `json:"network,required"`
 	// If the receiving bank accepts the transfer but notifies that future transfers
@@ -128,6 +146,8 @@ type ACHTransfer struct {
 	Return ACHTransferReturn `json:"return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
+	// The Standard Entry Class (SEC) code to use for the transfer.
+	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The descriptor that will show on the recipient's bank statement.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The lifecycle status of the transfer.
@@ -137,26 +157,6 @@ type ACHTransfer struct {
 	Submission ACHTransferSubmission `json:"submission,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	// The description of the date of the transfer.
-	CompanyDescriptiveDate string `json:"company_descriptive_date,required,nullable"`
-	// The data you chose to associate with the transfer.
-	CompanyDiscretionaryData string `json:"company_discretionary_data,required,nullable"`
-	// The description of the transfer you set to be shown to the recipient.
-	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
-	// The name by which the recipient knows you.
-	CompanyName string `json:"company_name,required,nullable"`
-	// The type of the account to which the transfer will be sent.
-	Funding ACHTransferFunding `json:"funding,required"`
-	// Your identifer for the transfer recipient.
-	IndividualID string `json:"individual_id,required,nullable"`
-	// The name of the transfer recipient. This value is information and not verified
-	// by the recipient's bank.
-	IndividualName string `json:"individual_name,required,nullable"`
-	// The transfer effective date in
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
-	// The Standard Entry Class (SEC) code to use for the transfer.
-	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
@@ -165,33 +165,33 @@ type ACHTransfer struct {
 
 // achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
 type achTransferJSON struct {
+	ID                       apijson.Field
 	AccountID                apijson.Field
 	AccountNumber            apijson.Field
 	Addendum                 apijson.Field
 	Amount                   apijson.Field
-	Currency                 apijson.Field
 	Approval                 apijson.Field
 	Cancellation             apijson.Field
-	CreatedAt                apijson.Field
-	ExternalAccountID        apijson.Field
-	ID                       apijson.Field
-	Network                  apijson.Field
-	NotificationsOfChange    apijson.Field
-	Return                   apijson.Field
-	RoutingNumber            apijson.Field
-	StatementDescriptor      apijson.Field
-	Status                   apijson.Field
-	Submission               apijson.Field
-	TransactionID            apijson.Field
 	CompanyDescriptiveDate   apijson.Field
 	CompanyDiscretionaryData apijson.Field
 	CompanyEntryDescription  apijson.Field
 	CompanyName              apijson.Field
+	CreatedAt                apijson.Field
+	Currency                 apijson.Field
+	EffectiveDate            apijson.Field
+	ExternalAccountID        apijson.Field
 	Funding                  apijson.Field
 	IndividualID             apijson.Field
 	IndividualName           apijson.Field
-	EffectiveDate            apijson.Field
+	Network                  apijson.Field
+	NotificationsOfChange    apijson.Field
+	Return                   apijson.Field
+	RoutingNumber            apijson.Field
 	StandardEntryClassCode   apijson.Field
+	StatementDescriptor      apijson.Field
+	Status                   apijson.Field
+	Submission               apijson.Field
+	TransactionID            apijson.Field
 	Type                     apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
@@ -200,19 +200,6 @@ type achTransferJSON struct {
 func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-// currency. For ACH transfers this is always equal to `usd`.
-type ACHTransferCurrency string
-
-const (
-	ACHTransferCurrencyCad ACHTransferCurrency = "CAD"
-	ACHTransferCurrencyChf ACHTransferCurrency = "CHF"
-	ACHTransferCurrencyEur ACHTransferCurrency = "EUR"
-	ACHTransferCurrencyGbp ACHTransferCurrency = "GBP"
-	ACHTransferCurrencyJpy ACHTransferCurrency = "JPY"
-	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
-)
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
@@ -264,6 +251,27 @@ func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency. For ACH transfers this is always equal to `usd`.
+type ACHTransferCurrency string
+
+const (
+	ACHTransferCurrencyCad ACHTransferCurrency = "CAD"
+	ACHTransferCurrencyChf ACHTransferCurrency = "CHF"
+	ACHTransferCurrencyEur ACHTransferCurrency = "EUR"
+	ACHTransferCurrencyGbp ACHTransferCurrency = "GBP"
+	ACHTransferCurrencyJpy ACHTransferCurrency = "JPY"
+	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
+)
+
+// The type of the account to which the transfer will be sent.
+type ACHTransferFunding string
+
+const (
+	ACHTransferFundingChecking ACHTransferFunding = "checking"
+	ACHTransferFundingSavings  ACHTransferFunding = "savings"
+)
+
 // The transfer's network.
 type ACHTransferNetwork string
 
@@ -272,22 +280,22 @@ const (
 )
 
 type ACHTransferNotificationsOfChange struct {
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the notification occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The type of change that occurred.
 	ChangeCode string `json:"change_code,required"`
 	// The corrected data.
 	CorrectedData string `json:"corrected_data,required"`
-	JSON          achTransferNotificationsOfChangeJSON
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the notification occurred.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	JSON      achTransferNotificationsOfChangeJSON
 }
 
 // achTransferNotificationsOfChangeJSON contains the JSON metadata for the struct
 // [ACHTransferNotificationsOfChange]
 type achTransferNotificationsOfChangeJSON struct {
-	CreatedAt     apijson.Field
 	ChangeCode    apijson.Field
 	CorrectedData apijson.Field
+	CreatedAt     apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -301,25 +309,25 @@ type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Why the ACH Transfer was returned.
-	ReturnReasonCode ACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The three character ACH return code, in the range R01 to R85.
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
-	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
+	// Why the ACH Transfer was returned.
+	ReturnReasonCode ACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferReturnJSON
+	// The identifier of the ACH Transfer associated with this return.
+	TransferID string `json:"transfer_id,required"`
+	JSON       achTransferReturnJSON
 }
 
 // achTransferReturnJSON contains the JSON metadata for the struct
 // [ACHTransferReturn]
 type achTransferReturnJSON struct {
 	CreatedAt           apijson.Field
-	ReturnReasonCode    apijson.Field
 	RawReturnReasonCode apijson.Field
-	TransferID          apijson.Field
+	ReturnReasonCode    apijson.Field
 	TransactionID       apijson.Field
+	TransferID          apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
 }
@@ -404,6 +412,15 @@ const (
 	ACHTransferReturnReturnReasonCodeUntimelyReturn                                              ACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
+// The Standard Entry Class (SEC) code to use for the transfer.
+type ACHTransferStandardEntryClassCode string
+
+const (
+	ACHTransferStandardEntryClassCodeCorporateCreditOrDebit        ACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
+	ACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHTransferStandardEntryClassCode = "prearranged_payments_and_deposit"
+	ACHTransferStandardEntryClassCodeInternetInitiated             ACHTransferStandardEntryClassCode = "internet_initiated"
+)
+
 // The lifecycle status of the transfer.
 type ACHTransferStatus string
 
@@ -421,18 +438,18 @@ const (
 // After the transfer is submitted to FedACH, this will contain supplemental
 // details.
 type ACHTransferSubmission struct {
-	// The trace number for the submission.
-	TraceNumber string `json:"trace_number,required"`
 	// When the ACH transfer was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	// The trace number for the submission.
+	TraceNumber string `json:"trace_number,required"`
 	JSON        achTransferSubmissionJSON
 }
 
 // achTransferSubmissionJSON contains the JSON metadata for the struct
 // [ACHTransferSubmission]
 type achTransferSubmissionJSON struct {
-	TraceNumber apijson.Field
 	SubmittedAt apijson.Field
+	TraceNumber apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -440,23 +457,6 @@ type achTransferSubmissionJSON struct {
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The type of the account to which the transfer will be sent.
-type ACHTransferFunding string
-
-const (
-	ACHTransferFundingChecking ACHTransferFunding = "checking"
-	ACHTransferFundingSavings  ACHTransferFunding = "savings"
-)
-
-// The Standard Entry Class (SEC) code to use for the transfer.
-type ACHTransferStandardEntryClassCode string
-
-const (
-	ACHTransferStandardEntryClassCodeCorporateCreditOrDebit        ACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
-	ACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHTransferStandardEntryClassCode = "prearranged_payments_and_deposit"
-	ACHTransferStandardEntryClassCodeInternetInitiated             ACHTransferStandardEntryClassCode = "internet_initiated"
-)
 
 // A constant representing the object's type. For this resource it will always be
 // `ach_transfer`.

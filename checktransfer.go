@@ -101,36 +101,36 @@ func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID 
 // Check Transfers move funds from your Increase account by mailing a physical
 // check.
 type CheckTransfer struct {
+	// The Check transfer's identifier.
+	ID string `json:"id,required"`
 	// The identifier of the Account from which funds will be transferred.
 	AccountID string `json:"account_id,required"`
+	// The city of the check's destination.
+	AddressCity string `json:"address_city,required,nullable"`
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1,required,nullable"`
 	// The second line of the address of the check's destination.
 	AddressLine2 string `json:"address_line2,required,nullable"`
-	// The city of the check's destination.
-	AddressCity string `json:"address_city,required,nullable"`
 	// The state of the check's destination.
 	AddressState string `json:"address_state,required,nullable"`
 	// The postal code of the check's destination.
 	AddressZip string `json:"address_zip,required,nullable"`
-	// The return address to be printed on the check.
-	ReturnAddress CheckTransferReturnAddress `json:"return_address,required,nullable"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-	// currency.
-	Currency CheckTransferCurrency `json:"currency,required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
 	Approval CheckTransferApproval `json:"approval,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation CheckTransferCancellation `json:"cancellation,required,nullable"`
-	// The Check transfer's identifier.
-	ID string `json:"id,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+	// currency.
+	Currency CheckTransferCurrency `json:"currency,required"`
+	// After a check transfer is deposited, this will contain supplemental details.
+	Deposit CheckTransferDeposit `json:"deposit,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
 	MailedAt time.Time `json:"mailed_at,required,nullable" format:"date-time"`
@@ -140,24 +140,24 @@ type CheckTransfer struct {
 	Note string `json:"note,required,nullable"`
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required,nullable"`
-	// The lifecycle status of the transfer.
-	Status CheckTransferStatus `json:"status,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was submitted.
-	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
-	// After the transfer is submitted, this will contain supplemental details.
-	Submission CheckTransferSubmission `json:"submission,required,nullable"`
-	// The ID for the transaction caused by the transfer.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	// After a stop-payment is requested on the check, this will contain supplemental
-	// details.
-	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request,required,nullable"`
-	// After a check transfer is deposited, this will contain supplemental details.
-	Deposit CheckTransferDeposit `json:"deposit,required,nullable"`
+	// The return address to be printed on the check.
+	ReturnAddress CheckTransferReturnAddress `json:"return_address,required,nullable"`
 	// After a check transfer is returned, this will contain supplemental details. A
 	// check transfer is returned when the receiver mails a never deposited check back
 	// to the bank printed on the check.
 	ReturnDetails CheckTransferReturnDetails `json:"return_details,required,nullable"`
+	// The lifecycle status of the transfer.
+	Status CheckTransferStatus `json:"status,required"`
+	// After a stop-payment is requested on the check, this will contain supplemental
+	// details.
+	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request,required,nullable"`
+	// After the transfer is submitted, this will contain supplemental details.
+	Submission CheckTransferSubmission `json:"submission,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was submitted.
+	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
+	// The ID for the transaction caused by the transfer.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
@@ -166,30 +166,30 @@ type CheckTransfer struct {
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
 type checkTransferJSON struct {
+	ID                 apijson.Field
 	AccountID          apijson.Field
+	AddressCity        apijson.Field
 	AddressLine1       apijson.Field
 	AddressLine2       apijson.Field
-	AddressCity        apijson.Field
 	AddressState       apijson.Field
 	AddressZip         apijson.Field
-	ReturnAddress      apijson.Field
 	Amount             apijson.Field
-	CreatedAt          apijson.Field
-	Currency           apijson.Field
 	Approval           apijson.Field
 	Cancellation       apijson.Field
-	ID                 apijson.Field
+	CreatedAt          apijson.Field
+	Currency           apijson.Field
+	Deposit            apijson.Field
 	MailedAt           apijson.Field
 	Message            apijson.Field
 	Note               apijson.Field
 	RecipientName      apijson.Field
-	Status             apijson.Field
-	SubmittedAt        apijson.Field
-	Submission         apijson.Field
-	TransactionID      apijson.Field
-	StopPaymentRequest apijson.Field
-	Deposit            apijson.Field
+	ReturnAddress      apijson.Field
 	ReturnDetails      apijson.Field
+	Status             apijson.Field
+	StopPaymentRequest apijson.Field
+	Submission         apijson.Field
+	SubmittedAt        apijson.Field
+	TransactionID      apijson.Field
 	Type               apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
@@ -198,53 +198,6 @@ type checkTransferJSON struct {
 func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The return address to be printed on the check.
-type CheckTransferReturnAddress struct {
-	// The name of the address.
-	Name string `json:"name,required,nullable"`
-	// The first line of the address.
-	Line1 string `json:"line1,required,nullable"`
-	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
-	// The city of the address.
-	City string `json:"city,required,nullable"`
-	// The US state of the address.
-	State string `json:"state,required,nullable"`
-	// The postal code of the address.
-	Zip  string `json:"zip,required,nullable"`
-	JSON checkTransferReturnAddressJSON
-}
-
-// checkTransferReturnAddressJSON contains the JSON metadata for the struct
-// [CheckTransferReturnAddress]
-type checkTransferReturnAddressJSON struct {
-	Name        apijson.Field
-	Line1       apijson.Field
-	Line2       apijson.Field
-	City        apijson.Field
-	State       apijson.Field
-	Zip         apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-// currency.
-type CheckTransferCurrency string
-
-const (
-	CheckTransferCurrencyCad CheckTransferCurrency = "CAD"
-	CheckTransferCurrencyChf CheckTransferCurrency = "CHF"
-	CheckTransferCurrencyEur CheckTransferCurrency = "EUR"
-	CheckTransferCurrencyGbp CheckTransferCurrency = "GBP"
-	CheckTransferCurrencyJpy CheckTransferCurrency = "JPY"
-	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
-)
 
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
@@ -296,93 +249,29 @@ func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The lifecycle status of the transfer.
-type CheckTransferStatus string
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
+type CheckTransferCurrency string
 
 const (
-	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
-	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
-	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
-	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
-	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
-	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
-	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
-	CheckTransferStatusReturned          CheckTransferStatus = "returned"
-	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
-	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
-)
-
-// After the transfer is submitted, this will contain supplemental details.
-type CheckTransferSubmission struct {
-	// When this check transfer was submitted to our check printer.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	// The identitying number of the check.
-	CheckNumber string `json:"check_number,required"`
-	JSON        checkTransferSubmissionJSON
-}
-
-// checkTransferSubmissionJSON contains the JSON metadata for the struct
-// [CheckTransferSubmission]
-type checkTransferSubmissionJSON struct {
-	SubmittedAt apijson.Field
-	CheckNumber apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// After a stop-payment is requested on the check, this will contain supplemental
-// details.
-type CheckTransferStopPaymentRequest struct {
-	// The ID of the check transfer that was stopped.
-	TransferID string `json:"transfer_id,required"`
-	// The transaction ID of the corresponding credit transaction.
-	TransactionID string `json:"transaction_id,required"`
-	// The time the stop-payment was requested.
-	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
-	// A constant representing the object's type. For this resource it will always be
-	// `check_transfer_stop_payment_request`.
-	Type CheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON checkTransferStopPaymentRequestJSON
-}
-
-// checkTransferStopPaymentRequestJSON contains the JSON metadata for the struct
-// [CheckTransferStopPaymentRequest]
-type checkTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Field
-	TransactionID apijson.Field
-	RequestedAt   apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `check_transfer_stop_payment_request`.
-type CheckTransferStopPaymentRequestType string
-
-const (
-	CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest CheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
+	CheckTransferCurrencyCad CheckTransferCurrency = "CAD"
+	CheckTransferCurrencyChf CheckTransferCurrency = "CHF"
+	CheckTransferCurrencyEur CheckTransferCurrency = "EUR"
+	CheckTransferCurrencyGbp CheckTransferCurrency = "GBP"
+	CheckTransferCurrencyJpy CheckTransferCurrency = "JPY"
+	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
 // After a check transfer is deposited, this will contain supplemental details.
 type CheckTransferDeposit struct {
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
-	// The identifier of the API File object containing an image of the back of the
-	// deposited check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type CheckTransferDepositType `json:"type,required"`
@@ -392,9 +281,9 @@ type CheckTransferDeposit struct {
 // checkTransferDepositJSON contains the JSON metadata for the struct
 // [CheckTransferDeposit]
 type checkTransferDepositJSON struct {
+	BackImageFileID  apijson.Field
 	DepositedAt      apijson.Field
 	FrontImageFileID apijson.Field
-	BackImageFileID  apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -412,33 +301,67 @@ const (
 	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
 )
 
+// The return address to be printed on the check.
+type CheckTransferReturnAddress struct {
+	// The city of the address.
+	City string `json:"city,required,nullable"`
+	// The first line of the address.
+	Line1 string `json:"line1,required,nullable"`
+	// The second line of the address.
+	Line2 string `json:"line2,required,nullable"`
+	// The name of the address.
+	Name string `json:"name,required,nullable"`
+	// The US state of the address.
+	State string `json:"state,required,nullable"`
+	// The postal code of the address.
+	Zip  string `json:"zip,required,nullable"`
+	JSON checkTransferReturnAddressJSON
+}
+
+// checkTransferReturnAddressJSON contains the JSON metadata for the struct
+// [CheckTransferReturnAddress]
+type checkTransferReturnAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	Name        apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // After a check transfer is returned, this will contain supplemental details. A
 // check transfer is returned when the receiver mails a never deposited check back
 // to the bank printed on the check.
 type CheckTransferReturnDetails struct {
-	// The identifier of the returned Check Transfer.
-	TransferID string `json:"transfer_id,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// If available, a document with additional information about the return.
 	FileID string `json:"file_id,required,nullable"`
 	// The reason why the check was returned.
 	Reason CheckTransferReturnDetailsReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          checkTransferReturnDetailsJSON
+	// The identifier of the returned Check Transfer.
+	TransferID string `json:"transfer_id,required"`
+	JSON       checkTransferReturnDetailsJSON
 }
 
 // checkTransferReturnDetailsJSON contains the JSON metadata for the struct
 // [CheckTransferReturnDetails]
 type checkTransferReturnDetailsJSON struct {
-	TransferID    apijson.Field
-	ReturnedAt    apijson.Field
 	FileID        apijson.Field
 	Reason        apijson.Field
+	ReturnedAt    apijson.Field
 	TransactionID apijson.Field
+	TransferID    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -455,6 +378,83 @@ const (
 	CheckTransferReturnDetailsReasonRefusedByRecipient    CheckTransferReturnDetailsReason = "refused_by_recipient"
 	CheckTransferReturnDetailsReasonReturnedNotAuthorized CheckTransferReturnDetailsReason = "returned_not_authorized"
 )
+
+// The lifecycle status of the transfer.
+type CheckTransferStatus string
+
+const (
+	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
+	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
+	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
+	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
+	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
+	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
+	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
+	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
+	CheckTransferStatusReturned          CheckTransferStatus = "returned"
+	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
+	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
+)
+
+// After a stop-payment is requested on the check, this will contain supplemental
+// details.
+type CheckTransferStopPaymentRequest struct {
+	// The time the stop-payment was requested.
+	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
+	// The transaction ID of the corresponding credit transaction.
+	TransactionID string `json:"transaction_id,required"`
+	// The ID of the check transfer that was stopped.
+	TransferID string `json:"transfer_id,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `check_transfer_stop_payment_request`.
+	Type CheckTransferStopPaymentRequestType `json:"type,required"`
+	JSON checkTransferStopPaymentRequestJSON
+}
+
+// checkTransferStopPaymentRequestJSON contains the JSON metadata for the struct
+// [CheckTransferStopPaymentRequest]
+type checkTransferStopPaymentRequestJSON struct {
+	RequestedAt   apijson.Field
+	TransactionID apijson.Field
+	TransferID    apijson.Field
+	Type          apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `check_transfer_stop_payment_request`.
+type CheckTransferStopPaymentRequestType string
+
+const (
+	CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest CheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
+)
+
+// After the transfer is submitted, this will contain supplemental details.
+type CheckTransferSubmission struct {
+	// The identitying number of the check.
+	CheckNumber string `json:"check_number,required"`
+	// When this check transfer was submitted to our check printer.
+	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	JSON        checkTransferSubmissionJSON
+}
+
+// checkTransferSubmissionJSON contains the JSON metadata for the struct
+// [CheckTransferSubmission]
+type checkTransferSubmissionJSON struct {
+	CheckNumber apijson.Field
+	SubmittedAt apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer`.
@@ -499,18 +499,18 @@ func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 // The return address to be printed on the check. If omitted this will default to
 // the address of the Entity of the Account used to make the Check Transfer.
 type CheckTransferNewParamsReturnAddress struct {
-	// The name of the return address.
-	Name param.Field[string] `json:"name,required"`
-	// The first line of the return address.
-	Line1 param.Field[string] `json:"line1,required"`
-	// The second line of the return address.
-	Line2 param.Field[string] `json:"line2"`
 	// The city of the return address.
 	City param.Field[string] `json:"city,required"`
+	// The first line of the return address.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The name of the return address.
+	Name param.Field[string] `json:"name,required"`
 	// The US state of the return address.
 	State param.Field[string] `json:"state,required"`
 	// The postal code of the return address.
 	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the return address.
+	Line2 param.Field[string] `json:"line2"`
 }
 
 func (r CheckTransferNewParamsReturnAddress) MarshalJSON() (data []byte, err error) {

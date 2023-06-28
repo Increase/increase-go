@@ -92,6 +92,8 @@ func (r *AccountService) Close(ctx context.Context, accountID string, opts ...op
 // Accounts are your bank accounts with Increase. They store money, receive
 // transfers, and send payments. They earn interest and have depository insurance.
 type Account struct {
+	// The Account identifier.
+	ID string `json:"id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -103,8 +105,6 @@ type Account struct {
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
 	InformationalEntityID string `json:"informational_entity_id,required,nullable"`
-	// The Account identifier.
-	ID string `json:"id,required"`
 	// The interest accrued but not yet paid, expressed as a string containing a
 	// floating-point value.
 	InterestAccrued string `json:"interest_accrued,required"`
@@ -127,11 +127,11 @@ type Account struct {
 
 // accountJSON contains the JSON metadata for the struct [Account]
 type accountJSON struct {
+	ID                    apijson.Field
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	EntityID              apijson.Field
 	InformationalEntityID apijson.Field
-	ID                    apijson.Field
 	InterestAccrued       apijson.Field
 	InterestAccruedAt     apijson.Field
 	InterestRate          apijson.Field

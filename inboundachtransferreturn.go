@@ -82,15 +82,15 @@ type InboundACHTransferReturn struct {
 	ID string `json:"id,required"`
 	// The ID for the Transaction that is being returned.
 	InboundACHTransferTransactionID string `json:"inbound_ach_transfer_transaction_id,required"`
-	// The ID for the transaction refunding the transfer.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	// The lifecycle status of the transfer.
-	Status InboundACHTransferReturnStatus `json:"status,required"`
 	// The reason why this transfer will be returned. This is sent to the initiating
 	// bank.
 	Reason InboundACHTransferReturnReason `json:"reason,required"`
+	// The lifecycle status of the transfer.
+	Status InboundACHTransferReturnStatus `json:"status,required"`
 	// After the return is submitted to FedACH, this will contain supplemental details.
 	Submission InboundACHTransferReturnSubmission `json:"submission,required,nullable"`
+	// The ID for the transaction refunding the transfer.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_return`.
 	Type InboundACHTransferReturnType `json:"type,required"`
@@ -102,10 +102,10 @@ type InboundACHTransferReturn struct {
 type inboundACHTransferReturnJSON struct {
 	ID                              apijson.Field
 	InboundACHTransferTransactionID apijson.Field
-	TransactionID                   apijson.Field
-	Status                          apijson.Field
 	Reason                          apijson.Field
+	Status                          apijson.Field
 	Submission                      apijson.Field
+	TransactionID                   apijson.Field
 	Type                            apijson.Field
 	raw                             string
 	ExtraFields                     map[string]apijson.Field
@@ -114,14 +114,6 @@ type inboundACHTransferReturnJSON struct {
 func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The lifecycle status of the transfer.
-type InboundACHTransferReturnStatus string
-
-const (
-	InboundACHTransferReturnStatusPendingSubmitting InboundACHTransferReturnStatus = "pending_submitting"
-	InboundACHTransferReturnStatusSubmitted         InboundACHTransferReturnStatus = "submitted"
-)
 
 // The reason why this transfer will be returned. This is sent to the initiating
 // bank.
@@ -138,20 +130,28 @@ const (
 	InboundACHTransferReturnReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferReturnReason = "corporate_customer_advised_not_authorized"
 )
 
+// The lifecycle status of the transfer.
+type InboundACHTransferReturnStatus string
+
+const (
+	InboundACHTransferReturnStatusPendingSubmitting InboundACHTransferReturnStatus = "pending_submitting"
+	InboundACHTransferReturnStatusSubmitted         InboundACHTransferReturnStatus = "submitted"
+)
+
 // After the return is submitted to FedACH, this will contain supplemental details.
 type InboundACHTransferReturnSubmission struct {
-	// The trace number for the submission.
-	TraceNumber string `json:"trace_number,required"`
 	// When the ACH transfer return was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	// The trace number for the submission.
+	TraceNumber string `json:"trace_number,required"`
 	JSON        inboundACHTransferReturnSubmissionJSON
 }
 
 // inboundACHTransferReturnSubmissionJSON contains the JSON metadata for the struct
 // [InboundACHTransferReturnSubmission]
 type inboundACHTransferReturnSubmissionJSON struct {
-	TraceNumber apijson.Field
 	SubmittedAt apijson.Field
+	TraceNumber apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

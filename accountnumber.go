@@ -88,12 +88,12 @@ func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query Account
 // inbound payments. Generating a unique account number per vendor ensures you
 // always know the originator of an incoming payment.
 type AccountNumber struct {
+	// The Account Number identifier.
+	ID string `json:"id,required"`
 	// The identifier for the account this Account Number belongs to.
 	AccountID string `json:"account_id,required"`
 	// The account number.
 	AccountNumber string `json:"account_number,required"`
-	// The Account Number identifier.
-	ID string `json:"id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -111,9 +111,9 @@ type AccountNumber struct {
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
 type accountNumberJSON struct {
+	ID            apijson.Field
 	AccountID     apijson.Field
 	AccountNumber apijson.Field
-	ID            apijson.Field
 	CreatedAt     apijson.Field
 	Name          apijson.Field
 	RoutingNumber apijson.Field

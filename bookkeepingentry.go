@@ -58,6 +58,8 @@ func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query Book
 
 // Entries are T-account entries recording debits and credits.
 type BookkeepingEntry struct {
+	// The entry identifier.
+	ID string `json:"id,required"`
 	// The identifier for the Account the Entry belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Entry amount in the minor unit of its currency. For dollars, for example,
@@ -65,8 +67,6 @@ type BookkeepingEntry struct {
 	Amount int64 `json:"amount,required"`
 	// The identifier for the Account the Entry belongs to.
 	EntrySetID string `json:"entry_set_id,required"`
-	// The entry identifier.
-	ID string `json:"id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry`.
 	Type BookkeepingEntryType `json:"type,required"`
@@ -76,10 +76,10 @@ type BookkeepingEntry struct {
 // bookkeepingEntryJSON contains the JSON metadata for the struct
 // [BookkeepingEntry]
 type bookkeepingEntryJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
 	EntrySetID  apijson.Field
-	ID          apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field

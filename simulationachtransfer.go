@@ -71,14 +71,14 @@ func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID
 
 // The results of an inbound ACH Transfer simulation.
 type ACHTransferSimulation struct {
-	// If the ACH Transfer attempt succeeds, this will contain the resulting
-	// [Transaction](#transactions) object. The Transaction's `source` will be of
-	// `category: inbound_ach_transfer`.
-	Transaction ACHTransferSimulationTransaction `json:"transaction,required,nullable"`
 	// If the ACH Transfer attempt fails, this will contain the resulting
 	// [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of `category: inbound_ach_transfer`.
 	DeclinedTransaction ACHTransferSimulationDeclinedTransaction `json:"declined_transaction,required,nullable"`
+	// If the ACH Transfer attempt succeeds, this will contain the resulting
+	// [Transaction](#transactions) object. The Transaction's `source` will be of
+	// `category: inbound_ach_transfer`.
+	Transaction ACHTransferSimulationTransaction `json:"transaction,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_simulation_result`.
 	Type ACHTransferSimulationType `json:"type,required"`
@@ -88,8 +88,8 @@ type ACHTransferSimulation struct {
 // achTransferSimulationJSON contains the JSON metadata for the struct
 // [ACHTransferSimulation]
 type achTransferSimulationJSON struct {
-	Transaction         apijson.Field
 	DeclinedTransaction apijson.Field
+	Transaction         apijson.Field
 	Type                apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
@@ -99,28 +99,684 @@ func (r *ACHTransferSimulation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// If the ACH Transfer attempt fails, this will contain the resulting
+// [Declined Transaction](#declined-transactions) object. The Declined
+// Transaction's `source` will be of `category: inbound_ach_transfer`.
+type ACHTransferSimulationDeclinedTransaction struct {
+	// The Declined Transaction identifier.
+	ID string `json:"id,required"`
+	// The identifier for the Account the Declined Transaction belongs to.
+	AccountID string `json:"account_id,required"`
+	// The Declined Transaction amount in the minor unit of its currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+	// Transaction occured.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+	// Transaction's currency. This will match the currency on the Declined
+	// Transcation's Account.
+	Currency ACHTransferSimulationDeclinedTransactionCurrency `json:"currency,required"`
+	// This is the description the vendor provides.
+	Description string `json:"description,required"`
+	// The identifier for the route this Declined Transaction came through. Routes are
+	// things like cards and ACH details.
+	RouteID string `json:"route_id,required,nullable"`
+	// The type of the route this Declined Transaction came through.
+	RouteType ACHTransferSimulationDeclinedTransactionRouteType `json:"route_type,required,nullable"`
+	// This is an object giving more details on the network-level event that caused the
+	// Declined Transaction. For example, for a card transaction this lists the
+	// merchant's industry and location. Note that for backwards compatibility reasons,
+	// additional undocumented keys may appear in this object. These should be treated
+	// as deprecated and will be removed in the future.
+	Source ACHTransferSimulationDeclinedTransactionSource `json:"source,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `declined_transaction`.
+	Type ACHTransferSimulationDeclinedTransactionType `json:"type,required"`
+	JSON achTransferSimulationDeclinedTransactionJSON
+}
+
+// achTransferSimulationDeclinedTransactionJSON contains the JSON metadata for the
+// struct [ACHTransferSimulationDeclinedTransaction]
+type achTransferSimulationDeclinedTransactionJSON struct {
+	ID          apijson.Field
+	AccountID   apijson.Field
+	Amount      apijson.Field
+	CreatedAt   apijson.Field
+	Currency    apijson.Field
+	Description apijson.Field
+	RouteID     apijson.Field
+	RouteType   apijson.Field
+	Source      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
+// Transaction's currency. This will match the currency on the Declined
+// Transcation's Account.
+type ACHTransferSimulationDeclinedTransactionCurrency string
+
+const (
+	ACHTransferSimulationDeclinedTransactionCurrencyCad ACHTransferSimulationDeclinedTransactionCurrency = "CAD"
+	ACHTransferSimulationDeclinedTransactionCurrencyChf ACHTransferSimulationDeclinedTransactionCurrency = "CHF"
+	ACHTransferSimulationDeclinedTransactionCurrencyEur ACHTransferSimulationDeclinedTransactionCurrency = "EUR"
+	ACHTransferSimulationDeclinedTransactionCurrencyGbp ACHTransferSimulationDeclinedTransactionCurrency = "GBP"
+	ACHTransferSimulationDeclinedTransactionCurrencyJpy ACHTransferSimulationDeclinedTransactionCurrency = "JPY"
+	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
+)
+
+// The type of the route this Declined Transaction came through.
+type ACHTransferSimulationDeclinedTransactionRouteType string
+
+const (
+	ACHTransferSimulationDeclinedTransactionRouteTypeAccountNumber ACHTransferSimulationDeclinedTransactionRouteType = "account_number"
+	ACHTransferSimulationDeclinedTransactionRouteTypeCard          ACHTransferSimulationDeclinedTransactionRouteType = "card"
+)
+
+// This is an object giving more details on the network-level event that caused the
+// Declined Transaction. For example, for a card transaction this lists the
+// merchant's industry and location. Note that for backwards compatibility reasons,
+// additional undocumented keys may appear in this object. These should be treated
+// as deprecated and will be removed in the future.
+type ACHTransferSimulationDeclinedTransactionSource struct {
+	// A ACH Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `ach_decline`.
+	ACHDecline ACHTransferSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
+	// A Card Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_decline`.
+	CardDecline ACHTransferSimulationDeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
+	// The type of decline that took place. We may add additional possible values for
+	// this enum over time; your application should be able to handle such additions
+	// gracefully.
+	Category ACHTransferSimulationDeclinedTransactionSourceCategory `json:"category,required"`
+	// A Check Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `check_decline`.
+	CheckDecline ACHTransferSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
+	// A Inbound Real Time Payments Transfer Decline object. This field will be present
+	// in the JSON response if and only if `category` is equal to
+	// `inbound_real_time_payments_transfer_decline`.
+	InboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
+	// A International ACH Decline object. This field will be present in the JSON
+	// response if and only if `category` is equal to `international_ach_decline`.
+	InternationalACHDecline ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
+	// A Wire Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `wire_decline`.
+	WireDecline ACHTransferSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
+	JSON        achTransferSimulationDeclinedTransactionSourceJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceJSON contains the JSON metadata
+// for the struct [ACHTransferSimulationDeclinedTransactionSource]
+type achTransferSimulationDeclinedTransactionSourceJSON struct {
+	ACHDecline                             apijson.Field
+	CardDecline                            apijson.Field
+	Category                               apijson.Field
+	CheckDecline                           apijson.Field
+	InboundRealTimePaymentsTransferDecline apijson.Field
+	InternationalACHDecline                apijson.Field
+	WireDecline                            apijson.Field
+	raw                                    string
+	ExtraFields                            map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A ACH Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `ach_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                             int64  `json:"amount,required"`
+	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	OriginatorCompanyID                string `json:"originator_company_id,required"`
+	OriginatorCompanyName              string `json:"originator_company_name,required"`
+	// Why the ACH transfer was declined.
+	Reason           ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
+	ReceiverIDNumber string                                                         `json:"receiver_id_number,required,nullable"`
+	ReceiverName     string                                                         `json:"receiver_name,required,nullable"`
+	TraceNumber      string                                                         `json:"trace_number,required"`
+	JSON             achTransferSimulationDeclinedTransactionSourceACHDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceACHDeclineJSON contains the JSON
+// metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceACHDecline]
+type achTransferSimulationDeclinedTransactionSourceACHDeclineJSON struct {
+	Amount                             apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
+	Reason                             apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	TraceNumber                        apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the ACH transfer was declined.
+type ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+)
+
+// A Card Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+	// account currency.
+	Currency ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// If the authorization was attempted using a Digital Wallet Token (such as an
+	// Apple Pay purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required,nullable"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The payment network used to process this card authorization
+	Network ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
+	// Fields specific to the `network`
+	NetworkDetails ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
+	// The identifier of the Real-Time Decision sent to approve or decline this
+	// transaction.
+	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// Why the transaction was declined.
+	Reason ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
+	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineJSON contains the JSON
+// metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDecline]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
+	Amount               apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
+	Network              apijson.Field
+	NetworkDetails       apijson.Field
+	RealTimeDecisionID   apijson.Field
+	Reason               apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+// account currency.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
+)
+
+// The payment network used to process this card authorization
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
+)
+
+// Fields specific to the `network`
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// Fields specific to the `visa` network
+	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
+	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to the `visa` network
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date
+	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
+
+// Why the transaction was declined.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+)
+
+// The type of decline that took place. We may add additional possible values for
+// this enum over time; your application should be able to handle such additions
+// gracefully.
+type ACHTransferSimulationDeclinedTransactionSourceCategory string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCategoryACHDecline                             ACHTransferSimulationDeclinedTransactionSourceCategory = "ach_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryCardDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "card_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryCheckDecline                           ACHTransferSimulationDeclinedTransactionSourceCategory = "check_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                ACHTransferSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryWireDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "wire_decline"
+	ACHTransferSimulationDeclinedTransactionSourceCategoryOther                                  ACHTransferSimulationDeclinedTransactionSourceCategory = "other"
+)
+
+// A Check Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `check_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount        int64  `json:"amount,required"`
+	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// Why the check was declined.
+	Reason ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
+	JSON   achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON contains the JSON
+// metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCheckDecline]
+type achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
+	Amount        apijson.Field
+	AuxiliaryOnUs apijson.Field
+	Reason        apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the check was declined.
+type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+)
+
+// A Inbound Real Time Payments Transfer Decline object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer.
+	Currency ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
+	// The account number of the account that sent the transfer.
+	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
+	// The routing number of the account that sent the transfer.
+	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	// Why the transfer was declined.
+	Reason ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	// Additional information included with the transfer.
+	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	// The Real Time Payments network identification of the declined transfer.
+	TransactionIdentification string `json:"transaction_identification,required"`
+	JSON                      achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
+type achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
+	Amount                    apijson.Field
+	CreditorName              apijson.Field
+	Currency                  apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	Reason                    apijson.Field
+	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer.
+type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
+)
+
+// Why the transfer was declined.
+type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
+)
+
+// A International ACH Decline object. This field will be present in the JSON
+// response if and only if `category` is equal to `international_ach_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                                                 int64  `json:"amount,required"`
+	DestinationCountryCode                                 string `json:"destination_country_code,required"`
+	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
+	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
+	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
+	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
+	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
+	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
+	OriginatorCity                                         string `json:"originator_city,required"`
+	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
+	OriginatorCountry                                      string `json:"originator_country,required"`
+	OriginatorIdentification                               string `json:"originator_identification,required"`
+	OriginatorName                                         string `json:"originator_name,required"`
+	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
+	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
+	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
+	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
+	ReceiverCity                                           string `json:"receiver_city,required"`
+	ReceiverCountry                                        string `json:"receiver_country,required"`
+	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
+	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
+	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
+	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
+	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
+	TraceNumber                                            string `json:"trace_number,required"`
+	JSON                                                   achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline]
+type achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON struct {
+	Amount                                                 apijson.Field
+	DestinationCountryCode                                 apijson.Field
+	DestinationCurrencyCode                                apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
+	ForeignPaymentAmount                                   apijson.Field
+	ForeignTraceNumber                                     apijson.Field
+	InternationalTransactionTypeCode                       apijson.Field
+	OriginatingCurrencyCode                                apijson.Field
+	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
+	OriginatorCity                                         apijson.Field
+	OriginatorCompanyEntryDescription                      apijson.Field
+	OriginatorCountry                                      apijson.Field
+	OriginatorIdentification                               apijson.Field
+	OriginatorName                                         apijson.Field
+	OriginatorPostalCode                                   apijson.Field
+	OriginatorStateOrProvince                              apijson.Field
+	OriginatorStreetAddress                                apijson.Field
+	PaymentRelatedInformation                              apijson.Field
+	PaymentRelatedInformation2                             apijson.Field
+	ReceiverCity                                           apijson.Field
+	ReceiverCountry                                        apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
+	ReceiverPostalCode                                     apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
+	ReceivingCompanyOrIndividualName                       apijson.Field
+	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
+	TraceNumber                                            apijson.Field
+	raw                                                    string
+	ExtraFields                                            map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A Wire Decline object. This field will be present in the JSON response if and
+// only if `category` is equal to `wire_decline`.
+type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount                                  int64  `json:"amount,required"`
+	BeneficiaryAddressLine1                 string `json:"beneficiary_address_line1,required,nullable"`
+	BeneficiaryAddressLine2                 string `json:"beneficiary_address_line2,required,nullable"`
+	BeneficiaryAddressLine3                 string `json:"beneficiary_address_line3,required,nullable"`
+	BeneficiaryName                         string `json:"beneficiary_name,required,nullable"`
+	BeneficiaryReference                    string `json:"beneficiary_reference,required,nullable"`
+	Description                             string `json:"description,required"`
+	InputMessageAccountabilityData          string `json:"input_message_accountability_data,required,nullable"`
+	OriginatorAddressLine1                  string `json:"originator_address_line1,required,nullable"`
+	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
+	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
+	OriginatorName                          string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// Why the wire transfer was declined.
+	Reason ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
+	JSON   achTransferSimulationDeclinedTransactionSourceWireDeclineJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceWireDeclineJSON contains the JSON
+// metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceWireDecline]
+type achTransferSimulationDeclinedTransactionSourceWireDeclineJSON struct {
+	Amount                                  apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	Reason                                  apijson.Field
+	raw                                     string
+	ExtraFields                             map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Why the wire transfer was declined.
+type ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason string
+
+const (
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `declined_transaction`.
+type ACHTransferSimulationDeclinedTransactionType string
+
+const (
+	ACHTransferSimulationDeclinedTransactionTypeDeclinedTransaction ACHTransferSimulationDeclinedTransactionType = "declined_transaction"
+)
+
 // If the ACH Transfer attempt succeeds, this will contain the resulting
 // [Transaction](#transactions) object. The Transaction's `source` will be of
 // `category: inbound_ach_transfer`.
 type ACHTransferSimulationTransaction struct {
+	// The Transaction identifier.
+	ID string `json:"id,required"`
 	// The identifier for the Account the Transaction belongs to.
 	AccountID string `json:"account_id,required"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+	// Transaction occured.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
 	Currency ACHTransferSimulationTransactionCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// For a Transaction related to a transfer, this is the description you provide.
 	// For a Transaction related to a payment, this is the description the vendor
 	// provides.
 	Description string `json:"description,required"`
-	// The Transaction identifier.
-	ID string `json:"id,required"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
 	RouteID string `json:"route_id,required,nullable"`
@@ -140,12 +796,12 @@ type ACHTransferSimulationTransaction struct {
 // achTransferSimulationTransactionJSON contains the JSON metadata for the struct
 // [ACHTransferSimulationTransaction]
 type achTransferSimulationTransactionJSON struct {
+	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
-	Currency    apijson.Field
 	CreatedAt   apijson.Field
+	Currency    apijson.Field
 	Description apijson.Field
-	ID          apijson.Field
 	RouteID     apijson.Field
 	RouteType   apijson.Field
 	Source      apijson.Field
@@ -185,10 +841,6 @@ const (
 // undocumented keys may appear in this object. These should be treated as
 // deprecated and will be removed in the future.
 type ACHTransferSimulationTransactionSource struct {
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
-	Category ACHTransferSimulationTransactionSourceCategory `json:"category,required"`
 	// A Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
 	AccountTransferIntention ACHTransferSimulationTransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
@@ -213,6 +865,10 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement ACHTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	// The type of transaction that took place. We may add additional possible values
+	// for this enum over time; your application should be able to handle such
+	// additions gracefully.
+	Category ACHTransferSimulationTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
 	CheckDepositAcceptance ACHTransferSimulationTransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
@@ -290,7 +946,6 @@ type ACHTransferSimulationTransactionSource struct {
 // achTransferSimulationTransactionSourceJSON contains the JSON metadata for the
 // struct [ACHTransferSimulationTransactionSource]
 type achTransferSimulationTransactionSourceJSON struct {
-	Category                                    apijson.Field
 	AccountTransferIntention                    apijson.Field
 	ACHTransferIntention                        apijson.Field
 	ACHTransferRejection                        apijson.Field
@@ -299,6 +954,7 @@ type achTransferSimulationTransactionSourceJSON struct {
 	CardRefund                                  apijson.Field
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
+	Category                                    apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
@@ -328,46 +984,6 @@ type achTransferSimulationTransactionSourceJSON struct {
 func (r *ACHTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
-type ACHTransferSimulationTransactionSourceCategory string
-
-const (
-	ACHTransferSimulationTransactionSourceCategoryAccountTransferIntention                    ACHTransferSimulationTransactionSourceCategory = "account_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferIntention                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferRejection                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferReturn                           ACHTransferSimulationTransactionSourceCategory = "ach_transfer_return"
-	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
-	ACHTransferSimulationTransactionSourceCategoryCardRefund                                  ACHTransferSimulationTransactionSourceCategory = "card_refund"
-	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment                          ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
-	ACHTransferSimulationTransactionSourceCategoryCardSettlement                              ACHTransferSimulationTransactionSourceCategory = "card_settlement"
-	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
-	ACHTransferSimulationTransactionSourceCategoryCheckDepositReturn                          ACHTransferSimulationTransactionSourceCategory = "check_deposit_return"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferDeposit                        ACHTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn                         ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
-	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"
-	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer                          ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
-	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	ACHTransferSimulationTransactionSourceCategoryInboundCheck                                ACHTransferSimulationTransactionSourceCategory = "inbound_check"
-	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer             ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
-	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal          ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
-	ACHTransferSimulationTransactionSourceCategoryInterestPayment                             ACHTransferSimulationTransactionSourceCategory = "interest_payment"
-	ACHTransferSimulationTransactionSourceCategoryInternalSource                              ACHTransferSimulationTransactionSourceCategory = "internal_source"
-	ACHTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     ACHTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	ACHTransferSimulationTransactionSourceCategorySampleFunds                                 ACHTransferSimulationTransactionSourceCategory = "sample_funds"
-	ACHTransferSimulationTransactionSourceCategoryWireTransferIntention                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryWireTransferRejection                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryOther                                       ACHTransferSimulationTransactionSourceCategory = "other"
-)
 
 // A Account Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_intention`.
@@ -423,10 +1039,10 @@ const (
 // A ACH Transfer Intention object. This field will be present in the JSON response
 // if and only if `category` is equal to `ach_transfer_intention`.
 type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
+	AccountNumber string `json:"account_number,required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount              int64  `json:"amount,required"`
-	AccountNumber       string `json:"account_number,required"`
 	RoutingNumber       string `json:"routing_number,required"`
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
@@ -438,8 +1054,8 @@ type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
 // metadata for the struct
 // [ACHTransferSimulationTransactionSourceACHTransferIntention]
 type achTransferSimulationTransactionSourceACHTransferIntentionJSON struct {
-	Amount              apijson.Field
 	AccountNumber       apijson.Field
+	Amount              apijson.Field
 	RoutingNumber       apijson.Field
 	StatementDescriptor apijson.Field
 	TransferID          apijson.Field
@@ -478,15 +1094,15 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Why the ACH Transfer was returned.
-	ReturnReasonCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The three character ACH return code, in the range R01 to R85.
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
-	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
+	// Why the ACH Transfer was returned.
+	ReturnReasonCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The identifier of the Tranasaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferSimulationTransactionSourceACHTransferReturnJSON
+	// The identifier of the ACH Transfer associated with this return.
+	TransferID string `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceACHTransferReturnJSON
 }
 
 // achTransferSimulationTransactionSourceACHTransferReturnJSON contains the JSON
@@ -494,10 +1110,10 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 // [ACHTransferSimulationTransactionSourceACHTransferReturn]
 type achTransferSimulationTransactionSourceACHTransferReturnJSON struct {
 	CreatedAt           apijson.Field
-	ReturnReasonCode    apijson.Field
 	RawReturnReasonCode apijson.Field
-	TransferID          apijson.Field
+	ReturnReasonCode    apijson.Field
 	TransactionID       apijson.Field
+	TransferID          apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
 }
@@ -625,16 +1241,16 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name,required,nullable"`
-	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type ACHTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
@@ -648,11 +1264,11 @@ type achTransferSimulationTransactionSourceCardRefundJSON struct {
 	Amount               apijson.Field
 	Currency             apijson.Field
 	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
-	MerchantState        apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
-	MerchantCategoryCode apijson.Field
+	MerchantState        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -692,10 +1308,10 @@ type ACHTransferSimulationTransactionSourceCardRevenuePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
 	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
 	JSON                  achTransferSimulationTransactionSourceCardRevenuePaymentJSON
@@ -707,8 +1323,8 @@ type ACHTransferSimulationTransactionSourceCardRevenuePayment struct {
 type achTransferSimulationTransactionSourceCardRevenuePaymentJSON struct {
 	Amount                apijson.Field
 	Currency              apijson.Field
-	PeriodStart           apijson.Field
 	PeriodEnd             apijson.Field
+	PeriodStart           apijson.Field
 	TransactedOnAccountID apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
@@ -736,35 +1352,35 @@ const (
 type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
-	// The Card Authorization that was created prior to this Card Settlement, if on
-	// exists.
-	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The Card Authorization that was created prior to this Card Settlement, if on
+	// exists.
+	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency ACHTransferSimulationTransactionSourceCardSettlementCurrency `json:"currency,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	// The 4-digit MCC describing the merchant's business.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// The identifier of the Pending Transaction associated with this Transaction.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
 	PresentmentAmount int64 `json:"presentment_amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
-	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
-	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
-	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
-	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required,nullable"`
-	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
-	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type ACHTransferSimulationTransactionSourceCardSettlementType `json:"type,required"`
@@ -775,18 +1391,18 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 // metadata for the struct [ACHTransferSimulationTransactionSourceCardSettlement]
 type achTransferSimulationTransactionSourceCardSettlementJSON struct {
 	ID                   apijson.Field
-	CardAuthorization    apijson.Field
 	Amount               apijson.Field
+	CardAuthorization    apijson.Field
 	Currency             apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
 	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
-	MerchantState        apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
-	MerchantCategoryCode apijson.Field
+	MerchantState        apijson.Field
 	PendingTransactionID apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -817,41 +1433,81 @@ const (
 	ACHTransferSimulationTransactionSourceCardSettlementTypeCardSettlement ACHTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
 )
 
+// The type of transaction that took place. We may add additional possible values
+// for this enum over time; your application should be able to handle such
+// additions gracefully.
+type ACHTransferSimulationTransactionSourceCategory string
+
+const (
+	ACHTransferSimulationTransactionSourceCategoryAccountTransferIntention                    ACHTransferSimulationTransactionSourceCategory = "account_transfer_intention"
+	ACHTransferSimulationTransactionSourceCategoryACHTransferIntention                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_intention"
+	ACHTransferSimulationTransactionSourceCategoryACHTransferRejection                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_rejection"
+	ACHTransferSimulationTransactionSourceCategoryACHTransferReturn                           ACHTransferSimulationTransactionSourceCategory = "ach_transfer_return"
+	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
+	ACHTransferSimulationTransactionSourceCategoryCardRefund                                  ACHTransferSimulationTransactionSourceCategory = "card_refund"
+	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment                          ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
+	ACHTransferSimulationTransactionSourceCategoryCardSettlement                              ACHTransferSimulationTransactionSourceCategory = "card_settlement"
+	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
+	ACHTransferSimulationTransactionSourceCategoryCheckDepositReturn                          ACHTransferSimulationTransactionSourceCategory = "check_deposit_return"
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferDeposit                        ACHTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn                         ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
+	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"
+	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer                          ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	ACHTransferSimulationTransactionSourceCategoryInboundCheck                                ACHTransferSimulationTransactionSourceCategory = "inbound_check"
+	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer             ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
+	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal          ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
+	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
+	ACHTransferSimulationTransactionSourceCategoryInterestPayment                             ACHTransferSimulationTransactionSourceCategory = "interest_payment"
+	ACHTransferSimulationTransactionSourceCategoryInternalSource                              ACHTransferSimulationTransactionSourceCategory = "internal_source"
+	ACHTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     ACHTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	ACHTransferSimulationTransactionSourceCategorySampleFunds                                 ACHTransferSimulationTransactionSourceCategory = "sample_funds"
+	ACHTransferSimulationTransactionSourceCategoryWireTransferIntention                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_intention"
+	ACHTransferSimulationTransactionSourceCategoryWireTransferRejection                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_rejection"
+	ACHTransferSimulationTransactionSourceCategoryOther                                       ACHTransferSimulationTransactionSourceCategory = "other"
+)
+
 // A Check Deposit Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_acceptance`.
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
+	// The account number printed on the check.
+	AccountNumber string `json:"account_number,required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
-	// The account number printed on the check.
-	AccountNumber string `json:"account_number,required"`
-	// The routing number printed on the check.
-	RoutingNumber string `json:"routing_number,required"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number for business checks.
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// The ID of the Check Deposit that was accepted.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
+	// The routing number printed on the check.
+	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
 	SerialNumber string `json:"serial_number,required,nullable"`
-	// The ID of the Check Deposit that was accepted.
-	CheckDepositID string `json:"check_deposit_id,required"`
-	JSON           achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
+	JSON         achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
 }
 
 // achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON contains the
 // JSON metadata for the struct
 // [ACHTransferSimulationTransactionSourceCheckDepositAcceptance]
 type achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON struct {
-	Amount         apijson.Field
-	Currency       apijson.Field
 	AccountNumber  apijson.Field
-	RoutingNumber  apijson.Field
+	Amount         apijson.Field
 	AuxiliaryOnUs  apijson.Field
-	SerialNumber   apijson.Field
 	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	RoutingNumber  apijson.Field
+	SerialNumber   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -879,18 +1535,18 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was returned.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency     ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency     `json:"currency,required"`
+	ReturnReason ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency,required"`
-	// The identifier of the Check Deposit that was returned.
-	CheckDepositID string `json:"check_deposit_id,required"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string                                                               `json:"transaction_id,required"`
-	ReturnReason  ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
+	TransactionID string `json:"transaction_id,required"`
 	JSON          achTransferSimulationTransactionSourceCheckDepositReturnJSON
 }
 
@@ -899,11 +1555,11 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 // [ACHTransferSimulationTransactionSourceCheckDepositReturn]
 type achTransferSimulationTransactionSourceCheckDepositReturnJSON struct {
 	Amount         apijson.Field
-	ReturnedAt     apijson.Field
-	Currency       apijson.Field
 	CheckDepositID apijson.Field
-	TransactionID  apijson.Field
+	Currency       apijson.Field
 	ReturnReason   apijson.Field
+	ReturnedAt     apijson.Field
+	TransactionID  apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -945,14 +1601,14 @@ const (
 // A Check Transfer Deposit object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_deposit`.
 type ACHTransferSimulationTransactionSourceCheckTransferDeposit struct {
+	// The identifier of the API File object containing an image of the back of the
+	// deposited check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
-	// The identifier of the API File object containing an image of the back of the
-	// deposited check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type ACHTransferSimulationTransactionSourceCheckTransferDepositType `json:"type,required"`
@@ -963,9 +1619,9 @@ type ACHTransferSimulationTransactionSourceCheckTransferDeposit struct {
 // metadata for the struct
 // [ACHTransferSimulationTransactionSourceCheckTransferDeposit]
 type achTransferSimulationTransactionSourceCheckTransferDepositJSON struct {
+	BackImageFileID  apijson.Field
 	DepositedAt      apijson.Field
 	FrontImageFileID apijson.Field
-	BackImageFileID  apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -986,12 +1642,12 @@ const (
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
 type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
+	// The city of the check's destination.
+	AddressCity string `json:"address_city,required,nullable"`
 	// The street address of the check's destination.
 	AddressLine1 string `json:"address_line1,required,nullable"`
 	// The second line of the address of the check's destination.
 	AddressLine2 string `json:"address_line2,required,nullable"`
-	// The city of the check's destination.
-	AddressCity string `json:"address_city,required,nullable"`
 	// The state of the check's destination.
 	AddressState string `json:"address_state,required,nullable"`
 	// The postal code of the check's destination.
@@ -1012,9 +1668,9 @@ type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
 // JSON metadata for the struct
 // [ACHTransferSimulationTransactionSourceCheckTransferIntention]
 type achTransferSimulationTransactionSourceCheckTransferIntentionJSON struct {
+	AddressCity   apijson.Field
 	AddressLine1  apijson.Field
 	AddressLine2  apijson.Field
-	AddressCity   apijson.Field
 	AddressState  apijson.Field
 	AddressZip    apijson.Field
 	Amount        apijson.Field
@@ -1066,30 +1722,30 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) Unmarshal
 // A Check Transfer Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_return`.
 type ACHTransferSimulationTransactionSourceCheckTransferReturn struct {
-	// The identifier of the returned Check Transfer.
-	TransferID string `json:"transfer_id,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// If available, a document with additional information about the return.
 	FileID string `json:"file_id,required,nullable"`
 	// The reason why the check was returned.
 	Reason ACHTransferSimulationTransactionSourceCheckTransferReturnReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the Transaction that was created to credit you for the
 	// returned check.
 	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          achTransferSimulationTransactionSourceCheckTransferReturnJSON
+	// The identifier of the returned Check Transfer.
+	TransferID string `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceCheckTransferReturnJSON
 }
 
 // achTransferSimulationTransactionSourceCheckTransferReturnJSON contains the JSON
 // metadata for the struct
 // [ACHTransferSimulationTransactionSourceCheckTransferReturn]
 type achTransferSimulationTransactionSourceCheckTransferReturnJSON struct {
-	TransferID    apijson.Field
-	ReturnedAt    apijson.Field
 	FileID        apijson.Field
 	Reason        apijson.Field
+	ReturnedAt    apijson.Field
 	TransactionID apijson.Field
+	TransferID    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -1111,12 +1767,12 @@ const (
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
 type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struct {
-	// The ID of the check transfer that was stopped.
-	TransferID string `json:"transfer_id,required"`
-	// The transaction ID of the corresponding credit transaction.
-	TransactionID string `json:"transaction_id,required"`
 	// The time the stop-payment was requested.
 	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
+	// The transaction ID of the corresponding credit transaction.
+	TransactionID string `json:"transaction_id,required"`
+	// The ID of the check transfer that was stopped.
+	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
@@ -1127,9 +1783,9 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struc
 // contains the JSON metadata for the struct
 // [ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest]
 type achTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	TransferID    apijson.Field
-	TransactionID apijson.Field
 	RequestedAt   apijson.Field
+	TransactionID apijson.Field
+	TransferID    apijson.Field
 	Type          apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -1191,11 +1847,11 @@ type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
 	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
 	OriginatorCompanyEntryDescription  string `json:"originator_company_entry_description,required"`
 	OriginatorCompanyID                string `json:"originator_company_id,required"`
+	OriginatorCompanyName              string `json:"originator_company_name,required"`
 	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
 	ReceiverName                       string `json:"receiver_name,required,nullable"`
 	TraceNumber                        string `json:"trace_number,required"`
@@ -1207,11 +1863,11 @@ type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 // [ACHTransferSimulationTransactionSourceInboundACHTransfer]
 type achTransferSimulationTransactionSourceInboundACHTransferJSON struct {
 	Amount                             apijson.Field
-	OriginatorCompanyName              apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyEntryDescription  apijson.Field
 	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
@@ -1228,24 +1884,24 @@ func (r *ACHTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON
 type ACHTransferSimulationTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount                int64  `json:"amount,required"`
+	CheckFrontImageFileID string `json:"check_front_image_file_id,required,nullable"`
+	CheckNumber           string `json:"check_number,required,nullable"`
+	CheckRearImageFileID  string `json:"check_rear_image_file_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency              ACHTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	CheckNumber           string                                                     `json:"check_number,required,nullable"`
-	CheckFrontImageFileID string                                                     `json:"check_front_image_file_id,required,nullable"`
-	CheckRearImageFileID  string                                                     `json:"check_rear_image_file_id,required,nullable"`
-	JSON                  achTransferSimulationTransactionSourceInboundCheckJSON
+	Currency ACHTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency,required"`
+	JSON     achTransferSimulationTransactionSourceInboundCheckJSON
 }
 
 // achTransferSimulationTransactionSourceInboundCheckJSON contains the JSON
 // metadata for the struct [ACHTransferSimulationTransactionSourceInboundCheck]
 type achTransferSimulationTransactionSourceInboundCheckJSON struct {
 	Amount                apijson.Field
-	Currency              apijson.Field
-	CheckNumber           apijson.Field
 	CheckFrontImageFileID apijson.Field
+	CheckNumber           apijson.Field
 	CheckRearImageFileID  apijson.Field
+	Currency              apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -1274,40 +1930,40 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struc
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount                                                 int64  `json:"amount,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
 	DestinationCountryCode                                 string `json:"destination_country_code,required"`
 	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
+	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
 	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
 	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
 	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
 	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
 	OriginatorCity                                         string `json:"originator_city,required"`
 	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
 	OriginatorCountry                                      string `json:"originator_country,required"`
 	OriginatorIdentification                               string `json:"originator_identification,required"`
 	OriginatorName                                         string `json:"originator_name,required"`
 	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
 	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
 	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
 	ReceiverCountry                                        string `json:"receiver_country,required"`
+	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
 	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
+	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
 	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
 	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
 	TraceNumber                                            string `json:"trace_number,required"`
 	JSON                                                   achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
 }
@@ -1317,40 +1973,40 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struc
 // [ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer]
 type achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON struct {
 	Amount                                                 apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignExchangeReference                               apijson.Field
 	DestinationCountryCode                                 apijson.Field
 	DestinationCurrencyCode                                apijson.Field
+	ForeignExchangeIndicator                               apijson.Field
+	ForeignExchangeReference                               apijson.Field
+	ForeignExchangeReferenceIndicator                      apijson.Field
 	ForeignPaymentAmount                                   apijson.Field
 	ForeignTraceNumber                                     apijson.Field
 	InternationalTransactionTypeCode                       apijson.Field
 	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
 	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
+	OriginatingDepositoryFinancialInstitutionID            apijson.Field
+	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
+	OriginatingDepositoryFinancialInstitutionName          apijson.Field
 	OriginatorCity                                         apijson.Field
 	OriginatorCompanyEntryDescription                      apijson.Field
 	OriginatorCountry                                      apijson.Field
 	OriginatorIdentification                               apijson.Field
 	OriginatorName                                         apijson.Field
 	OriginatorPostalCode                                   apijson.Field
-	OriginatorStreetAddress                                apijson.Field
 	OriginatorStateOrProvince                              apijson.Field
+	OriginatorStreetAddress                                apijson.Field
 	PaymentRelatedInformation                              apijson.Field
 	PaymentRelatedInformation2                             apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
 	ReceiverCity                                           apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
 	ReceiverCountry                                        apijson.Field
+	ReceiverIdentificationNumber                           apijson.Field
 	ReceiverPostalCode                                     apijson.Field
+	ReceiverStateOrProvince                                apijson.Field
+	ReceiverStreetAddress                                  apijson.Field
 	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
 	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
+	ReceivingDepositoryFinancialInstitutionID              apijson.Field
+	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
+	ReceivingDepositoryFinancialInstitutionName            apijson.Field
 	TraceNumber                                            apijson.Field
 	raw                                                    string
 	ExtraFields                                            map[string]apijson.Field
@@ -1367,22 +2023,22 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real Time Payments transfer.
 	Currency ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
-	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
-	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
-	// The Real Time Payments network identification of the transfer
-	TransactionIdentification string `json:"transaction_identification,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	// The Real Time Payments network identification of the transfer
+	TransactionIdentification string `json:"transaction_identification,required"`
+	JSON                      achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
 
 // achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
@@ -1390,13 +2046,13 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 // [ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation]
 type achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
 	Amount                    apijson.Field
-	Currency                  apijson.Field
 	CreditorName              apijson.Field
-	DebtorName                apijson.Field
+	Currency                  apijson.Field
 	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
 	DebtorRoutingNumber       apijson.Field
-	TransactionIdentification apijson.Field
 	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
@@ -1474,16 +2130,16 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal st
 	Description string `json:"description,required"`
 	// The Fedwire cycle date for the wire reversal.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// The Fedwire sequence number.
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier for the wire transfer that was reversed.
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -1498,11 +2154,11 @@ type achTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSO
 	Amount                                        apijson.Field
 	Description                                   apijson.Field
 	InputCycleDate                                apijson.Field
+	InputMessageAccountabilityData                apijson.Field
 	InputSequenceNumber                           apijson.Field
 	InputSource                                   apijson.Field
-	InputMessageAccountabilityData                apijson.Field
-	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputCycleDate                 apijson.Field
+	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputSequenceNumber            apijson.Field
 	PreviousMessageInputSource                    apijson.Field
 	raw                                           string
@@ -1523,18 +2179,20 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The description on the reversal message from Fedwire.
 	Description string `json:"description,required"`
+	// Additional financial institution information included in the wire reversal.
+	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The Fedwire cycle date for the wire reversal.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// The Fedwire sequence number.
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	// The Fedwire transaction identifier for the wire transfer that was reversed.
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
@@ -1542,8 +2200,6 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	// Information included in the wire reversal for the receiving financial
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
-	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -1558,16 +2214,16 @@ type achTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	Amount                                                apijson.Field
 	CreatedAt                                             apijson.Field
 	Description                                           apijson.Field
+	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	InputCycleDate                                        apijson.Field
+	InputMessageAccountabilityData                        apijson.Field
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
-	InputMessageAccountabilityData                        apijson.Field
-	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
+	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
 	PreviousMessageInputSource                            apijson.Field
 	ReceiverFinancialInstitutionInformation               apijson.Field
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
@@ -1595,11 +2251,11 @@ type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
 	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
 	OriginatorName                          string `json:"originator_name,required,nullable"`
+	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
 	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
 	JSON                                    achTransferSimulationTransactionSourceInboundWireTransferJSON
 }
 
@@ -1619,11 +2275,11 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	OriginatorToBeneficiaryInformation      apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -1635,29 +2291,29 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSO
 // A Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
 type ACHTransferSimulationTransactionSourceInterestPayment struct {
+	// The account on which the interest was accrued.
+	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency ACHTransferSimulationTransactionSourceInterestPaymentCurrency `json:"currency,required"`
-	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
-	// The account on which the interest was accrued.
-	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
-	JSON               achTransferSimulationTransactionSourceInterestPaymentJSON
+	// The start of the period for which this transaction paid interest.
+	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	JSON        achTransferSimulationTransactionSourceInterestPaymentJSON
 }
 
 // achTransferSimulationTransactionSourceInterestPaymentJSON contains the JSON
 // metadata for the struct [ACHTransferSimulationTransactionSourceInterestPayment]
 type achTransferSimulationTransactionSourceInterestPaymentJSON struct {
+	AccruedOnAccountID apijson.Field
 	Amount             apijson.Field
 	Currency           apijson.Field
-	PeriodStart        apijson.Field
 	PeriodEnd          apijson.Field
-	AccruedOnAccountID apijson.Field
+	PeriodStart        apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -1793,26 +2449,26 @@ func (r *ACHTransferSimulationTransactionSourceSampleFunds) UnmarshalJSON(data [
 // A Wire Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_intention`.
 type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
-	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`
-	TransferID         string `json:"transfer_id,required"`
-	JSON               achTransferSimulationTransactionSourceWireTransferIntentionJSON
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	RoutingNumber string `json:"routing_number,required"`
+	TransferID    string `json:"transfer_id,required"`
+	JSON          achTransferSimulationTransactionSourceWireTransferIntentionJSON
 }
 
 // achTransferSimulationTransactionSourceWireTransferIntentionJSON contains the
 // JSON metadata for the struct
 // [ACHTransferSimulationTransactionSourceWireTransferIntention]
 type achTransferSimulationTransactionSourceWireTransferIntentionJSON struct {
-	Amount             apijson.Field
 	AccountNumber      apijson.Field
-	RoutingNumber      apijson.Field
+	Amount             apijson.Field
 	MessageToRecipient apijson.Field
+	RoutingNumber      apijson.Field
 	TransferID         apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
@@ -1848,662 +2504,6 @@ type ACHTransferSimulationTransactionType string
 
 const (
 	ACHTransferSimulationTransactionTypeTransaction ACHTransferSimulationTransactionType = "transaction"
-)
-
-// If the ACH Transfer attempt fails, this will contain the resulting
-// [Declined Transaction](#declined-transactions) object. The Declined
-// Transaction's `source` will be of `category: inbound_ach_transfer`.
-type ACHTransferSimulationDeclinedTransaction struct {
-	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID string `json:"account_id,required"`
-	// The Declined Transaction amount in the minor unit of its currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
-	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
-	Currency ACHTransferSimulationDeclinedTransactionCurrency `json:"currency,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// This is the description the vendor provides.
-	Description string `json:"description,required"`
-	// The Declined Transaction identifier.
-	ID string `json:"id,required"`
-	// The identifier for the route this Declined Transaction came through. Routes are
-	// things like cards and ACH details.
-	RouteID string `json:"route_id,required,nullable"`
-	// The type of the route this Declined Transaction came through.
-	RouteType ACHTransferSimulationDeclinedTransactionRouteType `json:"route_type,required,nullable"`
-	// This is an object giving more details on the network-level event that caused the
-	// Declined Transaction. For example, for a card transaction this lists the
-	// merchant's industry and location. Note that for backwards compatibility reasons,
-	// additional undocumented keys may appear in this object. These should be treated
-	// as deprecated and will be removed in the future.
-	Source ACHTransferSimulationDeclinedTransactionSource `json:"source,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `declined_transaction`.
-	Type ACHTransferSimulationDeclinedTransactionType `json:"type,required"`
-	JSON achTransferSimulationDeclinedTransactionJSON
-}
-
-// achTransferSimulationDeclinedTransactionJSON contains the JSON metadata for the
-// struct [ACHTransferSimulationDeclinedTransaction]
-type achTransferSimulationDeclinedTransactionJSON struct {
-	AccountID   apijson.Field
-	Amount      apijson.Field
-	Currency    apijson.Field
-	CreatedAt   apijson.Field
-	Description apijson.Field
-	ID          apijson.Field
-	RouteID     apijson.Field
-	RouteType   apijson.Field
-	Source      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
-// Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
-type ACHTransferSimulationDeclinedTransactionCurrency string
-
-const (
-	ACHTransferSimulationDeclinedTransactionCurrencyCad ACHTransferSimulationDeclinedTransactionCurrency = "CAD"
-	ACHTransferSimulationDeclinedTransactionCurrencyChf ACHTransferSimulationDeclinedTransactionCurrency = "CHF"
-	ACHTransferSimulationDeclinedTransactionCurrencyEur ACHTransferSimulationDeclinedTransactionCurrency = "EUR"
-	ACHTransferSimulationDeclinedTransactionCurrencyGbp ACHTransferSimulationDeclinedTransactionCurrency = "GBP"
-	ACHTransferSimulationDeclinedTransactionCurrencyJpy ACHTransferSimulationDeclinedTransactionCurrency = "JPY"
-	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
-)
-
-// The type of the route this Declined Transaction came through.
-type ACHTransferSimulationDeclinedTransactionRouteType string
-
-const (
-	ACHTransferSimulationDeclinedTransactionRouteTypeAccountNumber ACHTransferSimulationDeclinedTransactionRouteType = "account_number"
-	ACHTransferSimulationDeclinedTransactionRouteTypeCard          ACHTransferSimulationDeclinedTransactionRouteType = "card"
-)
-
-// This is an object giving more details on the network-level event that caused the
-// Declined Transaction. For example, for a card transaction this lists the
-// merchant's industry and location. Note that for backwards compatibility reasons,
-// additional undocumented keys may appear in this object. These should be treated
-// as deprecated and will be removed in the future.
-type ACHTransferSimulationDeclinedTransactionSource struct {
-	// The type of decline that took place. We may add additional possible values for
-	// this enum over time; your application should be able to handle such additions
-	// gracefully.
-	Category ACHTransferSimulationDeclinedTransactionSourceCategory `json:"category,required"`
-	// A ACH Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `ach_decline`.
-	ACHDecline ACHTransferSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
-	// A Card Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_decline`.
-	CardDecline ACHTransferSimulationDeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
-	// A Check Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `check_decline`.
-	CheckDecline ACHTransferSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// A Inbound Real Time Payments Transfer Decline object. This field will be present
-	// in the JSON response if and only if `category` is equal to
-	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
-	// A International ACH Decline object. This field will be present in the JSON
-	// response if and only if `category` is equal to `international_ach_decline`.
-	InternationalACHDecline ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
-	// A Wire Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `wire_decline`.
-	WireDecline ACHTransferSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        achTransferSimulationDeclinedTransactionSourceJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceJSON contains the JSON metadata
-// for the struct [ACHTransferSimulationDeclinedTransactionSource]
-type achTransferSimulationDeclinedTransactionSourceJSON struct {
-	Category                               apijson.Field
-	ACHDecline                             apijson.Field
-	CardDecline                            apijson.Field
-	CheckDecline                           apijson.Field
-	InboundRealTimePaymentsTransferDecline apijson.Field
-	InternationalACHDecline                apijson.Field
-	WireDecline                            apijson.Field
-	raw                                    string
-	ExtraFields                            map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The type of decline that took place. We may add additional possible values for
-// this enum over time; your application should be able to handle such additions
-// gracefully.
-type ACHTransferSimulationDeclinedTransactionSourceCategory string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCategoryACHDecline                             ACHTransferSimulationDeclinedTransactionSourceCategory = "ach_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryCardDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "card_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryCheckDecline                           ACHTransferSimulationDeclinedTransactionSourceCategory = "check_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                ACHTransferSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryWireDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "wire_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryOther                                  ACHTransferSimulationDeclinedTransactionSourceCategory = "other"
-)
-
-// A ACH Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `ach_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
-	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
-	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
-	OriginatorCompanyID                string `json:"originator_company_id,required"`
-	// Why the ACH transfer was declined.
-	Reason           ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
-	ReceiverIDNumber string                                                         `json:"receiver_id_number,required,nullable"`
-	ReceiverName     string                                                         `json:"receiver_name,required,nullable"`
-	TraceNumber      string                                                         `json:"trace_number,required"`
-	JSON             achTransferSimulationDeclinedTransactionSourceACHDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceACHDeclineJSON contains the JSON
-// metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceACHDecline]
-type achTransferSimulationDeclinedTransactionSourceACHDeclineJSON struct {
-	Amount                             apijson.Field
-	OriginatorCompanyName              apijson.Field
-	OriginatorCompanyDescriptiveDate   apijson.Field
-	OriginatorCompanyDiscretionaryData apijson.Field
-	OriginatorCompanyID                apijson.Field
-	Reason                             apijson.Field
-	ReceiverIDNumber                   apijson.Field
-	ReceiverName                       apijson.Field
-	TraceNumber                        apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the ACH transfer was declined.
-type ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
-)
-
-// A Card Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
-	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
-	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
-	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
-	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
-	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
-	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required,nullable"`
-	// The payment network used to process this card authorization
-	Network ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
-	// Fields specific to the `network`
-	NetworkDetails ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
-	Currency ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
-	// Why the transaction was declined.
-	Reason ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
-	// The identifier of the Real-Time Decision sent to approve or decline this
-	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
-	// If the authorization was attempted using a Digital Wallet Token (such as an
-	// Apple Pay purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	JSON                 achTransferSimulationDeclinedTransactionSourceCardDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceCardDeclineJSON contains the JSON
-// metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceCardDecline]
-type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
-	MerchantAcceptorID   apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	Network              apijson.Field
-	NetworkDetails       apijson.Field
-	Amount               apijson.Field
-	Currency             apijson.Field
-	Reason               apijson.Field
-	MerchantState        apijson.Field
-	RealTimeDecisionID   apijson.Field
-	DigitalWalletTokenID apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The payment network used to process this card authorization
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
-)
-
-// Fields specific to the `network`
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
-	// Fields specific to the `visa` network
-	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
-	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
-// contains the JSON metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
-type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
-	Visa        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Fields specific to the `visa` network
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
-	// For electronic commerce transactions, this identifies the level of security used
-	// in obtaining the customer's payment credential. For mail or telephone order
-	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
-	// The method used to enter the cardholder's primary account number and card
-	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
-// contains the JSON metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa]
-type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
-	ElectronicCommerceIndicator apijson.Field
-	PointOfServiceEntryMode     apijson.Field
-	raw                         string
-	ExtraFields                 map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// For electronic commerce transactions, this identifies the level of security used
-// in obtaining the customer's payment credential. For mail or telephone order
-// transactions, identifies the type of mail or telephone order.
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
-)
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
-)
-
-// Why the transaction was declined.
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
-)
-
-// A Check Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `check_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount        int64  `json:"amount,required"`
-	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
-	// Why the check was declined.
-	Reason ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON contains the JSON
-// metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceCheckDecline]
-type achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount        apijson.Field
-	AuxiliaryOnUs apijson.Field
-	Reason        apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the check was declined.
-type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
-)
-
-// A Inbound Real Time Payments Transfer Decline object. This field will be present
-// in the JSON response if and only if `category` is equal to
-// `inbound_real_time_payments_transfer_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
-	// transfer.
-	Currency ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
-	// Why the transfer was declined.
-	Reason ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
-	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
-	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
-	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
-	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
-	// The Real Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	JSON                  achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
-// contains the JSON metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
-type achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
-	Amount                    apijson.Field
-	Currency                  apijson.Field
-	Reason                    apijson.Field
-	CreditorName              apijson.Field
-	DebtorName                apijson.Field
-	DebtorAccountNumber       apijson.Field
-	DebtorRoutingNumber       apijson.Field
-	TransactionIdentification apijson.Field
-	RemittanceInformation     apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
-// transfer.
-type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
-)
-
-// Why the transfer was declined.
-type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
-)
-
-// A International ACH Decline object. This field will be present in the JSON
-// response if and only if `category` is equal to `international_ach_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount                                                 int64  `json:"amount,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
-	DestinationCountryCode                                 string `json:"destination_country_code,required"`
-	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
-	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
-	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
-	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
-	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
-	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
-	OriginatorCity                                         string `json:"originator_city,required"`
-	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
-	OriginatorCountry                                      string `json:"originator_country,required"`
-	OriginatorIdentification                               string `json:"originator_identification,required"`
-	OriginatorName                                         string `json:"originator_name,required"`
-	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
-	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
-	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
-	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
-	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
-	ReceiverCountry                                        string `json:"receiver_country,required"`
-	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
-	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
-	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
-	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
-// contains the JSON metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline]
-type achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON struct {
-	Amount                                                 apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignExchangeReference                               apijson.Field
-	DestinationCountryCode                                 apijson.Field
-	DestinationCurrencyCode                                apijson.Field
-	ForeignPaymentAmount                                   apijson.Field
-	ForeignTraceNumber                                     apijson.Field
-	InternationalTransactionTypeCode                       apijson.Field
-	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
-	OriginatorCity                                         apijson.Field
-	OriginatorCompanyEntryDescription                      apijson.Field
-	OriginatorCountry                                      apijson.Field
-	OriginatorIdentification                               apijson.Field
-	OriginatorName                                         apijson.Field
-	OriginatorPostalCode                                   apijson.Field
-	OriginatorStreetAddress                                apijson.Field
-	OriginatorStateOrProvince                              apijson.Field
-	PaymentRelatedInformation                              apijson.Field
-	PaymentRelatedInformation2                             apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
-	ReceiverCity                                           apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
-	ReceiverCountry                                        apijson.Field
-	ReceiverPostalCode                                     apijson.Field
-	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
-	TraceNumber                                            apijson.Field
-	raw                                                    string
-	ExtraFields                                            map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A Wire Decline object. This field will be present in the JSON response if and
-// only if `category` is equal to `wire_decline`.
-type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// Why the wire transfer was declined.
-	Reason                                  ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	Description                             string                                                          `json:"description,required"`
-	BeneficiaryAddressLine1                 string                                                          `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2                 string                                                          `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3                 string                                                          `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                         string                                                          `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference                    string                                                          `json:"beneficiary_reference,required,nullable"`
-	InputMessageAccountabilityData          string                                                          `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1                  string                                                          `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2                  string                                                          `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3                  string                                                          `json:"originator_address_line3,required,nullable"`
-	OriginatorName                          string                                                          `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformationLine1 string                                                          `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	OriginatorToBeneficiaryInformationLine2 string                                                          `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	OriginatorToBeneficiaryInformationLine3 string                                                          `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	OriginatorToBeneficiaryInformationLine4 string                                                          `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    achTransferSimulationDeclinedTransactionSourceWireDeclineJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceWireDeclineJSON contains the JSON
-// metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceWireDecline]
-type achTransferSimulationDeclinedTransactionSourceWireDeclineJSON struct {
-	Amount                                  apijson.Field
-	Reason                                  apijson.Field
-	Description                             apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryReference                    apijson.Field
-	InputMessageAccountabilityData          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Why the wire transfer was declined.
-type ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason string
-
-const (
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
-)
-
-// A constant representing the object's type. For this resource it will always be
-// `declined_transaction`.
-type ACHTransferSimulationDeclinedTransactionType string
-
-const (
-	ACHTransferSimulationDeclinedTransactionTypeDeclinedTransaction ACHTransferSimulationDeclinedTransactionType = "declined_transaction"
 )
 
 // A constant representing the object's type. For this resource it will always be
