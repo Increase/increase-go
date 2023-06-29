@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.3.0](https://github.com/Increase/increase-go/compare/v0.2.0...v0.3.0) (2023-06-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **types:** singularize array item types ([#36](https://github.com/Increase/increase-go/issues/36))
+* rename a response type and remove unnecessary types from paginated endpoints ([#33](https://github.com/Increase/increase-go/issues/33))
+* **api:** remove many enum members from document category ([#32](https://github.com/Increase/increase-go/issues/32))
+
+### Features
+
+* **api/types:** mark more check transfer intention properties as nullable ([#31](https://github.com/Increase/increase-go/issues/31)) ([429efca](https://github.com/Increase/increase-go/commit/429efca9994054ed7b33684ebcc9e88d92637895))
+* generate `api.md` file ([#29](https://github.com/Increase/increase-go/issues/29)) ([8242f41](https://github.com/Increase/increase-go/commit/8242f41fd1feec60ca3d98ec3bdeac852628b288))
+* respect `x-should-retry` header ([#22](https://github.com/Increase/increase-go/issues/22)) ([314b640](https://github.com/Increase/increase-go/commit/314b640c091c895fa3749622c1671df543fab087))
+
+
+### Chores
+
+* **tests:** minor reformatting of docs and tests ([#25](https://github.com/Increase/increase-go/issues/25)) ([1fb923f](https://github.com/Increase/increase-go/commit/1fb923f31efb17255de1ec19087066fc8b85029b))
+
+
+### Documentation
+
+* add comments to alias types ([#30](https://github.com/Increase/increase-go/issues/30)) ([7f54628](https://github.com/Increase/increase-go/commit/7f546284c9791d921f988ac3d39df056da8d9c8f))
+* add trailing newlines ([#34](https://github.com/Increase/increase-go/issues/34)) ([537501c](https://github.com/Increase/increase-go/commit/537501c031d9fdb0e08f3071a19dff1e13309d78))
+
+
+### Styles
+
+* minor reordering of types and properties ([#35](https://github.com/Increase/increase-go/issues/35)) ([556169b](https://github.com/Increase/increase-go/commit/556169b6bf09eca01edbdc120d002739c29a798e))
+
+
+### Refactors
+
+* **api:** remove `other` from reason enum ([#27](https://github.com/Increase/increase-go/issues/27)) ([8136d90](https://github.com/Increase/increase-go/commit/8136d903fffcd1aedcd234f752a82bdee84055ac))
+* **api:** remove many enum members from document category ([#32](https://github.com/Increase/increase-go/issues/32)) ([2eb741a](https://github.com/Increase/increase-go/commit/2eb741a136cb2418bf3a34b892ee35bdd1b2f32b))
+* **api:** remove unused properties and enum members ([#24](https://github.com/Increase/increase-go/issues/24)) ([6a450bb](https://github.com/Increase/increase-go/commit/6a450bb2600eeaad489b5c363d1adc0d3337e0af))
+* improve `time.Time` encoding and decoding ([#20](https://github.com/Increase/increase-go/issues/20)) ([4bde6e9](https://github.com/Increase/increase-go/commit/4bde6e9b7d2b6a6bad2fb4ae074bd8a1b47167b5))
+* rename a response type and remove unnecessary types from paginated endpoints ([#33](https://github.com/Increase/increase-go/issues/33)) ([0b8dacd](https://github.com/Increase/increase-go/commit/0b8dacd07acfc3b42c2b1022a5035f1103eace4a))
+* **types:** singularize array item types ([#36](https://github.com/Increase/increase-go/issues/36)) ([67ed591](https://github.com/Increase/increase-go/commit/67ed5914941faa47bd4794ea6c0aef1308a1b0d0))
+
 ## [0.2.0](https://github.com/Increase/increase-go/compare/v0.1.1...v0.2.0) (2023-06-13)
 
 
