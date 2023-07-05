@@ -151,11 +151,17 @@ func (r *Account) UnmarshalJSON(data []byte) (err error) {
 type AccountCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	AccountCurrencyCad AccountCurrency = "CAD"
+	// Swiss Franc (CHF)
 	AccountCurrencyChf AccountCurrency = "CHF"
+	// Euro (EUR)
 	AccountCurrencyEur AccountCurrency = "EUR"
+	// British Pound (GBP)
 	AccountCurrencyGbp AccountCurrency = "GBP"
+	// Japanese Yen (JPY)
 	AccountCurrencyJpy AccountCurrency = "JPY"
+	// US Dollar (USD)
 	AccountCurrencyUsd AccountCurrency = "USD"
 )
 
@@ -163,7 +169,9 @@ const (
 type AccountStatus string
 
 const (
-	AccountStatusOpen   AccountStatus = "open"
+	// Open Accounts that are ready to use.
+	AccountStatusOpen AccountStatus = "open"
+	// Closed Accounts on which no new activity can occur.
 	AccountStatusClosed AccountStatus = "closed"
 )
 
@@ -252,6 +260,8 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 type AccountListParamsStatus string
 
 const (
-	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
+	// Open Accounts that are ready to use.
+	AccountListParamsStatusOpen AccountListParamsStatus = "open"
+	// Closed Accounts on which no new activity can occur.
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
 )

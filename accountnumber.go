@@ -131,8 +131,11 @@ func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 type AccountNumberStatus string
 
 const (
-	AccountNumberStatusActive   AccountNumberStatus = "active"
+	// The account number is active.
+	AccountNumberStatusActive AccountNumberStatus = "active"
+	// The account number is temporarily disabled.
 	AccountNumberStatusDisabled AccountNumberStatus = "disabled"
+	// The account number is permanently disabled.
 	AccountNumberStatusCanceled AccountNumberStatus = "canceled"
 )
 
@@ -170,8 +173,11 @@ func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 type AccountNumberUpdateParamsStatus string
 
 const (
-	AccountNumberUpdateParamsStatusActive   AccountNumberUpdateParamsStatus = "active"
+	// The account number is active.
+	AccountNumberUpdateParamsStatusActive AccountNumberUpdateParamsStatus = "active"
+	// The account number is temporarily disabled.
 	AccountNumberUpdateParamsStatusDisabled AccountNumberUpdateParamsStatus = "disabled"
+	// The account number is permanently disabled.
 	AccountNumberUpdateParamsStatusCanceled AccountNumberUpdateParamsStatus = "canceled"
 )
 
@@ -225,7 +231,10 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 type AccountNumberListParamsStatus string
 
 const (
-	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
+	// The account number is active.
+	AccountNumberListParamsStatusActive AccountNumberListParamsStatus = "active"
+	// The account number is temporarily disabled.
 	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
+	// The account number is permanently disabled.
 	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )

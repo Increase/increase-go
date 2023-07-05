@@ -167,7 +167,9 @@ func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err erro
 type RealTimeDecisionCardAuthorizationDecision string
 
 const (
+	// Approve the authorization.
 	RealTimeDecisionCardAuthorizationDecisionApprove RealTimeDecisionCardAuthorizationDecision = "approve"
+	// Decline the authorization.
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
@@ -175,6 +177,7 @@ const (
 type RealTimeDecisionCardAuthorizationNetwork string
 
 const (
+	// Visa
 	RealTimeDecisionCardAuthorizationNetworkVisa RealTimeDecisionCardAuthorizationNetwork = "visa"
 )
 
@@ -228,22 +231,52 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Single transaction of a mail/phone order: Use to indicate that the transaction
+	// is a mail/phone order purchase, not a recurring transaction or installment
+	// payment. For domestic transactions in the US region, this value may also
+	// indicate one bill payment transaction in the card-present or card-absent
+	// environments.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	// Recurring transaction: Payment indicator used to indicate a recurring
+	// transaction that originates from an acquirer in the US region.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	// Installment payment: Payment indicator used to indicate one purchase of goods or
+	// services that is billed to the account in multiple charges over a period of time
+	// agreed upon by the cardholder and merchant from transactions that originate from
+	// an acquirer in the US region.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	// Unknown classification: other mail order: Use to indicate that the type of
+	// mail/telephone order is unknown.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	// Secure electronic commerce transaction: Use to indicate that the electronic
+	// commerce transaction has been authenticated using e.g., 3-D Secure
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+	// identify an electronic commerce transaction where the merchant attempted to
+	// authenticate the cardholder using 3-D Secure, but was unable to complete the
+	// authentication because the issuer or cardholder does not participate in the 3-D
+	// Secure program.
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	// Non-authenticated security transaction: Use to identify an electronic commerce
+	// transaction that uses data encryption for security however , cardholder
+	// authentication is not performed using 3-D Secure.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	// Non-secure transaction: Use to identify an electronic commerce transaction that
+	// has no data protection.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 // The category of the Real-Time Decision.
 type RealTimeDecisionCategory string
 
 const (
-	RealTimeDecisionCategoryCardAuthorizationRequested           RealTimeDecisionCategory = "card_authorization_requested"
-	RealTimeDecisionCategoryDigitalWalletTokenRequested          RealTimeDecisionCategory = "digital_wallet_token_requested"
+	// A card is being authorized.
+	RealTimeDecisionCategoryCardAuthorizationRequested RealTimeDecisionCategory = "card_authorization_requested"
+	// A card is being loaded into a digital wallet.
+	RealTimeDecisionCategoryDigitalWalletTokenRequested RealTimeDecisionCategory = "digital_wallet_token_requested"
+	// A card is being loaded into a digital wallet and requires cardholder
+	// authentication.
 	RealTimeDecisionCategoryDigitalWalletAuthenticationRequested RealTimeDecisionCategory = "digital_wallet_authentication_requested"
 )
 
@@ -289,7 +322,9 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte)
 type RealTimeDecisionDigitalWalletAuthenticationChannel string
 
 const (
-	RealTimeDecisionDigitalWalletAuthenticationChannelSMS   RealTimeDecisionDigitalWalletAuthenticationChannel = "sms"
+	// Send one-time passcodes over SMS.
+	RealTimeDecisionDigitalWalletAuthenticationChannelSMS RealTimeDecisionDigitalWalletAuthenticationChannel = "sms"
+	// Send one-time passcodes over email.
 	RealTimeDecisionDigitalWalletAuthenticationChannelEmail RealTimeDecisionDigitalWalletAuthenticationChannel = "email"
 )
 
@@ -297,7 +332,9 @@ const (
 type RealTimeDecisionDigitalWalletAuthenticationDigitalWallet string
 
 const (
-	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay  RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
+	// Apple Pay
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
+	// Google Pay
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
 )
 
@@ -305,7 +342,9 @@ const (
 type RealTimeDecisionDigitalWalletAuthenticationResult string
 
 const (
+	// Your application successfully delivered the one-time passcode to the cardholder.
 	RealTimeDecisionDigitalWalletAuthenticationResultSuccess RealTimeDecisionDigitalWalletAuthenticationResult = "success"
+	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionDigitalWalletAuthenticationResultFailure RealTimeDecisionDigitalWalletAuthenticationResult = "failure"
 )
 
@@ -345,7 +384,9 @@ func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err err
 type RealTimeDecisionDigitalWalletTokenDecision string
 
 const (
+	// Approve the provisioning request.
 	RealTimeDecisionDigitalWalletTokenDecisionApprove RealTimeDecisionDigitalWalletTokenDecision = "approve"
+	// Decline the provisioning request.
 	RealTimeDecisionDigitalWalletTokenDecisionDecline RealTimeDecisionDigitalWalletTokenDecision = "decline"
 )
 
@@ -353,7 +394,9 @@ const (
 type RealTimeDecisionDigitalWalletTokenDigitalWallet string
 
 const (
-	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay  RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
+	// Apple Pay
+	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
+	// Google Pay
 	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
 )
 
@@ -361,9 +404,12 @@ const (
 type RealTimeDecisionStatus string
 
 const (
-	RealTimeDecisionStatusPending   RealTimeDecisionStatus = "pending"
+	// The decision is pending action via real-time webhook.
+	RealTimeDecisionStatusPending RealTimeDecisionStatus = "pending"
+	// Your webhook actioned the real-time decision.
 	RealTimeDecisionStatusResponded RealTimeDecisionStatus = "responded"
-	RealTimeDecisionStatusTimedOut  RealTimeDecisionStatus = "timed_out"
+	// Your webhook failed to respond to the authorization in time.
+	RealTimeDecisionStatusTimedOut RealTimeDecisionStatus = "timed_out"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -405,7 +451,9 @@ func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byt
 type RealTimeDecisionActionParamsCardAuthorizationDecision string
 
 const (
+	// Approve the authorization.
 	RealTimeDecisionActionParamsCardAuthorizationDecisionApprove RealTimeDecisionActionParamsCardAuthorizationDecision = "approve"
+	// Decline the authorization.
 	RealTimeDecisionActionParamsCardAuthorizationDecisionDecline RealTimeDecisionActionParamsCardAuthorizationDecision = "decline"
 )
 
@@ -424,7 +472,9 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthentication) MarshalJSON() (
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string
 
 const (
+	// Your application successfully delivered the one-time passcode to the cardholder.
 	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "success"
+	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "failure"
 )
 

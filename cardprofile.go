@@ -182,9 +182,14 @@ func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err err
 type CardProfileStatus string
 
 const (
-	CardProfileStatusPending  CardProfileStatus = "pending"
+	// The Card Profile is awaiting review from Increase and/or processing by card
+	// networks.
+	CardProfileStatusPending CardProfileStatus = "pending"
+	// There is an issue with the Card Profile preventing it from use.
 	CardProfileStatusRejected CardProfileStatus = "rejected"
-	CardProfileStatusActive   CardProfileStatus = "active"
+	// The Card Profile can be assigned to Cards.
+	CardProfileStatusActive CardProfileStatus = "active"
+	// The Card Profile is no longer in use.
 	CardProfileStatusArchived CardProfileStatus = "archived"
 )
 
@@ -283,8 +288,13 @@ func (r CardProfileListParamsStatus) URLQuery() (v url.Values) {
 type CardProfileListParamsStatusIn string
 
 const (
-	CardProfileListParamsStatusInPending  CardProfileListParamsStatusIn = "pending"
+	// The Card Profile is awaiting review from Increase and/or processing by card
+	// networks.
+	CardProfileListParamsStatusInPending CardProfileListParamsStatusIn = "pending"
+	// There is an issue with the Card Profile preventing it from use.
 	CardProfileListParamsStatusInRejected CardProfileListParamsStatusIn = "rejected"
-	CardProfileListParamsStatusInActive   CardProfileListParamsStatusIn = "active"
+	// The Card Profile can be assigned to Cards.
+	CardProfileListParamsStatusInActive CardProfileListParamsStatusIn = "active"
+	// The Card Profile is no longer in use.
 	CardProfileListParamsStatusInArchived CardProfileListParamsStatusIn = "archived"
 )

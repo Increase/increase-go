@@ -254,11 +254,17 @@ func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 type CheckTransferCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CheckTransferCurrencyCad CheckTransferCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CheckTransferCurrencyChf CheckTransferCurrency = "CHF"
+	// Euro (EUR)
 	CheckTransferCurrencyEur CheckTransferCurrency = "EUR"
+	// British Pound (GBP)
 	CheckTransferCurrencyGbp CheckTransferCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CheckTransferCurrencyJpy CheckTransferCurrency = "JPY"
+	// US Dollar (USD)
 	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
@@ -374,8 +380,12 @@ func (r *CheckTransferReturnDetails) UnmarshalJSON(data []byte) (err error) {
 type CheckTransferReturnDetailsReason string
 
 const (
-	CheckTransferReturnDetailsReasonMailDeliveryFailure   CheckTransferReturnDetailsReason = "mail_delivery_failure"
-	CheckTransferReturnDetailsReasonRefusedByRecipient    CheckTransferReturnDetailsReason = "refused_by_recipient"
+	// Mail delivery failed and the check was returned to sender.
+	CheckTransferReturnDetailsReasonMailDeliveryFailure CheckTransferReturnDetailsReason = "mail_delivery_failure"
+	// The check arrived and the recipient refused to deposit it.
+	CheckTransferReturnDetailsReasonRefusedByRecipient CheckTransferReturnDetailsReason = "refused_by_recipient"
+	// The check was fraudulently deposited and the transfer was returned to the Bank
+	// of First Deposit.
 	CheckTransferReturnDetailsReasonReturnedNotAuthorized CheckTransferReturnDetailsReason = "returned_not_authorized"
 )
 
@@ -383,16 +393,27 @@ const (
 type CheckTransferStatus string
 
 const (
-	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
+	// The transfer is awaiting approval.
+	CheckTransferStatusPendingApproval CheckTransferStatus = "pending_approval"
+	// The transfer is pending submission.
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	CheckTransferStatusSubmitted         CheckTransferStatus = "submitted"
-	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
-	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
-	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
-	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
-	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
-	CheckTransferStatusReturned          CheckTransferStatus = "returned"
-	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
+	// The transfer is complete.
+	CheckTransferStatusSubmitted CheckTransferStatus = "submitted"
+	// The check is queued for mailing.
+	CheckTransferStatusPendingMailing CheckTransferStatus = "pending_mailing"
+	// The check has been mailed.
+	CheckTransferStatusMailed CheckTransferStatus = "mailed"
+	// The transfer has been canceled.
+	CheckTransferStatusCanceled CheckTransferStatus = "canceled"
+	// The check has been deposited.
+	CheckTransferStatusDeposited CheckTransferStatus = "deposited"
+	// A stop-payment was requested for this check.
+	CheckTransferStatusStopped CheckTransferStatus = "stopped"
+	// The transfer has been returned.
+	CheckTransferStatusReturned CheckTransferStatus = "returned"
+	// The transfer has been rejected.
+	CheckTransferStatusRejected CheckTransferStatus = "rejected"
+	// The transfer requires attention from an Increase operator.
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 )
 

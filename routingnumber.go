@@ -100,7 +100,9 @@ func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 type RoutingNumberACHTransfers string
 
 const (
-	RoutingNumberACHTransfersSupported    RoutingNumberACHTransfers = "supported"
+	// The routing number can receive this transfer type.
+	RoutingNumberACHTransfersSupported RoutingNumberACHTransfers = "supported"
+	// The routing number cannot receive this transfer type.
 	RoutingNumberACHTransfersNotSupported RoutingNumberACHTransfers = "not_supported"
 )
 
@@ -108,7 +110,9 @@ const (
 type RoutingNumberRealTimePaymentsTransfers string
 
 const (
-	RoutingNumberRealTimePaymentsTransfersSupported    RoutingNumberRealTimePaymentsTransfers = "supported"
+	// The routing number can receive this transfer type.
+	RoutingNumberRealTimePaymentsTransfersSupported RoutingNumberRealTimePaymentsTransfers = "supported"
+	// The routing number cannot receive this transfer type.
 	RoutingNumberRealTimePaymentsTransfersNotSupported RoutingNumberRealTimePaymentsTransfers = "not_supported"
 )
 
@@ -124,7 +128,9 @@ const (
 type RoutingNumberWireTransfers string
 
 const (
-	RoutingNumberWireTransfersSupported    RoutingNumberWireTransfers = "supported"
+	// The routing number can receive this transfer type.
+	RoutingNumberWireTransfersSupported RoutingNumberWireTransfers = "supported"
+	// The routing number cannot receive this transfer type.
 	RoutingNumberWireTransfersNotSupported RoutingNumberWireTransfers = "not_supported"
 )
 

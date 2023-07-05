@@ -251,11 +251,17 @@ func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 type WireTransferCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	WireTransferCurrencyCad WireTransferCurrency = "CAD"
+	// Swiss Franc (CHF)
 	WireTransferCurrencyChf WireTransferCurrency = "CHF"
+	// Euro (EUR)
 	WireTransferCurrencyEur WireTransferCurrency = "EUR"
+	// British Pound (GBP)
 	WireTransferCurrencyGbp WireTransferCurrency = "GBP"
+	// Japanese Yen (JPY)
 	WireTransferCurrencyJpy WireTransferCurrency = "JPY"
+	// US Dollar (USD)
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
@@ -333,13 +339,20 @@ func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 type WireTransferStatus string
 
 const (
-	WireTransferStatusCanceled          WireTransferStatus = "canceled"
+	// The transfer has been canceled.
+	WireTransferStatusCanceled WireTransferStatus = "canceled"
+	// The transfer requires attention from an Increase operator.
 	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
-	WireTransferStatusPendingApproval   WireTransferStatus = "pending_approval"
-	WireTransferStatusRejected          WireTransferStatus = "rejected"
-	WireTransferStatusReversed          WireTransferStatus = "reversed"
-	WireTransferStatusComplete          WireTransferStatus = "complete"
-	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
+	// The transfer is pending approval.
+	WireTransferStatusPendingApproval WireTransferStatus = "pending_approval"
+	// The transfer has been rejected.
+	WireTransferStatusRejected WireTransferStatus = "rejected"
+	// The transfer has been reversed.
+	WireTransferStatusReversed WireTransferStatus = "reversed"
+	// The transfer is complete.
+	WireTransferStatusComplete WireTransferStatus = "complete"
+	// The transfer is pending creation.
+	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
 )
 
 // After the transfer is submitted to Fedwire, this will contain supplemental

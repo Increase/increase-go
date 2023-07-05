@@ -209,8 +209,11 @@ func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 type CardStatus string
 
 const (
-	CardStatusActive   CardStatus = "active"
+	// The card is active.
+	CardStatusActive CardStatus = "active"
+	// The card is temporarily disabled.
 	CardStatusDisabled CardStatus = "disabled"
+	// The card is temporarily canceled.
 	CardStatusCanceled CardStatus = "canceled"
 )
 
@@ -382,8 +385,11 @@ func (r CardUpdateParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
 type CardUpdateParamsStatus string
 
 const (
-	CardUpdateParamsStatusActive   CardUpdateParamsStatus = "active"
+	// The card is active.
+	CardUpdateParamsStatusActive CardUpdateParamsStatus = "active"
+	// The card is temporarily disabled.
 	CardUpdateParamsStatusDisabled CardUpdateParamsStatus = "disabled"
+	// The card is temporarily canceled.
 	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
 )
 

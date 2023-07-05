@@ -163,11 +163,17 @@ func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (e
 type ACHTransferSimulationDeclinedTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationDeclinedTransactionCurrencyCad ACHTransferSimulationDeclinedTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationDeclinedTransactionCurrencyChf ACHTransferSimulationDeclinedTransactionCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationDeclinedTransactionCurrencyEur ACHTransferSimulationDeclinedTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationDeclinedTransactionCurrencyGbp ACHTransferSimulationDeclinedTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationDeclinedTransactionCurrencyJpy ACHTransferSimulationDeclinedTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationDeclinedTransactionCurrencyUsd ACHTransferSimulationDeclinedTransactionCurrency = "USD"
 )
 
@@ -175,8 +181,10 @@ const (
 type ACHTransferSimulationDeclinedTransactionRouteType string
 
 const (
+	// An Account Number.
 	ACHTransferSimulationDeclinedTransactionRouteTypeAccountNumber ACHTransferSimulationDeclinedTransactionRouteType = "account_number"
-	ACHTransferSimulationDeclinedTransactionRouteTypeCard          ACHTransferSimulationDeclinedTransactionRouteType = "card"
+	// A Card.
+	ACHTransferSimulationDeclinedTransactionRouteTypeCard ACHTransferSimulationDeclinedTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -272,18 +280,30 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON
 type ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	// The account number is canceled.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
+	// The account number is disabled.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
+	// The transaction would cause a limit to be exceeded.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	// A credit was refused.
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
-	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// Other.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
+	// The account's entity is not active.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
+	// Your account contains insufficient funds.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	// Other.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	// The account number that was debited does not exist.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
+	// Other.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	// The transaction is not allowed per Increase's terms.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -354,11 +374,17 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSO
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
@@ -366,6 +392,7 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
+	// Visa
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
 
@@ -421,32 +448,72 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Single transaction of a mail/phone order: Use to indicate that the transaction
+	// is a mail/phone order purchase, not a recurring transaction or installment
+	// payment. For domestic transactions in the US region, this value may also
+	// indicate one bill payment transaction in the card-present or card-absent
+	// environments.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	// Recurring transaction: Payment indicator used to indicate a recurring
+	// transaction that originates from an acquirer in the US region.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	// Installment payment: Payment indicator used to indicate one purchase of goods or
+	// services that is billed to the account in multiple charges over a period of time
+	// agreed upon by the cardholder and merchant from transactions that originate from
+	// an acquirer in the US region.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	// Unknown classification: other mail order: Use to indicate that the type of
+	// mail/telephone order is unknown.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	// Secure electronic commerce transaction: Use to indicate that the electronic
+	// commerce transaction has been authenticated using e.g., 3-D Secure
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+	// identify an electronic commerce transaction where the merchant attempted to
+	// authenticate the cardholder using 3-D Secure, but was unable to complete the
+	// authentication because the issuer or cardholder does not participate in the 3-D
+	// Secure program.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	// Non-authenticated security transaction: Use to identify an electronic commerce
+	// transaction that uses data encryption for security however , cardholder
+	// authentication is not performed using 3-D Secure.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	// Non-secure transaction: Use to identify an electronic commerce transaction that
+	// has no data protection.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 // Why the transaction was declined.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	// The Card was not active.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The account's entity was not active.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	// The account was inactive.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	// The Card's Account did not have a sufficient available balance.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	// The given CVV2 did not match the card's value.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	// The attempted card transaction is not allowed per Increase's terms.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	// The transaction was blocked by an internal limit for new Increase accounts.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
+	// The transaction was blocked by a Limit.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	// Your application declined the transaction via webhook.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	// Your application webhook did not respond without the required timeout.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	// Declined by stand-in processing.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	// The original card authorization for this incremental authorization does not
+	// exist.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
@@ -456,13 +523,27 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceCategory string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCategoryACHDecline                             ACHTransferSimulationDeclinedTransactionSourceCategory = "ach_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryCardDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "card_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryCheckDecline                           ACHTransferSimulationDeclinedTransactionSourceCategory = "check_decline"
+	// The Declined Transaction was created by a ACH Decline object. Details will be
+	// under the `ach_decline` object.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryACHDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "ach_decline"
+	// The Declined Transaction was created by a Card Decline object. Details will be
+	// under the `card_decline` object.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryCardDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "card_decline"
+	// The Declined Transaction was created by a Check Decline object. Details will be
+	// under the `check_decline` object.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryCheckDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "check_decline"
+	// The Declined Transaction was created by a Inbound Real Time Payments Transfer
+	// Decline object. Details will be under the
+	// `inbound_real_time_payments_transfer_decline` object.
 	ACHTransferSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                ACHTransferSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryWireDecline                            ACHTransferSimulationDeclinedTransactionSourceCategory = "wire_decline"
-	ACHTransferSimulationDeclinedTransactionSourceCategoryOther                                  ACHTransferSimulationDeclinedTransactionSourceCategory = "other"
+	// The Declined Transaction was created by a International ACH Decline object.
+	// Details will be under the `international_ach_decline` object.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryInternationalACHDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
+	// The Declined Transaction was created by a Wire Decline object. Details will be
+	// under the `wire_decline` object.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryWireDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "wire_decline"
+	// The Declined Transaction was made for an undocumented or deprecated reason.
+	ACHTransferSimulationDeclinedTransactionSourceCategoryOther ACHTransferSimulationDeclinedTransactionSourceCategory = "other"
 )
 
 // A Check Decline object. This field will be present in the JSON response if and
@@ -496,21 +577,36 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJS
 type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	// The account number is canceled.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
+	// The account number is disabled.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	// The transaction would cause a limit to be exceeded.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
+	// The account's entity is not active.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
+	// Your account contains insufficient funds.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	// Unable to locate account.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	// Routing number on the check is not ours.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	// Unable to process.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
+	// Refer to image.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	// Stop payment requested for this check.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
+	// Check was returned to sender.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	// The check was a duplicate deposit.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	// The transaction is not allowed.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	// The check was altered or fictitious.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
 // A Inbound Real Time Payments Transfer Decline object. This field will be present
@@ -568,11 +664,17 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTr
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
@@ -580,11 +682,17 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// The account number is canceled.
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	// The account number is disabled.
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	// Your account is restricted.
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	// Your account is inactive.
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	// The account's entity is not active.
+	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// Your account is not enabled to receive Real Time Payments transfers.
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -739,11 +847,17 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSO
 type ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason string
 
 const (
+	// The account number is canceled.
 	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
+	// The account number is disabled.
 	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
-	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	// The account's entity is not active.
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
+	// The beneficiary account number does not exist.
+	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	// The transaction is not allowed per Increase's terms.
 	ACHTransferSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
@@ -820,11 +934,17 @@ func (r *ACHTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error
 type ACHTransferSimulationTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionCurrencyCad ACHTransferSimulationTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionCurrencyChf ACHTransferSimulationTransactionCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionCurrencyEur ACHTransferSimulationTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionCurrencyGbp ACHTransferSimulationTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionCurrencyJpy ACHTransferSimulationTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionCurrencyUsd ACHTransferSimulationTransactionCurrency = "USD"
 )
 
@@ -832,8 +952,10 @@ const (
 type ACHTransferSimulationTransactionRouteType string
 
 const (
+	// An Account Number.
 	ACHTransferSimulationTransactionRouteTypeAccountNumber ACHTransferSimulationTransactionRouteType = "account_number"
-	ACHTransferSimulationTransactionRouteTypeCard          ACHTransferSimulationTransactionRouteType = "card"
+	// A Card.
+	ACHTransferSimulationTransactionRouteTypeCard ACHTransferSimulationTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -1028,11 +1150,17 @@ func (r *ACHTransferSimulationTransactionSourceAccountTransferIntention) Unmarsh
 type ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyCad ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyChf ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyEur ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyGbp ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyJpy ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrencyUsd ACHTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
@@ -1126,76 +1254,187 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(
 type ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R01. Insufficient funds in the source account.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	// Code R03. The account does not exist or the receiving bank was unable to locate
+	// it.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoAccount ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	// Code R02. The account is closed.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	// Code R04. The account number is invalid at the receiving bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	// Code R23. The receiving bank account refused a credit transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
+	// Class code.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	// Code R29. The corporate customer reversed the transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	// Code R08. The receiving bank stopped payment on this transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	// Code R20. The receiving bank account does not perform transfers.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	// Code R09. The receiving bank account does not have enough available balance for
+	// the transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	// Code R28. The routing number is incorrect.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	// Code R10. The customer reversed the transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// Code R19. The amount field is incorrect or too large.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	// Code R07. The customer who initiated the transfer revoked authorization.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	// Code R13. The routing number is invalid.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	// Code R17. The receiving bank is unable to process a field in the transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	// Code R45. The individual name field was invalid.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	// Code R06. The originating financial institution reversed the transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	// Code R34. The receiving bank's regulatory supervisor has limited their
+	// participation.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	// Code R85. The outbound international ACH transfer was incorrect.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	// Code R12. A rare return reason. The account was sold to another bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	// Code R25. The addenda record is incorrect or missing.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAddendaError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	// Code R15. A rare return reason. The account holder is deceased.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	// Code R11. A rare return reason. The customer authorized some payment to the
+	// sender, but this payment was not in error.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
+	// Code R74. A rare return reason. Sent in response to a return that was returned
+	// with code `field_error`. The latest return should include the corrected
+	// field(s).
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	// Code R24. A rare return reason. The receiving bank received an exact duplicate
+	// entry with the same trace number and amount.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	// Code R67. A rare return reason. The return this message refers to was a
+	// duplicate.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	// Code R47. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	// Code R43. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	// Code R44. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	// Code R46. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	// Code R41. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	// Code R40. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	// Code R42. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	// Code R84. A rare return reason. The International ACH Transfer cannot be
+	// processed by the gateway.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	// Code R69. A rare return reason. One or more of the fields in the ACH were
+	// malformed.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFieldError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	// Code R83. A rare return reason. The Foreign receiving bank was unable to settle
+	// this ACH transfer.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	// Code R80. A rare return reason. The International ACH Transfer is malformed.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	// Code R18. A rare return reason. The ACH has an improper effective entry date
+	// field.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	// Code R39. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	// Code R21. A rare return reason. The Company ID field of the ACH was invalid.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	// Code R82. A rare return reason. The foreign receiving bank identifier for an
+	// International ACH Transfer was invalid.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	// Code R22. A rare return reason. The Individual ID number field of the ACH was
+	// invalid.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	// Code R53. A rare return reason. Both the Represented Check ("RCK") entry and the
+	// original check were presented to the bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	// Code R51. A rare return reason. The Represented Check ("RCK") entry is
+	// ineligible.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	// Code R26. A rare return reason. The ACH is missing a required field.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	// Code R71. A rare return reason. The receiving bank does not recognize the
+	// routing number in a dishonored return entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	// Code R61. A rare return reason. The receiving bank does not recognize the
+	// routing number in a return entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	// Code R76. A rare return reason. Sent in response to a return, the bank does not
+	// find the errors alleged by the returning bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	// Code R77. A rare return reason. The receiving bank does not accept the return of
+	// the erroneous debit. The funds are not available at the receiving bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	// Code R81. A rare return reason. The receiving bank does not accept International
+	// ACH Transfers.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	// Code R31. A rare return reason. A return that has been agreed to be accepted by
+	// the receiving bank, despite falling outside of the usual return timeframe.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	// Code R70. A rare return reason. The receiving bank had not approved this return.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	// Code R32. A rare return reason. The receiving bank could not settle this
+	// transaction.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	// Code R30. A rare return reason. The receiving bank does not accept Check
+	// Truncation ACH transfers.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R14. A rare return reason. The payee is deceased.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
-	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
+	// Code R75. A rare return reason. The originating bank disputes that an earlier
+	// `duplicate_entry` return was actually a duplicate.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	// Code R62. A rare return reason. The originating bank made a mistake earlier and
+	// this return corrects it.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	// Code R36. A rare return reason. Return of a malformed credit entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	// Code R35. A rare return reason. Return of a malformed debit entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	// Code R33. A rare return reason. Return of a Destroyed Check ("XKC") entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	// Code R37. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	// Code R50. A rare return reason. State law prevents the bank from accepting the
+	// Represented Check ("RCK") entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	// Code R52. A rare return reason. A stop payment was issued on a Represented Check
+	// ("RCK") entry.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	// Code R38. A rare return reason. The source attached to the ACH, usually an ACH
+	// check conversion, includes a stop payment.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
+	// it was on time.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// originated ACH.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	// Code R72. A rare return reason. The dishonored return was sent too late.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	// Code R68. A rare return reason. The return was sent too late.
+	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -1283,11 +1522,17 @@ func (r *ACHTransferSimulationTransactionSourceCardRefund) UnmarshalJSON(data []
 type ACHTransferSimulationTransactionSourceCardRefundCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyCad ACHTransferSimulationTransactionSourceCardRefundCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyChf ACHTransferSimulationTransactionSourceCardRefundCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyEur ACHTransferSimulationTransactionSourceCardRefundCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyGbp ACHTransferSimulationTransactionSourceCardRefundCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyJpy ACHTransferSimulationTransactionSourceCardRefundCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyUsd ACHTransferSimulationTransactionSourceCardRefundCurrency = "USD"
 )
 
@@ -1339,11 +1584,17 @@ func (r *ACHTransferSimulationTransactionSourceCardRevenuePayment) UnmarshalJSON
 type ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyCad ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyChf ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyEur ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyGbp ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyJpy ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrencyUsd ACHTransferSimulationTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
@@ -1417,11 +1668,17 @@ func (r *ACHTransferSimulationTransactionSourceCardSettlement) UnmarshalJSON(dat
 type ACHTransferSimulationTransactionSourceCardSettlementCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyCad ACHTransferSimulationTransactionSourceCardSettlementCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyChf ACHTransferSimulationTransactionSourceCardSettlementCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyEur ACHTransferSimulationTransactionSourceCardSettlementCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyGbp ACHTransferSimulationTransactionSourceCardSettlementCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyJpy ACHTransferSimulationTransactionSourceCardSettlementCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyUsd ACHTransferSimulationTransactionSourceCardSettlementCurrency = "USD"
 )
 
@@ -1439,38 +1696,103 @@ const (
 type ACHTransferSimulationTransactionSourceCategory string
 
 const (
-	ACHTransferSimulationTransactionSourceCategoryAccountTransferIntention                    ACHTransferSimulationTransactionSourceCategory = "account_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferIntention                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferRejection                        ACHTransferSimulationTransactionSourceCategory = "ach_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryACHTransferReturn                           ACHTransferSimulationTransactionSourceCategory = "ach_transfer_return"
-	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance                       ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
-	ACHTransferSimulationTransactionSourceCategoryCardRefund                                  ACHTransferSimulationTransactionSourceCategory = "card_refund"
-	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment                          ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
-	ACHTransferSimulationTransactionSourceCategoryCardSettlement                              ACHTransferSimulationTransactionSourceCategory = "card_settlement"
-	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance                      ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
-	ACHTransferSimulationTransactionSourceCategoryCheckDepositReturn                          ACHTransferSimulationTransactionSourceCategory = "check_deposit_return"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferDeposit                        ACHTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection                      ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn                         ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest             ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
-	ACHTransferSimulationTransactionSourceCategoryFeePayment                                  ACHTransferSimulationTransactionSourceCategory = "fee_payment"
-	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer                          ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
-	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention           ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	ACHTransferSimulationTransactionSourceCategoryInboundCheck                                ACHTransferSimulationTransactionSourceCategory = "inbound_check"
-	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer             ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Account Transfer Intention object. Details will
+	// be under the `account_transfer_intention` object.
+	ACHTransferSimulationTransactionSourceCategoryAccountTransferIntention ACHTransferSimulationTransactionSourceCategory = "account_transfer_intention"
+	// The Transaction was created by a ACH Transfer Intention object. Details will be
+	// under the `ach_transfer_intention` object.
+	ACHTransferSimulationTransactionSourceCategoryACHTransferIntention ACHTransferSimulationTransactionSourceCategory = "ach_transfer_intention"
+	// The Transaction was created by a ACH Transfer Rejection object. Details will be
+	// under the `ach_transfer_rejection` object.
+	ACHTransferSimulationTransactionSourceCategoryACHTransferRejection ACHTransferSimulationTransactionSourceCategory = "ach_transfer_rejection"
+	// The Transaction was created by a ACH Transfer Return object. Details will be
+	// under the `ach_transfer_return` object.
+	ACHTransferSimulationTransactionSourceCategoryACHTransferReturn ACHTransferSimulationTransactionSourceCategory = "ach_transfer_return"
+	// The Transaction was created by a Card Dispute Acceptance object. Details will be
+	// under the `card_dispute_acceptance` object.
+	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
+	// The Transaction was created by a Card Refund object. Details will be under the
+	// `card_refund` object.
+	ACHTransferSimulationTransactionSourceCategoryCardRefund ACHTransferSimulationTransactionSourceCategory = "card_refund"
+	// The Transaction was created by a Card Revenue Payment object. Details will be
+	// under the `card_revenue_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
+	// The Transaction was created by a Card Settlement object. Details will be under
+	// the `card_settlement` object.
+	ACHTransferSimulationTransactionSourceCategoryCardSettlement ACHTransferSimulationTransactionSourceCategory = "card_settlement"
+	// The Transaction was created by a Check Deposit Acceptance object. Details will
+	// be under the `check_deposit_acceptance` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
+	// The Transaction was created by a Check Deposit Return object. Details will be
+	// under the `check_deposit_return` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckDepositReturn ACHTransferSimulationTransactionSourceCategory = "check_deposit_return"
+	// The Transaction was created by a Check Transfer Deposit object. Details will be
+	// under the `check_transfer_deposit` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferDeposit ACHTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
+	// The Transaction was created by a Check Transfer Intention object. Details will
+	// be under the `check_transfer_intention` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
+	// The Transaction was created by a Check Transfer Rejection object. Details will
+	// be under the `check_transfer_rejection` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
+	// The Transaction was created by a Check Transfer Return object. Details will be
+	// under the `check_transfer_return` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferReturn ACHTransferSimulationTransactionSourceCategory = "check_transfer_return"
+	// The Transaction was created by a Check Transfer Stop Payment Request object.
+	// Details will be under the `check_transfer_stop_payment_request` object.
+	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
+	// The Transaction was created by a Fee Payment object. Details will be under the
+	// `fee_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryFeePayment ACHTransferSimulationTransactionSourceCategory = "fee_payment"
+	// The Transaction was created by a Inbound ACH Transfer object. Details will be
+	// under the `inbound_ach_transfer` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
+	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
+	// Details will be under the `inbound_ach_transfer_return_intention` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	// The Transaction was created by a Inbound Check object. Details will be under the
+	// `inbound_check` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundCheck ACHTransferSimulationTransactionSourceCategory = "inbound_check"
+	// The Transaction was created by a Inbound International ACH Transfer object.
+	// Details will be under the `inbound_international_ach_transfer` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Inbound Real Time Payments Transfer
+	// Confirmation object. Details will be under the
+	// `inbound_real_time_payments_transfer_confirmation` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment                  ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal          ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
-	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer                         ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
-	ACHTransferSimulationTransactionSourceCategoryInterestPayment                             ACHTransferSimulationTransactionSourceCategory = "interest_payment"
-	ACHTransferSimulationTransactionSourceCategoryInternalSource                              ACHTransferSimulationTransactionSourceCategory = "internal_source"
-	ACHTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     ACHTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	ACHTransferSimulationTransactionSourceCategorySampleFunds                                 ACHTransferSimulationTransactionSourceCategory = "sample_funds"
-	ACHTransferSimulationTransactionSourceCategoryWireTransferIntention                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_intention"
-	ACHTransferSimulationTransactionSourceCategoryWireTransferRejection                       ACHTransferSimulationTransactionSourceCategory = "wire_transfer_rejection"
-	ACHTransferSimulationTransactionSourceCategoryOther                                       ACHTransferSimulationTransactionSourceCategory = "other"
+	// The Transaction was created by a Inbound Wire Drawdown Payment object. Details
+	// will be under the `inbound_wire_drawdown_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	// The Transaction was created by a Inbound Wire Drawdown Payment Reversal object.
+	// Details will be under the `inbound_wire_drawdown_payment_reversal` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// The Transaction was created by a Inbound Wire Reversal object. Details will be
+	// under the `inbound_wire_reversal` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
+	// The Transaction was created by a Inbound Wire Transfer object. Details will be
+	// under the `inbound_wire_transfer` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
+	// The Transaction was created by a Interest Payment object. Details will be under
+	// the `interest_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryInterestPayment ACHTransferSimulationTransactionSourceCategory = "interest_payment"
+	// The Transaction was created by a Internal Source object. Details will be under
+	// the `internal_source` object.
+	ACHTransferSimulationTransactionSourceCategoryInternalSource ACHTransferSimulationTransactionSourceCategory = "internal_source"
+	// The Transaction was created by a Real Time Payments Transfer Acknowledgement
+	// object. Details will be under the `real_time_payments_transfer_acknowledgement`
+	// object.
+	ACHTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement ACHTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	// The Transaction was created by a Sample Funds object. Details will be under the
+	// `sample_funds` object.
+	ACHTransferSimulationTransactionSourceCategorySampleFunds ACHTransferSimulationTransactionSourceCategory = "sample_funds"
+	// The Transaction was created by a Wire Transfer Intention object. Details will be
+	// under the `wire_transfer_intention` object.
+	ACHTransferSimulationTransactionSourceCategoryWireTransferIntention ACHTransferSimulationTransactionSourceCategory = "wire_transfer_intention"
+	// The Transaction was created by a Wire Transfer Rejection object. Details will be
+	// under the `wire_transfer_rejection` object.
+	ACHTransferSimulationTransactionSourceCategoryWireTransferRejection ACHTransferSimulationTransactionSourceCategory = "wire_transfer_rejection"
+	// The Transaction was made for an undocumented or deprecated reason.
+	ACHTransferSimulationTransactionSourceCategoryOther ACHTransferSimulationTransactionSourceCategory = "other"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -1521,11 +1843,17 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositAcceptance) Unmarshal
 type ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyCad ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyChf ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyEur ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyGbp ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyJpy ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrencyUsd ACHTransferSimulationTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
@@ -1573,29 +1901,47 @@ func (r *ACHTransferSimulationTransactionSourceCheckDepositReturn) UnmarshalJSON
 type ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyCad ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyChf ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyEur ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyGbp ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyJpy ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCheckDepositReturnCurrencyUsd ACHTransferSimulationTransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
 type ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason string
 
 const (
+	// The check doesn't allow ACH conversion.
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonClosedAccount             ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "closed_account"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNoAccount                 ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "no_account"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNotAuthorized             ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "not_authorized"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStaleDated                ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stale_dated"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStopPayment               ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stop_payment"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnknownReason             ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
-	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The account is closed.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonClosedAccount ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "closed_account"
+	// The check has already been deposited.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
+	// Insufficient funds
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
+	// No account was found matching the check details.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNoAccount ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "no_account"
+	// The check was not authorized.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNotAuthorized ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "not_authorized"
+	// The check is too old.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStaleDated ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stale_dated"
+	// The payment has been stopped by the account holder.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStopPayment ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stop_payment"
+	// The reason for the return is unknown.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnknownReason ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
+	// The image doesn't match the details submitted.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
+	// The image could not be read.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	// The check endorsement was irregular.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response
@@ -1690,11 +2036,17 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferIntention) Unmarshal
 type ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyCad ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyChf ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyEur ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyGbp ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyJpy ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
@@ -1758,8 +2110,12 @@ func (r *ACHTransferSimulationTransactionSourceCheckTransferReturn) UnmarshalJSO
 type ACHTransferSimulationTransactionSourceCheckTransferReturnReason string
 
 const (
-	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure   ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient    ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// Mail delivery failed and the check was returned to sender.
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonMailDeliveryFailure ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	// The check arrived and the recipient refused to deposit it.
+	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonRefusedByRecipient ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// The check was fraudulently deposited and the transfer was returned to the Bank
+	// of First Deposit.
 	ACHTransferSimulationTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized ACHTransferSimulationTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
 
@@ -1833,11 +2189,17 @@ func (r *ACHTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []
 type ACHTransferSimulationTransactionSourceFeePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyCad ACHTransferSimulationTransactionSourceFeePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyChf ACHTransferSimulationTransactionSourceFeePaymentCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyEur ACHTransferSimulationTransactionSourceFeePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyGbp ACHTransferSimulationTransactionSourceFeePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyJpy ACHTransferSimulationTransactionSourceFeePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyUsd ACHTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
 )
 
@@ -1915,11 +2277,17 @@ func (r *ACHTransferSimulationTransactionSourceInboundCheck) UnmarshalJSON(data 
 type ACHTransferSimulationTransactionSourceInboundCheckCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyCad ACHTransferSimulationTransactionSourceInboundCheckCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyChf ACHTransferSimulationTransactionSourceInboundCheckCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyEur ACHTransferSimulationTransactionSourceInboundCheckCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyGbp ACHTransferSimulationTransactionSourceInboundCheckCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyJpy ACHTransferSimulationTransactionSourceInboundCheckCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceInboundCheckCurrencyUsd ACHTransferSimulationTransactionSourceInboundCheckCurrency = "USD"
 )
 
@@ -2066,11 +2434,17 @@ func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferCo
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
@@ -2327,11 +2701,17 @@ func (r *ACHTransferSimulationTransactionSourceInterestPayment) UnmarshalJSON(da
 type ACHTransferSimulationTransactionSourceInterestPaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyCad ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyChf ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyEur ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyGbp ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyJpy ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceInterestPaymentCurrencyUsd ACHTransferSimulationTransactionSourceInterestPaymentCurrency = "USD"
 )
 
@@ -2367,29 +2747,47 @@ func (r *ACHTransferSimulationTransactionSourceInternalSource) UnmarshalJSON(dat
 type ACHTransferSimulationTransactionSourceInternalSourceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyCad ACHTransferSimulationTransactionSourceInternalSourceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyChf ACHTransferSimulationTransactionSourceInternalSourceCurrency = "CHF"
+	// Euro (EUR)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyEur ACHTransferSimulationTransactionSourceInternalSourceCurrency = "EUR"
+	// British Pound (GBP)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyGbp ACHTransferSimulationTransactionSourceInternalSourceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyJpy ACHTransferSimulationTransactionSourceInternalSourceCurrency = "JPY"
+	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceInternalSourceCurrencyUsd ACHTransferSimulationTransactionSourceInternalSourceCurrency = "USD"
 )
 
 type ACHTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
-	ACHTransferSimulationTransactionSourceInternalSourceReasonAccountClosure             ACHTransferSimulationTransactionSourceInternalSourceReason = "account_closure"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration              ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback                   ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable       ACHTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment         ACHTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonError                      ACHTransferSimulationTransactionSourceInternalSourceReason = "error"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection            ACHTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonFees                       ACHTransferSimulationTransactionSourceInternalSourceReason = "fees"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonInterest                   ACHTransferSimulationTransactionSourceInternalSourceReason = "interest"
+	// Account closure
+	ACHTransferSimulationTransactionSourceInternalSourceReasonAccountClosure ACHTransferSimulationTransactionSourceInternalSourceReason = "account_closure"
+	// Bank migration
+	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
+	// Cashback
+	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
+	// Collection receivable
+	ACHTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable ACHTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"
+	// Empyreal adjustment
+	ACHTransferSimulationTransactionSourceInternalSourceReasonEmpyrealAdjustment ACHTransferSimulationTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	// Error
+	ACHTransferSimulationTransactionSourceInternalSourceReasonError ACHTransferSimulationTransactionSourceInternalSourceReason = "error"
+	// Error correction
+	ACHTransferSimulationTransactionSourceInternalSourceReasonErrorCorrection ACHTransferSimulationTransactionSourceInternalSourceReason = "error_correction"
+	// Fees
+	ACHTransferSimulationTransactionSourceInternalSourceReasonFees ACHTransferSimulationTransactionSourceInternalSourceReason = "fees"
+	// Interest
+	ACHTransferSimulationTransactionSourceInternalSourceReasonInterest ACHTransferSimulationTransactionSourceInternalSourceReason = "interest"
+	// Negative balance forgiveness
 	ACHTransferSimulationTransactionSourceInternalSourceReasonNegativeBalanceForgiveness ACHTransferSimulationTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFunds                ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
-	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn          ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
+	// Sample funds
+	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFunds ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds"
+	// Sample funds return
+	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Real Time Payments Transfer Acknowledgement object. This field will be present
@@ -2552,74 +2950,185 @@ func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error
 type SimulationACHTransferReturnParamsReason string
 
 const (
-	SimulationACHTransferReturnParamsReasonInsufficientFund                                            SimulationACHTransferReturnParamsReason = "insufficient_fund"
-	SimulationACHTransferReturnParamsReasonNoAccount                                                   SimulationACHTransferReturnParamsReason = "no_account"
-	SimulationACHTransferReturnParamsReasonAccountClosed                                               SimulationACHTransferReturnParamsReason = "account_closed"
-	SimulationACHTransferReturnParamsReasonInvalidAccountNumberStructure                               SimulationACHTransferReturnParamsReason = "invalid_account_number_structure"
-	SimulationACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction                SimulationACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
-	SimulationACHTransferReturnParamsReasonCreditEntryRefusedByReceiver                                SimulationACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
-	SimulationACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     SimulationACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	SimulationACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized                       SimulationACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
-	SimulationACHTransferReturnParamsReasonPaymentStopped                                              SimulationACHTransferReturnParamsReason = "payment_stopped"
-	SimulationACHTransferReturnParamsReasonNonTransactionAccount                                       SimulationACHTransferReturnParamsReason = "non_transaction_account"
-	SimulationACHTransferReturnParamsReasonUncollectedFunds                                            SimulationACHTransferReturnParamsReason = "uncollected_funds"
-	SimulationACHTransferReturnParamsReasonRoutingNumberCheckDigitError                                SimulationACHTransferReturnParamsReason = "routing_number_check_digit_error"
-	SimulationACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   SimulationACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	SimulationACHTransferReturnParamsReasonAmountFieldError                                            SimulationACHTransferReturnParamsReason = "amount_field_error"
-	SimulationACHTransferReturnParamsReasonAuthorizationRevokedByCustomer                              SimulationACHTransferReturnParamsReason = "authorization_revoked_by_customer"
-	SimulationACHTransferReturnParamsReasonInvalidACHRoutingNumber                                     SimulationACHTransferReturnParamsReason = "invalid_ach_routing_number"
-	SimulationACHTransferReturnParamsReasonFileRecordEditCriteria                                      SimulationACHTransferReturnParamsReason = "file_record_edit_criteria"
-	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualName                                    SimulationACHTransferReturnParamsReason = "enr_invalid_individual_name"
-	SimulationACHTransferReturnParamsReasonReturnedPerOdfiRequest                                      SimulationACHTransferReturnParamsReason = "returned_per_odfi_request"
-	SimulationACHTransferReturnParamsReasonLimitedParticipationDfi                                     SimulationACHTransferReturnParamsReason = "limited_participation_dfi"
-	SimulationACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment                SimulationACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
-	SimulationACHTransferReturnParamsReasonAccountSoldToAnotherDfi                                     SimulationACHTransferReturnParamsReason = "account_sold_to_another_dfi"
-	SimulationACHTransferReturnParamsReasonAddendaError                                                SimulationACHTransferReturnParamsReason = "addenda_error"
-	SimulationACHTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased                          SimulationACHTransferReturnParamsReason = "beneficiary_or_account_holder_deceased"
-	SimulationACHTransferReturnParamsReasonCustomerAdvisedNotWithinAuthorizationTerms                  SimulationACHTransferReturnParamsReason = "customer_advised_not_within_authorization_terms"
-	SimulationACHTransferReturnParamsReasonCorrectedReturn                                             SimulationACHTransferReturnParamsReason = "corrected_return"
-	SimulationACHTransferReturnParamsReasonDuplicateEntry                                              SimulationACHTransferReturnParamsReason = "duplicate_entry"
-	SimulationACHTransferReturnParamsReasonDuplicateReturn                                             SimulationACHTransferReturnParamsReason = "duplicate_return"
-	SimulationACHTransferReturnParamsReasonEnrDuplicateEnrollment                                      SimulationACHTransferReturnParamsReason = "enr_duplicate_enrollment"
-	SimulationACHTransferReturnParamsReasonEnrInvalidDfiAccountNumber                                  SimulationACHTransferReturnParamsReason = "enr_invalid_dfi_account_number"
-	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualIDNumber                                SimulationACHTransferReturnParamsReason = "enr_invalid_individual_id_number"
-	SimulationACHTransferReturnParamsReasonEnrInvalidRepresentativePayeeIndicator                      SimulationACHTransferReturnParamsReason = "enr_invalid_representative_payee_indicator"
-	SimulationACHTransferReturnParamsReasonEnrInvalidTransactionCode                                   SimulationACHTransferReturnParamsReason = "enr_invalid_transaction_code"
-	SimulationACHTransferReturnParamsReasonEnrReturnOfEnrEntry                                         SimulationACHTransferReturnParamsReason = "enr_return_of_enr_entry"
-	SimulationACHTransferReturnParamsReasonEnrRoutingNumberCheckDigitError                             SimulationACHTransferReturnParamsReason = "enr_routing_number_check_digit_error"
-	SimulationACHTransferReturnParamsReasonEntryNotProcessedByGateway                                  SimulationACHTransferReturnParamsReason = "entry_not_processed_by_gateway"
-	SimulationACHTransferReturnParamsReasonFieldError                                                  SimulationACHTransferReturnParamsReason = "field_error"
-	SimulationACHTransferReturnParamsReasonForeignReceivingDfiUnableToSettle                           SimulationACHTransferReturnParamsReason = "foreign_receiving_dfi_unable_to_settle"
-	SimulationACHTransferReturnParamsReasonIatEntryCodingError                                         SimulationACHTransferReturnParamsReason = "iat_entry_coding_error"
-	SimulationACHTransferReturnParamsReasonImproperEffectiveEntryDate                                  SimulationACHTransferReturnParamsReason = "improper_effective_entry_date"
-	SimulationACHTransferReturnParamsReasonImproperSourceDocumentSourceDocumentPresented               SimulationACHTransferReturnParamsReason = "improper_source_document_source_document_presented"
-	SimulationACHTransferReturnParamsReasonInvalidCompanyID                                            SimulationACHTransferReturnParamsReason = "invalid_company_id"
-	SimulationACHTransferReturnParamsReasonInvalidForeignReceivingDfiIdentification                    SimulationACHTransferReturnParamsReason = "invalid_foreign_receiving_dfi_identification"
-	SimulationACHTransferReturnParamsReasonInvalidIndividualIDNumber                                   SimulationACHTransferReturnParamsReason = "invalid_individual_id_number"
-	SimulationACHTransferReturnParamsReasonItemAndRckEntryPresentedForPayment                          SimulationACHTransferReturnParamsReason = "item_and_rck_entry_presented_for_payment"
-	SimulationACHTransferReturnParamsReasonItemRelatedToRckEntryIsIneligible                           SimulationACHTransferReturnParamsReason = "item_related_to_rck_entry_is_ineligible"
-	SimulationACHTransferReturnParamsReasonMandatoryFieldError                                         SimulationACHTransferReturnParamsReason = "mandatory_field_error"
-	SimulationACHTransferReturnParamsReasonMisroutedDishonoredReturn                                   SimulationACHTransferReturnParamsReason = "misrouted_dishonored_return"
-	SimulationACHTransferReturnParamsReasonMisroutedReturn                                             SimulationACHTransferReturnParamsReason = "misrouted_return"
-	SimulationACHTransferReturnParamsReasonNoErrorsFound                                               SimulationACHTransferReturnParamsReason = "no_errors_found"
-	SimulationACHTransferReturnParamsReasonNonAcceptanceOfR62DishonoredReturn                          SimulationACHTransferReturnParamsReason = "non_acceptance_of_r62_dishonored_return"
-	SimulationACHTransferReturnParamsReasonNonParticipantInIatProgram                                  SimulationACHTransferReturnParamsReason = "non_participant_in_iat_program"
-	SimulationACHTransferReturnParamsReasonPermissibleReturnEntry                                      SimulationACHTransferReturnParamsReason = "permissible_return_entry"
-	SimulationACHTransferReturnParamsReasonPermissibleReturnEntryNotAccepted                           SimulationACHTransferReturnParamsReason = "permissible_return_entry_not_accepted"
-	SimulationACHTransferReturnParamsReasonRdfiNonSettlement                                           SimulationACHTransferReturnParamsReason = "rdfi_non_settlement"
-	SimulationACHTransferReturnParamsReasonRdfiParticipantInCheckTruncationProgram                     SimulationACHTransferReturnParamsReason = "rdfi_participant_in_check_truncation_program"
+	// Code R01. Insufficient funds in the source account.
+	SimulationACHTransferReturnParamsReasonInsufficientFund SimulationACHTransferReturnParamsReason = "insufficient_fund"
+	// Code R03. The account does not exist or the receiving bank was unable to locate
+	// it.
+	SimulationACHTransferReturnParamsReasonNoAccount SimulationACHTransferReturnParamsReason = "no_account"
+	// Code R02. The account is closed.
+	SimulationACHTransferReturnParamsReasonAccountClosed SimulationACHTransferReturnParamsReason = "account_closed"
+	// Code R04. The account number is invalid at the receiving bank.
+	SimulationACHTransferReturnParamsReasonInvalidAccountNumberStructure SimulationACHTransferReturnParamsReason = "invalid_account_number_structure"
+	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	SimulationACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction SimulationACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
+	// Code R23. The receiving bank account refused a credit transfer.
+	SimulationACHTransferReturnParamsReasonCreditEntryRefusedByReceiver SimulationACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
+	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
+	// Class code.
+	SimulationACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode SimulationACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	// Code R29. The corporate customer reversed the transfer.
+	SimulationACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized SimulationACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
+	// Code R08. The receiving bank stopped payment on this transfer.
+	SimulationACHTransferReturnParamsReasonPaymentStopped SimulationACHTransferReturnParamsReason = "payment_stopped"
+	// Code R20. The receiving bank account does not perform transfers.
+	SimulationACHTransferReturnParamsReasonNonTransactionAccount SimulationACHTransferReturnParamsReason = "non_transaction_account"
+	// Code R09. The receiving bank account does not have enough available balance for
+	// the transfer.
+	SimulationACHTransferReturnParamsReasonUncollectedFunds SimulationACHTransferReturnParamsReason = "uncollected_funds"
+	// Code R28. The routing number is incorrect.
+	SimulationACHTransferReturnParamsReasonRoutingNumberCheckDigitError SimulationACHTransferReturnParamsReason = "routing_number_check_digit_error"
+	// Code R10. The customer reversed the transfer.
+	SimulationACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete SimulationACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// Code R19. The amount field is incorrect or too large.
+	SimulationACHTransferReturnParamsReasonAmountFieldError SimulationACHTransferReturnParamsReason = "amount_field_error"
+	// Code R07. The customer who initiated the transfer revoked authorization.
+	SimulationACHTransferReturnParamsReasonAuthorizationRevokedByCustomer SimulationACHTransferReturnParamsReason = "authorization_revoked_by_customer"
+	// Code R13. The routing number is invalid.
+	SimulationACHTransferReturnParamsReasonInvalidACHRoutingNumber SimulationACHTransferReturnParamsReason = "invalid_ach_routing_number"
+	// Code R17. The receiving bank is unable to process a field in the transfer.
+	SimulationACHTransferReturnParamsReasonFileRecordEditCriteria SimulationACHTransferReturnParamsReason = "file_record_edit_criteria"
+	// Code R45. The individual name field was invalid.
+	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualName SimulationACHTransferReturnParamsReason = "enr_invalid_individual_name"
+	// Code R06. The originating financial institution reversed the transfer.
+	SimulationACHTransferReturnParamsReasonReturnedPerOdfiRequest SimulationACHTransferReturnParamsReason = "returned_per_odfi_request"
+	// Code R34. The receiving bank's regulatory supervisor has limited their
+	// participation.
+	SimulationACHTransferReturnParamsReasonLimitedParticipationDfi SimulationACHTransferReturnParamsReason = "limited_participation_dfi"
+	// Code R85. The outbound international ACH transfer was incorrect.
+	SimulationACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment SimulationACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
+	// Code R12. A rare return reason. The account was sold to another bank.
+	SimulationACHTransferReturnParamsReasonAccountSoldToAnotherDfi SimulationACHTransferReturnParamsReason = "account_sold_to_another_dfi"
+	// Code R25. The addenda record is incorrect or missing.
+	SimulationACHTransferReturnParamsReasonAddendaError SimulationACHTransferReturnParamsReason = "addenda_error"
+	// Code R15. A rare return reason. The account holder is deceased.
+	SimulationACHTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased SimulationACHTransferReturnParamsReason = "beneficiary_or_account_holder_deceased"
+	// Code R11. A rare return reason. The customer authorized some payment to the
+	// sender, but this payment was not in error.
+	SimulationACHTransferReturnParamsReasonCustomerAdvisedNotWithinAuthorizationTerms SimulationACHTransferReturnParamsReason = "customer_advised_not_within_authorization_terms"
+	// Code R74. A rare return reason. Sent in response to a return that was returned
+	// with code `field_error`. The latest return should include the corrected
+	// field(s).
+	SimulationACHTransferReturnParamsReasonCorrectedReturn SimulationACHTransferReturnParamsReason = "corrected_return"
+	// Code R24. A rare return reason. The receiving bank received an exact duplicate
+	// entry with the same trace number and amount.
+	SimulationACHTransferReturnParamsReasonDuplicateEntry SimulationACHTransferReturnParamsReason = "duplicate_entry"
+	// Code R67. A rare return reason. The return this message refers to was a
+	// duplicate.
+	SimulationACHTransferReturnParamsReasonDuplicateReturn SimulationACHTransferReturnParamsReason = "duplicate_return"
+	// Code R47. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrDuplicateEnrollment SimulationACHTransferReturnParamsReason = "enr_duplicate_enrollment"
+	// Code R43. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrInvalidDfiAccountNumber SimulationACHTransferReturnParamsReason = "enr_invalid_dfi_account_number"
+	// Code R44. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualIDNumber SimulationACHTransferReturnParamsReason = "enr_invalid_individual_id_number"
+	// Code R46. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrInvalidRepresentativePayeeIndicator SimulationACHTransferReturnParamsReason = "enr_invalid_representative_payee_indicator"
+	// Code R41. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrInvalidTransactionCode SimulationACHTransferReturnParamsReason = "enr_invalid_transaction_code"
+	// Code R40. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrReturnOfEnrEntry SimulationACHTransferReturnParamsReason = "enr_return_of_enr_entry"
+	// Code R42. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	SimulationACHTransferReturnParamsReasonEnrRoutingNumberCheckDigitError SimulationACHTransferReturnParamsReason = "enr_routing_number_check_digit_error"
+	// Code R84. A rare return reason. The International ACH Transfer cannot be
+	// processed by the gateway.
+	SimulationACHTransferReturnParamsReasonEntryNotProcessedByGateway SimulationACHTransferReturnParamsReason = "entry_not_processed_by_gateway"
+	// Code R69. A rare return reason. One or more of the fields in the ACH were
+	// malformed.
+	SimulationACHTransferReturnParamsReasonFieldError SimulationACHTransferReturnParamsReason = "field_error"
+	// Code R83. A rare return reason. The Foreign receiving bank was unable to settle
+	// this ACH transfer.
+	SimulationACHTransferReturnParamsReasonForeignReceivingDfiUnableToSettle SimulationACHTransferReturnParamsReason = "foreign_receiving_dfi_unable_to_settle"
+	// Code R80. A rare return reason. The International ACH Transfer is malformed.
+	SimulationACHTransferReturnParamsReasonIatEntryCodingError SimulationACHTransferReturnParamsReason = "iat_entry_coding_error"
+	// Code R18. A rare return reason. The ACH has an improper effective entry date
+	// field.
+	SimulationACHTransferReturnParamsReasonImproperEffectiveEntryDate SimulationACHTransferReturnParamsReason = "improper_effective_entry_date"
+	// Code R39. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	SimulationACHTransferReturnParamsReasonImproperSourceDocumentSourceDocumentPresented SimulationACHTransferReturnParamsReason = "improper_source_document_source_document_presented"
+	// Code R21. A rare return reason. The Company ID field of the ACH was invalid.
+	SimulationACHTransferReturnParamsReasonInvalidCompanyID SimulationACHTransferReturnParamsReason = "invalid_company_id"
+	// Code R82. A rare return reason. The foreign receiving bank identifier for an
+	// International ACH Transfer was invalid.
+	SimulationACHTransferReturnParamsReasonInvalidForeignReceivingDfiIdentification SimulationACHTransferReturnParamsReason = "invalid_foreign_receiving_dfi_identification"
+	// Code R22. A rare return reason. The Individual ID number field of the ACH was
+	// invalid.
+	SimulationACHTransferReturnParamsReasonInvalidIndividualIDNumber SimulationACHTransferReturnParamsReason = "invalid_individual_id_number"
+	// Code R53. A rare return reason. Both the Represented Check ("RCK") entry and the
+	// original check were presented to the bank.
+	SimulationACHTransferReturnParamsReasonItemAndRckEntryPresentedForPayment SimulationACHTransferReturnParamsReason = "item_and_rck_entry_presented_for_payment"
+	// Code R51. A rare return reason. The Represented Check ("RCK") entry is
+	// ineligible.
+	SimulationACHTransferReturnParamsReasonItemRelatedToRckEntryIsIneligible SimulationACHTransferReturnParamsReason = "item_related_to_rck_entry_is_ineligible"
+	// Code R26. A rare return reason. The ACH is missing a required field.
+	SimulationACHTransferReturnParamsReasonMandatoryFieldError SimulationACHTransferReturnParamsReason = "mandatory_field_error"
+	// Code R71. A rare return reason. The receiving bank does not recognize the
+	// routing number in a dishonored return entry.
+	SimulationACHTransferReturnParamsReasonMisroutedDishonoredReturn SimulationACHTransferReturnParamsReason = "misrouted_dishonored_return"
+	// Code R61. A rare return reason. The receiving bank does not recognize the
+	// routing number in a return entry.
+	SimulationACHTransferReturnParamsReasonMisroutedReturn SimulationACHTransferReturnParamsReason = "misrouted_return"
+	// Code R76. A rare return reason. Sent in response to a return, the bank does not
+	// find the errors alleged by the returning bank.
+	SimulationACHTransferReturnParamsReasonNoErrorsFound SimulationACHTransferReturnParamsReason = "no_errors_found"
+	// Code R77. A rare return reason. The receiving bank does not accept the return of
+	// the erroneous debit. The funds are not available at the receiving bank.
+	SimulationACHTransferReturnParamsReasonNonAcceptanceOfR62DishonoredReturn SimulationACHTransferReturnParamsReason = "non_acceptance_of_r62_dishonored_return"
+	// Code R81. A rare return reason. The receiving bank does not accept International
+	// ACH Transfers.
+	SimulationACHTransferReturnParamsReasonNonParticipantInIatProgram SimulationACHTransferReturnParamsReason = "non_participant_in_iat_program"
+	// Code R31. A rare return reason. A return that has been agreed to be accepted by
+	// the receiving bank, despite falling outside of the usual return timeframe.
+	SimulationACHTransferReturnParamsReasonPermissibleReturnEntry SimulationACHTransferReturnParamsReason = "permissible_return_entry"
+	// Code R70. A rare return reason. The receiving bank had not approved this return.
+	SimulationACHTransferReturnParamsReasonPermissibleReturnEntryNotAccepted SimulationACHTransferReturnParamsReason = "permissible_return_entry_not_accepted"
+	// Code R32. A rare return reason. The receiving bank could not settle this
+	// transaction.
+	SimulationACHTransferReturnParamsReasonRdfiNonSettlement SimulationACHTransferReturnParamsReason = "rdfi_non_settlement"
+	// Code R30. A rare return reason. The receiving bank does not accept Check
+	// Truncation ACH transfers.
+	SimulationACHTransferReturnParamsReasonRdfiParticipantInCheckTruncationProgram SimulationACHTransferReturnParamsReason = "rdfi_participant_in_check_truncation_program"
+	// Code R14. A rare return reason. The payee is deceased.
 	SimulationACHTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity SimulationACHTransferReturnParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	SimulationACHTransferReturnParamsReasonReturnNotADuplicate                                         SimulationACHTransferReturnParamsReason = "return_not_a_duplicate"
-	SimulationACHTransferReturnParamsReasonReturnOfErroneousOrReversingDebit                           SimulationACHTransferReturnParamsReason = "return_of_erroneous_or_reversing_debit"
-	SimulationACHTransferReturnParamsReasonReturnOfImproperCreditEntry                                 SimulationACHTransferReturnParamsReason = "return_of_improper_credit_entry"
-	SimulationACHTransferReturnParamsReasonReturnOfImproperDebitEntry                                  SimulationACHTransferReturnParamsReason = "return_of_improper_debit_entry"
-	SimulationACHTransferReturnParamsReasonReturnOfXckEntry                                            SimulationACHTransferReturnParamsReason = "return_of_xck_entry"
-	SimulationACHTransferReturnParamsReasonSourceDocumentPresentedForPayment                           SimulationACHTransferReturnParamsReason = "source_document_presented_for_payment"
-	SimulationACHTransferReturnParamsReasonStateLawAffectingRckAcceptance                              SimulationACHTransferReturnParamsReason = "state_law_affecting_rck_acceptance"
-	SimulationACHTransferReturnParamsReasonStopPaymentOnItemRelatedToRckEntry                          SimulationACHTransferReturnParamsReason = "stop_payment_on_item_related_to_rck_entry"
-	SimulationACHTransferReturnParamsReasonStopPaymentOnSourceDocument                                 SimulationACHTransferReturnParamsReason = "stop_payment_on_source_document"
-	SimulationACHTransferReturnParamsReasonTimelyOriginalReturn                                        SimulationACHTransferReturnParamsReason = "timely_original_return"
-	SimulationACHTransferReturnParamsReasonTraceNumberError                                            SimulationACHTransferReturnParamsReason = "trace_number_error"
-	SimulationACHTransferReturnParamsReasonUntimelyDishonoredReturn                                    SimulationACHTransferReturnParamsReason = "untimely_dishonored_return"
-	SimulationACHTransferReturnParamsReasonUntimelyReturn                                              SimulationACHTransferReturnParamsReason = "untimely_return"
+	// Code R75. A rare return reason. The originating bank disputes that an earlier
+	// `duplicate_entry` return was actually a duplicate.
+	SimulationACHTransferReturnParamsReasonReturnNotADuplicate SimulationACHTransferReturnParamsReason = "return_not_a_duplicate"
+	// Code R62. A rare return reason. The originating bank made a mistake earlier and
+	// this return corrects it.
+	SimulationACHTransferReturnParamsReasonReturnOfErroneousOrReversingDebit SimulationACHTransferReturnParamsReason = "return_of_erroneous_or_reversing_debit"
+	// Code R36. A rare return reason. Return of a malformed credit entry.
+	SimulationACHTransferReturnParamsReasonReturnOfImproperCreditEntry SimulationACHTransferReturnParamsReason = "return_of_improper_credit_entry"
+	// Code R35. A rare return reason. Return of a malformed debit entry.
+	SimulationACHTransferReturnParamsReasonReturnOfImproperDebitEntry SimulationACHTransferReturnParamsReason = "return_of_improper_debit_entry"
+	// Code R33. A rare return reason. Return of a Destroyed Check ("XKC") entry.
+	SimulationACHTransferReturnParamsReasonReturnOfXckEntry SimulationACHTransferReturnParamsReason = "return_of_xck_entry"
+	// Code R37. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	SimulationACHTransferReturnParamsReasonSourceDocumentPresentedForPayment SimulationACHTransferReturnParamsReason = "source_document_presented_for_payment"
+	// Code R50. A rare return reason. State law prevents the bank from accepting the
+	// Represented Check ("RCK") entry.
+	SimulationACHTransferReturnParamsReasonStateLawAffectingRckAcceptance SimulationACHTransferReturnParamsReason = "state_law_affecting_rck_acceptance"
+	// Code R52. A rare return reason. A stop payment was issued on a Represented Check
+	// ("RCK") entry.
+	SimulationACHTransferReturnParamsReasonStopPaymentOnItemRelatedToRckEntry SimulationACHTransferReturnParamsReason = "stop_payment_on_item_related_to_rck_entry"
+	// Code R38. A rare return reason. The source attached to the ACH, usually an ACH
+	// check conversion, includes a stop payment.
+	SimulationACHTransferReturnParamsReasonStopPaymentOnSourceDocument SimulationACHTransferReturnParamsReason = "stop_payment_on_source_document"
+	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
+	// it was on time.
+	SimulationACHTransferReturnParamsReasonTimelyOriginalReturn SimulationACHTransferReturnParamsReason = "timely_original_return"
+	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// originated ACH.
+	SimulationACHTransferReturnParamsReasonTraceNumberError SimulationACHTransferReturnParamsReason = "trace_number_error"
+	// Code R72. A rare return reason. The dishonored return was sent too late.
+	SimulationACHTransferReturnParamsReasonUntimelyDishonoredReturn SimulationACHTransferReturnParamsReason = "untimely_dishonored_return"
+	// Code R68. A rare return reason. The return was sent too late.
+	SimulationACHTransferReturnParamsReasonUntimelyReturn SimulationACHTransferReturnParamsReason = "untimely_return"
 )

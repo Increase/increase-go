@@ -152,11 +152,17 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []by
 type CardAuthorizationSimulationDeclinedTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyCad CardAuthorizationSimulationDeclinedTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyChf CardAuthorizationSimulationDeclinedTransactionCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyEur CardAuthorizationSimulationDeclinedTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyGbp CardAuthorizationSimulationDeclinedTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyJpy CardAuthorizationSimulationDeclinedTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationDeclinedTransactionCurrencyUsd CardAuthorizationSimulationDeclinedTransactionCurrency = "USD"
 )
 
@@ -164,8 +170,10 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionRouteType string
 
 const (
+	// An Account Number.
 	CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber CardAuthorizationSimulationDeclinedTransactionRouteType = "account_number"
-	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard          CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
+	// A Card.
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -261,18 +269,30 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) Unmarsh
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled             CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	// The account number is canceled.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
+	// The account number is disabled.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
+	// The transaction would cause a limit to be exceeded.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	// A credit was refused.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn              CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute                   CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest            CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
-	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// Other.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
+	// The account's entity is not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
+	// Your account contains insufficient funds.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	// Other.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	// The account number that was debited does not exist.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
+	// Other.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
+	// The transaction is not allowed per Increase's terms.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -343,11 +363,17 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Unmars
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
@@ -355,6 +381,7 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork string
 
 const (
+	// Visa
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkVisa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
 )
 
@@ -410,32 +437,72 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Single transaction of a mail/phone order: Use to indicate that the transaction
+	// is a mail/phone order purchase, not a recurring transaction or installment
+	// payment. For domestic transactions in the US region, this value may also
+	// indicate one bill payment transaction in the card-present or card-absent
+	// environments.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	// Recurring transaction: Payment indicator used to indicate a recurring
+	// transaction that originates from an acquirer in the US region.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	// Installment payment: Payment indicator used to indicate one purchase of goods or
+	// services that is billed to the account in multiple charges over a period of time
+	// agreed upon by the cardholder and merchant from transactions that originate from
+	// an acquirer in the US region.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	// Unknown classification: other mail order: Use to indicate that the type of
+	// mail/telephone order is unknown.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	// Secure electronic commerce transaction: Use to indicate that the electronic
+	// commerce transaction has been authenticated using e.g., 3-D Secure
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+	// identify an electronic commerce transaction where the merchant attempted to
+	// authenticate the cardholder using 3-D Secure, but was unable to complete the
+	// authentication because the issuer or cardholder does not participate in the 3-D
+	// Secure program.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	// Non-authenticated security transaction: Use to identify an electronic commerce
+	// transaction that uses data encryption for security however , cardholder
+	// authentication is not performed using 3-D Secure.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	// Non-secure transaction: Use to identify an electronic commerce transaction that
+	// has no data protection.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 // Why the transaction was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked                  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds            CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit        CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit                CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	// The Card was not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The account's entity was not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	// The account was inactive.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "group_locked"
+	// The Card's Account did not have a sufficient available balance.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	// The given CVV2 did not match the card's value.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	// The attempted card transaction is not allowed per Increase's terms.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	// The transaction was blocked by an internal limit for new Increase accounts.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
+	// The transaction was blocked by a Limit.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	// Your application declined the transaction via webhook.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	// Your application webhook did not respond without the required timeout.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	// Declined by stand-in processing.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
+	// The original card authorization for this incremental authorization does not
+	// exist.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
@@ -445,13 +512,27 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryACHDecline                             CardAuthorizationSimulationDeclinedTransactionSourceCategory = "ach_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline                           CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
+	// The Declined Transaction was created by a ACH Decline object. Details will be
+	// under the `ach_decline` object.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryACHDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "ach_decline"
+	// The Declined Transaction was created by a Card Decline object. Details will be
+	// under the `card_decline` object.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
+	// The Declined Transaction was created by a Check Decline object. Details will be
+	// under the `check_decline` object.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
+	// The Declined Transaction was created by a Inbound Real Time Payments Transfer
+	// Decline object. Details will be under the
+	// `inbound_real_time_payments_transfer_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline                CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline                            CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
-	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther                                  CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
+	// The Declined Transaction was created by a International ACH Decline object.
+	// Details will be under the `international_ach_decline` object.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
+	// The Declined Transaction was created by a Wire Decline object. Details will be
+	// under the `wire_decline` object.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
+	// The Declined Transaction was made for an undocumented or deprecated reason.
+	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
 )
 
 // A Check Decline object. This field will be present in the JSON response if and
@@ -485,21 +566,36 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) Unmar
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled      CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds     CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	// The account number is canceled.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
+	// The account number is disabled.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	// The transaction would cause a limit to be exceeded.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
+	// The account's entity is not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
+	// Your account contains insufficient funds.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
+	// Unable to locate account.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem            CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess       CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage          CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned              CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment  CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized         CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious   CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	// Routing number on the check is not ours.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	// Unable to process.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
+	// Refer to image.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	// Stop payment requested for this check.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
+	// Check was returned to sender.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
+	// The check was a duplicate deposit.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
+	// The transaction is not allowed.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	// The check was altered or fictitious.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
 // A Inbound Real Time Payments Transfer Decline object. This field will be present
@@ -557,11 +653,17 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
@@ -569,11 +671,17 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// The account number is canceled.
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	// The account number is disabled.
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	// Your account is restricted.
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	// Your account is inactive.
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	// The account's entity is not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// Your account is not enabled to receive Real Time Payments transfers.
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -728,11 +836,17 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceWireDecline) Unmars
 type CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason string
 
 const (
+	// The account number is canceled.
 	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
+	// The account number is disabled.
 	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked           CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
-	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber       CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	// The account's entity is not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "group_locked"
+	// The beneficiary account number does not exist.
+	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonNoAccountNumber CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "no_account_number"
+	// The transaction is not allowed per Increase's terms.
 	CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
@@ -816,11 +930,17 @@ func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byt
 type CardAuthorizationSimulationPendingTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionCurrencyCad CardAuthorizationSimulationPendingTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionCurrencyChf CardAuthorizationSimulationPendingTransactionCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionCurrencyEur CardAuthorizationSimulationPendingTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionCurrencyGbp CardAuthorizationSimulationPendingTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionCurrencyJpy CardAuthorizationSimulationPendingTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionCurrencyUsd CardAuthorizationSimulationPendingTransactionCurrency = "USD"
 )
 
@@ -828,8 +948,10 @@ const (
 type CardAuthorizationSimulationPendingTransactionRouteType string
 
 const (
+	// An Account Number.
 	CardAuthorizationSimulationPendingTransactionRouteTypeAccountNumber CardAuthorizationSimulationPendingTransactionRouteType = "account_number"
-	CardAuthorizationSimulationPendingTransactionRouteTypeCard          CardAuthorizationSimulationPendingTransactionRouteType = "card"
+	// A Card.
+	CardAuthorizationSimulationPendingTransactionRouteTypeCard CardAuthorizationSimulationPendingTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -922,11 +1044,17 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstr
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyCad CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyChf CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyEur CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
@@ -1031,11 +1159,17 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) U
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
@@ -1043,6 +1177,7 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork string
 
 const (
+	// Visa
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkVisa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork = "visa"
 )
 
@@ -1098,14 +1233,40 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Single transaction of a mail/phone order: Use to indicate that the transaction
+	// is a mail/phone order purchase, not a recurring transaction or installment
+	// payment. For domestic transactions in the US region, this value may also
+	// indicate one bill payment transaction in the card-present or card-absent
+	// environments.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	// Recurring transaction: Payment indicator used to indicate a recurring
+	// transaction that originates from an acquirer in the US region.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	// Installment payment: Payment indicator used to indicate one purchase of goods or
+	// services that is billed to the account in multiple charges over a period of time
+	// agreed upon by the cardholder and merchant from transactions that originate from
+	// an acquirer in the US region.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	// Unknown classification: other mail order: Use to indicate that the type of
+	// mail/telephone order is unknown.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	// Secure electronic commerce transaction: Use to indicate that the electronic
+	// commerce transaction has been authenticated using e.g., 3-D Secure
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+	// identify an electronic commerce transaction where the merchant attempted to
+	// authenticate the cardholder using 3-D Secure, but was unable to complete the
+	// authentication because the issuer or cardholder does not participate in the 3-D
+	// Secure program.
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	// Non-authenticated security transaction: Use to identify an electronic commerce
+	// transaction that uses data encryption for security however , cardholder
+	// authentication is not performed using 3-D Secure.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	// Non-secure transaction: Use to identify an electronic commerce transaction that
+	// has no data protection.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -1122,15 +1283,33 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceCategory string
 
 const (
-	CardAuthorizationSimulationPendingTransactionSourceCategoryAccountTransferInstruction          CardAuthorizationSimulationPendingTransactionSourceCategory = "account_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction              CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization                   CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction            CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold                    CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
+	// The Pending Transaction was created by a Account Transfer Instruction object.
+	// Details will be under the `account_transfer_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryAccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "account_transfer_instruction"
+	// The Pending Transaction was created by a ACH Transfer Instruction object.
+	// Details will be under the `ach_transfer_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
+	// The Pending Transaction was created by a Card Authorization object. Details will
+	// be under the `card_authorization` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
+	// The Pending Transaction was created by a Check Deposit Instruction object.
+	// Details will be under the `check_deposit_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
+	// The Pending Transaction was created by a Check Transfer Instruction object.
+	// Details will be under the `check_transfer_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
+	// The Pending Transaction was created by a Inbound Funds Hold object. Details will
+	// be under the `inbound_funds_hold` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
+	// The Pending Transaction was created by a Real Time Payments Transfer Instruction
+	// object. Details will be under the `real_time_payments_transfer_instruction`
+	// object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction             CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
-	CardAuthorizationSimulationPendingTransactionSourceCategoryOther                               CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
+	// The Pending Transaction was created by a Wire Transfer Instruction object.
+	// Details will be under the `wire_transfer_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
+	// The Pending Transaction was made for an undocumented or deprecated reason.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryOther CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
 )
 
 // A Check Deposit Instruction object. This field will be present in the JSON
@@ -1175,11 +1354,17 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
@@ -1217,11 +1402,17 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruc
 type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyCad CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyChf CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyEur CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
@@ -1276,11 +1467,17 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Un
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyCad CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "CAD"
+	// Swiss Franc (CHF)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyChf CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "CHF"
+	// Euro (EUR)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyEur CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "EUR"
+	// British Pound (GBP)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyGbp CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "GBP"
+	// Japanese Yen (JPY)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyJpy CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "JPY"
+	// US Dollar (USD)
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
@@ -1288,7 +1485,9 @@ const (
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus string
 
 const (
-	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusHeld     CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "held"
+	// Funds are still being held.
+	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusHeld CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "held"
+	// Funds have been released.
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusComplete CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
@@ -1354,7 +1553,11 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruct
 type CardAuthorizationSimulationPendingTransactionStatus string
 
 const (
-	CardAuthorizationSimulationPendingTransactionStatusPending  CardAuthorizationSimulationPendingTransactionStatus = "pending"
+	// The Pending Transaction is still awaiting confirmation.
+	CardAuthorizationSimulationPendingTransactionStatusPending CardAuthorizationSimulationPendingTransactionStatus = "pending"
+	// The Pending Transaction is confirmed. An associated Transaction exists for this
+	// object. The Pending Transaction will no longer count against your balance and
+	// can generally be hidden from UIs, etc.
 	CardAuthorizationSimulationPendingTransactionStatusComplete CardAuthorizationSimulationPendingTransactionStatus = "complete"
 )
 

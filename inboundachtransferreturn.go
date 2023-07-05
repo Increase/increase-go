@@ -120,22 +120,38 @@ func (r *InboundACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 type InboundACHTransferReturnReason string
 
 const (
-	InboundACHTransferReturnReasonAuthorizationRevokedByCustomer                              InboundACHTransferReturnReason = "authorization_revoked_by_customer"
-	InboundACHTransferReturnReasonPaymentStopped                                              InboundACHTransferReturnReason = "payment_stopped"
-	InboundACHTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferReturnReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The customer no longer authorizes this transaction. The Nacha return code is
+	// R07.
+	InboundACHTransferReturnReasonAuthorizationRevokedByCustomer InboundACHTransferReturnReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped. This reason is only allowed
+	// for debits. The Nacha return code is R08.
+	InboundACHTransferReturnReasonPaymentStopped InboundACHTransferReturnReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized. The Nacha return code is
+	// R10.
+	InboundACHTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferReturnReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased. The Nacha return code is R14.
 	InboundACHTransferReturnReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferReturnReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	InboundACHTransferReturnReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferReturnReason = "beneficiary_or_account_holder_deceased"
-	InboundACHTransferReturnReasonCreditEntryRefusedByReceiver                                InboundACHTransferReturnReason = "credit_entry_refused_by_receiver"
-	InboundACHTransferReturnReasonDuplicateEntry                                              InboundACHTransferReturnReason = "duplicate_entry"
-	InboundACHTransferReturnReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferReturnReason = "corporate_customer_advised_not_authorized"
+	// The account holder is deceased. The Nacha return code is R15.
+	InboundACHTransferReturnReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferReturnReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry. This reason is only allowed for credits.
+	// The Nacha return code is R23.
+	InboundACHTransferReturnReasonCreditEntryRefusedByReceiver InboundACHTransferReturnReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate. The Nacha return
+	// code is R24.
+	InboundACHTransferReturnReasonDuplicateEntry InboundACHTransferReturnReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction. The Nacha return
+	// code is R29.
+	InboundACHTransferReturnReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferReturnReason = "corporate_customer_advised_not_authorized"
 )
 
 // The lifecycle status of the transfer.
 type InboundACHTransferReturnStatus string
 
 const (
+	// The transfer return is pending submission to the Federal Reserve.
 	InboundACHTransferReturnStatusPendingSubmitting InboundACHTransferReturnStatus = "pending_submitting"
-	InboundACHTransferReturnStatusSubmitted         InboundACHTransferReturnStatus = "submitted"
+	// The transfer has been submitted to the Federal Reserve.
+	InboundACHTransferReturnStatusSubmitted InboundACHTransferReturnStatus = "submitted"
 )
 
 // After the return is submitted to FedACH, this will contain supplemental details.
@@ -186,14 +202,28 @@ func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error
 type InboundACHTransferReturnNewParamsReason string
 
 const (
-	InboundACHTransferReturnNewParamsReasonAuthorizationRevokedByCustomer                              InboundACHTransferReturnNewParamsReason = "authorization_revoked_by_customer"
-	InboundACHTransferReturnNewParamsReasonPaymentStopped                                              InboundACHTransferReturnNewParamsReason = "payment_stopped"
-	InboundACHTransferReturnNewParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferReturnNewParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The customer no longer authorizes this transaction. The Nacha return code is
+	// R07.
+	InboundACHTransferReturnNewParamsReasonAuthorizationRevokedByCustomer InboundACHTransferReturnNewParamsReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped. This reason is only allowed
+	// for debits. The Nacha return code is R08.
+	InboundACHTransferReturnNewParamsReasonPaymentStopped InboundACHTransferReturnNewParamsReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized. The Nacha return code is
+	// R10.
+	InboundACHTransferReturnNewParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferReturnNewParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased. The Nacha return code is R14.
 	InboundACHTransferReturnNewParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferReturnNewParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	InboundACHTransferReturnNewParamsReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferReturnNewParamsReason = "beneficiary_or_account_holder_deceased"
-	InboundACHTransferReturnNewParamsReasonCreditEntryRefusedByReceiver                                InboundACHTransferReturnNewParamsReason = "credit_entry_refused_by_receiver"
-	InboundACHTransferReturnNewParamsReasonDuplicateEntry                                              InboundACHTransferReturnNewParamsReason = "duplicate_entry"
-	InboundACHTransferReturnNewParamsReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferReturnNewParamsReason = "corporate_customer_advised_not_authorized"
+	// The account holder is deceased. The Nacha return code is R15.
+	InboundACHTransferReturnNewParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferReturnNewParamsReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry. This reason is only allowed for credits.
+	// The Nacha return code is R23.
+	InboundACHTransferReturnNewParamsReasonCreditEntryRefusedByReceiver InboundACHTransferReturnNewParamsReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate. The Nacha return
+	// code is R24.
+	InboundACHTransferReturnNewParamsReasonDuplicateEntry InboundACHTransferReturnNewParamsReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction. The Nacha return
+	// code is R29.
+	InboundACHTransferReturnNewParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferReturnNewParamsReason = "corporate_customer_advised_not_authorized"
 )
 
 type InboundACHTransferReturnListParams struct {
