@@ -57,6 +57,8 @@ func (r SimulationCardDisputeActionParams) MarshalJSON() (data []byte, err error
 type SimulationCardDisputeActionParamsStatus string
 
 const (
+	// The Card Dispute has been accepted and your funds have been returned.
 	SimulationCardDisputeActionParamsStatusAccepted SimulationCardDisputeActionParamsStatus = "accepted"
+	// The Card Dispute has been rejected.
 	SimulationCardDisputeActionParamsStatusRejected SimulationCardDisputeActionParamsStatus = "rejected"
 )

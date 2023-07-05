@@ -106,56 +106,110 @@ func (r *Event) UnmarshalJSON(data []byte) (err error) {
 type EventCategory string
 
 const (
-	EventCategoryAccountCreated                                       EventCategory = "account.created"
-	EventCategoryAccountUpdated                                       EventCategory = "account.updated"
-	EventCategoryAccountNumberCreated                                 EventCategory = "account_number.created"
-	EventCategoryAccountNumberUpdated                                 EventCategory = "account_number.updated"
-	EventCategoryAccountStatementCreated                              EventCategory = "account_statement.created"
-	EventCategoryAccountTransferCreated                               EventCategory = "account_transfer.created"
-	EventCategoryAccountTransferUpdated                               EventCategory = "account_transfer.updated"
-	EventCategoryACHPrenotificationCreated                            EventCategory = "ach_prenotification.created"
-	EventCategoryACHPrenotificationUpdated                            EventCategory = "ach_prenotification.updated"
-	EventCategoryACHTransferCreated                                   EventCategory = "ach_transfer.created"
-	EventCategoryACHTransferUpdated                                   EventCategory = "ach_transfer.updated"
-	EventCategoryCardCreated                                          EventCategory = "card.created"
-	EventCategoryCardUpdated                                          EventCategory = "card.updated"
-	EventCategoryCardPaymentCreated                                   EventCategory = "card_payment.created"
-	EventCategoryCardPaymentUpdated                                   EventCategory = "card_payment.updated"
-	EventCategoryCardDisputeCreated                                   EventCategory = "card_dispute.created"
-	EventCategoryCardDisputeUpdated                                   EventCategory = "card_dispute.updated"
-	EventCategoryCheckDepositCreated                                  EventCategory = "check_deposit.created"
-	EventCategoryCheckDepositUpdated                                  EventCategory = "check_deposit.updated"
-	EventCategoryCheckTransferCreated                                 EventCategory = "check_transfer.created"
-	EventCategoryCheckTransferUpdated                                 EventCategory = "check_transfer.updated"
-	EventCategoryDeclinedTransactionCreated                           EventCategory = "declined_transaction.created"
-	EventCategoryDigitalWalletTokenCreated                            EventCategory = "digital_wallet_token.created"
-	EventCategoryDigitalWalletTokenUpdated                            EventCategory = "digital_wallet_token.updated"
-	EventCategoryDocumentCreated                                      EventCategory = "document.created"
-	EventCategoryEntityCreated                                        EventCategory = "entity.created"
-	EventCategoryEntityUpdated                                        EventCategory = "entity.updated"
-	EventCategoryExternalAccountCreated                               EventCategory = "external_account.created"
-	EventCategoryFileCreated                                          EventCategory = "file.created"
-	EventCategoryGroupUpdated                                         EventCategory = "group.updated"
-	EventCategoryGroupHeartbeat                                       EventCategory = "group.heartbeat"
-	EventCategoryInboundACHTransferReturnCreated                      EventCategory = "inbound_ach_transfer_return.created"
-	EventCategoryInboundACHTransferReturnUpdated                      EventCategory = "inbound_ach_transfer_return.updated"
-	EventCategoryInboundWireDrawdownRequestCreated                    EventCategory = "inbound_wire_drawdown_request.created"
-	EventCategoryOauthConnectionCreated                               EventCategory = "oauth_connection.created"
-	EventCategoryOauthConnectionDeactivated                           EventCategory = "oauth_connection.deactivated"
-	EventCategoryPendingTransactionCreated                            EventCategory = "pending_transaction.created"
-	EventCategoryPendingTransactionUpdated                            EventCategory = "pending_transaction.updated"
-	EventCategoryRealTimeDecisionCardAuthorizationRequested           EventCategory = "real_time_decision.card_authorization_requested"
-	EventCategoryRealTimeDecisionDigitalWalletTokenRequested          EventCategory = "real_time_decision.digital_wallet_token_requested"
+	// Occurs whenever an Account is created.
+	EventCategoryAccountCreated EventCategory = "account.created"
+	// Occurs whenever an Account is updated.
+	EventCategoryAccountUpdated EventCategory = "account.updated"
+	// Occurs whenever an Account Number is created.
+	EventCategoryAccountNumberCreated EventCategory = "account_number.created"
+	// Occurs whenever an Account Number is updated.
+	EventCategoryAccountNumberUpdated EventCategory = "account_number.updated"
+	// Occurs whenever an Account Statement is created.
+	EventCategoryAccountStatementCreated EventCategory = "account_statement.created"
+	// Occurs whenever an Account Transfer is created.
+	EventCategoryAccountTransferCreated EventCategory = "account_transfer.created"
+	// Occurs whenever an Account Transfer is updated.
+	EventCategoryAccountTransferUpdated EventCategory = "account_transfer.updated"
+	// Occurs whenever an ACH Prenotification is created.
+	EventCategoryACHPrenotificationCreated EventCategory = "ach_prenotification.created"
+	// Occurs whenever an ACH Prenotification is updated.
+	EventCategoryACHPrenotificationUpdated EventCategory = "ach_prenotification.updated"
+	// Occurs whenever an ACH Transfer is created.
+	EventCategoryACHTransferCreated EventCategory = "ach_transfer.created"
+	// Occurs whenever an ACH Transfer is updated.
+	EventCategoryACHTransferUpdated EventCategory = "ach_transfer.updated"
+	// Occurs whenever a Card is created.
+	EventCategoryCardCreated EventCategory = "card.created"
+	// Occurs whenever a Card is updated.
+	EventCategoryCardUpdated EventCategory = "card.updated"
+	// Occurs whenever a Card Payment is created.
+	EventCategoryCardPaymentCreated EventCategory = "card_payment.created"
+	// Occurs whenever a Card Payment is updated.
+	EventCategoryCardPaymentUpdated EventCategory = "card_payment.updated"
+	// Occurs whenever a Card Dispute is created.
+	EventCategoryCardDisputeCreated EventCategory = "card_dispute.created"
+	// Occurs whenever a Card Dispute is updated.
+	EventCategoryCardDisputeUpdated EventCategory = "card_dispute.updated"
+	// Occurs whenever a Check Deposit is created.
+	EventCategoryCheckDepositCreated EventCategory = "check_deposit.created"
+	// Occurs whenever a Check Deposit is updated.
+	EventCategoryCheckDepositUpdated EventCategory = "check_deposit.updated"
+	// Occurs whenever a Check Transfer is created.
+	EventCategoryCheckTransferCreated EventCategory = "check_transfer.created"
+	// Occurs whenever a Check Transfer is updated.
+	EventCategoryCheckTransferUpdated EventCategory = "check_transfer.updated"
+	// Occurs whenever a Declined Transaction is created.
+	EventCategoryDeclinedTransactionCreated EventCategory = "declined_transaction.created"
+	// Occurs whenever a Digital Wallet Token is created.
+	EventCategoryDigitalWalletTokenCreated EventCategory = "digital_wallet_token.created"
+	// Occurs whenever a Digital Wallet Token is updated.
+	EventCategoryDigitalWalletTokenUpdated EventCategory = "digital_wallet_token.updated"
+	// Occurs whenever a Document is created.
+	EventCategoryDocumentCreated EventCategory = "document.created"
+	// Occurs whenever an Entity is created.
+	EventCategoryEntityCreated EventCategory = "entity.created"
+	// Occurs whenever an Entity is updated.
+	EventCategoryEntityUpdated EventCategory = "entity.updated"
+	// Occurs whenever an External Account is created.
+	EventCategoryExternalAccountCreated EventCategory = "external_account.created"
+	// Occurs whenever a File is created.
+	EventCategoryFileCreated EventCategory = "file.created"
+	// Occurs whenever a Group is updated.
+	EventCategoryGroupUpdated EventCategory = "group.updated"
+	// Increase may send webhooks with this category to see if a webhook endpoint is
+	// working properly.
+	EventCategoryGroupHeartbeat EventCategory = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer Return is created.
+	EventCategoryInboundACHTransferReturnCreated EventCategory = "inbound_ach_transfer_return.created"
+	// Occurs whenever an Inbound ACH Transfer Return is updated.
+	EventCategoryInboundACHTransferReturnUpdated EventCategory = "inbound_ach_transfer_return.updated"
+	// Occurs whenever an Inbound Wire Drawdown Request is created.
+	EventCategoryInboundWireDrawdownRequestCreated EventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an OAuth Connection is created.
+	EventCategoryOauthConnectionCreated EventCategory = "oauth_connection.created"
+	// Occurs whenever an OAuth Connection is deactivated.
+	EventCategoryOauthConnectionDeactivated EventCategory = "oauth_connection.deactivated"
+	// Occurs whenever a Pending Transaction is created.
+	EventCategoryPendingTransactionCreated EventCategory = "pending_transaction.created"
+	// Occurs whenever a Pending Transaction is updated.
+	EventCategoryPendingTransactionUpdated EventCategory = "pending_transaction.updated"
+	// Occurs whenever a Real-Time Decision is created in response to a card
+	// authorization.
+	EventCategoryRealTimeDecisionCardAuthorizationRequested EventCategory = "real_time_decision.card_authorization_requested"
+	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
+	// provisioning attempt.
+	EventCategoryRealTimeDecisionDigitalWalletTokenRequested EventCategory = "real_time_decision.digital_wallet_token_requested"
+	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
+	// requiring two-factor authentication.
 	EventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventCategory = "real_time_decision.digital_wallet_authentication_requested"
-	EventCategoryRealTimePaymentsTransferCreated                      EventCategory = "real_time_payments_transfer.created"
-	EventCategoryRealTimePaymentsTransferUpdated                      EventCategory = "real_time_payments_transfer.updated"
-	EventCategoryRealTimePaymentsRequestForPaymentCreated             EventCategory = "real_time_payments_request_for_payment.created"
-	EventCategoryRealTimePaymentsRequestForPaymentUpdated             EventCategory = "real_time_payments_request_for_payment.updated"
-	EventCategoryTransactionCreated                                   EventCategory = "transaction.created"
-	EventCategoryWireDrawdownRequestCreated                           EventCategory = "wire_drawdown_request.created"
-	EventCategoryWireDrawdownRequestUpdated                           EventCategory = "wire_drawdown_request.updated"
-	EventCategoryWireTransferCreated                                  EventCategory = "wire_transfer.created"
-	EventCategoryWireTransferUpdated                                  EventCategory = "wire_transfer.updated"
+	// Occurs whenever a Real Time Payments Transfer is created.
+	EventCategoryRealTimePaymentsTransferCreated EventCategory = "real_time_payments_transfer.created"
+	// Occurs whenever a Real Time Payments Transfer is updated.
+	EventCategoryRealTimePaymentsTransferUpdated EventCategory = "real_time_payments_transfer.updated"
+	// Occurs whenever a Real Time Payments Request for Payment is created.
+	EventCategoryRealTimePaymentsRequestForPaymentCreated EventCategory = "real_time_payments_request_for_payment.created"
+	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	EventCategoryRealTimePaymentsRequestForPaymentUpdated EventCategory = "real_time_payments_request_for_payment.updated"
+	// Occurs whenever a Transaction is updated.
+	EventCategoryTransactionCreated EventCategory = "transaction.created"
+	// Occurs whenever a Wire Drawdown Request is created.
+	EventCategoryWireDrawdownRequestCreated EventCategory = "wire_drawdown_request.created"
+	// Occurs whenever a Wire Drawdown Request is updated.
+	EventCategoryWireDrawdownRequestUpdated EventCategory = "wire_drawdown_request.updated"
+	// Occurs whenever a Wire Transfer is created.
+	EventCategoryWireTransferCreated EventCategory = "wire_transfer.created"
+	// Occurs whenever a Wire Transfer is updated.
+	EventCategoryWireTransferUpdated EventCategory = "wire_transfer.updated"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -205,56 +259,110 @@ func (r EventListParamsCategory) URLQuery() (v url.Values) {
 type EventListParamsCategoryIn string
 
 const (
-	EventListParamsCategoryInAccountCreated                                       EventListParamsCategoryIn = "account.created"
-	EventListParamsCategoryInAccountUpdated                                       EventListParamsCategoryIn = "account.updated"
-	EventListParamsCategoryInAccountNumberCreated                                 EventListParamsCategoryIn = "account_number.created"
-	EventListParamsCategoryInAccountNumberUpdated                                 EventListParamsCategoryIn = "account_number.updated"
-	EventListParamsCategoryInAccountStatementCreated                              EventListParamsCategoryIn = "account_statement.created"
-	EventListParamsCategoryInAccountTransferCreated                               EventListParamsCategoryIn = "account_transfer.created"
-	EventListParamsCategoryInAccountTransferUpdated                               EventListParamsCategoryIn = "account_transfer.updated"
-	EventListParamsCategoryInACHPrenotificationCreated                            EventListParamsCategoryIn = "ach_prenotification.created"
-	EventListParamsCategoryInACHPrenotificationUpdated                            EventListParamsCategoryIn = "ach_prenotification.updated"
-	EventListParamsCategoryInACHTransferCreated                                   EventListParamsCategoryIn = "ach_transfer.created"
-	EventListParamsCategoryInACHTransferUpdated                                   EventListParamsCategoryIn = "ach_transfer.updated"
-	EventListParamsCategoryInCardCreated                                          EventListParamsCategoryIn = "card.created"
-	EventListParamsCategoryInCardUpdated                                          EventListParamsCategoryIn = "card.updated"
-	EventListParamsCategoryInCardPaymentCreated                                   EventListParamsCategoryIn = "card_payment.created"
-	EventListParamsCategoryInCardPaymentUpdated                                   EventListParamsCategoryIn = "card_payment.updated"
-	EventListParamsCategoryInCardDisputeCreated                                   EventListParamsCategoryIn = "card_dispute.created"
-	EventListParamsCategoryInCardDisputeUpdated                                   EventListParamsCategoryIn = "card_dispute.updated"
-	EventListParamsCategoryInCheckDepositCreated                                  EventListParamsCategoryIn = "check_deposit.created"
-	EventListParamsCategoryInCheckDepositUpdated                                  EventListParamsCategoryIn = "check_deposit.updated"
-	EventListParamsCategoryInCheckTransferCreated                                 EventListParamsCategoryIn = "check_transfer.created"
-	EventListParamsCategoryInCheckTransferUpdated                                 EventListParamsCategoryIn = "check_transfer.updated"
-	EventListParamsCategoryInDeclinedTransactionCreated                           EventListParamsCategoryIn = "declined_transaction.created"
-	EventListParamsCategoryInDigitalWalletTokenCreated                            EventListParamsCategoryIn = "digital_wallet_token.created"
-	EventListParamsCategoryInDigitalWalletTokenUpdated                            EventListParamsCategoryIn = "digital_wallet_token.updated"
-	EventListParamsCategoryInDocumentCreated                                      EventListParamsCategoryIn = "document.created"
-	EventListParamsCategoryInEntityCreated                                        EventListParamsCategoryIn = "entity.created"
-	EventListParamsCategoryInEntityUpdated                                        EventListParamsCategoryIn = "entity.updated"
-	EventListParamsCategoryInExternalAccountCreated                               EventListParamsCategoryIn = "external_account.created"
-	EventListParamsCategoryInFileCreated                                          EventListParamsCategoryIn = "file.created"
-	EventListParamsCategoryInGroupUpdated                                         EventListParamsCategoryIn = "group.updated"
-	EventListParamsCategoryInGroupHeartbeat                                       EventListParamsCategoryIn = "group.heartbeat"
-	EventListParamsCategoryInInboundACHTransferReturnCreated                      EventListParamsCategoryIn = "inbound_ach_transfer_return.created"
-	EventListParamsCategoryInInboundACHTransferReturnUpdated                      EventListParamsCategoryIn = "inbound_ach_transfer_return.updated"
-	EventListParamsCategoryInInboundWireDrawdownRequestCreated                    EventListParamsCategoryIn = "inbound_wire_drawdown_request.created"
-	EventListParamsCategoryInOauthConnectionCreated                               EventListParamsCategoryIn = "oauth_connection.created"
-	EventListParamsCategoryInOauthConnectionDeactivated                           EventListParamsCategoryIn = "oauth_connection.deactivated"
-	EventListParamsCategoryInPendingTransactionCreated                            EventListParamsCategoryIn = "pending_transaction.created"
-	EventListParamsCategoryInPendingTransactionUpdated                            EventListParamsCategoryIn = "pending_transaction.updated"
-	EventListParamsCategoryInRealTimeDecisionCardAuthorizationRequested           EventListParamsCategoryIn = "real_time_decision.card_authorization_requested"
-	EventListParamsCategoryInRealTimeDecisionDigitalWalletTokenRequested          EventListParamsCategoryIn = "real_time_decision.digital_wallet_token_requested"
+	// Occurs whenever an Account is created.
+	EventListParamsCategoryInAccountCreated EventListParamsCategoryIn = "account.created"
+	// Occurs whenever an Account is updated.
+	EventListParamsCategoryInAccountUpdated EventListParamsCategoryIn = "account.updated"
+	// Occurs whenever an Account Number is created.
+	EventListParamsCategoryInAccountNumberCreated EventListParamsCategoryIn = "account_number.created"
+	// Occurs whenever an Account Number is updated.
+	EventListParamsCategoryInAccountNumberUpdated EventListParamsCategoryIn = "account_number.updated"
+	// Occurs whenever an Account Statement is created.
+	EventListParamsCategoryInAccountStatementCreated EventListParamsCategoryIn = "account_statement.created"
+	// Occurs whenever an Account Transfer is created.
+	EventListParamsCategoryInAccountTransferCreated EventListParamsCategoryIn = "account_transfer.created"
+	// Occurs whenever an Account Transfer is updated.
+	EventListParamsCategoryInAccountTransferUpdated EventListParamsCategoryIn = "account_transfer.updated"
+	// Occurs whenever an ACH Prenotification is created.
+	EventListParamsCategoryInACHPrenotificationCreated EventListParamsCategoryIn = "ach_prenotification.created"
+	// Occurs whenever an ACH Prenotification is updated.
+	EventListParamsCategoryInACHPrenotificationUpdated EventListParamsCategoryIn = "ach_prenotification.updated"
+	// Occurs whenever an ACH Transfer is created.
+	EventListParamsCategoryInACHTransferCreated EventListParamsCategoryIn = "ach_transfer.created"
+	// Occurs whenever an ACH Transfer is updated.
+	EventListParamsCategoryInACHTransferUpdated EventListParamsCategoryIn = "ach_transfer.updated"
+	// Occurs whenever a Card is created.
+	EventListParamsCategoryInCardCreated EventListParamsCategoryIn = "card.created"
+	// Occurs whenever a Card is updated.
+	EventListParamsCategoryInCardUpdated EventListParamsCategoryIn = "card.updated"
+	// Occurs whenever a Card Payment is created.
+	EventListParamsCategoryInCardPaymentCreated EventListParamsCategoryIn = "card_payment.created"
+	// Occurs whenever a Card Payment is updated.
+	EventListParamsCategoryInCardPaymentUpdated EventListParamsCategoryIn = "card_payment.updated"
+	// Occurs whenever a Card Dispute is created.
+	EventListParamsCategoryInCardDisputeCreated EventListParamsCategoryIn = "card_dispute.created"
+	// Occurs whenever a Card Dispute is updated.
+	EventListParamsCategoryInCardDisputeUpdated EventListParamsCategoryIn = "card_dispute.updated"
+	// Occurs whenever a Check Deposit is created.
+	EventListParamsCategoryInCheckDepositCreated EventListParamsCategoryIn = "check_deposit.created"
+	// Occurs whenever a Check Deposit is updated.
+	EventListParamsCategoryInCheckDepositUpdated EventListParamsCategoryIn = "check_deposit.updated"
+	// Occurs whenever a Check Transfer is created.
+	EventListParamsCategoryInCheckTransferCreated EventListParamsCategoryIn = "check_transfer.created"
+	// Occurs whenever a Check Transfer is updated.
+	EventListParamsCategoryInCheckTransferUpdated EventListParamsCategoryIn = "check_transfer.updated"
+	// Occurs whenever a Declined Transaction is created.
+	EventListParamsCategoryInDeclinedTransactionCreated EventListParamsCategoryIn = "declined_transaction.created"
+	// Occurs whenever a Digital Wallet Token is created.
+	EventListParamsCategoryInDigitalWalletTokenCreated EventListParamsCategoryIn = "digital_wallet_token.created"
+	// Occurs whenever a Digital Wallet Token is updated.
+	EventListParamsCategoryInDigitalWalletTokenUpdated EventListParamsCategoryIn = "digital_wallet_token.updated"
+	// Occurs whenever a Document is created.
+	EventListParamsCategoryInDocumentCreated EventListParamsCategoryIn = "document.created"
+	// Occurs whenever an Entity is created.
+	EventListParamsCategoryInEntityCreated EventListParamsCategoryIn = "entity.created"
+	// Occurs whenever an Entity is updated.
+	EventListParamsCategoryInEntityUpdated EventListParamsCategoryIn = "entity.updated"
+	// Occurs whenever an External Account is created.
+	EventListParamsCategoryInExternalAccountCreated EventListParamsCategoryIn = "external_account.created"
+	// Occurs whenever a File is created.
+	EventListParamsCategoryInFileCreated EventListParamsCategoryIn = "file.created"
+	// Occurs whenever a Group is updated.
+	EventListParamsCategoryInGroupUpdated EventListParamsCategoryIn = "group.updated"
+	// Increase may send webhooks with this category to see if a webhook endpoint is
+	// working properly.
+	EventListParamsCategoryInGroupHeartbeat EventListParamsCategoryIn = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer Return is created.
+	EventListParamsCategoryInInboundACHTransferReturnCreated EventListParamsCategoryIn = "inbound_ach_transfer_return.created"
+	// Occurs whenever an Inbound ACH Transfer Return is updated.
+	EventListParamsCategoryInInboundACHTransferReturnUpdated EventListParamsCategoryIn = "inbound_ach_transfer_return.updated"
+	// Occurs whenever an Inbound Wire Drawdown Request is created.
+	EventListParamsCategoryInInboundWireDrawdownRequestCreated EventListParamsCategoryIn = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an OAuth Connection is created.
+	EventListParamsCategoryInOauthConnectionCreated EventListParamsCategoryIn = "oauth_connection.created"
+	// Occurs whenever an OAuth Connection is deactivated.
+	EventListParamsCategoryInOauthConnectionDeactivated EventListParamsCategoryIn = "oauth_connection.deactivated"
+	// Occurs whenever a Pending Transaction is created.
+	EventListParamsCategoryInPendingTransactionCreated EventListParamsCategoryIn = "pending_transaction.created"
+	// Occurs whenever a Pending Transaction is updated.
+	EventListParamsCategoryInPendingTransactionUpdated EventListParamsCategoryIn = "pending_transaction.updated"
+	// Occurs whenever a Real-Time Decision is created in response to a card
+	// authorization.
+	EventListParamsCategoryInRealTimeDecisionCardAuthorizationRequested EventListParamsCategoryIn = "real_time_decision.card_authorization_requested"
+	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
+	// provisioning attempt.
+	EventListParamsCategoryInRealTimeDecisionDigitalWalletTokenRequested EventListParamsCategoryIn = "real_time_decision.digital_wallet_token_requested"
+	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
+	// requiring two-factor authentication.
 	EventListParamsCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested EventListParamsCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
-	EventListParamsCategoryInRealTimePaymentsTransferCreated                      EventListParamsCategoryIn = "real_time_payments_transfer.created"
-	EventListParamsCategoryInRealTimePaymentsTransferUpdated                      EventListParamsCategoryIn = "real_time_payments_transfer.updated"
-	EventListParamsCategoryInRealTimePaymentsRequestForPaymentCreated             EventListParamsCategoryIn = "real_time_payments_request_for_payment.created"
-	EventListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated             EventListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
-	EventListParamsCategoryInTransactionCreated                                   EventListParamsCategoryIn = "transaction.created"
-	EventListParamsCategoryInWireDrawdownRequestCreated                           EventListParamsCategoryIn = "wire_drawdown_request.created"
-	EventListParamsCategoryInWireDrawdownRequestUpdated                           EventListParamsCategoryIn = "wire_drawdown_request.updated"
-	EventListParamsCategoryInWireTransferCreated                                  EventListParamsCategoryIn = "wire_transfer.created"
-	EventListParamsCategoryInWireTransferUpdated                                  EventListParamsCategoryIn = "wire_transfer.updated"
+	// Occurs whenever a Real Time Payments Transfer is created.
+	EventListParamsCategoryInRealTimePaymentsTransferCreated EventListParamsCategoryIn = "real_time_payments_transfer.created"
+	// Occurs whenever a Real Time Payments Transfer is updated.
+	EventListParamsCategoryInRealTimePaymentsTransferUpdated EventListParamsCategoryIn = "real_time_payments_transfer.updated"
+	// Occurs whenever a Real Time Payments Request for Payment is created.
+	EventListParamsCategoryInRealTimePaymentsRequestForPaymentCreated EventListParamsCategoryIn = "real_time_payments_request_for_payment.created"
+	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	EventListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated EventListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
+	// Occurs whenever a Transaction is updated.
+	EventListParamsCategoryInTransactionCreated EventListParamsCategoryIn = "transaction.created"
+	// Occurs whenever a Wire Drawdown Request is created.
+	EventListParamsCategoryInWireDrawdownRequestCreated EventListParamsCategoryIn = "wire_drawdown_request.created"
+	// Occurs whenever a Wire Drawdown Request is updated.
+	EventListParamsCategoryInWireDrawdownRequestUpdated EventListParamsCategoryIn = "wire_drawdown_request.updated"
+	// Occurs whenever a Wire Transfer is created.
+	EventListParamsCategoryInWireTransferCreated EventListParamsCategoryIn = "wire_transfer.created"
+	// Occurs whenever a Wire Transfer is updated.
+	EventListParamsCategoryInWireTransferUpdated EventListParamsCategoryIn = "wire_transfer.updated"
 )
 
 type EventListParamsCreatedAt struct {

@@ -177,9 +177,12 @@ func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
 type CardDisputeStatus string
 
 const (
+	// The Card Dispute is pending review.
 	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
-	CardDisputeStatusAccepted         CardDisputeStatus = "accepted"
-	CardDisputeStatusRejected         CardDisputeStatus = "rejected"
+	// The Card Dispute has been accepted and your funds have been returned.
+	CardDisputeStatusAccepted CardDisputeStatus = "accepted"
+	// The Card Dispute has been rejected.
+	CardDisputeStatusRejected CardDisputeStatus = "rejected"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -263,7 +266,10 @@ func (r CardDisputeListParamsStatus) URLQuery() (v url.Values) {
 type CardDisputeListParamsStatusIn string
 
 const (
+	// The Card Dispute is pending review.
 	CardDisputeListParamsStatusInPendingReviewing CardDisputeListParamsStatusIn = "pending_reviewing"
-	CardDisputeListParamsStatusInAccepted         CardDisputeListParamsStatusIn = "accepted"
-	CardDisputeListParamsStatusInRejected         CardDisputeListParamsStatusIn = "rejected"
+	// The Card Dispute has been accepted and your funds have been returned.
+	CardDisputeListParamsStatusInAccepted CardDisputeListParamsStatusIn = "accepted"
+	// The Card Dispute has been rejected.
+	CardDisputeListParamsStatusInRejected CardDisputeListParamsStatusIn = "rejected"
 )

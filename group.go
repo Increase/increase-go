@@ -75,16 +75,20 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 type GroupACHDebitStatus string
 
 const (
+	// The Group cannot make ACH debits.
 	GroupACHDebitStatusDisabled GroupACHDebitStatus = "disabled"
-	GroupACHDebitStatusEnabled  GroupACHDebitStatus = "enabled"
+	// The Group can make ACH debits.
+	GroupACHDebitStatusEnabled GroupACHDebitStatus = "enabled"
 )
 
 // If the Group is activated or not.
 type GroupActivationStatus string
 
 const (
+	// The Group is not activated.
 	GroupActivationStatusUnactivated GroupActivationStatus = "unactivated"
-	GroupActivationStatusActivated   GroupActivationStatus = "activated"
+	// The Group is activated.
+	GroupActivationStatusActivated GroupActivationStatus = "activated"
 )
 
 // A constant representing the object's type. For this resource it will always be

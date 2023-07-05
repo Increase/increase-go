@@ -7,13 +7,22 @@ package shared
 type PointOfServiceEntryMode string
 
 const (
-	PointOfServiceEntryModeManual                     PointOfServiceEntryMode = "manual"
-	PointOfServiceEntryModeMagneticStripeNoCvv        PointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	PointOfServiceEntryModeOpticalCode                PointOfServiceEntryMode = "optical_code"
-	PointOfServiceEntryModeIntegratedCircuitCard      PointOfServiceEntryMode = "integrated_circuit_card"
-	PointOfServiceEntryModeContactless                PointOfServiceEntryMode = "contactless"
-	PointOfServiceEntryModeCredentialOnFile           PointOfServiceEntryMode = "credential_on_file"
-	PointOfServiceEntryModeMagneticStripe             PointOfServiceEntryMode = "magnetic_stripe"
-	PointOfServiceEntryModeContactlessMagneticStripe  PointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Manual key entry
+	PointOfServiceEntryModeManual PointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	PointOfServiceEntryModeMagneticStripeNoCvv PointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	PointOfServiceEntryModeOpticalCode PointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	PointOfServiceEntryModeIntegratedCircuitCard PointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	PointOfServiceEntryModeContactless PointOfServiceEntryMode = "contactless"
+	// Transaction iniated using a credential that has previously been stored on file
+	PointOfServiceEntryModeCredentialOnFile PointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	PointOfServiceEntryModeMagneticStripe PointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	PointOfServiceEntryModeContactlessMagneticStripe PointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
 	PointOfServiceEntryModeIntegratedCircuitCardNoCvv PointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )

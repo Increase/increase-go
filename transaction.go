@@ -129,11 +129,17 @@ func (r *Transaction) UnmarshalJSON(data []byte) (err error) {
 type TransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionCurrencyCad TransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionCurrencyChf TransactionCurrency = "CHF"
+	// Euro (EUR)
 	TransactionCurrencyEur TransactionCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionCurrencyGbp TransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionCurrencyJpy TransactionCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
@@ -141,8 +147,10 @@ const (
 type TransactionRouteType string
 
 const (
+	// An Account Number.
 	TransactionRouteTypeAccountNumber TransactionRouteType = "account_number"
-	TransactionRouteTypeCard          TransactionRouteType = "card"
+	// A Card.
+	TransactionRouteTypeCard TransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -336,11 +344,17 @@ func (r *TransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (
 type TransactionSourceAccountTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceAccountTransferIntentionCurrencyCad TransactionSourceAccountTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceAccountTransferIntentionCurrencyChf TransactionSourceAccountTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceAccountTransferIntentionCurrencyEur TransactionSourceAccountTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceAccountTransferIntentionCurrencyGbp TransactionSourceAccountTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceAccountTransferIntentionCurrencyJpy TransactionSourceAccountTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
@@ -431,76 +445,187 @@ func (r *TransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err err
 type TransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
-	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
-	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms                  TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
-	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         TransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             TransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  TransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
-	TransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  TransactionSourceACHTransferReturnReturnReasonCode = "field_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           TransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
-	TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         TransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  TransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
-	TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               TransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            TransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    TransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   TransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
-	TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          TransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
-	TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           TransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
-	TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         TransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               TransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
-	TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          TransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  TransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
-	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
-	TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
-	TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R01. Insufficient funds in the source account.
+	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	// Code R03. The account does not exist or the receiving bank was unable to locate
+	// it.
+	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	// Code R02. The account is closed.
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	// Code R04. The account number is invalid at the receiving bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	// Code R23. The receiving bank account refused a credit transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
+	// Class code.
+	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	// Code R29. The corporate customer reversed the transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	// Code R08. The receiving bank stopped payment on this transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	// Code R20. The receiving bank account does not perform transfers.
+	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	// Code R09. The receiving bank account does not have enough available balance for
+	// the transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	// Code R28. The routing number is incorrect.
+	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	// Code R10. The customer reversed the transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// Code R19. The amount field is incorrect or too large.
+	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	// Code R07. The customer who initiated the transfer revoked authorization.
+	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	// Code R13. The routing number is invalid.
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	// Code R17. The receiving bank is unable to process a field in the transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	// Code R45. The individual name field was invalid.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	// Code R06. The originating financial institution reversed the transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	// Code R34. The receiving bank's regulatory supervisor has limited their
+	// participation.
+	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	// Code R85. The outbound international ACH transfer was incorrect.
+	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	// Code R12. A rare return reason. The account was sold to another bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	// Code R25. The addenda record is incorrect or missing.
+	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	// Code R15. A rare return reason. The account holder is deceased.
+	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	// Code R11. A rare return reason. The customer authorized some payment to the
+	// sender, but this payment was not in error.
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
+	// Code R74. A rare return reason. Sent in response to a return that was returned
+	// with code `field_error`. The latest return should include the corrected
+	// field(s).
+	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	// Code R24. A rare return reason. The receiving bank received an exact duplicate
+	// entry with the same trace number and amount.
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	// Code R67. A rare return reason. The return this message refers to was a
+	// duplicate.
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	// Code R47. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment TransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	// Code R43. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	// Code R44. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	// Code R46. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	// Code R41. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	// Code R40. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry TransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	// Code R42. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError TransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	// Code R84. A rare return reason. The International ACH Transfer cannot be
+	// processed by the gateway.
+	TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway TransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	// Code R69. A rare return reason. One or more of the fields in the ACH were
+	// malformed.
+	TransactionSourceACHTransferReturnReturnReasonCodeFieldError TransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	// Code R83. A rare return reason. The Foreign receiving bank was unable to settle
+	// this ACH transfer.
+	TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle TransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	// Code R80. A rare return reason. The International ACH Transfer is malformed.
+	TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError TransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	// Code R18. A rare return reason. The ACH has an improper effective entry date
+	// field.
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate TransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	// Code R39. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented TransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	// Code R21. A rare return reason. The Company ID field of the ACH was invalid.
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID TransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	// Code R82. A rare return reason. The foreign receiving bank identifier for an
+	// International ACH Transfer was invalid.
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification TransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	// Code R22. A rare return reason. The Individual ID number field of the ACH was
+	// invalid.
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber TransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	// Code R53. A rare return reason. Both the Represented Check ("RCK") entry and the
+	// original check were presented to the bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment TransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	// Code R51. A rare return reason. The Represented Check ("RCK") entry is
+	// ineligible.
+	TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible TransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	// Code R26. A rare return reason. The ACH is missing a required field.
+	TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError TransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	// Code R71. A rare return reason. The receiving bank does not recognize the
+	// routing number in a dishonored return entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	// Code R61. A rare return reason. The receiving bank does not recognize the
+	// routing number in a return entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	// Code R76. A rare return reason. Sent in response to a return, the bank does not
+	// find the errors alleged by the returning bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound TransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	// Code R77. A rare return reason. The receiving bank does not accept the return of
+	// the erroneous debit. The funds are not available at the receiving bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	// Code R81. A rare return reason. The receiving bank does not accept International
+	// ACH Transfers.
+	TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram TransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	// Code R31. A rare return reason. A return that has been agreed to be accepted by
+	// the receiving bank, despite falling outside of the usual return timeframe.
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	// Code R70. A rare return reason. The receiving bank had not approved this return.
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	// Code R32. A rare return reason. The receiving bank could not settle this
+	// transaction.
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	// Code R30. A rare return reason. The receiving bank does not accept Check
+	// Truncation ACH transfers.
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R14. A rare return reason. The payee is deceased.
 	TransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity TransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         TransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           TransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            TransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           TransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
-	TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              TransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
-	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
-	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
-	TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        TransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            TransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
-	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    TransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
-	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
+	// Code R75. A rare return reason. The originating bank disputes that an earlier
+	// `duplicate_entry` return was actually a duplicate.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate TransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	// Code R62. A rare return reason. The originating bank made a mistake earlier and
+	// this return corrects it.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit TransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	// Code R36. A rare return reason. Return of a malformed credit entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	// Code R35. A rare return reason. Return of a malformed debit entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	// Code R33. A rare return reason. Return of a Destroyed Check ("XKC") entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	// Code R37. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment TransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	// Code R50. A rare return reason. State law prevents the bank from accepting the
+	// Represented Check ("RCK") entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance TransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	// Code R52. A rare return reason. A stop payment was issued on a Represented Check
+	// ("RCK") entry.
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	// Code R38. A rare return reason. The source attached to the ACH, usually an ACH
+	// check conversion, includes a stop payment.
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
+	// it was on time.
+	TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn TransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// originated ACH.
+	TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError TransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	// Code R72. A rare return reason. The dishonored return was sent too late.
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	// Code R68. A rare return reason. The return was sent too late.
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -587,11 +712,17 @@ func (r *TransactionSourceCardRefund) UnmarshalJSON(data []byte) (err error) {
 type TransactionSourceCardRefundCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCardRefundCurrencyCad TransactionSourceCardRefundCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCardRefundCurrencyChf TransactionSourceCardRefundCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCardRefundCurrencyEur TransactionSourceCardRefundCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCardRefundCurrencyGbp TransactionSourceCardRefundCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCardRefundCurrencyJpy TransactionSourceCardRefundCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCardRefundCurrencyUsd TransactionSourceCardRefundCurrency = "USD"
 )
 
@@ -642,11 +773,17 @@ func (r *TransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err er
 type TransactionSourceCardRevenuePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCardRevenuePaymentCurrencyCad TransactionSourceCardRevenuePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCardRevenuePaymentCurrencyChf TransactionSourceCardRevenuePaymentCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCardRevenuePaymentCurrencyEur TransactionSourceCardRevenuePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCardRevenuePaymentCurrencyGbp TransactionSourceCardRevenuePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCardRevenuePaymentCurrencyJpy TransactionSourceCardRevenuePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
@@ -720,11 +857,17 @@ func (r *TransactionSourceCardSettlement) UnmarshalJSON(data []byte) (err error)
 type TransactionSourceCardSettlementCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCardSettlementCurrencyCad TransactionSourceCardSettlementCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCardSettlementCurrencyChf TransactionSourceCardSettlementCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCardSettlementCurrencyEur TransactionSourceCardSettlementCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCardSettlementCurrencyGbp TransactionSourceCardSettlementCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCardSettlementCurrencyJpy TransactionSourceCardSettlementCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCardSettlementCurrencyUsd TransactionSourceCardSettlementCurrency = "USD"
 )
 
@@ -742,38 +885,103 @@ const (
 type TransactionSourceCategory string
 
 const (
-	TransactionSourceCategoryAccountTransferIntention                    TransactionSourceCategory = "account_transfer_intention"
-	TransactionSourceCategoryACHTransferIntention                        TransactionSourceCategory = "ach_transfer_intention"
-	TransactionSourceCategoryACHTransferRejection                        TransactionSourceCategory = "ach_transfer_rejection"
-	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
-	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
-	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
-	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
-	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
-	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
-	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
-	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
-	TransactionSourceCategoryCheckTransferIntention                      TransactionSourceCategory = "check_transfer_intention"
-	TransactionSourceCategoryCheckTransferRejection                      TransactionSourceCategory = "check_transfer_rejection"
-	TransactionSourceCategoryCheckTransferReturn                         TransactionSourceCategory = "check_transfer_return"
-	TransactionSourceCategoryCheckTransferStopPaymentRequest             TransactionSourceCategory = "check_transfer_stop_payment_request"
-	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
-	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
-	TransactionSourceCategoryInboundACHTransferReturnIntention           TransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	TransactionSourceCategoryInboundCheck                                TransactionSourceCategory = "inbound_check"
-	TransactionSourceCategoryInboundInternationalACHTransfer             TransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Account Transfer Intention object. Details will
+	// be under the `account_transfer_intention` object.
+	TransactionSourceCategoryAccountTransferIntention TransactionSourceCategory = "account_transfer_intention"
+	// The Transaction was created by a ACH Transfer Intention object. Details will be
+	// under the `ach_transfer_intention` object.
+	TransactionSourceCategoryACHTransferIntention TransactionSourceCategory = "ach_transfer_intention"
+	// The Transaction was created by a ACH Transfer Rejection object. Details will be
+	// under the `ach_transfer_rejection` object.
+	TransactionSourceCategoryACHTransferRejection TransactionSourceCategory = "ach_transfer_rejection"
+	// The Transaction was created by a ACH Transfer Return object. Details will be
+	// under the `ach_transfer_return` object.
+	TransactionSourceCategoryACHTransferReturn TransactionSourceCategory = "ach_transfer_return"
+	// The Transaction was created by a Card Dispute Acceptance object. Details will be
+	// under the `card_dispute_acceptance` object.
+	TransactionSourceCategoryCardDisputeAcceptance TransactionSourceCategory = "card_dispute_acceptance"
+	// The Transaction was created by a Card Refund object. Details will be under the
+	// `card_refund` object.
+	TransactionSourceCategoryCardRefund TransactionSourceCategory = "card_refund"
+	// The Transaction was created by a Card Revenue Payment object. Details will be
+	// under the `card_revenue_payment` object.
+	TransactionSourceCategoryCardRevenuePayment TransactionSourceCategory = "card_revenue_payment"
+	// The Transaction was created by a Card Settlement object. Details will be under
+	// the `card_settlement` object.
+	TransactionSourceCategoryCardSettlement TransactionSourceCategory = "card_settlement"
+	// The Transaction was created by a Check Deposit Acceptance object. Details will
+	// be under the `check_deposit_acceptance` object.
+	TransactionSourceCategoryCheckDepositAcceptance TransactionSourceCategory = "check_deposit_acceptance"
+	// The Transaction was created by a Check Deposit Return object. Details will be
+	// under the `check_deposit_return` object.
+	TransactionSourceCategoryCheckDepositReturn TransactionSourceCategory = "check_deposit_return"
+	// The Transaction was created by a Check Transfer Deposit object. Details will be
+	// under the `check_transfer_deposit` object.
+	TransactionSourceCategoryCheckTransferDeposit TransactionSourceCategory = "check_transfer_deposit"
+	// The Transaction was created by a Check Transfer Intention object. Details will
+	// be under the `check_transfer_intention` object.
+	TransactionSourceCategoryCheckTransferIntention TransactionSourceCategory = "check_transfer_intention"
+	// The Transaction was created by a Check Transfer Rejection object. Details will
+	// be under the `check_transfer_rejection` object.
+	TransactionSourceCategoryCheckTransferRejection TransactionSourceCategory = "check_transfer_rejection"
+	// The Transaction was created by a Check Transfer Return object. Details will be
+	// under the `check_transfer_return` object.
+	TransactionSourceCategoryCheckTransferReturn TransactionSourceCategory = "check_transfer_return"
+	// The Transaction was created by a Check Transfer Stop Payment Request object.
+	// Details will be under the `check_transfer_stop_payment_request` object.
+	TransactionSourceCategoryCheckTransferStopPaymentRequest TransactionSourceCategory = "check_transfer_stop_payment_request"
+	// The Transaction was created by a Fee Payment object. Details will be under the
+	// `fee_payment` object.
+	TransactionSourceCategoryFeePayment TransactionSourceCategory = "fee_payment"
+	// The Transaction was created by a Inbound ACH Transfer object. Details will be
+	// under the `inbound_ach_transfer` object.
+	TransactionSourceCategoryInboundACHTransfer TransactionSourceCategory = "inbound_ach_transfer"
+	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
+	// Details will be under the `inbound_ach_transfer_return_intention` object.
+	TransactionSourceCategoryInboundACHTransferReturnIntention TransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	// The Transaction was created by a Inbound Check object. Details will be under the
+	// `inbound_check` object.
+	TransactionSourceCategoryInboundCheck TransactionSourceCategory = "inbound_check"
+	// The Transaction was created by a Inbound International ACH Transfer object.
+	// Details will be under the `inbound_international_ach_transfer` object.
+	TransactionSourceCategoryInboundInternationalACHTransfer TransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Inbound Real Time Payments Transfer
+	// Confirmation object. Details will be under the
+	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	TransactionSourceCategoryInboundWireDrawdownPayment                  TransactionSourceCategory = "inbound_wire_drawdown_payment"
-	TransactionSourceCategoryInboundWireDrawdownPaymentReversal          TransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
-	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
-	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
-	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
-	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
-	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
-	TransactionSourceCategoryWireTransferRejection                       TransactionSourceCategory = "wire_transfer_rejection"
-	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
+	// The Transaction was created by a Inbound Wire Drawdown Payment object. Details
+	// will be under the `inbound_wire_drawdown_payment` object.
+	TransactionSourceCategoryInboundWireDrawdownPayment TransactionSourceCategory = "inbound_wire_drawdown_payment"
+	// The Transaction was created by a Inbound Wire Drawdown Payment Reversal object.
+	// Details will be under the `inbound_wire_drawdown_payment_reversal` object.
+	TransactionSourceCategoryInboundWireDrawdownPaymentReversal TransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// The Transaction was created by a Inbound Wire Reversal object. Details will be
+	// under the `inbound_wire_reversal` object.
+	TransactionSourceCategoryInboundWireReversal TransactionSourceCategory = "inbound_wire_reversal"
+	// The Transaction was created by a Inbound Wire Transfer object. Details will be
+	// under the `inbound_wire_transfer` object.
+	TransactionSourceCategoryInboundWireTransfer TransactionSourceCategory = "inbound_wire_transfer"
+	// The Transaction was created by a Interest Payment object. Details will be under
+	// the `interest_payment` object.
+	TransactionSourceCategoryInterestPayment TransactionSourceCategory = "interest_payment"
+	// The Transaction was created by a Internal Source object. Details will be under
+	// the `internal_source` object.
+	TransactionSourceCategoryInternalSource TransactionSourceCategory = "internal_source"
+	// The Transaction was created by a Real Time Payments Transfer Acknowledgement
+	// object. Details will be under the `real_time_payments_transfer_acknowledgement`
+	// object.
+	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	// The Transaction was created by a Sample Funds object. Details will be under the
+	// `sample_funds` object.
+	TransactionSourceCategorySampleFunds TransactionSourceCategory = "sample_funds"
+	// The Transaction was created by a Wire Transfer Intention object. Details will be
+	// under the `wire_transfer_intention` object.
+	TransactionSourceCategoryWireTransferIntention TransactionSourceCategory = "wire_transfer_intention"
+	// The Transaction was created by a Wire Transfer Rejection object. Details will be
+	// under the `wire_transfer_rejection` object.
+	TransactionSourceCategoryWireTransferRejection TransactionSourceCategory = "wire_transfer_rejection"
+	// The Transaction was made for an undocumented or deprecated reason.
+	TransactionSourceCategoryOther TransactionSourceCategory = "other"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -823,11 +1031,17 @@ func (r *TransactionSourceCheckDepositAcceptance) UnmarshalJSON(data []byte) (er
 type TransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCheckDepositAcceptanceCurrencyCad TransactionSourceCheckDepositAcceptanceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCheckDepositAcceptanceCurrencyChf TransactionSourceCheckDepositAcceptanceCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCheckDepositAcceptanceCurrencyEur TransactionSourceCheckDepositAcceptanceCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCheckDepositAcceptanceCurrencyGbp TransactionSourceCheckDepositAcceptanceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCheckDepositAcceptanceCurrencyJpy TransactionSourceCheckDepositAcceptanceCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCheckDepositAcceptanceCurrencyUsd TransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
@@ -874,29 +1088,47 @@ func (r *TransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err er
 type TransactionSourceCheckDepositReturnCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCheckDepositReturnCurrencyCad TransactionSourceCheckDepositReturnCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCheckDepositReturnCurrencyChf TransactionSourceCheckDepositReturnCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCheckDepositReturnCurrencyEur TransactionSourceCheckDepositReturnCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCheckDepositReturnCurrencyGbp TransactionSourceCheckDepositReturnCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCheckDepositReturnCurrencyJpy TransactionSourceCheckDepositReturnCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCheckDepositReturnCurrencyUsd TransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
 type TransactionSourceCheckDepositReturnReturnReason string
 
 const (
+	// The check doesn't allow ACH conversion.
 	TransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported TransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
-	TransactionSourceCheckDepositReturnReturnReasonClosedAccount             TransactionSourceCheckDepositReturnReturnReason = "closed_account"
-	TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       TransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
-	TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         TransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
-	TransactionSourceCheckDepositReturnReturnReasonNoAccount                 TransactionSourceCheckDepositReturnReturnReason = "no_account"
-	TransactionSourceCheckDepositReturnReturnReasonNotAuthorized             TransactionSourceCheckDepositReturnReturnReason = "not_authorized"
-	TransactionSourceCheckDepositReturnReturnReasonStaleDated                TransactionSourceCheckDepositReturnReturnReason = "stale_dated"
-	TransactionSourceCheckDepositReturnReturnReasonStopPayment               TransactionSourceCheckDepositReturnReturnReason = "stop_payment"
-	TransactionSourceCheckDepositReturnReturnReasonUnknownReason             TransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
-	TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          TransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
-	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage           TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
-	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The account is closed.
+	TransactionSourceCheckDepositReturnReturnReasonClosedAccount TransactionSourceCheckDepositReturnReturnReason = "closed_account"
+	// The check has already been deposited.
+	TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission TransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
+	// Insufficient funds
+	TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds TransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
+	// No account was found matching the check details.
+	TransactionSourceCheckDepositReturnReturnReasonNoAccount TransactionSourceCheckDepositReturnReturnReason = "no_account"
+	// The check was not authorized.
+	TransactionSourceCheckDepositReturnReturnReasonNotAuthorized TransactionSourceCheckDepositReturnReturnReason = "not_authorized"
+	// The check is too old.
+	TransactionSourceCheckDepositReturnReturnReasonStaleDated TransactionSourceCheckDepositReturnReturnReason = "stale_dated"
+	// The payment has been stopped by the account holder.
+	TransactionSourceCheckDepositReturnReturnReasonStopPayment TransactionSourceCheckDepositReturnReturnReason = "stop_payment"
+	// The reason for the return is unknown.
+	TransactionSourceCheckDepositReturnReturnReasonUnknownReason TransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
+	// The image doesn't match the details submitted.
+	TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails TransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
+	// The image could not be read.
+	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	// The check endorsement was irregular.
+	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response
@@ -989,11 +1221,17 @@ func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (er
 type TransactionSourceCheckTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceCheckTransferIntentionCurrencyCad TransactionSourceCheckTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceCheckTransferIntentionCurrencyChf TransactionSourceCheckTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceCheckTransferIntentionCurrencyEur TransactionSourceCheckTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceCheckTransferIntentionCurrencyGbp TransactionSourceCheckTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceCheckTransferIntentionCurrencyJpy TransactionSourceCheckTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceCheckTransferIntentionCurrencyUsd TransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
@@ -1055,8 +1293,12 @@ func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err e
 type TransactionSourceCheckTransferReturnReason string
 
 const (
-	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure   TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	TransactionSourceCheckTransferReturnReasonRefusedByRecipient    TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// Mail delivery failed and the check was returned to sender.
+	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	// The check arrived and the recipient refused to deposit it.
+	TransactionSourceCheckTransferReturnReasonRefusedByRecipient TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// The check was fraudulently deposited and the transfer was returned to the Bank
+	// of First Deposit.
 	TransactionSourceCheckTransferReturnReasonReturnedNotAuthorized TransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
 
@@ -1129,11 +1371,17 @@ func (r *TransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
 type TransactionSourceFeePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceFeePaymentCurrencyCad TransactionSourceFeePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceFeePaymentCurrencyChf TransactionSourceFeePaymentCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceFeePaymentCurrencyEur TransactionSourceFeePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceFeePaymentCurrencyGbp TransactionSourceFeePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceFeePaymentCurrencyJpy TransactionSourceFeePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceFeePaymentCurrencyUsd TransactionSourceFeePaymentCurrency = "USD"
 )
 
@@ -1210,11 +1458,17 @@ func (r *TransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 type TransactionSourceInboundCheckCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceInboundCheckCurrencyCad TransactionSourceInboundCheckCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceInboundCheckCurrencyChf TransactionSourceInboundCheckCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceInboundCheckCurrencyEur TransactionSourceInboundCheckCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceInboundCheckCurrencyGbp TransactionSourceInboundCheckCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceInboundCheckCurrencyJpy TransactionSourceInboundCheckCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceInboundCheckCurrencyUsd TransactionSourceInboundCheckCurrency = "USD"
 )
 
@@ -1360,11 +1614,17 @@ func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) Unmarshal
 type TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
@@ -1617,11 +1877,17 @@ func (r *TransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error
 type TransactionSourceInterestPaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceInterestPaymentCurrencyCad TransactionSourceInterestPaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceInterestPaymentCurrencyChf TransactionSourceInterestPaymentCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceInterestPaymentCurrencyEur TransactionSourceInterestPaymentCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceInterestPaymentCurrencyGbp TransactionSourceInterestPaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceInterestPaymentCurrencyJpy TransactionSourceInterestPaymentCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceInterestPaymentCurrencyUsd TransactionSourceInterestPaymentCurrency = "USD"
 )
 
@@ -1657,29 +1923,47 @@ func (r *TransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error)
 type TransactionSourceInternalSourceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	TransactionSourceInternalSourceCurrencyCad TransactionSourceInternalSourceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	TransactionSourceInternalSourceCurrencyChf TransactionSourceInternalSourceCurrency = "CHF"
+	// Euro (EUR)
 	TransactionSourceInternalSourceCurrencyEur TransactionSourceInternalSourceCurrency = "EUR"
+	// British Pound (GBP)
 	TransactionSourceInternalSourceCurrencyGbp TransactionSourceInternalSourceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	TransactionSourceInternalSourceCurrencyJpy TransactionSourceInternalSourceCurrency = "JPY"
+	// US Dollar (USD)
 	TransactionSourceInternalSourceCurrencyUsd TransactionSourceInternalSourceCurrency = "USD"
 )
 
 type TransactionSourceInternalSourceReason string
 
 const (
-	TransactionSourceInternalSourceReasonAccountClosure             TransactionSourceInternalSourceReason = "account_closure"
-	TransactionSourceInternalSourceReasonBankMigration              TransactionSourceInternalSourceReason = "bank_migration"
-	TransactionSourceInternalSourceReasonCashback                   TransactionSourceInternalSourceReason = "cashback"
-	TransactionSourceInternalSourceReasonCollectionReceivable       TransactionSourceInternalSourceReason = "collection_receivable"
-	TransactionSourceInternalSourceReasonEmpyrealAdjustment         TransactionSourceInternalSourceReason = "empyreal_adjustment"
-	TransactionSourceInternalSourceReasonError                      TransactionSourceInternalSourceReason = "error"
-	TransactionSourceInternalSourceReasonErrorCorrection            TransactionSourceInternalSourceReason = "error_correction"
-	TransactionSourceInternalSourceReasonFees                       TransactionSourceInternalSourceReason = "fees"
-	TransactionSourceInternalSourceReasonInterest                   TransactionSourceInternalSourceReason = "interest"
+	// Account closure
+	TransactionSourceInternalSourceReasonAccountClosure TransactionSourceInternalSourceReason = "account_closure"
+	// Bank migration
+	TransactionSourceInternalSourceReasonBankMigration TransactionSourceInternalSourceReason = "bank_migration"
+	// Cashback
+	TransactionSourceInternalSourceReasonCashback TransactionSourceInternalSourceReason = "cashback"
+	// Collection receivable
+	TransactionSourceInternalSourceReasonCollectionReceivable TransactionSourceInternalSourceReason = "collection_receivable"
+	// Empyreal adjustment
+	TransactionSourceInternalSourceReasonEmpyrealAdjustment TransactionSourceInternalSourceReason = "empyreal_adjustment"
+	// Error
+	TransactionSourceInternalSourceReasonError TransactionSourceInternalSourceReason = "error"
+	// Error correction
+	TransactionSourceInternalSourceReasonErrorCorrection TransactionSourceInternalSourceReason = "error_correction"
+	// Fees
+	TransactionSourceInternalSourceReasonFees TransactionSourceInternalSourceReason = "fees"
+	// Interest
+	TransactionSourceInternalSourceReasonInterest TransactionSourceInternalSourceReason = "interest"
+	// Negative balance forgiveness
 	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
-	TransactionSourceInternalSourceReasonSampleFunds                TransactionSourceInternalSourceReason = "sample_funds"
-	TransactionSourceInternalSourceReasonSampleFundsReturn          TransactionSourceInternalSourceReason = "sample_funds_return"
+	// Sample funds
+	TransactionSourceInternalSourceReasonSampleFunds TransactionSourceInternalSourceReason = "sample_funds"
+	// Sample funds return
+	TransactionSourceInternalSourceReasonSampleFundsReturn TransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Real Time Payments Transfer Acknowledgement object. This field will be present
@@ -1835,38 +2119,103 @@ func (r TransactionListParamsCategory) URLQuery() (v url.Values) {
 type TransactionListParamsCategoryIn string
 
 const (
-	TransactionListParamsCategoryInAccountTransferIntention                    TransactionListParamsCategoryIn = "account_transfer_intention"
-	TransactionListParamsCategoryInACHTransferIntention                        TransactionListParamsCategoryIn = "ach_transfer_intention"
-	TransactionListParamsCategoryInACHTransferRejection                        TransactionListParamsCategoryIn = "ach_transfer_rejection"
-	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
-	TransactionListParamsCategoryInCardDisputeAcceptance                       TransactionListParamsCategoryIn = "card_dispute_acceptance"
-	TransactionListParamsCategoryInCardRefund                                  TransactionListParamsCategoryIn = "card_refund"
-	TransactionListParamsCategoryInCardRevenuePayment                          TransactionListParamsCategoryIn = "card_revenue_payment"
-	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
-	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
-	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
-	TransactionListParamsCategoryInCheckTransferDeposit                        TransactionListParamsCategoryIn = "check_transfer_deposit"
-	TransactionListParamsCategoryInCheckTransferIntention                      TransactionListParamsCategoryIn = "check_transfer_intention"
-	TransactionListParamsCategoryInCheckTransferRejection                      TransactionListParamsCategoryIn = "check_transfer_rejection"
-	TransactionListParamsCategoryInCheckTransferReturn                         TransactionListParamsCategoryIn = "check_transfer_return"
-	TransactionListParamsCategoryInCheckTransferStopPaymentRequest             TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
-	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
-	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
-	TransactionListParamsCategoryInInboundACHTransferReturnIntention           TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
-	TransactionListParamsCategoryInInboundCheck                                TransactionListParamsCategoryIn = "inbound_check"
-	TransactionListParamsCategoryInInboundInternationalACHTransfer             TransactionListParamsCategoryIn = "inbound_international_ach_transfer"
+	// The Transaction was created by a Account Transfer Intention object. Details will
+	// be under the `account_transfer_intention` object.
+	TransactionListParamsCategoryInAccountTransferIntention TransactionListParamsCategoryIn = "account_transfer_intention"
+	// The Transaction was created by a ACH Transfer Intention object. Details will be
+	// under the `ach_transfer_intention` object.
+	TransactionListParamsCategoryInACHTransferIntention TransactionListParamsCategoryIn = "ach_transfer_intention"
+	// The Transaction was created by a ACH Transfer Rejection object. Details will be
+	// under the `ach_transfer_rejection` object.
+	TransactionListParamsCategoryInACHTransferRejection TransactionListParamsCategoryIn = "ach_transfer_rejection"
+	// The Transaction was created by a ACH Transfer Return object. Details will be
+	// under the `ach_transfer_return` object.
+	TransactionListParamsCategoryInACHTransferReturn TransactionListParamsCategoryIn = "ach_transfer_return"
+	// The Transaction was created by a Card Dispute Acceptance object. Details will be
+	// under the `card_dispute_acceptance` object.
+	TransactionListParamsCategoryInCardDisputeAcceptance TransactionListParamsCategoryIn = "card_dispute_acceptance"
+	// The Transaction was created by a Card Refund object. Details will be under the
+	// `card_refund` object.
+	TransactionListParamsCategoryInCardRefund TransactionListParamsCategoryIn = "card_refund"
+	// The Transaction was created by a Card Revenue Payment object. Details will be
+	// under the `card_revenue_payment` object.
+	TransactionListParamsCategoryInCardRevenuePayment TransactionListParamsCategoryIn = "card_revenue_payment"
+	// The Transaction was created by a Card Settlement object. Details will be under
+	// the `card_settlement` object.
+	TransactionListParamsCategoryInCardSettlement TransactionListParamsCategoryIn = "card_settlement"
+	// The Transaction was created by a Check Deposit Acceptance object. Details will
+	// be under the `check_deposit_acceptance` object.
+	TransactionListParamsCategoryInCheckDepositAcceptance TransactionListParamsCategoryIn = "check_deposit_acceptance"
+	// The Transaction was created by a Check Deposit Return object. Details will be
+	// under the `check_deposit_return` object.
+	TransactionListParamsCategoryInCheckDepositReturn TransactionListParamsCategoryIn = "check_deposit_return"
+	// The Transaction was created by a Check Transfer Deposit object. Details will be
+	// under the `check_transfer_deposit` object.
+	TransactionListParamsCategoryInCheckTransferDeposit TransactionListParamsCategoryIn = "check_transfer_deposit"
+	// The Transaction was created by a Check Transfer Intention object. Details will
+	// be under the `check_transfer_intention` object.
+	TransactionListParamsCategoryInCheckTransferIntention TransactionListParamsCategoryIn = "check_transfer_intention"
+	// The Transaction was created by a Check Transfer Rejection object. Details will
+	// be under the `check_transfer_rejection` object.
+	TransactionListParamsCategoryInCheckTransferRejection TransactionListParamsCategoryIn = "check_transfer_rejection"
+	// The Transaction was created by a Check Transfer Return object. Details will be
+	// under the `check_transfer_return` object.
+	TransactionListParamsCategoryInCheckTransferReturn TransactionListParamsCategoryIn = "check_transfer_return"
+	// The Transaction was created by a Check Transfer Stop Payment Request object.
+	// Details will be under the `check_transfer_stop_payment_request` object.
+	TransactionListParamsCategoryInCheckTransferStopPaymentRequest TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
+	// The Transaction was created by a Fee Payment object. Details will be under the
+	// `fee_payment` object.
+	TransactionListParamsCategoryInFeePayment TransactionListParamsCategoryIn = "fee_payment"
+	// The Transaction was created by a Inbound ACH Transfer object. Details will be
+	// under the `inbound_ach_transfer` object.
+	TransactionListParamsCategoryInInboundACHTransfer TransactionListParamsCategoryIn = "inbound_ach_transfer"
+	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
+	// Details will be under the `inbound_ach_transfer_return_intention` object.
+	TransactionListParamsCategoryInInboundACHTransferReturnIntention TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
+	// The Transaction was created by a Inbound Check object. Details will be under the
+	// `inbound_check` object.
+	TransactionListParamsCategoryInInboundCheck TransactionListParamsCategoryIn = "inbound_check"
+	// The Transaction was created by a Inbound International ACH Transfer object.
+	// Details will be under the `inbound_international_ach_transfer` object.
+	TransactionListParamsCategoryInInboundInternationalACHTransfer TransactionListParamsCategoryIn = "inbound_international_ach_transfer"
+	// The Transaction was created by a Inbound Real Time Payments Transfer
+	// Confirmation object. Details will be under the
+	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	TransactionListParamsCategoryInInboundWireDrawdownPayment                  TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
-	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal          TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
-	TransactionListParamsCategoryInInboundWireReversal                         TransactionListParamsCategoryIn = "inbound_wire_reversal"
-	TransactionListParamsCategoryInInboundWireTransfer                         TransactionListParamsCategoryIn = "inbound_wire_transfer"
-	TransactionListParamsCategoryInInterestPayment                             TransactionListParamsCategoryIn = "interest_payment"
-	TransactionListParamsCategoryInInternalSource                              TransactionListParamsCategoryIn = "internal_source"
-	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
-	TransactionListParamsCategoryInSampleFunds                                 TransactionListParamsCategoryIn = "sample_funds"
-	TransactionListParamsCategoryInWireTransferIntention                       TransactionListParamsCategoryIn = "wire_transfer_intention"
-	TransactionListParamsCategoryInWireTransferRejection                       TransactionListParamsCategoryIn = "wire_transfer_rejection"
-	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
+	// The Transaction was created by a Inbound Wire Drawdown Payment object. Details
+	// will be under the `inbound_wire_drawdown_payment` object.
+	TransactionListParamsCategoryInInboundWireDrawdownPayment TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
+	// The Transaction was created by a Inbound Wire Drawdown Payment Reversal object.
+	// Details will be under the `inbound_wire_drawdown_payment_reversal` object.
+	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
+	// The Transaction was created by a Inbound Wire Reversal object. Details will be
+	// under the `inbound_wire_reversal` object.
+	TransactionListParamsCategoryInInboundWireReversal TransactionListParamsCategoryIn = "inbound_wire_reversal"
+	// The Transaction was created by a Inbound Wire Transfer object. Details will be
+	// under the `inbound_wire_transfer` object.
+	TransactionListParamsCategoryInInboundWireTransfer TransactionListParamsCategoryIn = "inbound_wire_transfer"
+	// The Transaction was created by a Interest Payment object. Details will be under
+	// the `interest_payment` object.
+	TransactionListParamsCategoryInInterestPayment TransactionListParamsCategoryIn = "interest_payment"
+	// The Transaction was created by a Internal Source object. Details will be under
+	// the `internal_source` object.
+	TransactionListParamsCategoryInInternalSource TransactionListParamsCategoryIn = "internal_source"
+	// The Transaction was created by a Real Time Payments Transfer Acknowledgement
+	// object. Details will be under the `real_time_payments_transfer_acknowledgement`
+	// object.
+	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
+	// The Transaction was created by a Sample Funds object. Details will be under the
+	// `sample_funds` object.
+	TransactionListParamsCategoryInSampleFunds TransactionListParamsCategoryIn = "sample_funds"
+	// The Transaction was created by a Wire Transfer Intention object. Details will be
+	// under the `wire_transfer_intention` object.
+	TransactionListParamsCategoryInWireTransferIntention TransactionListParamsCategoryIn = "wire_transfer_intention"
+	// The Transaction was created by a Wire Transfer Rejection object. Details will be
+	// under the `wire_transfer_rejection` object.
+	TransactionListParamsCategoryInWireTransferRejection TransactionListParamsCategoryIn = "wire_transfer_rejection"
+	// The Transaction was made for an undocumented or deprecated reason.
+	TransactionListParamsCategoryInOther TransactionListParamsCategoryIn = "other"
 )
 
 type TransactionListParamsCreatedAt struct {

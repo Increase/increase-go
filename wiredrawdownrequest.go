@@ -145,10 +145,14 @@ func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 type WireDrawdownRequestStatus string
 
 const (
+	// The drawdown request is queued to be submitted to Fedwire.
 	WireDrawdownRequestStatusPendingSubmission WireDrawdownRequestStatus = "pending_submission"
-	WireDrawdownRequestStatusPendingResponse   WireDrawdownRequestStatus = "pending_response"
-	WireDrawdownRequestStatusFulfilled         WireDrawdownRequestStatus = "fulfilled"
-	WireDrawdownRequestStatusRefused           WireDrawdownRequestStatus = "refused"
+	// The drawdown request has been sent and the recipient should respond in some way.
+	WireDrawdownRequestStatusPendingResponse WireDrawdownRequestStatus = "pending_response"
+	// The drawdown request has been fulfilled by the recipient.
+	WireDrawdownRequestStatusFulfilled WireDrawdownRequestStatus = "fulfilled"
+	// The drawdown request has been refused by the recipient.
+	WireDrawdownRequestStatusRefused WireDrawdownRequestStatus = "refused"
 )
 
 // After the drawdown request is submitted to Fedwire, this will contain

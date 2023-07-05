@@ -73,10 +73,14 @@ func (r *SimulationDigitalWalletTokenRequestNewResponse) UnmarshalJSON(data []by
 type SimulationDigitalWalletTokenRequestNewResponseDeclineReason string
 
 const (
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive        SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "card_not_active"
+	// The card is not active.
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "card_not_active"
+	// The card does not have a two-factor authentication method.
 	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonNoVerificationMethod SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "no_verification_method"
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_timed_out"
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
+	// Your webhook timed out when evaluating the token provisioning attempt.
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_timed_out"
+	// Your webhook declined the token provisioning attempt.
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
 )
 
 // A constant representing the object's type. For this resource it will always be

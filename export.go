@@ -122,15 +122,19 @@ func (r *Export) UnmarshalJSON(data []byte) (err error) {
 type ExportCategory string
 
 const (
+	// Export a CSV of all transactions for a given time range.
 	ExportCategoryTransactionCsv ExportCategory = "transaction_csv"
-	ExportCategoryBalanceCsv     ExportCategory = "balance_csv"
+	// Export a CSV of account balances for the dates in a given range.
+	ExportCategoryBalanceCsv ExportCategory = "balance_csv"
 )
 
 // The status of the Export.
 type ExportStatus string
 
 const (
-	ExportStatusPending  ExportStatus = "pending"
+	// Increase is generating the export.
+	ExportStatusPending ExportStatus = "pending"
+	// The export has been successfully generated.
 	ExportStatusComplete ExportStatus = "complete"
 )
 
@@ -161,8 +165,10 @@ func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 type ExportNewParamsCategory string
 
 const (
+	// Export a CSV of all transactions for a given time range.
 	ExportNewParamsCategoryTransactionCsv ExportNewParamsCategory = "transaction_csv"
-	ExportNewParamsCategoryBalanceCsv     ExportNewParamsCategory = "balance_csv"
+	// Export a CSV of account balances for the dates in a given range.
+	ExportNewParamsCategoryBalanceCsv ExportNewParamsCategory = "balance_csv"
 )
 
 // Options for the created export. Required if `category` is equal to
