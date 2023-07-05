@@ -131,16 +131,21 @@ func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 type ExternalAccountFunding string
 
 const (
+	// A checking account.
 	ExternalAccountFundingChecking ExternalAccountFunding = "checking"
-	ExternalAccountFundingSavings  ExternalAccountFunding = "savings"
-	ExternalAccountFundingOther    ExternalAccountFunding = "other"
+	// A savings account.
+	ExternalAccountFundingSavings ExternalAccountFunding = "savings"
+	// A different type of account.
+	ExternalAccountFundingOther ExternalAccountFunding = "other"
 )
 
 // The External Account's status.
 type ExternalAccountStatus string
 
 const (
-	ExternalAccountStatusActive   ExternalAccountStatus = "active"
+	// The External Acccount is active.
+	ExternalAccountStatusActive ExternalAccountStatus = "active"
+	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
 )
 
@@ -156,9 +161,12 @@ const (
 type ExternalAccountVerificationStatus string
 
 const (
+	// The External Account has not been verified.
 	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
-	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
-	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
+	// The External Account is in the process of being verified.
+	ExternalAccountVerificationStatusPending ExternalAccountVerificationStatus = "pending"
+	// The External Account is verified.
+	ExternalAccountVerificationStatusVerified ExternalAccountVerificationStatus = "verified"
 )
 
 type ExternalAccountNewParams struct {
@@ -181,9 +189,12 @@ func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 type ExternalAccountNewParamsFunding string
 
 const (
+	// A checking account.
 	ExternalAccountNewParamsFundingChecking ExternalAccountNewParamsFunding = "checking"
-	ExternalAccountNewParamsFundingSavings  ExternalAccountNewParamsFunding = "savings"
-	ExternalAccountNewParamsFundingOther    ExternalAccountNewParamsFunding = "other"
+	// A savings account.
+	ExternalAccountNewParamsFundingSavings ExternalAccountNewParamsFunding = "savings"
+	// A different type of account.
+	ExternalAccountNewParamsFundingOther ExternalAccountNewParamsFunding = "other"
 )
 
 type ExternalAccountUpdateParams struct {
@@ -201,7 +212,9 @@ func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 type ExternalAccountUpdateParamsStatus string
 
 const (
-	ExternalAccountUpdateParamsStatusActive   ExternalAccountUpdateParamsStatus = "active"
+	// The External Acccount is active.
+	ExternalAccountUpdateParamsStatusActive ExternalAccountUpdateParamsStatus = "active"
+	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountUpdateParamsStatusArchived ExternalAccountUpdateParamsStatus = "archived"
 )
 
@@ -242,6 +255,8 @@ func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 type ExternalAccountListParamsStatusIn string
 
 const (
-	ExternalAccountListParamsStatusInActive   ExternalAccountListParamsStatusIn = "active"
+	// The External Acccount is active.
+	ExternalAccountListParamsStatusInActive ExternalAccountListParamsStatusIn = "active"
+	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )

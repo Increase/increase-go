@@ -108,9 +108,14 @@ func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 type DigitalWalletTokenStatus string
 
 const (
-	DigitalWalletTokenStatusActive      DigitalWalletTokenStatus = "active"
-	DigitalWalletTokenStatusInactive    DigitalWalletTokenStatus = "inactive"
-	DigitalWalletTokenStatusSuspended   DigitalWalletTokenStatus = "suspended"
+	// The digital wallet token is active.
+	DigitalWalletTokenStatusActive DigitalWalletTokenStatus = "active"
+	// The digital wallet token has been created but not successfully activated via
+	// two-factor authentication yet.
+	DigitalWalletTokenStatusInactive DigitalWalletTokenStatus = "inactive"
+	// The digital wallet token has been temporarily paused.
+	DigitalWalletTokenStatusSuspended DigitalWalletTokenStatus = "suspended"
+	// The digital wallet token has been permanently cancelled.
 	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
 )
 
@@ -118,7 +123,9 @@ const (
 type DigitalWalletTokenTokenRequestor string
 
 const (
-	DigitalWalletTokenTokenRequestorApplePay  DigitalWalletTokenTokenRequestor = "apple_pay"
+	// Apple Pay
+	DigitalWalletTokenTokenRequestorApplePay DigitalWalletTokenTokenRequestor = "apple_pay"
+	// Google Pay
 	DigitalWalletTokenTokenRequestorGooglePay DigitalWalletTokenTokenRequestor = "google_pay"
 )
 

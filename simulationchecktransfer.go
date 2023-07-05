@@ -72,7 +72,11 @@ func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err err
 type SimulationCheckTransferReturnParamsReason string
 
 const (
-	SimulationCheckTransferReturnParamsReasonMailDeliveryFailure   SimulationCheckTransferReturnParamsReason = "mail_delivery_failure"
-	SimulationCheckTransferReturnParamsReasonRefusedByRecipient    SimulationCheckTransferReturnParamsReason = "refused_by_recipient"
+	// Mail delivery failed and the check was returned to sender.
+	SimulationCheckTransferReturnParamsReasonMailDeliveryFailure SimulationCheckTransferReturnParamsReason = "mail_delivery_failure"
+	// The check arrived and the recipient refused to deposit it.
+	SimulationCheckTransferReturnParamsReasonRefusedByRecipient SimulationCheckTransferReturnParamsReason = "refused_by_recipient"
+	// The check was fraudulently deposited and the transfer was returned to the Bank
+	// of First Deposit.
 	SimulationCheckTransferReturnParamsReasonReturnedNotAuthorized SimulationCheckTransferReturnParamsReason = "returned_not_authorized"
 )

@@ -103,7 +103,9 @@ func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
 type OauthConnectionStatus string
 
 const (
-	OauthConnectionStatusActive   OauthConnectionStatus = "active"
+	// The OAuth connection is active.
+	OauthConnectionStatusActive OauthConnectionStatus = "active"
+	// The OAuth connection is permanently deactivated.
 	OauthConnectionStatusInactive OauthConnectionStatus = "inactive"
 )
 

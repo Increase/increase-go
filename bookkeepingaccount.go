@@ -103,7 +103,9 @@ func (r *BookkeepingAccount) UnmarshalJSON(data []byte) (err error) {
 type BookkeepingAccountComplianceCategory string
 
 const (
-	BookkeepingAccountComplianceCategoryCommingledCash  BookkeepingAccountComplianceCategory = "commingled_cash"
+	// A cash in an commingled Increase Account.
+	BookkeepingAccountComplianceCategoryCommingledCash BookkeepingAccountComplianceCategory = "commingled_cash"
+	// A customer balance.
 	BookkeepingAccountComplianceCategoryCustomerBalance BookkeepingAccountComplianceCategory = "customer_balance"
 )
 
@@ -134,7 +136,9 @@ func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {
 type BookkeepingAccountNewParamsComplianceCategory string
 
 const (
-	BookkeepingAccountNewParamsComplianceCategoryCommingledCash  BookkeepingAccountNewParamsComplianceCategory = "commingled_cash"
+	// A cash in an commingled Increase Account.
+	BookkeepingAccountNewParamsComplianceCategoryCommingledCash BookkeepingAccountNewParamsComplianceCategory = "commingled_cash"
+	// A customer balance.
 	BookkeepingAccountNewParamsComplianceCategoryCustomerBalance BookkeepingAccountNewParamsComplianceCategory = "customer_balance"
 )
 

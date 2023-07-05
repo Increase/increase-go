@@ -130,19 +130,28 @@ func (r *Limit) UnmarshalJSON(data []byte) (err error) {
 type LimitInterval string
 
 const (
+	// Enforce the Limit per-transaction.
 	LimitIntervalTransaction LimitInterval = "transaction"
-	LimitIntervalDay         LimitInterval = "day"
-	LimitIntervalWeek        LimitInterval = "week"
-	LimitIntervalMonth       LimitInterval = "month"
-	LimitIntervalYear        LimitInterval = "year"
-	LimitIntervalAllTime     LimitInterval = "all_time"
+	// Enforce the Limit based on the trailing 24 hour period.
+	LimitIntervalDay LimitInterval = "day"
+	// Enforce the Limit based on the trailing seven days.
+	LimitIntervalWeek LimitInterval = "week"
+	// Enforce the Limit based on the trailing month, going back to the current day in
+	// the previous month, or as close as possible given month length differences.
+	LimitIntervalMonth LimitInterval = "month"
+	// Enforce the Limit based on the trailing 365 days.
+	LimitIntervalYear LimitInterval = "year"
+	// Enforce the Limit for all time.
+	LimitIntervalAllTime LimitInterval = "all_time"
 )
 
 // The metric for the Limit.
 type LimitMetric string
 
 const (
-	LimitMetricCount  LimitMetric = "count"
+	// The maximum number of debits allowed.
+	LimitMetricCount LimitMetric = "count"
+	// The maximum volume of debits allowed in the minor unit of the model's currency.
 	LimitMetricVolume LimitMetric = "volume"
 )
 
@@ -150,16 +159,21 @@ const (
 type LimitModelType string
 
 const (
-	LimitModelTypeAccount       LimitModelType = "account"
+	// Enforce the Limit for the entire account.
+	LimitModelTypeAccount LimitModelType = "account"
+	// Enforce the Limit for this specific route.
 	LimitModelTypeAccountNumber LimitModelType = "account_number"
-	LimitModelTypeCard          LimitModelType = "card"
+	// Enforce the Limit for this specific card.
+	LimitModelTypeCard LimitModelType = "card"
 )
 
 // The current status of the Limit.
 type LimitStatus string
 
 const (
-	LimitStatusActive   LimitStatus = "active"
+	// The Limit is active.
+	LimitStatusActive LimitStatus = "active"
+	// The Limit is temporarily disabled.
 	LimitStatusInactive LimitStatus = "inactive"
 )
 
@@ -191,7 +205,9 @@ func (r LimitNewParams) MarshalJSON() (data []byte, err error) {
 type LimitNewParamsMetric string
 
 const (
-	LimitNewParamsMetricCount  LimitNewParamsMetric = "count"
+	// The maximum number of debits allowed.
+	LimitNewParamsMetricCount LimitNewParamsMetric = "count"
+	// The maximum volume of debits allowed in the minor unit of the model's currency.
 	LimitNewParamsMetricVolume LimitNewParamsMetric = "volume"
 )
 
@@ -199,12 +215,19 @@ const (
 type LimitNewParamsInterval string
 
 const (
+	// Enforce the limit per-transaction.
 	LimitNewParamsIntervalTransaction LimitNewParamsInterval = "transaction"
-	LimitNewParamsIntervalDay         LimitNewParamsInterval = "day"
-	LimitNewParamsIntervalWeek        LimitNewParamsInterval = "week"
-	LimitNewParamsIntervalMonth       LimitNewParamsInterval = "month"
-	LimitNewParamsIntervalYear        LimitNewParamsInterval = "year"
-	LimitNewParamsIntervalAllTime     LimitNewParamsInterval = "all_time"
+	// Enforce the limit based on the previous 24 hour period.
+	LimitNewParamsIntervalDay LimitNewParamsInterval = "day"
+	// Enforce the limit based on the previous seven days.
+	LimitNewParamsIntervalWeek LimitNewParamsInterval = "week"
+	// Enforce the limit based on the previous month, going back to the current day in
+	// the previous month, or as close as possible given month length differences.
+	LimitNewParamsIntervalMonth LimitNewParamsInterval = "month"
+	// Enforce the limit based on the previous year.
+	LimitNewParamsIntervalYear LimitNewParamsInterval = "year"
+	// Enforce the limit for all time.
+	LimitNewParamsIntervalAllTime LimitNewParamsInterval = "all_time"
 )
 
 type LimitUpdateParams struct {
@@ -220,8 +243,10 @@ func (r LimitUpdateParams) MarshalJSON() (data []byte, err error) {
 type LimitUpdateParamsStatus string
 
 const (
+	// Disable the limit temporarily.
 	LimitUpdateParamsStatusInactive LimitUpdateParamsStatus = "inactive"
-	LimitUpdateParamsStatusActive   LimitUpdateParamsStatus = "active"
+	// Activate the limit.
+	LimitUpdateParamsStatusActive LimitUpdateParamsStatus = "active"
 )
 
 type LimitListParams struct {

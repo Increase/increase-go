@@ -106,9 +106,14 @@ func (r *Document) UnmarshalJSON(data []byte) (err error) {
 type DocumentCategory string
 
 const (
-	DocumentCategoryForm1099Int          DocumentCategory = "form_1099_int"
+	// Internal Revenue Service Form 1099-INT.
+	DocumentCategoryForm1099Int DocumentCategory = "form_1099_int"
+	// A document submitted in response to a proof of authorization request for an ACH
+	// transfer.
 	DocumentCategoryProofOfAuthorization DocumentCategory = "proof_of_authorization"
-	DocumentCategoryCompanyInformation   DocumentCategory = "company_information"
+	// Company information, such a policies or procedures, typically submitted during
+	// our due diligence process.
+	DocumentCategoryCompanyInformation DocumentCategory = "company_information"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -158,9 +163,14 @@ func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
 type DocumentListParamsCategoryIn string
 
 const (
-	DocumentListParamsCategoryInForm1099Int          DocumentListParamsCategoryIn = "form_1099_int"
+	// Internal Revenue Service Form 1099-INT.
+	DocumentListParamsCategoryInForm1099Int DocumentListParamsCategoryIn = "form_1099_int"
+	// A document submitted in response to a proof of authorization request for an ACH
+	// transfer.
 	DocumentListParamsCategoryInProofOfAuthorization DocumentListParamsCategoryIn = "proof_of_authorization"
-	DocumentListParamsCategoryInCompanyInformation   DocumentListParamsCategoryIn = "company_information"
+	// Company information, such a policies or procedures, typically submitted during
+	// our due diligence process.
+	DocumentListParamsCategoryInCompanyInformation DocumentListParamsCategoryIn = "company_information"
 )
 
 type DocumentListParamsCreatedAt struct {

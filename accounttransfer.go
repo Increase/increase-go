@@ -208,11 +208,17 @@ func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 type AccountTransferCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	AccountTransferCurrencyCad AccountTransferCurrency = "CAD"
+	// Swiss Franc (CHF)
 	AccountTransferCurrencyChf AccountTransferCurrency = "CHF"
+	// Euro (EUR)
 	AccountTransferCurrencyEur AccountTransferCurrency = "EUR"
+	// British Pound (GBP)
 	AccountTransferCurrencyGbp AccountTransferCurrency = "GBP"
+	// Japanese Yen (JPY)
 	AccountTransferCurrencyJpy AccountTransferCurrency = "JPY"
+	// US Dollar (USD)
 	AccountTransferCurrencyUsd AccountTransferCurrency = "USD"
 )
 
@@ -227,9 +233,12 @@ const (
 type AccountTransferStatus string
 
 const (
+	// The transfer is pending approval.
 	AccountTransferStatusPendingApproval AccountTransferStatus = "pending_approval"
-	AccountTransferStatusCanceled        AccountTransferStatus = "canceled"
-	AccountTransferStatusComplete        AccountTransferStatus = "complete"
+	// The transfer has been canceled.
+	AccountTransferStatusCanceled AccountTransferStatus = "canceled"
+	// The transfer has been completed.
+	AccountTransferStatusComplete AccountTransferStatus = "complete"
 )
 
 // A constant representing the object's type. For this resource it will always be

@@ -139,8 +139,10 @@ func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 type ACHPrenotificationCreditDebitIndicator string
 
 const (
+	// The Prenotification is for an anticipated credit.
 	ACHPrenotificationCreditDebitIndicatorCredit ACHPrenotificationCreditDebitIndicator = "credit"
-	ACHPrenotificationCreditDebitIndicatorDebit  ACHPrenotificationCreditDebitIndicator = "debit"
+	// The Prenotification is for an anticipated debit.
+	ACHPrenotificationCreditDebitIndicatorDebit ACHPrenotificationCreditDebitIndicator = "debit"
 )
 
 // If your prenotification is returned, this will contain details of the return.
@@ -170,10 +172,14 @@ func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (er
 type ACHPrenotificationStatus string
 
 const (
+	// The Prenotification is pending submission.
 	ACHPrenotificationStatusPendingSubmitting ACHPrenotificationStatus = "pending_submitting"
+	// The Prenotification requires attention.
 	ACHPrenotificationStatusRequiresAttention ACHPrenotificationStatus = "requires_attention"
-	ACHPrenotificationStatusReturned          ACHPrenotificationStatus = "returned"
-	ACHPrenotificationStatusSubmitted         ACHPrenotificationStatus = "submitted"
+	// The Prenotification has been returned.
+	ACHPrenotificationStatusReturned ACHPrenotificationStatus = "returned"
+	// The Prentification is complete.
+	ACHPrenotificationStatusSubmitted ACHPrenotificationStatus = "submitted"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -222,17 +228,22 @@ func (r ACHPrenotificationNewParams) MarshalJSON() (data []byte, err error) {
 type ACHPrenotificationNewParamsCreditDebitIndicator string
 
 const (
+	// The Prenotification is for an anticipated credit.
 	ACHPrenotificationNewParamsCreditDebitIndicatorCredit ACHPrenotificationNewParamsCreditDebitIndicator = "credit"
-	ACHPrenotificationNewParamsCreditDebitIndicatorDebit  ACHPrenotificationNewParamsCreditDebitIndicator = "debit"
+	// The Prenotification is for an anticipated debit.
+	ACHPrenotificationNewParamsCreditDebitIndicatorDebit ACHPrenotificationNewParamsCreditDebitIndicator = "debit"
 )
 
 // The Standard Entry Class (SEC) code to use for the ACH Prenotification.
 type ACHPrenotificationNewParamsStandardEntryClassCode string
 
 const (
-	ACHPrenotificationNewParamsStandardEntryClassCodeCorporateCreditOrDebit        ACHPrenotificationNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
+	// Corporate Credit and Debit (CCD).
+	ACHPrenotificationNewParamsStandardEntryClassCodeCorporateCreditOrDebit ACHPrenotificationNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
+	// Prearranged Payments and Deposits (PPD).
 	ACHPrenotificationNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHPrenotificationNewParamsStandardEntryClassCode = "prearranged_payments_and_deposit"
-	ACHPrenotificationNewParamsStandardEntryClassCodeInternetInitiated             ACHPrenotificationNewParamsStandardEntryClassCode = "internet_initiated"
+	// Internet Initiated (WEB).
+	ACHPrenotificationNewParamsStandardEntryClassCodeInternetInitiated ACHPrenotificationNewParamsStandardEntryClassCode = "internet_initiated"
 )
 
 type ACHPrenotificationListParams struct {

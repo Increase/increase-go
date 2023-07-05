@@ -137,11 +137,17 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 type PendingTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionCurrencyCad PendingTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionCurrencyChf PendingTransactionCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionCurrencyEur PendingTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionCurrencyGbp PendingTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionCurrencyJpy PendingTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
@@ -149,8 +155,10 @@ const (
 type PendingTransactionRouteType string
 
 const (
+	// An Account Number.
 	PendingTransactionRouteTypeAccountNumber PendingTransactionRouteType = "account_number"
-	PendingTransactionRouteTypeCard          PendingTransactionRouteType = "card"
+	// A Card.
+	PendingTransactionRouteTypeCard PendingTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -242,11 +250,17 @@ func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data 
 type PendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionSourceAccountTransferInstructionCurrencyCad PendingTransactionSourceAccountTransferInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionSourceAccountTransferInstructionCurrencyChf PendingTransactionSourceAccountTransferInstructionCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionSourceAccountTransferInstructionCurrencyEur PendingTransactionSourceAccountTransferInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionSourceAccountTransferInstructionCurrencyGbp PendingTransactionSourceAccountTransferInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionSourceAccountTransferInstructionCurrencyJpy PendingTransactionSourceAccountTransferInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
@@ -349,11 +363,17 @@ func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (
 type PendingTransactionSourceCardAuthorizationCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionSourceCardAuthorizationCurrencyCad PendingTransactionSourceCardAuthorizationCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionSourceCardAuthorizationCurrencyChf PendingTransactionSourceCardAuthorizationCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionSourceCardAuthorizationCurrencyEur PendingTransactionSourceCardAuthorizationCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionSourceCardAuthorizationCurrencyGbp PendingTransactionSourceCardAuthorizationCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionSourceCardAuthorizationCurrencyJpy PendingTransactionSourceCardAuthorizationCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
@@ -361,6 +381,7 @@ const (
 type PendingTransactionSourceCardAuthorizationNetwork string
 
 const (
+	// Visa
 	PendingTransactionSourceCardAuthorizationNetworkVisa PendingTransactionSourceCardAuthorizationNetwork = "visa"
 )
 
@@ -416,14 +437,40 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJ
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Single transaction of a mail/phone order: Use to indicate that the transaction
+	// is a mail/phone order purchase, not a recurring transaction or installment
+	// payment. For domestic transactions in the US region, this value may also
+	// indicate one bill payment transaction in the card-present or card-absent
+	// environments.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	// Recurring transaction: Payment indicator used to indicate a recurring
+	// transaction that originates from an acquirer in the US region.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	// Installment payment: Payment indicator used to indicate one purchase of goods or
+	// services that is billed to the account in multiple charges over a period of time
+	// agreed upon by the cardholder and merchant from transactions that originate from
+	// an acquirer in the US region.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	// Unknown classification: other mail order: Use to indicate that the type of
+	// mail/telephone order is unknown.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	// Secure electronic commerce transaction: Use to indicate that the electronic
+	// commerce transaction has been authenticated using e.g., 3-D Secure
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+	// identify an electronic commerce transaction where the merchant attempted to
+	// authenticate the cardholder using 3-D Secure, but was unable to complete the
+	// authentication because the issuer or cardholder does not participate in the 3-D
+	// Secure program.
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	// Non-authenticated security transaction: Use to identify an electronic commerce
+	// transaction that uses data encryption for security however , cardholder
+	// authentication is not performed using 3-D Secure.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	// Non-secure transaction: Use to identify an electronic commerce transaction that
+	// has no data protection.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -440,15 +487,33 @@ const (
 type PendingTransactionSourceCategory string
 
 const (
-	PendingTransactionSourceCategoryAccountTransferInstruction          PendingTransactionSourceCategory = "account_transfer_instruction"
-	PendingTransactionSourceCategoryACHTransferInstruction              PendingTransactionSourceCategory = "ach_transfer_instruction"
-	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
-	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
-	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
-	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
+	// The Pending Transaction was created by a Account Transfer Instruction object.
+	// Details will be under the `account_transfer_instruction` object.
+	PendingTransactionSourceCategoryAccountTransferInstruction PendingTransactionSourceCategory = "account_transfer_instruction"
+	// The Pending Transaction was created by a ACH Transfer Instruction object.
+	// Details will be under the `ach_transfer_instruction` object.
+	PendingTransactionSourceCategoryACHTransferInstruction PendingTransactionSourceCategory = "ach_transfer_instruction"
+	// The Pending Transaction was created by a Card Authorization object. Details will
+	// be under the `card_authorization` object.
+	PendingTransactionSourceCategoryCardAuthorization PendingTransactionSourceCategory = "card_authorization"
+	// The Pending Transaction was created by a Check Deposit Instruction object.
+	// Details will be under the `check_deposit_instruction` object.
+	PendingTransactionSourceCategoryCheckDepositInstruction PendingTransactionSourceCategory = "check_deposit_instruction"
+	// The Pending Transaction was created by a Check Transfer Instruction object.
+	// Details will be under the `check_transfer_instruction` object.
+	PendingTransactionSourceCategoryCheckTransferInstruction PendingTransactionSourceCategory = "check_transfer_instruction"
+	// The Pending Transaction was created by a Inbound Funds Hold object. Details will
+	// be under the `inbound_funds_hold` object.
+	PendingTransactionSourceCategoryInboundFundsHold PendingTransactionSourceCategory = "inbound_funds_hold"
+	// The Pending Transaction was created by a Real Time Payments Transfer Instruction
+	// object. Details will be under the `real_time_payments_transfer_instruction`
+	// object.
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
-	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
+	// The Pending Transaction was created by a Wire Transfer Instruction object.
+	// Details will be under the `wire_transfer_instruction` object.
+	PendingTransactionSourceCategoryWireTransferInstruction PendingTransactionSourceCategory = "wire_transfer_instruction"
+	// The Pending Transaction was made for an undocumented or deprecated reason.
+	PendingTransactionSourceCategoryOther PendingTransactionSourceCategory = "other"
 )
 
 // A Check Deposit Instruction object. This field will be present in the JSON
@@ -492,11 +557,17 @@ func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []b
 type PendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionSourceCheckDepositInstructionCurrencyCad PendingTransactionSourceCheckDepositInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionSourceCheckDepositInstructionCurrencyChf PendingTransactionSourceCheckDepositInstructionCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionSourceCheckDepositInstructionCurrencyEur PendingTransactionSourceCheckDepositInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionSourceCheckDepositInstructionCurrencyGbp PendingTransactionSourceCheckDepositInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionSourceCheckDepositInstructionCurrencyJpy PendingTransactionSourceCheckDepositInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionSourceCheckDepositInstructionCurrencyUsd PendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
@@ -533,11 +604,17 @@ func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []
 type PendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionSourceCheckTransferInstructionCurrencyCad PendingTransactionSourceCheckTransferInstructionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionSourceCheckTransferInstructionCurrencyChf PendingTransactionSourceCheckTransferInstructionCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionSourceCheckTransferInstructionCurrencyEur PendingTransactionSourceCheckTransferInstructionCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionSourceCheckTransferInstructionCurrencyGbp PendingTransactionSourceCheckTransferInstructionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionSourceCheckTransferInstructionCurrencyJpy PendingTransactionSourceCheckTransferInstructionCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
@@ -591,11 +668,17 @@ func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (e
 type PendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	PendingTransactionSourceInboundFundsHoldCurrencyCad PendingTransactionSourceInboundFundsHoldCurrency = "CAD"
+	// Swiss Franc (CHF)
 	PendingTransactionSourceInboundFundsHoldCurrencyChf PendingTransactionSourceInboundFundsHoldCurrency = "CHF"
+	// Euro (EUR)
 	PendingTransactionSourceInboundFundsHoldCurrencyEur PendingTransactionSourceInboundFundsHoldCurrency = "EUR"
+	// British Pound (GBP)
 	PendingTransactionSourceInboundFundsHoldCurrencyGbp PendingTransactionSourceInboundFundsHoldCurrency = "GBP"
+	// Japanese Yen (JPY)
 	PendingTransactionSourceInboundFundsHoldCurrencyJpy PendingTransactionSourceInboundFundsHoldCurrency = "JPY"
+	// US Dollar (USD)
 	PendingTransactionSourceInboundFundsHoldCurrencyUsd PendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
@@ -603,7 +686,9 @@ const (
 type PendingTransactionSourceInboundFundsHoldStatus string
 
 const (
-	PendingTransactionSourceInboundFundsHoldStatusHeld     PendingTransactionSourceInboundFundsHoldStatus = "held"
+	// Funds are still being held.
+	PendingTransactionSourceInboundFundsHoldStatusHeld PendingTransactionSourceInboundFundsHoldStatus = "held"
+	// Funds have been released.
 	PendingTransactionSourceInboundFundsHoldStatusComplete PendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
@@ -668,7 +753,11 @@ func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []b
 type PendingTransactionStatus string
 
 const (
-	PendingTransactionStatusPending  PendingTransactionStatus = "pending"
+	// The Pending Transaction is still awaiting confirmation.
+	PendingTransactionStatusPending PendingTransactionStatus = "pending"
+	// The Pending Transaction is confirmed. An associated Transaction exists for this
+	// object. The Pending Transaction will no longer count against your balance and
+	// can generally be hidden from UIs, etc.
 	PendingTransactionStatusComplete PendingTransactionStatus = "complete"
 )
 
@@ -749,6 +838,10 @@ func (r PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
 type PendingTransactionListParamsStatusIn string
 
 const (
-	PendingTransactionListParamsStatusInPending  PendingTransactionListParamsStatusIn = "pending"
+	// The Pending Transaction is still awaiting confirmation.
+	PendingTransactionListParamsStatusInPending PendingTransactionListParamsStatusIn = "pending"
+	// The Pending Transaction is confirmed. An associated Transaction exists for this
+	// object. The Pending Transaction will no longer count against your balance and
+	// can generally be hidden from UIs, etc.
 	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )

@@ -128,11 +128,17 @@ func (r *InterestPaymentSimulationResultTransaction) UnmarshalJSON(data []byte) 
 type InterestPaymentSimulationResultTransactionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionCurrencyCad InterestPaymentSimulationResultTransactionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionCurrencyChf InterestPaymentSimulationResultTransactionCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionCurrencyEur InterestPaymentSimulationResultTransactionCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionCurrencyGbp InterestPaymentSimulationResultTransactionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionCurrencyJpy InterestPaymentSimulationResultTransactionCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionCurrencyUsd InterestPaymentSimulationResultTransactionCurrency = "USD"
 )
 
@@ -140,8 +146,10 @@ const (
 type InterestPaymentSimulationResultTransactionRouteType string
 
 const (
+	// An Account Number.
 	InterestPaymentSimulationResultTransactionRouteTypeAccountNumber InterestPaymentSimulationResultTransactionRouteType = "account_number"
-	InterestPaymentSimulationResultTransactionRouteTypeCard          InterestPaymentSimulationResultTransactionRouteType = "card"
+	// A Card.
+	InterestPaymentSimulationResultTransactionRouteTypeCard InterestPaymentSimulationResultTransactionRouteType = "card"
 )
 
 // This is an object giving more details on the network-level event that caused the
@@ -336,11 +344,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceAccountTransferIntentio
 type InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyCad InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyChf InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyEur InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyGbp InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyJpy InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrencyUsd InterestPaymentSimulationResultTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
@@ -434,76 +448,187 @@ func (r *InterestPaymentSimulationResultTransactionSourceACHTransferReturn) Unma
 type InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R01. Insufficient funds in the source account.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	// Code R03. The account does not exist or the receiving bank was unable to locate
+	// it.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoAccount InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	// Code R02. The account is closed.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	// Code R04. The account number is invalid at the receiving bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	// Code R23. The receiving bank account refused a credit transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
+	// Class code.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	// Code R29. The corporate customer reversed the transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	// Code R08. The receiving bank stopped payment on this transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	// Code R20. The receiving bank account does not perform transfers.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	// Code R09. The receiving bank account does not have enough available balance for
+	// the transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	// Code R28. The routing number is incorrect.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	// Code R10. The customer reversed the transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// Code R19. The amount field is incorrect or too large.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	// Code R07. The customer who initiated the transfer revoked authorization.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	// Code R13. The routing number is invalid.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	// Code R17. The receiving bank is unable to process a field in the transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	// Code R45. The individual name field was invalid.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	// Code R06. The originating financial institution reversed the transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	// Code R34. The receiving bank's regulatory supervisor has limited their
+	// participation.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	// Code R85. The outbound international ACH transfer was incorrect.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	// Code R12. A rare return reason. The account was sold to another bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	// Code R25. The addenda record is incorrect or missing.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeAddendaError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	// Code R15. A rare return reason. The account holder is deceased.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	// Code R11. A rare return reason. The customer authorized some payment to the
+	// sender, but this payment was not in error.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
+	// Code R74. A rare return reason. Sent in response to a return that was returned
+	// with code `field_error`. The latest return should include the corrected
+	// field(s).
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	// Code R24. A rare return reason. The receiving bank received an exact duplicate
+	// entry with the same trace number and amount.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	// Code R67. A rare return reason. The return this message refers to was a
+	// duplicate.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	// Code R47. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	// Code R43. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	// Code R44. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	// Code R46. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	// Code R41. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	// Code R40. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	// Code R42. A rare return reason. Only used for US Government agency non-monetary
+	// automatic enrollment messages.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	// Code R84. A rare return reason. The International ACH Transfer cannot be
+	// processed by the gateway.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	// Code R69. A rare return reason. One or more of the fields in the ACH were
+	// malformed.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeFieldError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	// Code R83. A rare return reason. The Foreign receiving bank was unable to settle
+	// this ACH transfer.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	// Code R80. A rare return reason. The International ACH Transfer is malformed.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	// Code R18. A rare return reason. The ACH has an improper effective entry date
+	// field.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	// Code R39. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	// Code R21. A rare return reason. The Company ID field of the ACH was invalid.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	// Code R82. A rare return reason. The foreign receiving bank identifier for an
+	// International ACH Transfer was invalid.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	// Code R22. A rare return reason. The Individual ID number field of the ACH was
+	// invalid.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	// Code R53. A rare return reason. Both the Represented Check ("RCK") entry and the
+	// original check were presented to the bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	// Code R51. A rare return reason. The Represented Check ("RCK") entry is
+	// ineligible.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	// Code R26. A rare return reason. The ACH is missing a required field.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	// Code R71. A rare return reason. The receiving bank does not recognize the
+	// routing number in a dishonored return entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	// Code R61. A rare return reason. The receiving bank does not recognize the
+	// routing number in a return entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	// Code R76. A rare return reason. Sent in response to a return, the bank does not
+	// find the errors alleged by the returning bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	// Code R77. A rare return reason. The receiving bank does not accept the return of
+	// the erroneous debit. The funds are not available at the receiving bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	// Code R81. A rare return reason. The receiving bank does not accept International
+	// ACH Transfers.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	// Code R31. A rare return reason. A return that has been agreed to be accepted by
+	// the receiving bank, despite falling outside of the usual return timeframe.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	// Code R70. A rare return reason. The receiving bank had not approved this return.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	// Code R32. A rare return reason. The receiving bank could not settle this
+	// transaction.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	// Code R30. A rare return reason. The receiving bank does not accept Check
+	// Truncation ACH transfers.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
+	// Code R14. A rare return reason. The payee is deceased.
 	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
-	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
+	// Code R75. A rare return reason. The originating bank disputes that an earlier
+	// `duplicate_entry` return was actually a duplicate.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	// Code R62. A rare return reason. The originating bank made a mistake earlier and
+	// this return corrects it.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	// Code R36. A rare return reason. Return of a malformed credit entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	// Code R35. A rare return reason. Return of a malformed debit entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	// Code R33. A rare return reason. Return of a Destroyed Check ("XKC") entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	// Code R37. A rare return reason. The source document related to this ACH, usually
+	// an ACH check conversion, was presented to the bank.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	// Code R50. A rare return reason. State law prevents the bank from accepting the
+	// Represented Check ("RCK") entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	// Code R52. A rare return reason. A stop payment was issued on a Represented Check
+	// ("RCK") entry.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	// Code R38. A rare return reason. The source attached to the ACH, usually an ACH
+	// check conversion, includes a stop payment.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
+	// it was on time.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// originated ACH.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	// Code R72. A rare return reason. The dishonored return was sent too late.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	// Code R68. A rare return reason. The return was sent too late.
+	InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
@@ -592,11 +717,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRefund) UnmarshalJS
 type InterestPaymentSimulationResultTransactionSourceCardRefundCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyCad InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyChf InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyEur InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyGbp InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "USD"
 )
 
@@ -648,11 +779,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardRevenuePayment) Unm
 type InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyCad InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyChf InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyEur InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyGbp InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
@@ -727,11 +864,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceCardSettlement) Unmarsh
 type InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyCad InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyChf InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyEur InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyGbp InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "USD"
 )
 
@@ -749,38 +892,103 @@ const (
 type InterestPaymentSimulationResultTransactionSourceCategory string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceCategoryAccountTransferIntention                    InterestPaymentSimulationResultTransactionSourceCategory = "account_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferIntention                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferRejection                        InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferReturn                           InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance                       InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund                                  InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment                          InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement                              InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance                      InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositReturn                          InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferDeposit                        InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_deposit"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection                      InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn                         InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest             InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
-	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment                                  InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransfer                          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention           InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundCheck                                InterestPaymentSimulationResultTransactionSourceCategory = "inbound_check"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer             InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Account Transfer Intention object. Details will
+	// be under the `account_transfer_intention` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryAccountTransferIntention InterestPaymentSimulationResultTransactionSourceCategory = "account_transfer_intention"
+	// The Transaction was created by a ACH Transfer Intention object. Details will be
+	// under the `ach_transfer_intention` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferIntention InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_intention"
+	// The Transaction was created by a ACH Transfer Rejection object. Details will be
+	// under the `ach_transfer_rejection` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferRejection InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
+	// The Transaction was created by a ACH Transfer Return object. Details will be
+	// under the `ach_transfer_return` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryACHTransferReturn InterestPaymentSimulationResultTransactionSourceCategory = "ach_transfer_return"
+	// The Transaction was created by a Card Dispute Acceptance object. Details will be
+	// under the `card_dispute_acceptance` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
+	// The Transaction was created by a Card Refund object. Details will be under the
+	// `card_refund` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
+	// The Transaction was created by a Card Revenue Payment object. Details will be
+	// under the `card_revenue_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
+	// The Transaction was created by a Card Settlement object. Details will be under
+	// the `card_settlement` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
+	// The Transaction was created by a Check Deposit Acceptance object. Details will
+	// be under the `check_deposit_acceptance` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
+	// The Transaction was created by a Check Deposit Return object. Details will be
+	// under the `check_deposit_return` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositReturn InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_return"
+	// The Transaction was created by a Check Transfer Deposit object. Details will be
+	// under the `check_transfer_deposit` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferDeposit InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_deposit"
+	// The Transaction was created by a Check Transfer Intention object. Details will
+	// be under the `check_transfer_intention` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
+	// The Transaction was created by a Check Transfer Rejection object. Details will
+	// be under the `check_transfer_rejection` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
+	// The Transaction was created by a Check Transfer Return object. Details will be
+	// under the `check_transfer_return` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
+	// The Transaction was created by a Check Transfer Stop Payment Request object.
+	// Details will be under the `check_transfer_stop_payment_request` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
+	// The Transaction was created by a Fee Payment object. Details will be under the
+	// `fee_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryFeePayment InterestPaymentSimulationResultTransactionSourceCategory = "fee_payment"
+	// The Transaction was created by a Inbound ACH Transfer object. Details will be
+	// under the `inbound_ach_transfer` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransfer InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer"
+	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
+	// Details will be under the `inbound_ach_transfer_return_intention` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention InterestPaymentSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	// The Transaction was created by a Inbound Check object. Details will be under the
+	// `inbound_check` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundCheck InterestPaymentSimulationResultTransactionSourceCategory = "inbound_check"
+	// The Transaction was created by a Inbound International ACH Transfer object.
+	// Details will be under the `inbound_international_ach_transfer` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
+	// The Transaction was created by a Inbound Real Time Payments Transfer
+	// Confirmation object. Details will be under the
+	// `inbound_real_time_payments_transfer_confirmation` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment                  InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal          InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireTransfer                         InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
-	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment                             InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
-	InterestPaymentSimulationResultTransactionSourceCategoryInternalSource                              InterestPaymentSimulationResultTransactionSourceCategory = "internal_source"
-	InterestPaymentSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     InterestPaymentSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	InterestPaymentSimulationResultTransactionSourceCategorySampleFunds                                 InterestPaymentSimulationResultTransactionSourceCategory = "sample_funds"
-	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferIntention                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_intention"
-	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferRejection                       InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_rejection"
-	InterestPaymentSimulationResultTransactionSourceCategoryOther                                       InterestPaymentSimulationResultTransactionSourceCategory = "other"
+	// The Transaction was created by a Inbound Wire Drawdown Payment object. Details
+	// will be under the `inbound_wire_drawdown_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
+	// The Transaction was created by a Inbound Wire Drawdown Payment Reversal object.
+	// Details will be under the `inbound_wire_drawdown_payment_reversal` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// The Transaction was created by a Inbound Wire Reversal object. Details will be
+	// under the `inbound_wire_reversal` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
+	// The Transaction was created by a Inbound Wire Transfer object. Details will be
+	// under the `inbound_wire_transfer` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireTransfer InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
+	// The Transaction was created by a Interest Payment object. Details will be under
+	// the `interest_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
+	// The Transaction was created by a Internal Source object. Details will be under
+	// the `internal_source` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInternalSource InterestPaymentSimulationResultTransactionSourceCategory = "internal_source"
+	// The Transaction was created by a Real Time Payments Transfer Acknowledgement
+	// object. Details will be under the `real_time_payments_transfer_acknowledgement`
+	// object.
+	InterestPaymentSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement InterestPaymentSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	// The Transaction was created by a Sample Funds object. Details will be under the
+	// `sample_funds` object.
+	InterestPaymentSimulationResultTransactionSourceCategorySampleFunds InterestPaymentSimulationResultTransactionSourceCategory = "sample_funds"
+	// The Transaction was created by a Wire Transfer Intention object. Details will be
+	// under the `wire_transfer_intention` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferIntention InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_intention"
+	// The Transaction was created by a Wire Transfer Rejection object. Details will be
+	// under the `wire_transfer_rejection` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryWireTransferRejection InterestPaymentSimulationResultTransactionSourceCategory = "wire_transfer_rejection"
+	// The Transaction was made for an undocumented or deprecated reason.
+	InterestPaymentSimulationResultTransactionSourceCategoryOther InterestPaymentSimulationResultTransactionSourceCategory = "other"
 )
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
@@ -831,11 +1039,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptance)
 type InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyCad InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyChf InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyEur InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyGbp InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyJpy InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrencyUsd InterestPaymentSimulationResultTransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
@@ -883,29 +1097,47 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckDepositReturn) Unm
 type InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyCad InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyChf InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyEur InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyGbp InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyJpy InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrencyUsd InterestPaymentSimulationResultTransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
 type InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason string
 
 const (
+	// The check doesn't allow ACH conversion.
 	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonClosedAccount             InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "closed_account"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonNoAccount                 InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "no_account"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonNotAuthorized             InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "not_authorized"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonStaleDated                InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "stale_dated"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonStopPayment               InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "stop_payment"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnknownReason             InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnreadableImage           InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
-	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The account is closed.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonClosedAccount InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "closed_account"
+	// The check has already been deposited.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
+	// Insufficient funds
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonInsufficientFunds InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
+	// No account was found matching the check details.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonNoAccount InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "no_account"
+	// The check was not authorized.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonNotAuthorized InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "not_authorized"
+	// The check is too old.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonStaleDated InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "stale_dated"
+	// The payment has been stopped by the account holder.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonStopPayment InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "stop_payment"
+	// The reason for the return is unknown.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnknownReason InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
+	// The image doesn't match the details submitted.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
+	// The image could not be read.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonUnreadableImage InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	// The check endorsement was irregular.
+	InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular InterestPaymentSimulationResultTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response
@@ -1000,11 +1232,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferIntention)
 type InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyCad InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyChf InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyEur InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyGbp InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyJpy InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyUsd InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
@@ -1068,8 +1306,12 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferReturn) Un
 type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonMailDeliveryFailure   InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient    InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// Mail delivery failed and the check was returned to sender.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonMailDeliveryFailure InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
+	// The check arrived and the recipient refused to deposit it.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
+	// The check was fraudulently deposited and the transfer was returned to the Bank
+	// of First Deposit.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
 )
 
@@ -1144,11 +1386,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceFeePayment) UnmarshalJS
 type InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyCad InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyChf InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyEur InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyGbp InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyJpy InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceFeePaymentCurrencyUsd InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency = "USD"
 )
 
@@ -1227,11 +1475,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundCheck) Unmarshal
 type InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyCad InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyChf InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyEur InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyGbp InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyJpy InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceInboundCheckCurrencyUsd InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency = "USD"
 )
 
@@ -1378,11 +1632,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundRealTimePayments
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
@@ -1640,11 +1900,17 @@ func (r *InterestPaymentSimulationResultTransactionSourceInterestPayment) Unmars
 type InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyCad InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyChf InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyEur InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyGbp InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyJpy InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrencyUsd InterestPaymentSimulationResultTransactionSourceInterestPaymentCurrency = "USD"
 )
 
@@ -1681,29 +1947,47 @@ func (r *InterestPaymentSimulationResultTransactionSourceInternalSource) Unmarsh
 type InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency string
 
 const (
+	// Canadian Dollar (CAD)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyCad InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "CAD"
+	// Swiss Franc (CHF)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyChf InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "CHF"
+	// Euro (EUR)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyEur InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "EUR"
+	// British Pound (GBP)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyGbp InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "GBP"
+	// Japanese Yen (JPY)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyJpy InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "JPY"
+	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceInternalSourceCurrencyUsd InterestPaymentSimulationResultTransactionSourceInternalSourceCurrency = "USD"
 )
 
 type InterestPaymentSimulationResultTransactionSourceInternalSourceReason string
 
 const (
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonAccountClosure             InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "account_closure"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration              InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback                   InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable       InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment         InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonError                      InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonErrorCorrection            InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error_correction"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonFees                       InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "fees"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonInterest                   InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "interest"
+	// Account closure
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonAccountClosure InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "account_closure"
+	// Bank migration
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
+	// Cashback
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
+	// Collection receivable
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
+	// Empyreal adjustment
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonEmpyrealAdjustment InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "empyreal_adjustment"
+	// Error
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonError InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error"
+	// Error correction
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonErrorCorrection InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "error_correction"
+	// Fees
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonFees InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "fees"
+	// Interest
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonInterest InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "interest"
+	// Negative balance forgiveness
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonNegativeBalanceForgiveness InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "negative_balance_forgiveness"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFunds                InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
-	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn          InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
+	// Sample funds
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFunds InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds"
+	// Sample funds return
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 // A Real Time Payments Transfer Acknowledgement object. This field will be present
