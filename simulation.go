@@ -16,6 +16,7 @@ type SimulationService struct {
 	AccountStatements           *SimulationAccountStatementService
 	ACHTransfers                *SimulationACHTransferService
 	CardDisputes                *SimulationCardDisputeService
+	CardProfiles                *SimulationCardProfileService
 	CardRefunds                 *SimulationCardRefundService
 	CheckTransfers              *SimulationCheckTransferService
 	Documents                   *SimulationDocumentService
@@ -39,6 +40,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.AccountStatements = NewSimulationAccountStatementService(opts...)
 	r.ACHTransfers = NewSimulationACHTransferService(opts...)
 	r.CardDisputes = NewSimulationCardDisputeService(opts...)
+	r.CardProfiles = NewSimulationCardProfileService(opts...)
 	r.CardRefunds = NewSimulationCardRefundService(opts...)
 	r.CheckTransfers = NewSimulationCheckTransferService(opts...)
 	r.Documents = NewSimulationDocumentService(opts...)

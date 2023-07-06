@@ -81,9 +81,9 @@ type InterestPaymentSimulationResultTransaction struct {
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
 	Currency InterestPaymentSimulationResultTransactionCurrency `json:"currency,required"`
-	// For a Transaction related to a transfer, this is the description you provide.
-	// For a Transaction related to a payment, this is the description the vendor
-	// provides.
+	// An informational message describing this transaction. Use the fields in `source`
+	// to get more detailed information. This field appears as the line-item on the
+	// statement.
 	Description string `json:"description,required"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
@@ -200,9 +200,6 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
 	CheckTransferRejection InterestPaymentSimulationResultTransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
-	// A Check Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn InterestPaymentSimulationResultTransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -276,7 +273,6 @@ type interestPaymentSimulationResultTransactionSourceJSON struct {
 	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
 	CheckTransferRejection                      apijson.Field
-	CheckTransferReturn                         apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
@@ -684,6 +680,8 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// The identifier of the Transaction associated with this Transaction.
+	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type InterestPaymentSimulationResultTransactionSourceCardRefundType `json:"type,required"`
@@ -703,6 +701,7 @@ type interestPaymentSimulationResultTransactionSourceCardRefundJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -827,6 +826,8 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The identifier of the Transaction associated with this Transaction.
+	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type InterestPaymentSimulationResultTransactionSourceCardSettlementType `json:"type,required"`
@@ -850,6 +851,7 @@ type interestPaymentSimulationResultTransactionSourceCardSettlementJSON struct {
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -931,9 +933,6 @@ const (
 	// The Transaction was created by a Check Transfer Rejection object. Details will
 	// be under the `check_transfer_rejection` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
-	// The Transaction was created by a Check Transfer Return object. Details will be
-	// under the `check_transfer_return` object.
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferReturn InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_return"
 	// The Transaction was created by a Check Transfer Stop Payment Request object.
 	// Details will be under the `check_transfer_stop_payment_request` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
@@ -1151,6 +1150,8 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Transaction object created when the check was deposited.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type InterestPaymentSimulationResultTransactionSourceCheckTransferDepositType `json:"type,required"`
@@ -1164,6 +1165,7 @@ type interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON st
 	BackImageFileID  apijson.Field
 	DepositedAt      apijson.Field
 	FrontImageFileID apijson.Field
+	TransactionID    apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -1267,62 +1269,14 @@ func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection)
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Check Transfer Return object. This field will be present in the JSON response
-// if and only if `category` is equal to `check_transfer_return`.
-type InterestPaymentSimulationResultTransactionSourceCheckTransferReturn struct {
-	// If available, a document with additional information about the return.
-	FileID string `json:"file_id,required,nullable"`
-	// The reason why the check was returned.
-	Reason InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason `json:"reason,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
-	// The identifier of the Transaction that was created to credit you for the
-	// returned check.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	// The identifier of the returned Check Transfer.
-	TransferID string `json:"transfer_id,required"`
-	JSON       interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON
-}
-
-// interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON contains
-// the JSON metadata for the struct
-// [InterestPaymentSimulationResultTransactionSourceCheckTransferReturn]
-type interestPaymentSimulationResultTransactionSourceCheckTransferReturnJSON struct {
-	FileID        apijson.Field
-	Reason        apijson.Field
-	ReturnedAt    apijson.Field
-	TransactionID apijson.Field
-	TransferID    apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The reason why the check was returned.
-type InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason string
-
-const (
-	// Mail delivery failed and the check was returned to sender.
-	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonMailDeliveryFailure InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	// The check arrived and the recipient refused to deposit it.
-	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonRefusedByRecipient InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "refused_by_recipient"
-	// The check was fraudulently deposited and the transfer was returned to the Bank
-	// of First Deposit.
-	InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReasonReturnedNotAuthorized InterestPaymentSimulationResultTransactionSourceCheckTransferReturnReason = "returned_not_authorized"
-)
-
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
 type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest struct {
+	// The reason why this transfer was stopped.
+	Reason InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason `json:"reason,required"`
 	// The time the stop-payment was requested.
 	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
-	// The transaction ID of the corresponding credit transaction.
-	TransactionID string `json:"transaction_id,required"`
 	// The ID of the check transfer that was stopped.
 	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1335,17 +1289,27 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentReq
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest]
 type interestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON struct {
-	RequestedAt   apijson.Field
-	TransactionID apijson.Field
-	TransferID    apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	Reason      apijson.Field
+	RequestedAt apijson.Field
+	TransferID  apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The reason why this transfer was stopped.
+type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason string
+
+const (
+	// The check could not be delivered.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	// The check was stopped for another reason.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonUnknown InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
+)
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
