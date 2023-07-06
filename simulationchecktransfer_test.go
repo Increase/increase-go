@@ -48,27 +48,3 @@ func TestSimulationCheckTransferMail(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
-
-func TestSimulationCheckTransferReturn(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
-		option.WithBaseURL("http://127.0.0.1:4010"),
-	)
-	_, err := client.Simulations.CheckTransfers.Return(
-		context.TODO(),
-		"check_transfer_30b43acfu9vw8fyc4f5",
-		increase.SimulationCheckTransferReturnParams{
-			Reason: increase.F(increase.SimulationCheckTransferReturnParamsReasonMailDeliveryFailure),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
