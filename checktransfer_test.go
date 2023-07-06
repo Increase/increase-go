@@ -41,6 +41,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			State: increase.F("x"),
 			Zip:   increase.F("x"),
 		}),
+		SourceAccountNumberID: increase.F("string"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -133,7 +134,7 @@ func TestCheckTransferCancel(t *testing.T) {
 	}
 }
 
-func TestCheckTransferStopPayment(t *testing.T) {
+func TestCheckTransferStopPaymentWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
@@ -142,7 +143,13 @@ func TestCheckTransferStopPayment(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
 	)
-	_, err := client.CheckTransfers.StopPayment(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	_, err := client.CheckTransfers.StopPayment(
+		context.TODO(),
+		"check_transfer_30b43acfu9vw8fyc4f5",
+		increase.CheckTransferStopPaymentParams{
+			Reason: increase.F(increase.CheckTransferStopPaymentParamsReasonMailDeliveryFailed),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

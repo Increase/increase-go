@@ -83,9 +83,9 @@ type Transaction struct {
 	// Transaction's currency. This will match the currency on the Transcation's
 	// Account.
 	Currency TransactionCurrency `json:"currency,required"`
-	// For a Transaction related to a transfer, this is the description you provide.
-	// For a Transaction related to a payment, this is the description the vendor
-	// provides.
+	// An informational message describing this transaction. Use the fields in `source`
+	// to get more detailed information. This field appears as the line-item on the
+	// statement.
 	Description string `json:"description,required"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
@@ -201,9 +201,6 @@ type TransactionSource struct {
 	// A Check Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_rejection`.
 	CheckTransferRejection TransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
-	// A Check Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_return`.
-	CheckTransferReturn TransactionSourceCheckTransferReturn `json:"check_transfer_return,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -277,7 +274,6 @@ type transactionSourceJSON struct {
 	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
 	CheckTransferRejection                      apijson.Field
-	CheckTransferReturn                         apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
@@ -680,6 +676,8 @@ type TransactionSourceCardRefund struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// The identifier of the Transaction associated with this Transaction.
+	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type TransactionSourceCardRefundType `json:"type,required"`
@@ -698,6 +696,7 @@ type transactionSourceCardRefundJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -821,6 +820,8 @@ type TransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The identifier of the Transaction associated with this Transaction.
+	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type TransactionSourceCardSettlementType `json:"type,required"`
@@ -843,6 +844,7 @@ type transactionSourceCardSettlementJSON struct {
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -924,9 +926,6 @@ const (
 	// The Transaction was created by a Check Transfer Rejection object. Details will
 	// be under the `check_transfer_rejection` object.
 	TransactionSourceCategoryCheckTransferRejection TransactionSourceCategory = "check_transfer_rejection"
-	// The Transaction was created by a Check Transfer Return object. Details will be
-	// under the `check_transfer_return` object.
-	TransactionSourceCategoryCheckTransferReturn TransactionSourceCategory = "check_transfer_return"
 	// The Transaction was created by a Check Transfer Stop Payment Request object.
 	// Details will be under the `check_transfer_stop_payment_request` object.
 	TransactionSourceCategoryCheckTransferStopPaymentRequest TransactionSourceCategory = "check_transfer_stop_payment_request"
@@ -1142,6 +1141,8 @@ type TransactionSourceCheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Transaction object created when the check was deposited.
+	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type TransactionSourceCheckTransferDepositType `json:"type,required"`
@@ -1154,6 +1155,7 @@ type transactionSourceCheckTransferDepositJSON struct {
 	BackImageFileID  apijson.Field
 	DepositedAt      apijson.Field
 	FrontImageFileID apijson.Field
+	TransactionID    apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -1255,61 +1257,14 @@ func (r *TransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Check Transfer Return object. This field will be present in the JSON response
-// if and only if `category` is equal to `check_transfer_return`.
-type TransactionSourceCheckTransferReturn struct {
-	// If available, a document with additional information about the return.
-	FileID string `json:"file_id,required,nullable"`
-	// The reason why the check was returned.
-	Reason TransactionSourceCheckTransferReturnReason `json:"reason,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
-	// The identifier of the Transaction that was created to credit you for the
-	// returned check.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	// The identifier of the returned Check Transfer.
-	TransferID string `json:"transfer_id,required"`
-	JSON       transactionSourceCheckTransferReturnJSON
-}
-
-// transactionSourceCheckTransferReturnJSON contains the JSON metadata for the
-// struct [TransactionSourceCheckTransferReturn]
-type transactionSourceCheckTransferReturnJSON struct {
-	FileID        apijson.Field
-	Reason        apijson.Field
-	ReturnedAt    apijson.Field
-	TransactionID apijson.Field
-	TransferID    apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *TransactionSourceCheckTransferReturn) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The reason why the check was returned.
-type TransactionSourceCheckTransferReturnReason string
-
-const (
-	// Mail delivery failed and the check was returned to sender.
-	TransactionSourceCheckTransferReturnReasonMailDeliveryFailure TransactionSourceCheckTransferReturnReason = "mail_delivery_failure"
-	// The check arrived and the recipient refused to deposit it.
-	TransactionSourceCheckTransferReturnReasonRefusedByRecipient TransactionSourceCheckTransferReturnReason = "refused_by_recipient"
-	// The check was fraudulently deposited and the transfer was returned to the Bank
-	// of First Deposit.
-	TransactionSourceCheckTransferReturnReasonReturnedNotAuthorized TransactionSourceCheckTransferReturnReason = "returned_not_authorized"
-)
-
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
 type TransactionSourceCheckTransferStopPaymentRequest struct {
+	// The reason why this transfer was stopped.
+	Reason TransactionSourceCheckTransferStopPaymentRequestReason `json:"reason,required"`
 	// The time the stop-payment was requested.
 	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
-	// The transaction ID of the corresponding credit transaction.
-	TransactionID string `json:"transaction_id,required"`
 	// The ID of the check transfer that was stopped.
 	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1321,17 +1276,27 @@ type TransactionSourceCheckTransferStopPaymentRequest struct {
 // transactionSourceCheckTransferStopPaymentRequestJSON contains the JSON metadata
 // for the struct [TransactionSourceCheckTransferStopPaymentRequest]
 type transactionSourceCheckTransferStopPaymentRequestJSON struct {
-	RequestedAt   apijson.Field
-	TransactionID apijson.Field
-	TransferID    apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	Reason      apijson.Field
+	RequestedAt apijson.Field
+	TransferID  apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *TransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The reason why this transfer was stopped.
+type TransactionSourceCheckTransferStopPaymentRequestReason string
+
+const (
+	// The check could not be delivered.
+	TransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed TransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	// The check was stopped for another reason.
+	TransactionSourceCheckTransferStopPaymentRequestReasonUnknown TransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
+)
 
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
@@ -2158,9 +2123,6 @@ const (
 	// The Transaction was created by a Check Transfer Rejection object. Details will
 	// be under the `check_transfer_rejection` object.
 	TransactionListParamsCategoryInCheckTransferRejection TransactionListParamsCategoryIn = "check_transfer_rejection"
-	// The Transaction was created by a Check Transfer Return object. Details will be
-	// under the `check_transfer_return` object.
-	TransactionListParamsCategoryInCheckTransferReturn TransactionListParamsCategoryIn = "check_transfer_return"
 	// The Transaction was created by a Check Transfer Stop Payment Request object.
 	// Details will be under the `check_transfer_stop_payment_request` object.
 	TransactionListParamsCategoryInCheckTransferStopPaymentRequest TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"

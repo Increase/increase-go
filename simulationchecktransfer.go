@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -49,34 +47,3 @@ func (r *SimulationCheckTransferService) Mail(ctx context.Context, checkTransfer
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
-
-// Simulates a [Check Transfer](#check-transfers) being returned via USPS to
-// Increase. This transfer must first have a `status` of `mailed`.
-func (r *SimulationCheckTransferService) Return(ctx context.Context, checkTransferID string, body SimulationCheckTransferReturnParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/check_transfers/%s/return", checkTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
-type SimulationCheckTransferReturnParams struct {
-	// The reason why the Check Transfer was returned to Increase.
-	Reason param.Field[SimulationCheckTransferReturnParamsReason] `json:"reason,required"`
-}
-
-func (r SimulationCheckTransferReturnParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The reason why the Check Transfer was returned to Increase.
-type SimulationCheckTransferReturnParamsReason string
-
-const (
-	// Mail delivery failed and the check was returned to sender.
-	SimulationCheckTransferReturnParamsReasonMailDeliveryFailure SimulationCheckTransferReturnParamsReason = "mail_delivery_failure"
-	// The check arrived and the recipient refused to deposit it.
-	SimulationCheckTransferReturnParamsReasonRefusedByRecipient SimulationCheckTransferReturnParamsReason = "refused_by_recipient"
-	// The check was fraudulently deposited and the transfer was returned to the Bank
-	// of First Deposit.
-	SimulationCheckTransferReturnParamsReasonReturnedNotAuthorized SimulationCheckTransferReturnParamsReason = "returned_not_authorized"
-)

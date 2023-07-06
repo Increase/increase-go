@@ -213,7 +213,7 @@ const (
 	CardStatusActive CardStatus = "active"
 	// The card is temporarily disabled.
 	CardStatusDisabled CardStatus = "disabled"
-	// The card is temporarily canceled.
+	// The card is permanently canceled.
 	CardStatusCanceled CardStatus = "canceled"
 )
 
@@ -389,7 +389,7 @@ const (
 	CardUpdateParamsStatusActive CardUpdateParamsStatus = "active"
 	// The card is temporarily disabled.
 	CardUpdateParamsStatusDisabled CardUpdateParamsStatus = "disabled"
-	// The card is temporarily canceled.
+	// The card is permanently canceled.
 	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
 )
 
