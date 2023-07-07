@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.0](https://github.com/Increase/increase-go/compare/v0.3.0...v0.4.0) (2023-07-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** add card profiles simulation method ([#39](https://github.com/Increase/increase-go/issues/39))
+
+### Features
+
+* **api:** add card profiles simulation method ([#39](https://github.com/Increase/increase-go/issues/39)) ([0774f0a](https://github.com/Increase/increase-go/commit/0774f0aaae88b27c2d1abb6aa641c4b507651896))
+
+
+### Documentation
+
+* **types:** add documentation for enum members ([#37](https://github.com/Increase/increase-go/issues/37)) ([7d35ce9](https://github.com/Increase/increase-go/commit/7d35ce9f05e881d8ad701447c54d6d565ff3abfc))
+
 ## [0.3.0](https://github.com/Increase/increase-go/compare/v0.2.0...v0.3.0) (2023-06-29)
 
 
