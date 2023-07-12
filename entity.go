@@ -1124,10 +1124,12 @@ const (
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The identifier of the File containing the driver's license.
+	// The identifier of the File containing the front of the driver's license.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
 }
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -1142,8 +1144,11 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther str
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier of the File containing the document.
+	// The identifier of the File containing the front of the document.
 	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
 	// The document's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 }
@@ -1272,10 +1277,12 @@ const (
 type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The identifier of the File containing the driver's license.
+	// The identifier of the File containing the front of the driver's license.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
 }
 
 func (r EntityNewParamsJointIndividualsIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -1290,8 +1297,11 @@ type EntityNewParamsJointIndividualsIdentificationOther struct {
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier of the File containing the document.
+	// The identifier of the File containing the front of the document.
 	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
 	// The document's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 }
@@ -1401,10 +1411,12 @@ const (
 type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The identifier of the File containing the driver's license.
+	// The identifier of the File containing the front of the driver's license.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
 }
 
 func (r EntityNewParamsNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -1419,8 +1431,11 @@ type EntityNewParamsNaturalPersonIdentificationOther struct {
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier of the File containing the document.
+	// The identifier of the File containing the front of the document.
 	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
 	// The document's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 }
@@ -1617,10 +1632,12 @@ const (
 type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The identifier of the File containing the driver's license.
+	// The identifier of the File containing the front of the driver's license.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
 }
 
 func (r EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -1635,8 +1652,11 @@ type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier of the File containing the document.
+	// The identifier of the File containing the front of the document.
 	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
 	// The document's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 }
@@ -1743,10 +1763,12 @@ const (
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
-	// The identifier of the File containing the driver's license.
+	// The identifier of the File containing the front of the driver's license.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The state that issued the provided driver's license.
 	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
 }
 
 func (r EntityNewParamsTrustGrantorIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
@@ -1761,8 +1783,11 @@ type EntityNewParamsTrustGrantorIdentificationOther struct {
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier of the File containing the document.
+	// The identifier of the File containing the front of the document.
 	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
 	// The document's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
 }

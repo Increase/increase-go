@@ -163,7 +163,9 @@ type CheckTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
-	JSON checkTransferJSON
+	// The unique identifier you chose for this transfer.
+	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
+	JSON             checkTransferJSON
 }
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
@@ -195,6 +197,7 @@ type checkTransferJSON struct {
 	StopPaymentRequest    apijson.Field
 	Submission            apijson.Field
 	Type                  apijson.Field
+	UniqueIdentifier      apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -478,6 +481,10 @@ type CheckTransferNewParams struct {
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
+	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// another transfer will result in an error. You can query for the transfer
+	// associated with this identifier using the List endpoint.
+	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -514,6 +521,8 @@ type CheckTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter Check Transfers to the one with the specified unique identifier.
+	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [CheckTransferListParams]'s query parameters as

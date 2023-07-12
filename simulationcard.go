@@ -1439,7 +1439,10 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
 	// The status of the hold.
 	Status CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
-	JSON   cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_funds_hold`.
+	Type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldType `json:"type,required"`
+	JSON cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON contains
@@ -1454,6 +1457,7 @@ type cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON str
 	PendingTransactionID    apijson.Field
 	ReleasedAt              apijson.Field
 	Status                  apijson.Field
+	Type                    apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -1489,6 +1493,14 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusHeld CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "held"
 	// Funds have been released.
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatusComplete CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldStatus = "complete"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_funds_hold`.
+type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldType string
+
+const (
+	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldTypeInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldType = "inbound_funds_hold"
 )
 
 // A Real Time Payments Transfer Instruction object. This field will be present in

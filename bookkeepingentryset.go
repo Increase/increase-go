@@ -106,8 +106,8 @@ const (
 type BookkeepingEntrySetNewParams struct {
 	// The bookkeeping entries.
 	Entries param.Field[[]BookkeepingEntrySetNewParamsEntry] `json:"entries,required"`
-	// The date of the transaction. If `transaction_id` is provided, this must match
-	// the `created_at` field on that resource.
+	// The date of the transaction. Optional if `transaction_id` is provided, in which
+	// case we use the `date` of that transaction. Required otherwise.
 	Date param.Field[time.Time] `json:"date" format:"date-time"`
 	// The identifier of the Transaction related to this entry set, if any.
 	TransactionID param.Field[string] `json:"transaction_id"`

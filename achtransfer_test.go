@@ -39,6 +39,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		RequireApproval:          increase.F(true),
 		RoutingNumber:            increase.F("xxxxxxxxx"),
 		StandardEntryClassCode:   increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
+		UniqueIdentifier:         increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -86,6 +87,7 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
 		Limit:             increase.F(int64(0)),
+		UniqueIdentifier:  increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
