@@ -160,7 +160,9 @@ type ACHTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
-	JSON achTransferJSON
+	// The unique identifier you chose for this transfer.
+	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
+	JSON             achTransferJSON
 }
 
 // achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
@@ -193,6 +195,7 @@ type achTransferJSON struct {
 	Submission               apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
+	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -289,7 +292,7 @@ const (
 
 type ACHTransferNotificationsOfChange struct {
 	// The type of change that occurred.
-	ChangeCode string `json:"change_code,required"`
+	ChangeCode ACHTransferNotificationsOfChangeChangeCode `json:"change_code,required"`
 	// The corrected data.
 	CorrectedData string `json:"corrected_data,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -311,6 +314,33 @@ type achTransferNotificationsOfChangeJSON struct {
 func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The type of change that occurred.
+type ACHTransferNotificationsOfChangeChangeCode string
+
+const (
+	// The account number was incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectAccountNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_account_number"
+	// The routing number was incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_routing_number"
+	// Both the routing number and the account number were incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumberAndAccountNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_routing_number_and_account_number"
+	// The transaction code was incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectTransactionCode ACHTransferNotificationsOfChangeChangeCode = "incorrect_transaction_code"
+	// The account number and the transaction code were incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectAccountNumberAndTransactionCode ACHTransferNotificationsOfChangeChangeCode = "incorrect_account_number_and_transaction_code"
+	// The routing number, account number, and transaction code were incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode ACHTransferNotificationsOfChangeChangeCode = "incorrect_routing_number_account_number_and_transaction_code"
+	// The receiving depository financial institution identification was incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification ACHTransferNotificationsOfChangeChangeCode = "incorrect_receiving_depository_financial_institution_identification"
+	// The individual identification number was incorrect.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectIndividualIdentificationNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_individual_identification_number"
+	// The addenda had an incorrect format.
+	ACHTransferNotificationsOfChangeChangeCodeAddendaFormatError ACHTransferNotificationsOfChangeChangeCode = "addenda_format_error"
+	// The standard entry class code was incorrect for an outbound international
+	// payment.
+	ACHTransferNotificationsOfChangeChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment ACHTransferNotificationsOfChangeChangeCode = "incorrect_standard_entry_class_code_for_outbound_international_payment"
+)
 
 // If your transfer is returned, this will contain details of the return.
 type ACHTransferReturn struct {
@@ -647,6 +677,10 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
+	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// another transfer will result in an error. You can query for the transfer
+	// associated with this identifier using the List endpoint.
+	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -686,6 +720,8 @@ type ACHTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter ACH Transfers to the one with the specified unique identifier.
+	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.

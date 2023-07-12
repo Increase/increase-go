@@ -162,7 +162,9 @@ type WireTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
 	Type WireTransferType `json:"type,required"`
-	JSON wireTransferJSON
+	// The unique identifier you chose for this transfer.
+	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
+	JSON             wireTransferJSON
 }
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
@@ -188,6 +190,7 @@ type wireTransferJSON struct {
 	Submission              apijson.Field
 	TransactionID           apijson.Field
 	Type                    apijson.Field
+	UniqueIdentifier        apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -411,6 +414,10 @@ type WireTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
+	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// another transfer will result in an error. You can query for the transfer
+	// associated with this identifier using the List endpoint.
+	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -428,6 +435,8 @@ type WireTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter Wire Transfers to the one with the specified unique identifier.
+	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.

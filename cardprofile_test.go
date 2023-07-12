@@ -36,6 +36,11 @@ func TestCardProfileNewWithOptionalParams(t *testing.T) {
 			BackgroundImageFileID: increase.F("string"),
 			AppIconFileID:         increase.F("string"),
 		}),
+		PhysicalCards: increase.F(increase.CardProfileNewParamsPhysicalCards{
+			ContactPhone:       increase.F("x"),
+			FrontImageFileID:   increase.F("string"),
+			CarrierImageFileID: increase.F("string"),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

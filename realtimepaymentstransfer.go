@@ -121,7 +121,9 @@ type RealTimePaymentsTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_payments_transfer`.
 	Type RealTimePaymentsTransferType `json:"type,required"`
-	JSON realTimePaymentsTransferJSON
+	// The unique identifier you chose for this transfer.
+	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
+	JSON             realTimePaymentsTransferJSON
 }
 
 // realTimePaymentsTransferJSON contains the JSON metadata for the struct
@@ -145,6 +147,7 @@ type realTimePaymentsTransferJSON struct {
 	Submission               apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
+	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -394,6 +397,10 @@ type RealTimePaymentsTransferNewParams struct {
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// another transfer will result in an error. You can query for the transfer
+	// associated with this identifier using the List endpoint.
+	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r RealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -412,6 +419,8 @@ type RealTimePaymentsTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter ACH Transfers to the one with the specified unique identifier.
+	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [RealTimePaymentsTransferListParams]'s query parameters as

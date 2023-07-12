@@ -88,6 +88,8 @@ type CardProfile struct {
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
 	DigitalWallets CardProfileDigitalWallets `json:"digital_wallets,required"`
+	// How physical cards should be designed and shipped.
+	PhysicalCards CardProfilePhysicalCards `json:"physical_cards,required,nullable"`
 	// The status of the Card Profile.
 	Status CardProfileStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -102,6 +104,7 @@ type cardProfileJSON struct {
 	CreatedAt      apijson.Field
 	Description    apijson.Field
 	DigitalWallets apijson.Field
+	PhysicalCards  apijson.Field
 	Status         apijson.Field
 	Type           apijson.Field
 	raw            string
@@ -178,6 +181,34 @@ func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// How physical cards should be designed and shipped.
+type CardProfilePhysicalCards struct {
+	// The identifier of the File containing the physical card's back image.
+	BackImageFileID string `json:"back_image_file_id,required"`
+	// The identifier of the File containing the physical card's carrier image.
+	CarrierImageFileID string `json:"carrier_image_file_id,required"`
+	// A phone number the user can contact to receive support for their card.
+	ContactPhone string `json:"contact_phone,required"`
+	// The identifier of the File containing the physical card's front image.
+	FrontImageFileID string `json:"front_image_file_id,required"`
+	JSON             cardProfilePhysicalCardsJSON
+}
+
+// cardProfilePhysicalCardsJSON contains the JSON metadata for the struct
+// [CardProfilePhysicalCards]
+type cardProfilePhysicalCardsJSON struct {
+	BackImageFileID    apijson.Field
+	CarrierImageFileID apijson.Field
+	ContactPhone       apijson.Field
+	FrontImageFileID   apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardProfilePhysicalCards) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // The status of the Card Profile.
 type CardProfileStatus string
 
@@ -207,6 +238,8 @@ type CardProfileNewParams struct {
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
 	DigitalWallets param.Field[CardProfileNewParamsDigitalWallets] `json:"digital_wallets,required"`
+	// How physical cards should be designed and shipped.
+	PhysicalCards param.Field[CardProfileNewParamsPhysicalCards] `json:"physical_cards"`
 }
 
 func (r CardProfileNewParams) MarshalJSON() (data []byte, err error) {
@@ -249,6 +282,20 @@ type CardProfileNewParamsDigitalWalletsTextColor struct {
 }
 
 func (r CardProfileNewParamsDigitalWalletsTextColor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// How physical cards should be designed and shipped.
+type CardProfileNewParamsPhysicalCards struct {
+	// The identifier of the File containing the physical card's carrier image.
+	CarrierImageFileID param.Field[string] `json:"carrier_image_file_id,required"`
+	// A phone number the user can contact to receive support for their card.
+	ContactPhone param.Field[string] `json:"contact_phone,required"`
+	// The identifier of the File containing the physical card's front image.
+	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
+}
+
+func (r CardProfileNewParamsPhysicalCards) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

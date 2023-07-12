@@ -542,6 +542,16 @@ Methods:
 
 - <code title="post /simulations/inbound_wire_drawdown_requests">client.Simulations.InboundWireDrawdownRequests.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundWireDrawdownRequestService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundWireDrawdownRequestNewParams">SimulationInboundWireDrawdownRequestNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireDrawdownRequest">InboundWireDrawdownRequest</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## InboundFundsHolds
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundFundsHoldReleaseResponse">SimulationInboundFundsHoldReleaseResponse</a>
+
+Methods:
+
+- <code title="post /simulations/inbound_funds_holds/{inbound_funds_hold_id}/release">client.Simulations.InboundFundsHolds.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundFundsHoldService.Release">Release</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, inboundFundsHoldID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundFundsHoldReleaseResponse">SimulationInboundFundsHoldReleaseResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## InterestPayments
 
 Response Types:
