@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.0](https://github.com/Increase/increase-go/compare/v0.4.0...v0.5.0) (2023-07-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** add unique_identifier, driver's license backs, inbound funds holds, and more ([#41](https://github.com/Increase/increase-go/issues/41))
+
+### Features
+
+* **api:** add unique_identifier, driver's license backs, inbound funds holds, and more ([#41](https://github.com/Increase/increase-go/issues/41)) ([9809814](https://github.com/Increase/increase-go/commit/980981411a18f16a4de372deabcd8d362b8575d5))
+
 ## [0.4.0](https://github.com/Increase/increase-go/compare/v0.3.0...v0.4.0) (2023-07-07)
 
 
