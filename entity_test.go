@@ -58,6 +58,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -66,6 +67,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -93,6 +95,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -101,6 +104,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -128,6 +132,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -136,6 +141,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -167,6 +173,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 					DriversLicense: increase.F(increase.EntityNewParamsJointIndividualsIdentificationDriversLicense{
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
 						State:          increase.F("x"),
 					}),
@@ -175,6 +182,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						Description:    increase.F("x"),
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 					}),
 				}),
 			}, {
@@ -198,6 +206,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 					DriversLicense: increase.F(increase.EntityNewParamsJointIndividualsIdentificationDriversLicense{
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
 						State:          increase.F("x"),
 					}),
@@ -206,6 +215,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						Description:    increase.F("x"),
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 					}),
 				}),
 			}, {
@@ -229,6 +239,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 					DriversLicense: increase.F(increase.EntityNewParamsJointIndividualsIdentificationDriversLicense{
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
 						State:          increase.F("x"),
 					}),
@@ -237,6 +248,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						Description:    increase.F("x"),
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 					}),
 				}),
 			}}),
@@ -262,6 +274,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				}),
 				DriversLicense: increase.F(increase.EntityNewParamsNaturalPersonIdentificationDriversLicense{
 					FileID:         increase.F("string"),
+					BackFileID:     increase.F("string"),
 					ExpirationDate: increase.F(time.Now()),
 					State:          increase.F("x"),
 				}),
@@ -270,6 +283,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					Description:    increase.F("x"),
 					ExpirationDate: increase.F(time.Now()),
 					FileID:         increase.F("string"),
+					BackFileID:     increase.F("string"),
 				}),
 			}),
 		}),
@@ -316,6 +330,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -324,6 +339,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -350,6 +366,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -358,6 +375,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -384,6 +402,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 						DriversLicense: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense{
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
 							State:          increase.F("x"),
 						}),
@@ -392,6 +411,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 							Description:    increase.F("x"),
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("string"),
+							BackFileID:     increase.F("string"),
 						}),
 					}),
 				}),
@@ -417,6 +437,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 					DriversLicense: increase.F(increase.EntityNewParamsTrustGrantorIdentificationDriversLicense{
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
 						State:          increase.F("x"),
 					}),
@@ -425,6 +446,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						Description:    increase.F("x"),
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("string"),
+						BackFileID:     increase.F("string"),
 					}),
 				}),
 			}),

@@ -18,6 +18,7 @@ type Error struct {
 	Detail string `json:"detail,required,nullable"`
 	// All errors related to parsing the request parameters.
 	Errors     []interface{} `json:"errors,required"`
+	ResourceID string        `json:"resource_id,required"`
 	Status     ErrorStatus   `json:"status,required"`
 	Title      string        `json:"title,required"`
 	Type       ErrorType     `json:"type,required"`
@@ -32,6 +33,7 @@ type Error struct {
 type errorJSON struct {
 	Detail      apijson.Field
 	Errors      apijson.Field
+	ResourceID  apijson.Field
 	Status      apijson.Field
 	Title       apijson.Field
 	Type        apijson.Field
@@ -62,11 +64,11 @@ func (r *Error) DumpResponse(body bool) []byte {
 type ErrorStatus int64
 
 const (
-	ErrorStatus429 ErrorStatus = 429
+	ErrorStatus409 ErrorStatus = 409
 )
 
 type ErrorType string
 
 const (
-	ErrorTypeRateLimitedError ErrorType = "rate_limited_error"
+	ErrorTypeUniqueIdentifierAlreadyExistsError ErrorType = "unique_identifier_already_exists_error"
 )

@@ -163,7 +163,9 @@ const (
 	FilePurposeDigitalWalletAppIcon FilePurpose = "digital_wallet_app_icon"
 	// A card image to be printed on the front of a physical card. This must be a
 	// 2100x1340 pixel PNG with no other color but black.
-	FilePurposePhysicalCardArtwork FilePurpose = "physical_card_artwork"
+	FilePurposePhysicalCardFront FilePurpose = "physical_card_front"
+	// The image to be printed on the back of a physical card.
+	FilePurposePhysicalCardBack FilePurpose = "physical_card_back"
 	// An image representing the entirety of the carrier used for a physical card. This
 	// must be a 2550x3300 pixel PNG with no other color but black.
 	FilePurposePhysicalCardCarrier FilePurpose = "physical_card_carrier"
@@ -250,7 +252,7 @@ const (
 	FileNewParamsPurposeDigitalWalletAppIcon FileNewParamsPurpose = "digital_wallet_app_icon"
 	// A card image to be printed on the front of a physical card. This must be a
 	// 2100x1340 pixel PNG with no other color but black.
-	FileNewParamsPurposePhysicalCardArtwork FileNewParamsPurpose = "physical_card_artwork"
+	FileNewParamsPurposePhysicalCardFront FileNewParamsPurpose = "physical_card_front"
 	// An image representing the entirety of the carrier used for a physical card. This
 	// must be a 2550x3300 pixel PNG with no other color but black.
 	FileNewParamsPurposePhysicalCardCarrier FileNewParamsPurpose = "physical_card_carrier"
@@ -343,7 +345,9 @@ const (
 	FileListParamsPurposeInDigitalWalletAppIcon FileListParamsPurposeIn = "digital_wallet_app_icon"
 	// A card image to be printed on the front of a physical card. This must be a
 	// 2100x1340 pixel PNG with no other color but black.
-	FileListParamsPurposeInPhysicalCardArtwork FileListParamsPurposeIn = "physical_card_artwork"
+	FileListParamsPurposeInPhysicalCardFront FileListParamsPurposeIn = "physical_card_front"
+	// The image to be printed on the back of a physical card.
+	FileListParamsPurposeInPhysicalCardBack FileListParamsPurposeIn = "physical_card_back"
 	// An image representing the entirety of the carrier used for a physical card. This
 	// must be a 2550x3300 pixel PNG with no other color but black.
 	FileListParamsPurposeInPhysicalCardCarrier FileListParamsPurposeIn = "physical_card_carrier"

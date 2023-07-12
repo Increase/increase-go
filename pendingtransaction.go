@@ -641,7 +641,10 @@ type PendingTransactionSourceInboundFundsHold struct {
 	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
 	// The status of the hold.
 	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
-	JSON   pendingTransactionSourceInboundFundsHoldJSON
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_funds_hold`.
+	Type PendingTransactionSourceInboundFundsHoldType `json:"type,required"`
+	JSON pendingTransactionSourceInboundFundsHoldJSON
 }
 
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
@@ -655,6 +658,7 @@ type pendingTransactionSourceInboundFundsHoldJSON struct {
 	PendingTransactionID    apijson.Field
 	ReleasedAt              apijson.Field
 	Status                  apijson.Field
+	Type                    apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -690,6 +694,14 @@ const (
 	PendingTransactionSourceInboundFundsHoldStatusHeld PendingTransactionSourceInboundFundsHoldStatus = "held"
 	// Funds have been released.
 	PendingTransactionSourceInboundFundsHoldStatusComplete PendingTransactionSourceInboundFundsHoldStatus = "complete"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_funds_hold`.
+type PendingTransactionSourceInboundFundsHoldType string
+
+const (
+	PendingTransactionSourceInboundFundsHoldTypeInboundFundsHold PendingTransactionSourceInboundFundsHoldType = "inbound_funds_hold"
 )
 
 // A Real Time Payments Transfer Instruction object. This field will be present in
