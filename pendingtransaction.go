@@ -323,6 +323,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -348,6 +351,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PendingTransactionID apijson.Field
+	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
 	raw                  string

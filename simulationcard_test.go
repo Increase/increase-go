@@ -25,6 +25,7 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 		CardID:               increase.F("string"),
 		DigitalWalletTokenID: increase.F("string"),
 		EventSubscriptionID:  increase.F("string"),
+		PhysicalCardID:       increase.F("string"),
 	})
 	if err != nil {
 		var apierr *increase.Error
