@@ -325,6 +325,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	Network CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -348,6 +351,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct 
 	MerchantState        apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
+	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
 	raw                  string
@@ -1118,6 +1122,9 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	NetworkDetails CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -1144,6 +1151,7 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PendingTransactionID apijson.Field
+	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -1601,6 +1609,8 @@ type SimulationCardAuthorizeParams struct {
 	// decision event subscription, you can use this field to route events to any
 	// specified event subscription for testing purposes.
 	EventSubscriptionID param.Field[string] `json:"event_subscription_id"`
+	// The identifier of the Physical Card to be authorized.
+	PhysicalCardID param.Field[string] `json:"physical_card_id"`
 }
 
 func (r SimulationCardAuthorizeParams) MarshalJSON() (data []byte, err error) {

@@ -122,6 +122,9 @@ type RealTimeDecisionCardAuthorization struct {
 	Network RealTimeDecisionCardAuthorizationNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details,required"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The amount of the attempted authorization in the currency the card user sees at
 	// the time of purchase, in the minor unit of that currency. For dollars, for
 	// example, this is cents.
@@ -151,6 +154,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	MerchantDescriptor   apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
+	PhysicalCardID       apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
 	SettlementAmount     apijson.Field

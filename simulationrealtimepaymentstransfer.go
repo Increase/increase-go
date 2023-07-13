@@ -324,6 +324,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	Network InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -347,6 +350,7 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantState        apijson.Field
 	Network              apijson.Field
 	NetworkDetails       apijson.Field
+	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
 	raw                  string
