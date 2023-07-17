@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.1](https://github.com/Increase/increase-go/compare/v0.5.0...v0.5.1) (2023-07-17)
+
+
+### Features
+
+* **api:** add physical_card_id ([#44](https://github.com/Increase/increase-go/issues/44)) ([2b953a5](https://github.com/Increase/increase-go/commit/2b953a5ac6c29129479d247a0ea60fd97f66ab3f))
+
+
+### Chores
+
+* **internal:** add `codegen.log` to `.gitignore` ([#46](https://github.com/Increase/increase-go/issues/46)) ([720e4ab](https://github.com/Increase/increase-go/commit/720e4ab7c9fab1206120d1e9466f3c8cb9b3d923))
+
 ## [0.5.0](https://github.com/Increase/increase-go/compare/v0.4.0...v0.5.0) (2023-07-12)
 
 
