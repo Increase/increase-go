@@ -317,8 +317,6 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// The payment network used to process this card authorization
-	Network PendingTransactionSourceCardAuthorizationNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
@@ -348,7 +346,6 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
-	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PendingTransactionID apijson.Field
 	PhysicalCardID       apijson.Field
@@ -381,18 +378,12 @@ const (
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
-// The payment network used to process this card authorization
-type PendingTransactionSourceCardAuthorizationNetwork string
-
-const (
-	// Visa
-	PendingTransactionSourceCardAuthorizationNetworkVisa PendingTransactionSourceCardAuthorizationNetwork = "visa"
-)
-
 // Fields specific to the `network`
 type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
+	// The payment network used to process this card authorization
+	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network
-	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required"`
+	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON
 }
 
@@ -400,6 +391,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 // metadata for the struct
 // [PendingTransactionSourceCardAuthorizationNetworkDetails]
 type pendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
+	Category    apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -408,6 +400,14 @@ type pendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
 func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The payment network used to process this card authorization
+type PendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
+
+const (
+	// Visa
+	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
+)
 
 // Fields specific to the `visa` network
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {

@@ -118,8 +118,6 @@ type RealTimeDecisionCardAuthorization struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// The payment network used to process this card authorization
-	Network RealTimeDecisionCardAuthorizationNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -132,6 +130,8 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// user sees at the time of purchase.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// Fields specific to the type of request, such as an incremental authorization.
+	RequestDetails RealTimeDecisionCardAuthorizationRequestDetails `json:"request_details,required"`
 	// The amount of the attempted authorization in the currency it will be settled in.
 	// This currency is the same as that of the Account the card belongs to.
 	SettlementAmount int64 `json:"settlement_amount,required"`
@@ -152,11 +152,11 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
-	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PhysicalCardID       apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	RequestDetails       apijson.Field
 	SettlementAmount     apijson.Field
 	SettlementCurrency   apijson.Field
 	raw                  string
@@ -177,24 +177,19 @@ const (
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
-// The payment network used to process this card authorization
-type RealTimeDecisionCardAuthorizationNetwork string
-
-const (
-	// Visa
-	RealTimeDecisionCardAuthorizationNetworkVisa RealTimeDecisionCardAuthorizationNetwork = "visa"
-)
-
 // Fields specific to the `network`
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
+	// The payment network used to process this card authorization
+	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network
-	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required"`
+	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON
 }
 
 // realTimeDecisionCardAuthorizationNetworkDetailsJSON contains the JSON metadata
 // for the struct [RealTimeDecisionCardAuthorizationNetworkDetails]
 type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
+	Category    apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -203,6 +198,14 @@ type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The payment network used to process this card authorization
+type RealTimeDecisionCardAuthorizationNetworkDetailsCategory string
+
+const (
+	// Visa
+	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
+)
 
 // Fields specific to the `visa` network
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
@@ -270,6 +273,67 @@ const (
 	// has no data protection.
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
+
+// Fields specific to the type of request, such as an incremental authorization.
+type RealTimeDecisionCardAuthorizationRequestDetails struct {
+	// The type of this request (e.g., an initial authorization or an incremental
+	// authorization.)
+	Category RealTimeDecisionCardAuthorizationRequestDetailsCategory `json:"category,required"`
+	// Fields specific to the categorty `incremental_authorization`.
+	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
+	// Fields specific to the category `initial_authorization`.
+	InitialAuthorization interface{} `json:"initial_authorization,required,nullable"`
+	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON
+}
+
+// realTimeDecisionCardAuthorizationRequestDetailsJSON contains the JSON metadata
+// for the struct [RealTimeDecisionCardAuthorizationRequestDetails]
+type realTimeDecisionCardAuthorizationRequestDetailsJSON struct {
+	Category                 apijson.Field
+	IncrementalAuthorization apijson.Field
+	InitialAuthorization     apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationRequestDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The type of this request (e.g., an initial authorization or an incremental
+// authorization.)
+type RealTimeDecisionCardAuthorizationRequestDetailsCategory string
+
+const (
+	// A regular, standalone authorization.
+	RealTimeDecisionCardAuthorizationRequestDetailsCategoryInitialAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "initial_authorization"
+	// An incremental request to increase the amount of an existing authorization.
+	RealTimeDecisionCardAuthorizationRequestDetailsCategoryIncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "incremental_authorization"
+)
+
+// Fields specific to the categorty `incremental_authorization`.
+type RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization struct {
+	// The card payment for this authorization and increment.
+	CardPaymentID string `json:"card_payment_id,required"`
+	// The identifier of the card authorization this request is attempting to
+	// increment.
+	OriginalCardAuthorizationID string `json:"original_card_authorization_id,required"`
+	JSON                        realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON
+}
+
+// realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON
+// contains the JSON metadata for the struct
+// [RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization]
+type realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON struct {
+	CardPaymentID               apijson.Field
+	OriginalCardAuthorizationID apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // The category of the Real-Time Decision.
 type RealTimeDecisionCategory string

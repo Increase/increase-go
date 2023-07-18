@@ -332,8 +332,6 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
-	// The payment network used to process this card authorization
-	Network ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -360,7 +358,6 @@ type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	MerchantState        apijson.Field
-	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
@@ -392,18 +389,12 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
-// The payment network used to process this card authorization
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork string
-
-const (
-	// Visa
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetwork = "visa"
-)
-
 // Fields specific to the `network`
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// The payment network used to process this card authorization
+	Category ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network
-	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
+	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
 
@@ -411,6 +402,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails str
 // contains the JSON metadata for the struct
 // [ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails]
 type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Category    apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -419,6 +411,14 @@ type achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The payment network used to process this card authorization
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
+
+const (
+	// Visa
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
+)
 
 // Fields specific to the `visa` network
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {

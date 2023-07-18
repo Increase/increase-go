@@ -107,16 +107,6 @@ type CheckTransfer struct {
 	AccountID string `json:"account_id,required"`
 	// The account number printed on the check.
 	AccountNumber string `json:"account_number,required"`
-	// The city of the check's destination.
-	AddressCity string `json:"address_city,required,nullable"`
-	// The street address of the check's destination.
-	AddressLine1 string `json:"address_line1,required,nullable"`
-	// The second line of the address of the check's destination.
-	AddressLine2 string `json:"address_line2,required,nullable"`
-	// The state of the check's destination.
-	AddressState string `json:"address_state,required,nullable"`
-	// The postal code of the check's destination.
-	AddressZip string `json:"address_zip,required,nullable"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// If your account requires approvals for transfers and the transfer was approved,
@@ -135,19 +125,16 @@ type CheckTransfer struct {
 	Currency CheckTransferCurrency `json:"currency,required"`
 	// After a check transfer is deposited, this will contain supplemental details.
 	Deposit CheckTransferDeposit `json:"deposit,required,nullable"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the check was mailed.
-	MailedAt time.Time `json:"mailed_at,required,nullable" format:"date-time"`
-	// The descriptor that will be printed on the memo field on the check.
-	Message string `json:"message,required,nullable"`
-	// The descriptor that will be printed on the letter included with the check.
-	Note string `json:"note,required,nullable"`
+	// Whether Increase will print and mail the check or if you will do it yourself.
+	FulfillmentMethod CheckTransferFulfillmentMethod `json:"fulfillment_method,required"`
+	// If the check has been mailed by Increase, this will contain details of the
+	// shipment.
+	Mailing CheckTransferMailing `json:"mailing,required,nullable"`
 	// The identifier of the Pending Transaction associated with the check's creation.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
-	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required,nullable"`
-	// The return address to be printed on the check.
-	ReturnAddress CheckTransferReturnAddress `json:"return_address,required,nullable"`
+	// Details relating to the physical check that Increase will print and mail. Will
+	// be present if and only if `fulfillment_method` is equal to `physical_check`.
+	PhysicalCheck CheckTransferPhysicalCheck `json:"physical_check,required,nullable"`
 	// The routing number printed on the check.
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Account Number from which to send the transfer and print
@@ -173,11 +160,6 @@ type checkTransferJSON struct {
 	ID                    apijson.Field
 	AccountID             apijson.Field
 	AccountNumber         apijson.Field
-	AddressCity           apijson.Field
-	AddressLine1          apijson.Field
-	AddressLine2          apijson.Field
-	AddressState          apijson.Field
-	AddressZip            apijson.Field
 	Amount                apijson.Field
 	Approval              apijson.Field
 	Cancellation          apijson.Field
@@ -185,12 +167,10 @@ type checkTransferJSON struct {
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	Deposit               apijson.Field
-	MailedAt              apijson.Field
-	Message               apijson.Field
-	Note                  apijson.Field
+	FulfillmentMethod     apijson.Field
+	Mailing               apijson.Field
 	PendingTransactionID  apijson.Field
-	RecipientName         apijson.Field
-	ReturnAddress         apijson.Field
+	PhysicalCheck         apijson.Field
 	RoutingNumber         apijson.Field
 	SourceAccountNumberID apijson.Field
 	Status                apijson.Field
@@ -317,37 +297,136 @@ const (
 	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
 )
 
-// The return address to be printed on the check.
-type CheckTransferReturnAddress struct {
-	// The city of the address.
-	City string `json:"city,required,nullable"`
-	// The first line of the address.
-	Line1 string `json:"line1,required,nullable"`
-	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
-	// The name of the address.
-	Name string `json:"name,required,nullable"`
-	// The US state of the address.
-	State string `json:"state,required,nullable"`
-	// The postal code of the address.
-	Zip  string `json:"zip,required,nullable"`
-	JSON checkTransferReturnAddressJSON
+// Whether Increase will print and mail the check or if you will do it yourself.
+type CheckTransferFulfillmentMethod string
+
+const (
+	// Increase will print and mail a physical check.
+	CheckTransferFulfillmentMethodPhysicalCheck CheckTransferFulfillmentMethod = "physical_check"
+	// Increase will not print a check; you are responsible for printing and mailing a
+	// check with the provided account number, routing number, check number, and
+	// amount.
+	CheckTransferFulfillmentMethodThirdParty CheckTransferFulfillmentMethod = "third_party"
+)
+
+// If the check has been mailed by Increase, this will contain details of the
+// shipment.
+type CheckTransferMailing struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check was mailed.
+	MailedAt time.Time `json:"mailed_at,required" format:"date-time"`
+	JSON     checkTransferMailingJSON
 }
 
-// checkTransferReturnAddressJSON contains the JSON metadata for the struct
-// [CheckTransferReturnAddress]
-type checkTransferReturnAddressJSON struct {
-	City        apijson.Field
-	Line1       apijson.Field
-	Line2       apijson.Field
-	Name        apijson.Field
-	State       apijson.Field
-	Zip         apijson.Field
+// checkTransferMailingJSON contains the JSON metadata for the struct
+// [CheckTransferMailing]
+type checkTransferMailingJSON struct {
+	MailedAt    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CheckTransferReturnAddress) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckTransferMailing) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Details relating to the physical check that Increase will print and mail. Will
+// be present if and only if `fulfillment_method` is equal to `physical_check`.
+type CheckTransferPhysicalCheck struct {
+	// Details for where Increase will mail the check.
+	MailingAddress CheckTransferPhysicalCheckMailingAddress `json:"mailing_address,required"`
+	// The descriptor that will be printed on the memo field on the check.
+	Memo string `json:"memo,required,nullable"`
+	// The descriptor that will be printed on the letter included with the check.
+	Note string `json:"note,required,nullable"`
+	// The name that will be printed on the check.
+	RecipientName string `json:"recipient_name,required,nullable"`
+	// The return address to be printed on the check.
+	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
+	JSON          checkTransferPhysicalCheckJSON
+}
+
+// checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
+// [CheckTransferPhysicalCheck]
+type checkTransferPhysicalCheckJSON struct {
+	MailingAddress apijson.Field
+	Memo           apijson.Field
+	Note           apijson.Field
+	RecipientName  apijson.Field
+	ReturnAddress  apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheck) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Details for where Increase will mail the check.
+type CheckTransferPhysicalCheckMailingAddress struct {
+	// The city of the check's destination.
+	City string `json:"city,required,nullable"`
+	// The street address of the check's destination.
+	Line1 string `json:"line1,required,nullable"`
+	// The second line of the address of the check's destination.
+	Line2 string `json:"line2,required,nullable"`
+	// The name component of the check's mailing address.
+	Name string `json:"name,required,nullable"`
+	// The postal code of the check's destination.
+	PostalCode string `json:"postal_code,required,nullable"`
+	// The state of the check's destination.
+	State string `json:"state,required,nullable"`
+	JSON  checkTransferPhysicalCheckMailingAddressJSON
+}
+
+// checkTransferPhysicalCheckMailingAddressJSON contains the JSON metadata for the
+// struct [CheckTransferPhysicalCheckMailingAddress]
+type checkTransferPhysicalCheckMailingAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	Name        apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckMailingAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The return address to be printed on the check.
+type CheckTransferPhysicalCheckReturnAddress struct {
+	// The city of the check's destination.
+	City string `json:"city,required,nullable"`
+	// The street address of the check's destination.
+	Line1 string `json:"line1,required,nullable"`
+	// The second line of the address of the check's destination.
+	Line2 string `json:"line2,required,nullable"`
+	// The name component of the check's return address.
+	Name string `json:"name,required,nullable"`
+	// The postal code of the check's destination.
+	PostalCode string `json:"postal_code,required,nullable"`
+	// The state of the check's destination.
+	State string `json:"state,required,nullable"`
+	JSON  checkTransferPhysicalCheckReturnAddressJSON
+}
+
+// checkTransferPhysicalCheckReturnAddressJSON contains the JSON metadata for the
+// struct [CheckTransferPhysicalCheckReturnAddress]
+type checkTransferPhysicalCheckReturnAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	Name        apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckReturnAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -455,29 +534,16 @@ const (
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The city of the check's destination.
-	AddressCity param.Field[string] `json:"address_city,required"`
-	// The street address of the check's destination.
-	AddressLine1 param.Field[string] `json:"address_line1,required"`
-	// The state of the check's destination.
-	AddressState param.Field[string] `json:"address_state,required"`
-	// The postal code of the check's destination.
-	AddressZip param.Field[string] `json:"address_zip,required"`
 	// The transfer amount in cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The descriptor that will be printed on the memo field on the check.
-	Message param.Field[string] `json:"message,required"`
-	// The name that will be printed on the check.
-	RecipientName param.Field[string] `json:"recipient_name,required"`
-	// The second line of the address of the check's destination.
-	AddressLine2 param.Field[string] `json:"address_line2"`
-	// The descriptor that will be printed on the letter included with the check.
-	Note param.Field[string] `json:"note"`
+	// Whether Increase will print and mail the check or if you will do it yourself.
+	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method"`
+	// Details relating to the physical check that Increase will print and mail. This
+	// is required if `fulfillment_method` is equal to `physical_check`. It must not be
+	// included if any other `fulfillment_method` is provided.
+	PhysicalCheck param.Field[CheckTransferNewParamsPhysicalCheck] `json:"physical_check"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// The return address to be printed on the check. If omitted this will default to
-	// the address of the Entity of the Account used to make the Check Transfer.
-	ReturnAddress param.Field[CheckTransferNewParamsReturnAddress] `json:"return_address"`
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
@@ -491,24 +557,78 @@ func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Whether Increase will print and mail the check or if you will do it yourself.
+type CheckTransferNewParamsFulfillmentMethod string
+
+const (
+	// Increase will print and mail a physical check.
+	CheckTransferNewParamsFulfillmentMethodPhysicalCheck CheckTransferNewParamsFulfillmentMethod = "physical_check"
+	// Increase will not print a check; you are responsible for printing and mailing a
+	// check with the provided account number, routing number, check number, and
+	// amount.
+	CheckTransferNewParamsFulfillmentMethodThirdParty CheckTransferNewParamsFulfillmentMethod = "third_party"
+)
+
+// Details relating to the physical check that Increase will print and mail. This
+// is required if `fulfillment_method` is equal to `physical_check`. It must not be
+// included if any other `fulfillment_method` is provided.
+type CheckTransferNewParamsPhysicalCheck struct {
+	// Details for where Increase will mail the check.
+	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address,required"`
+	// The descriptor that will be printed on the memo field on the check.
+	Memo param.Field[string] `json:"memo,required"`
+	// The name that will be printed on the check in the 'To:' field.
+	RecipientName param.Field[string] `json:"recipient_name,required"`
+	// The descriptor that will be printed on the letter included with the check.
+	Note param.Field[string] `json:"note"`
+	// The return address to be printed on the check. If omitted this will default to
+	// the address of the Entity of the Account used to make the Check Transfer.
+	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
+}
+
+func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Details for where Increase will mail the check.
+type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
+	// The city component of the check's destination address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address component of the check's destination address.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The postal code component of the check's destination address.
+	PostalCode param.Field[string] `json:"postal_code,required"`
+	// The US state component of the check's destination address.
+	State param.Field[string] `json:"state,required"`
+	// The second line of the address component of the check's destination address.
+	Line2 param.Field[string] `json:"line2"`
+	// The name component of the check's destination address. Defaults to the provided
+	// `recipient_name` parameter.
+	Name param.Field[string] `json:"name"`
+}
+
+func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The return address to be printed on the check. If omitted this will default to
 // the address of the Entity of the Account used to make the Check Transfer.
-type CheckTransferNewParamsReturnAddress struct {
+type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 	// The city of the return address.
 	City param.Field[string] `json:"city,required"`
 	// The first line of the return address.
 	Line1 param.Field[string] `json:"line1,required"`
 	// The name of the return address.
 	Name param.Field[string] `json:"name,required"`
+	// The postal code of the return address.
+	PostalCode param.Field[string] `json:"postal_code,required"`
 	// The US state of the return address.
 	State param.Field[string] `json:"state,required"`
-	// The postal code of the return address.
-	Zip param.Field[string] `json:"zip,required"`
 	// The second line of the return address.
 	Line2 param.Field[string] `json:"line2"`
 }
 
-func (r CheckTransferNewParamsReturnAddress) MarshalJSON() (data []byte, err error) {
+func (r CheckTransferNewParamsPhysicalCheckReturnAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
