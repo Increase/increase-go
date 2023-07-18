@@ -298,8 +298,6 @@ type DeclinedTransactionSourceCardDecline struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
-	// The payment network used to process this card authorization
-	Network DeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails DeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -325,7 +323,6 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	MerchantState        apijson.Field
-	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
@@ -357,24 +354,19 @@ const (
 	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
-// The payment network used to process this card authorization
-type DeclinedTransactionSourceCardDeclineNetwork string
-
-const (
-	// Visa
-	DeclinedTransactionSourceCardDeclineNetworkVisa DeclinedTransactionSourceCardDeclineNetwork = "visa"
-)
-
 // Fields specific to the `network`
 type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// The payment network used to process this card authorization
+	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network
-	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
+	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
 
 // declinedTransactionSourceCardDeclineNetworkDetailsJSON contains the JSON
 // metadata for the struct [DeclinedTransactionSourceCardDeclineNetworkDetails]
 type declinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Category    apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -383,6 +375,14 @@ type declinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The payment network used to process this card authorization
+type DeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
+
+const (
+	// Visa
+	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
+)
 
 // Fields specific to the `visa` network
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {

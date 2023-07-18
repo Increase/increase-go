@@ -320,8 +320,6 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
-	// The payment network used to process this card authorization
-	Network InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork `json:"network,required"`
 	// Fields specific to the `network`
 	NetworkDetails InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -348,7 +346,6 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	MerchantState        apijson.Field
-	Network              apijson.Field
 	NetworkDetails       apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
@@ -380,18 +377,12 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrencyUsd InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
-// The payment network used to process this card authorization
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork string
-
-const (
-	// Visa
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkVisa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetwork = "visa"
-)
-
 // Fields specific to the `network`
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails struct {
+	// The payment network used to process this card authorization
+	Category InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network
-	Visa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required"`
+	Visa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
 
@@ -399,6 +390,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 // contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails]
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
+	Category    apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -407,6 +399,14 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The payment network used to process this card authorization
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
+
+const (
+	// Visa
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
+)
 
 // Fields specific to the `visa` network
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {

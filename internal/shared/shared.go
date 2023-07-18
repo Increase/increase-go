@@ -7,6 +7,8 @@ package shared
 type PointOfServiceEntryMode string
 
 const (
+	// Unknown
+	PointOfServiceEntryModeUnknown PointOfServiceEntryMode = "unknown"
 	// Manual key entry
 	PointOfServiceEntryModeManual PointOfServiceEntryMode = "manual"
 	// Magnetic stripe read, without card verification value
