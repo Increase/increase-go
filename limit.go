@@ -188,8 +188,8 @@ const (
 type LimitNewParams struct {
 	// The metric for the limit.
 	Metric param.Field[LimitNewParamsMetric] `json:"metric,required"`
-	// The identifier of the Account or Account Number you wish to associate the limit
-	// with.
+	// The identifier of the Account, Account Number, or Card you wish to associate the
+	// limit with.
 	ModelID param.Field[string] `json:"model_id,required"`
 	// The value to test the limit against.
 	Value param.Field[int64] `json:"value,required"`
