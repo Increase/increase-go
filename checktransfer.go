@@ -340,7 +340,7 @@ type CheckTransferPhysicalCheck struct {
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note,required,nullable"`
 	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required,nullable"`
+	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
 	JSON          checkTransferPhysicalCheckJSON

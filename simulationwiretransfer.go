@@ -1327,16 +1327,19 @@ type WireTransferSimulationTransactionSourceFeePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency WireTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     wireTransferSimulationTransactionSourceFeePaymentJSON
+	// The start of this payment's fee period, usually the first day of a month.
+	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	JSON           wireTransferSimulationTransactionSourceFeePaymentJSON
 }
 
 // wireTransferSimulationTransactionSourceFeePaymentJSON contains the JSON metadata
 // for the struct [WireTransferSimulationTransactionSourceFeePayment]
 type wireTransferSimulationTransactionSourceFeePaymentJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	Currency       apijson.Field
+	FeePeriodStart apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *WireTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
