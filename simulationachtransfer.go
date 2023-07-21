@@ -298,6 +298,8 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	// Other.
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	// Other.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "return_of_erroneous_or_reversing_debit"
 	// The account number that was debited does not exist.
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	// Other.
@@ -2136,16 +2138,19 @@ type ACHTransferSimulationTransactionSourceFeePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency ACHTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     achTransferSimulationTransactionSourceFeePaymentJSON
+	// The start of this payment's fee period, usually the first day of a month.
+	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	JSON           achTransferSimulationTransactionSourceFeePaymentJSON
 }
 
 // achTransferSimulationTransactionSourceFeePaymentJSON contains the JSON metadata
 // for the struct [ACHTransferSimulationTransactionSourceFeePayment]
 type achTransferSimulationTransactionSourceFeePaymentJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	Currency       apijson.Field
+	FeePeriodStart apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *ACHTransferSimulationTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {

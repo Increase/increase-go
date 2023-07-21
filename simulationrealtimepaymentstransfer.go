@@ -286,6 +286,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonInsufficientFunds InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	// Other.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonMisroutedReturn InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	// Other.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "return_of_erroneous_or_reversing_debit"
 	// The account number that was debited does not exist.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonNoACHRoute InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	// Other.
@@ -2128,17 +2130,20 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment 
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
+	// The start of this payment's fee period, usually the first day of a month.
+	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
 // contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment]
 type inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	Currency       apijson.Field
+	FeePeriodStart apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
