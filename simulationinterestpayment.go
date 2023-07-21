@@ -1328,17 +1328,20 @@ type InterestPaymentSimulationResultTransactionSourceFeePayment struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency InterestPaymentSimulationResultTransactionSourceFeePaymentCurrency `json:"currency,required"`
-	JSON     interestPaymentSimulationResultTransactionSourceFeePaymentJSON
+	// The start of this payment's fee period, usually the first day of a month.
+	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	JSON           interestPaymentSimulationResultTransactionSourceFeePaymentJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceFeePaymentJSON contains the JSON
 // metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceFeePayment]
 type interestPaymentSimulationResultTransactionSourceFeePaymentJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	Currency       apijson.Field
+	FeePeriodStart apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {

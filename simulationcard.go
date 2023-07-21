@@ -287,6 +287,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
 	// Other.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "misrouted_return"
+	// Other.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "return_of_erroneous_or_reversing_debit"
 	// The account number that was debited does not exist.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "no_ach_route"
 	// Other.
