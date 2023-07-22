@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.0](https://github.com/Increase/increase-go/compare/v0.5.1...v0.6.0) (2023-07-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** reorganize `check_transfer` and `network fields; add `request_details`; add `unknown` ([#48](https://github.com/Increase/increase-go/issues/48))
+
+### Features
+
+* **api:** add fee_period_start and return_of_erroneous_or_reversing_debit ([#51](https://github.com/Increase/increase-go/issues/51)) ([7f09d65](https://github.com/Increase/increase-go/commit/7f09d6599b40a47e555919713713ecb1379a2268))
+* **api:** reorganize `check_transfer` and `network fields; add `request_details`; add `unknown` ([#48](https://github.com/Increase/increase-go/issues/48)) ([e35fba9](https://github.com/Increase/increase-go/commit/e35fba9db8310b4eeea1ee9e137d310a29524f2a))
+
+
+### Documentation
+
+* **api:** update `model_id` documentation ([#50](https://github.com/Increase/increase-go/issues/50)) ([00ef46d](https://github.com/Increase/increase-go/commit/00ef46d8adb055e823926266c6f4a5986273cc8f))
+
 ## [0.5.1](https://github.com/Increase/increase-go/compare/v0.5.0...v0.5.1) (2023-07-17)
 
 
