@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/Increase/increase-go/compare/v0.6.0...v0.6.1) (2023-07-27)
+
+
+### Features
+
+* add `Bool` param field helper ([#53](https://github.com/Increase/increase-go/issues/53)) ([5dadbe7](https://github.com/Increase/increase-go/commit/5dadbe7d3a049c05bf971f674504a73357fd74ce))
+
 ## [0.6.0](https://github.com/Increase/increase-go/compare/v0.5.1...v0.6.0) (2023-07-22)
 
 
