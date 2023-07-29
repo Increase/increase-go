@@ -18,8 +18,8 @@ func TestSimulationCheckDepositReject(t *testing.T) {
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.CheckDeposits.Reject(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {
@@ -36,8 +36,8 @@ func TestSimulationCheckDepositReturn(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.CheckDeposits.Return(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {
@@ -55,8 +55,8 @@ func TestSimulationCheckDepositSubmit(t *testing.T) {
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.CheckDeposits.Submit(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {

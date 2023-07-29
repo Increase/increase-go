@@ -17,8 +17,8 @@ func TestSimulationCardProfileApprove(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.CardProfiles.Approve(context.TODO(), "card_profile_cox5y73lob2eqly18piy")
 	if err != nil {

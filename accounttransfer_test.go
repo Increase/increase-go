@@ -18,8 +18,8 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{
 		AccountID:            increase.F("string"),
@@ -43,8 +43,8 @@ func TestAccountTransferGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.Get(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {
@@ -61,8 +61,8 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{
 		AccountID: increase.F("string"),
@@ -90,8 +90,8 @@ func TestAccountTransferApprove(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.Approve(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {
@@ -108,8 +108,8 @@ func TestAccountTransferCancel(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.Cancel(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {

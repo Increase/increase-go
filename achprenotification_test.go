@@ -18,8 +18,8 @@ func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.New(context.TODO(), increase.ACHPrenotificationNewParams{
 		AccountNumber:            increase.F("x"),
@@ -49,8 +49,8 @@ func TestACHPrenotificationGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.Get(context.TODO(), "ach_prenotification_ubjf9qqsxl3obbcn1u34")
 	if err != nil {
@@ -67,8 +67,8 @@ func TestACHPrenotificationListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.List(context.TODO(), increase.ACHPrenotificationListParams{
 		CreatedAt: increase.F(increase.ACHPrenotificationListParamsCreatedAt{

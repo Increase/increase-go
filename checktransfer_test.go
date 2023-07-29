@@ -18,8 +18,8 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
 		AccountID:         increase.F("string"),
@@ -64,8 +64,8 @@ func TestCheckTransferGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.Get(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -82,8 +82,8 @@ func TestCheckTransferListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
 		AccountID: increase.F("string"),
@@ -111,8 +111,8 @@ func TestCheckTransferApprove(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.Approve(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -129,8 +129,8 @@ func TestCheckTransferCancel(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.Cancel(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -148,8 +148,8 @@ func TestCheckTransferStopPaymentWithOptionalParams(t *testing.T) {
 	}
 	t.Skip("Prism doesn't accept no request body being sent but returns 415 if it is sent")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckTransfers.StopPayment(
 		context.TODO(),

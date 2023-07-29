@@ -17,8 +17,8 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
 		AccountNumberID:          increase.F("string"),
@@ -44,8 +44,8 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.ACHTransfers.Return(
 		context.TODO(),
@@ -69,8 +69,8 @@ func TestSimulationACHTransferSubmit(t *testing.T) {
 	}
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.ACHTransfers.Submit(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
