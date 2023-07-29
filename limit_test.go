@@ -17,8 +17,8 @@ func TestLimitNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Limits.New(context.TODO(), increase.LimitNewParams{
 		Metric:   increase.F(increase.LimitNewParamsMetricCount),
@@ -40,8 +40,8 @@ func TestLimitGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Limits.Get(context.TODO(), "limit_fku42k0qtc8ulsuas38q")
 	if err != nil {
@@ -58,8 +58,8 @@ func TestLimitUpdate(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Limits.Update(
 		context.TODO(),
@@ -82,8 +82,8 @@ func TestLimitListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Limits.List(context.TODO(), increase.LimitListParams{
 		Cursor:  increase.F("string"),

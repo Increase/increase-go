@@ -18,8 +18,8 @@ func TestAccountStatementGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountStatements.Get(context.TODO(), "account_statement_lkc03a4skm2k7f38vj15")
 	if err != nil {
@@ -36,8 +36,8 @@ func TestAccountStatementListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountStatements.List(context.TODO(), increase.AccountStatementListParams{
 		AccountID: increase.F("string"),

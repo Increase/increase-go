@@ -18,8 +18,8 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Exports.New(context.TODO(), increase.ExportNewParams{
 		Category: increase.F(increase.ExportNewParamsCategoryTransactionCsv),
@@ -56,8 +56,8 @@ func TestExportGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Exports.Get(context.TODO(), "export_8s4m48qz3bclzje0zwh9")
 	if err != nil {
@@ -74,8 +74,8 @@ func TestExportListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Exports.List(context.TODO(), increase.ExportListParams{
 		Cursor: increase.F("string"),

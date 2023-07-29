@@ -18,8 +18,8 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:                  increase.F("x"),
@@ -41,8 +41,8 @@ func TestAccountGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
@@ -59,8 +59,8 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.Update(
 		context.TODO(),
@@ -83,8 +83,8 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.List(context.TODO(), increase.AccountListParams{
 		CreatedAt: increase.F(increase.AccountListParamsCreatedAt{
@@ -114,8 +114,8 @@ func TestAccountClose(t *testing.T) {
 	}
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.Close(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {

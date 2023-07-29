@@ -17,8 +17,8 @@ func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.New(context.TODO(), increase.ExternalAccountNewParams{
 		AccountNumber: increase.F("x"),
@@ -40,8 +40,8 @@ func TestExternalAccountGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.Get(context.TODO(), "external_account_ukk55lr923a3ac0pp7iv")
 	if err != nil {
@@ -58,8 +58,8 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.Update(
 		context.TODO(),
@@ -83,8 +83,8 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{
 		Cursor: increase.F("string"),

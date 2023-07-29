@@ -21,8 +21,8 @@ func TestFileNewWithOptionalParams(t *testing.T) {
 	}
 	t.Skip("skipped: prism mock server is broken for file uploads")
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Files.New(context.TODO(), increase.FileNewParams{
 		File:        increase.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
@@ -43,8 +43,8 @@ func TestFileGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Files.Get(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
 	if err != nil {
@@ -61,8 +61,8 @@ func TestFileListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Files.List(context.TODO(), increase.FileListParams{
 		CreatedAt: increase.F(increase.FileListParamsCreatedAt{

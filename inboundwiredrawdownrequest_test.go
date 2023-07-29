@@ -17,8 +17,8 @@ func TestInboundWireDrawdownRequestGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundWireDrawdownRequests.Get(context.TODO(), "inbound_wire_drawdown_request_u5a92ikqhz1ytphn799e")
 	if err != nil {
@@ -35,8 +35,8 @@ func TestInboundWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundWireDrawdownRequests.List(context.TODO(), increase.InboundWireDrawdownRequestListParams{
 		Cursor: increase.F("string"),

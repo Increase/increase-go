@@ -16,8 +16,8 @@ func TestManualPagination(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	page, err := client.Accounts.List(context.TODO(), increase.AccountListParams{})
 	if err != nil {
