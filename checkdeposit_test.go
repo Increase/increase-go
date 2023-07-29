@@ -18,8 +18,8 @@ func TestCheckDepositNew(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckDeposits.New(context.TODO(), increase.CheckDepositNewParams{
 		AccountID:        increase.F("string"),
@@ -42,8 +42,8 @@ func TestCheckDepositGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckDeposits.Get(context.TODO(), "check_deposit_instruction_q2shv7x9qhevfm71kor8")
 	if err != nil {
@@ -60,8 +60,8 @@ func TestCheckDepositListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckDeposits.List(context.TODO(), increase.CheckDepositListParams{
 		AccountID: increase.F("string"),

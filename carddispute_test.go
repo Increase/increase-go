@@ -18,8 +18,8 @@ func TestCardDisputeNew(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{
 		DisputedTransactionID: increase.F("string"),
@@ -39,8 +39,8 @@ func TestCardDisputeGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CardDisputes.Get(context.TODO(), "card_dispute_h9sc95nbl1cgltpp7men")
 	if err != nil {
@@ -57,8 +57,8 @@ func TestCardDisputeListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CardDisputes.List(context.TODO(), increase.CardDisputeListParams{
 		CreatedAt: increase.F(increase.CardDisputeListParamsCreatedAt{

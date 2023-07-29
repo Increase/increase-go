@@ -18,8 +18,8 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
 		AccountID: increase.F("string"),
@@ -51,8 +51,8 @@ func TestCardGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.Get(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {
@@ -69,8 +69,8 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.Update(
 		context.TODO(),
@@ -106,8 +106,8 @@ func TestCardListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.List(context.TODO(), increase.CardListParams{
 		AccountID: increase.F("string"),
@@ -134,8 +134,8 @@ func TestCardGetSensitiveDetails(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.GetSensitiveDetails(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {

@@ -18,8 +18,8 @@ func TestDocumentGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Documents.Get(context.TODO(), "document_qjtqc6s4c14ve2q89izm")
 	if err != nil {
@@ -36,8 +36,8 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Documents.List(context.TODO(), increase.DocumentListParams{
 		Category: increase.F(increase.DocumentListParamsCategory{

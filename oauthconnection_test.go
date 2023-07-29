@@ -17,8 +17,8 @@ func TestOauthConnectionGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.OauthConnections.Get(context.TODO(), "connection_dauknoksyr4wilz4e6my")
 	if err != nil {
@@ -35,8 +35,8 @@ func TestOauthConnectionListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.OauthConnections.List(context.TODO(), increase.OauthConnectionListParams{
 		Cursor: increase.F("string"),

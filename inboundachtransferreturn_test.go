@@ -17,8 +17,8 @@ func TestInboundACHTransferReturnNew(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransferReturns.New(context.TODO(), increase.InboundACHTransferReturnNewParams{
 		Reason:        increase.F(increase.InboundACHTransferReturnNewParamsReasonAuthorizationRevokedByCustomer),
@@ -38,8 +38,8 @@ func TestInboundACHTransferReturnGet(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransferReturns.Get(context.TODO(), "inbound_ach_transfer_return_fhcxk5huskwhmt7iz0gk")
 	if err != nil {
@@ -56,8 +56,8 @@ func TestInboundACHTransferReturnListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithAPIKey("APIKey"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransferReturns.List(context.TODO(), increase.InboundACHTransferReturnListParams{
 		Cursor: increase.F("string"),
