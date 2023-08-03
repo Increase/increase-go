@@ -1,0 +1,207 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package increase
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/increase/increase-go/internal/apijson"
+	"github.com/increase/increase-go/internal/param"
+	"github.com/increase/increase-go/internal/requestconfig"
+	"github.com/increase/increase-go/option"
+)
+
+// EntityBeneficialOwnerService contains methods and other services that help with
+// interacting with the increase API. Note, unlike clients, this service does not
+// read variables from the environment automatically. You should not instantiate
+// this service directly, and instead use the [NewEntityBeneficialOwnerService]
+// method instead.
+type EntityBeneficialOwnerService struct {
+	Options []option.RequestOption
+}
+
+// NewEntityBeneficialOwnerService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewEntityBeneficialOwnerService(opts ...option.RequestOption) (r *EntityBeneficialOwnerService) {
+	r = &EntityBeneficialOwnerService{}
+	r.Options = opts
+	return
+}
+
+// Create a beneficial owner for a corporate Entity
+func (r *EntityBeneficialOwnerService) New(ctx context.Context, entityID string, body EntityBeneficialOwnerNewParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("entities/%s/beneficial_owners", entityID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+type EntityBeneficialOwnerNewParams struct {
+	// The identifying details of anyone controlling or owning 25% or more of the
+	// corporation.
+	BeneficialOwner param.Field[EntityBeneficialOwnerNewParamsBeneficialOwner] `json:"beneficial_owner,required"`
+}
+
+func (r EntityBeneficialOwnerNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The identifying details of anyone controlling or owning 25% or more of the
+// corporation.
+type EntityBeneficialOwnerNewParamsBeneficialOwner struct {
+	// Personal details for the beneficial owner.
+	Individual param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual] `json:"individual,required"`
+	// Why this person is considered a beneficial owner of the entity.
+	Prong param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerProng] `json:"prong,required"`
+	// This person's role or title within the entity.
+	CompanyTitle param.Field[string] `json:"company_title"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwner) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Personal details for the beneficial owner.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual struct {
+	// The individual's address.
+	Address param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress] `json:"address,required"`
+	// The person's date of birth in YYYY-MM-DD format.
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	// A means of verifying the person's identity.
+	Identification param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentification] `json:"identification,required"`
+	// The person's legal name.
+	Name param.Field[string] `json:"name,required"`
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual's address.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A means of verifying the person's identity.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	Method param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod] `json:"method,required"`
+	// An identification number that can be used to verify the individual's identity,
+	// such as a social security number.
+	Number param.Field[string] `json:"number,required"`
+	// Information about the United States driver's license used for identification.
+	// Required if `method` is equal to `drivers_license`.
+	DriversLicense param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationDriversLicense] `json:"drivers_license"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationOther] `json:"other"`
+	// Information about the passport used for identification. Required if `method` is
+	// equal to `passport`.
+	Passport param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport] `json:"passport"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A method that can be used to verify the individual's identity.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod string
+
+const (
+	// A social security number.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "social_security_number"
+	// An individual taxpayer identification number (ITIN).
+	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "individual_taxpayer_identification_number"
+	// A passport number.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodPassport EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "passport"
+	// A driver's license number.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodDriversLicense EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "drivers_license"
+	// Another identifying document.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodOther EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "other"
+)
+
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationDriversLicense struct {
+	// The driver's license's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	// The identifier of the File containing the front of the driver's license.
+	FileID param.Field[string] `json:"file_id,required"`
+	// The state that issued the provided driver's license.
+	State param.Field[string] `json:"state,required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document.
+	Country param.Field[string] `json:"country,required"`
+	// A description of the document submitted.
+	Description param.Field[string] `json:"description,required"`
+	// The identifier of the File containing the front of the document.
+	FileID param.Field[string] `json:"file_id,required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport struct {
+	// The country that issued the passport.
+	Country param.Field[string] `json:"country,required"`
+	// The passport's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	// The identifier of the File containing the passport.
+	FileID param.Field[string] `json:"file_id,required"`
+}
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Why this person is considered a beneficial owner of the entity.
+type EntityBeneficialOwnerNewParamsBeneficialOwnerProng string
+
+const (
+	// A person with 25% or greater direct or indirect ownership of the entity.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership EntityBeneficialOwnerNewParamsBeneficialOwnerProng = "ownership"
+	// A person who manages, directs, or has significant control of the entity.
+	EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl EntityBeneficialOwnerNewParamsBeneficialOwnerProng = "control"
+)

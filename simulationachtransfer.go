@@ -1009,9 +1009,6 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
 	CheckTransferIntention ACHTransferSimulationTransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
-	// A Check Transfer Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection ACHTransferSimulationTransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -1084,7 +1081,6 @@ type achTransferSimulationTransactionSourceJSON struct {
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
-	CheckTransferRejection                      apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
@@ -1492,6 +1488,9 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Additional details about the card purchase, such as tax and industry-specific
+	// fields.
+	PurchaseDetails ACHTransferSimulationTransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1512,6 +1511,7 @@ type achTransferSimulationTransactionSourceCardRefundJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -1539,6 +1539,540 @@ const (
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyJpy ACHTransferSimulationTransactionSourceCardRefundCurrency = "JPY"
 	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCardRefundCurrencyUsd ACHTransferSimulationTransactionSourceCardRefundCurrency = "USD"
+)
+
+// Additional details about the card purchase, such as tax and industry-specific
+// fields.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetails struct {
+	// Fields specific to car rentals.
+	CarRental ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	// An identifier from the merchant for the customer or consumer.
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	// The state or provincial tax amount in minor units.
+	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	// Fields specific to lodging.
+	Lodging ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	// The national tax amount in minor units.
+	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	// An identifier from the merchant for the purchase to the issuer and cardholder.
+	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	// The format of the purchase identifier.
+	PurchaseIdentifierFormat ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	// Fields specific to travel.
+	Travel ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
+	JSON   achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON contains the
+// JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetails]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON struct {
+	CarRental                   apijson.Field
+	CustomerReferenceIdentifier apijson.Field
+	LocalTaxAmount              apijson.Field
+	LocalTaxCurrency            apijson.Field
+	Lodging                     apijson.Field
+	NationalTaxAmount           apijson.Field
+	NationalTaxCurrency         apijson.Field
+	PurchaseIdentifier          apijson.Field
+	PurchaseIdentifierFormat    apijson.Field
+	Travel                      apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to car rentals.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental struct {
+	// Code indicating the vehicle's class.
+	CarClassCode string `json:"car_class_code,required,nullable"`
+	// Date the customer picked up the car or, in the case of a no-show or pre-pay
+	// transaction, the scheduled pick up date.
+	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	// Daily rate being charged for the vehicle.
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+	// rate.
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	// Number of days the vehicle was rented.
+	DaysRented int64 `json:"days_rented,required,nullable"`
+	// Additional charges (gas, late fee, etc.) being billed.
+	ExtraCharges ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	// Fuel charges for the vehicle.
+	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+	// assessed.
+	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	// Any insurance being charged for the vehicle.
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+	// charges assessed.
+	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	// An indicator that the cardholder is being billed for a reserved vehicle that was
+	// not actually rented (that is, a "no-show" charge).
+	NoShowIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Charges for returning the vehicle at a different location than where it was
+	// picked up.
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+	// drop-off charges assessed.
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	// Name of the person renting the vehicle.
+	RenterName string `json:"renter_name,required,nullable"`
+	// Weekly rate being charged for the vehicle.
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+	// rental rate.
+	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON struct {
+	CarClassCode                 apijson.Field
+	CheckoutDate                 apijson.Field
+	DailyRentalRateAmount        apijson.Field
+	DailyRentalRateCurrency      apijson.Field
+	DaysRented                   apijson.Field
+	ExtraCharges                 apijson.Field
+	FuelChargesAmount            apijson.Field
+	FuelChargesCurrency          apijson.Field
+	InsuranceChargesAmount       apijson.Field
+	InsuranceChargesCurrency     apijson.Field
+	NoShowIndicator              apijson.Field
+	OneWayDropOffChargesAmount   apijson.Field
+	OneWayDropOffChargesCurrency apijson.Field
+	RenterName                   apijson.Field
+	WeeklyRentalRateAmount       apijson.Field
+	WeeklyRentalRateCurrency     apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (gas, late fee, etc.) being billed.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges string
+
+const (
+	// No extra charge
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	// Gas
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesGas ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
+	// Extra mileage
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	// Late return
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
+	// One way service fee
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
+	// Parking violation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
+)
+
+// An indicator that the cardholder is being billed for a reserved vehicle that was
+// not actually rented (that is, a "no-show" charge).
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator string
+
+const (
+	// Not applicable
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
+	// No show for specialized vehicle
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
+)
+
+// Fields specific to lodging.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging struct {
+	// Date the customer checked in.
+	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	// Daily rate being charged for the room.
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+	// rate.
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	// Additional charges (phone, late check-out, etc.) being billed.
+	ExtraCharges ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	// Folio cash advances for the room.
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+	// advances.
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	// Food and beverage charges for the room.
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// beverage charges.
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	// Indicator that the cardholder is being billed for a reserved room that was not
+	// actually used.
+	NoShowIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Prepaid expenses being charged for the room.
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+	// expenses.
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	// Number of nights the room was rented.
+	RoomNights int64 `json:"room_nights,required,nullable"`
+	// Total room tax being charged.
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+	// tax.
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	// Total tax being charged for the room.
+	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+	// assessed.
+	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
+	JSON             achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON struct {
+	CheckInDate                 apijson.Field
+	DailyRoomRateAmount         apijson.Field
+	DailyRoomRateCurrency       apijson.Field
+	ExtraCharges                apijson.Field
+	FolioCashAdvancesAmount     apijson.Field
+	FolioCashAdvancesCurrency   apijson.Field
+	FoodBeverageChargesAmount   apijson.Field
+	FoodBeverageChargesCurrency apijson.Field
+	NoShowIndicator             apijson.Field
+	PrepaidExpensesAmount       apijson.Field
+	PrepaidExpensesCurrency     apijson.Field
+	RoomNights                  apijson.Field
+	TotalRoomTaxAmount          apijson.Field
+	TotalRoomTaxCurrency        apijson.Field
+	TotalTaxAmount              apijson.Field
+	TotalTaxCurrency            apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (phone, late check-out, etc.) being billed.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges string
+
+const (
+	// No extra charge
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
+	// Restaurant
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesRestaurant ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
+	// Gift shop
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesGiftShop ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	// Mini bar
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesMiniBar ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	// Telephone
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesTelephone ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
+	// Other
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesOther ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "other"
+	// Laundry
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
+)
+
+// Indicator that the cardholder is being billed for a reserved room that was not
+// actually used.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator string
+
+const (
+	// Not applicable
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
+	// No show
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
+)
+
+// The format of the purchase identifier.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat string
+
+const (
+	// Free text
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	// Order number
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
+	// Rental agreement number
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
+	// Hotel folio number
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	// Invoice number
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+)
+
+// Fields specific to travel.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel struct {
+	// Ancillary purchases in addition to the airfare.
+	Ancillary ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	// Indicates the computerized reservation system used to book the ticket.
+	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Date of departure.
+	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	// Code for the originating city or airport.
+	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	// Name of the passenger.
+	PassengerName string `json:"passenger_name,required,nullable"`
+	// Indicates whether this ticket is non-refundable.
+	RestrictedTicketIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	// Indicates why a ticket was changed.
+	TicketChangeIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	// Ticket number.
+	TicketNumber string `json:"ticket_number,required,nullable"`
+	// Code for the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	// Name of the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	// Fields specific to each leg of the journey.
+	TripLegs []ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	JSON     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON struct {
+	Ancillary                     apijson.Field
+	ComputerizedReservationSystem apijson.Field
+	CreditReasonIndicator         apijson.Field
+	DepartureDate                 apijson.Field
+	OriginationCityAirportCode    apijson.Field
+	PassengerName                 apijson.Field
+	RestrictedTicketIndicator     apijson.Field
+	TicketChangeIndicator         apijson.Field
+	TicketNumber                  apijson.Field
+	TravelAgencyCode              apijson.Field
+	TravelAgencyName              apijson.Field
+	TripLegs                      apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Ancillary purchases in addition to the airfare.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillary struct {
+	// If this purchase has a connection or relationship to another purchase, such as a
+	// baggage fee for a passenger transport ticket, this field should contain the
+	// ticket document number for the other purchase.
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Name of the passenger or description of the ancillary purchase.
+	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	// Additional travel charges, such as baggage fees.
+	Services []ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	// Ticket document number.
+	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
+	JSON                 achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillary]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON struct {
+	ConnectedTicketDocumentNumber apijson.Field
+	CreditReasonIndicator         apijson.Field
+	PassengerNameOrDescription    apijson.Field
+	Services                      apijson.Field
+	TicketDocumentNumber          apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates the reason for a credit to the cardholder.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator string
+
+const (
+	// No credit
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Other
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+)
+
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService struct {
+	// Category of the ancillary service.
+	Category ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	// Sub-category of the ancillary service, free-form.
+	SubCategory string `json:"sub_category,required,nullable"`
+	JSON        achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON struct {
+	Category    apijson.Field
+	SubCategory apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Category of the ancillary service.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	// Bundled service
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	// Baggage fee
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	// Change fee
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	// Cargo
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	// Carbon offset
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	// Frequent flyer
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	// Gift card
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	// Ground transport
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
+	// In-flight entertainment
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
+	// Lounge
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	// Medical
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	// Meal beverage
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	// Other
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	// Passenger assist fee
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	// Pets
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	// Seat fees
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	// Standby
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	// Service fee
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	// Store
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	// Travel service
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	// Unaccompanied travel
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	// Upgrades
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	// Wi-fi
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+)
+
+// Indicates the reason for a credit to the cardholder.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator string
+
+const (
+	// No credit
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket cancellation
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	// Other
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
+	// Partial refund of airline ticket
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+)
+
+// Indicates whether this ticket is non-refundable.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
+
+const (
+	// No restrictions
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
+	// Restricted non-refundable ticket
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
+)
+
+// Indicates why a ticket was changed.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
+	// Change to existing ticket
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
+	// New ticket
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+)
+
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg struct {
+	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
+	CarrierCode string `json:"carrier_code,required,nullable"`
+	// Code for the destination city or airport.
+	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	// Fare basis code.
+	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	// Flight number.
+	FlightNumber string `json:"flight_number,required,nullable"`
+	// Service class (e.g., first class, business class, etc.).
+	ServiceClass string `json:"service_class,required,nullable"`
+	// Indicates whether a stopover is allowed on this ticket.
+	StopOverCode ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	JSON         achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+}
+
+// achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg]
+type achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON struct {
+	CarrierCode                apijson.Field
+	DestinationCityAirportCode apijson.Field
+	FareBasisCode              apijson.Field
+	FlightNumber               apijson.Field
+	ServiceClass               apijson.Field
+	StopOverCode               apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates whether a stopover is allowed on this ticket.
+type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	// Stop over allowed
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
+	// Stop over not allowed
+	ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -1637,6 +2171,9 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// Additional details about the card purchase, such as tax and industry-specific
+	// fields.
+	PurchaseDetails ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1661,6 +2198,7 @@ type achTransferSimulationTransactionSourceCardSettlementJSON struct {
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -1688,6 +2226,540 @@ const (
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyJpy ACHTransferSimulationTransactionSourceCardSettlementCurrency = "JPY"
 	// US Dollar (USD)
 	ACHTransferSimulationTransactionSourceCardSettlementCurrencyUsd ACHTransferSimulationTransactionSourceCardSettlementCurrency = "USD"
+)
+
+// Additional details about the card purchase, such as tax and industry-specific
+// fields.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetails struct {
+	// Fields specific to car rentals.
+	CarRental ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	// An identifier from the merchant for the customer or consumer.
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	// The state or provincial tax amount in minor units.
+	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	// Fields specific to lodging.
+	Lodging ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	// The national tax amount in minor units.
+	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	// An identifier from the merchant for the purchase to the issuer and cardholder.
+	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	// The format of the purchase identifier.
+	PurchaseIdentifierFormat ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	// Fields specific to travel.
+	Travel ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
+	JSON   achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON contains
+// the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetails]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON struct {
+	CarRental                   apijson.Field
+	CustomerReferenceIdentifier apijson.Field
+	LocalTaxAmount              apijson.Field
+	LocalTaxCurrency            apijson.Field
+	Lodging                     apijson.Field
+	NationalTaxAmount           apijson.Field
+	NationalTaxCurrency         apijson.Field
+	PurchaseIdentifier          apijson.Field
+	PurchaseIdentifierFormat    apijson.Field
+	Travel                      apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to car rentals.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRental struct {
+	// Code indicating the vehicle's class.
+	CarClassCode string `json:"car_class_code,required,nullable"`
+	// Date the customer picked up the car or, in the case of a no-show or pre-pay
+	// transaction, the scheduled pick up date.
+	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	// Daily rate being charged for the vehicle.
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+	// rate.
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	// Number of days the vehicle was rented.
+	DaysRented int64 `json:"days_rented,required,nullable"`
+	// Additional charges (gas, late fee, etc.) being billed.
+	ExtraCharges ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	// Fuel charges for the vehicle.
+	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+	// assessed.
+	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	// Any insurance being charged for the vehicle.
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+	// charges assessed.
+	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	// An indicator that the cardholder is being billed for a reserved vehicle that was
+	// not actually rented (that is, a "no-show" charge).
+	NoShowIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Charges for returning the vehicle at a different location than where it was
+	// picked up.
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+	// drop-off charges assessed.
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	// Name of the person renting the vehicle.
+	RenterName string `json:"renter_name,required,nullable"`
+	// Weekly rate being charged for the vehicle.
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+	// rental rate.
+	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRental]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON struct {
+	CarClassCode                 apijson.Field
+	CheckoutDate                 apijson.Field
+	DailyRentalRateAmount        apijson.Field
+	DailyRentalRateCurrency      apijson.Field
+	DaysRented                   apijson.Field
+	ExtraCharges                 apijson.Field
+	FuelChargesAmount            apijson.Field
+	FuelChargesCurrency          apijson.Field
+	InsuranceChargesAmount       apijson.Field
+	InsuranceChargesCurrency     apijson.Field
+	NoShowIndicator              apijson.Field
+	OneWayDropOffChargesAmount   apijson.Field
+	OneWayDropOffChargesCurrency apijson.Field
+	RenterName                   apijson.Field
+	WeeklyRentalRateAmount       apijson.Field
+	WeeklyRentalRateCurrency     apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (gas, late fee, etc.) being billed.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges string
+
+const (
+	// No extra charge
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	// Gas
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesGas ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
+	// Extra mileage
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	// Late return
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
+	// One way service fee
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
+	// Parking violation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
+)
+
+// An indicator that the cardholder is being billed for a reserved vehicle that was
+// not actually rented (that is, a "no-show" charge).
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
+
+const (
+	// Not applicable
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
+	// No show for specialized vehicle
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
+)
+
+// Fields specific to lodging.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging struct {
+	// Date the customer checked in.
+	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	// Daily rate being charged for the room.
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+	// rate.
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	// Additional charges (phone, late check-out, etc.) being billed.
+	ExtraCharges ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	// Folio cash advances for the room.
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+	// advances.
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	// Food and beverage charges for the room.
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// beverage charges.
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	// Indicator that the cardholder is being billed for a reserved room that was not
+	// actually used.
+	NoShowIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Prepaid expenses being charged for the room.
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+	// expenses.
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	// Number of nights the room was rented.
+	RoomNights int64 `json:"room_nights,required,nullable"`
+	// Total room tax being charged.
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+	// tax.
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	// Total tax being charged for the room.
+	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+	// assessed.
+	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
+	JSON             achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON struct {
+	CheckInDate                 apijson.Field
+	DailyRoomRateAmount         apijson.Field
+	DailyRoomRateCurrency       apijson.Field
+	ExtraCharges                apijson.Field
+	FolioCashAdvancesAmount     apijson.Field
+	FolioCashAdvancesCurrency   apijson.Field
+	FoodBeverageChargesAmount   apijson.Field
+	FoodBeverageChargesCurrency apijson.Field
+	NoShowIndicator             apijson.Field
+	PrepaidExpensesAmount       apijson.Field
+	PrepaidExpensesCurrency     apijson.Field
+	RoomNights                  apijson.Field
+	TotalRoomTaxAmount          apijson.Field
+	TotalRoomTaxCurrency        apijson.Field
+	TotalTaxAmount              apijson.Field
+	TotalTaxCurrency            apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (phone, late check-out, etc.) being billed.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges string
+
+const (
+	// No extra charge
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
+	// Restaurant
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
+	// Gift shop
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	// Mini bar
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	// Telephone
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesTelephone ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
+	// Other
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesOther ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
+	// Laundry
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
+)
+
+// Indicator that the cardholder is being billed for a reserved room that was not
+// actually used.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator string
+
+const (
+	// Not applicable
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
+	// No show
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
+)
+
+// The format of the purchase identifier.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
+
+const (
+	// Free text
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	// Order number
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
+	// Rental agreement number
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
+	// Hotel folio number
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	// Invoice number
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+)
+
+// Fields specific to travel.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel struct {
+	// Ancillary purchases in addition to the airfare.
+	Ancillary ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	// Indicates the computerized reservation system used to book the ticket.
+	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Date of departure.
+	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	// Code for the originating city or airport.
+	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	// Name of the passenger.
+	PassengerName string `json:"passenger_name,required,nullable"`
+	// Indicates whether this ticket is non-refundable.
+	RestrictedTicketIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	// Indicates why a ticket was changed.
+	TicketChangeIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	// Ticket number.
+	TicketNumber string `json:"ticket_number,required,nullable"`
+	// Code for the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	// Name of the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	// Fields specific to each leg of the journey.
+	TripLegs []ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	JSON     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON struct {
+	Ancillary                     apijson.Field
+	ComputerizedReservationSystem apijson.Field
+	CreditReasonIndicator         apijson.Field
+	DepartureDate                 apijson.Field
+	OriginationCityAirportCode    apijson.Field
+	PassengerName                 apijson.Field
+	RestrictedTicketIndicator     apijson.Field
+	TicketChangeIndicator         apijson.Field
+	TicketNumber                  apijson.Field
+	TravelAgencyCode              apijson.Field
+	TravelAgencyName              apijson.Field
+	TripLegs                      apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Ancillary purchases in addition to the airfare.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillary struct {
+	// If this purchase has a connection or relationship to another purchase, such as a
+	// baggage fee for a passenger transport ticket, this field should contain the
+	// ticket document number for the other purchase.
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Name of the passenger or description of the ancillary purchase.
+	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	// Additional travel charges, such as baggage fees.
+	Services []ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	// Ticket document number.
+	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
+	JSON                 achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillary]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON struct {
+	ConnectedTicketDocumentNumber apijson.Field
+	CreditReasonIndicator         apijson.Field
+	PassengerNameOrDescription    apijson.Field
+	Services                      apijson.Field
+	TicketDocumentNumber          apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates the reason for a credit to the cardholder.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator string
+
+const (
+	// No credit
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Other
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+)
+
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService struct {
+	// Category of the ancillary service.
+	Category ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	// Sub-category of the ancillary service, free-form.
+	SubCategory string `json:"sub_category,required,nullable"`
+	JSON        achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON struct {
+	Category    apijson.Field
+	SubCategory apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Category of the ancillary service.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	// Bundled service
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	// Baggage fee
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	// Change fee
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	// Cargo
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	// Carbon offset
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	// Frequent flyer
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	// Gift card
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	// Ground transport
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
+	// In-flight entertainment
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
+	// Lounge
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	// Medical
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	// Meal beverage
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	// Other
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	// Passenger assist fee
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	// Pets
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	// Seat fees
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	// Standby
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	// Service fee
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	// Store
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	// Travel service
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	// Unaccompanied travel
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	// Upgrades
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	// Wi-fi
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+)
+
+// Indicates the reason for a credit to the cardholder.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
+
+const (
+	// No credit
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket cancellation
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	// Other
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
+	// Partial refund of airline ticket
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+)
+
+// Indicates whether this ticket is non-refundable.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
+
+const (
+	// No restrictions
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
+	// Restricted non-refundable ticket
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
+)
+
+// Indicates why a ticket was changed.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
+	// Change to existing ticket
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
+	// New ticket
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+)
+
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg struct {
+	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
+	CarrierCode string `json:"carrier_code,required,nullable"`
+	// Code for the destination city or airport.
+	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	// Fare basis code.
+	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	// Flight number.
+	FlightNumber string `json:"flight_number,required,nullable"`
+	// Service class (e.g., first class, business class, etc.).
+	ServiceClass string `json:"service_class,required,nullable"`
+	// Indicates whether a stopover is allowed on this ticket.
+	StopOverCode ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	JSON         achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+}
+
+// achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg]
+type achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON struct {
+	CarrierCode                apijson.Field
+	DestinationCityAirportCode apijson.Field
+	FareBasisCode              apijson.Field
+	FlightNumber               apijson.Field
+	ServiceClass               apijson.Field
+	StopOverCode               apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates whether a stopover is allowed on this ticket.
+type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode string
+
+const (
+	// None
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	// Stop over allowed
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
+	// Stop over not allowed
+	ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -1740,9 +2812,6 @@ const (
 	// The Transaction was created by a Check Transfer Intention object. Details will
 	// be under the `check_transfer_intention` object.
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferIntention ACHTransferSimulationTransactionSourceCategory = "check_transfer_intention"
-	// The Transaction was created by a Check Transfer Rejection object. Details will
-	// be under the `check_transfer_rejection` object.
-	ACHTransferSimulationTransactionSourceCategoryCheckTransferRejection ACHTransferSimulationTransactionSourceCategory = "check_transfer_rejection"
 	// The Transaction was created by a Check Transfer Stop Payment Request object.
 	// Details will be under the `check_transfer_stop_payment_request` object.
 	ACHTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest ACHTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
@@ -2058,27 +3127,6 @@ const (
 	ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrencyUsd ACHTransferSimulationTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-// A Check Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_rejection`.
-type ACHTransferSimulationTransactionSourceCheckTransferRejection struct {
-	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceCheckTransferRejectionJSON
-}
-
-// achTransferSimulationTransactionSourceCheckTransferRejectionJSON contains the
-// JSON metadata for the struct
-// [ACHTransferSimulationTransactionSourceCheckTransferRejection]
-type achTransferSimulationTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
@@ -2117,6 +3165,9 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason
 const (
 	// The check could not be delivered.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	// The check was cancelled by an Increase operator who will provide details
+	// out-of-band.
+	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonUnknown ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )
@@ -2743,6 +3794,8 @@ const (
 	ACHTransferSimulationTransactionSourceInternalSourceReasonBankMigration ACHTransferSimulationTransactionSourceInternalSourceReason = "bank_migration"
 	// Cashback
 	ACHTransferSimulationTransactionSourceInternalSourceReasonCashback ACHTransferSimulationTransactionSourceInternalSourceReason = "cashback"
+	// Check adjustment
+	ACHTransferSimulationTransactionSourceInternalSourceReasonCheckAdjustment ACHTransferSimulationTransactionSourceInternalSourceReason = "check_adjustment"
 	// Collection receivable
 	ACHTransferSimulationTransactionSourceInternalSourceReasonCollectionReceivable ACHTransferSimulationTransactionSourceInternalSourceReason = "collection_receivable"
 	// Empyreal adjustment
