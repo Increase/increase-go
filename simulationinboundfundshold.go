@@ -43,6 +43,8 @@ func (r *SimulationInboundFundsHoldService) Release(ctx context.Context, inbound
 // We hold funds for certain transaction types to account for return windows where
 // funds might still be clawed back by the sending institution.
 type SimulationInboundFundsHoldReleaseResponse struct {
+	// The Inbound Funds Hold identifier.
+	ID string `json:"id,required"`
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -72,6 +74,7 @@ type SimulationInboundFundsHoldReleaseResponse struct {
 // simulationInboundFundsHoldReleaseResponseJSON contains the JSON metadata for the
 // struct [SimulationInboundFundsHoldReleaseResponse]
 type simulationInboundFundsHoldReleaseResponseJSON struct {
+	ID                      apijson.Field
 	Amount                  apijson.Field
 	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field

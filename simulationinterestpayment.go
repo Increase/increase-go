@@ -197,9 +197,6 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// A Check Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_intention`.
 	CheckTransferIntention InterestPaymentSimulationResultTransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
-	// A Check Transfer Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to `check_transfer_rejection`.
-	CheckTransferRejection InterestPaymentSimulationResultTransactionSourceCheckTransferRejection `json:"check_transfer_rejection,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -272,7 +269,6 @@ type interestPaymentSimulationResultTransactionSourceJSON struct {
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
 	CheckTransferIntention                      apijson.Field
-	CheckTransferRejection                      apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
@@ -680,6 +676,9 @@ type InterestPaymentSimulationResultTransactionSourceCardRefund struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Additional details about the card purchase, such as tax and industry-specific
+	// fields.
+	PurchaseDetails InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -701,6 +700,7 @@ type interestPaymentSimulationResultTransactionSourceCardRefundJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -728,6 +728,540 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "JPY"
 	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCardRefundCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardRefundCurrency = "USD"
+)
+
+// Additional details about the card purchase, such as tax and industry-specific
+// fields.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetails struct {
+	// Fields specific to car rentals.
+	CarRental InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	// An identifier from the merchant for the customer or consumer.
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	// The state or provincial tax amount in minor units.
+	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	// Fields specific to lodging.
+	Lodging InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	// The national tax amount in minor units.
+	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	// An identifier from the merchant for the purchase to the issuer and cardholder.
+	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	// The format of the purchase identifier.
+	PurchaseIdentifierFormat InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	// Fields specific to travel.
+	Travel InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
+	JSON   interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetails]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON struct {
+	CarRental                   apijson.Field
+	CustomerReferenceIdentifier apijson.Field
+	LocalTaxAmount              apijson.Field
+	LocalTaxCurrency            apijson.Field
+	Lodging                     apijson.Field
+	NationalTaxAmount           apijson.Field
+	NationalTaxCurrency         apijson.Field
+	PurchaseIdentifier          apijson.Field
+	PurchaseIdentifierFormat    apijson.Field
+	Travel                      apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to car rentals.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRental struct {
+	// Code indicating the vehicle's class.
+	CarClassCode string `json:"car_class_code,required,nullable"`
+	// Date the customer picked up the car or, in the case of a no-show or pre-pay
+	// transaction, the scheduled pick up date.
+	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	// Daily rate being charged for the vehicle.
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+	// rate.
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	// Number of days the vehicle was rented.
+	DaysRented int64 `json:"days_rented,required,nullable"`
+	// Additional charges (gas, late fee, etc.) being billed.
+	ExtraCharges InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	// Fuel charges for the vehicle.
+	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+	// assessed.
+	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	// Any insurance being charged for the vehicle.
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+	// charges assessed.
+	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	// An indicator that the cardholder is being billed for a reserved vehicle that was
+	// not actually rented (that is, a "no-show" charge).
+	NoShowIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Charges for returning the vehicle at a different location than where it was
+	// picked up.
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+	// drop-off charges assessed.
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	// Name of the person renting the vehicle.
+	RenterName string `json:"renter_name,required,nullable"`
+	// Weekly rate being charged for the vehicle.
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+	// rental rate.
+	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRental]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON struct {
+	CarClassCode                 apijson.Field
+	CheckoutDate                 apijson.Field
+	DailyRentalRateAmount        apijson.Field
+	DailyRentalRateCurrency      apijson.Field
+	DaysRented                   apijson.Field
+	ExtraCharges                 apijson.Field
+	FuelChargesAmount            apijson.Field
+	FuelChargesCurrency          apijson.Field
+	InsuranceChargesAmount       apijson.Field
+	InsuranceChargesCurrency     apijson.Field
+	NoShowIndicator              apijson.Field
+	OneWayDropOffChargesAmount   apijson.Field
+	OneWayDropOffChargesCurrency apijson.Field
+	RenterName                   apijson.Field
+	WeeklyRentalRateAmount       apijson.Field
+	WeeklyRentalRateCurrency     apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (gas, late fee, etc.) being billed.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges string
+
+const (
+	// No extra charge
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	// Gas
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesGas InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
+	// Extra mileage
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	// Late return
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
+	// One way service fee
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
+	// Parking violation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
+)
+
+// An indicator that the cardholder is being billed for a reserved vehicle that was
+// not actually rented (that is, a "no-show" charge).
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator string
+
+const (
+	// Not applicable
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
+	// No show for specialized vehicle
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
+)
+
+// Fields specific to lodging.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodging struct {
+	// Date the customer checked in.
+	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	// Daily rate being charged for the room.
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+	// rate.
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	// Additional charges (phone, late check-out, etc.) being billed.
+	ExtraCharges InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	// Folio cash advances for the room.
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+	// advances.
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	// Food and beverage charges for the room.
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// beverage charges.
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	// Indicator that the cardholder is being billed for a reserved room that was not
+	// actually used.
+	NoShowIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Prepaid expenses being charged for the room.
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+	// expenses.
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	// Number of nights the room was rented.
+	RoomNights int64 `json:"room_nights,required,nullable"`
+	// Total room tax being charged.
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+	// tax.
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	// Total tax being charged for the room.
+	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+	// assessed.
+	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
+	JSON             interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodging]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON struct {
+	CheckInDate                 apijson.Field
+	DailyRoomRateAmount         apijson.Field
+	DailyRoomRateCurrency       apijson.Field
+	ExtraCharges                apijson.Field
+	FolioCashAdvancesAmount     apijson.Field
+	FolioCashAdvancesCurrency   apijson.Field
+	FoodBeverageChargesAmount   apijson.Field
+	FoodBeverageChargesCurrency apijson.Field
+	NoShowIndicator             apijson.Field
+	PrepaidExpensesAmount       apijson.Field
+	PrepaidExpensesCurrency     apijson.Field
+	RoomNights                  apijson.Field
+	TotalRoomTaxAmount          apijson.Field
+	TotalRoomTaxCurrency        apijson.Field
+	TotalTaxAmount              apijson.Field
+	TotalTaxCurrency            apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (phone, late check-out, etc.) being billed.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges string
+
+const (
+	// No extra charge
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
+	// Restaurant
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesRestaurant InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
+	// Gift shop
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesGiftShop InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	// Mini bar
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesMiniBar InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	// Telephone
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesTelephone InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesOther InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "other"
+	// Laundry
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
+)
+
+// Indicator that the cardholder is being billed for a reserved room that was not
+// actually used.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator string
+
+const (
+	// Not applicable
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
+	// No show
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
+)
+
+// The format of the purchase identifier.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat string
+
+const (
+	// Free text
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	// Order number
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
+	// Rental agreement number
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
+	// Hotel folio number
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	// Invoice number
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+)
+
+// Fields specific to travel.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravel struct {
+	// Ancillary purchases in addition to the airfare.
+	Ancillary InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	// Indicates the computerized reservation system used to book the ticket.
+	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Date of departure.
+	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	// Code for the originating city or airport.
+	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	// Name of the passenger.
+	PassengerName string `json:"passenger_name,required,nullable"`
+	// Indicates whether this ticket is non-refundable.
+	RestrictedTicketIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	// Indicates why a ticket was changed.
+	TicketChangeIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	// Ticket number.
+	TicketNumber string `json:"ticket_number,required,nullable"`
+	// Code for the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	// Name of the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	// Fields specific to each leg of the journey.
+	TripLegs []InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	JSON     interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravel]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON struct {
+	Ancillary                     apijson.Field
+	ComputerizedReservationSystem apijson.Field
+	CreditReasonIndicator         apijson.Field
+	DepartureDate                 apijson.Field
+	OriginationCityAirportCode    apijson.Field
+	PassengerName                 apijson.Field
+	RestrictedTicketIndicator     apijson.Field
+	TicketChangeIndicator         apijson.Field
+	TicketNumber                  apijson.Field
+	TravelAgencyCode              apijson.Field
+	TravelAgencyName              apijson.Field
+	TripLegs                      apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravel) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Ancillary purchases in addition to the airfare.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary struct {
+	// If this purchase has a connection or relationship to another purchase, such as a
+	// baggage fee for a passenger transport ticket, this field should contain the
+	// ticket document number for the other purchase.
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Name of the passenger or description of the ancillary purchase.
+	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	// Additional travel charges, such as baggage fees.
+	Services []InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	// Ticket document number.
+	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
+	JSON                 interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON struct {
+	ConnectedTicketDocumentNumber apijson.Field
+	CreditReasonIndicator         apijson.Field
+	PassengerNameOrDescription    apijson.Field
+	Services                      apijson.Field
+	TicketDocumentNumber          apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates the reason for a credit to the cardholder.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator string
+
+const (
+	// No credit
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+)
+
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService struct {
+	// Category of the ancillary service.
+	Category InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	// Sub-category of the ancillary service, free-form.
+	SubCategory string `json:"sub_category,required,nullable"`
+	JSON        interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON struct {
+	Category    apijson.Field
+	SubCategory apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Category of the ancillary service.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	// Bundled service
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	// Baggage fee
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	// Change fee
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	// Cargo
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	// Carbon offset
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	// Frequent flyer
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	// Gift card
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	// Ground transport
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
+	// In-flight entertainment
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
+	// Lounge
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	// Medical
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	// Meal beverage
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	// Passenger assist fee
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	// Pets
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	// Seat fees
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	// Standby
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	// Service fee
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	// Store
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	// Travel service
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	// Unaccompanied travel
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	// Upgrades
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	// Wi-fi
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+)
+
+// Indicates the reason for a credit to the cardholder.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator string
+
+const (
+	// No credit
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket cancellation
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
+	// Partial refund of airline ticket
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+)
+
+// Indicates whether this ticket is non-refundable.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
+
+const (
+	// No restrictions
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
+	// Restricted non-refundable ticket
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
+)
+
+// Indicates why a ticket was changed.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
+	// Change to existing ticket
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
+	// New ticket
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+)
+
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLeg struct {
+	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
+	CarrierCode string `json:"carrier_code,required,nullable"`
+	// Code for the destination city or airport.
+	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	// Fare basis code.
+	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	// Flight number.
+	FlightNumber string `json:"flight_number,required,nullable"`
+	// Service class (e.g., first class, business class, etc.).
+	ServiceClass string `json:"service_class,required,nullable"`
+	// Indicates whether a stopover is allowed on this ticket.
+	StopOverCode InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	JSON         interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLeg]
+type interestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON struct {
+	CarrierCode                apijson.Field
+	DestinationCityAirportCode apijson.Field
+	FareBasisCode              apijson.Field
+	FlightNumber               apijson.Field
+	ServiceClass               apijson.Field
+	StopOverCode               apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLeg) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates whether a stopover is allowed on this ticket.
+type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	// Stop over allowed
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
+	// Stop over not allowed
+	InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -826,6 +1360,9 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// Additional details about the card purchase, such as tax and industry-specific
+	// fields.
+	PurchaseDetails InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -851,6 +1388,7 @@ type interestPaymentSimulationResultTransactionSourceCardSettlementJSON struct {
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -878,6 +1416,540 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyJpy InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "JPY"
 	// US Dollar (USD)
 	InterestPaymentSimulationResultTransactionSourceCardSettlementCurrencyUsd InterestPaymentSimulationResultTransactionSourceCardSettlementCurrency = "USD"
+)
+
+// Additional details about the card purchase, such as tax and industry-specific
+// fields.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetails struct {
+	// Fields specific to car rentals.
+	CarRental InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	// An identifier from the merchant for the customer or consumer.
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	// The state or provincial tax amount in minor units.
+	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	// Fields specific to lodging.
+	Lodging InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	// The national tax amount in minor units.
+	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+	// assessed.
+	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	// An identifier from the merchant for the purchase to the issuer and cardholder.
+	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	// The format of the purchase identifier.
+	PurchaseIdentifierFormat InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	// Fields specific to travel.
+	Travel InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
+	JSON   interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetails]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON struct {
+	CarRental                   apijson.Field
+	CustomerReferenceIdentifier apijson.Field
+	LocalTaxAmount              apijson.Field
+	LocalTaxCurrency            apijson.Field
+	Lodging                     apijson.Field
+	NationalTaxAmount           apijson.Field
+	NationalTaxCurrency         apijson.Field
+	PurchaseIdentifier          apijson.Field
+	PurchaseIdentifierFormat    apijson.Field
+	Travel                      apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields specific to car rentals.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRental struct {
+	// Code indicating the vehicle's class.
+	CarClassCode string `json:"car_class_code,required,nullable"`
+	// Date the customer picked up the car or, in the case of a no-show or pre-pay
+	// transaction, the scheduled pick up date.
+	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	// Daily rate being charged for the vehicle.
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+	// rate.
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	// Number of days the vehicle was rented.
+	DaysRented int64 `json:"days_rented,required,nullable"`
+	// Additional charges (gas, late fee, etc.) being billed.
+	ExtraCharges InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	// Fuel charges for the vehicle.
+	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+	// assessed.
+	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	// Any insurance being charged for the vehicle.
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+	// charges assessed.
+	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	// An indicator that the cardholder is being billed for a reserved vehicle that was
+	// not actually rented (that is, a "no-show" charge).
+	NoShowIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Charges for returning the vehicle at a different location than where it was
+	// picked up.
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+	// drop-off charges assessed.
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	// Name of the person renting the vehicle.
+	RenterName string `json:"renter_name,required,nullable"`
+	// Weekly rate being charged for the vehicle.
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+	// rental rate.
+	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRental]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON struct {
+	CarClassCode                 apijson.Field
+	CheckoutDate                 apijson.Field
+	DailyRentalRateAmount        apijson.Field
+	DailyRentalRateCurrency      apijson.Field
+	DaysRented                   apijson.Field
+	ExtraCharges                 apijson.Field
+	FuelChargesAmount            apijson.Field
+	FuelChargesCurrency          apijson.Field
+	InsuranceChargesAmount       apijson.Field
+	InsuranceChargesCurrency     apijson.Field
+	NoShowIndicator              apijson.Field
+	OneWayDropOffChargesAmount   apijson.Field
+	OneWayDropOffChargesCurrency apijson.Field
+	RenterName                   apijson.Field
+	WeeklyRentalRateAmount       apijson.Field
+	WeeklyRentalRateCurrency     apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (gas, late fee, etc.) being billed.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges string
+
+const (
+	// No extra charge
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	// Gas
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesGas InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
+	// Extra mileage
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	// Late return
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
+	// One way service fee
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
+	// Parking violation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
+)
+
+// An indicator that the cardholder is being billed for a reserved vehicle that was
+// not actually rented (that is, a "no-show" charge).
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
+
+const (
+	// Not applicable
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
+	// No show for specialized vehicle
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
+)
+
+// Fields specific to lodging.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodging struct {
+	// Date the customer checked in.
+	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	// Daily rate being charged for the room.
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+	// rate.
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	// Additional charges (phone, late check-out, etc.) being billed.
+	ExtraCharges InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	// Folio cash advances for the room.
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+	// advances.
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	// Food and beverage charges for the room.
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// beverage charges.
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	// Indicator that the cardholder is being billed for a reserved room that was not
+	// actually used.
+	NoShowIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	// Prepaid expenses being charged for the room.
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+	// expenses.
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	// Number of nights the room was rented.
+	RoomNights int64 `json:"room_nights,required,nullable"`
+	// Total room tax being charged.
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+	// tax.
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	// Total tax being charged for the room.
+	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+	// assessed.
+	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
+	JSON             interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodging]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON struct {
+	CheckInDate                 apijson.Field
+	DailyRoomRateAmount         apijson.Field
+	DailyRoomRateCurrency       apijson.Field
+	ExtraCharges                apijson.Field
+	FolioCashAdvancesAmount     apijson.Field
+	FolioCashAdvancesCurrency   apijson.Field
+	FoodBeverageChargesAmount   apijson.Field
+	FoodBeverageChargesCurrency apijson.Field
+	NoShowIndicator             apijson.Field
+	PrepaidExpensesAmount       apijson.Field
+	PrepaidExpensesCurrency     apijson.Field
+	RoomNights                  apijson.Field
+	TotalRoomTaxAmount          apijson.Field
+	TotalRoomTaxCurrency        apijson.Field
+	TotalTaxAmount              apijson.Field
+	TotalTaxCurrency            apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional charges (phone, late check-out, etc.) being billed.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges string
+
+const (
+	// No extra charge
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
+	// Restaurant
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
+	// Gift shop
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	// Mini bar
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	// Telephone
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesTelephone InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesOther InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
+	// Laundry
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
+)
+
+// Indicator that the cardholder is being billed for a reserved room that was not
+// actually used.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator string
+
+const (
+	// Not applicable
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
+	// No show
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
+)
+
+// The format of the purchase identifier.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
+
+const (
+	// Free text
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	// Order number
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
+	// Rental agreement number
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
+	// Hotel folio number
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	// Invoice number
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+)
+
+// Fields specific to travel.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravel struct {
+	// Ancillary purchases in addition to the airfare.
+	Ancillary InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	// Indicates the computerized reservation system used to book the ticket.
+	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Date of departure.
+	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	// Code for the originating city or airport.
+	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	// Name of the passenger.
+	PassengerName string `json:"passenger_name,required,nullable"`
+	// Indicates whether this ticket is non-refundable.
+	RestrictedTicketIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	// Indicates why a ticket was changed.
+	TicketChangeIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	// Ticket number.
+	TicketNumber string `json:"ticket_number,required,nullable"`
+	// Code for the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	// Name of the travel agency if the ticket was issued by a travel agency.
+	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	// Fields specific to each leg of the journey.
+	TripLegs []InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	JSON     interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravel]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON struct {
+	Ancillary                     apijson.Field
+	ComputerizedReservationSystem apijson.Field
+	CreditReasonIndicator         apijson.Field
+	DepartureDate                 apijson.Field
+	OriginationCityAirportCode    apijson.Field
+	PassengerName                 apijson.Field
+	RestrictedTicketIndicator     apijson.Field
+	TicketChangeIndicator         apijson.Field
+	TicketNumber                  apijson.Field
+	TravelAgencyCode              apijson.Field
+	TravelAgencyName              apijson.Field
+	TripLegs                      apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravel) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Ancillary purchases in addition to the airfare.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary struct {
+	// If this purchase has a connection or relationship to another purchase, such as a
+	// baggage fee for a passenger transport ticket, this field should contain the
+	// ticket document number for the other purchase.
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	// Indicates the reason for a credit to the cardholder.
+	CreditReasonIndicator InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	// Name of the passenger or description of the ancillary purchase.
+	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	// Additional travel charges, such as baggage fees.
+	Services []InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	// Ticket document number.
+	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
+	JSON                 interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON struct {
+	ConnectedTicketDocumentNumber apijson.Field
+	CreditReasonIndicator         apijson.Field
+	PassengerNameOrDescription    apijson.Field
+	Services                      apijson.Field
+	TicketDocumentNumber          apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates the reason for a credit to the cardholder.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator string
+
+const (
+	// No credit
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+)
+
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService struct {
+	// Category of the ancillary service.
+	Category InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	// Sub-category of the ancillary service, free-form.
+	SubCategory string `json:"sub_category,required,nullable"`
+	JSON        interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON struct {
+	Category    apijson.Field
+	SubCategory apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Category of the ancillary service.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	// Bundled service
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	// Baggage fee
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	// Change fee
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	// Cargo
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	// Carbon offset
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	// Frequent flyer
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	// Gift card
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	// Ground transport
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
+	// In-flight entertainment
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
+	// Lounge
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	// Medical
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	// Meal beverage
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	// Passenger assist fee
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	// Pets
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	// Seat fees
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	// Standby
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	// Service fee
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	// Store
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	// Travel service
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	// Unaccompanied travel
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	// Upgrades
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	// Wi-fi
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+)
+
+// Indicates the reason for a credit to the cardholder.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
+
+const (
+	// No credit
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	// Passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket and passenger transport ancillary purchase cancellation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
+	// Airline ticket cancellation
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	// Other
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
+	// Partial refund of airline ticket
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+)
+
+// Indicates whether this ticket is non-refundable.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
+
+const (
+	// No restrictions
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
+	// Restricted non-refundable ticket
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
+)
+
+// Indicates why a ticket was changed.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
+	// Change to existing ticket
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
+	// New ticket
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+)
+
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg struct {
+	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
+	CarrierCode string `json:"carrier_code,required,nullable"`
+	// Code for the destination city or airport.
+	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	// Fare basis code.
+	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	// Flight number.
+	FlightNumber string `json:"flight_number,required,nullable"`
+	// Service class (e.g., first class, business class, etc.).
+	ServiceClass string `json:"service_class,required,nullable"`
+	// Indicates whether a stopover is allowed on this ticket.
+	StopOverCode InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	JSON         interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+}
+
+// interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+// contains the JSON metadata for the struct
+// [InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg]
+type interestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON struct {
+	CarrierCode                apijson.Field
+	DestinationCityAirportCode apijson.Field
+	FareBasisCode              apijson.Field
+	FlightNumber               apijson.Field
+	ServiceClass               apijson.Field
+	StopOverCode               apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Indicates whether a stopover is allowed on this ticket.
+type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode string
+
+const (
+	// None
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	// Stop over allowed
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
+	// Stop over not allowed
+	InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -930,9 +2002,6 @@ const (
 	// The Transaction was created by a Check Transfer Intention object. Details will
 	// be under the `check_transfer_intention` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferIntention InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_intention"
-	// The Transaction was created by a Check Transfer Rejection object. Details will
-	// be under the `check_transfer_rejection` object.
-	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferRejection InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_rejection"
 	// The Transaction was created by a Check Transfer Stop Payment Request object.
 	// Details will be under the `check_transfer_stop_payment_request` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest InterestPaymentSimulationResultTransactionSourceCategory = "check_transfer_stop_payment_request"
@@ -1248,27 +2317,6 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrencyUsd InterestPaymentSimulationResultTransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
-// A Check Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_rejection`.
-type InterestPaymentSimulationResultTransactionSourceCheckTransferRejection struct {
-	// The identifier of the Check Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
-}
-
-// interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON
-// contains the JSON metadata for the struct
-// [InterestPaymentSimulationResultTransactionSourceCheckTransferRejection]
-type interestPaymentSimulationResultTransactionSourceCheckTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
@@ -1307,6 +2355,9 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentReq
 const (
 	// The check could not be delivered.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	// The check was cancelled by an Increase operator who will provide details
+	// out-of-band.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonUnknown InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )
@@ -1937,6 +2988,8 @@ const (
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonBankMigration InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "bank_migration"
 	// Cashback
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCashback InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "cashback"
+	// Check adjustment
+	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCheckAdjustment InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "check_adjustment"
 	// Collection receivable
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonCollectionReceivable InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "collection_receivable"
 	// Empyreal adjustment
@@ -2085,6 +3138,10 @@ type SimulationInterestPaymentNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The interest amount in cents. Must be positive.
 	Amount param.Field[int64] `json:"amount,required"`
+	// The end of the interest period. If not provided, defaults to the current time.
+	PeriodEnd param.Field[time.Time] `json:"period_end" format:"date-time"`
+	// The start of the interest period. If not provided, defaults to the current time.
+	PeriodStart param.Field[time.Time] `json:"period_start" format:"date-time"`
 }
 
 func (r SimulationInterestPaymentNewParams) MarshalJSON() (data []byte, err error) {

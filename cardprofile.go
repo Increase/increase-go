@@ -184,14 +184,16 @@ func (r *CardProfileDigitalWalletsTextColor) UnmarshalJSON(data []byte) (err err
 // How physical cards should be designed and shipped.
 type CardProfilePhysicalCards struct {
 	// The identifier of the File containing the physical card's back image.
-	BackImageFileID string `json:"back_image_file_id,required"`
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
 	// The identifier of the File containing the physical card's carrier image.
-	CarrierImageFileID string `json:"carrier_image_file_id,required"`
+	CarrierImageFileID string `json:"carrier_image_file_id,required,nullable"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone string `json:"contact_phone,required"`
+	ContactPhone string `json:"contact_phone,required,nullable"`
 	// The identifier of the File containing the physical card's front image.
-	FrontImageFileID string `json:"front_image_file_id,required"`
-	JSON             cardProfilePhysicalCardsJSON
+	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The status of the Physical Card Profile.
+	Status CardProfilePhysicalCardsStatus `json:"status,required"`
+	JSON   cardProfilePhysicalCardsJSON
 }
 
 // cardProfilePhysicalCardsJSON contains the JSON metadata for the struct
@@ -201,6 +203,7 @@ type cardProfilePhysicalCardsJSON struct {
 	CarrierImageFileID apijson.Field
 	ContactPhone       apijson.Field
 	FrontImageFileID   apijson.Field
+	Status             apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -208,6 +211,22 @@ type cardProfilePhysicalCardsJSON struct {
 func (r *CardProfilePhysicalCards) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The status of the Physical Card Profile.
+type CardProfilePhysicalCardsStatus string
+
+const (
+	// The Card Profile is not eligible for physical cards.
+	CardProfilePhysicalCardsStatusNotEligible CardProfilePhysicalCardsStatus = "not_eligible"
+	// There is an issue with the Physical Card Profile preventing it from use.
+	CardProfilePhysicalCardsStatusRejected CardProfilePhysicalCardsStatus = "rejected"
+	// The card profile is awaiting review by Increase.
+	CardProfilePhysicalCardsStatusPendingReviewing CardProfilePhysicalCardsStatus = "pending_reviewing"
+	// The card profile is awaiting submission to the fulfillment provider.
+	CardProfilePhysicalCardsStatusPendingSubmitting CardProfilePhysicalCardsStatus = "pending_submitting"
+	// The Physical Card Profile has been submitted to the fulfillment provider.
+	CardProfilePhysicalCardsStatusSubmitted CardProfilePhysicalCardsStatus = "submitted"
+)
 
 // The status of the Card Profile.
 type CardProfileStatus string

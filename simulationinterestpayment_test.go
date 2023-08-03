@@ -6,13 +6,14 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationInterestPaymentNew(t *testing.T) {
+func TestSimulationInterestPaymentNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
@@ -21,8 +22,10 @@ func TestSimulationInterestPaymentNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.InterestPayments.New(context.TODO(), increase.SimulationInterestPaymentNewParams{
-		AccountID: increase.F("string"),
-		Amount:    increase.F(int64(1)),
+		AccountID:   increase.F("string"),
+		Amount:      increase.F(int64(1)),
+		PeriodEnd:   increase.F(time.Now()),
+		PeriodStart: increase.F(time.Now()),
 	})
 	if err != nil {
 		var apierr *increase.Error

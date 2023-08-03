@@ -625,6 +625,8 @@ const (
 // A Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
 type PendingTransactionSourceInboundFundsHold struct {
+	// The Inbound Funds Hold identifier.
+	ID string `json:"id,required"`
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -654,6 +656,7 @@ type PendingTransactionSourceInboundFundsHold struct {
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
 // struct [PendingTransactionSourceInboundFundsHold]
 type pendingTransactionSourceInboundFundsHoldJSON struct {
+	ID                      apijson.Field
 	Amount                  apijson.Field
 	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field
