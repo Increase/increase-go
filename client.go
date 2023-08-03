@@ -24,6 +24,7 @@ type Client struct {
 	Cards                       *CardService
 	CardDisputes                *CardDisputeService
 	CardProfiles                *CardProfileService
+	CardPurchaseSupplements     *CardPurchaseSupplementService
 	ExternalAccounts            *ExternalAccountService
 	Exports                     *ExportService
 	DigitalWalletTokens         *DigitalWalletTokenService
@@ -77,6 +78,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Cards = NewCardService(opts...)
 	r.CardDisputes = NewCardDisputeService(opts...)
 	r.CardProfiles = NewCardProfileService(opts...)
+	r.CardPurchaseSupplements = NewCardPurchaseSupplementService(opts...)
 	r.ExternalAccounts = NewExternalAccountService(opts...)
 	r.Exports = NewExportService(opts...)
 	r.DigitalWalletTokens = NewDigitalWalletTokenService(opts...)

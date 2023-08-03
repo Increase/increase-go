@@ -23,6 +23,7 @@ import (
 // service directly, and instead use the [NewEntityService] method instead.
 type EntityService struct {
 	Options               []option.RequestOption
+	BeneficialOwners      *EntityBeneficialOwnerService
 	SupplementalDocuments *EntitySupplementalDocumentService
 }
 
@@ -32,6 +33,7 @@ type EntityService struct {
 func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 	r = &EntityService{}
 	r.Options = opts
+	r.BeneficialOwners = NewEntityBeneficialOwnerService(opts...)
 	r.SupplementalDocuments = NewEntitySupplementalDocumentService(opts...)
 	return
 }

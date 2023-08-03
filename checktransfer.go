@@ -492,6 +492,9 @@ type CheckTransferStopPaymentRequestReason string
 const (
 	// The check could not be delivered.
 	CheckTransferStopPaymentRequestReasonMailDeliveryFailed CheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	// The check was cancelled by an Increase operator who will provide details
+	// out-of-band.
+	CheckTransferStopPaymentRequestReasonRejectedByIncrease CheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
 	CheckTransferStopPaymentRequestReasonUnknown CheckTransferStopPaymentRequestReason = "unknown"
 )
