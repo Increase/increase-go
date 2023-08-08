@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.2](https://github.com/Increase/increase-go/compare/v0.6.1...v0.6.2) (2023-08-08)
+
+
+### Features
+
+* **api:** updates ([#59](https://github.com/Increase/increase-go/issues/59)) ([3ebf588](https://github.com/Increase/increase-go/commit/3ebf588b69d7cb1a2b304cf6008970a86bf4b7c7))
+
+
+### Chores
+
+* **internal:** minor reformatting of code ([#56](https://github.com/Increase/increase-go/issues/56)) ([b0cf72f](https://github.com/Increase/increase-go/commit/b0cf72f36e0ae74cace8b05a2b7fbedc09f9df8d))
+
+
+### Documentation
+
+* **readme:** remove beta status + document versioning policy ([#61](https://github.com/Increase/increase-go/issues/61)) ([4c384c7](https://github.com/Increase/increase-go/commit/4c384c7ebf099370ab11b66a2eb388ab6b02bd8e))
+
 ## [0.6.1](https://github.com/Increase/increase-go/compare/v0.6.0...v0.6.1) (2023-07-27)
 
 
