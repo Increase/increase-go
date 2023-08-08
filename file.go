@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/increase/increase-go/internal/apiform"
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
 	"github.com/increase/increase-go/internal/param"
@@ -196,36 +197,19 @@ type FileNewParams struct {
 	Description param.Field[string] `json:"description"`
 }
 
-func (r FileNewParams) MarshalMultipart() (data []byte, err error) {
-	body := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(body)
-	defer writer.Close()
-	{
-		name := "anonymous_file"
-		if nameable, ok := r.File.Value.(interface{ Name() string }); ok {
-			name = nameable.Name()
-		}
-		part, err := writer.CreateFormFile("file", name)
-		if err != nil {
-			return nil, err
-		}
-		io.Copy(part, r.File.Value)
+func (r FileNewParams) MarshalMultipart() (data []byte, contentType string, err error) {
+	buf := bytes.NewBuffer(nil)
+	writer := multipart.NewWriter(buf)
+	err = apiform.MarshalRoot(r, writer)
+	if err != nil {
+		writer.Close()
+		return nil, "", err
 	}
-	{
-		bdy, err := apijson.Marshal(r.Purpose)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("purpose", string(bdy))
+	err = writer.Close()
+	if err != nil {
+		return nil, "", err
 	}
-	{
-		bdy, err := apijson.Marshal(r.Description)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("description", string(bdy))
-	}
-	return body.Bytes(), nil
+	return buf.Bytes(), writer.FormDataContentType(), nil
 }
 
 // What the File will be used for in Increase's systems.
