@@ -312,6 +312,9 @@ const (
 // If the check has been mailed by Increase, this will contain details of the
 // shipment.
 type CheckTransferMailing struct {
+	// The ID of the file corresponding to an image of the check that was mailed, if
+	// available.
+	ImageID string `json:"image_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
 	MailedAt time.Time `json:"mailed_at,required" format:"date-time"`
@@ -321,6 +324,7 @@ type CheckTransferMailing struct {
 // checkTransferMailingJSON contains the JSON metadata for the struct
 // [CheckTransferMailing]
 type checkTransferMailingJSON struct {
+	ImageID     apijson.Field
 	MailedAt    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field

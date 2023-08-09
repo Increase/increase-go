@@ -1016,8 +1016,8 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`.
 	FeePayment ACHTransferSimulationTransactionSourceFeePayment `json:"fee_payment,required,nullable"`
-	// A Inbound ACH Transfer object. This field will be present in the JSON response
-	// if and only if `category` is equal to `inbound_ach_transfer`.
+	// A Inbound ACH Transfer Intention object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer ACHTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
 	// A Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
@@ -2818,8 +2818,8 @@ const (
 	// The Transaction was created by a Fee Payment object. Details will be under the
 	// `fee_payment` object.
 	ACHTransferSimulationTransactionSourceCategoryFeePayment ACHTransferSimulationTransactionSourceCategory = "fee_payment"
-	// The Transaction was created by a Inbound ACH Transfer object. Details will be
-	// under the `inbound_ach_transfer` object.
+	// The Transaction was created by a Inbound ACH Transfer Intention object. Details
+	// will be under the `inbound_ach_transfer` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundACHTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
 	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
 	// Details will be under the `inbound_ach_transfer_return_intention` object.
@@ -3227,8 +3227,8 @@ const (
 	ACHTransferSimulationTransactionSourceFeePaymentCurrencyUsd ACHTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
 )
 
-// A Inbound ACH Transfer object. This field will be present in the JSON response
-// if and only if `category` is equal to `inbound_ach_transfer`.
+// A Inbound ACH Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_ach_transfer`.
 type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.

@@ -72,7 +72,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prong:        increase.F(increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
 			}, {
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Name:        increase.F("x"),
@@ -109,7 +109,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prong:        increase.F(increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
 			}, {
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Name:        increase.F("x"),
@@ -146,7 +146,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prong:        increase.F(increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
 			}}),
 		}),
 		Description: increase.F("x"),
@@ -497,6 +497,24 @@ func TestEntityListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 	})
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestEntityArchive(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
+	)
+	_, err := client.Entities.Archive(context.TODO(), "entity_n8y8tnk2p9339ti393yi")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

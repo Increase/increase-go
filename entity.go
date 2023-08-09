@@ -77,6 +77,14 @@ func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListPara
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Archive an Entity
+func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("entities/%s/archive", entityID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
 // Entities are the legal entities that own accounts. They can be people,
 // corporations, partnerships, or trusts.
 type Entity struct {
@@ -1033,8 +1041,9 @@ func (r EntityNewParamsCorporationAddress) MarshalJSON() (data []byte, err error
 type EntityNewParamsCorporationBeneficialOwner struct {
 	// Personal details for the beneficial owner.
 	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
-	// Why this person is considered a beneficial owner of the entity.
-	Prong param.Field[EntityNewParamsCorporationBeneficialOwnersProng] `json:"prong,required"`
+	// Why this person is considered a beneficial owner of the entity. At least one
+	// option is required.
+	Prongs param.Field[[]EntityNewParamsCorporationBeneficialOwnersProng] `json:"prongs,required"`
 	// This person's role or title within the entity.
 	CompanyTitle param.Field[string] `json:"company_title"`
 }
@@ -1174,7 +1183,6 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPasspo
 	return apijson.MarshalRoot(r)
 }
 
-// Why this person is considered a beneficial owner of the entity.
 type EntityNewParamsCorporationBeneficialOwnersProng string
 
 const (
