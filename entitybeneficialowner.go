@@ -55,8 +55,9 @@ func (r EntityBeneficialOwnerNewParams) MarshalJSON() (data []byte, err error) {
 type EntityBeneficialOwnerNewParamsBeneficialOwner struct {
 	// Personal details for the beneficial owner.
 	Individual param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual] `json:"individual,required"`
-	// Why this person is considered a beneficial owner of the entity.
-	Prong param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerProng] `json:"prong,required"`
+	// Why this person is considered a beneficial owner of the entity. At least one
+	// option is required.
+	Prongs param.Field[[]EntityBeneficialOwnerNewParamsBeneficialOwnerProng] `json:"prongs,required"`
 	// This person's role or title within the entity.
 	CompanyTitle param.Field[string] `json:"company_title"`
 }
@@ -196,7 +197,6 @@ func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPas
 	return apijson.MarshalRoot(r)
 }
 
-// Why this person is considered a beneficial owner of the entity.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerProng string
 
 const (

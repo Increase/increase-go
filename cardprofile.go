@@ -74,6 +74,14 @@ func (r *CardProfileService) ListAutoPaging(ctx context.Context, query CardProfi
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Archive an Card Profile
+func (r *CardProfileService) Archive(ctx context.Context, cardProfileID string, opts ...option.RequestOption) (res *CardProfile, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("card_profiles/%s/archive", cardProfileID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
 // This contains artwork and metadata relating to a Card's appearance in digital
 // wallet apps like Apple Pay and Google Pay. For more information, see our guide
 // on [digital card artwork](https://increase.com/documentation/card-art)
@@ -88,6 +96,8 @@ type CardProfile struct {
 	// How Cards should appear in digital wallets such as Apple Pay. Different wallets
 	// will use these values to render card artwork appropriately for their app.
 	DigitalWallets CardProfileDigitalWallets `json:"digital_wallets,required"`
+	// Whether this Card Profile is the default for all cards in its Increase group.
+	IsDefault bool `json:"is_default,required"`
 	// How physical cards should be designed and shipped.
 	PhysicalCards CardProfilePhysicalCards `json:"physical_cards,required,nullable"`
 	// The status of the Card Profile.
@@ -104,6 +114,7 @@ type cardProfileJSON struct {
 	CreatedAt      apijson.Field
 	Description    apijson.Field
 	DigitalWallets apijson.Field
+	IsDefault      apijson.Field
 	PhysicalCards  apijson.Field
 	Status         apijson.Field
 	Type           apijson.Field

@@ -144,6 +144,8 @@ const (
 	FilePurposeCheckImageFront FilePurpose = "check_image_front"
 	// An image of the back of a check, used for check deposits.
 	FilePurposeCheckImageBack FilePurpose = "check_image_back"
+	// An image of a check that was mailed to a recipient.
+	FilePurposeMailedCheckImage FilePurpose = "mailed_check_image"
 	// IRS Form 1099-INT.
 	FilePurposeForm1099Int FilePurpose = "form_1099_int"
 	// IRS Form SS-4.
@@ -220,6 +222,8 @@ const (
 	FileNewParamsPurposeCheckImageFront FileNewParamsPurpose = "check_image_front"
 	// An image of the back of a check, used for check deposits.
 	FileNewParamsPurposeCheckImageBack FileNewParamsPurpose = "check_image_back"
+	// An image of a check that was mailed to a recipient.
+	FileNewParamsPurposeMailedCheckImage FileNewParamsPurpose = "mailed_check_image"
 	// IRS Form SS-4.
 	FileNewParamsPurposeFormSS4 FileNewParamsPurpose = "form_ss_4"
 	// An image of a government-issued ID.
@@ -309,6 +313,8 @@ const (
 	FileListParamsPurposeInCheckImageFront FileListParamsPurposeIn = "check_image_front"
 	// An image of the back of a check, used for check deposits.
 	FileListParamsPurposeInCheckImageBack FileListParamsPurposeIn = "check_image_back"
+	// An image of a check that was mailed to a recipient.
+	FileListParamsPurposeInMailedCheckImage FileListParamsPurposeIn = "mailed_check_image"
 	// IRS Form 1099-INT.
 	FileListParamsPurposeInForm1099Int FileListParamsPurposeIn = "form_1099_int"
 	// IRS Form SS-4.

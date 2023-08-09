@@ -61,7 +61,7 @@ func TestEntityBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prong:        increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership),
+				Prongs:       increase.F([]increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProng{increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership, increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership, increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership}),
 			}),
 		},
 	)

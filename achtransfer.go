@@ -598,6 +598,11 @@ const (
 // After the transfer is submitted to FedACH, this will contain supplemental
 // details.
 type ACHTransferSubmission struct {
+	// When the funds transfer is expected to settle in the recipient's account.
+	// Credits may be available sooner, at the receiving banks discretion. The FedACH
+	// schedule is published
+	// [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
+	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at,required" format:"date-time"`
 	// When the ACH transfer was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
 	// The trace number for the submission.
@@ -608,10 +613,11 @@ type ACHTransferSubmission struct {
 // achTransferSubmissionJSON contains the JSON metadata for the struct
 // [ACHTransferSubmission]
 type achTransferSubmissionJSON struct {
-	SubmittedAt apijson.Field
-	TraceNumber apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ExpectedFundsSettlementAt apijson.Field
+	SubmittedAt               apijson.Field
+	TraceNumber               apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
