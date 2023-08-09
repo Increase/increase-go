@@ -98,6 +98,9 @@ type ACHPrenotification struct {
 	CreditDebitIndicator ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator,required,nullable"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date-time"`
+	// If the receiving bank notifies that future transfers should use different
+	// details, this will contain those details.
+	NotificationsOfChange []ACHPrenotificationNotificationsOfChange `json:"notifications_of_change,required"`
 	// If your prenotification is returned, this will contain details of the return.
 	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -123,6 +126,7 @@ type achPrenotificationJSON struct {
 	CreatedAt                apijson.Field
 	CreditDebitIndicator     apijson.Field
 	EffectiveDate            apijson.Field
+	NotificationsOfChange    apijson.Field
 	PrenotificationReturn    apijson.Field
 	RoutingNumber            apijson.Field
 	Status                   apijson.Field
@@ -143,6 +147,58 @@ const (
 	ACHPrenotificationCreditDebitIndicatorCredit ACHPrenotificationCreditDebitIndicator = "credit"
 	// The Prenotification is for an anticipated debit.
 	ACHPrenotificationCreditDebitIndicatorDebit ACHPrenotificationCreditDebitIndicator = "debit"
+)
+
+type ACHPrenotificationNotificationsOfChange struct {
+	// The type of change that occurred.
+	ChangeCode ACHPrenotificationNotificationsOfChangeChangeCode `json:"change_code,required"`
+	// The corrected data.
+	CorrectedData string `json:"corrected_data,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the notification occurred.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	JSON      achPrenotificationNotificationsOfChangeJSON
+}
+
+// achPrenotificationNotificationsOfChangeJSON contains the JSON metadata for the
+// struct [ACHPrenotificationNotificationsOfChange]
+type achPrenotificationNotificationsOfChangeJSON struct {
+	ChangeCode    apijson.Field
+	CorrectedData apijson.Field
+	CreatedAt     apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ACHPrenotificationNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The type of change that occurred.
+type ACHPrenotificationNotificationsOfChangeChangeCode string
+
+const (
+	// The account number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectAccountNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_account_number"
+	// The routing number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_routing_number"
+	// Both the routing number and the account number were incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumberAndAccountNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_routing_number_and_account_number"
+	// The transaction code was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTransactionCode ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_transaction_code"
+	// The account number and the transaction code were incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectAccountNumberAndTransactionCode ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_account_number_and_transaction_code"
+	// The routing number, account number, and transaction code were incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_routing_number_account_number_and_transaction_code"
+	// The receiving depository financial institution identification was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_receiving_depository_financial_institution_identification"
+	// The individual identification number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectIndividualIdentificationNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_individual_identification_number"
+	// The addenda had an incorrect format.
+	ACHPrenotificationNotificationsOfChangeChangeCodeAddendaFormatError ACHPrenotificationNotificationsOfChangeChangeCode = "addenda_format_error"
+	// The standard entry class code was incorrect for an outbound international
+	// payment.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_standard_entry_class_code_for_outbound_international_payment"
 )
 
 // If your prenotification is returned, this will contain details of the return.
