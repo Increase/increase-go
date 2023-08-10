@@ -65,8 +65,10 @@ func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Events are records of things that happened to objects in the API. They also
-// result in webhooks being generated.
+// Events are records of things that happened to objects at Increase. Events are
+// accessible via the List Events endpoint and can be delivered to your application
+// via webhooks. For more information, see our
+// [webhooks guide](https://increase.com/documentation/webhooks).
 type Event struct {
 	// The Event identifier.
 	ID string `json:"id,required"`

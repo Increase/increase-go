@@ -165,18 +165,17 @@ const (
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
 type PendingTransactionSource struct {
-	// A Account Transfer Instruction object. This field will be present in the JSON
+	// An Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
 	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,required,nullable"`
-	// A ACH Transfer Instruction object. This field will be present in the JSON
+	// An ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
 	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,required,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
 	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
 	Category PendingTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
@@ -184,7 +183,7 @@ type PendingTransactionSource struct {
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
 	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
-	// A Inbound Funds Hold object. This field will be present in the JSON response if
+	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// A Real Time Payments Transfer Instruction object. This field will be present in
@@ -217,7 +216,7 @@ func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Account Transfer Instruction object. This field will be present in the JSON
+// An Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
 type PendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -264,7 +263,7 @@ const (
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
-// A ACH Transfer Instruction object. This field will be present in the JSON
+// An ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
 type PendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -485,36 +484,32 @@ const (
 	PendingTransactionSourceCardAuthorizationTypeCardAuthorization PendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
 
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type PendingTransactionSourceCategory string
 
 const (
-	// The Pending Transaction was created by a Account Transfer Instruction object.
-	// Details will be under the `account_transfer_instruction` object.
+	// Account Transfer Instruction: details will be under the
+	// `account_transfer_instruction` object.
 	PendingTransactionSourceCategoryAccountTransferInstruction PendingTransactionSourceCategory = "account_transfer_instruction"
-	// The Pending Transaction was created by a ACH Transfer Instruction object.
-	// Details will be under the `ach_transfer_instruction` object.
-	PendingTransactionSourceCategoryACHTransferInstruction PendingTransactionSourceCategory = "ach_transfer_instruction"
-	// The Pending Transaction was created by a Card Authorization object. Details will
-	// be under the `card_authorization` object.
-	PendingTransactionSourceCategoryCardAuthorization PendingTransactionSourceCategory = "card_authorization"
-	// The Pending Transaction was created by a Check Deposit Instruction object.
-	// Details will be under the `check_deposit_instruction` object.
-	PendingTransactionSourceCategoryCheckDepositInstruction PendingTransactionSourceCategory = "check_deposit_instruction"
-	// The Pending Transaction was created by a Check Transfer Instruction object.
-	// Details will be under the `check_transfer_instruction` object.
-	PendingTransactionSourceCategoryCheckTransferInstruction PendingTransactionSourceCategory = "check_transfer_instruction"
-	// The Pending Transaction was created by a Inbound Funds Hold object. Details will
-	// be under the `inbound_funds_hold` object.
-	PendingTransactionSourceCategoryInboundFundsHold PendingTransactionSourceCategory = "inbound_funds_hold"
-	// The Pending Transaction was created by a Real Time Payments Transfer Instruction
-	// object. Details will be under the `real_time_payments_transfer_instruction`
+	// ACH Transfer Instruction: details will be under the `ach_transfer_instruction`
 	// object.
+	PendingTransactionSourceCategoryACHTransferInstruction PendingTransactionSourceCategory = "ach_transfer_instruction"
+	// Card Authorization: details will be under the `card_authorization` object.
+	PendingTransactionSourceCategoryCardAuthorization PendingTransactionSourceCategory = "card_authorization"
+	// Check Deposit Instruction: details will be under the `check_deposit_instruction`
+	// object.
+	PendingTransactionSourceCategoryCheckDepositInstruction PendingTransactionSourceCategory = "check_deposit_instruction"
+	// Check Transfer Instruction: details will be under the
+	// `check_transfer_instruction` object.
+	PendingTransactionSourceCategoryCheckTransferInstruction PendingTransactionSourceCategory = "check_transfer_instruction"
+	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
+	PendingTransactionSourceCategoryInboundFundsHold PendingTransactionSourceCategory = "inbound_funds_hold"
+	// Real Time Payments Transfer Instruction: details will be under the
+	// `real_time_payments_transfer_instruction` object.
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	// The Pending Transaction was created by a Wire Transfer Instruction object.
-	// Details will be under the `wire_transfer_instruction` object.
+	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
+	// object.
 	PendingTransactionSourceCategoryWireTransferInstruction PendingTransactionSourceCategory = "wire_transfer_instruction"
 	// The Pending Transaction was made for an undocumented or deprecated reason.
 	PendingTransactionSourceCategoryOther PendingTransactionSourceCategory = "other"
@@ -622,7 +617,7 @@ const (
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
-// A Inbound Funds Hold object. This field will be present in the JSON response if
+// An Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
 type PendingTransactionSourceInboundFundsHold struct {
 	// The Inbound Funds Hold identifier.
