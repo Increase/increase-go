@@ -160,24 +160,23 @@ const (
 // additional undocumented keys may appear in this object. These should be treated
 // as deprecated and will be removed in the future.
 type DeclinedTransactionSource struct {
-	// A ACH Decline object. This field will be present in the JSON response if and
+	// An ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
 	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
-	// The type of decline that took place. We may add additional possible values for
-	// this enum over time; your application should be able to handle such additions
-	// gracefully.
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
 	Category DeclinedTransactionSourceCategory `json:"category,required"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// A Inbound Real Time Payments Transfer Decline object. This field will be present
-	// in the JSON response if and only if `category` is equal to
+	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
-	// A International ACH Decline object. This field will be present in the JSON
+	// An International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
 	InternationalACHDecline DeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
@@ -204,7 +203,7 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A ACH Decline object. This field will be present in the JSON response if and
+// An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type DeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
@@ -486,30 +485,24 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
-// The type of decline that took place. We may add additional possible values for
-// this enum over time; your application should be able to handle such additions
-// gracefully.
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type DeclinedTransactionSourceCategory string
 
 const (
-	// The Declined Transaction was created by a ACH Decline object. Details will be
-	// under the `ach_decline` object.
+	// ACH Decline: details will be under the `ach_decline` object.
 	DeclinedTransactionSourceCategoryACHDecline DeclinedTransactionSourceCategory = "ach_decline"
-	// The Declined Transaction was created by a Card Decline object. Details will be
-	// under the `card_decline` object.
+	// Card Decline: details will be under the `card_decline` object.
 	DeclinedTransactionSourceCategoryCardDecline DeclinedTransactionSourceCategory = "card_decline"
-	// The Declined Transaction was created by a Check Decline object. Details will be
-	// under the `check_decline` object.
+	// Check Decline: details will be under the `check_decline` object.
 	DeclinedTransactionSourceCategoryCheckDecline DeclinedTransactionSourceCategory = "check_decline"
-	// The Declined Transaction was created by a Inbound Real Time Payments Transfer
-	// Decline object. Details will be under the
+	// Inbound Real Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	// The Declined Transaction was created by a International ACH Decline object.
-	// Details will be under the `international_ach_decline` object.
+	// International ACH Decline: details will be under the `international_ach_decline`
+	// object.
 	DeclinedTransactionSourceCategoryInternationalACHDecline DeclinedTransactionSourceCategory = "international_ach_decline"
-	// The Declined Transaction was created by a Wire Decline object. Details will be
-	// under the `wire_decline` object.
+	// Wire Decline: details will be under the `wire_decline` object.
 	DeclinedTransactionSourceCategoryWireDecline DeclinedTransactionSourceCategory = "wire_decline"
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	DeclinedTransactionSourceCategoryOther DeclinedTransactionSourceCategory = "other"
@@ -577,8 +570,8 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// A Inbound Real Time Payments Transfer Decline object. This field will be present
-// in the JSON response if and only if `category` is equal to
+// An Inbound Real Time Payments Transfer Decline object. This field will be
+// present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
@@ -664,7 +657,7 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-// A International ACH Decline object. This field will be present in the JSON
+// An International ACH Decline object. This field will be present in the JSON
 // response if and only if `category` is equal to `international_ach_decline`.
 type DeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
