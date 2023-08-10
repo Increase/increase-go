@@ -158,17 +158,17 @@ const (
 // undocumented keys may appear in this object. These should be treated as
 // deprecated and will be removed in the future.
 type WireTransferSimulationTransactionSource struct {
-	// A Account Transfer Intention object. This field will be present in the JSON
+	// An Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`.
 	AccountTransferIntention WireTransferSimulationTransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
-	// A ACH Transfer Intention object. This field will be present in the JSON response
-	// if and only if `category` is equal to `ach_transfer_intention`.
+	// An ACH Transfer Intention object. This field will be present in the JSON
+	// response if and only if `category` is equal to `ach_transfer_intention`.
 	ACHTransferIntention WireTransferSimulationTransactionSourceACHTransferIntention `json:"ach_transfer_intention,required,nullable"`
-	// A ACH Transfer Rejection object. This field will be present in the JSON response
-	// if and only if `category` is equal to `ach_transfer_rejection`.
+	// An ACH Transfer Rejection object. This field will be present in the JSON
+	// response if and only if `category` is equal to `ach_transfer_rejection`.
 	ACHTransferRejection WireTransferSimulationTransactionSourceACHTransferRejection `json:"ach_transfer_rejection,required,nullable"`
-	// A ACH Transfer Return object. This field will be present in the JSON response if
-	// and only if `category` is equal to `ach_transfer_return`.
+	// An ACH Transfer Return object. This field will be present in the JSON response
+	// if and only if `category` is equal to `ach_transfer_return`.
 	ACHTransferReturn WireTransferSimulationTransactionSourceACHTransferReturn `json:"ach_transfer_return,required,nullable"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
@@ -182,9 +182,8 @@ type WireTransferSimulationTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement WireTransferSimulationTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
 	Category WireTransferSimulationTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`.
@@ -205,38 +204,38 @@ type WireTransferSimulationTransactionSource struct {
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`.
 	FeePayment WireTransferSimulationTransactionSourceFeePayment `json:"fee_payment,required,nullable"`
-	// A Inbound ACH Transfer Intention object. This field will be present in the JSON
+	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer WireTransferSimulationTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
-	// A Inbound Check object. This field will be present in the JSON response if and
+	// An Inbound Check object. This field will be present in the JSON response if and
 	// only if `category` is equal to `inbound_check`.
 	InboundCheck WireTransferSimulationTransactionSourceInboundCheck `json:"inbound_check,required,nullable"`
-	// A Inbound International ACH Transfer object. This field will be present in the
+	// An Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
 	InboundInternationalACHTransfer WireTransferSimulationTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer,required,nullable"`
-	// A Inbound Real Time Payments Transfer Confirmation object. This field will be
+	// An Inbound Real Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
-	// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+	// An Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
 	InboundWireDrawdownPayment WireTransferSimulationTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
-	// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
+	// An Inbound Wire Drawdown Payment Reversal object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_wire_drawdown_payment_reversal`.
 	InboundWireDrawdownPaymentReversal WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal,required,nullable"`
-	// A Inbound Wire Reversal object. This field will be present in the JSON response
+	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal WireTransferSimulationTransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
-	// A Inbound Wire Transfer object. This field will be present in the JSON response
+	// An Inbound Wire Transfer object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_transfer`.
 	InboundWireTransfer WireTransferSimulationTransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,required,nullable"`
-	// A Interest Payment object. This field will be present in the JSON response if
+	// An Interest Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `interest_payment`.
 	InterestPayment WireTransferSimulationTransactionSourceInterestPayment `json:"interest_payment,required,nullable"`
-	// A Internal Source object. This field will be present in the JSON response if and
-	// only if `category` is equal to `internal_source`.
+	// An Internal Source object. This field will be present in the JSON response if
+	// and only if `category` is equal to `internal_source`.
 	InternalSource WireTransferSimulationTransactionSourceInternalSource `json:"internal_source,required,nullable"`
 	// A Real Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
@@ -294,7 +293,7 @@ func (r *WireTransferSimulationTransactionSource) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Account Transfer Intention object. This field will be present in the JSON
+// An Account Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_intention`.
 type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -351,8 +350,8 @@ const (
 	WireTransferSimulationTransactionSourceAccountTransferIntentionCurrencyUsd WireTransferSimulationTransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
-// A ACH Transfer Intention object. This field will be present in the JSON response
-// if and only if `category` is equal to `ach_transfer_intention`.
+// An ACH Transfer Intention object. This field will be present in the JSON
+// response if and only if `category` is equal to `ach_transfer_intention`.
 type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	AccountNumber string `json:"account_number,required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
@@ -382,8 +381,8 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A ACH Transfer Rejection object. This field will be present in the JSON response
-// if and only if `category` is equal to `ach_transfer_rejection`.
+// An ACH Transfer Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `ach_transfer_rejection`.
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
@@ -403,8 +402,8 @@ func (r *WireTransferSimulationTransactionSourceACHTransferRejection) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A ACH Transfer Return object. This field will be present in the JSON response if
-// and only if `category` is equal to `ach_transfer_return`.
+// An ACH Transfer Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `ach_transfer_return`.
 type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -1959,100 +1958,85 @@ const (
 	WireTransferSimulationTransactionSourceCardSettlementTypeCardSettlement WireTransferSimulationTransactionSourceCardSettlementType = "card_settlement"
 )
 
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type WireTransferSimulationTransactionSourceCategory string
 
 const (
-	// The Transaction was created by a Account Transfer Intention object. Details will
-	// be under the `account_transfer_intention` object.
+	// Account Transfer Intention: details will be under the
+	// `account_transfer_intention` object.
 	WireTransferSimulationTransactionSourceCategoryAccountTransferIntention WireTransferSimulationTransactionSourceCategory = "account_transfer_intention"
-	// The Transaction was created by a ACH Transfer Intention object. Details will be
-	// under the `ach_transfer_intention` object.
+	// ACH Transfer Intention: details will be under the `ach_transfer_intention`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryACHTransferIntention WireTransferSimulationTransactionSourceCategory = "ach_transfer_intention"
-	// The Transaction was created by a ACH Transfer Rejection object. Details will be
-	// under the `ach_transfer_rejection` object.
+	// ACH Transfer Rejection: details will be under the `ach_transfer_rejection`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryACHTransferRejection WireTransferSimulationTransactionSourceCategory = "ach_transfer_rejection"
-	// The Transaction was created by a ACH Transfer Return object. Details will be
-	// under the `ach_transfer_return` object.
+	// ACH Transfer Return: details will be under the `ach_transfer_return` object.
 	WireTransferSimulationTransactionSourceCategoryACHTransferReturn WireTransferSimulationTransactionSourceCategory = "ach_transfer_return"
-	// The Transaction was created by a Card Dispute Acceptance object. Details will be
-	// under the `card_dispute_acceptance` object.
+	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryCardDisputeAcceptance WireTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
-	// The Transaction was created by a Card Refund object. Details will be under the
-	// `card_refund` object.
+	// Card Refund: details will be under the `card_refund` object.
 	WireTransferSimulationTransactionSourceCategoryCardRefund WireTransferSimulationTransactionSourceCategory = "card_refund"
-	// The Transaction was created by a Card Revenue Payment object. Details will be
-	// under the `card_revenue_payment` object.
+	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
 	WireTransferSimulationTransactionSourceCategoryCardRevenuePayment WireTransferSimulationTransactionSourceCategory = "card_revenue_payment"
-	// The Transaction was created by a Card Settlement object. Details will be under
-	// the `card_settlement` object.
+	// Card Settlement: details will be under the `card_settlement` object.
 	WireTransferSimulationTransactionSourceCategoryCardSettlement WireTransferSimulationTransactionSourceCategory = "card_settlement"
-	// The Transaction was created by a Check Deposit Acceptance object. Details will
-	// be under the `check_deposit_acceptance` object.
+	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryCheckDepositAcceptance WireTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
-	// The Transaction was created by a Check Deposit Return object. Details will be
-	// under the `check_deposit_return` object.
+	// Check Deposit Return: details will be under the `check_deposit_return` object.
 	WireTransferSimulationTransactionSourceCategoryCheckDepositReturn WireTransferSimulationTransactionSourceCategory = "check_deposit_return"
-	// The Transaction was created by a Check Transfer Deposit object. Details will be
-	// under the `check_transfer_deposit` object.
+	// Check Transfer Deposit: details will be under the `check_transfer_deposit`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryCheckTransferDeposit WireTransferSimulationTransactionSourceCategory = "check_transfer_deposit"
-	// The Transaction was created by a Check Transfer Intention object. Details will
-	// be under the `check_transfer_intention` object.
+	// Check Transfer Intention: details will be under the `check_transfer_intention`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryCheckTransferIntention WireTransferSimulationTransactionSourceCategory = "check_transfer_intention"
-	// The Transaction was created by a Check Transfer Stop Payment Request object.
-	// Details will be under the `check_transfer_stop_payment_request` object.
+	// Check Transfer Stop Payment Request: details will be under the
+	// `check_transfer_stop_payment_request` object.
 	WireTransferSimulationTransactionSourceCategoryCheckTransferStopPaymentRequest WireTransferSimulationTransactionSourceCategory = "check_transfer_stop_payment_request"
-	// The Transaction was created by a Fee Payment object. Details will be under the
-	// `fee_payment` object.
+	// Fee Payment: details will be under the `fee_payment` object.
 	WireTransferSimulationTransactionSourceCategoryFeePayment WireTransferSimulationTransactionSourceCategory = "fee_payment"
-	// The Transaction was created by a Inbound ACH Transfer Intention object. Details
-	// will be under the `inbound_ach_transfer` object.
+	// Inbound ACH Transfer Intention: details will be under the `inbound_ach_transfer`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryInboundACHTransfer WireTransferSimulationTransactionSourceCategory = "inbound_ach_transfer"
-	// The Transaction was created by a Inbound ACH Transfer Return Intention object.
-	// Details will be under the `inbound_ach_transfer_return_intention` object.
+	// Inbound ACH Transfer Return Intention: details will be under the
+	// `inbound_ach_transfer_return_intention` object.
 	WireTransferSimulationTransactionSourceCategoryInboundACHTransferReturnIntention WireTransferSimulationTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	// The Transaction was created by a Inbound Check object. Details will be under the
-	// `inbound_check` object.
+	// Inbound Check: details will be under the `inbound_check` object.
 	WireTransferSimulationTransactionSourceCategoryInboundCheck WireTransferSimulationTransactionSourceCategory = "inbound_check"
-	// The Transaction was created by a Inbound International ACH Transfer object.
-	// Details will be under the `inbound_international_ach_transfer` object.
+	// Inbound International ACH Transfer: details will be under the
+	// `inbound_international_ach_transfer` object.
 	WireTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer WireTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
-	// The Transaction was created by a Inbound Real Time Payments Transfer
-	// Confirmation object. Details will be under the
+	// Inbound Real Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	WireTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation WireTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// The Transaction was created by a Inbound Wire Drawdown Payment object. Details
-	// will be under the `inbound_wire_drawdown_payment` object.
+	// Inbound Wire Drawdown Payment: details will be under the
+	// `inbound_wire_drawdown_payment` object.
 	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
-	// The Transaction was created by a Inbound Wire Drawdown Payment Reversal object.
-	// Details will be under the `inbound_wire_drawdown_payment_reversal` object.
+	// Inbound Wire Drawdown Payment Reversal: details will be under the
+	// `inbound_wire_drawdown_payment_reversal` object.
 	WireTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal WireTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
-	// The Transaction was created by a Inbound Wire Reversal object. Details will be
-	// under the `inbound_wire_reversal` object.
+	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	WireTransferSimulationTransactionSourceCategoryInboundWireReversal WireTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
-	// The Transaction was created by a Inbound Wire Transfer object. Details will be
-	// under the `inbound_wire_transfer` object.
+	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.
 	WireTransferSimulationTransactionSourceCategoryInboundWireTransfer WireTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
-	// The Transaction was created by a Interest Payment object. Details will be under
-	// the `interest_payment` object.
+	// Interest Payment: details will be under the `interest_payment` object.
 	WireTransferSimulationTransactionSourceCategoryInterestPayment WireTransferSimulationTransactionSourceCategory = "interest_payment"
-	// The Transaction was created by a Internal Source object. Details will be under
-	// the `internal_source` object.
+	// Internal Source: details will be under the `internal_source` object.
 	WireTransferSimulationTransactionSourceCategoryInternalSource WireTransferSimulationTransactionSourceCategory = "internal_source"
-	// The Transaction was created by a Real Time Payments Transfer Acknowledgement
-	// object. Details will be under the `real_time_payments_transfer_acknowledgement`
-	// object.
+	// Real Time Payments Transfer Acknowledgement: details will be under the
+	// `real_time_payments_transfer_acknowledgement` object.
 	WireTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement WireTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	// The Transaction was created by a Sample Funds object. Details will be under the
-	// `sample_funds` object.
+	// Sample Funds: details will be under the `sample_funds` object.
 	WireTransferSimulationTransactionSourceCategorySampleFunds WireTransferSimulationTransactionSourceCategory = "sample_funds"
-	// The Transaction was created by a Wire Transfer Intention object. Details will be
-	// under the `wire_transfer_intention` object.
+	// Wire Transfer Intention: details will be under the `wire_transfer_intention`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryWireTransferIntention WireTransferSimulationTransactionSourceCategory = "wire_transfer_intention"
-	// The Transaction was created by a Wire Transfer Rejection object. Details will be
-	// under the `wire_transfer_rejection` object.
+	// Wire Transfer Rejection: details will be under the `wire_transfer_rejection`
+	// object.
 	WireTransferSimulationTransactionSourceCategoryWireTransferRejection WireTransferSimulationTransactionSourceCategory = "wire_transfer_rejection"
 	// The Transaction was made for an undocumented or deprecated reason.
 	WireTransferSimulationTransactionSourceCategoryOther WireTransferSimulationTransactionSourceCategory = "other"
@@ -2416,7 +2400,7 @@ const (
 	WireTransferSimulationTransactionSourceFeePaymentCurrencyUsd WireTransferSimulationTransactionSourceFeePaymentCurrency = "USD"
 )
 
-// A Inbound ACH Transfer Intention object. This field will be present in the JSON
+// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_ach_transfer`.
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
@@ -2454,7 +2438,7 @@ func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Inbound Check object. This field will be present in the JSON response if and
+// An Inbound Check object. This field will be present in the JSON response if and
 // only if `category` is equal to `inbound_check`.
 type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
@@ -2504,7 +2488,7 @@ const (
 	WireTransferSimulationTransactionSourceInboundCheckCurrencyUsd WireTransferSimulationTransactionSourceInboundCheckCurrency = "USD"
 )
 
-// A Inbound International ACH Transfer object. This field will be present in the
+// An Inbound International ACH Transfer object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `inbound_international_ach_transfer`.
 type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
@@ -2597,7 +2581,7 @@ func (r *WireTransferSimulationTransactionSourceInboundInternationalACHTransfer)
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Inbound Real Time Payments Transfer Confirmation object. This field will be
+// An Inbound Real Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
 type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
@@ -2661,7 +2645,7 @@ const (
 	WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
-// A Inbound Wire Drawdown Payment object. This field will be present in the JSON
+// An Inbound Wire Drawdown Payment object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
@@ -2707,7 +2691,7 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) Unma
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Inbound Wire Drawdown Payment Reversal object. This field will be present in
+// An Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal struct {
@@ -2756,7 +2740,7 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentRevers
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Inbound Wire Reversal object. This field will be present in the JSON response
+// An Inbound Wire Reversal object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_reversal`.
 type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The amount that was reversed.
@@ -2821,7 +2805,7 @@ func (r *WireTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Inbound Wire Transfer object. This field will be present in the JSON response
+// An Inbound Wire Transfer object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_transfer`.
 type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
@@ -2875,7 +2859,7 @@ func (r *WireTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJS
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Interest Payment object. This field will be present in the JSON response if
+// An Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
 type WireTransferSimulationTransactionSourceInterestPayment struct {
 	// The account on which the interest was accrued.
@@ -2928,8 +2912,8 @@ const (
 	WireTransferSimulationTransactionSourceInterestPaymentCurrencyUsd WireTransferSimulationTransactionSourceInterestPaymentCurrency = "USD"
 )
 
-// A Internal Source object. This field will be present in the JSON response if and
-// only if `category` is equal to `internal_source`.
+// An Internal Source object. This field will be present in the JSON response if
+// and only if `category` is equal to `internal_source`.
 type WireTransferSimulationTransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.

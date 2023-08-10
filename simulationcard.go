@@ -182,24 +182,23 @@ const (
 // additional undocumented keys may appear in this object. These should be treated
 // as deprecated and will be removed in the future.
 type CardAuthorizationSimulationDeclinedTransactionSource struct {
-	// A ACH Decline object. This field will be present in the JSON response if and
+	// An ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
 	ACHDecline CardAuthorizationSimulationDeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline CardAuthorizationSimulationDeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
-	// The type of decline that took place. We may add additional possible values for
-	// this enum over time; your application should be able to handle such additions
-	// gracefully.
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
 	Category CardAuthorizationSimulationDeclinedTransactionSourceCategory `json:"category,required"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// A Inbound Real Time Payments Transfer Decline object. This field will be present
-	// in the JSON response if and only if `category` is equal to
+	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
-	// A International ACH Decline object. This field will be present in the JSON
+	// An International ACH Decline object. This field will be present in the JSON
 	// response if and only if `category` is equal to `international_ach_decline`.
 	InternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline `json:"international_ach_decline,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
@@ -226,7 +225,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(dat
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A ACH Decline object. This field will be present in the JSON response if and
+// An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
@@ -512,30 +511,24 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
 )
 
-// The type of decline that took place. We may add additional possible values for
-// this enum over time; your application should be able to handle such additions
-// gracefully.
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type CardAuthorizationSimulationDeclinedTransactionSourceCategory string
 
 const (
-	// The Declined Transaction was created by a ACH Decline object. Details will be
-	// under the `ach_decline` object.
+	// ACH Decline: details will be under the `ach_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryACHDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "ach_decline"
-	// The Declined Transaction was created by a Card Decline object. Details will be
-	// under the `card_decline` object.
+	// Card Decline: details will be under the `card_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
-	// The Declined Transaction was created by a Check Decline object. Details will be
-	// under the `check_decline` object.
+	// Check Decline: details will be under the `check_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
-	// The Declined Transaction was created by a Inbound Real Time Payments Transfer
-	// Decline object. Details will be under the
+	// Inbound Real Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	// The Declined Transaction was created by a International ACH Decline object.
-	// Details will be under the `international_ach_decline` object.
+	// International ACH Decline: details will be under the `international_ach_decline`
+	// object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInternationalACHDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "international_ach_decline"
-	// The Declined Transaction was created by a Wire Decline object. Details will be
-	// under the `wire_decline` object.
+	// Wire Decline: details will be under the `wire_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryWireDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "wire_decline"
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryOther CardAuthorizationSimulationDeclinedTransactionSourceCategory = "other"
@@ -604,8 +597,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// A Inbound Real Time Payments Transfer Decline object. This field will be present
-// in the JSON response if and only if `category` is equal to
+// An Inbound Real Time Payments Transfer Decline object. This field will be
+// present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
@@ -691,7 +684,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
-// A International ACH Decline object. This field will be present in the JSON
+// An International ACH Decline object. This field will be present in the JSON
 // response if and only if `category` is equal to `international_ach_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
@@ -964,18 +957,17 @@ const (
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
 type CardAuthorizationSimulationPendingTransactionSource struct {
-	// A Account Transfer Instruction object. This field will be present in the JSON
+	// An Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
 	AccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,required,nullable"`
-	// A ACH Transfer Instruction object. This field will be present in the JSON
+	// An ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
 	ACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,required,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
 	CardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
-	// The type of transaction that took place. We may add additional possible values
-	// for this enum over time; your application should be able to handle such
-	// additions gracefully.
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
 	Category CardAuthorizationSimulationPendingTransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
@@ -983,7 +975,7 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
 	CheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
-	// A Inbound Funds Hold object. This field will be present in the JSON response if
+	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// A Real Time Payments Transfer Instruction object. This field will be present in
@@ -1016,7 +1008,7 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// A Account Transfer Instruction object. This field will be present in the JSON
+// An Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -1064,7 +1056,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
-// A ACH Transfer Instruction object. This field will be present in the JSON
+// An ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
@@ -1287,36 +1279,32 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationTypeCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
 
-// The type of transaction that took place. We may add additional possible values
-// for this enum over time; your application should be able to handle such
-// additions gracefully.
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
 type CardAuthorizationSimulationPendingTransactionSourceCategory string
 
 const (
-	// The Pending Transaction was created by a Account Transfer Instruction object.
-	// Details will be under the `account_transfer_instruction` object.
+	// Account Transfer Instruction: details will be under the
+	// `account_transfer_instruction` object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryAccountTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "account_transfer_instruction"
-	// The Pending Transaction was created by a ACH Transfer Instruction object.
-	// Details will be under the `ach_transfer_instruction` object.
-	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
-	// The Pending Transaction was created by a Card Authorization object. Details will
-	// be under the `card_authorization` object.
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
-	// The Pending Transaction was created by a Check Deposit Instruction object.
-	// Details will be under the `check_deposit_instruction` object.
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
-	// The Pending Transaction was created by a Check Transfer Instruction object.
-	// Details will be under the `check_transfer_instruction` object.
-	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
-	// The Pending Transaction was created by a Inbound Funds Hold object. Details will
-	// be under the `inbound_funds_hold` object.
-	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
-	// The Pending Transaction was created by a Real Time Payments Transfer Instruction
-	// object. Details will be under the `real_time_payments_transfer_instruction`
+	// ACH Transfer Instruction: details will be under the `ach_transfer_instruction`
 	// object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryACHTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "ach_transfer_instruction"
+	// Card Authorization: details will be under the `card_authorization` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCardAuthorization CardAuthorizationSimulationPendingTransactionSourceCategory = "card_authorization"
+	// Check Deposit Instruction: details will be under the `check_deposit_instruction`
+	// object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckDepositInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_deposit_instruction"
+	// Check Transfer Instruction: details will be under the
+	// `check_transfer_instruction` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
+	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
+	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
+	// Real Time Payments Transfer Instruction: details will be under the
+	// `real_time_payments_transfer_instruction` object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	// The Pending Transaction was created by a Wire Transfer Instruction object.
-	// Details will be under the `wire_transfer_instruction` object.
+	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
+	// object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryWireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "wire_transfer_instruction"
 	// The Pending Transaction was made for an undocumented or deprecated reason.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryOther CardAuthorizationSimulationPendingTransactionSourceCategory = "other"
@@ -1426,7 +1414,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrencyUsd CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
-// A Inbound Funds Hold object. This field will be present in the JSON response if
+// An Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct {
 	// The Inbound Funds Hold identifier.
