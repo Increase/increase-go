@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.3](https://github.com/Increase/increase-go/compare/v0.6.2...v0.6.3) (2023-08-11)
+
+
+### Features
+
+* **api:** updates ([#64](https://github.com/Increase/increase-go/issues/64)) ([8152bcf](https://github.com/Increase/increase-go/commit/8152bcfcd24a924ae4306e23ee08cee91488340d))
+
+
+### Bug Fixes
+
+* **client:** correctly set multipart form data boundary ([#62](https://github.com/Increase/increase-go/issues/62)) ([0eb012e](https://github.com/Increase/increase-go/commit/0eb012e7b813854c249f0a8db7f0dec34afc5f83))
+
+
+### Documentation
+
+* **api:** change description of various fields ([#65](https://github.com/Increase/increase-go/issues/65)) ([92a0c51](https://github.com/Increase/increase-go/commit/92a0c51da05ac91cc02ba767abc903e40a8ec259))
+
 ## [0.6.2](https://github.com/Increase/increase-go/compare/v0.6.1...v0.6.2) (2023-08-08)
 
 
