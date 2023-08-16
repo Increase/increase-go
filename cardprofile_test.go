@@ -80,6 +80,9 @@ func TestCardProfileListWithOptionalParams(t *testing.T) {
 	_, err := client.CardProfiles.List(context.TODO(), increase.CardProfileListParams{
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
+		PhysicalCardsStatus: increase.F(increase.CardProfileListParamsPhysicalCardsStatus{
+			In: increase.F([]increase.CardProfileListParamsPhysicalCardsStatusIn{increase.CardProfileListParamsPhysicalCardsStatusInNotEligible, increase.CardProfileListParamsPhysicalCardsStatusInNotEligible, increase.CardProfileListParamsPhysicalCardsStatusInNotEligible}),
+		}),
 		Status: increase.F(increase.CardProfileListParamsStatus{
 			In: increase.F([]increase.CardProfileListParamsStatusIn{increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending}),
 		}),

@@ -235,8 +235,9 @@ const (
 	CardProfilePhysicalCardsStatusPendingReviewing CardProfilePhysicalCardsStatus = "pending_reviewing"
 	// The card profile is awaiting submission to the fulfillment provider.
 	CardProfilePhysicalCardsStatusPendingSubmitting CardProfilePhysicalCardsStatus = "pending_submitting"
-	// The Physical Card Profile has been submitted to the fulfillment provider.
-	CardProfilePhysicalCardsStatusSubmitted CardProfilePhysicalCardsStatus = "submitted"
+	// The Physical Card Profile has been submitted to the fulfillment provider and is
+	// ready to use.
+	CardProfilePhysicalCardsStatusActive CardProfilePhysicalCardsStatus = "active"
 )
 
 // The status of the Card Profile.
@@ -334,8 +335,9 @@ type CardProfileListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                       `query:"limit"`
-	Status param.Field[CardProfileListParamsStatus] `query:"status"`
+	Limit               param.Field[int64]                                    `query:"limit"`
+	PhysicalCardsStatus param.Field[CardProfileListParamsPhysicalCardsStatus] `query:"physical_cards_status"`
+	Status              param.Field[CardProfileListParamsStatus]              `query:"status"`
 }
 
 // URLQuery serializes [CardProfileListParams]'s query parameters as `url.Values`.
@@ -346,10 +348,42 @@ func (r CardProfileListParams) URLQuery() (v url.Values) {
 	})
 }
 
+type CardProfileListParamsPhysicalCardsStatus struct {
+	// Filter Card Profiles for those with the specified physical card status or
+	// statuses. For GET requests, this should be encoded as a comma-delimited string,
+	// such as `?in=one,two,three`.
+	In param.Field[[]CardProfileListParamsPhysicalCardsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [CardProfileListParamsPhysicalCardsStatus]'s query
+// parameters as `url.Values`.
+func (r CardProfileListParamsPhysicalCardsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type CardProfileListParamsPhysicalCardsStatusIn string
+
+const (
+	// The Card Profile is not eligible for physical cards.
+	CardProfileListParamsPhysicalCardsStatusInNotEligible CardProfileListParamsPhysicalCardsStatusIn = "not_eligible"
+	// There is an issue with the Physical Card Profile preventing it from use.
+	CardProfileListParamsPhysicalCardsStatusInRejected CardProfileListParamsPhysicalCardsStatusIn = "rejected"
+	// The card profile is awaiting review by Increase.
+	CardProfileListParamsPhysicalCardsStatusInPendingReviewing CardProfileListParamsPhysicalCardsStatusIn = "pending_reviewing"
+	// The card profile is awaiting submission to the fulfillment provider.
+	CardProfileListParamsPhysicalCardsStatusInPendingSubmitting CardProfileListParamsPhysicalCardsStatusIn = "pending_submitting"
+	// The Physical Card Profile has been submitted to the fulfillment provider and is
+	// ready to use.
+	CardProfileListParamsPhysicalCardsStatusInActive CardProfileListParamsPhysicalCardsStatusIn = "active"
+)
+
 type CardProfileListParamsStatus struct {
-	// Filter Card Profiles for those with the specified status or statuses. For GET
-	// requests, this should be encoded as a comma-delimited string, such as
-	// `?in=one,two,three`.
+	// Filter Card Profiles for those with the specified digital wallet status or
+	// statuses. For GET requests, this should be encoded as a comma-delimited string,
+	// such as `?in=one,two,three`.
 	In param.Field[[]CardProfileListParamsStatusIn] `query:"in"`
 }
 
