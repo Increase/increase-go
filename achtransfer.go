@@ -99,6 +99,10 @@ type ACHTransfer struct {
 	AccountID string `json:"account_id,required"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
+	// After the transfer is acknowledged by FedACH, this will contain supplemental
+	// details. The Federal Reserve sends an acknowledgement message for each file that
+	// Increase submits.
+	Acknowledgement ACHTransferAcknowledgement `json:"acknowledgement,required,nullable"`
 	// Additional information that will be sent to the recipient.
 	Addendum string `json:"addendum,required,nullable"`
 	// The transfer amount in USD cents. A positive amount indicates a credit transfer
@@ -153,7 +157,10 @@ type ACHTransfer struct {
 	// The lifecycle status of the transfer.
 	Status ACHTransferStatus `json:"status,required"`
 	// After the transfer is submitted to FedACH, this will contain supplemental
-	// details.
+	// details. Increase batches transfers and submits a file to the Federal Reserve
+	// roughly every 30 minutes. The Federal Reserve processes ACH transfers during
+	// weekdays according to their (posted
+	// schedule)[https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html].
 	Submission ACHTransferSubmission `json:"submission,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
@@ -170,6 +177,7 @@ type achTransferJSON struct {
 	ID                       apijson.Field
 	AccountID                apijson.Field
 	AccountNumber            apijson.Field
+	Acknowledgement          apijson.Field
 	Addendum                 apijson.Field
 	Amount                   apijson.Field
 	Approval                 apijson.Field
@@ -201,6 +209,28 @@ type achTransferJSON struct {
 }
 
 func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// After the transfer is acknowledged by FedACH, this will contain supplemental
+// details. The Federal Reserve sends an acknowledgement message for each file that
+// Increase submits.
+type ACHTransferAcknowledgement struct {
+	// When the Federal Reserve acknowledged the submitted file containing this
+	// transfer.
+	AcknowledgedAt string `json:"acknowledged_at,required"`
+	JSON           achTransferAcknowledgementJSON
+}
+
+// achTransferAcknowledgementJSON contains the JSON metadata for the struct
+// [ACHTransferAcknowledgement]
+type achTransferAcknowledgementJSON struct {
+	AcknowledgedAt apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *ACHTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -596,7 +626,10 @@ const (
 )
 
 // After the transfer is submitted to FedACH, this will contain supplemental
-// details.
+// details. Increase batches transfers and submits a file to the Federal Reserve
+// roughly every 30 minutes. The Federal Reserve processes ACH transfers during
+// weekdays according to their (posted
+// schedule)[https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html].
 type ACHTransferSubmission struct {
 	// When the funds transfer is expected to settle in the recipient's account.
 	// Credits may be available sooner, at the receiving banks discretion. The FedACH
