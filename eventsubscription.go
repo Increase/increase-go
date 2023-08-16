@@ -96,8 +96,6 @@ type EventSubscription struct {
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category,required,nullable"`
-	// The key that will be used to sign webhooks.
-	SharedSecret string `json:"shared_secret,required"`
 	// This indicates if we'll send notifications to this subscription.
 	Status EventSubscriptionStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -114,7 +112,6 @@ type eventSubscriptionJSON struct {
 	ID                    apijson.Field
 	CreatedAt             apijson.Field
 	SelectedEventCategory apijson.Field
-	SharedSecret          apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
 	URL                   apijson.Field
