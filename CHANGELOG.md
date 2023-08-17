@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.7.0](https://github.com/Increase/increase-go/compare/v0.6.3...v0.7.0) (2023-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** change `physical_cards.status` value, remove `event_subscription` field, add fields ([#70](https://github.com/Increase/increase-go/issues/70))
+
+### Features
+
+* **api:** change `physical_cards.status` value, remove `event_subscription` field, add fields ([#70](https://github.com/Increase/increase-go/issues/70)) ([bda93c7](https://github.com/Increase/increase-go/commit/bda93c7cbea14c011dd699a863c186f00af678a7))
+
+
+### Chores
+
+* assign default reviewers to release PRs ([#67](https://github.com/Increase/increase-go/issues/67)) ([e832e27](https://github.com/Increase/increase-go/commit/e832e272d6a95c137caf084c5ab8dd32ace49153))
+
 ## [0.6.3](https://github.com/Increase/increase-go/compare/v0.6.2...v0.6.3) (2023-08-11)
 
 
