@@ -35,7 +35,7 @@ func NewRealTimePaymentsTransferService(opts ...option.RequestOption) (r *RealTi
 	return
 }
 
-// Create a Real Time Payments Transfer
+// Create a Real-Time Payments Transfer
 func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "real_time_payments_transfers"
@@ -43,7 +43,7 @@ func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTime
 	return
 }
 
-// Retrieve a Real Time Payments Transfer
+// Retrieve a Real-Time Payments Transfer
 func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("real_time_payments_transfers/%s", realTimePaymentsTransferID)
@@ -51,7 +51,7 @@ func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePayme
 	return
 }
 
-// List Real Time Payments Transfers
+// List Real-Time Payments Transfers
 func (r *RealTimePaymentsTransferService) List(ctx context.Context, query RealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *shared.Page[RealTimePaymentsTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -69,15 +69,15 @@ func (r *RealTimePaymentsTransferService) List(ctx context.Context, query RealTi
 	return res, nil
 }
 
-// List Real Time Payments Transfers
+// List Real-Time Payments Transfers
 func (r *RealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, query RealTimePaymentsTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[RealTimePaymentsTransfer] {
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Real Time Payments transfers move funds, within seconds, between your Increase
-// account and any other account on the Real Time Payments network.
+// Real-Time Payments transfers move funds, within seconds, between your Increase
+// account and any other account on the Real-Time Payments network.
 type RealTimePaymentsTransfer struct {
-	// The Real Time Payments Transfer's identifier.
+	// The Real-Time Payments Transfer's identifier.
 	ID string `json:"id,required"`
 	// The Account from which the transfer was sent.
 	AccountID string `json:"account_id,required"`
@@ -95,7 +95,7 @@ type RealTimePaymentsTransfer struct {
 	// The name of the transfer's recipient as provided by the sender.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-	// currency. For real time payments transfers this is always equal to `USD`.
+	// currency. For real-time payments transfers this is always equal to `USD`.
 	Currency RealTimePaymentsTransferCurrency `json:"currency,required"`
 	// The destination account number.
 	DestinationAccountNumber string `json:"destination_account_number,required"`
@@ -104,7 +104,12 @@ type RealTimePaymentsTransfer struct {
 	DestinationRoutingNumber string `json:"destination_routing_number,required"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
-	// If the transfer is rejected by Real Time Payments or the destination financial
+	// The ID for the pending transaction representing the transfer. A pending
+	// transaction is created when the transfer
+	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
+	// by someone else in your organization.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// If the transfer is rejected by Real-Time Payments or the destination financial
 	// institution, this will contain supplemental details.
 	Rejection RealTimePaymentsTransferRejection `json:"rejection,required,nullable"`
 	// Unstructured information that will show on the recipient's bank statement.
@@ -113,7 +118,7 @@ type RealTimePaymentsTransfer struct {
 	SourceAccountNumberID string `json:"source_account_number_id,required"`
 	// The lifecycle status of the transfer.
 	Status RealTimePaymentsTransferStatus `json:"status,required"`
-	// After the transfer is submitted to Real Time Payments, this will contain
+	// After the transfer is submitted to Real-Time Payments, this will contain
 	// supplemental details.
 	Submission RealTimePaymentsTransferSubmission `json:"submission,required,nullable"`
 	// The Transaction funding the transfer once it is complete.
@@ -140,6 +145,7 @@ type realTimePaymentsTransferJSON struct {
 	DestinationAccountNumber apijson.Field
 	DestinationRoutingNumber apijson.Field
 	ExternalAccountID        apijson.Field
+	PendingTransactionID     apijson.Field
 	Rejection                apijson.Field
 	RemittanceInformation    apijson.Field
 	SourceAccountNumberID    apijson.Field
@@ -207,7 +213,7 @@ func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err e
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
-// currency. For real time payments transfers this is always equal to `USD`.
+// currency. For real-time payments transfers this is always equal to `USD`.
 type RealTimePaymentsTransferCurrency string
 
 const (
@@ -225,14 +231,14 @@ const (
 	RealTimePaymentsTransferCurrencyUsd RealTimePaymentsTransferCurrency = "USD"
 )
 
-// If the transfer is rejected by Real Time Payments or the destination financial
+// If the transfer is rejected by Real-Time Payments or the destination financial
 // institution, this will contain supplemental details.
 type RealTimePaymentsTransferRejection struct {
 	// Additional information about the rejection provided by the recipient bank when
 	// the `reject_reason_code` is `NARRATIVE`.
 	RejectReasonAdditionalInformation string `json:"reject_reason_additional_information,required,nullable"`
 	// The reason the transfer was rejected as provided by the recipient bank or the
-	// Real Time Payments network.
+	// Real-Time Payments network.
 	RejectReasonCode RealTimePaymentsTransferRejectionRejectReasonCode `json:"reject_reason_code,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was rejected.
@@ -255,66 +261,66 @@ func (r *RealTimePaymentsTransferRejection) UnmarshalJSON(data []byte) (err erro
 }
 
 // The reason the transfer was rejected as provided by the recipient bank or the
-// Real Time Payments network.
+// Real-Time Payments network.
 type RealTimePaymentsTransferRejectionRejectReasonCode string
 
 const (
-	// The destination account is closed. Corresponds to the Real Time Payments reason
+	// The destination account is closed. Corresponds to the Real-Time Payments reason
 	// code `AC04`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeAccountClosed RealTimePaymentsTransferRejectionRejectReasonCode = "account_closed"
 	// The destination account is currently blocked from receiving transactions.
-	// Corresponds to the Real Time Payments reason code `AC06`.
+	// Corresponds to the Real-Time Payments reason code `AC06`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeAccountBlocked RealTimePaymentsTransferRejectionRejectReasonCode = "account_blocked"
-	// The destination account is ineligible to receive Real Time Payments transfers.
-	// Corresponds to the Real Time Payments reason code `AC14`.
+	// The destination account is ineligible to receive Real-Time Payments transfers.
+	// Corresponds to the Real-Time Payments reason code `AC14`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAccountType RealTimePaymentsTransferRejectionRejectReasonCode = "invalid_creditor_account_type"
-	// The destination account does not exist. Corresponds to the Real Time Payments
+	// The destination account does not exist. Corresponds to the Real-Time Payments
 	// reason code `AC03`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAccountNumber RealTimePaymentsTransferRejectionRejectReasonCode = "invalid_creditor_account_number"
-	// The destination routing number is invalid. Corresponds to the Real Time Payments
+	// The destination routing number is invalid. Corresponds to the Real-Time Payments
 	// reason code `RC04`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier RealTimePaymentsTransferRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
-	// The destination account holder is deceased. Corresponds to the Real Time
+	// The destination account holder is deceased. Corresponds to the Real-Time
 	// Payments reason code `MD07`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeEndCustomerDeceased RealTimePaymentsTransferRejectionRejectReasonCode = "end_customer_deceased"
 	// The reason is provided as narrative information in the additional information
 	// field.
 	RealTimePaymentsTransferRejectionRejectReasonCodeNarrative RealTimePaymentsTransferRejectionRejectReasonCode = "narrative"
-	// Real Time Payments transfers are not allowed to the destination account.
-	// Corresponds to the Real Time Payments reason code `AG01`.
+	// Real-Time Payments transfers are not allowed to the destination account.
+	// Corresponds to the Real-Time Payments reason code `AG01`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeTransactionForbidden RealTimePaymentsTransferRejectionRejectReasonCode = "transaction_forbidden"
-	// Real Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real Time Payments reason code `AG03`.
+	// Real-Time Payments transfers are not enabled for the destination account.
+	// Corresponds to the Real-Time Payments reason code `AG03`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeTransactionTypeNotSupported RealTimePaymentsTransferRejectionRejectReasonCode = "transaction_type_not_supported"
 	// The amount of the transfer is different than expected by the recipient.
-	// Corresponds to the Real Time Payments reason code `AM09`.
+	// Corresponds to the Real-Time Payments reason code `AM09`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeUnexpectedAmount RealTimePaymentsTransferRejectionRejectReasonCode = "unexpected_amount"
 	// The amount is higher than the recipient is authorized to send or receive.
-	// Corresponds to the Real Time Payments reason code `AM14`.
+	// Corresponds to the Real-Time Payments reason code `AM14`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeAmountExceedsBankLimits RealTimePaymentsTransferRejectionRejectReasonCode = "amount_exceeds_bank_limits"
 	// The creditor's address is required, but missing or invalid. Corresponds to the
-	// Real Time Payments reason code `BE04`.
+	// Real-Time Payments reason code `BE04`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAddress RealTimePaymentsTransferRejectionRejectReasonCode = "invalid_creditor_address"
-	// The specified creditor is unknown. Corresponds to the Real Time Payments reason
+	// The specified creditor is unknown. Corresponds to the Real-Time Payments reason
 	// code `BE06`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeUnknownEndCustomer RealTimePaymentsTransferRejectionRejectReasonCode = "unknown_end_customer"
 	// The debtor's address is required, but missing or invalid. Corresponds to the
-	// Real Time Payments reason code `BE07`.
+	// Real-Time Payments reason code `BE07`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInvalidDebtorAddress RealTimePaymentsTransferRejectionRejectReasonCode = "invalid_debtor_address"
-	// There was a timeout processing the transfer. Corresponds to the Real Time
+	// There was a timeout processing the transfer. Corresponds to the Real-Time
 	// Payments reason code `DS24`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeTimeout RealTimePaymentsTransferRejectionRejectReasonCode = "timeout"
-	// Real Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real Time Payments reason code `NOAT`.
+	// Real-Time Payments transfers are not enabled for the destination account.
+	// Corresponds to the Real-Time Payments reason code `NOAT`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeUnsupportedMessageForRecipient RealTimePaymentsTransferRejectionRejectReasonCode = "unsupported_message_for_recipient"
-	// The destination financial institution is currently not connected to Real Time
-	// Payments. Corresponds to the Real Time Payments reason code `9912`.
+	// The destination financial institution is currently not connected to Real-Time
+	// Payments. Corresponds to the Real-Time Payments reason code `9912`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeRecipientConnectionNotAvailable RealTimePaymentsTransferRejectionRejectReasonCode = "recipient_connection_not_available"
-	// Real Time Payments is currently unavailable. Corresponds to the Real Time
+	// Real-Time Payments is currently unavailable. Corresponds to the Real-Time
 	// Payments reason code `9948`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeRealTimePaymentsSuspended RealTimePaymentsTransferRejectionRejectReasonCode = "real_time_payments_suspended"
-	// The destination financial institution is currently signed off of Real Time
-	// Payments. Corresponds to the Real Time Payments reason code `9910`.
+	// The destination financial institution is currently signed off of Real-Time
+	// Payments. Corresponds to the Real-Time Payments reason code `9910`.
 	RealTimePaymentsTransferRejectionRejectReasonCodeInstructedAgentSignedOff RealTimePaymentsTransferRejectionRejectReasonCode = "instructed_agent_signed_off"
 	// The transfer was rejected due to an internal Increase issue. We have been
 	// notified.
@@ -331,9 +337,9 @@ const (
 	RealTimePaymentsTransferStatusPendingApproval RealTimePaymentsTransferStatus = "pending_approval"
 	// The transfer has been canceled.
 	RealTimePaymentsTransferStatusCanceled RealTimePaymentsTransferStatus = "canceled"
-	// The transfer is queued to be submitted to Real Time Payments.
+	// The transfer is queued to be submitted to Real-Time Payments.
 	RealTimePaymentsTransferStatusPendingSubmission RealTimePaymentsTransferStatus = "pending_submission"
-	// The transfer has been submitted and is pending a response from Real Time
+	// The transfer has been submitted and is pending a response from Real-Time
 	// Payments.
 	RealTimePaymentsTransferStatusSubmitted RealTimePaymentsTransferStatus = "submitted"
 	// The transfer has been sent successfully and is complete.
@@ -344,13 +350,13 @@ const (
 	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
 )
 
-// After the transfer is submitted to Real Time Payments, this will contain
+// After the transfer is submitted to Real-Time Payments, this will contain
 // supplemental details.
 type RealTimePaymentsTransferSubmission struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was submitted to The Clearing House.
 	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
-	// The Real Time Payments network identification of the transfer.
+	// The Real-Time Payments network identification of the transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      realTimePaymentsTransferSubmissionJSON
 }
@@ -377,7 +383,7 @@ const (
 )
 
 type RealTimePaymentsTransferNewParams struct {
-	// The transfer amount in USD cents. For Real Time Payments transfers, must be
+	// The transfer amount in USD cents. For Real-Time Payments transfers, must be
 	// positive.
 	Amount param.Field[int64] `json:"amount,required"`
 	// The name of the transfer's recipient.
@@ -397,7 +403,7 @@ type RealTimePaymentsTransferNewParams struct {
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
@@ -408,12 +414,12 @@ func (r RealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error
 }
 
 type RealTimePaymentsTransferListParams struct {
-	// Filter Real Time Payments Transfers to those belonging to the specified Account.
+	// Filter Real-Time Payments Transfers to those belonging to the specified Account.
 	AccountID param.Field[string]                                      `query:"account_id"`
 	CreatedAt param.Field[RealTimePaymentsTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
-	// Filter Real Time Payments Transfers to those made to the specified External
+	// Filter Real-Time Payments Transfers to those made to the specified External
 	// Account.
 	ExternalAccountID param.Field[string] `query:"external_account_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100

@@ -11,7 +11,6 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -215,7 +214,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON
 }
 
@@ -274,12 +273,39 @@ const (
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // Fields specific to the type of request, such as an incremental authorization.
 type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// The type of this request (e.g., an initial authorization or an incremental
 	// authorization.)
 	Category RealTimeDecisionCardAuthorizationRequestDetailsCategory `json:"category,required"`
-	// Fields specific to the categorty `incremental_authorization`.
+	// Fields specific to the category `incremental_authorization`.
 	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
 	// Fields specific to the category `initial_authorization`.
 	InitialAuthorization interface{} `json:"initial_authorization,required,nullable"`
@@ -311,7 +337,7 @@ const (
 	RealTimeDecisionCardAuthorizationRequestDetailsCategoryIncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "incremental_authorization"
 )
 
-// Fields specific to the categorty `incremental_authorization`.
+// Fields specific to the category `incremental_authorization`.
 type RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization struct {
 	// The card payment for this authorization and increment.
 	CardPaymentID string `json:"card_payment_id,required"`

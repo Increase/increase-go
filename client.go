@@ -41,6 +41,7 @@ type Client struct {
 	WireTransfers               *WireTransferService
 	CheckTransfers              *CheckTransferService
 	Entities                    *EntityService
+	InboundACHTransfers         *InboundACHTransferService
 	InboundWireDrawdownRequests *InboundWireDrawdownRequestService
 	WireDrawdownRequests        *WireDrawdownRequestService
 	Events                      *EventService
@@ -95,6 +96,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.WireTransfers = NewWireTransferService(opts...)
 	r.CheckTransfers = NewCheckTransferService(opts...)
 	r.Entities = NewEntityService(opts...)
+	r.InboundACHTransfers = NewInboundACHTransferService(opts...)
 	r.InboundWireDrawdownRequests = NewInboundWireDrawdownRequestService(opts...)
 	r.WireDrawdownRequests = NewWireDrawdownRequestService(opts...)
 	r.Events = NewEventService(opts...)

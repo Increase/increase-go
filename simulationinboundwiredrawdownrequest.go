@@ -31,7 +31,7 @@ func NewSimulationInboundWireDrawdownRequestService(opts ...option.RequestOption
 	return
 }
 
-// Simulates the receival of an
+// Simulates receiving an
 // [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
 func (r *SimulationInboundWireDrawdownRequestService) New(ctx context.Context, body SimulationInboundWireDrawdownRequestNewParams, opts ...option.RequestOption) (res *InboundWireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)

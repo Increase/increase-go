@@ -171,6 +171,10 @@ const (
 	// Increase may send webhooks with this category to see if a webhook endpoint is
 	// working properly.
 	EventCategoryGroupHeartbeat EventCategory = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer is created.
+	EventCategoryInboundACHTransferCreated EventCategory = "inbound_ach_transfer.created"
+	// Occurs whenever an Inbound ACH Transfer is updated.
+	EventCategoryInboundACHTransferUpdated EventCategory = "inbound_ach_transfer.updated"
 	// Occurs whenever an Inbound ACH Transfer Return is created.
 	EventCategoryInboundACHTransferReturnCreated EventCategory = "inbound_ach_transfer_return.created"
 	// Occurs whenever an Inbound ACH Transfer Return is updated.
@@ -194,15 +198,15 @@ const (
 	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
 	// requiring two-factor authentication.
 	EventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventCategory = "real_time_decision.digital_wallet_authentication_requested"
-	// Occurs whenever a Real Time Payments Transfer is created.
+	// Occurs whenever a Real-Time Payments Transfer is created.
 	EventCategoryRealTimePaymentsTransferCreated EventCategory = "real_time_payments_transfer.created"
-	// Occurs whenever a Real Time Payments Transfer is updated.
+	// Occurs whenever a Real-Time Payments Transfer is updated.
 	EventCategoryRealTimePaymentsTransferUpdated EventCategory = "real_time_payments_transfer.updated"
-	// Occurs whenever a Real Time Payments Request for Payment is created.
+	// Occurs whenever a Real-Time Payments Request for Payment is created.
 	EventCategoryRealTimePaymentsRequestForPaymentCreated EventCategory = "real_time_payments_request_for_payment.created"
-	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	// Occurs whenever a Real-Time Payments Request for Payment is updated.
 	EventCategoryRealTimePaymentsRequestForPaymentUpdated EventCategory = "real_time_payments_request_for_payment.updated"
-	// Occurs whenever a Transaction is updated.
+	// Occurs whenever a Transaction is created.
 	EventCategoryTransactionCreated EventCategory = "transaction.created"
 	// Occurs whenever a Wire Drawdown Request is created.
 	EventCategoryWireDrawdownRequestCreated EventCategory = "wire_drawdown_request.created"
@@ -324,6 +328,10 @@ const (
 	// Increase may send webhooks with this category to see if a webhook endpoint is
 	// working properly.
 	EventListParamsCategoryInGroupHeartbeat EventListParamsCategoryIn = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer is created.
+	EventListParamsCategoryInInboundACHTransferCreated EventListParamsCategoryIn = "inbound_ach_transfer.created"
+	// Occurs whenever an Inbound ACH Transfer is updated.
+	EventListParamsCategoryInInboundACHTransferUpdated EventListParamsCategoryIn = "inbound_ach_transfer.updated"
 	// Occurs whenever an Inbound ACH Transfer Return is created.
 	EventListParamsCategoryInInboundACHTransferReturnCreated EventListParamsCategoryIn = "inbound_ach_transfer_return.created"
 	// Occurs whenever an Inbound ACH Transfer Return is updated.
@@ -347,15 +355,15 @@ const (
 	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
 	// requiring two-factor authentication.
 	EventListParamsCategoryInRealTimeDecisionDigitalWalletAuthenticationRequested EventListParamsCategoryIn = "real_time_decision.digital_wallet_authentication_requested"
-	// Occurs whenever a Real Time Payments Transfer is created.
+	// Occurs whenever a Real-Time Payments Transfer is created.
 	EventListParamsCategoryInRealTimePaymentsTransferCreated EventListParamsCategoryIn = "real_time_payments_transfer.created"
-	// Occurs whenever a Real Time Payments Transfer is updated.
+	// Occurs whenever a Real-Time Payments Transfer is updated.
 	EventListParamsCategoryInRealTimePaymentsTransferUpdated EventListParamsCategoryIn = "real_time_payments_transfer.updated"
-	// Occurs whenever a Real Time Payments Request for Payment is created.
+	// Occurs whenever a Real-Time Payments Request for Payment is created.
 	EventListParamsCategoryInRealTimePaymentsRequestForPaymentCreated EventListParamsCategoryIn = "real_time_payments_request_for_payment.created"
-	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	// Occurs whenever a Real-Time Payments Request for Payment is updated.
 	EventListParamsCategoryInRealTimePaymentsRequestForPaymentUpdated EventListParamsCategoryIn = "real_time_payments_request_for_payment.updated"
-	// Occurs whenever a Transaction is updated.
+	// Occurs whenever a Transaction is created.
 	EventListParamsCategoryInTransactionCreated EventListParamsCategoryIn = "transaction.created"
 	// Occurs whenever a Wire Drawdown Request is created.
 	EventListParamsCategoryInWireDrawdownRequestCreated EventListParamsCategoryIn = "wire_drawdown_request.created"

@@ -10,7 +10,6 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -100,11 +99,11 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency CardAuthorizationSimulationDeclinedTransactionCurrency `json:"currency,required"`
 	// This is the description the vendor provides.
 	Description string `json:"description,required"`
@@ -148,7 +147,7 @@ func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []by
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
+// Transaction's Account.
 type CardAuthorizationSimulationDeclinedTransactionCurrency string
 
 const (
@@ -194,7 +193,7 @@ type CardAuthorizationSimulationDeclinedTransactionSource struct {
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
@@ -294,6 +293,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// The user initiated the decline.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonUserInitiated CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "user_initiated"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -418,7 +419,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 	ElectronicCommerceIndicator CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
@@ -478,12 +479,41 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // Why the transaction was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
 	// The Card was not active.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The Physical Card was not active.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
 	// The account's entity was not active.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
 	// The account was inactive.
@@ -494,8 +524,6 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by an internal limit for new Increase accounts.
-	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	// The transaction was blocked by a Limit.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	// Your application declined the transaction via webhook.
@@ -509,6 +537,9 @@ const (
 	// The original card authorization for this incremental authorization does not
 	// exist.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+	// The transaction was suspected to be fraudulent. Please reach out to
+	// support@increase.com for more information.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonSuspectedFraud CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
 
 // The type of the resource. We may add additional possible values for this enum
@@ -522,7 +553,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCardDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "card_decline"
 	// Check Decline: details will be under the `check_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryCheckDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "check_decline"
-	// Inbound Real Time Payments Transfer Decline: details will be under the
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	CardAuthorizationSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline CardAuthorizationSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	// International ACH Decline: details will be under the `international_ach_decline`
@@ -597,7 +628,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// An Inbound Real Time Payments Transfer Decline object. This field will be
+// An Inbound Real-Time Payments Transfer Decline object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
@@ -607,7 +638,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer's currency. This will always be "USD" for a Real-Time Payments
 	// transfer.
 	Currency CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
@@ -620,7 +651,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	Reason CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the declined transfer.
+	// The Real-Time Payments network identification of the declined transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
@@ -647,7 +678,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaym
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer's currency. This will always be "USD" for a Real-Time Payments
 // transfer.
 type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
@@ -680,7 +711,7 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	// The account's entity is not active.
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real Time Payments transfers.
+	// Your account is not enabled to receive Real-Time Payments transfers.
 	CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -872,11 +903,11 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	// Transaction was completed.
 	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 	// Transaction's currency. This will match the currency on the Pending
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency CardAuthorizationSimulationPendingTransactionCurrency `json:"currency,required"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
@@ -925,7 +956,7 @@ func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byt
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
-// Transcation's Account.
+// Transaction's Account.
 type CardAuthorizationSimulationPendingTransactionCurrency string
 
 const (
@@ -978,7 +1009,7 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
-	// A Real Time Payments Transfer Instruction object. This field will be present in
+	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
 	RealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
@@ -1211,7 +1242,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 	ElectronicCommerceIndicator CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
 }
 
@@ -1271,6 +1302,33 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType string
@@ -1300,7 +1358,7 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceCategoryCheckTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "check_transfer_instruction"
 	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceCategory = "inbound_funds_hold"
-	// Real Time Payments Transfer Instruction: details will be under the
+	// Real-Time Payments Transfer Instruction: details will be under the
 	// `real_time_payments_transfer_instruction` object.
 	CardAuthorizationSimulationPendingTransactionSourceCategoryRealTimePaymentsTransferInstruction CardAuthorizationSimulationPendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
 	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
@@ -1504,14 +1562,14 @@ const (
 	CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldTypeInboundFundsHold CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldType = "inbound_funds_hold"
 )
 
-// A Real Time Payments Transfer Instruction object. This field will be present in
+// A Real-Time Payments Transfer Instruction object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The identifier of the Real Time Payments Transfer that led to this Pending
+	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON
