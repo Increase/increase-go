@@ -41,6 +41,9 @@ func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.DeclinedTransactions.List(context.TODO(), increase.DeclinedTransactionListParams{
 		AccountID: increase.F("string"),
+		Category: increase.F(increase.DeclinedTransactionListParamsCategory{
+			In: increase.F([]increase.DeclinedTransactionListParamsCategoryIn{increase.DeclinedTransactionListParamsCategoryInACHDecline, increase.DeclinedTransactionListParamsCategoryInACHDecline, increase.DeclinedTransactionListParamsCategoryInACHDecline}),
+		}),
 		CreatedAt: increase.F(increase.DeclinedTransactionListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),

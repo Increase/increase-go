@@ -191,6 +191,10 @@ const (
 	// Increase may send webhooks with this category to see if a webhook endpoint is
 	// working properly.
 	EventSubscriptionSelectedEventCategoryGroupHeartbeat EventSubscriptionSelectedEventCategory = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer is created.
+	EventSubscriptionSelectedEventCategoryInboundACHTransferCreated EventSubscriptionSelectedEventCategory = "inbound_ach_transfer.created"
+	// Occurs whenever an Inbound ACH Transfer is updated.
+	EventSubscriptionSelectedEventCategoryInboundACHTransferUpdated EventSubscriptionSelectedEventCategory = "inbound_ach_transfer.updated"
 	// Occurs whenever an Inbound ACH Transfer Return is created.
 	EventSubscriptionSelectedEventCategoryInboundACHTransferReturnCreated EventSubscriptionSelectedEventCategory = "inbound_ach_transfer_return.created"
 	// Occurs whenever an Inbound ACH Transfer Return is updated.
@@ -214,15 +218,15 @@ const (
 	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
 	// requiring two-factor authentication.
 	EventSubscriptionSelectedEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventSubscriptionSelectedEventCategory = "real_time_decision.digital_wallet_authentication_requested"
-	// Occurs whenever a Real Time Payments Transfer is created.
+	// Occurs whenever a Real-Time Payments Transfer is created.
 	EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferCreated EventSubscriptionSelectedEventCategory = "real_time_payments_transfer.created"
-	// Occurs whenever a Real Time Payments Transfer is updated.
+	// Occurs whenever a Real-Time Payments Transfer is updated.
 	EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferUpdated EventSubscriptionSelectedEventCategory = "real_time_payments_transfer.updated"
-	// Occurs whenever a Real Time Payments Request for Payment is created.
+	// Occurs whenever a Real-Time Payments Request for Payment is created.
 	EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentCreated EventSubscriptionSelectedEventCategory = "real_time_payments_request_for_payment.created"
-	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	// Occurs whenever a Real-Time Payments Request for Payment is updated.
 	EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentUpdated EventSubscriptionSelectedEventCategory = "real_time_payments_request_for_payment.updated"
-	// Occurs whenever a Transaction is updated.
+	// Occurs whenever a Transaction is created.
 	EventSubscriptionSelectedEventCategoryTransactionCreated EventSubscriptionSelectedEventCategory = "transaction.created"
 	// Occurs whenever a Wire Drawdown Request is created.
 	EventSubscriptionSelectedEventCategoryWireDrawdownRequestCreated EventSubscriptionSelectedEventCategory = "wire_drawdown_request.created"
@@ -340,6 +344,10 @@ const (
 	// Increase may send webhooks with this category to see if a webhook endpoint is
 	// working properly.
 	EventSubscriptionNewParamsSelectedEventCategoryGroupHeartbeat EventSubscriptionNewParamsSelectedEventCategory = "group.heartbeat"
+	// Occurs whenever an Inbound ACH Transfer is created.
+	EventSubscriptionNewParamsSelectedEventCategoryInboundACHTransferCreated EventSubscriptionNewParamsSelectedEventCategory = "inbound_ach_transfer.created"
+	// Occurs whenever an Inbound ACH Transfer is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryInboundACHTransferUpdated EventSubscriptionNewParamsSelectedEventCategory = "inbound_ach_transfer.updated"
 	// Occurs whenever an Inbound ACH Transfer Return is created.
 	EventSubscriptionNewParamsSelectedEventCategoryInboundACHTransferReturnCreated EventSubscriptionNewParamsSelectedEventCategory = "inbound_ach_transfer_return.created"
 	// Occurs whenever an Inbound ACH Transfer Return is updated.
@@ -363,15 +371,15 @@ const (
 	// Occurs whenever a Real-Time Decision is created in response to a digital wallet
 	// requiring two-factor authentication.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventSubscriptionNewParamsSelectedEventCategory = "real_time_decision.digital_wallet_authentication_requested"
-	// Occurs whenever a Real Time Payments Transfer is created.
+	// Occurs whenever a Real-Time Payments Transfer is created.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimePaymentsTransferCreated EventSubscriptionNewParamsSelectedEventCategory = "real_time_payments_transfer.created"
-	// Occurs whenever a Real Time Payments Transfer is updated.
+	// Occurs whenever a Real-Time Payments Transfer is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimePaymentsTransferUpdated EventSubscriptionNewParamsSelectedEventCategory = "real_time_payments_transfer.updated"
-	// Occurs whenever a Real Time Payments Request for Payment is created.
+	// Occurs whenever a Real-Time Payments Request for Payment is created.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimePaymentsRequestForPaymentCreated EventSubscriptionNewParamsSelectedEventCategory = "real_time_payments_request_for_payment.created"
-	// Occurs whenever a Real Time Payments Request for Payment is updated.
+	// Occurs whenever a Real-Time Payments Request for Payment is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimePaymentsRequestForPaymentUpdated EventSubscriptionNewParamsSelectedEventCategory = "real_time_payments_request_for_payment.updated"
-	// Occurs whenever a Transaction is updated.
+	// Occurs whenever a Transaction is created.
 	EventSubscriptionNewParamsSelectedEventCategoryTransactionCreated EventSubscriptionNewParamsSelectedEventCategory = "transaction.created"
 	// Occurs whenever a Wire Drawdown Request is created.
 	EventSubscriptionNewParamsSelectedEventCategoryWireDrawdownRequestCreated EventSubscriptionNewParamsSelectedEventCategory = "wire_drawdown_request.created"

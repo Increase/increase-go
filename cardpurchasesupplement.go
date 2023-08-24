@@ -222,7 +222,7 @@ type CardPurchaseSupplementLineItem struct {
 	SalesTaxRate string `json:"sales_tax_rate,required,nullable"`
 	// Total amount of all line items
 	TotalAmount int64 `json:"total_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the totla
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total
 	// amount.
 	TotalAmountCurrency string `json:"total_amount_currency,required,nullable"`
 	// Cost of line item per unit of measure, in major units.

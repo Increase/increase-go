@@ -119,6 +119,11 @@ type AccountTransfer struct {
 	DestinationTransactionID string `json:"destination_transaction_id,required,nullable"`
 	// The transfer's network.
 	Network AccountTransferNetwork `json:"network,required"`
+	// The ID for the pending transaction representing the transfer. A pending
+	// transaction is created when the transfer
+	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
+	// by someone else in your organization.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The lifecycle status of the transfer.
 	Status AccountTransferStatus `json:"status,required"`
 	// The ID for the transaction funding the transfer.
@@ -144,6 +149,7 @@ type accountTransferJSON struct {
 	DestinationAccountID     apijson.Field
 	DestinationTransactionID apijson.Field
 	Network                  apijson.Field
+	PendingTransactionID     apijson.Field
 	Status                   apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
@@ -264,7 +270,7 @@ type AccountTransferNewParams struct {
 	DestinationAccountID param.Field[string] `json:"destination_account_id,required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`

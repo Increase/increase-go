@@ -136,7 +136,7 @@ type ACHTransfer struct {
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
 	// The type of the account to which the transfer will be sent.
 	Funding ACHTransferFunding `json:"funding,required"`
-	// Your identifer for the transfer recipient.
+	// Your identifier for the transfer recipient.
 	IndividualID string `json:"individual_id,required,nullable"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.
@@ -146,6 +146,11 @@ type ACHTransfer struct {
 	// If the receiving bank accepts the transfer but notifies that future transfers
 	// should use different details, this will contain those details.
 	NotificationsOfChange []ACHTransferNotificationsOfChange `json:"notifications_of_change,required"`
+	// The ID for the pending transaction representing the transfer. A pending
+	// transaction is created when the transfer
+	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
+	// by someone else in your organization.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// If your transfer is returned, this will contain details of the return.
 	Return ACHTransferReturn `json:"return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -195,6 +200,7 @@ type achTransferJSON struct {
 	IndividualName           apijson.Field
 	Network                  apijson.Field
 	NotificationsOfChange    apijson.Field
+	PendingTransactionID     apijson.Field
 	Return                   apijson.Field
 	RoutingNumber            apijson.Field
 	StandardEntryClassCode   apijson.Field
@@ -381,7 +387,7 @@ type ACHTransferReturn struct {
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode ACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
-	// The identifier of the Tranasaction associated with this return.
+	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
@@ -704,7 +710,7 @@ type ACHTransferNewParams struct {
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// The type of the account to which the transfer will be sent.
 	Funding param.Field[ACHTransferNewParamsFunding] `json:"funding"`
-	// Your identifer for the transfer recipient.
+	// Your identifier for the transfer recipient.
 	IndividualID param.Field[string] `json:"individual_id"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
@@ -716,7 +722,7 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
-	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`

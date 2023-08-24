@@ -41,6 +41,9 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.PendingTransactions.List(context.TODO(), increase.PendingTransactionListParams{
 		AccountID: increase.F("string"),
+		Category: increase.F(increase.PendingTransactionListParamsCategory{
+			In: increase.F([]increase.PendingTransactionListParamsCategoryIn{increase.PendingTransactionListParamsCategoryInAccountTransferInstruction, increase.PendingTransactionListParamsCategoryInAccountTransferInstruction, increase.PendingTransactionListParamsCategoryInAccountTransferInstruction}),
+		}),
 		CreatedAt: increase.F(increase.PendingTransactionListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),

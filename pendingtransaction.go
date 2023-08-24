@@ -80,11 +80,11 @@ type PendingTransaction struct {
 	// Transaction was completed.
 	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 	// Transaction's currency. This will match the currency on the Pending
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency PendingTransactionCurrency `json:"currency,required"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
@@ -133,7 +133,7 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
-// Transcation's Account.
+// Transaction's Account.
 type PendingTransactionCurrency string
 
 const (
@@ -186,7 +186,7 @@ type PendingTransactionSource struct {
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
-	// A Real Time Payments Transfer Instruction object. This field will be present in
+	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
 	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
@@ -416,7 +416,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
 }
 
@@ -476,6 +476,33 @@ const (
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type PendingTransactionSourceCardAuthorizationType string
@@ -505,7 +532,7 @@ const (
 	PendingTransactionSourceCategoryCheckTransferInstruction PendingTransactionSourceCategory = "check_transfer_instruction"
 	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
 	PendingTransactionSourceCategoryInboundFundsHold PendingTransactionSourceCategory = "inbound_funds_hold"
-	// Real Time Payments Transfer Instruction: details will be under the
+	// Real-Time Payments Transfer Instruction: details will be under the
 	// `real_time_payments_transfer_instruction` object.
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
 	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
@@ -706,14 +733,14 @@ const (
 	PendingTransactionSourceInboundFundsHoldTypeInboundFundsHold PendingTransactionSourceInboundFundsHoldType = "inbound_funds_hold"
 )
 
-// A Real Time Payments Transfer Instruction object. This field will be present in
+// A Real-Time Payments Transfer Instruction object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_instruction`.
 type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The identifier of the Real Time Payments Transfer that led to this Pending
+	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       pendingTransactionSourceRealTimePaymentsTransferInstructionJSON
@@ -786,6 +813,7 @@ const (
 type PendingTransactionListParams struct {
 	// Filter pending transactions to those belonging to the specified Account.
 	AccountID param.Field[string]                                `query:"account_id"`
+	Category  param.Field[PendingTransactionListParamsCategory]  `query:"category"`
 	CreatedAt param.Field[PendingTransactionListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
@@ -807,6 +835,50 @@ func (r PendingTransactionListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type PendingTransactionListParamsCategory struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]PendingTransactionListParamsCategoryIn] `query:"in"`
+}
+
+// URLQuery serializes [PendingTransactionListParamsCategory]'s query parameters as
+// `url.Values`.
+func (r PendingTransactionListParamsCategory) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type PendingTransactionListParamsCategoryIn string
+
+const (
+	// Account Transfer Instruction: details will be under the
+	// `account_transfer_instruction` object.
+	PendingTransactionListParamsCategoryInAccountTransferInstruction PendingTransactionListParamsCategoryIn = "account_transfer_instruction"
+	// ACH Transfer Instruction: details will be under the `ach_transfer_instruction`
+	// object.
+	PendingTransactionListParamsCategoryInACHTransferInstruction PendingTransactionListParamsCategoryIn = "ach_transfer_instruction"
+	// Card Authorization: details will be under the `card_authorization` object.
+	PendingTransactionListParamsCategoryInCardAuthorization PendingTransactionListParamsCategoryIn = "card_authorization"
+	// Check Deposit Instruction: details will be under the `check_deposit_instruction`
+	// object.
+	PendingTransactionListParamsCategoryInCheckDepositInstruction PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
+	// Check Transfer Instruction: details will be under the
+	// `check_transfer_instruction` object.
+	PendingTransactionListParamsCategoryInCheckTransferInstruction PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
+	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
+	PendingTransactionListParamsCategoryInInboundFundsHold PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
+	// Real-Time Payments Transfer Instruction: details will be under the
+	// `real_time_payments_transfer_instruction` object.
+	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
+	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
+	// object.
+	PendingTransactionListParamsCategoryInWireTransferInstruction PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
+	// The Pending Transaction was made for an undocumented or deprecated reason.
+	PendingTransactionListParamsCategoryInOther PendingTransactionListParamsCategoryIn = "other"
+)
 
 type PendingTransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

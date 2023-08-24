@@ -68,7 +68,7 @@ type RoutingNumber struct {
 	ACHTransfers RoutingNumberACHTransfers `json:"ach_transfers,required"`
 	// The name of the financial institution belonging to a routing number.
 	Name string `json:"name,required"`
-	// This routing number's support for Real Time Payments Transfers.
+	// This routing number's support for Real-Time Payments Transfers.
 	RealTimePaymentsTransfers RoutingNumberRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
 	// The nine digit routing number identifier.
 	RoutingNumber string `json:"routing_number,required"`
@@ -106,7 +106,7 @@ const (
 	RoutingNumberACHTransfersNotSupported RoutingNumberACHTransfers = "not_supported"
 )
 
-// This routing number's support for Real Time Payments Transfers.
+// This routing number's support for Real-Time Payments Transfers.
 type RoutingNumberRealTimePaymentsTransfers string
 
 const (

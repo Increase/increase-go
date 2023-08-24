@@ -143,7 +143,7 @@ const (
 type ExternalAccountStatus string
 
 const (
-	// The External Acccount is active.
+	// The External Account is active.
 	ExternalAccountStatusActive ExternalAccountStatus = "active"
 	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
@@ -212,7 +212,7 @@ func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 type ExternalAccountUpdateParamsStatus string
 
 const (
-	// The External Acccount is active.
+	// The External Account is active.
 	ExternalAccountUpdateParamsStatusActive ExternalAccountUpdateParamsStatus = "active"
 	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountUpdateParamsStatusArchived ExternalAccountUpdateParamsStatus = "archived"
@@ -255,7 +255,7 @@ func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 type ExternalAccountListParamsStatusIn string
 
 const (
-	// The External Acccount is active.
+	// The External Account is active.
 	ExternalAccountListParamsStatusInActive ExternalAccountListParamsStatusIn = "active"
 	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"

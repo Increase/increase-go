@@ -130,7 +130,10 @@ type CheckTransfer struct {
 	// If the check has been mailed by Increase, this will contain details of the
 	// shipment.
 	Mailing CheckTransferMailing `json:"mailing,required,nullable"`
-	// The identifier of the Pending Transaction associated with the check's creation.
+	// The ID for the pending transaction representing the transfer. A pending
+	// transaction is created when the transfer
+	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
+	// by someone else in your organization.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// Details relating to the physical check that Increase will print and mail. Will
 	// be present if and only if `fulfillment_method` is equal to `physical_check`.
@@ -496,7 +499,7 @@ type CheckTransferStopPaymentRequestReason string
 const (
 	// The check could not be delivered.
 	CheckTransferStopPaymentRequestReasonMailDeliveryFailed CheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	// The check was cancelled by an Increase operator who will provide details
+	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	CheckTransferStopPaymentRequestReasonRejectedByIncrease CheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
@@ -554,7 +557,7 @@ type CheckTransferNewParams struct {
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
-	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
