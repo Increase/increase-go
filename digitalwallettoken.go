@@ -115,7 +115,7 @@ const (
 	DigitalWalletTokenStatusInactive DigitalWalletTokenStatus = "inactive"
 	// The digital wallet token has been temporarily paused.
 	DigitalWalletTokenStatusSuspended DigitalWalletTokenStatus = "suspended"
-	// The digital wallet token has been permanently cancelled.
+	// The digital wallet token has been permanently canceled.
 	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
 )
 

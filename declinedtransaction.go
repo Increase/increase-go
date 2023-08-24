@@ -78,11 +78,11 @@ type DeclinedTransaction struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency DeclinedTransactionCurrency `json:"currency,required"`
 	// This is the description the vendor provides.
 	Description string `json:"description,required"`
@@ -126,7 +126,7 @@ func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
+// Transaction's Account.
 type DeclinedTransactionCurrency string
 
 const (
@@ -172,7 +172,7 @@ type DeclinedTransactionSource struct {
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
@@ -271,6 +271,8 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonOriginatorRequest DeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// The user initiated the decline.
+	DeclinedTransactionSourceACHDeclineReasonUserInitiated DeclinedTransactionSourceACHDeclineReason = "user_initiated"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -393,7 +395,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	ElectronicCommerceIndicator DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
@@ -452,12 +454,41 @@ const (
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // Why the transaction was declined.
 type DeclinedTransactionSourceCardDeclineReason string
 
 const (
 	// The Card was not active.
 	DeclinedTransactionSourceCardDeclineReasonCardNotActive DeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The Physical Card was not active.
+	DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive DeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
 	// The account's entity was not active.
 	DeclinedTransactionSourceCardDeclineReasonEntityNotActive DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
 	// The account was inactive.
@@ -468,8 +499,6 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by an internal limit for new Increase accounts.
-	DeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit DeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	// The transaction was blocked by a Limit.
 	DeclinedTransactionSourceCardDeclineReasonBreachesLimit DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	// Your application declined the transaction via webhook.
@@ -483,6 +512,9 @@ const (
 	// The original card authorization for this incremental authorization does not
 	// exist.
 	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+	// The transaction was suspected to be fraudulent. Please reach out to
+	// support@increase.com for more information.
+	DeclinedTransactionSourceCardDeclineReasonSuspectedFraud DeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
 
 // The type of the resource. We may add additional possible values for this enum
@@ -496,7 +528,7 @@ const (
 	DeclinedTransactionSourceCategoryCardDecline DeclinedTransactionSourceCategory = "card_decline"
 	// Check Decline: details will be under the `check_decline` object.
 	DeclinedTransactionSourceCategoryCheckDecline DeclinedTransactionSourceCategory = "check_decline"
-	// Inbound Real Time Payments Transfer Decline: details will be under the
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	// International ACH Decline: details will be under the `international_ach_decline`
@@ -570,7 +602,7 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// An Inbound Real Time Payments Transfer Decline object. This field will be
+// An Inbound Real-Time Payments Transfer Decline object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
@@ -580,7 +612,7 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer's currency. This will always be "USD" for a Real-Time Payments
 	// transfer.
 	Currency DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
@@ -593,7 +625,7 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the declined transfer.
+	// The Real-Time Payments network identification of the declined transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
@@ -620,7 +652,7 @@ func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) Unmars
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer's currency. This will always be "USD" for a Real-Time Payments
 // transfer.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
@@ -653,7 +685,7 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	// The account's entity is not active.
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real Time Payments transfers.
+	// Your account is not enabled to receive Real-Time Payments transfers.
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -831,6 +863,7 @@ const (
 type DeclinedTransactionListParams struct {
 	// Filter Declined Transactions to ones belonging to the specified Account.
 	AccountID param.Field[string]                                 `query:"account_id"`
+	Category  param.Field[DeclinedTransactionListParamsCategory]  `query:"category"`
 	CreatedAt param.Field[DeclinedTransactionListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
@@ -849,6 +882,42 @@ func (r DeclinedTransactionListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type DeclinedTransactionListParamsCategory struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]DeclinedTransactionListParamsCategoryIn] `query:"in"`
+}
+
+// URLQuery serializes [DeclinedTransactionListParamsCategory]'s query parameters
+// as `url.Values`.
+func (r DeclinedTransactionListParamsCategory) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type DeclinedTransactionListParamsCategoryIn string
+
+const (
+	// ACH Decline: details will be under the `ach_decline` object.
+	DeclinedTransactionListParamsCategoryInACHDecline DeclinedTransactionListParamsCategoryIn = "ach_decline"
+	// Card Decline: details will be under the `card_decline` object.
+	DeclinedTransactionListParamsCategoryInCardDecline DeclinedTransactionListParamsCategoryIn = "card_decline"
+	// Check Decline: details will be under the `check_decline` object.
+	DeclinedTransactionListParamsCategoryInCheckDecline DeclinedTransactionListParamsCategoryIn = "check_decline"
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
+	// `inbound_real_time_payments_transfer_decline` object.
+	DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline DeclinedTransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
+	// International ACH Decline: details will be under the `international_ach_decline`
+	// object.
+	DeclinedTransactionListParamsCategoryInInternationalACHDecline DeclinedTransactionListParamsCategoryIn = "international_ach_decline"
+	// Wire Decline: details will be under the `wire_decline` object.
+	DeclinedTransactionListParamsCategoryInWireDecline DeclinedTransactionListParamsCategoryIn = "wire_decline"
+	// The Declined Transaction was made for an undocumented or deprecated reason.
+	DeclinedTransactionListParamsCategoryInOther DeclinedTransactionListParamsCategoryIn = "other"
+)
 
 type DeclinedTransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

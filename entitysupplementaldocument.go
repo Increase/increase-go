@@ -43,7 +43,7 @@ func (r *EntitySupplementalDocumentService) New(ctx context.Context, entityID st
 	return
 }
 
-// List Entity Supplemental Document Submissionss
+// List Entity Supplemental Document Submissions
 func (r *EntitySupplementalDocumentService) List(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) (res *shared.Page[SupplementalDocument], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -61,7 +61,7 @@ func (r *EntitySupplementalDocumentService) List(ctx context.Context, query Enti
 	return res, nil
 }
 
-// List Entity Supplemental Document Submissionss
+// List Entity Supplemental Document Submissions
 func (r *EntitySupplementalDocumentService) ListAutoPaging(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) *shared.PageAutoPager[SupplementalDocument] {
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }

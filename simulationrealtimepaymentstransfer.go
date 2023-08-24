@@ -11,7 +11,6 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -34,7 +33,7 @@ func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) 
 	return
 }
 
-// Simulates submission of a Real Time Payments transfer and handling the response
+// Simulates submission of a Real-Time Payments transfer and handling the response
 // from the destination financial institution. This transfer must first have a
 // `status` of `pending_submission`.
 func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, realTimePaymentsTransferID string, body SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
@@ -44,7 +43,7 @@ func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context
 	return
 }
 
-// Simulates an inbound Real Time Payments transfer to your account. Real Time
+// Simulates an inbound Real-Time Payments transfer to your account. Real-Time
 // Payments are a beta feature.
 func (r *SimulationRealTimePaymentsTransferService) NewInbound(ctx context.Context, body SimulationRealTimePaymentsTransferNewInboundParams, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransferSimulationResult, err error) {
 	opts = append(r.Options[:], opts...)
@@ -53,14 +52,14 @@ func (r *SimulationRealTimePaymentsTransferService) NewInbound(ctx context.Conte
 	return
 }
 
-// The results of an inbound Real Time Payments Transfer simulation.
+// The results of an inbound Real-Time Payments Transfer simulation.
 type InboundRealTimePaymentsTransferSimulationResult struct {
-	// If the Real Time Payments Transfer attempt fails, this will contain the
+	// If the Real-Time Payments Transfer attempt fails, this will contain the
 	// resulting [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of
 	// `category: inbound_real_time_payments_transfer_decline`.
 	DeclinedTransaction InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction `json:"declined_transaction,required,nullable"`
-	// If the Real Time Payments Transfer attempt succeeds, this will contain the
+	// If the Real-Time Payments Transfer attempt succeeds, this will contain the
 	// resulting [Transaction](#transactions) object. The Transaction's `source` will
 	// be of `category: inbound_real_time_payments_transfer_confirmation`.
 	Transaction InboundRealTimePaymentsTransferSimulationResultTransaction `json:"transaction,required,nullable"`
@@ -84,7 +83,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// If the Real Time Payments Transfer attempt fails, this will contain the
+// If the Real-Time Payments Transfer attempt fails, this will contain the
 // resulting [Declined Transaction](#declined-transactions) object. The Declined
 // Transaction's `source` will be of
 // `category: inbound_real_time_payments_transfer_decline`.
@@ -97,11 +96,11 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency `json:"currency,required"`
 	// This is the description the vendor provides.
 	Description string `json:"description,required"`
@@ -146,7 +145,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) Unm
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
+// Transaction's Account.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionCurrency string
 
 const (
@@ -192,7 +191,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
@@ -293,6 +292,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonOriginatorRequest InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// The user initiated the decline.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonUserInitiated InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "user_initiated"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -417,7 +418,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	ElectronicCommerceIndicator InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
@@ -477,12 +478,41 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // Why the transaction was declined.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason string
 
 const (
 	// The Card was not active.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardNotActive InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The Physical Card was not active.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
 	// The account's entity was not active.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonEntityNotActive InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
 	// The account was inactive.
@@ -493,8 +523,6 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by an internal limit for new Increase accounts.
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	// The transaction was blocked by a Limit.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	// Your application declined the transaction via webhook.
@@ -508,6 +536,9 @@ const (
 	// The original card authorization for this incremental authorization does not
 	// exist.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+	// The transaction was suspected to be fraudulent. Please reach out to
+	// support@increase.com for more information.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonSuspectedFraud InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
 
 // The type of the resource. We may add additional possible values for this enum
@@ -521,7 +552,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCardDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "card_decline"
 	// Check Decline: details will be under the `check_decline` object.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "check_decline"
-	// Inbound Real Time Payments Transfer Decline: details will be under the
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	// International ACH Decline: details will be under the `international_ach_decline`
@@ -596,7 +627,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// An Inbound Real Time Payments Transfer Decline object. This field will be
+// An Inbound Real-Time Payments Transfer Decline object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
@@ -606,7 +637,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer's currency. This will always be "USD" for a Real-Time Payments
 	// transfer.
 	Currency InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
@@ -619,7 +650,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the declined transfer.
+	// The Real-Time Payments network identification of the declined transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
@@ -646,7 +677,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer's currency. This will always be "USD" for a Real-Time Payments
 // transfer.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
@@ -679,7 +710,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	// The account's entity is not active.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real Time Payments transfers.
+	// Your account is not enabled to receive Real-Time Payments transfers.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -856,7 +887,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionTypeDeclinedTransaction InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionType = "declined_transaction"
 )
 
-// If the Real Time Payments Transfer attempt succeeds, this will contain the
+// If the Real-Time Payments Transfer attempt succeeds, this will contain the
 // resulting [Transaction](#transactions) object. The Transaction's `source` will
 // be of `category: inbound_real_time_payments_transfer_confirmation`.
 type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
@@ -868,10 +899,10 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// Transaction's currency. This will match the currency on the Transcation's
+	// Transaction's currency. This will match the currency on the Transaction's
 	// Account.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionCurrency `json:"currency,required"`
 	// An informational message describing this transaction. Use the fields in `source`
@@ -917,7 +948,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) UnmarshalJS
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// Transaction's currency. This will match the currency on the Transcation's
+// Transaction's currency. This will match the currency on the Transaction's
 // Account.
 type InboundRealTimePaymentsTransferSimulationResultTransactionCurrency string
 
@@ -1007,7 +1038,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
 	InboundInternationalACHTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer,required,nullable"`
-	// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
@@ -1030,7 +1061,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`.
 	InternalSource InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource `json:"internal_source,required,nullable"`
-	// A Real Time Payments Transfer Acknowledgement object. This field will be present
+	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
 	RealTimePaymentsTransferAcknowledgement InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
@@ -1206,7 +1237,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
-	// The identifier of the Tranasaction associated with this return.
+	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
@@ -1694,7 +1725,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -2382,7 +2413,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -2806,7 +2837,7 @@ const (
 	// Inbound International ACH Transfer: details will be under the
 	// `inbound_international_ach_transfer` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
-	// Inbound Real Time Payments Transfer Confirmation: details will be under the
+	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
 	// Inbound Wire Drawdown Payment: details will be under the
@@ -2823,7 +2854,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "internal_source"
-	// Real Time Payments Transfer Acknowledgement: details will be under the
+	// Real-Time Payments Transfer Acknowledgement: details will be under the
 	// `real_time_payments_transfer_acknowledgement` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
 	// Sample Funds: details will be under the `sample_funds` object.
@@ -3134,7 +3165,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 const (
 	// The check could not be delivered.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	// The check was cancelled by an Increase operator who will provide details
+	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
@@ -3379,7 +3410,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
@@ -3389,7 +3420,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundReal
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-	// currency. This will always be "USD" for a Real Time Payments transfer.
+	// currency. This will always be "USD" for a Real-Time Payments transfer.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
@@ -3399,7 +3430,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundReal
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the transfer
+	// The Real-Time Payments network identification of the transfer
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
@@ -3425,7 +3456,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-// currency. This will always be "USD" for a Real Time Payments transfer.
+// currency. This will always be "USD" for a Real-Time Payments transfer.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -3570,7 +3601,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
 	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
@@ -3789,7 +3820,7 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-// A Real Time Payments Transfer Acknowledgement object. This field will be present
+// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
@@ -3801,7 +3832,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePay
 	DestinationRoutingNumber string `json:"destination_routing_number,required"`
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
-	// The identifier of the Real Time Payments Transfer that led to this Transaction.
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
 }
@@ -3935,62 +3966,62 @@ func (r SimulationRealTimePaymentsTransferCompleteParamsRejection) MarshalJSON()
 type SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
 
 const (
-	// The destination account is closed. Corresponds to the Real Time Payments reason
+	// The destination account is closed. Corresponds to the Real-Time Payments reason
 	// code `AC04`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountClosed SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_closed"
 	// The destination account is currently blocked from receiving transactions.
-	// Corresponds to the Real Time Payments reason code `AC06`.
+	// Corresponds to the Real-Time Payments reason code `AC06`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountBlocked SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_blocked"
-	// The destination account is ineligible to receive Real Time Payments transfers.
-	// Corresponds to the Real Time Payments reason code `AC14`.
+	// The destination account is ineligible to receive Real-Time Payments transfers.
+	// Corresponds to the Real-Time Payments reason code `AC14`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountType SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_type"
-	// The destination account does not exist. Corresponds to the Real Time Payments
+	// The destination account does not exist. Corresponds to the Real-Time Payments
 	// reason code `AC03`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountNumber SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_number"
-	// The destination routing number is invalid. Corresponds to the Real Time Payments
+	// The destination routing number is invalid. Corresponds to the Real-Time Payments
 	// reason code `RC04`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
-	// The destination account holder is deceased. Corresponds to the Real Time
+	// The destination account holder is deceased. Corresponds to the Real-Time
 	// Payments reason code `MD07`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeEndCustomerDeceased SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "end_customer_deceased"
 	// The reason is provided as narrative information in the additional information
 	// field.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeNarrative SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "narrative"
-	// Real Time Payments transfers are not allowed to the destination account.
-	// Corresponds to the Real Time Payments reason code `AG01`.
+	// Real-Time Payments transfers are not allowed to the destination account.
+	// Corresponds to the Real-Time Payments reason code `AG01`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionForbidden SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_forbidden"
-	// Real Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real Time Payments reason code `AG03`.
+	// Real-Time Payments transfers are not enabled for the destination account.
+	// Corresponds to the Real-Time Payments reason code `AG03`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionTypeNotSupported SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_type_not_supported"
 	// The amount of the transfer is different than expected by the recipient.
-	// Corresponds to the Real Time Payments reason code `AM09`.
+	// Corresponds to the Real-Time Payments reason code `AM09`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnexpectedAmount SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unexpected_amount"
 	// The amount is higher than the recipient is authorized to send or receive.
-	// Corresponds to the Real Time Payments reason code `AM14`.
+	// Corresponds to the Real-Time Payments reason code `AM14`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAmountExceedsBankLimits SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "amount_exceeds_bank_limits"
 	// The creditor's address is required, but missing or invalid. Corresponds to the
-	// Real Time Payments reason code `BE04`.
+	// Real-Time Payments reason code `BE04`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAddress SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_address"
-	// The specified creditor is unknown. Corresponds to the Real Time Payments reason
+	// The specified creditor is unknown. Corresponds to the Real-Time Payments reason
 	// code `BE06`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnknownEndCustomer SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unknown_end_customer"
 	// The debtor's address is required, but missing or invalid. Corresponds to the
-	// Real Time Payments reason code `BE07`.
+	// Real-Time Payments reason code `BE07`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidDebtorAddress SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_debtor_address"
-	// There was a timeout processing the transfer. Corresponds to the Real Time
+	// There was a timeout processing the transfer. Corresponds to the Real-Time
 	// Payments reason code `DS24`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTimeout SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "timeout"
-	// Real Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real Time Payments reason code `NOAT`.
+	// Real-Time Payments transfers are not enabled for the destination account.
+	// Corresponds to the Real-Time Payments reason code `NOAT`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnsupportedMessageForRecipient SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unsupported_message_for_recipient"
-	// The destination financial institution is currently not connected to Real Time
-	// Payments. Corresponds to the Real Time Payments reason code `9912`.
+	// The destination financial institution is currently not connected to Real-Time
+	// Payments. Corresponds to the Real-Time Payments reason code `9912`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRecipientConnectionNotAvailable SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "recipient_connection_not_available"
-	// Real Time Payments is currently unavailable. Corresponds to the Real Time
+	// Real-Time Payments is currently unavailable. Corresponds to the Real-Time
 	// Payments reason code `9948`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRealTimePaymentsSuspended SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "real_time_payments_suspended"
-	// The destination financial institution is currently signed off of Real Time
-	// Payments. Corresponds to the Real Time Payments reason code `9910`.
+	// The destination financial institution is currently signed off of Real-Time
+	// Payments. Corresponds to the Real-Time Payments reason code `9910`.
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInstructedAgentSignedOff SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "instructed_agent_signed_off"
 	// The transfer was rejected due to an internal Increase issue. We have been
 	// notified.
@@ -4000,7 +4031,7 @@ const (
 )
 
 type SimulationRealTimePaymentsTransferNewInboundParams struct {
-	// The identifier of the Account Number the inbound Real Time Payments Transfer is
+	// The identifier of the Account Number the inbound Real-Time Payments Transfer is
 	// for.
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in USD cents. Must be positive.

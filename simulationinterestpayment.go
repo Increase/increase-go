@@ -75,10 +75,10 @@ type InterestPaymentSimulationResultTransaction struct {
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// Transaction's currency. This will match the currency on the Transcation's
+	// Transaction's currency. This will match the currency on the Transaction's
 	// Account.
 	Currency InterestPaymentSimulationResultTransactionCurrency `json:"currency,required"`
 	// An informational message describing this transaction. Use the fields in `source`
@@ -123,7 +123,7 @@ func (r *InterestPaymentSimulationResultTransaction) UnmarshalJSON(data []byte) 
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// Transaction's currency. This will match the currency on the Transcation's
+// Transaction's currency. This will match the currency on the Transaction's
 // Account.
 type InterestPaymentSimulationResultTransactionCurrency string
 
@@ -213,7 +213,7 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
 	InboundInternationalACHTransfer InterestPaymentSimulationResultTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer,required,nullable"`
-	// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
@@ -236,7 +236,7 @@ type InterestPaymentSimulationResultTransactionSource struct {
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`.
 	InternalSource InterestPaymentSimulationResultTransactionSourceInternalSource `json:"internal_source,required,nullable"`
-	// A Real Time Payments Transfer Acknowledgement object. This field will be present
+	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
 	RealTimePaymentsTransferAcknowledgement InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
@@ -411,7 +411,7 @@ type InterestPaymentSimulationResultTransactionSourceACHTransferReturn struct {
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode InterestPaymentSimulationResultTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
-	// The identifier of the Tranasaction associated with this return.
+	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
@@ -899,7 +899,7 @@ type InterestPaymentSimulationResultTransactionSourceCardRefundPurchaseDetailsLo
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -1587,7 +1587,7 @@ type InterestPaymentSimulationResultTransactionSourceCardSettlementPurchaseDetai
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -2011,7 +2011,7 @@ const (
 	// Inbound International ACH Transfer: details will be under the
 	// `inbound_international_ach_transfer` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer InterestPaymentSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
-	// Inbound Real Time Payments Transfer Confirmation: details will be under the
+	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
 	// Inbound Wire Drawdown Payment: details will be under the
@@ -2028,7 +2028,7 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryInterestPayment InterestPaymentSimulationResultTransactionSourceCategory = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInternalSource InterestPaymentSimulationResultTransactionSourceCategory = "internal_source"
-	// Real Time Payments Transfer Acknowledgement: details will be under the
+	// Real-Time Payments Transfer Acknowledgement: details will be under the
 	// `real_time_payments_transfer_acknowledgement` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement InterestPaymentSimulationResultTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
 	// Sample Funds: details will be under the `sample_funds` object.
@@ -2339,7 +2339,7 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentReq
 const (
 	// The check could not be delivered.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	// The check was cancelled by an Increase operator who will provide details
+	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
@@ -2584,7 +2584,7 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundInternationalACH
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
@@ -2594,7 +2594,7 @@ type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTran
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-	// currency. This will always be "USD" for a Real Time Payments transfer.
+	// currency. This will always be "USD" for a Real-Time Payments transfer.
 	Currency InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
@@ -2604,7 +2604,7 @@ type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTran
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the transfer
+	// The Real-Time Payments network identification of the transfer
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      interestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
@@ -2630,7 +2630,7 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundRealTimePayments
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-// currency. This will always be "USD" for a Real Time Payments transfer.
+// currency. This will always be "USD" for a Real-Time Payments transfer.
 type InterestPaymentSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -2775,7 +2775,7 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
 	JSON           interestPaymentSimulationResultTransactionSourceInboundWireReversalJSON
@@ -2994,7 +2994,7 @@ const (
 	InterestPaymentSimulationResultTransactionSourceInternalSourceReasonSampleFundsReturn InterestPaymentSimulationResultTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-// A Real Time Payments Transfer Acknowledgement object. This field will be present
+// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`.
 type InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
@@ -3006,7 +3006,7 @@ type InterestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAck
 	DestinationRoutingNumber string `json:"destination_routing_number,required"`
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
-	// The identifier of the Real Time Payments Transfer that led to this Transaction.
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       interestPaymentSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
 }

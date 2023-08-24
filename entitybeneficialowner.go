@@ -4,7 +4,6 @@ package increase
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -33,9 +32,17 @@ func NewEntityBeneficialOwnerService(opts ...option.RequestOption) (r *EntityBen
 }
 
 // Create a beneficial owner for a corporate Entity
-func (r *EntityBeneficialOwnerService) New(ctx context.Context, entityID string, body EntityBeneficialOwnerNewParams, opts ...option.RequestOption) (res *Entity, err error) {
+func (r *EntityBeneficialOwnerService) New(ctx context.Context, body EntityBeneficialOwnerNewParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("entities/%s/beneficial_owners", entityID)
+	path := "entity_beneficial_owners"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+// Archive a beneficial owner belonging to a corporate Entity
+func (r *EntityBeneficialOwnerService) Archive(ctx context.Context, body EntityBeneficialOwnerArchiveParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "entity_beneficial_owners/archive"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -44,6 +51,8 @@ type EntityBeneficialOwnerNewParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
 	BeneficialOwner param.Field[EntityBeneficialOwnerNewParamsBeneficialOwner] `json:"beneficial_owner,required"`
+	// The identifier of the Entity to associate with the new Beneficial Owner.
+	EntityID param.Field[string] `json:"entity_id,required"`
 }
 
 func (r EntityBeneficialOwnerNewParams) MarshalJSON() (data []byte, err error) {
@@ -68,7 +77,7 @@ func (r EntityBeneficialOwnerNewParamsBeneficialOwner) MarshalJSON() (data []byt
 
 // Personal details for the beneficial owner.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual struct {
-	// The individual's address.
+	// The individual's physical address. Post Office Boxes are disallowed.
 	Address param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -87,7 +96,7 @@ func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual) MarshalJSON() (
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's address.
+// The individual's physical address. Post Office Boxes are disallowed.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -205,3 +214,15 @@ const (
 	// A person who manages, directs, or has significant control of the entity.
 	EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl EntityBeneficialOwnerNewParamsBeneficialOwnerProng = "control"
 )
+
+type EntityBeneficialOwnerArchiveParams struct {
+	// The identifying details of anyone controlling or owning 25% or more of the
+	// corporation.
+	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id,required"`
+	// The identifier of the Entity to retrieve.
+	EntityID param.Field[string] `json:"entity_id,required"`
+}
+
+func (r EntityBeneficialOwnerArchiveParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}

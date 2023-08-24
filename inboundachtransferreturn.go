@@ -90,7 +90,7 @@ type InboundACHTransferReturn struct {
 	// After the return is submitted to FedACH, this will contain supplemental details.
 	Submission InboundACHTransferReturnSubmission `json:"submission,required,nullable"`
 	// The ID for the transaction refunding the transfer.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_return`.
 	Type InboundACHTransferReturnType `json:"type,required"`

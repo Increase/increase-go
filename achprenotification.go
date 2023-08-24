@@ -234,7 +234,7 @@ const (
 	ACHPrenotificationStatusRequiresAttention ACHPrenotificationStatus = "requires_attention"
 	// The Prenotification has been returned.
 	ACHPrenotificationStatusReturned ACHPrenotificationStatus = "returned"
-	// The Prentification is complete.
+	// The Prenotification is complete.
 	ACHPrenotificationStatusSubmitted ACHPrenotificationStatus = "submitted"
 )
 
@@ -267,7 +267,7 @@ type ACHPrenotificationNewParams struct {
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
-	// Your identifer for the transfer recipient.
+	// Your identifier for the transfer recipient.
 	IndividualID param.Field[string] `json:"individual_id"`
 	// The name of the transfer recipient. This value is information and not verified
 	// by the recipient's bank.

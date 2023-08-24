@@ -148,6 +148,11 @@ type WireTransfer struct {
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The transfer's network.
 	Network WireTransferNetwork `json:"network,required"`
+	// The ID for the pending transaction representing the transfer. A pending
+	// transaction is created when the transfer
+	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
+	// by someone else in your organization.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// If your transfer is reversed, this will contain details of the reversal.
 	Reversal WireTransferReversal `json:"reversal,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -184,6 +189,7 @@ type wireTransferJSON struct {
 	ExternalAccountID       apijson.Field
 	MessageToRecipient      apijson.Field
 	Network                 apijson.Field
+	PendingTransactionID    apijson.Field
 	Reversal                apijson.Field
 	RoutingNumber           apijson.Field
 	Status                  apijson.Field
@@ -306,7 +312,7 @@ type WireTransferReversal struct {
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
 	JSON           wireTransferReversalJSON
@@ -414,7 +420,7 @@ type WireTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
-	// A unique identifier you choose for the transfer. Reusing this identifer for
+	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`

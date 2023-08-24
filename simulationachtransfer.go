@@ -11,7 +11,6 @@ import (
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -111,11 +110,11 @@ type ACHTransferSimulationDeclinedTransaction struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
-	// Transcation's Account.
+	// Transaction's Account.
 	Currency ACHTransferSimulationDeclinedTransactionCurrency `json:"currency,required"`
 	// This is the description the vendor provides.
 	Description string `json:"description,required"`
@@ -159,7 +158,7 @@ func (r *ACHTransferSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (e
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
-// Transcation's Account.
+// Transaction's Account.
 type ACHTransferSimulationDeclinedTransactionCurrency string
 
 const (
@@ -205,7 +204,7 @@ type ACHTransferSimulationDeclinedTransactionSource struct {
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline ACHTransferSimulationDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
-	// An Inbound Real Time Payments Transfer Decline object. This field will be
+	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
@@ -305,6 +304,8 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	// The user initiated the decline.
+	ACHTransferSimulationDeclinedTransactionSourceACHDeclineReasonUserInitiated ACHTransferSimulationDeclinedTransactionSourceACHDeclineReason = "user_initiated"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -429,7 +430,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
 	ElectronicCommerceIndicator ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date
-	PointOfServiceEntryMode shared.PointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
 
@@ -489,12 +490,41 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+// The method used to enter the cardholder's primary account number and card
+// expiration date
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	// Unknown
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	// Manual key entry
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	// Magnetic stripe read, without card verification value
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	// Optical code
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	// Contact chip card
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	// Contactless read of chip card
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	// Transaction initiated using a credential that has previously been stored on file
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	// Magnetic stripe read
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	// Contactless read of magnetic stripe data
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	// Contact chip card, without card verification value
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
 // Why the transaction was declined.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason string
 
 const (
 	// The Card was not active.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	// The Physical Card was not active.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
 	// The account's entity was not active.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "entity_not_active"
 	// The account was inactive.
@@ -505,8 +535,6 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by an internal limit for new Increase accounts.
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesInternalLimit ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_internal_limit"
 	// The transaction was blocked by a Limit.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "breaches_limit"
 	// Your application declined the transaction via webhook.
@@ -520,6 +548,9 @@ const (
 	// The original card authorization for this incremental authorization does not
 	// exist.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
+	// The transaction was suspected to be fraudulent. Please reach out to
+	// support@increase.com for more information.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonSuspectedFraud ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
 
 // The type of the resource. We may add additional possible values for this enum
@@ -533,7 +564,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCategoryCardDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "card_decline"
 	// Check Decline: details will be under the `check_decline` object.
 	ACHTransferSimulationDeclinedTransactionSourceCategoryCheckDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "check_decline"
-	// Inbound Real Time Payments Transfer Decline: details will be under the
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
 	// `inbound_real_time_payments_transfer_decline` object.
 	ACHTransferSimulationDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline ACHTransferSimulationDeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	// International ACH Decline: details will be under the `international_ach_decline`
@@ -608,7 +639,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
 )
 
-// An Inbound Real Time Payments Transfer Decline object. This field will be
+// An Inbound Real-Time Payments Transfer Decline object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
@@ -618,7 +649,7 @@ type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransf
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-	// transfer's currency. This will always be "USD" for a Real Time Payments
+	// transfer's currency. This will always be "USD" for a Real-Time Payments
 	// transfer.
 	Currency ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
@@ -631,7 +662,7 @@ type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransf
 	Reason ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the declined transfer.
+	// The Real-Time Payments network identification of the declined transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
 }
@@ -658,7 +689,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTr
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
-// transfer's currency. This will always be "USD" for a Real Time Payments
+// transfer's currency. This will always be "USD" for a Real-Time Payments
 // transfer.
 type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
@@ -691,7 +722,7 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
 	// The account's entity is not active.
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real Time Payments transfers.
+	// Your account is not enabled to receive Real-Time Payments transfers.
 	ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -880,10 +911,10 @@ type ACHTransferSimulationTransaction struct {
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occured.
+	// Transaction occurred.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// Transaction's currency. This will match the currency on the Transcation's
+	// Transaction's currency. This will match the currency on the Transaction's
 	// Account.
 	Currency ACHTransferSimulationTransactionCurrency `json:"currency,required"`
 	// An informational message describing this transaction. Use the fields in `source`
@@ -928,7 +959,7 @@ func (r *ACHTransferSimulationTransaction) UnmarshalJSON(data []byte) (err error
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// Transaction's currency. This will match the currency on the Transcation's
+// Transaction's currency. This will match the currency on the Transaction's
 // Account.
 type ACHTransferSimulationTransactionCurrency string
 
@@ -1018,7 +1049,7 @@ type ACHTransferSimulationTransactionSource struct {
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
 	InboundInternationalACHTransfer ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer,required,nullable"`
-	// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
@@ -1041,7 +1072,7 @@ type ACHTransferSimulationTransactionSource struct {
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`.
 	InternalSource ACHTransferSimulationTransactionSourceInternalSource `json:"internal_source,required,nullable"`
-	// A Real Time Payments Transfer Acknowledgement object. This field will be present
+	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
 	RealTimePaymentsTransferAcknowledgement ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
@@ -1216,7 +1247,7 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
 	// Why the ACH Transfer was returned.
 	ReturnReasonCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
-	// The identifier of the Tranasaction associated with this return.
+	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
 	TransferID string `json:"transfer_id,required"`
@@ -1703,7 +1734,7 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging stru
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -2390,7 +2421,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging 
 	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
 	// Food and beverage charges for the room.
 	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the foor and
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
 	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
@@ -2814,7 +2845,7 @@ const (
 	// Inbound International ACH Transfer: details will be under the
 	// `inbound_international_ach_transfer` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundInternationalACHTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_international_ach_transfer"
-	// Inbound Real Time Payments Transfer Confirmation: details will be under the
+	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
 	// Inbound Wire Drawdown Payment: details will be under the
@@ -2831,7 +2862,7 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryInterestPayment ACHTransferSimulationTransactionSourceCategory = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.
 	ACHTransferSimulationTransactionSourceCategoryInternalSource ACHTransferSimulationTransactionSourceCategory = "internal_source"
-	// Real Time Payments Transfer Acknowledgement: details will be under the
+	// Real-Time Payments Transfer Acknowledgement: details will be under the
 	// `real_time_payments_transfer_acknowledgement` object.
 	ACHTransferSimulationTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement ACHTransferSimulationTransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
 	// Sample Funds: details will be under the `sample_funds` object.
@@ -3142,7 +3173,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason
 const (
 	// The check could not be delivered.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	// The check was cancelled by an Increase operator who will provide details
+	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
 	// The check was stopped for another reason.
@@ -3385,7 +3416,7 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// An Inbound Real Time Payments Transfer Confirmation object. This field will be
+// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
@@ -3395,7 +3426,7 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	// The name the sender of the transfer specified as the recipient of the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-	// currency. This will always be "USD" for a Real Time Payments transfer.
+	// currency. This will always be "USD" for a Real-Time Payments transfer.
 	Currency ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
@@ -3405,7 +3436,7 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real Time Payments network identification of the transfer
+	// The Real-Time Payments network identification of the transfer
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
@@ -3431,7 +3462,7 @@ func (r *ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferCo
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
-// currency. This will always be "USD" for a Real Time Payments transfer.
+// currency. This will always be "USD" for a Real-Time Payments transfer.
 type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
@@ -3576,7 +3607,7 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string `json:"wire_transfer_id,required"`
 	JSON           achTransferSimulationTransactionSourceInboundWireReversalJSON
@@ -3793,7 +3824,7 @@ const (
 	ACHTransferSimulationTransactionSourceInternalSourceReasonSampleFundsReturn ACHTransferSimulationTransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
-// A Real Time Payments Transfer Acknowledgement object. This field will be present
+// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`.
 type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgement struct {
@@ -3805,7 +3836,7 @@ type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgeme
 	DestinationRoutingNumber string `json:"destination_routing_number,required"`
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
-	// The identifier of the Real Time Payments Transfer that led to this Transaction.
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       achTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
 }
