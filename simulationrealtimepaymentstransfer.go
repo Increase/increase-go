@@ -226,25 +226,38 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 // An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline struct {
+	// The ACH Decline's identifier.
+	ID string `json:"id,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
+	Amount int64 `json:"amount,required"`
+	// The descriptive date of the transfer.
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	// The additional information included with the transfer.
 	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
-	OriginatorCompanyID                string `json:"originator_company_id,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
+	// The identifier of the company that initiated the transfer.
+	OriginatorCompanyID string `json:"originator_company_id,required"`
+	// The name of the company that initiated the transfer.
+	OriginatorCompanyName string `json:"originator_company_name,required"`
 	// Why the ACH transfer was declined.
-	Reason           InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
-	ReceiverIDNumber string                                                                                   `json:"receiver_id_number,required,nullable"`
-	ReceiverName     string                                                                                   `json:"receiver_name,required,nullable"`
-	TraceNumber      string                                                                                   `json:"trace_number,required"`
-	JSON             inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
+	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
+	// The id of the receiver of the transfer.
+	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	// The name of the receiver of the transfer.
+	ReceiverName string `json:"receiver_name,required,nullable"`
+	// The trace number of the transfer.
+	TraceNumber string `json:"trace_number,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `ach_decline`.
+	Type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineType `json:"type,required"`
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
 // contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline]
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON struct {
+	ID                                 apijson.Field
 	Amount                             apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
@@ -254,6 +267,7 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
+	Type                               apijson.Field
 	raw                                string
 	ExtraFields                        map[string]apijson.Field
 }
@@ -294,6 +308,14 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	// The user initiated the decline.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonUserInitiated InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "user_initiated"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `ach_decline`.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineType string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineTypeACHDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineType = "ach_decline"
 )
 
 // A Card Decline object. This field will be present in the JSON response if and

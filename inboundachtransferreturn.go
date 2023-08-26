@@ -35,14 +35,6 @@ func NewInboundACHTransferReturnService(opts ...option.RequestOption) (r *Inboun
 	return
 }
 
-// Create an ACH Return
-func (r *InboundACHTransferReturnService) New(ctx context.Context, body InboundACHTransferReturnNewParams, opts ...option.RequestOption) (res *InboundACHTransferReturn, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "inbound_ach_transfer_returns"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
 // Retrieve an Inbound ACH Transfer Return
 func (r *InboundACHTransferReturnService) Get(ctx context.Context, inboundACHTransferReturnID string, opts ...option.RequestOption) (res *InboundACHTransferReturn, err error) {
 	opts = append(r.Options[:], opts...)
@@ -182,48 +174,6 @@ type InboundACHTransferReturnType string
 
 const (
 	InboundACHTransferReturnTypeInboundACHTransferReturn InboundACHTransferReturnType = "inbound_ach_transfer_return"
-)
-
-type InboundACHTransferReturnNewParams struct {
-	// The reason why this transfer will be returned. The most usual return codes are
-	// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
-	Reason param.Field[InboundACHTransferReturnNewParamsReason] `json:"reason,required"`
-	// The transaction identifier of the Inbound ACH Transfer to return to the
-	// originating financial institution.
-	TransactionID param.Field[string] `json:"transaction_id,required"`
-}
-
-func (r InboundACHTransferReturnNewParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The reason why this transfer will be returned. The most usual return codes are
-// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
-type InboundACHTransferReturnNewParamsReason string
-
-const (
-	// The customer no longer authorizes this transaction. The Nacha return code is
-	// R07.
-	InboundACHTransferReturnNewParamsReasonAuthorizationRevokedByCustomer InboundACHTransferReturnNewParamsReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped. This reason is only allowed
-	// for debits. The Nacha return code is R08.
-	InboundACHTransferReturnNewParamsReasonPaymentStopped InboundACHTransferReturnNewParamsReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized. The Nacha return code is
-	// R10.
-	InboundACHTransferReturnNewParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferReturnNewParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased. The Nacha return code is R14.
-	InboundACHTransferReturnNewParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferReturnNewParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased. The Nacha return code is R15.
-	InboundACHTransferReturnNewParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferReturnNewParamsReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry. This reason is only allowed for credits.
-	// The Nacha return code is R23.
-	InboundACHTransferReturnNewParamsReasonCreditEntryRefusedByReceiver InboundACHTransferReturnNewParamsReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate. The Nacha return
-	// code is R24.
-	InboundACHTransferReturnNewParamsReasonDuplicateEntry InboundACHTransferReturnNewParamsReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction. The Nacha return
-	// code is R29.
-	InboundACHTransferReturnNewParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferReturnNewParamsReason = "corporate_customer_advised_not_authorized"
 )
 
 type InboundACHTransferReturnListParams struct {
