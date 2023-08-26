@@ -66,6 +66,22 @@ func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query In
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Decline an Inbound ACH Transfer
+func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("inbound_ach_transfers/%s/decline", inboundACHTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
+// Create an ACH Return
+func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundACHTransferID string, body InboundACHTransferTransferReturnParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("inbound_ach_transfer/%s/transfer_returns", inboundACHTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // An Inbound ACH Transfer is an ACH transfer initiated outside of Increase to your
 // account.
 type InboundACHTransfer struct {
@@ -303,11 +319,16 @@ const (
 )
 
 type InboundACHTransferListParams struct {
+	// Filter Inbound ACH Tranfers to ones belonging to the specified Account.
+	AccountID param.Field[string]                                `query:"account_id"`
+	CreatedAt param.Field[InboundACHTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter Inbound ACH Transfers to those with the specified status.
+	Status param.Field[InboundACHTransferListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [InboundACHTransferListParams]'s query parameters as
@@ -318,3 +339,81 @@ func (r InboundACHTransferListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type InboundACHTransferListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [InboundACHTransferListParamsCreatedAt]'s query parameters
+// as `url.Values`.
+func (r InboundACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// Filter Inbound ACH Transfers to those with the specified status.
+type InboundACHTransferListParamsStatus string
+
+const (
+	// The Inbound ACH Transfer is awaiting action, will transition automatically if no
+	// action is taken.
+	InboundACHTransferListParamsStatusPending InboundACHTransferListParamsStatus = "pending"
+	// The Inbound ACH Transfer has been declined.
+	InboundACHTransferListParamsStatusDeclined InboundACHTransferListParamsStatus = "declined"
+	// The Inbound ACH Transfer is accepted.
+	InboundACHTransferListParamsStatusAccepted InboundACHTransferListParamsStatus = "accepted"
+	// The Inbound ACH Transfer has been returned.
+	InboundACHTransferListParamsStatusReturned InboundACHTransferListParamsStatus = "returned"
+)
+
+type InboundACHTransferTransferReturnParams struct {
+	// The reason why this transfer will be returned. The most usual return codes are
+	// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
+	Reason param.Field[InboundACHTransferTransferReturnParamsReason] `json:"reason,required"`
+}
+
+func (r InboundACHTransferTransferReturnParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason why this transfer will be returned. The most usual return codes are
+// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
+type InboundACHTransferTransferReturnParamsReason string
+
+const (
+	// The customer no longer authorizes this transaction. The Nacha return code is
+	// R07.
+	InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer InboundACHTransferTransferReturnParamsReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped. This reason is only allowed
+	// for debits. The Nacha return code is R08.
+	InboundACHTransferTransferReturnParamsReasonPaymentStopped InboundACHTransferTransferReturnParamsReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized. The Nacha return code is
+	// R10.
+	InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased. The Nacha return code is R14.
+	InboundACHTransferTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferTransferReturnParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	// The account holder is deceased. The Nacha return code is R15.
+	InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferTransferReturnParamsReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry. This reason is only allowed for credits.
+	// The Nacha return code is R23.
+	InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver InboundACHTransferTransferReturnParamsReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate. The Nacha return
+	// code is R24.
+	InboundACHTransferTransferReturnParamsReasonDuplicateEntry InboundACHTransferTransferReturnParamsReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction. The Nacha return
+	// code is R29.
+	InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
+)
