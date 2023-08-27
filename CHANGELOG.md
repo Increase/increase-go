@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1](https://github.com/Increase/increase-go/compare/v0.7.0...v0.7.1) (2023-08-27)
+
+
+### Features
+
+* **api:** move inbound ACH transfer returns (⚠️ breaking); add ACH transfer declines ([#75](https://github.com/Increase/increase-go/issues/75)) ([60a3e48](https://github.com/Increase/increase-go/commit/60a3e4810772bba6ee3b9c02aeed5081cd98c13a))
+* **api:** updates ([#74](https://github.com/Increase/increase-go/issues/74)) ([7fc28e0](https://github.com/Increase/increase-go/commit/7fc28e044950394cadd73468010a3642b5b4f042))
+
 ## [0.7.0](https://github.com/Increase/increase-go/compare/v0.6.3...v0.7.0) (2023-08-17)
 
 
