@@ -105,6 +105,9 @@ type RealTimeDecisionCardAuthorization struct {
 	CardID string `json:"card_id,required"`
 	// Whether or not the authorization was approved.
 	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
+	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+	// purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
@@ -146,6 +149,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	AccountID            apijson.Field
 	CardID               apijson.Field
 	Decision             apijson.Field
+	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field

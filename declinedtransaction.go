@@ -306,8 +306,8 @@ type DeclinedTransactionSourceCardDecline struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
-	// If the authorization was attempted using a Digital Wallet Token (such as an
-	// Apple Pay purchase), the identifier of the token that was used.
+	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
