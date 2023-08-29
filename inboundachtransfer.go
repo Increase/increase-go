@@ -74,7 +74,7 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 	return
 }
 
-// Create an ACH Return
+// Return an Inbound ACH Transfer
 func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundACHTransferID string, body InboundACHTransferTransferReturnParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("inbound_ach_transfers/%s/transfer_return", inboundACHTransferID)
