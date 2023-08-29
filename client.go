@@ -35,7 +35,6 @@ type Client struct {
 	Limits                      *LimitService
 	AccountTransfers            *AccountTransferService
 	ACHTransfers                *ACHTransferService
-	InboundACHTransferReturns   *InboundACHTransferReturnService
 	ACHPrenotifications         *ACHPrenotificationService
 	Documents                   *DocumentService
 	WireTransfers               *WireTransferService
@@ -90,7 +89,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Limits = NewLimitService(opts...)
 	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.ACHTransfers = NewACHTransferService(opts...)
-	r.InboundACHTransferReturns = NewInboundACHTransferReturnService(opts...)
 	r.ACHPrenotifications = NewACHPrenotificationService(opts...)
 	r.Documents = NewDocumentService(opts...)
 	r.WireTransfers = NewWireTransferService(opts...)

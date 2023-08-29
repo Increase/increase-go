@@ -261,17 +261,6 @@ Methods:
 - <code title="post /ach_transfers/{ach_transfer_id}/approve">client.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransferService.Approve">Approve</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, achTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransfer">ACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /ach_transfers/{ach_transfer_id}/cancel">client.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransferService.Cancel">Cancel</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, achTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransfer">ACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-# InboundACHTransferReturns
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturn">InboundACHTransferReturn</a>
-
-Methods:
-
-- <code title="get /inbound_ach_transfer_returns/{inbound_ach_transfer_return_id}">client.InboundACHTransferReturns.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturnService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, inboundACHTransferReturnID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturn">InboundACHTransferReturn</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="get /inbound_ach_transfer_returns">client.InboundACHTransferReturns.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturnService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturnListParams">InboundACHTransferReturnListParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#Page">Page</a>[<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransferReturn">InboundACHTransferReturn</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 # ACHPrenotifications
 
 Response Types:
