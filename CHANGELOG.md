@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.7.2 (2023-08-29)
+
+Full Changelog: [v0.7.1...v0.7.2](https://github.com/Increase/increase-go/compare/v0.7.1...v0.7.2)
+
+### Features
+
+* **api:** remove unused `/inbound_ach_transfer_returns` endpoints ([#81](https://github.com/Increase/increase-go/issues/81)) ([c545a87](https://github.com/Increase/increase-go/commit/c545a8743a69c11450980cd41acb3a36ba85451d))
+
+
+### Bug Fixes
+
+* **api:** move ACH Return endpoint and add digital wallet properties ([#80](https://github.com/Increase/increase-go/issues/80)) ([a119bd0](https://github.com/Increase/increase-go/commit/a119bd0631538fadefbeac12bf2ef0656d562860))
+
+
+### Chores
+
+* **ci:** setup workflows to create releases and release PRs ([#77](https://github.com/Increase/increase-go/issues/77)) ([3fd9088](https://github.com/Increase/increase-go/commit/3fd9088965f3ebdfaf7d69021ed796ddce5315f6))
+
 ## [0.7.1](https://github.com/Increase/increase-go/compare/v0.7.0...v0.7.1) (2023-08-27)
 
 
