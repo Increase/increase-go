@@ -263,6 +263,10 @@ type CheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the back of the
 	// deposited check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// bank depositing this check. In some rare cases, this is not transmitted via
+	// Check21 and the value will be null.
+	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
@@ -279,13 +283,14 @@ type CheckTransferDeposit struct {
 // checkTransferDepositJSON contains the JSON metadata for the struct
 // [CheckTransferDeposit]
 type checkTransferDepositJSON struct {
-	BackImageFileID  apijson.Field
-	DepositedAt      apijson.Field
-	FrontImageFileID apijson.Field
-	TransactionID    apijson.Field
-	Type             apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	BackImageFileID                 apijson.Field
+	BankOfFirstDepositRoutingNumber apijson.Field
+	DepositedAt                     apijson.Field
+	FrontImageFileID                apijson.Field
+	TransactionID                   apijson.Field
+	Type                            apijson.Field
+	raw                             string
+	ExtraFields                     map[string]apijson.Field
 }
 
 func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
