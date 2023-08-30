@@ -2198,6 +2198,10 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct
 	// The identifier of the API File object containing an image of the back of the
 	// deposited check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// bank depositing this check. In some rare cases, this is not transmitted via
+	// Check21 and the value will be null.
+	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
@@ -2215,13 +2219,14 @@ type InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit struct
 // contains the JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit]
 type interestPaymentSimulationResultTransactionSourceCheckTransferDepositJSON struct {
-	BackImageFileID  apijson.Field
-	DepositedAt      apijson.Field
-	FrontImageFileID apijson.Field
-	TransactionID    apijson.Field
-	Type             apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	BackImageFileID                 apijson.Field
+	BankOfFirstDepositRoutingNumber apijson.Field
+	DepositedAt                     apijson.Field
+	FrontImageFileID                apijson.Field
+	TransactionID                   apijson.Field
+	Type                            apijson.Field
+	raw                             string
+	ExtraFields                     map[string]apijson.Field
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceCheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
@@ -2416,7 +2421,9 @@ type InterestPaymentSimulationResultTransactionSourceInboundACHTransfer struct {
 	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
 	ReceiverName                       string `json:"receiver_name,required,nullable"`
 	TraceNumber                        string `json:"trace_number,required"`
-	JSON                               interestPaymentSimulationResultTransactionSourceInboundACHTransferJSON
+	// The inbound ach transfer's identifier.
+	TransferID string `json:"transfer_id,required"`
+	JSON       interestPaymentSimulationResultTransactionSourceInboundACHTransferJSON
 }
 
 // interestPaymentSimulationResultTransactionSourceInboundACHTransferJSON contains
@@ -2432,6 +2439,7 @@ type interestPaymentSimulationResultTransactionSourceInboundACHTransferJSON stru
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
 	TraceNumber                        apijson.Field
+	TransferID                         apijson.Field
 	raw                                string
 	ExtraFields                        map[string]apijson.Field
 }
@@ -2445,10 +2453,14 @@ func (r *InterestPaymentSimulationResultTransactionSourceInboundACHTransfer) Unm
 type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
-	Amount                int64  `json:"amount,required"`
-	CheckFrontImageFileID string `json:"check_front_image_file_id,required,nullable"`
-	CheckNumber           string `json:"check_number,required,nullable"`
-	CheckRearImageFileID  string `json:"check_rear_image_file_id,required,nullable"`
+	Amount int64 `json:"amount,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// bank depositing this check. In some rare cases, this is not transmitted via
+	// Check21 and the value will be null.
+	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
+	CheckFrontImageFileID           string `json:"check_front_image_file_id,required,nullable"`
+	CheckNumber                     string `json:"check_number,required,nullable"`
+	CheckRearImageFileID            string `json:"check_rear_image_file_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency InterestPaymentSimulationResultTransactionSourceInboundCheckCurrency `json:"currency,required"`
@@ -2459,13 +2471,14 @@ type InterestPaymentSimulationResultTransactionSourceInboundCheck struct {
 // JSON metadata for the struct
 // [InterestPaymentSimulationResultTransactionSourceInboundCheck]
 type interestPaymentSimulationResultTransactionSourceInboundCheckJSON struct {
-	Amount                apijson.Field
-	CheckFrontImageFileID apijson.Field
-	CheckNumber           apijson.Field
-	CheckRearImageFileID  apijson.Field
-	Currency              apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	Amount                          apijson.Field
+	BankOfFirstDepositRoutingNumber apijson.Field
+	CheckFrontImageFileID           apijson.Field
+	CheckNumber                     apijson.Field
+	CheckRearImageFileID            apijson.Field
+	Currency                        apijson.Field
+	raw                             string
+	ExtraFields                     map[string]apijson.Field
 }
 
 func (r *InterestPaymentSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
