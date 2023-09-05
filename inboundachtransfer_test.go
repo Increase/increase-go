@@ -78,6 +78,31 @@ func TestInboundACHTransferDecline(t *testing.T) {
 	}
 }
 
+func TestInboundACHTransferNotificationOfChangeWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
+	)
+	_, err := client.InboundACHTransfers.NotificationOfChange(
+		context.TODO(),
+		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
+		increase.InboundACHTransferNotificationOfChangeParams{
+			UpdatedAccountNumber: increase.F("x"),
+			UpdatedRoutingNumber: increase.F("x"),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestInboundACHTransferTransferReturn(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return

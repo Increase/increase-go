@@ -353,11 +353,15 @@ const (
 // An ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_intention`.
 type WireTransferSimulationTransactionSourceACHTransferIntention struct {
+	// The account number for the destination account.
 	AccountNumber string `json:"account_number,required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount              int64  `json:"amount,required"`
-	RoutingNumber       string `json:"routing_number,required"`
+	Amount int64 `json:"amount,required"`
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// destination account.
+	RoutingNumber string `json:"routing_number,required"`
+	// A description set when the ACH Transfer was created.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
@@ -479,7 +483,8 @@ const (
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
 	// Code R45. The individual name field was invalid.
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	// Code R06. The originating financial institution reversed the transfer.
+	// Code R06. The originating financial institution asked for this transfer to be
+	// returned.
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
 	// Code R34. The receiving bank's regulatory supervisor has limited their
 	// participation.
@@ -590,8 +595,8 @@ const (
 	// Code R75. A rare return reason. The originating bank disputes that an earlier
 	// `duplicate_entry` return was actually a duplicate.
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	// Code R62. A rare return reason. The originating bank made a mistake earlier and
-	// this return corrects it.
+	// Code R62. A rare return reason. The originating financial institution made a
+	// mistake and this return corrects it.
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
 	// Code R36. A rare return reason. Return of a malformed credit entry.
 	WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry WireTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
@@ -2114,7 +2119,9 @@ type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	CheckDepositID string `json:"check_deposit_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency     WireTransferSimulationTransactionSourceCheckDepositReturnCurrency     `json:"currency,required"`
+	Currency WireTransferSimulationTransactionSourceCheckDepositReturnCurrency `json:"currency,required"`
+	// Why this check was returned by the bank holding the account it was drawn
+	// against.
 	ReturnReason WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
@@ -2162,6 +2169,8 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnCurrencyUsd WireTransferSimulationTransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
+// Why this check was returned by the bank holding the account it was drawn
+// against.
 type WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason string
 
 const (
@@ -2410,15 +2419,29 @@ const (
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	OriginatorCompanyDescriptiveDate   string `json:"originator_company_descriptive_date,required,nullable"`
+	Amount int64 `json:"amount,required"`
+	// The description of the date of the transfer, usually in the format `YYMMDD`.
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	// Data set by the originator.
 	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
-	OriginatorCompanyEntryDescription  string `json:"originator_company_entry_description,required"`
-	OriginatorCompanyID                string `json:"originator_company_id,required"`
-	OriginatorCompanyName              string `json:"originator_company_name,required"`
-	ReceiverIDNumber                   string `json:"receiver_id_number,required,nullable"`
-	ReceiverName                       string `json:"receiver_name,required,nullable"`
-	TraceNumber                        string `json:"trace_number,required"`
+	// An informational description of the transfer.
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	// An identifier for the originating company. This is generally, but not always, a
+	// stable identifier across multiple transfers.
+	OriginatorCompanyID string `json:"originator_company_id,required"`
+	// A name set by the originator to identify themselves.
+	OriginatorCompanyName string `json:"originator_company_name,required"`
+	// The originator's identifier for the transfer receipient.
+	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	// The name of the transfer recipient. This value is informational and not verified
+	// by Increase.
+	ReceiverName string `json:"receiver_name,required,nullable"`
+	// A 15 digit number recorded in the Nacha file and available to both the
+	// originating and receiving bank. Along with the amount, date, and originating
+	// routing number, this can be used to identify the ACH transfer at either bank.
+	// ACH trace numbers are not unique, but are
+	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	TraceNumber string `json:"trace_number,required"`
 	// The inbound ach transfer's identifier.
 	TransferID string `json:"transfer_id,required"`
 	JSON       wireTransferSimulationTransactionSourceInboundACHTransferJSON
@@ -2456,9 +2479,13 @@ type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// bank depositing this check. In some rare cases, this is not transmitted via
 	// Check21 and the value will be null.
 	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
-	CheckFrontImageFileID           string `json:"check_front_image_file_id,required,nullable"`
-	CheckNumber                     string `json:"check_number,required,nullable"`
-	CheckRearImageFileID            string `json:"check_rear_image_file_id,required,nullable"`
+	// The front image of the check. This is a black and white TIFF image file.
+	CheckFrontImageFileID string `json:"check_front_image_file_id,required,nullable"`
+	// The number of the check. This field is set by the depositing bank and can be
+	// unreliable.
+	CheckNumber string `json:"check_number,required,nullable"`
+	// The rear image of the check. This is a black and white TIFF image file.
+	CheckRearImageFileID string `json:"check_rear_image_file_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency WireTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency,required"`
@@ -2663,41 +2690,67 @@ const (
 type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount                             int64  `json:"amount,required"`
-	BeneficiaryAddressLine1            string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2            string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3            string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                    string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference               string `json:"beneficiary_reference,required,nullable"`
-	Description                        string `json:"description,required"`
-	InputMessageAccountabilityData     string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1             string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2             string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3             string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                     string `json:"originator_name,required,nullable"`
+	Amount int64 `json:"amount,required"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
+	// A name set by the sender.
+	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
+	// An Increase-constructed description of the transfer.
+	Description string `json:"description,required"`
+	// A unique identifier available to the originating and receiving banks, commonly
+	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
+	// service and is helpful when debugging wires with the receiving bank.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The originator of the wire, set by the sending bank.
+	OriginatorName string `json:"originator_name,required,nullable"`
+	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	JSON                               wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
+	// A free-form message set by the wire originator.
+	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	// A free-form message set by the wire originator.
+	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	// A free-form message set by the wire originator.
+	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	// A free-form message set by the wire originator.
+	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
 }
 
 // wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
 // the JSON metadata for the struct
 // [WireTransferSimulationTransactionSourceInboundWireDrawdownPayment]
 type wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                             apijson.Field
-	BeneficiaryAddressLine1            apijson.Field
-	BeneficiaryAddressLine2            apijson.Field
-	BeneficiaryAddressLine3            apijson.Field
-	BeneficiaryName                    apijson.Field
-	BeneficiaryReference               apijson.Field
-	Description                        apijson.Field
-	InputMessageAccountabilityData     apijson.Field
-	OriginatorAddressLine1             apijson.Field
-	OriginatorAddressLine2             apijson.Field
-	OriginatorAddressLine3             apijson.Field
-	OriginatorName                     apijson.Field
-	OriginatorToBeneficiaryInformation apijson.Field
-	raw                                string
-	ExtraFields                        map[string]apijson.Field
+	Amount                                  apijson.Field
+	BeneficiaryAddressLine1                 apijson.Field
+	BeneficiaryAddressLine2                 apijson.Field
+	BeneficiaryAddressLine3                 apijson.Field
+	BeneficiaryName                         apijson.Field
+	BeneficiaryReference                    apijson.Field
+	Description                             apijson.Field
+	InputMessageAccountabilityData          apijson.Field
+	OriginatorAddressLine1                  apijson.Field
+	OriginatorAddressLine2                  apijson.Field
+	OriginatorAddressLine3                  apijson.Field
+	OriginatorName                          apijson.Field
+	OriginatorToBeneficiaryInformation      apijson.Field
+	OriginatorToBeneficiaryInformationLine1 apijson.Field
+	OriginatorToBeneficiaryInformationLine2 apijson.Field
+	OriginatorToBeneficiaryInformationLine3 apijson.Field
+	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	raw                                     string
+	ExtraFields                             map[string]apijson.Field
 }
 
 func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
@@ -2756,16 +2809,17 @@ func (r *WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentRevers
 // An Inbound Wire Reversal object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_reversal`.
 type WireTransferSimulationTransactionSourceInboundWireReversal struct {
-	// The amount that was reversed.
+	// The amount that was reversed in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the reversal was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The description on the reversal message from Fedwire.
+	// The description on the reversal message from Fedwire, set by the reversing bank.
 	Description string `json:"description,required"`
 	// Additional financial institution information included in the wire reversal.
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
-	// The Fedwire cycle date for the wire reversal.
+	// The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
+	// PM Eastern Time on the evening before the `cycle date`.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
@@ -2773,7 +2827,8 @@ type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire cycle date for the wire transfer that was reversed.
+	// The Fedwire cycle date for the wire transfer that is being reversed by this
+	// message.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
@@ -2821,24 +2876,41 @@ func (r *WireTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJS
 // An Inbound Wire Transfer object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_transfer`.
 type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount                                  int64  `json:"amount,required"`
-	BeneficiaryAddressLine1                 string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2                 string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3                 string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                         string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference                    string `json:"beneficiary_reference,required,nullable"`
-	Description                             string `json:"description,required"`
-	InputMessageAccountabilityData          string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1                  string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                          string `json:"originator_name,required,nullable"`
-	OriginatorToBeneficiaryInformation      string `json:"originator_to_beneficiary_information,required,nullable"`
+	// The amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
+	// A name set by the sender.
+	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
+	// An Increase-constructed description of the transfer.
+	Description string `json:"description,required"`
+	// A unique identifier available to the originating and receiving banks, commonly
+	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
+	// service and is helpful when debugging wires with the originating bank.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The originator of the wire, set by the sending bank.
+	OriginatorName string `json:"originator_name,required,nullable"`
+	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
+	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	JSON                                    wireTransferSimulationTransactionSourceInboundWireTransferJSON
 }
@@ -2934,8 +3006,10 @@ type WireTransferSimulationTransactionSourceInternalSource struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
 	Currency WireTransferSimulationTransactionSourceInternalSourceCurrency `json:"currency,required"`
-	Reason   WireTransferSimulationTransactionSourceInternalSourceReason   `json:"reason,required"`
-	JSON     wireTransferSimulationTransactionSourceInternalSourceJSON
+	// An Internal Source is a transaction between you and Increase. This describes the
+	// reason for the transaction.
+	Reason WireTransferSimulationTransactionSourceInternalSourceReason `json:"reason,required"`
+	JSON   wireTransferSimulationTransactionSourceInternalSourceJSON
 }
 
 // wireTransferSimulationTransactionSourceInternalSourceJSON contains the JSON
@@ -2971,6 +3045,8 @@ const (
 	WireTransferSimulationTransactionSourceInternalSourceCurrencyUsd WireTransferSimulationTransactionSourceInternalSourceCurrency = "USD"
 )
 
+// An Internal Source is a transaction between you and Increase. This describes the
+// reason for the transaction.
 type WireTransferSimulationTransactionSourceInternalSourceReason string
 
 const (
@@ -3067,8 +3143,9 @@ type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
-	TransferID    string `json:"transfer_id,required"`
-	JSON          wireTransferSimulationTransactionSourceWireTransferIntentionJSON
+	// The identifier of the Wire Transfer that led to this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceWireTransferIntentionJSON
 }
 
 // wireTransferSimulationTransactionSourceWireTransferIntentionJSON contains the
@@ -3091,6 +3168,7 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) Unmarshal
 // A Wire Transfer Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_rejection`.
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
+	// The identifier of the Wire Transfer that led to this Transaction.
 	TransferID string `json:"transfer_id,required"`
 	JSON       wireTransferSimulationTransactionSourceWireTransferRejectionJSON
 }

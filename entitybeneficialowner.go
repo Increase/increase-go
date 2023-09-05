@@ -47,6 +47,14 @@ func (r *EntityBeneficialOwnerService) Archive(ctx context.Context, body EntityB
 	return
 }
 
+// Update the address for a beneficial owner belonging to a corporate Entity
+func (r *EntityBeneficialOwnerService) UpdateAddress(ctx context.Context, body EntityBeneficialOwnerUpdateAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "entity_beneficial_owners/address"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 type EntityBeneficialOwnerNewParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
@@ -224,5 +232,38 @@ type EntityBeneficialOwnerArchiveParams struct {
 }
 
 func (r EntityBeneficialOwnerArchiveParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type EntityBeneficialOwnerUpdateAddressParams struct {
+	// The individual's physical address. Post Office Boxes are disallowed.
+	Address param.Field[EntityBeneficialOwnerUpdateAddressParamsAddress] `json:"address,required"`
+	// The identifying details of anyone controlling or owning 25% or more of the
+	// corporation.
+	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id,required"`
+	// The identifier of the Entity to retrieve.
+	EntityID param.Field[string] `json:"entity_id,required"`
+}
+
+func (r EntityBeneficialOwnerUpdateAddressParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual's physical address. Post Office Boxes are disallowed.
+type EntityBeneficialOwnerUpdateAddressParamsAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityBeneficialOwnerUpdateAddressParamsAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

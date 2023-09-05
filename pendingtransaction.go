@@ -763,14 +763,19 @@ func (r *PendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJ
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type PendingTransactionSourceWireTransferInstruction struct {
+	// The account number for the destination account.
 	AccountNumber string `json:"account_number,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount             int64  `json:"amount,required"`
+	Amount int64 `json:"amount,required"`
+	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`
-	RoutingNumber      string `json:"routing_number,required"`
-	TransferID         string `json:"transfer_id,required"`
-	JSON               pendingTransactionSourceWireTransferInstructionJSON
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+	// destination account.
+	RoutingNumber string `json:"routing_number,required"`
+	// The identifier of the Wire Transfer that led to this Pending Transaction.
+	TransferID string `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceWireTransferInstructionJSON
 }
 
 // pendingTransactionSourceWireTransferInstructionJSON contains the JSON metadata

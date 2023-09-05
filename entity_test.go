@@ -523,3 +523,33 @@ func TestEntityArchive(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
+
+func TestEntityUpdateAddressWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
+	)
+	_, err := client.Entities.UpdateAddress(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityUpdateAddressParams{
+			Address: increase.F(increase.EntityUpdateAddressParamsAddress{
+				Line1: increase.F("x"),
+				Line2: increase.F("x"),
+				City:  increase.F("x"),
+				State: increase.F("x"),
+				Zip:   increase.F("x"),
+			}),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}

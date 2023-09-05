@@ -263,11 +263,12 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled DeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
 	// The account number is disabled.
 	DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled DeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	// The transaction would cause a limit to be exceeded.
+	// The transaction would cause an Increase limit to be exceeded.
 	DeclinedTransactionSourceACHDeclineReasonBreachesLimit DeclinedTransactionSourceACHDeclineReason = "breaches_limit"
-	// A credit was refused.
+	// A credit was refused. This is a reasonable default reason for decline of
+	// credits.
 	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	// Other.
+	// A rare return reason. The return this message refers to was a duplicate.
 	DeclinedTransactionSourceACHDeclineReasonDuplicateReturn DeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	DeclinedTransactionSourceACHDeclineReasonEntityNotActive DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
@@ -275,13 +276,14 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonGroupLocked DeclinedTransactionSourceACHDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	// Other.
+	// A rare return reason. The return this message refers to was misrouted.
 	DeclinedTransactionSourceACHDeclineReasonMisroutedReturn DeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	// Other.
+	// The originating financial institution made a mistake and this return corrects
+	// it.
 	DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit DeclinedTransactionSourceACHDeclineReason = "return_of_erroneous_or_reversing_debit"
 	// The account number that was debited does not exist.
 	DeclinedTransactionSourceACHDeclineReasonNoACHRoute DeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	// Other.
+	// The originating financial institution asked for this transfer to be returned.
 	DeclinedTransactionSourceACHDeclineReasonOriginatorRequest DeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
@@ -567,7 +569,10 @@ const (
 type DeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount        int64  `json:"amount,required"`
+	Amount int64 `json:"amount,required"`
+	// A computer-readable number printed on the MICR line of business checks, usually
+	// the check number. This is useful for positive pay checks, but can be unreliably
+	// transmitted by the bank of first deposit.
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
 	// Why the check was declined.
 	Reason DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
@@ -807,21 +812,38 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []
 type DeclinedTransactionSourceWireDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount                                  int64  `json:"amount,required"`
-	BeneficiaryAddressLine1                 string `json:"beneficiary_address_line1,required,nullable"`
-	BeneficiaryAddressLine2                 string `json:"beneficiary_address_line2,required,nullable"`
-	BeneficiaryAddressLine3                 string `json:"beneficiary_address_line3,required,nullable"`
-	BeneficiaryName                         string `json:"beneficiary_name,required,nullable"`
-	BeneficiaryReference                    string `json:"beneficiary_reference,required,nullable"`
-	Description                             string `json:"description,required"`
-	InputMessageAccountabilityData          string `json:"input_message_accountability_data,required,nullable"`
-	OriginatorAddressLine1                  string `json:"originator_address_line1,required,nullable"`
-	OriginatorAddressLine2                  string `json:"originator_address_line2,required,nullable"`
-	OriginatorAddressLine3                  string `json:"originator_address_line3,required,nullable"`
-	OriginatorName                          string `json:"originator_name,required,nullable"`
+	Amount int64 `json:"amount,required"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
+	// A name set by the sender.
+	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
+	// An Increase-constructed description of the declined transaction.
+	Description string `json:"description,required"`
+	// A unique identifier available to the originating and receiving banks, commonly
+	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
+	// service and is helpful when debugging wires with the originating bank.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// The address of the wire originator, set by the sending bank.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The originator of the wire, set by the sending bank.
+	OriginatorName string `json:"originator_name,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
+	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
 	Reason DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`

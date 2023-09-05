@@ -283,16 +283,17 @@ const (
 
 // If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
-	// The amount that was reversed.
+	// The amount that was reversed in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the reversal was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The description on the reversal message from Fedwire.
+	// The description on the reversal message from Fedwire, set by the reversing bank.
 	Description string `json:"description,required"`
 	// Additional financial institution information included in the wire reversal.
 	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
-	// The Fedwire cycle date for the wire reversal.
+	// The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
+	// PM Eastern Time on the evening before the `cycle date`.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
@@ -300,7 +301,8 @@ type WireTransferReversal struct {
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The Fedwire cycle date for the wire transfer that was reversed.
+	// The Fedwire cycle date for the wire transfer that is being reversed by this
+	// message.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
 	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
