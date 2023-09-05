@@ -223,8 +223,10 @@ type ExternalAccountListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                           `query:"limit"`
-	Status param.Field[ExternalAccountListParamsStatus] `query:"status"`
+	Limit param.Field[int64] `query:"limit"`
+	// Filter External Accounts to those with the specified Routing Number.
+	RoutingNumber param.Field[string]                          `query:"routing_number"`
+	Status        param.Field[ExternalAccountListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [ExternalAccountListParams]'s query parameters as

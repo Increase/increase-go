@@ -91,3 +91,31 @@ func TestEntityBeneficialOwnerArchive(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
+
+func TestEntityBeneficialOwnerUpdateAddressWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAPIKey("APIKey"),
+	)
+	_, err := client.Entities.BeneficialOwners.UpdateAddress(context.TODO(), increase.EntityBeneficialOwnerUpdateAddressParams{
+		Address: increase.F(increase.EntityBeneficialOwnerUpdateAddressParamsAddress{
+			Line1: increase.F("x"),
+			Line2: increase.F("x"),
+			City:  increase.F("x"),
+			State: increase.F("x"),
+			Zip:   increase.F("x"),
+		}),
+		BeneficialOwnerID: increase.F("string"),
+		EntityID:          increase.F("string"),
+	})
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}

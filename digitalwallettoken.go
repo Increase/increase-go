@@ -127,6 +127,8 @@ const (
 	DigitalWalletTokenTokenRequestorApplePay DigitalWalletTokenTokenRequestor = "apple_pay"
 	// Google Pay
 	DigitalWalletTokenTokenRequestorGooglePay DigitalWalletTokenTokenRequestor = "google_pay"
+	// Unknown
+	DigitalWalletTokenTokenRequestorUnknown DigitalWalletTokenTokenRequestor = "unknown"
 )
 
 // A constant representing the object's type. For this resource it will always be

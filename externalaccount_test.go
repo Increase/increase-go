@@ -87,8 +87,9 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{
-		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Cursor:        increase.F("string"),
+		Limit:         increase.F(int64(0)),
+		RoutingNumber: increase.F("xxxxxxxxx"),
 		Status: increase.F(increase.ExternalAccountListParamsStatus{
 			In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInActive}),
 		}),

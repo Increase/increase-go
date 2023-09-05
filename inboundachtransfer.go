@@ -74,6 +74,14 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 	return
 }
 
+// Create a notification of change for an Inbound ACH Transfer
+func (r *InboundACHTransferService) NotificationOfChange(ctx context.Context, inboundACHTransferID string, body InboundACHTransferNotificationOfChangeParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("inbound_ach_transfers/%s/notification_of_change", inboundACHTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Return an Inbound ACH Transfer
 func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundACHTransferID string, body InboundACHTransferTransferReturnParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
@@ -89,6 +97,8 @@ type InboundACHTransfer struct {
 	ID string `json:"id,required"`
 	// If your transfer is accepted, this will contain details of the acceptance.
 	Acceptance InboundACHTransferAcceptance `json:"acceptance,required,nullable"`
+	// The identifier of the Account Number to which this transfer was sent.
+	AccountNumberID string `json:"account_number_id,required"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The time at which the transfer will be automatically resolved.
@@ -97,6 +107,9 @@ type InboundACHTransfer struct {
 	Decline InboundACHTransferDecline `json:"decline,required,nullable"`
 	// The direction of the transfer.
 	Direction InboundACHTransferDirection `json:"direction,required"`
+	// If you initiate a notification of change in response to the transfer, this will
+	// contain its details.
+	NotificationOfChange InboundACHTransferNotificationOfChange `json:"notification_of_change,required,nullable"`
 	// The descriptive date of the transfer.
 	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
 	// The additional information included with the transfer.
@@ -128,10 +141,12 @@ type InboundACHTransfer struct {
 type inboundACHTransferJSON struct {
 	ID                                 apijson.Field
 	Acceptance                         apijson.Field
+	AccountNumberID                    apijson.Field
 	Amount                             apijson.Field
 	AutomaticallyResolvesAt            apijson.Field
 	Decline                            apijson.Field
 	Direction                          apijson.Field
+	NotificationOfChange               apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyEntryDescription  apijson.Field
@@ -206,11 +221,12 @@ const (
 	InboundACHTransferDeclineReasonACHRouteCanceled InboundACHTransferDeclineReason = "ach_route_canceled"
 	// The account number is disabled.
 	InboundACHTransferDeclineReasonACHRouteDisabled InboundACHTransferDeclineReason = "ach_route_disabled"
-	// The transaction would cause a limit to be exceeded.
+	// The transaction would cause an Increase limit to be exceeded.
 	InboundACHTransferDeclineReasonBreachesLimit InboundACHTransferDeclineReason = "breaches_limit"
-	// A credit was refused.
+	// A credit was refused. This is a reasonable default reason for decline of
+	// credits.
 	InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineReason = "credit_entry_refused_by_receiver"
-	// Other.
+	// A rare return reason. The return this message refers to was a duplicate.
 	InboundACHTransferDeclineReasonDuplicateReturn InboundACHTransferDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	InboundACHTransferDeclineReasonEntityNotActive InboundACHTransferDeclineReason = "entity_not_active"
@@ -218,13 +234,14 @@ const (
 	InboundACHTransferDeclineReasonGroupLocked InboundACHTransferDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	InboundACHTransferDeclineReasonInsufficientFunds InboundACHTransferDeclineReason = "insufficient_funds"
-	// Other.
+	// A rare return reason. The return this message refers to was misrouted.
 	InboundACHTransferDeclineReasonMisroutedReturn InboundACHTransferDeclineReason = "misrouted_return"
-	// Other.
+	// The originating financial institution made a mistake and this return corrects
+	// it.
 	InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit InboundACHTransferDeclineReason = "return_of_erroneous_or_reversing_debit"
 	// The account number that was debited does not exist.
 	InboundACHTransferDeclineReasonNoACHRoute InboundACHTransferDeclineReason = "no_ach_route"
-	// Other.
+	// The originating financial institution asked for this transfer to be returned.
 	InboundACHTransferDeclineReasonOriginatorRequest InboundACHTransferDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	InboundACHTransferDeclineReasonTransactionNotAllowed InboundACHTransferDeclineReason = "transaction_not_allowed"
@@ -241,6 +258,29 @@ const (
 	// Debit
 	InboundACHTransferDirectionDebit InboundACHTransferDirection = "debit"
 )
+
+// If you initiate a notification of change in response to the transfer, this will
+// contain its details.
+type InboundACHTransferNotificationOfChange struct {
+	// The new account number provided in the notification of change
+	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
+	// The new account number provided in the notification of change
+	UpdatedRoutingNumber string `json:"updated_routing_number,required,nullable"`
+	JSON                 inboundACHTransferNotificationOfChangeJSON
+}
+
+// inboundACHTransferNotificationOfChangeJSON contains the JSON metadata for the
+// struct [InboundACHTransferNotificationOfChange]
+type inboundACHTransferNotificationOfChangeJSON struct {
+	UpdatedAccountNumber apijson.Field
+	UpdatedRoutingNumber apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *InboundACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // The status of the transfer.
 type InboundACHTransferStatus string
@@ -378,6 +418,17 @@ const (
 	// The Inbound ACH Transfer has been returned.
 	InboundACHTransferListParamsStatusReturned InboundACHTransferListParamsStatus = "returned"
 )
+
+type InboundACHTransferNotificationOfChangeParams struct {
+	// The updated account number to send in the notification of change.
+	UpdatedAccountNumber param.Field[string] `json:"updated_account_number"`
+	// The updated routing number to send in the notification of change.
+	UpdatedRoutingNumber param.Field[string] `json:"updated_routing_number"`
+}
+
+func (r InboundACHTransferNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
 
 type InboundACHTransferTransferReturnParams struct {
 	// The reason why this transfer will be returned. The most usual return codes are
