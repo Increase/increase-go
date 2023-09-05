@@ -434,6 +434,8 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
 	// Google Pay
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
+	// Unknown
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "unknown"
 )
 
 // Whether your application successfully delivered the one-time passcode.
@@ -496,6 +498,8 @@ const (
 	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
 	// Google Pay
 	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
+	// Unknown
+	RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown RealTimeDecisionDigitalWalletTokenDigitalWallet = "unknown"
 )
 
 // The status of the Real-Time Decision.

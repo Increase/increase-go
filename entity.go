@@ -85,6 +85,14 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 	return
 }
 
+// Update a Natural Person or Corporation's address
+func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body EntityUpdateAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("entities/%s/address", entityID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Entities are the legal entities that own accounts. They can be people,
 // corporations, partnerships, or trusts.
 type Entity struct {
@@ -1863,4 +1871,32 @@ func (r EntityListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type EntityUpdateAddressParams struct {
+	// The entity's physical address. Post Office Boxes are disallowed.
+	Address param.Field[EntityUpdateAddressParamsAddress] `json:"address,required"`
+}
+
+func (r EntityUpdateAddressParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The entity's physical address. Post Office Boxes are disallowed.
+type EntityUpdateAddressParamsAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateAddressParamsAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

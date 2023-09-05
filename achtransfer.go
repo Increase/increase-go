@@ -164,8 +164,8 @@ type ACHTransfer struct {
 	// After the transfer is submitted to FedACH, this will contain supplemental
 	// details. Increase batches transfers and submits a file to the Federal Reserve
 	// roughly every 30 minutes. The Federal Reserve processes ACH transfers during
-	// weekdays according to their (posted
-	// schedule)[https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html].
+	// weekdays according to their
+	// [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 	Submission ACHTransferSubmission `json:"submission,required,nullable"`
 	// The ID for the transaction funding the transfer.
 	TransactionID string `json:"transaction_id,required,nullable"`
@@ -327,9 +327,10 @@ const (
 )
 
 type ACHTransferNotificationsOfChange struct {
-	// The type of change that occurred.
+	// The required type of change that is being signaled by the receiving financial
+	// institution.
 	ChangeCode ACHTransferNotificationsOfChangeChangeCode `json:"change_code,required"`
-	// The corrected data.
+	// The corrected data that should be used in future ACHs to this account.
 	CorrectedData string `json:"corrected_data,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
@@ -351,7 +352,8 @@ func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The type of change that occurred.
+// The required type of change that is being signaled by the receiving financial
+// institution.
 type ACHTransferNotificationsOfChangeChangeCode string
 
 const (
@@ -453,7 +455,8 @@ const (
 	ACHTransferReturnReturnReasonCodeFileRecordEditCriteria ACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
 	// Code R45. The individual name field was invalid.
 	ACHTransferReturnReturnReasonCodeEnrInvalidIndividualName ACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	// Code R06. The originating financial institution reversed the transfer.
+	// Code R06. The originating financial institution asked for this transfer to be
+	// returned.
 	ACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest ACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
 	// Code R34. The receiving bank's regulatory supervisor has limited their
 	// participation.
@@ -564,8 +567,8 @@ const (
 	// Code R75. A rare return reason. The originating bank disputes that an earlier
 	// `duplicate_entry` return was actually a duplicate.
 	ACHTransferReturnReturnReasonCodeReturnNotADuplicate ACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	// Code R62. A rare return reason. The originating bank made a mistake earlier and
-	// this return corrects it.
+	// Code R62. A rare return reason. The originating financial institution made a
+	// mistake and this return corrects it.
 	ACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit ACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
 	// Code R36. A rare return reason. Return of a malformed credit entry.
 	ACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry ACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
@@ -634,8 +637,8 @@ const (
 // After the transfer is submitted to FedACH, this will contain supplemental
 // details. Increase batches transfers and submits a file to the Federal Reserve
 // roughly every 30 minutes. The Federal Reserve processes ACH transfers during
-// weekdays according to their (posted
-// schedule)[https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html].
+// weekdays according to their
+// [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 type ACHTransferSubmission struct {
 	// When the funds transfer is expected to settle in the recipient's account.
 	// Credits may be available sooner, at the receiving banks discretion. The FedACH
@@ -644,7 +647,11 @@ type ACHTransferSubmission struct {
 	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at,required" format:"date-time"`
 	// When the ACH transfer was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	// The trace number for the submission.
+	// A 15 digit number recorded in the Nacha file and transmitted to the receiving
+	// bank. Along with the amount, date, and originating routing number, this can be
+	// used to identify the ACH transfer at the receiving bank. ACH trace numbers are
+	// not unique, but are
+	// [used to correlate returns](https://increase.com/documentation/ach#returns).
 	TraceNumber string `json:"trace_number,required"`
 	JSON        achTransferSubmissionJSON
 }

@@ -296,7 +296,9 @@ type CheckDepositDepositReturn struct {
 	CheckDepositID string `json:"check_deposit_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency     CheckDepositDepositReturnCurrency     `json:"currency,required"`
+	Currency CheckDepositDepositReturnCurrency `json:"currency,required"`
+	// Why this check was returned by the bank holding the account it was drawn
+	// against.
 	ReturnReason CheckDepositDepositReturnReturnReason `json:"return_reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
@@ -343,6 +345,8 @@ const (
 	CheckDepositDepositReturnCurrencyUsd CheckDepositDepositReturnCurrency = "USD"
 )
 
+// Why this check was returned by the bank holding the account it was drawn
+// against.
 type CheckDepositDepositReturnReturnReason string
 
 const (
