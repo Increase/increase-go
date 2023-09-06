@@ -42,7 +42,7 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 	_, err := client.Transactions.List(context.TODO(), increase.TransactionListParams{
 		AccountID: increase.F("string"),
 		Category: increase.F(increase.TransactionListParamsCategory{
-			In: increase.F([]increase.TransactionListParamsCategoryIn{increase.TransactionListParamsCategoryInAccountTransferIntention, increase.TransactionListParamsCategoryInAccountTransferIntention, increase.TransactionListParamsCategoryInAccountTransferIntention}),
+			In: increase.F([]increase.TransactionListParamsCategoryIn{increase.TransactionListParamsCategoryInAccountTransferIntention, increase.TransactionListParamsCategoryInACHTransferIntention, increase.TransactionListParamsCategoryInACHTransferRejection}),
 		}),
 		CreatedAt: increase.F(increase.TransactionListParamsCreatedAt{
 			After:      increase.F(time.Now()),

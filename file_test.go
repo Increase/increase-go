@@ -73,7 +73,7 @@ func TestFileListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 		Purpose: increase.F(increase.FileListParamsPurpose{
-			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageFront}),
+			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageBack, increase.FileListParamsPurposeInMailedCheckImage}),
 		}),
 	})
 	if err != nil {

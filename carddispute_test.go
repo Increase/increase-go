@@ -70,7 +70,7 @@ func TestCardDisputeListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 		Status: increase.F(increase.CardDisputeListParamsStatus{
-			In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingReviewing}),
+			In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInAccepted, increase.CardDisputeListParamsStatusInRejected}),
 		}),
 	})
 	if err != nil {
