@@ -72,7 +72,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
 			}, {
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Name:        increase.F("x"),
@@ -109,7 +109,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
 			}, {
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Name:        increase.F("x"),
@@ -146,7 +146,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership}),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
 			}}),
 		}),
 		Description: increase.F("x"),

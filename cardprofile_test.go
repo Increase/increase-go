@@ -81,10 +81,10 @@ func TestCardProfileListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
 		PhysicalCardsStatus: increase.F(increase.CardProfileListParamsPhysicalCardsStatus{
-			In: increase.F([]increase.CardProfileListParamsPhysicalCardsStatusIn{increase.CardProfileListParamsPhysicalCardsStatusInNotEligible, increase.CardProfileListParamsPhysicalCardsStatusInNotEligible, increase.CardProfileListParamsPhysicalCardsStatusInNotEligible}),
+			In: increase.F([]increase.CardProfileListParamsPhysicalCardsStatusIn{increase.CardProfileListParamsPhysicalCardsStatusInNotEligible, increase.CardProfileListParamsPhysicalCardsStatusInRejected, increase.CardProfileListParamsPhysicalCardsStatusInPendingReviewing}),
 		}),
 		Status: increase.F(increase.CardProfileListParamsStatus{
-			In: increase.F([]increase.CardProfileListParamsStatusIn{increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInPending}),
+			In: increase.F([]increase.CardProfileListParamsStatusIn{increase.CardProfileListParamsStatusInPending, increase.CardProfileListParamsStatusInRejected, increase.CardProfileListParamsStatusInActive}),
 		}),
 	})
 	if err != nil {
