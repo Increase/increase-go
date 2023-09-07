@@ -358,7 +358,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
-	// Fields specific to the `network`
+	// Fields specific to the `network`.
 	NetworkDetails ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
@@ -415,11 +415,11 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrencyUsd ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
-// Fields specific to the `network`
+// Fields specific to the `network`.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails struct {
-	// The payment network used to process this card authorization
+	// The payment network used to process this card authorization.
 	Category ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
-	// Fields specific to the `visa` network
+	// Fields specific to the `visa` network.
 	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
 }
@@ -438,7 +438,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The payment network used to process this card authorization
+// The payment network used to process this card authorization.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
 const (
@@ -446,14 +446,14 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
 )
 
-// Fields specific to the `visa` network
+// Fields specific to the `visa` network.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
 	ElectronicCommerceIndicator ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
-	// expiration date
+	// expiration date.
 	PointOfServiceEntryMode ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
 }
@@ -515,7 +515,7 @@ const (
 )
 
 // The method used to enter the cardholder's primary account number and card
-// expiration date
+// expiration date.
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
@@ -758,43 +758,102 @@ const (
 type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount                                                 int64  `json:"amount,required"`
-	DestinationCountryCode                                 string `json:"destination_country_code,required"`
-	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
-	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
-	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
-	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
+	Amount int64 `json:"amount,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the destination country.
+	DestinationCountryCode string `json:"destination_country_code,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
+	// destination bank account.
+	DestinationCurrencyCode string `json:"destination_currency_code,required"`
+	// A description of how the foreign exchange rate was calculated.
+	ForeignExchangeIndicator ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
+	// Depending on the `foreign_exchange_reference_indicator`, an exchange rate or a
+	// reference to a well-known rate.
+	ForeignExchangeReference string `json:"foreign_exchange_reference,required,nullable"`
+	// An instruction of how to interpret the `foreign_exchange_reference` field for
+	// this Transaction.
+	ForeignExchangeReferenceIndicator ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
+	// The amount in the minor unit of the foreign payment currency. For dollars, for
+	// example, this is cents.
+	ForeignPaymentAmount int64 `json:"foreign_payment_amount,required"`
+	// A reference number in the foreign banking infrastructure.
+	ForeignTraceNumber string `json:"foreign_trace_number,required,nullable"`
+	// The type of transfer. Set by the originator.
+	InternationalTransactionTypeCode ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
+	// originating bank account.
+	OriginatingCurrencyCode string `json:"originating_currency_code,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the originating branch country.
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatorCity                                         string `json:"originator_city,required"`
-	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
-	OriginatorCountry                                      string `json:"originator_country,required"`
-	OriginatorIdentification                               string `json:"originator_identification,required"`
-	OriginatorName                                         string `json:"originator_name,required"`
-	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
-	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
-	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverCountry                                        string `json:"receiver_country,required"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
-	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+	// An identifier for the originating bank. One of an International Bank Account
+	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// domestic identifier like a US Routing Number.
+	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id,required"`
+	// An instruction of how to interpret the
+	// `originating_depository_financial_institution_id` field for this Transaction.
+	OriginatingDepositoryFinancialInstitutionIDQualifier ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
+	// The name of the originating bank. Sometimes this will refer to an American bank
+	// and obscure the correspondent foreign bank.
+	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name,required"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorCity string `json:"originator_city,required"`
+	// A description field set by the originator.
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	// A portion of the originator address. The
+	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
+	// code of the originator country.
+	OriginatorCountry string `json:"originator_country,required"`
+	// An identifier for the originating company. This is generally stable across
+	// multiple ACH transfers.
+	OriginatorIdentification string `json:"originator_identification,required"`
+	// Either the name of the originator or an intermediary money transmitter.
+	OriginatorName string `json:"originator_name,required"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorPostalCode string `json:"originator_postal_code,required,nullable"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorStateOrProvince string `json:"originator_state_or_province,required,nullable"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorStreetAddress string `json:"originator_street_address,required"`
+	// A description field set by the originator.
+	PaymentRelatedInformation string `json:"payment_related_information,required,nullable"`
+	// A description field set by the originator.
+	PaymentRelatedInformation2 string `json:"payment_related_information2,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverCity string `json:"receiver_city,required"`
+	// A portion of the receiver address. The
+	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
+	// code of the receiver country.
+	ReceiverCountry string `json:"receiver_country,required"`
+	// An identification number the originator uses for the receiver.
+	ReceiverIdentificationNumber string `json:"receiver_identification_number,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverPostalCode string `json:"receiver_postal_code,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverStateOrProvince string `json:"receiver_state_or_province,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverStreetAddress string `json:"receiver_street_address,required"`
+	// The name of the receiver of the transfer. This is not verified by Increase.
+	ReceivingCompanyOrIndividualName string `json:"receiving_company_or_individual_name,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the receiving bank country.
+	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country,required"`
+	// An identifier for the receiving bank. One of an International Bank Account
+	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// domestic identifier like a US Routing Number.
+	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id,required"`
+	// An instruction of how to interpret the
+	// `receiving_depository_financial_institution_id` field for this Transaction.
+	ReceivingDepositoryFinancialInstitutionIDQualifier ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	// The name of the receiving bank, as set by the sending financial institution.
+	ReceivingDepositoryFinancialInstitutionName string `json:"receiving_depository_financial_institution_name,required"`
+	// A 15 digit number recorded in the Nacha file and available to both the
+	// originating and receiving bank. Along with the amount, date, and originating
+	// routing number, this can be used to identify the ACH transfer at either bank.
+	// ACH trace numbers are not unique, but are
+	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	TraceNumber string `json:"trace_number,required"`
+	JSON        achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
 }
 
 // achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
@@ -844,6 +903,109 @@ type achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON s
 func (r *ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// A description of how the foreign exchange rate was calculated.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator string
+
+const (
+	// The originator chose an amount in their own currency. The settled amount in USD
+	// was converted using the exchange rate.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorFixedToVariable ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator = "fixed_to_variable"
+	// The originator chose an amount to settle in USD. The originator's amount was
+	// variable; known only after the foreign exchange conversion.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorVariableToFixed ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator = "variable_to_fixed"
+	// The amount was originated and settled as a fixed amount in USD. There is no
+	// foreign exchange conversion.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorFixedToFixed ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator = "fixed_to_fixed"
+)
+
+// An instruction of how to interpret the `foreign_exchange_reference` field for
+// this Transaction.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator string
+
+const (
+	// The ACH file contains a foreign exchange rate.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorForeignExchangeRate ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator = "foreign_exchange_rate"
+	// The ACH file contains a reference to a well-known foreign exchange rate.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
+	// There is no foreign exchange for this transfer, so the
+	// `foreign_exchange_reference` field is blank.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorBlank ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator = "blank"
+)
+
+// The type of transfer. Set by the originator.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode string
+
+const (
+	// Sent as `ANN` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeAnnuity ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "annuity"
+	// Sent as `BUS` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeBusinessOrCommercial ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "business_or_commercial"
+	// Sent as `DEP` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeDeposit ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "deposit"
+	// Sent as `LOA` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeLoan ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "loan"
+	// Sent as `MIS` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMiscellaneous ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "miscellaneous"
+	// Sent as `MOR` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMortgage ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "mortgage"
+	// Sent as `PEN` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePension ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "pension"
+	// Sent as `REM` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRemittance ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "remittance"
+	// Sent as `RLS` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRentOrLease ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "rent_or_lease"
+	// Sent as `SAL` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeSalaryOrPayroll ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "salary_or_payroll"
+	// Sent as `TAX` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeTax ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "tax"
+	// Sent as `ARC` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeAccountsReceivable ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "accounts_receivable"
+	// Sent as `BOC` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeBackOfficeConversion ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "back_office_conversion"
+	// Sent as `MTE` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMachineTransfer ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "machine_transfer"
+	// Sent as `POP` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePointOfPurchase ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "point_of_purchase"
+	// Sent as `POS` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePointOfSale ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "point_of_sale"
+	// Sent as `RCK` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRepresentedCheck ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "represented_check"
+	// Sent as `SHR` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeSharedNetworkTransaction ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "shared_network_transaction"
+	// Sent as `TEL` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeTelphoneInitiated ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "telphone_initiated"
+	// Sent as `WEB` in the Nacha file.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeInternetInitiated ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "internet_initiated"
+)
+
+// An instruction of how to interpret the
+// `originating_depository_financial_institution_id` field for this Transaction.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier string
+
+const (
+	// A domestic clearing system number. In the US, for example, this is the American
+	// Banking Association (ABA) routing number.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	// The SWIFT Bank Identifier Code (BIC) of the bank.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierBicCode ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	// An International Bank Account Number.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierIban ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
+)
+
+// An instruction of how to interpret the
+// `receiving_depository_financial_institution_id` field for this Transaction.
+type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier string
+
+const (
+	// A domestic clearing system number. In the US, for example, this is the American
+	// Banking Association (ABA) routing number.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	// The SWIFT Bank Identifier Code (BIC) of the bank.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierBicCode ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	// An International Bank Account Number.
+	ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierIban ACHTransferSimulationDeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
+)
 
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.
@@ -3413,43 +3575,102 @@ const (
 type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
-	Amount                                                 int64  `json:"amount,required"`
-	DestinationCountryCode                                 string `json:"destination_country_code,required"`
-	DestinationCurrencyCode                                string `json:"destination_currency_code,required"`
-	ForeignExchangeIndicator                               string `json:"foreign_exchange_indicator,required"`
-	ForeignExchangeReference                               string `json:"foreign_exchange_reference,required,nullable"`
-	ForeignExchangeReferenceIndicator                      string `json:"foreign_exchange_reference_indicator,required"`
-	ForeignPaymentAmount                                   int64  `json:"foreign_payment_amount,required"`
-	ForeignTraceNumber                                     string `json:"foreign_trace_number,required,nullable"`
-	InternationalTransactionTypeCode                       string `json:"international_transaction_type_code,required"`
-	OriginatingCurrencyCode                                string `json:"originating_currency_code,required"`
+	Amount int64 `json:"amount,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the destination country.
+	DestinationCountryCode string `json:"destination_country_code,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
+	// destination bank account.
+	DestinationCurrencyCode string `json:"destination_currency_code,required"`
+	// A description of how the foreign exchange rate was calculated.
+	ForeignExchangeIndicator ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
+	// Depending on the `foreign_exchange_reference_indicator`, an exchange rate or a
+	// reference to a well-known rate.
+	ForeignExchangeReference string `json:"foreign_exchange_reference,required,nullable"`
+	// An instruction of how to interpret the `foreign_exchange_reference` field for
+	// this Transaction.
+	ForeignExchangeReferenceIndicator ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
+	// The amount in the minor unit of the foreign payment currency. For dollars, for
+	// example, this is cents.
+	ForeignPaymentAmount int64 `json:"foreign_payment_amount,required"`
+	// A reference number in the foreign banking infrastructure.
+	ForeignTraceNumber string `json:"foreign_trace_number,required,nullable"`
+	// The type of transfer. Set by the originator.
+	InternationalTransactionTypeCode ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
+	// originating bank account.
+	OriginatingCurrencyCode string `json:"originating_currency_code,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the originating branch country.
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
-	OriginatingDepositoryFinancialInstitutionID            string `json:"originating_depository_financial_institution_id,required"`
-	OriginatingDepositoryFinancialInstitutionIDQualifier   string `json:"originating_depository_financial_institution_id_qualifier,required"`
-	OriginatingDepositoryFinancialInstitutionName          string `json:"originating_depository_financial_institution_name,required"`
-	OriginatorCity                                         string `json:"originator_city,required"`
-	OriginatorCompanyEntryDescription                      string `json:"originator_company_entry_description,required"`
-	OriginatorCountry                                      string `json:"originator_country,required"`
-	OriginatorIdentification                               string `json:"originator_identification,required"`
-	OriginatorName                                         string `json:"originator_name,required"`
-	OriginatorPostalCode                                   string `json:"originator_postal_code,required,nullable"`
-	OriginatorStateOrProvince                              string `json:"originator_state_or_province,required,nullable"`
-	OriginatorStreetAddress                                string `json:"originator_street_address,required"`
-	PaymentRelatedInformation                              string `json:"payment_related_information,required,nullable"`
-	PaymentRelatedInformation2                             string `json:"payment_related_information2,required,nullable"`
-	ReceiverCity                                           string `json:"receiver_city,required"`
-	ReceiverCountry                                        string `json:"receiver_country,required"`
-	ReceiverIdentificationNumber                           string `json:"receiver_identification_number,required,nullable"`
-	ReceiverPostalCode                                     string `json:"receiver_postal_code,required,nullable"`
-	ReceiverStateOrProvince                                string `json:"receiver_state_or_province,required,nullable"`
-	ReceiverStreetAddress                                  string `json:"receiver_street_address,required"`
-	ReceivingCompanyOrIndividualName                       string `json:"receiving_company_or_individual_name,required"`
-	ReceivingDepositoryFinancialInstitutionCountry         string `json:"receiving_depository_financial_institution_country,required"`
-	ReceivingDepositoryFinancialInstitutionID              string `json:"receiving_depository_financial_institution_id,required"`
-	ReceivingDepositoryFinancialInstitutionIDQualifier     string `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	ReceivingDepositoryFinancialInstitutionName            string `json:"receiving_depository_financial_institution_name,required"`
-	TraceNumber                                            string `json:"trace_number,required"`
-	JSON                                                   achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
+	// An identifier for the originating bank. One of an International Bank Account
+	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// domestic identifier like a US Routing Number.
+	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id,required"`
+	// An instruction of how to interpret the
+	// `originating_depository_financial_institution_id` field for this Transaction.
+	OriginatingDepositoryFinancialInstitutionIDQualifier ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
+	// The name of the originating bank. Sometimes this will refer to an American bank
+	// and obscure the correspondent foreign bank.
+	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name,required"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorCity string `json:"originator_city,required"`
+	// A description field set by the originator.
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	// A portion of the originator address. The
+	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
+	// code of the originator country.
+	OriginatorCountry string `json:"originator_country,required"`
+	// An identifier for the originating company. This is generally stable across
+	// multiple ACH transfers.
+	OriginatorIdentification string `json:"originator_identification,required"`
+	// Either the name of the originator or an intermediary money transmitter.
+	OriginatorName string `json:"originator_name,required"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorPostalCode string `json:"originator_postal_code,required,nullable"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorStateOrProvince string `json:"originator_state_or_province,required,nullable"`
+	// A portion of the originator address. This may be incomplete.
+	OriginatorStreetAddress string `json:"originator_street_address,required"`
+	// A description field set by the originator.
+	PaymentRelatedInformation string `json:"payment_related_information,required,nullable"`
+	// A description field set by the originator.
+	PaymentRelatedInformation2 string `json:"payment_related_information2,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverCity string `json:"receiver_city,required"`
+	// A portion of the receiver address. The
+	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
+	// code of the receiver country.
+	ReceiverCountry string `json:"receiver_country,required"`
+	// An identification number the originator uses for the receiver.
+	ReceiverIdentificationNumber string `json:"receiver_identification_number,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverPostalCode string `json:"receiver_postal_code,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverStateOrProvince string `json:"receiver_state_or_province,required,nullable"`
+	// A portion of the receiver address. This may be incomplete.
+	ReceiverStreetAddress string `json:"receiver_street_address,required"`
+	// The name of the receiver of the transfer. This is not verified by Increase.
+	ReceivingCompanyOrIndividualName string `json:"receiving_company_or_individual_name,required"`
+	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
+	// country code of the receiving bank country.
+	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country,required"`
+	// An identifier for the receiving bank. One of an International Bank Account
+	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// domestic identifier like a US Routing Number.
+	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id,required"`
+	// An instruction of how to interpret the
+	// `receiving_depository_financial_institution_id` field for this Transaction.
+	ReceivingDepositoryFinancialInstitutionIDQualifier ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	// The name of the receiving bank, as set by the sending financial institution.
+	ReceivingDepositoryFinancialInstitutionName string `json:"receiving_depository_financial_institution_name,required"`
+	// A 15 digit number recorded in the Nacha file and available to both the
+	// originating and receiving bank. Along with the amount, date, and originating
+	// routing number, this can be used to identify the ACH transfer at either bank.
+	// ACH trace numbers are not unique, but are
+	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	TraceNumber string `json:"trace_number,required"`
+	JSON        achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
 }
 
 // achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
@@ -3500,6 +3721,109 @@ func (r *ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A description of how the foreign exchange rate was calculated.
+type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator string
+
+const (
+	// The originator chose an amount in their own currency. The settled amount in USD
+	// was converted using the exchange rate.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_variable"
+	// The originator chose an amount to settle in USD. The originator's amount was
+	// variable; known only after the foreign exchange conversion.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "variable_to_fixed"
+	// The amount was originated and settled as a fixed amount in USD. There is no
+	// foreign exchange conversion.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_fixed"
+)
+
+// An instruction of how to interpret the `foreign_exchange_reference` field for
+// this Transaction.
+type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator string
+
+const (
+	// The ACH file contains a foreign exchange rate.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_rate"
+	// The ACH file contains a reference to a well-known foreign exchange rate.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
+	// There is no foreign exchange for this transfer, so the
+	// `foreign_exchange_reference` field is blank.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank ACHTransferSimulationTransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "blank"
+)
+
+// The type of transfer. Set by the originator.
+type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode string
+
+const (
+	// Sent as `ANN` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "annuity"
+	// Sent as `BUS` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "business_or_commercial"
+	// Sent as `DEP` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeDeposit ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "deposit"
+	// Sent as `LOA` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeLoan ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "loan"
+	// Sent as `MIS` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "miscellaneous"
+	// Sent as `MOR` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMortgage ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "mortgage"
+	// Sent as `PEN` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePension ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "pension"
+	// Sent as `REM` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRemittance ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "remittance"
+	// Sent as `RLS` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "rent_or_lease"
+	// Sent as `SAL` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "salary_or_payroll"
+	// Sent as `TAX` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTax ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "tax"
+	// Sent as `ARC` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "accounts_receivable"
+	// Sent as `BOC` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "back_office_conversion"
+	// Sent as `MTE` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "machine_transfer"
+	// Sent as `POP` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_purchase"
+	// Sent as `POS` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_sale"
+	// Sent as `RCK` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "represented_check"
+	// Sent as `SHR` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "shared_network_transaction"
+	// Sent as `TEL` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "telphone_initiated"
+	// Sent as `WEB` in the Nacha file.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated ACHTransferSimulationTransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "internet_initiated"
+)
+
+// An instruction of how to interpret the
+// `originating_depository_financial_institution_id` field for this Transaction.
+type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier string
+
+const (
+	// A domestic clearing system number. In the US, for example, this is the American
+	// Banking Association (ABA) routing number.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	// The SWIFT Bank Identifier Code (BIC) of the bank.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	// An International Bank Account Number.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban ACHTransferSimulationTransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
+)
+
+// An instruction of how to interpret the
+// `receiving_depository_financial_institution_id` field for this Transaction.
+type ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier string
+
+const (
+	// A domestic clearing system number. In the US, for example, this is the American
+	// Banking Association (ABA) routing number.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	// The SWIFT Bank Identifier Code (BIC) of the bank.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	// An International Bank Account Number.
+	ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban ACHTransferSimulationTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
+)
+
 // An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
@@ -3520,7 +3844,7 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
-	// The Real-Time Payments network identification of the transfer
+	// The Real-Time Payments network identification of the transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	JSON                      achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
 }
