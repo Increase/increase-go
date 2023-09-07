@@ -93,7 +93,7 @@ func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string,
 // Simulates the reversal of a [Wire Transfer](#wire-transfers) by the Federal
 // Reserve due to error conditions. This will also create a
 // [Transaction](#transaction) to account for the returned funds. This Wire
-// Transfer must first have a `status` of `complete`.'
+// Transfer must first have a `status` of `complete`.
 func (r *WireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)

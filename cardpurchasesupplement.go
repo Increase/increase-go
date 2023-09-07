@@ -220,7 +220,7 @@ type CardPurchaseSupplementLineItem struct {
 	SalesTaxCurrency string `json:"sales_tax_currency,required,nullable"`
 	// Sales tax rate for this line item.
 	SalesTaxRate string `json:"sales_tax_rate,required,nullable"`
-	// Total amount of all line items
+	// Total amount of all line items.
 	TotalAmount int64 `json:"total_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total
 	// amount.
@@ -229,7 +229,7 @@ type CardPurchaseSupplementLineItem struct {
 	UnitCost string `json:"unit_cost,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the unit cost.
 	UnitCostCurrency string `json:"unit_cost_currency,required,nullable"`
-	// Code indicating unit of measure (gallons, etc.)
+	// Code indicating unit of measure (gallons, etc.).
 	UnitOfMeasureCode string `json:"unit_of_measure_code,required,nullable"`
 	JSON              cardPurchaseSupplementLineItemJSON
 }

@@ -120,7 +120,7 @@ type RealTimeDecisionCardAuthorization struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// Fields specific to the `network`
+	// Fields specific to the `network`.
 	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
@@ -180,11 +180,11 @@ const (
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
-// Fields specific to the `network`
+// Fields specific to the `network`.
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
-	// The payment network used to process this card authorization
+	// The payment network used to process this card authorization.
 	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
-	// Fields specific to the `visa` network
+	// Fields specific to the `visa` network.
 	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON
 }
@@ -202,7 +202,7 @@ func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The payment network used to process this card authorization
+// The payment network used to process this card authorization.
 type RealTimeDecisionCardAuthorizationNetworkDetailsCategory string
 
 const (
@@ -210,14 +210,14 @@ const (
 	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
 )
 
-// Fields specific to the `visa` network
+// Fields specific to the `visa` network.
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
 	ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
-	// expiration date
+	// expiration date.
 	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON
 }
@@ -278,7 +278,7 @@ const (
 )
 
 // The method used to enter the cardholder's primary account number and card
-// expiration date
+// expiration date.
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
@@ -307,7 +307,7 @@ const (
 // Fields specific to the type of request, such as an incremental authorization.
 type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// The type of this request (e.g., an initial authorization or an incremental
-	// authorization.)
+	// authorization).
 	Category RealTimeDecisionCardAuthorizationRequestDetailsCategory `json:"category,required"`
 	// Fields specific to the category `incremental_authorization`.
 	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
@@ -331,7 +331,7 @@ func (r *RealTimeDecisionCardAuthorizationRequestDetails) UnmarshalJSON(data []b
 }
 
 // The type of this request (e.g., an initial authorization or an incremental
-// authorization.)
+// authorization).
 type RealTimeDecisionCardAuthorizationRequestDetailsCategory string
 
 const (
