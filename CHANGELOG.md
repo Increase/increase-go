@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.7.3 (2023-09-07)
+
+Full Changelog: [v0.7.2...v0.7.3](https://github.com/increase/increase-go/compare/v0.7.2...v0.7.3)
+
+### Features
+
+* **api:** add bank_of_first_deposit_routing_number and transfer_id properties ([#82](https://github.com/increase/increase-go/issues/82)) ([b9407a8](https://github.com/increase/increase-go/commit/b9407a8ea94153ef8f61eea71f1cf46a550dc8db))
+* **api:** add Update Address  and Create Notification Change endpoints ([#86](https://github.com/increase/increase-go/issues/86)) ([f3de558](https://github.com/increase/increase-go/commit/f3de558bec0a1bcb0ce9272c81012de12e83860a))
+* fixes tests where an array has to have unique enum values ([#87](https://github.com/increase/increase-go/issues/87)) ([ea994ce](https://github.com/increase/increase-go/commit/ea994ceee40286c47dc5e90b8042f9942ad2acb0))
+
+
+### Chores
+
+* **internal:** implement inline json unmarshalling ([#85](https://github.com/increase/increase-go/issues/85)) ([7862aa5](https://github.com/increase/increase-go/commit/7862aa57236bc7b996d582d22c735cdeb62cb38a))
+
+
+### Documentation
+
+* **api:** add docstrings and refine enum types ([#89](https://github.com/increase/increase-go/issues/89)) ([d38244b](https://github.com/increase/increase-go/commit/d38244bfe6bb1b43da9c2cc69430ad206183d5f2))
+* **readme:** add link to api.md ([#88](https://github.com/increase/increase-go/issues/88)) ([98dcd31](https://github.com/increase/increase-go/commit/98dcd313800a9b122a144d3cb13b876e8735f5df))
+
 ## 0.7.2 (2023-08-29)
 
 Full Changelog: [v0.7.1...v0.7.2](https://github.com/Increase/increase-go/compare/v0.7.1...v0.7.2)
