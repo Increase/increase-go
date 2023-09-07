@@ -45,7 +45,7 @@ type BookkeepingEntrySet struct {
 	ID string `json:"id,required"`
 	// The timestamp of the entry set.
 	Date time.Time `json:"date,required" format:"date-time"`
-	// The entries
+	// The entries.
 	Entries []BookkeepingEntrySetEntry `json:"entries,required"`
 	// The transaction identifier, if any.
 	TransactionID string `json:"transaction_id,required,nullable"`

@@ -10,7 +10,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-// A list of Account objects
+// A list of Account objects.
 type Page[T any] struct {
 	Data []T `json:"data,required"`
 	// A pointer to a place in the list.

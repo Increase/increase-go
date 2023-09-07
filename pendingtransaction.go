@@ -316,7 +316,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
-	// Fields specific to the `network`
+	// Fields specific to the `network`.
 	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
@@ -377,11 +377,11 @@ const (
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
-// Fields specific to the `network`
+// Fields specific to the `network`.
 type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
-	// The payment network used to process this card authorization
+	// The payment network used to process this card authorization.
 	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
-	// Fields specific to the `visa` network
+	// Fields specific to the `visa` network.
 	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON
 }
@@ -400,7 +400,7 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The payment network used to process this card authorization
+// The payment network used to process this card authorization.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
 
 const (
@@ -408,14 +408,14 @@ const (
 	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
 )
 
-// Fields specific to the `visa` network
+// Fields specific to the `visa` network.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
 	ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
-	// expiration date
+	// expiration date.
 	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
 	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
 }
@@ -477,7 +477,7 @@ const (
 )
 
 // The method used to enter the cardholder's primary account number and card
-// expiration date
+// expiration date.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (

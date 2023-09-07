@@ -194,7 +194,7 @@ type InboundACHTransferDecline struct {
 	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
 	// The id of the transaction for the declined transfer.
 	DeclinedTransactionID string `json:"declined_transaction_id,required"`
-	// The reason for the transfer decline
+	// The reason for the transfer decline.
 	Reason InboundACHTransferDeclineReason `json:"reason,required"`
 	JSON   inboundACHTransferDeclineJSON
 }
@@ -213,7 +213,7 @@ func (r *InboundACHTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The reason for the transfer decline
+// The reason for the transfer decline.
 type InboundACHTransferDeclineReason string
 
 const (
@@ -262,9 +262,9 @@ const (
 // If you initiate a notification of change in response to the transfer, this will
 // contain its details.
 type InboundACHTransferNotificationOfChange struct {
-	// The new account number provided in the notification of change
+	// The new account number provided in the notification of change.
 	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
-	// The new account number provided in the notification of change
+	// The new account number provided in the notification of change.
 	UpdatedRoutingNumber string `json:"updated_routing_number,required,nullable"`
 	JSON                 inboundACHTransferNotificationOfChangeJSON
 }
@@ -299,7 +299,7 @@ const (
 
 // If your transfer is returned, this will contain details of the return.
 type InboundACHTransferTransferReturn struct {
-	// The reason for the transfer return
+	// The reason for the transfer return.
 	Reason InboundACHTransferTransferReturnReason `json:"reason,required"`
 	// The time at which the transfer was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
@@ -322,7 +322,7 @@ func (r *InboundACHTransferTransferReturn) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The reason for the transfer return
+// The reason for the transfer return.
 type InboundACHTransferTransferReturnReason string
 
 const (

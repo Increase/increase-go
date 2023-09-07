@@ -645,7 +645,7 @@ type EntityTrust struct {
 	FormationState string `json:"formation_state,required,nullable"`
 	// The grantor of the trust. Will be present if the `category` is `revocable`.
 	Grantor EntityTrustGrantor `json:"grantor,required,nullable"`
-	// The trust's name
+	// The trust's name.
 	Name string `json:"name,required"`
 	// The Employer Identification Number (EIN) of the trust itself.
 	TaxIdentifier string `json:"tax_identifier,required,nullable"`
