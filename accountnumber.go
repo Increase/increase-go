@@ -97,6 +97,8 @@ type AccountNumber struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Properties related to how this Account Number handles inbound ACH transfers.
+	InboundACH AccountNumberInboundACH `json:"inbound_ach,required"`
 	// The name you choose for the Account Number.
 	Name string `json:"name,required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -115,6 +117,7 @@ type accountNumberJSON struct {
 	AccountID     apijson.Field
 	AccountNumber apijson.Field
 	CreatedAt     apijson.Field
+	InboundACH    apijson.Field
 	Name          apijson.Field
 	RoutingNumber apijson.Field
 	Status        apijson.Field
@@ -126,6 +129,37 @@ type accountNumberJSON struct {
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Properties related to how this Account Number handles inbound ACH transfers.
+type AccountNumberInboundACH struct {
+	// Whether ACH debits are allowed against this Account Number. Note that they will
+	// still be declined if this is `allowed` if the Account Number is not active.
+	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status,required"`
+	JSON        accountNumberInboundACHJSON
+}
+
+// accountNumberInboundACHJSON contains the JSON metadata for the struct
+// [AccountNumberInboundACH]
+type accountNumberInboundACHJSON struct {
+	DebitStatus apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountNumberInboundACH) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Whether ACH debits are allowed against this Account Number. Note that they will
+// still be declined if this is `allowed` if the Account Number is not active.
+type AccountNumberInboundACHDebitStatus string
+
+const (
+	// ACH Debits are allowed.
+	AccountNumberInboundACHDebitStatusAllowed AccountNumberInboundACHDebitStatus = "allowed"
+	// ACH Debits are blocked.
+	AccountNumberInboundACHDebitStatusBlocked AccountNumberInboundACHDebitStatus = "blocked"
+)
 
 // This indicates if payments can be made to the Account Number.
 type AccountNumberStatus string
@@ -152,13 +186,39 @@ type AccountNumberNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The name you choose for the Account Number.
 	Name param.Field[string] `json:"name,required"`
+	// Options related to how this Account Number should handle inbound ACH transfers.
+	InboundACH param.Field[AccountNumberNewParamsInboundACH] `json:"inbound_ach"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Options related to how this Account Number should handle inbound ACH transfers.
+type AccountNumberNewParamsInboundACH struct {
+	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
+	// will be declined if this is `allowed` but the Account Number is not active.
+	DebitStatus param.Field[AccountNumberNewParamsInboundACHDebitStatus] `json:"debit_status,required"`
+}
+
+func (r AccountNumberNewParamsInboundACH) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Whether ACH debits are allowed against this Account Number. Note that ACH debits
+// will be declined if this is `allowed` but the Account Number is not active.
+type AccountNumberNewParamsInboundACHDebitStatus string
+
+const (
+	// ACH Debits are allowed.
+	AccountNumberNewParamsInboundACHDebitStatusAllowed AccountNumberNewParamsInboundACHDebitStatus = "allowed"
+	// ACH Debits are blocked.
+	AccountNumberNewParamsInboundACHDebitStatusBlocked AccountNumberNewParamsInboundACHDebitStatus = "blocked"
+)
+
 type AccountNumberUpdateParams struct {
+	// Options related to how this Account Number handles inbound ACH transfers.
+	InboundACH param.Field[AccountNumberUpdateParamsInboundACH] `json:"inbound_ach"`
 	// The name you choose for the Account Number.
 	Name param.Field[string] `json:"name"`
 	// This indicates if transfers can be made to the Account Number.
@@ -168,6 +228,28 @@ type AccountNumberUpdateParams struct {
 func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// Options related to how this Account Number handles inbound ACH transfers.
+type AccountNumberUpdateParamsInboundACH struct {
+	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
+	// will be declined if this is `allowed` but the Account Number is not active.
+	DebitStatus param.Field[AccountNumberUpdateParamsInboundACHDebitStatus] `json:"debit_status"`
+}
+
+func (r AccountNumberUpdateParamsInboundACH) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Whether ACH debits are allowed against this Account Number. Note that ACH debits
+// will be declined if this is `allowed` but the Account Number is not active.
+type AccountNumberUpdateParamsInboundACHDebitStatus string
+
+const (
+	// ACH Debits are allowed.
+	AccountNumberUpdateParamsInboundACHDebitStatusAllowed AccountNumberUpdateParamsInboundACHDebitStatus = "allowed"
+	// ACH Debits are blocked.
+	AccountNumberUpdateParamsInboundACHDebitStatusBlocked AccountNumberUpdateParamsInboundACHDebitStatus = "blocked"
+)
 
 // This indicates if transfers can be made to the Account Number.
 type AccountNumberUpdateParamsStatus string

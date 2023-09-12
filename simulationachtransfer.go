@@ -634,10 +634,10 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJS
 type ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	// The account number is canceled.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The account number is disabled.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	// The account number is canceled.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The transaction would cause a limit to be exceeded.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
 	// The account's entity is not active.
@@ -646,24 +646,17 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	// Unable to locate account.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	// Routing number on the check is not ours.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	// Unable to process.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	// Refer to image.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	// Stop payment requested for this check.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	// Check was returned to sender.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonReturned ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	// The check was a duplicate deposit.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	// The transaction is not allowed.
+	// The check was not authorized.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	// The check was altered or fictitious.
-	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	// The amount the receiving bank is attempting to deposit does not match the amount
+	// on the check.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAmountMismatch ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
+	// The check attempting to be deposited does not belong to Increase.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be

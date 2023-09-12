@@ -231,6 +231,8 @@ const (
 	CardProfilePhysicalCardsStatusNotEligible CardProfilePhysicalCardsStatus = "not_eligible"
 	// There is an issue with the Physical Card Profile preventing it from use.
 	CardProfilePhysicalCardsStatusRejected CardProfilePhysicalCardsStatus = "rejected"
+	// The Card Profile has not yet been processed by Increase.
+	CardProfilePhysicalCardsStatusPendingCreating CardProfilePhysicalCardsStatus = "pending_creating"
 	// The card profile is awaiting review by Increase.
 	CardProfilePhysicalCardsStatusPendingReviewing CardProfilePhysicalCardsStatus = "pending_reviewing"
 	// The card profile is awaiting submission to the fulfillment provider.
@@ -371,6 +373,8 @@ const (
 	CardProfileListParamsPhysicalCardsStatusInNotEligible CardProfileListParamsPhysicalCardsStatusIn = "not_eligible"
 	// There is an issue with the Physical Card Profile preventing it from use.
 	CardProfileListParamsPhysicalCardsStatusInRejected CardProfileListParamsPhysicalCardsStatusIn = "rejected"
+	// The Card Profile has not yet been processed by Increase.
+	CardProfileListParamsPhysicalCardsStatusInPendingCreating CardProfileListParamsPhysicalCardsStatusIn = "pending_creating"
 	// The card profile is awaiting review by Increase.
 	CardProfileListParamsPhysicalCardsStatusInPendingReviewing CardProfileListParamsPhysicalCardsStatusIn = "pending_reviewing"
 	// The card profile is awaiting submission to the fulfillment provider.
