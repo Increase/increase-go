@@ -597,10 +597,10 @@ func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err 
 type DeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	// The account number is canceled.
-	DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled DeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The account number is disabled.
 	DeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled DeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	// The account number is canceled.
+	DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled DeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The transaction would cause a limit to be exceeded.
 	DeclinedTransactionSourceCheckDeclineReasonBreachesLimit DeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
 	// The account's entity is not active.
@@ -609,24 +609,17 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonGroupLocked DeclinedTransactionSourceCheckDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	DeclinedTransactionSourceCheckDeclineReasonInsufficientFunds DeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	// Unable to locate account.
-	DeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount DeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	// Routing number on the check is not ours.
-	DeclinedTransactionSourceCheckDeclineReasonNotOurItem DeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	// Unable to process.
-	DeclinedTransactionSourceCheckDeclineReasonUnableToProcess DeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	// Refer to image.
-	DeclinedTransactionSourceCheckDeclineReasonReferToImage DeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	// Stop payment requested for this check.
 	DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested DeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	// Check was returned to sender.
-	DeclinedTransactionSourceCheckDeclineReasonReturned DeclinedTransactionSourceCheckDeclineReason = "returned"
 	// The check was a duplicate deposit.
 	DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment DeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	// The transaction is not allowed.
+	// The check was not authorized.
 	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	// The check was altered or fictitious.
-	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	// The amount the receiving bank is attempting to deposit does not match the amount
+	// on the check.
+	DeclinedTransactionSourceCheckDeclineReasonAmountMismatch DeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
+	// The check attempting to be deposited does not belong to Increase.
+	DeclinedTransactionSourceCheckDeclineReasonNotOurItem DeclinedTransactionSourceCheckDeclineReason = "not_our_item"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be
