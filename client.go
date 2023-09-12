@@ -32,7 +32,6 @@ type Client struct {
 	PendingTransactions         *PendingTransactionService
 	Programs                    *ProgramService
 	DeclinedTransactions        *DeclinedTransactionService
-	Limits                      *LimitService
 	AccountTransfers            *AccountTransferService
 	ACHTransfers                *ACHTransferService
 	ACHPrenotifications         *ACHPrenotificationService
@@ -86,7 +85,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.PendingTransactions = NewPendingTransactionService(opts...)
 	r.Programs = NewProgramService(opts...)
 	r.DeclinedTransactions = NewDeclinedTransactionService(opts...)
-	r.Limits = NewLimitService(opts...)
 	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.ACHTransfers = NewACHTransferService(opts...)
 	r.ACHPrenotifications = NewACHPrenotificationService(opts...)

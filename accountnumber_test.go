@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestAccountNumberNew(t *testing.T) {
+func TestAccountNumberNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
@@ -24,6 +24,9 @@ func TestAccountNumberNew(t *testing.T) {
 	_, err := client.AccountNumbers.New(context.TODO(), increase.AccountNumberNewParams{
 		AccountID: increase.F("string"),
 		Name:      increase.F("x"),
+		InboundACH: increase.F(increase.AccountNumberNewParamsInboundACH{
+			DebitStatus: increase.F(increase.AccountNumberNewParamsInboundACHDebitStatusAllowed),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -64,6 +67,9 @@ func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"account_number_v18nkfqm6afpsrvy82b2",
 		increase.AccountNumberUpdateParams{
+			InboundACH: increase.F(increase.AccountNumberUpdateParamsInboundACH{
+				DebitStatus: increase.F(increase.AccountNumberUpdateParamsInboundACHDebitStatusAllowed),
+			}),
 			Name:   increase.F("x"),
 			Status: increase.F(increase.AccountNumberUpdateParamsStatusActive),
 		},

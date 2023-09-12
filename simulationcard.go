@@ -623,10 +623,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) Unmar
 type CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	// The account number is canceled.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The account number is disabled.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	// The account number is canceled.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
 	// The transaction would cause a limit to be exceeded.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonBreachesLimit CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
 	// The account's entity is not active.
@@ -635,24 +635,17 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	// Unable to locate account.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToLocateAccount CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_locate_account"
-	// Routing number on the check is not ours.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	// Unable to process.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	// Refer to image.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
 	// Stop payment requested for this check.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	// Check was returned to sender.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReturned CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "returned"
 	// The check was a duplicate deposit.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	// The transaction is not allowed.
+	// The check was not authorized.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotAuthorized CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	// The check was altered or fictitious.
-	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	// The amount the receiving bank is attempting to deposit does not match the amount
+	// on the check.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAmountMismatch CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
+	// The check attempting to be deposited does not belong to Increase.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be
