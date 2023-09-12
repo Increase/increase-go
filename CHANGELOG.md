@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.8.0 (2023-09-12)
+
+Full Changelog: [v0.7.3...v0.8.0](https://github.com/increase/increase-go/compare/v0.7.3...v0.8.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** remove Limits API, add ACH controls to Account Numbers   ([#92](https://github.com/increase/increase-go/issues/92))
+
+### Features
+
+* **api:** remove Limits API, add ACH controls to Account Numbers   ([#92](https://github.com/increase/increase-go/issues/92)) ([6e7817b](https://github.com/increase/increase-go/commit/6e7817bcde1dca89a0bb4f579a9df61a71f67b80))
+
+
+### Bug Fixes
+
+* **core:** add null check to prevent segfault when canceling context ([#90](https://github.com/increase/increase-go/issues/90)) ([15bca67](https://github.com/increase/increase-go/commit/15bca675a4b7cbf3fdeb48f78ffbf6a0d551b011))
+
+
+### Chores
+
+* **internal:** improve reliability of cancel delay test ([#93](https://github.com/increase/increase-go/issues/93)) ([c1efae5](https://github.com/increase/increase-go/commit/c1efae5a55f9fd1bbb2ca6b05602bbfe72709d37))
+
 ## 0.7.3 (2023-09-07)
 
 Full Changelog: [v0.7.2...v0.7.3](https://github.com/increase/increase-go/compare/v0.7.2...v0.7.3)
