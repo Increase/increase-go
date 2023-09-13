@@ -295,6 +295,8 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
@@ -337,6 +339,7 @@ type PendingTransactionSourceCardAuthorization struct {
 type pendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	ExpiresAt            apijson.Field
