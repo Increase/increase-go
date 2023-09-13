@@ -335,9 +335,13 @@ const (
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
 type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
+	// The Card Decline identifier.
+	ID string `json:"id,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -375,7 +379,9 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 // metadata for the struct
 // [ACHTransferSimulationDeclinedTransactionSourceCardDecline]
 type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
+	ID                   apijson.Field
 	Amount               apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -1699,6 +1705,8 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency ACHTransferSimulationTransactionSourceCardRefundCurrency `json:"currency,required"`
@@ -1731,6 +1739,7 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 type achTransferSimulationTransactionSourceCardRefundJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
@@ -2372,9 +2381,11 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The Card Authorization that was created prior to this Card Settlement, if on
+	// The Card Authorization that was created prior to this Card Settlement, if one
 	// exists.
 	CardAuthorization string `json:"card_authorization,required,nullable"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency ACHTransferSimulationTransactionSourceCardSettlementCurrency `json:"currency,required"`
@@ -2415,6 +2426,7 @@ type achTransferSimulationTransactionSourceCardSettlementJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardAuthorization    apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field

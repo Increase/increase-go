@@ -324,9 +324,13 @@ const (
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
+	// The Card Decline identifier.
+	ID string `json:"id,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -364,7 +368,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 // JSON metadata for the struct
 // [CardAuthorizationSimulationDeclinedTransactionSourceCardDecline]
 type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct {
+	ID                   apijson.Field
 	Amount               apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -1319,6 +1325,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
@@ -1362,6 +1370,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
+	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	ExpiresAt            apijson.Field
