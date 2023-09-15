@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.1 (2023-09-15)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/increase/increase-go/compare/v0.8.0...v0.8.1)
+
+### Features
+
+* **api:** add card payment ID reference to transaction models ([#94](https://github.com/increase/increase-go/issues/94)) ([c57cd95](https://github.com/increase/increase-go/commit/c57cd951b4b2d8cc91be971a6bfb02674df452b0))
+* retry on 408 Request Timeout ([#96](https://github.com/increase/increase-go/issues/96)) ([b70d67d](https://github.com/increase/increase-go/commit/b70d67db84905247ea1b5996c642410b7e9df070))
+
+
+### Bug Fixes
+
+* **core:** improve retry behavior and related docs ([#97](https://github.com/increase/increase-go/issues/97)) ([739a4b1](https://github.com/increase/increase-go/commit/739a4b1f50e9b20974c54311f7aa0663b143ee63))
+
 ## 0.8.0 (2023-09-12)
 
 Full Changelog: [v0.7.3...v0.8.0](https://github.com/increase/increase-go/compare/v0.7.3...v0.8.0)
