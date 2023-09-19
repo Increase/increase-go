@@ -36,6 +36,7 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 			Phone:         increase.F("x"),
 			CardProfileID: increase.F("string"),
 		}),
+		EntityID: increase.F("string"),
 	})
 	if err != nil {
 		var apierr *increase.Error

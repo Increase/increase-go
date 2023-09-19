@@ -33,11 +33,15 @@ func NewSimulationACHTransferService(opts ...option.RequestOption) (r *Simulatio
 }
 
 // Simulates an inbound ACH transfer to your account. This imitates initiating a
-// transaction to an Increase account from a different financial institution. The
+// transfer to an Increase account from a different financial institution. The
 // transfer may be either a credit or a debit depending on if the `amount` is
-// positive or negative. The result of calling this API will be either a
-// [Transaction](#transactions) or a [Declined Transaction](#declined-transactions)
-// depending on whether or not the transfer is allowed.
+// positive or negative. The result of calling this API will contain the created
+// transfer. You can pass a `resolve_at` parameter to allow for a window to
+// [action on the Inbound ACH Transfer](https://increase.com/documentation/inbound-ach-transfers#inbound-ach-transfers).
+// Alternatively, if you don't pass the `resolve_at` parameter the result will
+// contain either a [Transaction](#transactions) or a
+// [Declined Transaction](#declined-transactions) depending on whether or not the
+// transfer is allowed.
 func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body SimulationACHTransferNewInboundParams, opts ...option.RequestOption) (res *ACHTransferSimulation, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_ach_transfers"
@@ -78,6 +82,8 @@ type ACHTransferSimulation struct {
 	// [Transaction](#transactions) object. The Transaction's `source` will be of
 	// `category: inbound_ach_transfer`.
 	Transaction ACHTransferSimulationTransaction `json:"transaction,required,nullable"`
+	// The Inbound ACH Transfer.
+	Transfer ACHTransferSimulationTransfer `json:"transfer,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_simulation_result`.
 	Type ACHTransferSimulationType `json:"type,required"`
@@ -89,6 +95,7 @@ type ACHTransferSimulation struct {
 type achTransferSimulationJSON struct {
 	DeclinedTransaction apijson.Field
 	Transaction         apijson.Field
+	Transfer            apijson.Field
 	Type                apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
@@ -1454,7 +1461,8 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The three character ACH return code, in the range R01 to R85.
 	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
-	// Why the ACH Transfer was returned.
+	// Why the ACH Transfer was returned. This reason code is sent by the receiving
+	// bank back to Increase.
 	ReturnReasonCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
@@ -1480,27 +1488,30 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferReturn) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Why the ACH Transfer was returned.
+// Why the ACH Transfer was returned. This reason code is sent by the receiving
+// bank back to Increase.
 type ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	// Code R01. Insufficient funds in the source account.
+	// Code R01. Insufficient funds in the receiving account. Sometimes abbreviated to
+	// NSF.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
 	// Code R03. The account does not exist or the receiving bank was unable to locate
 	// it.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeNoAccount ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	// Code R02. The account is closed.
+	// Code R02. The account is closed at the receiving bank.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountClosed ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
 	// Code R04. The account number is invalid at the receiving bank.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	// Code R16. The account at the receiving bank was frozen per the Office of Foreign
+	// Assets Control.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
 	// Code R23. The receiving bank account refused a credit transfer.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
 	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
 	// Class code.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	// Code R29. The corporate customer reversed the transfer.
+	// Code R29. The corporate customer at the receiving bank reversed the transfer.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
 	// Code R08. The receiving bank stopped payment on this transfer.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodePaymentStopped ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
@@ -1511,11 +1522,12 @@ const (
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
 	// Code R28. The routing number is incorrect.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	// Code R10. The customer reversed the transfer.
+	// Code R10. The customer at the receiving bank reversed the transfer.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	// Code R19. The amount field is incorrect or too large.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	// Code R07. The customer who initiated the transfer revoked authorization.
+	// Code R07. The customer at the receiving institution informed their bank that
+	// they have revoked authorization for a previously authorized transfer.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
 	// Code R13. The routing number is invalid.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
@@ -1524,10 +1536,10 @@ const (
 	// Code R45. The individual name field was invalid.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
 	// Code R06. The originating financial institution asked for this transfer to be
-	// returned.
+	// returned. The receiving bank is complying with the request.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
 	// Code R34. The receiving bank's regulatory supervisor has limited their
-	// participation.
+	// participation in the ACH network.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
 	// Code R85. The outbound international ACH transfer was incorrect.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
@@ -1659,7 +1671,7 @@ const (
 	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
 	// it was on time.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
-	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// Code R27. A rare return reason. An ACH return's trace number does not match an
 	// originated ACH.
 	ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError ACHTransferSimulationTransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
 	// Code R72. A rare return reason. The dishonored return was sent too late.
@@ -4402,6 +4414,273 @@ const (
 	ACHTransferSimulationTransactionTypeTransaction ACHTransferSimulationTransactionType = "transaction"
 )
 
+// The Inbound ACH Transfer.
+type ACHTransferSimulationTransfer struct {
+	// The inbound ach transfer's identifier.
+	ID string `json:"id,required"`
+	// If your transfer is accepted, this will contain details of the acceptance.
+	Acceptance ACHTransferSimulationTransferAcceptance `json:"acceptance,required,nullable"`
+	// The identifier of the Account Number to which this transfer was sent.
+	AccountNumberID string `json:"account_number_id,required"`
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// The time at which the transfer will be automatically resolved.
+	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at,required" format:"date-time"`
+	// If your transfer is declined, this will contain details of the decline.
+	Decline ACHTransferSimulationTransferDecline `json:"decline,required,nullable"`
+	// The direction of the transfer.
+	Direction ACHTransferSimulationTransferDirection `json:"direction,required"`
+	// If you initiate a notification of change in response to the transfer, this will
+	// contain its details.
+	NotificationOfChange ACHTransferSimulationTransferNotificationOfChange `json:"notification_of_change,required,nullable"`
+	// The descriptive date of the transfer.
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	// The additional information included with the transfer.
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	// The description of the transfer.
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	// The id of the company that initiated the transfer.
+	OriginatorCompanyID string `json:"originator_company_id,required"`
+	// The name of the company that initiated the transfer.
+	OriginatorCompanyName string `json:"originator_company_name,required"`
+	// The id of the receiver of the transfer.
+	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	// The name of the receiver of the transfer.
+	ReceiverName string `json:"receiver_name,required,nullable"`
+	// The status of the transfer.
+	Status ACHTransferSimulationTransferStatus `json:"status,required"`
+	// The trace number of the transfer.
+	TraceNumber string `json:"trace_number,required"`
+	// If your transfer is returned, this will contain details of the return.
+	TransferReturn ACHTransferSimulationTransferTransferReturn `json:"transfer_return,required,nullable"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_ach_transfer`.
+	Type ACHTransferSimulationTransferType `json:"type,required"`
+	JSON achTransferSimulationTransferJSON
+}
+
+// achTransferSimulationTransferJSON contains the JSON metadata for the struct
+// [ACHTransferSimulationTransfer]
+type achTransferSimulationTransferJSON struct {
+	ID                                 apijson.Field
+	Acceptance                         apijson.Field
+	AccountNumberID                    apijson.Field
+	Amount                             apijson.Field
+	AutomaticallyResolvesAt            apijson.Field
+	Decline                            apijson.Field
+	Direction                          apijson.Field
+	NotificationOfChange               apijson.Field
+	OriginatorCompanyDescriptiveDate   apijson.Field
+	OriginatorCompanyDiscretionaryData apijson.Field
+	OriginatorCompanyEntryDescription  apijson.Field
+	OriginatorCompanyID                apijson.Field
+	OriginatorCompanyName              apijson.Field
+	ReceiverIDNumber                   apijson.Field
+	ReceiverName                       apijson.Field
+	Status                             apijson.Field
+	TraceNumber                        apijson.Field
+	TransferReturn                     apijson.Field
+	Type                               apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransfer) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// If your transfer is accepted, this will contain details of the acceptance.
+type ACHTransferSimulationTransferAcceptance struct {
+	// The time at which the transfer was accepted.
+	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	// The id of the transaction for the accepted transfer.
+	TransactionID string `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransferAcceptanceJSON
+}
+
+// achTransferSimulationTransferAcceptanceJSON contains the JSON metadata for the
+// struct [ACHTransferSimulationTransferAcceptance]
+type achTransferSimulationTransferAcceptanceJSON struct {
+	AcceptedAt    apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransferAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// If your transfer is declined, this will contain details of the decline.
+type ACHTransferSimulationTransferDecline struct {
+	// The time at which the transfer was declined.
+	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	// The id of the transaction for the declined transfer.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	// The reason for the transfer decline.
+	Reason ACHTransferSimulationTransferDeclineReason `json:"reason,required"`
+	JSON   achTransferSimulationTransferDeclineJSON
+}
+
+// achTransferSimulationTransferDeclineJSON contains the JSON metadata for the
+// struct [ACHTransferSimulationTransferDecline]
+type achTransferSimulationTransferDeclineJSON struct {
+	DeclinedAt            apijson.Field
+	DeclinedTransactionID apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The reason for the transfer decline.
+type ACHTransferSimulationTransferDeclineReason string
+
+const (
+	// The account number is canceled.
+	ACHTransferSimulationTransferDeclineReasonACHRouteCanceled ACHTransferSimulationTransferDeclineReason = "ach_route_canceled"
+	// The account number is disabled.
+	ACHTransferSimulationTransferDeclineReasonACHRouteDisabled ACHTransferSimulationTransferDeclineReason = "ach_route_disabled"
+	// The transaction would cause an Increase limit to be exceeded.
+	ACHTransferSimulationTransferDeclineReasonBreachesLimit ACHTransferSimulationTransferDeclineReason = "breaches_limit"
+	// A credit was refused. This is a reasonable default reason for decline of
+	// credits.
+	ACHTransferSimulationTransferDeclineReasonCreditEntryRefusedByReceiver ACHTransferSimulationTransferDeclineReason = "credit_entry_refused_by_receiver"
+	// A rare return reason. The return this message refers to was a duplicate.
+	ACHTransferSimulationTransferDeclineReasonDuplicateReturn ACHTransferSimulationTransferDeclineReason = "duplicate_return"
+	// The account's entity is not active.
+	ACHTransferSimulationTransferDeclineReasonEntityNotActive ACHTransferSimulationTransferDeclineReason = "entity_not_active"
+	// Your account is inactive.
+	ACHTransferSimulationTransferDeclineReasonGroupLocked ACHTransferSimulationTransferDeclineReason = "group_locked"
+	// Your account contains insufficient funds.
+	ACHTransferSimulationTransferDeclineReasonInsufficientFunds ACHTransferSimulationTransferDeclineReason = "insufficient_funds"
+	// A rare return reason. The return this message refers to was misrouted.
+	ACHTransferSimulationTransferDeclineReasonMisroutedReturn ACHTransferSimulationTransferDeclineReason = "misrouted_return"
+	// The originating financial institution made a mistake and this return corrects
+	// it.
+	ACHTransferSimulationTransferDeclineReasonReturnOfErroneousOrReversingDebit ACHTransferSimulationTransferDeclineReason = "return_of_erroneous_or_reversing_debit"
+	// The account number that was debited does not exist.
+	ACHTransferSimulationTransferDeclineReasonNoACHRoute ACHTransferSimulationTransferDeclineReason = "no_ach_route"
+	// The originating financial institution asked for this transfer to be returned.
+	ACHTransferSimulationTransferDeclineReasonOriginatorRequest ACHTransferSimulationTransferDeclineReason = "originator_request"
+	// The transaction is not allowed per Increase's terms.
+	ACHTransferSimulationTransferDeclineReasonTransactionNotAllowed ACHTransferSimulationTransferDeclineReason = "transaction_not_allowed"
+	// The user initiated the decline.
+	ACHTransferSimulationTransferDeclineReasonUserInitiated ACHTransferSimulationTransferDeclineReason = "user_initiated"
+)
+
+// The direction of the transfer.
+type ACHTransferSimulationTransferDirection string
+
+const (
+	// Credit
+	ACHTransferSimulationTransferDirectionCredit ACHTransferSimulationTransferDirection = "credit"
+	// Debit
+	ACHTransferSimulationTransferDirectionDebit ACHTransferSimulationTransferDirection = "debit"
+)
+
+// If you initiate a notification of change in response to the transfer, this will
+// contain its details.
+type ACHTransferSimulationTransferNotificationOfChange struct {
+	// The new account number provided in the notification of change.
+	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
+	// The new account number provided in the notification of change.
+	UpdatedRoutingNumber string `json:"updated_routing_number,required,nullable"`
+	JSON                 achTransferSimulationTransferNotificationOfChangeJSON
+}
+
+// achTransferSimulationTransferNotificationOfChangeJSON contains the JSON metadata
+// for the struct [ACHTransferSimulationTransferNotificationOfChange]
+type achTransferSimulationTransferNotificationOfChangeJSON struct {
+	UpdatedAccountNumber apijson.Field
+	UpdatedRoutingNumber apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransferNotificationOfChange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The status of the transfer.
+type ACHTransferSimulationTransferStatus string
+
+const (
+	// The Inbound ACH Transfer is awaiting action, will transition automatically if no
+	// action is taken.
+	ACHTransferSimulationTransferStatusPending ACHTransferSimulationTransferStatus = "pending"
+	// The Inbound ACH Transfer has been declined.
+	ACHTransferSimulationTransferStatusDeclined ACHTransferSimulationTransferStatus = "declined"
+	// The Inbound ACH Transfer is accepted.
+	ACHTransferSimulationTransferStatusAccepted ACHTransferSimulationTransferStatus = "accepted"
+	// The Inbound ACH Transfer has been returned.
+	ACHTransferSimulationTransferStatusReturned ACHTransferSimulationTransferStatus = "returned"
+)
+
+// If your transfer is returned, this will contain details of the return.
+type ACHTransferSimulationTransferTransferReturn struct {
+	// The reason for the transfer return.
+	Reason ACHTransferSimulationTransferTransferReturnReason `json:"reason,required"`
+	// The time at which the transfer was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	// The id of the transaction for the returned transfer.
+	TransactionID string `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransferTransferReturnJSON
+}
+
+// achTransferSimulationTransferTransferReturnJSON contains the JSON metadata for
+// the struct [ACHTransferSimulationTransferTransferReturn]
+type achTransferSimulationTransferTransferReturnJSON struct {
+	Reason        apijson.Field
+	ReturnedAt    apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationTransferTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The reason for the transfer return.
+type ACHTransferSimulationTransferTransferReturnReason string
+
+const (
+	// The customer no longer authorizes this transaction. The Nacha return code is
+	// R07.
+	ACHTransferSimulationTransferTransferReturnReasonAuthorizationRevokedByCustomer ACHTransferSimulationTransferTransferReturnReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped. This reason is only allowed
+	// for debits. The Nacha return code is R08.
+	ACHTransferSimulationTransferTransferReturnReasonPaymentStopped ACHTransferSimulationTransferTransferReturnReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized. The Nacha return code is
+	// R10.
+	ACHTransferSimulationTransferTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHTransferSimulationTransferTransferReturnReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased. The Nacha return code is R14.
+	ACHTransferSimulationTransferTransferReturnReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity ACHTransferSimulationTransferTransferReturnReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	// The account holder is deceased. The Nacha return code is R15.
+	ACHTransferSimulationTransferTransferReturnReasonBeneficiaryOrAccountHolderDeceased ACHTransferSimulationTransferTransferReturnReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry. This reason is only allowed for credits.
+	// The Nacha return code is R23.
+	ACHTransferSimulationTransferTransferReturnReasonCreditEntryRefusedByReceiver ACHTransferSimulationTransferTransferReturnReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate. The Nacha return
+	// code is R24.
+	ACHTransferSimulationTransferTransferReturnReasonDuplicateEntry ACHTransferSimulationTransferTransferReturnReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction. The Nacha return
+	// code is R29.
+	ACHTransferSimulationTransferTransferReturnReasonCorporateCustomerAdvisedNotAuthorized ACHTransferSimulationTransferTransferReturnReason = "corporate_customer_advised_not_authorized"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_ach_transfer`.
+type ACHTransferSimulationTransferType string
+
+const (
+	ACHTransferSimulationTransferTypeInboundACHTransfer ACHTransferSimulationTransferType = "inbound_ach_transfer"
+)
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_ach_transfer_simulation_result`.
 type ACHTransferSimulationType string
@@ -4427,6 +4706,9 @@ type SimulationACHTransferNewInboundParams struct {
 	CompanyID param.Field[string] `json:"company_id"`
 	// The name of the sender.
 	CompanyName param.Field[string] `json:"company_name"`
+	// The time at which the transfer should be resolved. If not provided will resolve
+	// immediately.
+	ResolveAt param.Field[time.Time] `json:"resolve_at" format:"date-time"`
 }
 
 func (r SimulationACHTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
@@ -4448,23 +4730,25 @@ func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error
 type SimulationACHTransferReturnParamsReason string
 
 const (
-	// Code R01. Insufficient funds in the source account.
+	// Code R01. Insufficient funds in the receiving account. Sometimes abbreviated to
+	// NSF.
 	SimulationACHTransferReturnParamsReasonInsufficientFund SimulationACHTransferReturnParamsReason = "insufficient_fund"
 	// Code R03. The account does not exist or the receiving bank was unable to locate
 	// it.
 	SimulationACHTransferReturnParamsReasonNoAccount SimulationACHTransferReturnParamsReason = "no_account"
-	// Code R02. The account is closed.
+	// Code R02. The account is closed at the receiving bank.
 	SimulationACHTransferReturnParamsReasonAccountClosed SimulationACHTransferReturnParamsReason = "account_closed"
 	// Code R04. The account number is invalid at the receiving bank.
 	SimulationACHTransferReturnParamsReasonInvalidAccountNumberStructure SimulationACHTransferReturnParamsReason = "invalid_account_number_structure"
-	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	// Code R16. The account at the receiving bank was frozen per the Office of Foreign
+	// Assets Control.
 	SimulationACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction SimulationACHTransferReturnParamsReason = "account_frozen_entry_returned_per_ofac_instruction"
 	// Code R23. The receiving bank account refused a credit transfer.
 	SimulationACHTransferReturnParamsReasonCreditEntryRefusedByReceiver SimulationACHTransferReturnParamsReason = "credit_entry_refused_by_receiver"
 	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
 	// Class code.
 	SimulationACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode SimulationACHTransferReturnParamsReason = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	// Code R29. The corporate customer reversed the transfer.
+	// Code R29. The corporate customer at the receiving bank reversed the transfer.
 	SimulationACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized SimulationACHTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
 	// Code R08. The receiving bank stopped payment on this transfer.
 	SimulationACHTransferReturnParamsReasonPaymentStopped SimulationACHTransferReturnParamsReason = "payment_stopped"
@@ -4475,11 +4759,12 @@ const (
 	SimulationACHTransferReturnParamsReasonUncollectedFunds SimulationACHTransferReturnParamsReason = "uncollected_funds"
 	// Code R28. The routing number is incorrect.
 	SimulationACHTransferReturnParamsReasonRoutingNumberCheckDigitError SimulationACHTransferReturnParamsReason = "routing_number_check_digit_error"
-	// Code R10. The customer reversed the transfer.
+	// Code R10. The customer at the receiving bank reversed the transfer.
 	SimulationACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete SimulationACHTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	// Code R19. The amount field is incorrect or too large.
 	SimulationACHTransferReturnParamsReasonAmountFieldError SimulationACHTransferReturnParamsReason = "amount_field_error"
-	// Code R07. The customer who initiated the transfer revoked authorization.
+	// Code R07. The customer at the receiving institution informed their bank that
+	// they have revoked authorization for a previously authorized transfer.
 	SimulationACHTransferReturnParamsReasonAuthorizationRevokedByCustomer SimulationACHTransferReturnParamsReason = "authorization_revoked_by_customer"
 	// Code R13. The routing number is invalid.
 	SimulationACHTransferReturnParamsReasonInvalidACHRoutingNumber SimulationACHTransferReturnParamsReason = "invalid_ach_routing_number"
@@ -4488,10 +4773,10 @@ const (
 	// Code R45. The individual name field was invalid.
 	SimulationACHTransferReturnParamsReasonEnrInvalidIndividualName SimulationACHTransferReturnParamsReason = "enr_invalid_individual_name"
 	// Code R06. The originating financial institution asked for this transfer to be
-	// returned.
+	// returned. The receiving bank is complying with the request.
 	SimulationACHTransferReturnParamsReasonReturnedPerOdfiRequest SimulationACHTransferReturnParamsReason = "returned_per_odfi_request"
 	// Code R34. The receiving bank's regulatory supervisor has limited their
-	// participation.
+	// participation in the ACH network.
 	SimulationACHTransferReturnParamsReasonLimitedParticipationDfi SimulationACHTransferReturnParamsReason = "limited_participation_dfi"
 	// Code R85. The outbound international ACH transfer was incorrect.
 	SimulationACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment SimulationACHTransferReturnParamsReason = "incorrectly_coded_outbound_international_payment"
@@ -4623,7 +4908,7 @@ const (
 	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
 	// it was on time.
 	SimulationACHTransferReturnParamsReasonTimelyOriginalReturn SimulationACHTransferReturnParamsReason = "timely_original_return"
-	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// Code R27. A rare return reason. An ACH return's trace number does not match an
 	// originated ACH.
 	SimulationACHTransferReturnParamsReasonTraceNumberError SimulationACHTransferReturnParamsReason = "trace_number_error"
 	// Code R72. A rare return reason. The dishonored return was sent too late.

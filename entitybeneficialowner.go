@@ -39,7 +39,7 @@ func (r *EntityBeneficialOwnerService) New(ctx context.Context, body EntityBenef
 	return
 }
 
-// Archive a beneficial owner belonging to a corporate Entity
+// Archive a beneficial owner for a corporate Entity
 func (r *EntityBeneficialOwnerService) Archive(ctx context.Context, body EntityBeneficialOwnerArchiveParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "entity_beneficial_owners/archive"
