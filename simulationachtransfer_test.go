@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/internal/testutil"
@@ -28,6 +29,7 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 		CompanyEntryDescription:  increase.F("x"),
 		CompanyID:                increase.F("x"),
 		CompanyName:              increase.F("x"),
+		ResolveAt:                increase.F(time.Now()),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -201,6 +201,26 @@ const (
 	// The standard entry class code was incorrect for an outbound international
 	// payment.
 	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_standard_entry_class_code_for_outbound_international_payment"
+	// The notification of change was misrouted.
+	ACHPrenotificationNotificationsOfChangeChangeCodeMisroutedNotificationOfChange ACHPrenotificationNotificationsOfChangeChangeCode = "misrouted_notification_of_change"
+	// The trace number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTraceNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_trace_number"
+	// The company identification number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectCompanyIdentificationNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_company_identification_number"
+	// The individual identification number or identification number was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectIdentificationNumber ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_identification_number"
+	// The corrected data was incorrectly formatted.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectlyFormattedCorrectedData ACHPrenotificationNotificationsOfChangeChangeCode = "incorrectly_formatted_corrected_data"
+	// The discretionary data was incorrect.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectDiscretionaryData ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_discretionary_data"
+	// The routing number was not from the original entry detail record.
+	ACHPrenotificationNotificationsOfChangeChangeCodeRoutingNumberNotFromOriginalEntryDetailRecord ACHPrenotificationNotificationsOfChangeChangeCode = "routing_number_not_from_original_entry_detail_record"
+	// The depository financial institution account number was not from the original
+	// entry detail record.
+	ACHPrenotificationNotificationsOfChangeChangeCodeDepositoryFinancialInstitutionAccountNumberNotFromOriginalEntryDetailRecord ACHPrenotificationNotificationsOfChangeChangeCode = "depository_financial_institution_account_number_not_from_original_entry_detail_record"
+	// The transaction code was incorrect, initiated by the originating depository
+	// financial institution.
+	ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution ACHPrenotificationNotificationsOfChangeChangeCode = "incorrect_transaction_code_by_originating_depository_financial_institution"
 )
 
 // If your prenotification is returned, this will contain details of the return.
@@ -230,23 +250,25 @@ func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (er
 type ACHPrenotificationPrenotificationReturnReturnReasonCode string
 
 const (
-	// Code R01. Insufficient funds in the source account.
+	// Code R01. Insufficient funds in the receiving account. Sometimes abbreviated to
+	// NSF.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeInsufficientFund ACHPrenotificationPrenotificationReturnReturnReasonCode = "insufficient_fund"
 	// Code R03. The account does not exist or the receiving bank was unable to locate
 	// it.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeNoAccount ACHPrenotificationPrenotificationReturnReturnReasonCode = "no_account"
-	// Code R02. The account is closed.
+	// Code R02. The account is closed at the receiving bank.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeAccountClosed ACHPrenotificationPrenotificationReturnReturnReasonCode = "account_closed"
 	// Code R04. The account number is invalid at the receiving bank.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeInvalidAccountNumberStructure ACHPrenotificationPrenotificationReturnReturnReasonCode = "invalid_account_number_structure"
-	// Code R16. The account was frozen per the Office of Foreign Assets Control.
+	// Code R16. The account at the receiving bank was frozen per the Office of Foreign
+	// Assets Control.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction ACHPrenotificationPrenotificationReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
 	// Code R23. The receiving bank account refused a credit transfer.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeCreditEntryRefusedByReceiver ACHPrenotificationPrenotificationReturnReturnReasonCode = "credit_entry_refused_by_receiver"
 	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
 	// Class code.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode ACHPrenotificationPrenotificationReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	// Code R29. The corporate customer reversed the transfer.
+	// Code R29. The corporate customer at the receiving bank reversed the transfer.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized ACHPrenotificationPrenotificationReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
 	// Code R08. The receiving bank stopped payment on this transfer.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodePaymentStopped ACHPrenotificationPrenotificationReturnReturnReasonCode = "payment_stopped"
@@ -257,11 +279,12 @@ const (
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeUncollectedFunds ACHPrenotificationPrenotificationReturnReturnReasonCode = "uncollected_funds"
 	// Code R28. The routing number is incorrect.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeRoutingNumberCheckDigitError ACHPrenotificationPrenotificationReturnReturnReasonCode = "routing_number_check_digit_error"
-	// Code R10. The customer reversed the transfer.
+	// Code R10. The customer at the receiving bank reversed the transfer.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete ACHPrenotificationPrenotificationReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	// Code R19. The amount field is incorrect or too large.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeAmountFieldError ACHPrenotificationPrenotificationReturnReturnReasonCode = "amount_field_error"
-	// Code R07. The customer who initiated the transfer revoked authorization.
+	// Code R07. The customer at the receiving institution informed their bank that
+	// they have revoked authorization for a previously authorized transfer.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeAuthorizationRevokedByCustomer ACHPrenotificationPrenotificationReturnReturnReasonCode = "authorization_revoked_by_customer"
 	// Code R13. The routing number is invalid.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeInvalidACHRoutingNumber ACHPrenotificationPrenotificationReturnReturnReasonCode = "invalid_ach_routing_number"
@@ -270,10 +293,10 @@ const (
 	// Code R45. The individual name field was invalid.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeEnrInvalidIndividualName ACHPrenotificationPrenotificationReturnReturnReasonCode = "enr_invalid_individual_name"
 	// Code R06. The originating financial institution asked for this transfer to be
-	// returned.
+	// returned. The receiving bank is complying with the request.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeReturnedPerOdfiRequest ACHPrenotificationPrenotificationReturnReturnReasonCode = "returned_per_odfi_request"
 	// Code R34. The receiving bank's regulatory supervisor has limited their
-	// participation.
+	// participation in the ACH network.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeLimitedParticipationDfi ACHPrenotificationPrenotificationReturnReturnReasonCode = "limited_participation_dfi"
 	// Code R85. The outbound international ACH transfer was incorrect.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment ACHPrenotificationPrenotificationReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
@@ -405,7 +428,7 @@ const (
 	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
 	// it was on time.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeTimelyOriginalReturn ACHPrenotificationPrenotificationReturnReturnReasonCode = "timely_original_return"
-	// Code R27. A rare return reason. An ACH Return's trace number does not match an
+	// Code R27. A rare return reason. An ACH return's trace number does not match an
 	// originated ACH.
 	ACHPrenotificationPrenotificationReturnReturnReasonCodeTraceNumberError ACHPrenotificationPrenotificationReturnReturnReasonCode = "trace_number_error"
 	// Code R72. A rare return reason. The dishonored return was sent too late.

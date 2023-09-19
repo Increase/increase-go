@@ -109,6 +109,8 @@ type Card struct {
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
 	DigitalWallet CardDigitalWallet `json:"digital_wallet,required,nullable"`
+	// The identifier for the entity associated with this card.
+	EntityID string `json:"entity_id,required,nullable"`
 	// The month the card expires in M format (e.g., August is 8).
 	ExpirationMonth int64 `json:"expiration_month,required"`
 	// The year the card expires in YYYY format (e.g., 2025).
@@ -131,6 +133,7 @@ type cardJSON struct {
 	CreatedAt       apijson.Field
 	Description     apijson.Field
 	DigitalWallet   apijson.Field
+	EntityID        apijson.Field
 	ExpirationMonth apijson.Field
 	ExpirationYear  apijson.Field
 	Last4           apijson.Field
@@ -282,6 +285,8 @@ type CardNewParams struct {
 	// Decision with the category `digital_wallet_token_requested` or
 	// `digital_wallet_authentication_requested`.
 	DigitalWallet param.Field[CardNewParamsDigitalWallet] `json:"digital_wallet"`
+	// The Entity the card should belong to.
+	EntityID param.Field[string] `json:"entity_id"`
 }
 
 func (r CardNewParams) MarshalJSON() (data []byte, err error) {
