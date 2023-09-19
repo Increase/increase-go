@@ -22,8 +22,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Entities.New(context.TODO(), increase.EntityNewParams{
-		Relationship: increase.F(increase.EntityNewParamsRelationshipAffiliated),
-		Structure:    increase.F(increase.EntityNewParamsStructureCorporation),
+		Structure: increase.F(increase.EntityNewParamsStructureCorporation),
 		Corporation: increase.F(increase.EntityNewParamsCorporation{
 			Name:               increase.F("x"),
 			Website:            increase.F("string"),
@@ -287,6 +286,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				}),
 			}),
 		}),
+		Relationship: increase.F(increase.EntityNewParamsRelationshipAffiliated),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("string"),
 		}, {

@@ -109,7 +109,7 @@ type Entity struct {
 	// `natural_person`.
 	NaturalPerson EntityNaturalPerson `json:"natural_person,required,nullable"`
 	// The relationship between your group and the entity.
-	Relationship EntityRelationship `json:"relationship,required"`
+	Relationship EntityRelationship `json:"relationship,required,nullable"`
 	// The entity's legal structure.
 	Structure EntityStructure `json:"structure,required"`
 	// Additional documentation associated with the entity. This is limited to the
@@ -952,8 +952,6 @@ const (
 )
 
 type EntityNewParams struct {
-	// The relationship between your group and the entity.
-	Relationship param.Field[EntityNewParamsRelationship] `json:"relationship,required"`
 	// The type of Entity to create.
 	Structure param.Field[EntityNewParamsStructure] `json:"structure,required"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
@@ -969,6 +967,8 @@ type EntityNewParams struct {
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
+	// The relationship between your group and the entity.
+	Relationship param.Field[EntityNewParamsRelationship] `json:"relationship"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
 	// Details of the trust entity to create. Required if `structure` is equal to
@@ -979,19 +979,6 @@ type EntityNewParams struct {
 func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
-
-// The relationship between your group and the entity.
-type EntityNewParamsRelationship string
-
-const (
-	// The entity is controlled by your group.
-	EntityNewParamsRelationshipAffiliated EntityNewParamsRelationship = "affiliated"
-	// The entity is for informational purposes only.
-	EntityNewParamsRelationshipInformational EntityNewParamsRelationship = "informational"
-	// The entity is not controlled by your group, but can still directly open
-	// accounts.
-	EntityNewParamsRelationshipUnaffiliated EntityNewParamsRelationship = "unaffiliated"
-)
 
 // The type of Entity to create.
 type EntityNewParamsStructure string
@@ -1479,6 +1466,19 @@ type EntityNewParamsNaturalPersonIdentificationPassport struct {
 func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// The relationship between your group and the entity.
+type EntityNewParamsRelationship string
+
+const (
+	// The entity is controlled by your group.
+	EntityNewParamsRelationshipAffiliated EntityNewParamsRelationship = "affiliated"
+	// The entity is for informational purposes only.
+	EntityNewParamsRelationshipInformational EntityNewParamsRelationship = "informational"
+	// The entity is not controlled by your group, but can still directly open
+	// accounts.
+	EntityNewParamsRelationshipUnaffiliated EntityNewParamsRelationship = "unaffiliated"
+)
 
 type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
