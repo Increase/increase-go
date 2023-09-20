@@ -122,6 +122,9 @@ func (r *Export) UnmarshalJSON(data []byte) (err error) {
 type ExportCategory string
 
 const (
+	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
+	// given time range and Account.
+	ExportCategoryAccountStatementOfx ExportCategory = "account_statement_ofx"
 	// Export a CSV of all transactions for a given time range.
 	ExportCategoryTransactionCsv ExportCategory = "transaction_csv"
 	// Export a CSV of account balances for the dates in a given range.
@@ -150,6 +153,9 @@ type ExportNewParams struct {
 	// The type of Export to create.
 	Category param.Field[ExportNewParamsCategory] `json:"category,required"`
 	// Options for the created export. Required if `category` is equal to
+	// `account_statement_ofx`.
+	AccountStatementOfx param.Field[ExportNewParamsAccountStatementOfx] `json:"account_statement_ofx"`
+	// Options for the created export. Required if `category` is equal to
 	// `balance_csv`.
 	BalanceCsv param.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
 	// Options for the created export. Required if `category` is equal to
@@ -165,11 +171,47 @@ func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 type ExportNewParamsCategory string
 
 const (
+	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
+	// given time range and Account.
+	ExportNewParamsCategoryAccountStatementOfx ExportNewParamsCategory = "account_statement_ofx"
 	// Export a CSV of all transactions for a given time range.
 	ExportNewParamsCategoryTransactionCsv ExportNewParamsCategory = "transaction_csv"
 	// Export a CSV of account balances for the dates in a given range.
 	ExportNewParamsCategoryBalanceCsv ExportNewParamsCategory = "balance_csv"
 )
+
+// Options for the created export. Required if `category` is equal to
+// `account_statement_ofx`.
+type ExportNewParamsAccountStatementOfx struct {
+	// The Account to create a statement for.
+	AccountID param.Field[string] `json:"account_id,required"`
+	// Filter results by time range on the `created_at` attribute.
+	CreatedAt param.Field[ExportNewParamsAccountStatementOfxCreatedAt] `json:"created_at"`
+}
+
+func (r ExportNewParamsAccountStatementOfx) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Filter results by time range on the `created_at` attribute.
+type ExportNewParamsAccountStatementOfxCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `json:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+}
+
+func (r ExportNewParamsAccountStatementOfxCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
 
 // Options for the created export. Required if `category` is equal to
 // `balance_csv`.
