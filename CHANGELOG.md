@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.2 (2023-09-20)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/Increase/increase-go/compare/v0.8.1...v0.8.2)
+
+### Features
+
+* **api:** add entity_id to Card and make relationship nullable ([#100](https://github.com/Increase/increase-go/issues/100)) ([8a7b176](https://github.com/Increase/increase-go/commit/8a7b176a4d62a822affe1e76cdc2158fbf058601))
+* **api:** export account statements in OFX format ([#102](https://github.com/Increase/increase-go/issues/102)) ([2889a31](https://github.com/Increase/increase-go/commit/2889a31818e75fb86daf16dec328f9e3a10a24b3))
+
 ## 0.8.1 (2023-09-15)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/increase/increase-go/compare/v0.8.0...v0.8.1)
