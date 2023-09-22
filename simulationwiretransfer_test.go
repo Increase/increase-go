@@ -32,6 +32,7 @@ func TestSimulationWireTransferNewInboundWithOptionalParams(t *testing.T) {
 		OriginatorAddressLine2:                  increase.F("x"),
 		OriginatorAddressLine3:                  increase.F("x"),
 		OriginatorName:                          increase.F("x"),
+		OriginatorRoutingNumber:                 increase.F("x"),
 		OriginatorToBeneficiaryInformationLine1: increase.F("x"),
 		OriginatorToBeneficiaryInformationLine2: increase.F("x"),
 		OriginatorToBeneficiaryInformationLine3: increase.F("x"),
