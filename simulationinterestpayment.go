@@ -2891,6 +2891,9 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPayment 
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -2920,6 +2923,7 @@ type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentJ
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
@@ -2949,6 +2953,9 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
@@ -2970,6 +2977,7 @@ type interestPaymentSimulationResultTransactionSourceInboundWireDrawdownPaymentR
 	InputMessageAccountabilityData                apijson.Field
 	InputSequenceNumber                           apijson.Field
 	InputSource                                   apijson.Field
+	OriginatorRoutingNumber                       apijson.Field
 	PreviousMessageInputCycleDate                 apijson.Field
 	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputSequenceNumber            apijson.Field
@@ -3003,6 +3011,9 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireReversal struct 
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that is being reversed by this
 	// message.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
@@ -3034,6 +3045,7 @@ type interestPaymentSimulationResultTransactionSourceInboundWireReversalJSON str
 	InputMessageAccountabilityData                        apijson.Field
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
+	OriginatorRoutingNumber                               apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
 	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
@@ -3078,6 +3090,9 @@ type InterestPaymentSimulationResultTransactionSourceInboundWireTransfer struct 
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -3107,6 +3122,7 @@ type interestPaymentSimulationResultTransactionSourceInboundWireTransferJSON str
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field

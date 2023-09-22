@@ -138,6 +138,10 @@ const (
 	EventCategoryCardPaymentCreated EventCategory = "card_payment.created"
 	// Occurs whenever a Card Payment is updated.
 	EventCategoryCardPaymentUpdated EventCategory = "card_payment.updated"
+	// Occurs whenever a Card Profile is created.
+	EventCategoryCardProfileCreated EventCategory = "card_profile.created"
+	// Occurs whenever a Card Profile is updated.
+	EventCategoryCardProfileUpdated EventCategory = "card_profile.updated"
 	// Occurs whenever a Card Dispute is created.
 	EventCategoryCardDisputeCreated EventCategory = "card_dispute.created"
 	// Occurs whenever a Card Dispute is updated.
@@ -295,6 +299,10 @@ const (
 	EventListParamsCategoryInCardPaymentCreated EventListParamsCategoryIn = "card_payment.created"
 	// Occurs whenever a Card Payment is updated.
 	EventListParamsCategoryInCardPaymentUpdated EventListParamsCategoryIn = "card_payment.updated"
+	// Occurs whenever a Card Profile is created.
+	EventListParamsCategoryInCardProfileCreated EventListParamsCategoryIn = "card_profile.created"
+	// Occurs whenever a Card Profile is updated.
+	EventListParamsCategoryInCardProfileUpdated EventListParamsCategoryIn = "card_profile.updated"
 	// Occurs whenever a Card Dispute is created.
 	EventListParamsCategoryInCardDisputeCreated EventListParamsCategoryIn = "card_dispute.created"
 	// Occurs whenever a Card Dispute is updated.

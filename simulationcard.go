@@ -1025,6 +1025,9 @@ type CardAuthorizationSimulationDeclinedTransactionSourceWireDecline struct {
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -1054,6 +1057,7 @@ type cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON struct 
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field

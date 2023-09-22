@@ -99,6 +99,9 @@ type AccountNumber struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Properties related to how this Account Number handles inbound ACH transfers.
 	InboundACH AccountNumberInboundACH `json:"inbound_ach,required"`
+	// Properties related to how this Account Number should handle inbound check
+	// withdrawls.
+	InboundChecks AccountNumberInboundChecks `json:"inbound_checks,required"`
 	// The name you choose for the Account Number.
 	Name string `json:"name,required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -118,6 +121,7 @@ type accountNumberJSON struct {
 	AccountNumber apijson.Field
 	CreatedAt     apijson.Field
 	InboundACH    apijson.Field
+	InboundChecks apijson.Field
 	Name          apijson.Field
 	RoutingNumber apijson.Field
 	Status        apijson.Field
@@ -161,6 +165,38 @@ const (
 	AccountNumberInboundACHDebitStatusBlocked AccountNumberInboundACHDebitStatus = "blocked"
 )
 
+// Properties related to how this Account Number should handle inbound check
+// withdrawls.
+type AccountNumberInboundChecks struct {
+	// How Increase should process checks with this account number printed on them.
+	Status AccountNumberInboundChecksStatus `json:"status,required"`
+	JSON   accountNumberInboundChecksJSON
+}
+
+// accountNumberInboundChecksJSON contains the JSON metadata for the struct
+// [AccountNumberInboundChecks]
+type accountNumberInboundChecksJSON struct {
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountNumberInboundChecks) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// How Increase should process checks with this account number printed on them.
+type AccountNumberInboundChecksStatus string
+
+const (
+	// Checks with this Account Number will be processed even if they are not
+	// associated with a Check Transfer.
+	AccountNumberInboundChecksStatusAllowed AccountNumberInboundChecksStatus = "allowed"
+	// Checks with this Account Number will be processed only if they can be matched to
+	// an existing Check Transfer.
+	AccountNumberInboundChecksStatusCheckTransfersOnly AccountNumberInboundChecksStatus = "check_transfers_only"
+)
+
 // This indicates if payments can be made to the Account Number.
 type AccountNumberStatus string
 
@@ -188,6 +224,9 @@ type AccountNumberNewParams struct {
 	Name param.Field[string] `json:"name,required"`
 	// Options related to how this Account Number should handle inbound ACH transfers.
 	InboundACH param.Field[AccountNumberNewParamsInboundACH] `json:"inbound_ach"`
+	// Options related to how this Account Number should handle inbound check
+	// withdrawls.
+	InboundChecks param.Field[AccountNumberNewParamsInboundChecks] `json:"inbound_checks"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
@@ -214,6 +253,29 @@ const (
 	AccountNumberNewParamsInboundACHDebitStatusAllowed AccountNumberNewParamsInboundACHDebitStatus = "allowed"
 	// ACH Debits are blocked.
 	AccountNumberNewParamsInboundACHDebitStatusBlocked AccountNumberNewParamsInboundACHDebitStatus = "blocked"
+)
+
+// Options related to how this Account Number should handle inbound check
+// withdrawls.
+type AccountNumberNewParamsInboundChecks struct {
+	// How Increase should process checks with this account number printed on them.
+	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status,required"`
+}
+
+func (r AccountNumberNewParamsInboundChecks) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// How Increase should process checks with this account number printed on them.
+type AccountNumberNewParamsInboundChecksStatus string
+
+const (
+	// Checks with this Account Number will be processed even if they are not
+	// associated with a Check Transfer.
+	AccountNumberNewParamsInboundChecksStatusAllowed AccountNumberNewParamsInboundChecksStatus = "allowed"
+	// Checks with this Account Number will be processed only if they can be matched to
+	// an existing Check Transfer.
+	AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly AccountNumberNewParamsInboundChecksStatus = "check_transfers_only"
 )
 
 type AccountNumberUpdateParams struct {
