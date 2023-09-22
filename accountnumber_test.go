@@ -27,6 +27,9 @@ func TestAccountNumberNewWithOptionalParams(t *testing.T) {
 		InboundACH: increase.F(increase.AccountNumberNewParamsInboundACH{
 			DebitStatus: increase.F(increase.AccountNumberNewParamsInboundACHDebitStatusAllowed),
 		}),
+		InboundChecks: increase.F(increase.AccountNumberNewParamsInboundChecks{
+			Status: increase.F(increase.AccountNumberNewParamsInboundChecksStatusAllowed),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

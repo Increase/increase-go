@@ -1043,6 +1043,9 @@ type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -1072,6 +1075,7 @@ type achTransferSimulationDeclinedTransactionSourceWireDeclineJSON struct {
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
@@ -3935,6 +3939,9 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -3964,6 +3971,7 @@ type achTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON struct
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
@@ -3993,6 +4001,9 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal st
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that was reversed.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
@@ -4014,6 +4025,7 @@ type achTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSO
 	InputMessageAccountabilityData                apijson.Field
 	InputSequenceNumber                           apijson.Field
 	InputSource                                   apijson.Field
+	OriginatorRoutingNumber                       apijson.Field
 	PreviousMessageInputCycleDate                 apijson.Field
 	PreviousMessageInputMessageAccountabilityData apijson.Field
 	PreviousMessageInputSequenceNumber            apijson.Field
@@ -4047,6 +4059,9 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that is being reversed by this
 	// message.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
@@ -4078,6 +4093,7 @@ type achTransferSimulationTransactionSourceInboundWireReversalJSON struct {
 	InputMessageAccountabilityData                        apijson.Field
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
+	OriginatorRoutingNumber                               apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
 	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
@@ -4122,6 +4138,9 @@ type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
 	// The originator of the wire, set by the sending bank.
 	OriginatorName string `json:"originator_name,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
 	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// A free-form message set by the wire originator.
@@ -4151,6 +4170,7 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
 	OriginatorName                          apijson.Field
+	OriginatorRoutingNumber                 apijson.Field
 	OriginatorToBeneficiaryInformation      apijson.Field
 	OriginatorToBeneficiaryInformationLine1 apijson.Field
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
@@ -4443,6 +4463,9 @@ type ACHTransferSimulationTransfer struct {
 	OriginatorCompanyID string `json:"originator_company_id,required"`
 	// The name of the company that initiated the transfer.
 	OriginatorCompanyName string `json:"originator_company_name,required"`
+	// The American Banking Association (ABA) routing number of the bank originating
+	// the transfer.
+	OriginatorRoutingNumber string `json:"originator_routing_number,required"`
 	// The id of the receiver of the transfer.
 	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
 	// The name of the receiver of the transfer.
@@ -4475,6 +4498,7 @@ type achTransferSimulationTransferJSON struct {
 	OriginatorCompanyEntryDescription  apijson.Field
 	OriginatorCompanyID                apijson.Field
 	OriginatorCompanyName              apijson.Field
+	OriginatorRoutingNumber            apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
 	Status                             apijson.Field

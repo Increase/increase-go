@@ -158,6 +158,10 @@ const (
 	EventSubscriptionSelectedEventCategoryCardPaymentCreated EventSubscriptionSelectedEventCategory = "card_payment.created"
 	// Occurs whenever a Card Payment is updated.
 	EventSubscriptionSelectedEventCategoryCardPaymentUpdated EventSubscriptionSelectedEventCategory = "card_payment.updated"
+	// Occurs whenever a Card Profile is created.
+	EventSubscriptionSelectedEventCategoryCardProfileCreated EventSubscriptionSelectedEventCategory = "card_profile.created"
+	// Occurs whenever a Card Profile is updated.
+	EventSubscriptionSelectedEventCategoryCardProfileUpdated EventSubscriptionSelectedEventCategory = "card_profile.updated"
 	// Occurs whenever a Card Dispute is created.
 	EventSubscriptionSelectedEventCategoryCardDisputeCreated EventSubscriptionSelectedEventCategory = "card_dispute.created"
 	// Occurs whenever a Card Dispute is updated.
@@ -311,6 +315,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryCardPaymentCreated EventSubscriptionNewParamsSelectedEventCategory = "card_payment.created"
 	// Occurs whenever a Card Payment is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryCardPaymentUpdated EventSubscriptionNewParamsSelectedEventCategory = "card_payment.updated"
+	// Occurs whenever a Card Profile is created.
+	EventSubscriptionNewParamsSelectedEventCategoryCardProfileCreated EventSubscriptionNewParamsSelectedEventCategory = "card_profile.created"
+	// Occurs whenever a Card Profile is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryCardProfileUpdated EventSubscriptionNewParamsSelectedEventCategory = "card_profile.updated"
 	// Occurs whenever a Card Dispute is created.
 	EventSubscriptionNewParamsSelectedEventCategoryCardDisputeCreated EventSubscriptionNewParamsSelectedEventCategory = "card_dispute.created"
 	// Occurs whenever a Card Dispute is updated.
