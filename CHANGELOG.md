@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.3 (2023-09-25)
+
+Full Changelog: [v0.8.2...v0.8.3](https://github.com/Increase/increase-go/compare/v0.8.2...v0.8.3)
+
+### Features
+
+* **api:** add inbound checks, originating routing number and new event types ([#105](https://github.com/Increase/increase-go/issues/105)) ([7a9328b](https://github.com/Increase/increase-go/commit/7a9328bf3c734fdcdc0a9910d0769733aa1fa274))
+* improve retry behavior on context deadline ([#106](https://github.com/Increase/increase-go/issues/106)) ([a2f1c71](https://github.com/Increase/increase-go/commit/a2f1c7186437378f71523c589b6b804bc13a0ce0))
+
+
+### Bug Fixes
+
+* **docs:** change `Page` package to shared ([#103](https://github.com/Increase/increase-go/issues/103)) ([69077fe](https://github.com/Increase/increase-go/commit/69077fe46795688978b98de73cd52b238f009c95))
+
 ## 0.8.2 (2023-09-20)
 
 Full Changelog: [v0.8.1...v0.8.2](https://github.com/Increase/increase-go/compare/v0.8.1...v0.8.2)
