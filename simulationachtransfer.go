@@ -3046,10 +3046,10 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryCardDisputeAcceptance ACHTransferSimulationTransactionSourceCategory = "card_dispute_acceptance"
 	// Card Refund: details will be under the `card_refund` object.
 	ACHTransferSimulationTransactionSourceCategoryCardRefund ACHTransferSimulationTransactionSourceCategory = "card_refund"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
 	// Card Settlement: details will be under the `card_settlement` object.
 	ACHTransferSimulationTransactionSourceCategoryCardSettlement ACHTransferSimulationTransactionSourceCategory = "card_settlement"
+	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryCardRevenuePayment ACHTransferSimulationTransactionSourceCategory = "card_revenue_payment"
 	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
 	// object.
 	ACHTransferSimulationTransactionSourceCategoryCheckDepositAcceptance ACHTransferSimulationTransactionSourceCategory = "check_deposit_acceptance"
@@ -3080,12 +3080,12 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation ACHTransferSimulationTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Drawdown Payment Reversal: details will be under the
 	// `inbound_wire_drawdown_payment_reversal` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPaymentReversal ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// Inbound Wire Drawdown Payment: details will be under the
+	// `inbound_wire_drawdown_payment` object.
+	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
 	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.

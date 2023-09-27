@@ -1982,10 +1982,10 @@ const (
 	TransactionSourceCategoryCardDisputeAcceptance TransactionSourceCategory = "card_dispute_acceptance"
 	// Card Refund: details will be under the `card_refund` object.
 	TransactionSourceCategoryCardRefund TransactionSourceCategory = "card_refund"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	TransactionSourceCategoryCardRevenuePayment TransactionSourceCategory = "card_revenue_payment"
 	// Card Settlement: details will be under the `card_settlement` object.
 	TransactionSourceCategoryCardSettlement TransactionSourceCategory = "card_settlement"
+	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
+	TransactionSourceCategoryCardRevenuePayment TransactionSourceCategory = "card_revenue_payment"
 	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
 	// object.
 	TransactionSourceCategoryCheckDepositAcceptance TransactionSourceCategory = "check_deposit_acceptance"
@@ -2016,12 +2016,12 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	TransactionSourceCategoryInboundWireDrawdownPayment TransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Drawdown Payment Reversal: details will be under the
 	// `inbound_wire_drawdown_payment_reversal` object.
 	TransactionSourceCategoryInboundWireDrawdownPaymentReversal TransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// Inbound Wire Drawdown Payment: details will be under the
+	// `inbound_wire_drawdown_payment` object.
+	TransactionSourceCategoryInboundWireDrawdownPayment TransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionSourceCategoryInboundWireReversal TransactionSourceCategory = "inbound_wire_reversal"
 	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.
@@ -3414,10 +3414,10 @@ const (
 	TransactionListParamsCategoryInCardDisputeAcceptance TransactionListParamsCategoryIn = "card_dispute_acceptance"
 	// Card Refund: details will be under the `card_refund` object.
 	TransactionListParamsCategoryInCardRefund TransactionListParamsCategoryIn = "card_refund"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	TransactionListParamsCategoryInCardRevenuePayment TransactionListParamsCategoryIn = "card_revenue_payment"
 	// Card Settlement: details will be under the `card_settlement` object.
 	TransactionListParamsCategoryInCardSettlement TransactionListParamsCategoryIn = "card_settlement"
+	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
+	TransactionListParamsCategoryInCardRevenuePayment TransactionListParamsCategoryIn = "card_revenue_payment"
 	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
 	// object.
 	TransactionListParamsCategoryInCheckDepositAcceptance TransactionListParamsCategoryIn = "check_deposit_acceptance"
@@ -3448,12 +3448,12 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	TransactionListParamsCategoryInInboundWireDrawdownPayment TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
 	// Inbound Wire Drawdown Payment Reversal: details will be under the
 	// `inbound_wire_drawdown_payment_reversal` object.
 	TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment_reversal"
+	// Inbound Wire Drawdown Payment: details will be under the
+	// `inbound_wire_drawdown_payment` object.
+	TransactionListParamsCategoryInInboundWireDrawdownPayment TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionListParamsCategoryInInboundWireReversal TransactionListParamsCategoryIn = "inbound_wire_reversal"
 	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.

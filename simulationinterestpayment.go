@@ -1996,10 +1996,10 @@ const (
 	InterestPaymentSimulationResultTransactionSourceCategoryCardDisputeAcceptance InterestPaymentSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
 	// Card Refund: details will be under the `card_refund` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCardRefund InterestPaymentSimulationResultTransactionSourceCategory = "card_refund"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
 	// Card Settlement: details will be under the `card_settlement` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCardSettlement InterestPaymentSimulationResultTransactionSourceCategory = "card_settlement"
+	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryCardRevenuePayment InterestPaymentSimulationResultTransactionSourceCategory = "card_revenue_payment"
 	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
 	// object.
 	InterestPaymentSimulationResultTransactionSourceCategoryCheckDepositAcceptance InterestPaymentSimulationResultTransactionSourceCategory = "check_deposit_acceptance"
@@ -2030,12 +2030,12 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InterestPaymentSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Drawdown Payment Reversal: details will be under the
 	// `inbound_wire_drawdown_payment_reversal` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
+	// Inbound Wire Drawdown Payment: details will be under the
+	// `inbound_wire_drawdown_payment` object.
+	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	InterestPaymentSimulationResultTransactionSourceCategoryInboundWireReversal InterestPaymentSimulationResultTransactionSourceCategory = "inbound_wire_reversal"
 	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.
