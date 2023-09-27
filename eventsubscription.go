@@ -186,6 +186,10 @@ const (
 	EventSubscriptionSelectedEventCategoryEntityCreated EventSubscriptionSelectedEventCategory = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventSubscriptionSelectedEventCategoryEntityUpdated EventSubscriptionSelectedEventCategory = "entity.updated"
+	// Occurs whenever an Export is created.
+	EventSubscriptionSelectedEventCategoryExportCreated EventSubscriptionSelectedEventCategory = "export.created"
+	// Occurs whenever an Export is updated.
+	EventSubscriptionSelectedEventCategoryExportUpdated EventSubscriptionSelectedEventCategory = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventSubscriptionSelectedEventCategoryExternalAccountCreated EventSubscriptionSelectedEventCategory = "external_account.created"
 	// Occurs whenever a File is created.
@@ -205,6 +209,14 @@ const (
 	EventSubscriptionSelectedEventCategoryInboundACHTransferReturnUpdated EventSubscriptionSelectedEventCategory = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventSubscriptionSelectedEventCategoryInboundWireDrawdownRequestCreated EventSubscriptionSelectedEventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an IntraFi Account Enrollment is created.
+	EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentCreated EventSubscriptionSelectedEventCategory = "intrafi_account_enrollment.created"
+	// Occurs whenever an IntraFi Account Enrollment is updated.
+	EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentUpdated EventSubscriptionSelectedEventCategory = "intrafi_account_enrollment.updated"
+	// Occurs whenever an IntraFi Exclusion is created.
+	EventSubscriptionSelectedEventCategoryIntrafiExclusionCreated EventSubscriptionSelectedEventCategory = "intrafi_exclusion.created"
+	// Occurs whenever an IntraFi Exclusion is updated.
+	EventSubscriptionSelectedEventCategoryIntrafiExclusionUpdated EventSubscriptionSelectedEventCategory = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
 	EventSubscriptionSelectedEventCategoryOauthConnectionCreated EventSubscriptionSelectedEventCategory = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
@@ -213,6 +225,10 @@ const (
 	EventSubscriptionSelectedEventCategoryPendingTransactionCreated EventSubscriptionSelectedEventCategory = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.
 	EventSubscriptionSelectedEventCategoryPendingTransactionUpdated EventSubscriptionSelectedEventCategory = "pending_transaction.updated"
+	// Occurs whenever a Physical Card is created.
+	EventSubscriptionSelectedEventCategoryPhysicalCardCreated EventSubscriptionSelectedEventCategory = "physical_card.created"
+	// Occurs whenever a Physical Card is updated.
+	EventSubscriptionSelectedEventCategoryPhysicalCardUpdated EventSubscriptionSelectedEventCategory = "physical_card.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested EventSubscriptionSelectedEventCategory = "real_time_decision.card_authorization_requested"
@@ -343,6 +359,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryEntityCreated EventSubscriptionNewParamsSelectedEventCategory = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryEntityUpdated EventSubscriptionNewParamsSelectedEventCategory = "entity.updated"
+	// Occurs whenever an Export is created.
+	EventSubscriptionNewParamsSelectedEventCategoryExportCreated EventSubscriptionNewParamsSelectedEventCategory = "export.created"
+	// Occurs whenever an Export is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryExportUpdated EventSubscriptionNewParamsSelectedEventCategory = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventSubscriptionNewParamsSelectedEventCategoryExternalAccountCreated EventSubscriptionNewParamsSelectedEventCategory = "external_account.created"
 	// Occurs whenever a File is created.
@@ -362,6 +382,14 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryInboundACHTransferReturnUpdated EventSubscriptionNewParamsSelectedEventCategory = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventSubscriptionNewParamsSelectedEventCategoryInboundWireDrawdownRequestCreated EventSubscriptionNewParamsSelectedEventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an IntraFi Account Enrollment is created.
+	EventSubscriptionNewParamsSelectedEventCategoryIntrafiAccountEnrollmentCreated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_account_enrollment.created"
+	// Occurs whenever an IntraFi Account Enrollment is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryIntrafiAccountEnrollmentUpdated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_account_enrollment.updated"
+	// Occurs whenever an IntraFi Exclusion is created.
+	EventSubscriptionNewParamsSelectedEventCategoryIntrafiExclusionCreated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_exclusion.created"
+	// Occurs whenever an IntraFi Exclusion is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryIntrafiExclusionUpdated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
 	EventSubscriptionNewParamsSelectedEventCategoryOauthConnectionCreated EventSubscriptionNewParamsSelectedEventCategory = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
@@ -370,6 +398,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryPendingTransactionCreated EventSubscriptionNewParamsSelectedEventCategory = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryPendingTransactionUpdated EventSubscriptionNewParamsSelectedEventCategory = "pending_transaction.updated"
+	// Occurs whenever a Physical Card is created.
+	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardCreated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.created"
+	// Occurs whenever a Physical Card is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardUpdated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested EventSubscriptionNewParamsSelectedEventCategory = "real_time_decision.card_authorization_requested"
