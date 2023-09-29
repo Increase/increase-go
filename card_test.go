@@ -90,7 +90,8 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 				Phone:         increase.F("x"),
 				CardProfileID: increase.F("string"),
 			}),
-			Status: increase.F(increase.CardUpdateParamsStatusActive),
+			EntityID: increase.F("string"),
+			Status:   increase.F(increase.CardUpdateParamsStatusActive),
 		},
 	)
 	if err != nil {
