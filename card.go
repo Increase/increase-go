@@ -285,7 +285,8 @@ type CardNewParams struct {
 	// Decision with the category `digital_wallet_token_requested` or
 	// `digital_wallet_authentication_requested`.
 	DigitalWallet param.Field[CardNewParamsDigitalWallet] `json:"digital_wallet"`
-	// The Entity the card should belong to.
+	// The Entity the card belongs to. You only need to supply this in rare situations
+	// when the card is not for the Account holder.
 	EntityID param.Field[string] `json:"entity_id"`
 }
 
@@ -341,6 +342,9 @@ type CardUpdateParams struct {
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
 	DigitalWallet param.Field[CardUpdateParamsDigitalWallet] `json:"digital_wallet"`
+	// The Entity the card belongs to. You only need to supply this in rare situations
+	// when the card is not for the Account holder.
+	EntityID param.Field[string] `json:"entity_id"`
 	// The status to update the Card with.
 	Status param.Field[CardUpdateParamsStatus] `json:"status"`
 }
