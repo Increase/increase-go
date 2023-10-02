@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 	"time"
 
@@ -14,11 +15,15 @@ import (
 )
 
 func TestEventGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Events.Get(context.TODO(), "event_001dzz0r20rzr4zrhrr1364hy80")
@@ -32,11 +37,15 @@ func TestEventGet(t *testing.T) {
 }
 
 func TestEventListWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Events.List(context.TODO(), increase.EventListParams{

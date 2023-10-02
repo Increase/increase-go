@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 
 	"github.com/increase/increase-go"
@@ -13,12 +14,16 @@ import (
 )
 
 func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
@@ -42,11 +47,15 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 }
 
 func TestWireDrawdownRequestGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
@@ -60,11 +69,15 @@ func TestWireDrawdownRequestGet(t *testing.T) {
 }
 
 func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{

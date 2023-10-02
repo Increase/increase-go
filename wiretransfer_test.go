@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 	"time"
 
@@ -14,11 +15,15 @@ import (
 )
 
 func TestWireTransferNewWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
@@ -45,11 +50,15 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 }
 
 func TestWireTransferGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.Get(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
@@ -63,11 +72,15 @@ func TestWireTransferGet(t *testing.T) {
 }
 
 func TestWireTransferListWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
@@ -93,11 +106,15 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 }
 
 func TestWireTransferApprove(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.Approve(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
@@ -111,11 +128,15 @@ func TestWireTransferApprove(t *testing.T) {
 }
 
 func TestWireTransferCancel(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.Cancel(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
@@ -129,12 +150,16 @@ func TestWireTransferCancel(t *testing.T) {
 }
 
 func TestWireTransferReverse(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.Reverse(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
@@ -148,12 +173,16 @@ func TestWireTransferReverse(t *testing.T) {
 }
 
 func TestWireTransferSubmit(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.Submit(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")

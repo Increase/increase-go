@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 	"time"
 
@@ -14,11 +15,15 @@ import (
 )
 
 func TestInboundACHTransferGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransfers.Get(context.TODO(), "inbound_ach_transfer_tdrwqr3fq9gnnq49odev")
@@ -32,11 +37,15 @@ func TestInboundACHTransferGet(t *testing.T) {
 }
 
 func TestInboundACHTransferListWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransfers.List(context.TODO(), increase.InboundACHTransferListParams{
@@ -61,11 +70,15 @@ func TestInboundACHTransferListWithOptionalParams(t *testing.T) {
 }
 
 func TestInboundACHTransferDecline(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransfers.Decline(context.TODO(), "inbound_ach_transfer_tdrwqr3fq9gnnq49odev")
@@ -79,11 +92,15 @@ func TestInboundACHTransferDecline(t *testing.T) {
 }
 
 func TestInboundACHTransferNotificationOfChangeWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransfers.NotificationOfChange(
@@ -104,11 +121,15 @@ func TestInboundACHTransferNotificationOfChangeWithOptionalParams(t *testing.T) 
 }
 
 func TestInboundACHTransferTransferReturn(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.InboundACHTransfers.TransferReturn(

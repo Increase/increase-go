@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 	"time"
 
@@ -14,11 +15,15 @@ import (
 )
 
 func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.New(context.TODO(), increase.ACHPrenotificationNewParams{
@@ -45,11 +50,15 @@ func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
 }
 
 func TestACHPrenotificationGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.Get(context.TODO(), "ach_prenotification_ubjf9qqsxl3obbcn1u34")
@@ -63,11 +72,15 @@ func TestACHPrenotificationGet(t *testing.T) {
 }
 
 func TestACHPrenotificationListWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.List(context.TODO(), increase.ACHPrenotificationListParams{

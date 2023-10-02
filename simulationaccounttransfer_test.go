@@ -5,6 +5,7 @@ package increase_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 
 	"github.com/increase/increase-go"
@@ -13,12 +14,16 @@ import (
 )
 
 func TestSimulationAccountTransferComplete(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.AccountTransfers.Complete(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
