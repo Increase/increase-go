@@ -509,6 +509,9 @@ func TestEntityListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(0)),
+		Status: increase.F(increase.EntityListParamsStatus{
+			In: increase.F([]increase.EntityListParamsStatusIn{increase.EntityListParamsStatusInActive, increase.EntityListParamsStatusInArchived, increase.EntityListParamsStatusInDisabled}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
