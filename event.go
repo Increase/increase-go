@@ -130,6 +130,10 @@ const (
 	EventCategoryACHTransferCreated EventCategory = "ach_transfer.created"
 	// Occurs whenever an ACH Transfer is updated.
 	EventCategoryACHTransferUpdated EventCategory = "ach_transfer.updated"
+	// Occurs whenever a Bookkeeping Account is created.
+	EventCategoryBookkeepingAccountCreated EventCategory = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Entry Set is created.
+	EventCategoryBookkeepingEntrySetUpdated EventCategory = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
 	EventCategoryCardCreated EventCategory = "card.created"
 	// Occurs whenever a Card is updated.
@@ -166,12 +170,18 @@ const (
 	EventCategoryEntityCreated EventCategory = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventCategoryEntityUpdated EventCategory = "entity.updated"
+	// Occurs whenever an Event Subscription is created.
+	EventCategoryEventSubscriptionCreated EventCategory = "event_subscription.created"
+	// Occurs whenever an Event Subscription is updated.
+	EventCategoryEventSubscriptionUpdated EventCategory = "event_subscription.updated"
 	// Occurs whenever an Export is created.
 	EventCategoryExportCreated EventCategory = "export.created"
 	// Occurs whenever an Export is updated.
 	EventCategoryExportUpdated EventCategory = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventCategoryExternalAccountCreated EventCategory = "external_account.created"
+	// Occurs whenever an External Account is updated.
+	EventCategoryExternalAccountUpdated EventCategory = "external_account.updated"
 	// Occurs whenever a File is created.
 	EventCategoryFileCreated EventCategory = "file.created"
 	// Occurs whenever a Group is updated.
@@ -307,6 +317,10 @@ const (
 	EventListParamsCategoryInACHTransferCreated EventListParamsCategoryIn = "ach_transfer.created"
 	// Occurs whenever an ACH Transfer is updated.
 	EventListParamsCategoryInACHTransferUpdated EventListParamsCategoryIn = "ach_transfer.updated"
+	// Occurs whenever a Bookkeeping Account is created.
+	EventListParamsCategoryInBookkeepingAccountCreated EventListParamsCategoryIn = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Entry Set is created.
+	EventListParamsCategoryInBookkeepingEntrySetUpdated EventListParamsCategoryIn = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
 	EventListParamsCategoryInCardCreated EventListParamsCategoryIn = "card.created"
 	// Occurs whenever a Card is updated.
@@ -343,12 +357,18 @@ const (
 	EventListParamsCategoryInEntityCreated EventListParamsCategoryIn = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventListParamsCategoryInEntityUpdated EventListParamsCategoryIn = "entity.updated"
+	// Occurs whenever an Event Subscription is created.
+	EventListParamsCategoryInEventSubscriptionCreated EventListParamsCategoryIn = "event_subscription.created"
+	// Occurs whenever an Event Subscription is updated.
+	EventListParamsCategoryInEventSubscriptionUpdated EventListParamsCategoryIn = "event_subscription.updated"
 	// Occurs whenever an Export is created.
 	EventListParamsCategoryInExportCreated EventListParamsCategoryIn = "export.created"
 	// Occurs whenever an Export is updated.
 	EventListParamsCategoryInExportUpdated EventListParamsCategoryIn = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventListParamsCategoryInExternalAccountCreated EventListParamsCategoryIn = "external_account.created"
+	// Occurs whenever an External Account is updated.
+	EventListParamsCategoryInExternalAccountUpdated EventListParamsCategoryIn = "external_account.updated"
 	// Occurs whenever a File is created.
 	EventListParamsCategoryInFileCreated EventListParamsCategoryIn = "file.created"
 	// Occurs whenever a Group is updated.
