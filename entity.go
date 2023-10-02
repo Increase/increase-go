@@ -108,8 +108,8 @@ type Entity struct {
 	// Details of the natural person entity. Will be present if `structure` is equal to
 	// `natural_person`.
 	NaturalPerson EntityNaturalPerson `json:"natural_person,required,nullable"`
-	// The relationship between your group and the entity.
-	Relationship EntityRelationship `json:"relationship,required,nullable"`
+	// The status of the entity.
+	Status EntityStatus `json:"status,required"`
 	// The entity's legal structure.
 	Structure EntityStructure `json:"structure,required"`
 	// Additional documentation associated with the entity. This is limited to the
@@ -131,7 +131,7 @@ type entityJSON struct {
 	Description           apijson.Field
 	Joint                 apijson.Field
 	NaturalPerson         apijson.Field
-	Relationship          apijson.Field
+	Status                apijson.Field
 	Structure             apijson.Field
 	SupplementalDocuments apijson.Field
 	Trust                 apijson.Field
@@ -569,17 +569,16 @@ const (
 	EntityNaturalPersonIdentificationMethodOther EntityNaturalPersonIdentificationMethod = "other"
 )
 
-// The relationship between your group and the entity.
-type EntityRelationship string
+// The status of the entity.
+type EntityStatus string
 
 const (
-	// The entity is controlled by your group.
-	EntityRelationshipAffiliated EntityRelationship = "affiliated"
-	// The entity is for informational purposes only.
-	EntityRelationshipInformational EntityRelationship = "informational"
-	// The entity is not controlled by your group, but can still directly open
-	// accounts.
-	EntityRelationshipUnaffiliated EntityRelationship = "unaffiliated"
+	// The entity is active.
+	EntityStatusActive EntityStatus = "active"
+	// The entity is archived, and can no longer be used to create accounts.
+	EntityStatusArchived EntityStatus = "archived"
+	// The entity is temporarily disabled and cannot be used for financial activity.
+	EntityStatusDisabled EntityStatus = "disabled"
 )
 
 // The entity's legal structure.
@@ -1838,7 +1837,8 @@ type EntityListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                  `query:"limit"`
+	Status param.Field[EntityListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.
@@ -1872,6 +1872,32 @@ func (r EntityListParamsCreatedAt) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+type EntityListParamsStatus struct {
+	// Filter Entities for those with the specified status or statuses. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]EntityListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [EntityListParamsStatus]'s query parameters as `url.Values`.
+func (r EntityListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type EntityListParamsStatusIn string
+
+const (
+	// The entity is active.
+	EntityListParamsStatusInActive EntityListParamsStatusIn = "active"
+	// The entity is archived, and can no longer be used to create accounts.
+	EntityListParamsStatusInArchived EntityListParamsStatusIn = "archived"
+	// The entity is temporarily disabled and cannot be used for financial activity.
+	EntityListParamsStatusInDisabled EntityListParamsStatusIn = "disabled"
+)
 
 type EntityUpdateAddressParams struct {
 	// The entity's physical address. Post Office Boxes are disallowed.

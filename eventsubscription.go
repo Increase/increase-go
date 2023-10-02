@@ -150,6 +150,10 @@ const (
 	EventSubscriptionSelectedEventCategoryACHTransferCreated EventSubscriptionSelectedEventCategory = "ach_transfer.created"
 	// Occurs whenever an ACH Transfer is updated.
 	EventSubscriptionSelectedEventCategoryACHTransferUpdated EventSubscriptionSelectedEventCategory = "ach_transfer.updated"
+	// Occurs whenever a Bookkeeping Account is created.
+	EventSubscriptionSelectedEventCategoryBookkeepingAccountCreated EventSubscriptionSelectedEventCategory = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Entry Set is created.
+	EventSubscriptionSelectedEventCategoryBookkeepingEntrySetUpdated EventSubscriptionSelectedEventCategory = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
 	EventSubscriptionSelectedEventCategoryCardCreated EventSubscriptionSelectedEventCategory = "card.created"
 	// Occurs whenever a Card is updated.
@@ -186,12 +190,18 @@ const (
 	EventSubscriptionSelectedEventCategoryEntityCreated EventSubscriptionSelectedEventCategory = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventSubscriptionSelectedEventCategoryEntityUpdated EventSubscriptionSelectedEventCategory = "entity.updated"
+	// Occurs whenever an Event Subscription is created.
+	EventSubscriptionSelectedEventCategoryEventSubscriptionCreated EventSubscriptionSelectedEventCategory = "event_subscription.created"
+	// Occurs whenever an Event Subscription is updated.
+	EventSubscriptionSelectedEventCategoryEventSubscriptionUpdated EventSubscriptionSelectedEventCategory = "event_subscription.updated"
 	// Occurs whenever an Export is created.
 	EventSubscriptionSelectedEventCategoryExportCreated EventSubscriptionSelectedEventCategory = "export.created"
 	// Occurs whenever an Export is updated.
 	EventSubscriptionSelectedEventCategoryExportUpdated EventSubscriptionSelectedEventCategory = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventSubscriptionSelectedEventCategoryExternalAccountCreated EventSubscriptionSelectedEventCategory = "external_account.created"
+	// Occurs whenever an External Account is updated.
+	EventSubscriptionSelectedEventCategoryExternalAccountUpdated EventSubscriptionSelectedEventCategory = "external_account.updated"
 	// Occurs whenever a File is created.
 	EventSubscriptionSelectedEventCategoryFileCreated EventSubscriptionSelectedEventCategory = "file.created"
 	// Occurs whenever a Group is updated.
@@ -323,6 +333,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryACHTransferCreated EventSubscriptionNewParamsSelectedEventCategory = "ach_transfer.created"
 	// Occurs whenever an ACH Transfer is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryACHTransferUpdated EventSubscriptionNewParamsSelectedEventCategory = "ach_transfer.updated"
+	// Occurs whenever a Bookkeeping Account is created.
+	EventSubscriptionNewParamsSelectedEventCategoryBookkeepingAccountCreated EventSubscriptionNewParamsSelectedEventCategory = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Entry Set is created.
+	EventSubscriptionNewParamsSelectedEventCategoryBookkeepingEntrySetUpdated EventSubscriptionNewParamsSelectedEventCategory = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
 	EventSubscriptionNewParamsSelectedEventCategoryCardCreated EventSubscriptionNewParamsSelectedEventCategory = "card.created"
 	// Occurs whenever a Card is updated.
@@ -359,12 +373,18 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryEntityCreated EventSubscriptionNewParamsSelectedEventCategory = "entity.created"
 	// Occurs whenever an Entity is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryEntityUpdated EventSubscriptionNewParamsSelectedEventCategory = "entity.updated"
+	// Occurs whenever an Event Subscription is created.
+	EventSubscriptionNewParamsSelectedEventCategoryEventSubscriptionCreated EventSubscriptionNewParamsSelectedEventCategory = "event_subscription.created"
+	// Occurs whenever an Event Subscription is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryEventSubscriptionUpdated EventSubscriptionNewParamsSelectedEventCategory = "event_subscription.updated"
 	// Occurs whenever an Export is created.
 	EventSubscriptionNewParamsSelectedEventCategoryExportCreated EventSubscriptionNewParamsSelectedEventCategory = "export.created"
 	// Occurs whenever an Export is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryExportUpdated EventSubscriptionNewParamsSelectedEventCategory = "export.updated"
 	// Occurs whenever an External Account is created.
 	EventSubscriptionNewParamsSelectedEventCategoryExternalAccountCreated EventSubscriptionNewParamsSelectedEventCategory = "external_account.created"
+	// Occurs whenever an External Account is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryExternalAccountUpdated EventSubscriptionNewParamsSelectedEventCategory = "external_account.updated"
 	// Occurs whenever a File is created.
 	EventSubscriptionNewParamsSelectedEventCategoryFileCreated EventSubscriptionNewParamsSelectedEventCategory = "file.created"
 	// Occurs whenever a Group is updated.
