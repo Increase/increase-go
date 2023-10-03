@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.8.4 (2023-10-03)
+
+Full Changelog: [v0.8.3...v0.8.4](https://github.com/increase/increase-go/compare/v0.8.3...v0.8.4)
+
+### Features
+
+* **api:** add card payments endpoints ([#109](https://github.com/increase/increase-go/issues/109)) ([baf55ee](https://github.com/increase/increase-go/commit/baf55eeb4994eff992e8f775bdd790fc47a59a54))
+* **api:** add physical cards endpoints ([#107](https://github.com/increase/increase-go/issues/107)) ([aa5b28e](https://github.com/increase/increase-go/commit/aa5b28eceabdbb92472edee065c929c8ae5d17c5))
+* **api:** expand event categories and Entity status options ([#113](https://github.com/increase/increase-go/issues/113)) ([90b0116](https://github.com/increase/increase-go/commit/90b01162ac64dd5896ef7f27d9bc3b9094f793a2))
+
+
+### Bug Fixes
+
+* prevent index out of range bug during auto-pagination ([#112](https://github.com/increase/increase-go/issues/112)) ([d86b9cc](https://github.com/increase/increase-go/commit/d86b9ccadc4ff6dde310bfd29b26c225fb532f01))
+
+
+### Chores
+
+* **tests:** update test examples ([#114](https://github.com/increase/increase-go/issues/114)) ([2d1ba8a](https://github.com/increase/increase-go/commit/2d1ba8afe168713bf4580b03d4e66e98c3822025))
+
 ## 0.8.3 (2023-09-25)
 
 Full Changelog: [v0.8.2...v0.8.3](https://github.com/Increase/increase-go/compare/v0.8.2...v0.8.3)
