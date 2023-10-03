@@ -28,17 +28,14 @@ func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
 		Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntry{{
-			AccountID: increase.F("string"),
-			Amount:    increase.F(int64(0)),
+			AccountID: increase.F("bookkeeping_account_9husfpw68pzmve9dvvc7"),
+			Amount:    increase.F(int64(100)),
 		}, {
-			AccountID: increase.F("string"),
-			Amount:    increase.F(int64(0)),
-		}, {
-			AccountID: increase.F("string"),
-			Amount:    increase.F(int64(0)),
+			AccountID: increase.F("bookkeeping_account_t2obldz1rcu15zr54umg"),
+			Amount:    increase.F(int64(-100)),
 		}}),
 		Date:          increase.F(time.Now()),
-		TransactionID: increase.F("string"),
+		TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),
 	})
 	if err != nil {
 		var apierr *increase.Error

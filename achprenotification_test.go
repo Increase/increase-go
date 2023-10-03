@@ -27,8 +27,8 @@ func TestACHPrenotificationNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHPrenotifications.New(context.TODO(), increase.ACHPrenotificationNewParams{
-		AccountNumber:            increase.F("x"),
-		RoutingNumber:            increase.F("xxxxxxxxx"),
+		AccountNumber:            increase.F("987654321"),
+		RoutingNumber:            increase.F("101050001"),
 		Addendum:                 increase.F("x"),
 		CompanyDescriptiveDate:   increase.F("x"),
 		CompanyDiscretionaryData: increase.F("x"),

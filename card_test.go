@@ -27,7 +27,7 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
 			Line1:      increase.F("x"),
 			Line2:      increase.F("x"),
@@ -35,7 +35,7 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 			State:      increase.F("x"),
 			PostalCode: increase.F("x"),
 		}),
-		Description: increase.F("x"),
+		Description: increase.F("Card for Ian Crease"),
 		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
 			Email:         increase.F("x"),
 			Phone:         increase.F("x"),
@@ -97,7 +97,7 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 				State:      increase.F("x"),
 				PostalCode: increase.F("x"),
 			}),
-			Description: increase.F("x"),
+			Description: increase.F("New description"),
 			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{
 				Email:         increase.F("x"),
 				Phone:         increase.F("x"),

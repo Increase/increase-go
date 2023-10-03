@@ -27,10 +27,10 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
-		AccountID:                increase.F("string"),
-		Amount:                   increase.F(int64(0)),
-		StatementDescriptor:      increase.F("x"),
-		AccountNumber:            increase.F("x"),
+		AccountID:                increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:                   increase.F(int64(100)),
+		StatementDescriptor:      increase.F("New ACH transfer"),
+		AccountNumber:            increase.F("987654321"),
 		Addendum:                 increase.F("x"),
 		CompanyDescriptiveDate:   increase.F("x"),
 		CompanyDiscretionaryData: increase.F("x"),
@@ -42,7 +42,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		IndividualID:             increase.F("x"),
 		IndividualName:           increase.F("x"),
 		RequireApproval:          increase.F(true),
-		RoutingNumber:            increase.F("xxxxxxxxx"),
+		RoutingNumber:            increase.F("101050001"),
 		StandardEntryClassCode:   increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
 		UniqueIdentifier:         increase.F("x"),
 	})

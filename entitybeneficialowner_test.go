@@ -29,19 +29,19 @@ func TestEntityBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 	_, err := client.Entities.BeneficialOwners.New(context.TODO(), increase.EntityBeneficialOwnerNewParams{
 		BeneficialOwner: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwner{
 			Individual: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual{
-				Name:        increase.F("x"),
+				Name:        increase.F("Ian Crease"),
 				DateOfBirth: increase.F(time.Now()),
 				Address: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress{
-					Line1: increase.F("x"),
+					Line1: increase.F("33 Liberty Street"),
 					Line2: increase.F("x"),
-					City:  increase.F("x"),
-					State: increase.F("x"),
-					Zip:   increase.F("x"),
+					City:  increase.F("New York"),
+					State: increase.F("NY"),
+					Zip:   increase.F("10045"),
 				}),
 				ConfirmedNoUsTaxID: increase.F(true),
 				Identification: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentification{
 					Method: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber),
-					Number: increase.F("xxxx"),
+					Number: increase.F("078051120"),
 					Passport: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport{
 						FileID:         increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
@@ -62,10 +62,10 @@ func TestEntityBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 					}),
 				}),
 			}),
-			CompanyTitle: increase.F("x"),
-			Prongs:       increase.F([]increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProng{increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership, increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl}),
+			CompanyTitle: increase.F("CEO"),
+			Prongs:       increase.F([]increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProng{increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl}),
 		}),
-		EntityID: increase.F("string"),
+		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -89,8 +89,8 @@ func TestEntityBeneficialOwnerArchive(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Entities.BeneficialOwners.Archive(context.TODO(), increase.EntityBeneficialOwnerArchiveParams{
-		BeneficialOwnerID: increase.F("string"),
-		EntityID:          increase.F("string"),
+		BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
+		EntityID:          increase.F("entity_n8y8tnk2p9339ti393yi"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -115,14 +115,14 @@ func TestEntityBeneficialOwnerUpdateAddressWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Entities.BeneficialOwners.UpdateAddress(context.TODO(), increase.EntityBeneficialOwnerUpdateAddressParams{
 		Address: increase.F(increase.EntityBeneficialOwnerUpdateAddressParamsAddress{
-			Line1: increase.F("x"),
-			Line2: increase.F("x"),
-			City:  increase.F("x"),
-			State: increase.F("x"),
-			Zip:   increase.F("x"),
+			Line1: increase.F("33 Liberty Street"),
+			Line2: increase.F("Unit 2"),
+			City:  increase.F("New York"),
+			State: increase.F("NY"),
+			Zip:   increase.F("10045"),
 		}),
-		BeneficialOwnerID: increase.F("string"),
-		EntityID:          increase.F("string"),
+		BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
+		EntityID:          increase.F("entity_n8y8tnk2p9339ti393yi"),
 	})
 	if err != nil {
 		var apierr *increase.Error

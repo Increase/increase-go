@@ -26,7 +26,7 @@ func TestSimulationProgramNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.Programs.New(context.TODO(), increase.SimulationProgramNewParams{
-		Name: increase.F("x"),
+		Name: increase.F("For Benefit Of"),
 	})
 	if err != nil {
 		var apierr *increase.Error

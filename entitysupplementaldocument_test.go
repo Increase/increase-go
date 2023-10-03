@@ -29,7 +29,7 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntitySupplementalDocumentNewParams{
-			FileID: increase.F("string"),
+			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		},
 	)
 	if err != nil {

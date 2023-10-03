@@ -27,17 +27,17 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
-		AccountID:               increase.F("string"),
-		Amount:                  increase.F(int64(1)),
-		BeneficiaryName:         increase.F("x"),
-		MessageToRecipient:      increase.F("x"),
-		AccountNumber:           increase.F("x"),
-		BeneficiaryAddressLine1: increase.F("x"),
-		BeneficiaryAddressLine2: increase.F("x"),
-		BeneficiaryAddressLine3: increase.F("x"),
+		AccountID:               increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:                  increase.F(int64(100)),
+		BeneficiaryName:         increase.F("Ian Crease"),
+		MessageToRecipient:      increase.F("New account transfer"),
+		AccountNumber:           increase.F("987654321"),
+		BeneficiaryAddressLine1: increase.F("33 Liberty Street"),
+		BeneficiaryAddressLine2: increase.F("New York"),
+		BeneficiaryAddressLine3: increase.F("NY 10045"),
 		ExternalAccountID:       increase.F("string"),
 		RequireApproval:         increase.F(true),
-		RoutingNumber:           increase.F("xxxxxxxxx"),
+		RoutingNumber:           increase.F("101050001"),
 		UniqueIdentifier:        increase.F("x"),
 	})
 	if err != nil {

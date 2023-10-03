@@ -56,13 +56,13 @@ func TestSimulationRealTimePaymentsTransferNewInboundWithOptionalParams(t *testi
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.RealTimePaymentsTransfers.NewInbound(context.TODO(), increase.SimulationRealTimePaymentsTransferNewInboundParams{
-		AccountNumberID:       increase.F("string"),
-		Amount:                increase.F(int64(1)),
+		AccountNumberID:       increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                increase.F(int64(1000)),
 		DebtorAccountNumber:   increase.F("x"),
 		DebtorName:            increase.F("x"),
 		DebtorRoutingNumber:   increase.F("xxxxxxxxx"),
 		RemittanceInformation: increase.F("x"),
-		RequestForPaymentID:   increase.F("string"),
+		RequestForPaymentID:   increase.F("real_time_payments_request_for_payment_28kcliz1oevcnqyn9qp7"),
 	})
 	if err != nil {
 		var apierr *increase.Error

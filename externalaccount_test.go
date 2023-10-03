@@ -26,9 +26,9 @@ func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.ExternalAccounts.New(context.TODO(), increase.ExternalAccountNewParams{
-		AccountNumber: increase.F("x"),
-		Description:   increase.F("x"),
-		RoutingNumber: increase.F("xxxxxxxxx"),
+		AccountNumber: increase.F("987654321"),
+		Description:   increase.F("Landlord"),
+		RoutingNumber: increase.F("101050001"),
 		Funding:       increase.F(increase.ExternalAccountNewParamsFundingChecking),
 	})
 	if err != nil {
@@ -78,7 +78,7 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"external_account_ukk55lr923a3ac0pp7iv",
 		increase.ExternalAccountUpdateParams{
-			Description: increase.F("x"),
+			Description: increase.F("New description"),
 			Status:      increase.F(increase.ExternalAccountUpdateParamsStatusActive),
 		},
 	)

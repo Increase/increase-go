@@ -27,8 +27,8 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
-		AccountNumberID:          increase.F("string"),
-		Amount:                   increase.F(int64(0)),
+		AccountNumberID:          increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                   increase.F(int64(1000)),
 		CompanyDescriptiveDate:   increase.F("x"),
 		CompanyDiscretionaryData: increase.F("x"),
 		CompanyEntryDescription:  increase.F("x"),

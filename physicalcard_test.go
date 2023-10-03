@@ -27,23 +27,23 @@ func TestPhysicalCardNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.PhysicalCards.New(context.TODO(), increase.PhysicalCardNewParams{
-		CardID:        increase.F("string"),
-		CardProfileID: increase.F("string"),
+		CardID:        increase.F("card_oubs0hwk5rn6knuecxg2"),
+		CardProfileID: increase.F("card_profile_cox5y73lob2eqly18piy"),
 		Cardholder: increase.F(increase.PhysicalCardNewParamsCardholder{
-			FirstName: increase.F("x"),
-			LastName:  increase.F("x"),
+			FirstName: increase.F("Ian"),
+			LastName:  increase.F("Crease"),
 		}),
 		Shipment: increase.F(increase.PhysicalCardNewParamsShipment{
 			Method: increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
 			Address: increase.F(increase.PhysicalCardNewParamsShipmentAddress{
-				Name:        increase.F("x"),
-				Line1:       increase.F("x"),
-				Line2:       increase.F("x"),
+				Name:        increase.F("Ian Crease"),
+				Line1:       increase.F("33 Liberty Street"),
+				Line2:       increase.F("Unit 2"),
 				Line3:       increase.F("x"),
 				PhoneNumber: increase.F("x"),
-				City:        increase.F("x"),
-				State:       increase.F("x"),
-				PostalCode:  increase.F("x"),
+				City:        increase.F("New York"),
+				State:       increase.F("NY"),
+				PostalCode:  increase.F("10045"),
 			}),
 		}),
 	})
@@ -94,7 +94,7 @@ func TestPhysicalCardUpdate(t *testing.T) {
 		context.TODO(),
 		"physical_card_ode8duyq5v2ynhjoharl",
 		increase.PhysicalCardUpdateParams{
-			Status: increase.F(increase.PhysicalCardUpdateParamsStatusActive),
+			Status: increase.F(increase.PhysicalCardUpdateParamsStatusDisabled),
 		},
 	)
 	if err != nil {
