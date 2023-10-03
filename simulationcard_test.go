@@ -26,10 +26,10 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{
-		Amount:               increase.F(int64(1)),
-		CardID:               increase.F("string"),
+		Amount:               increase.F(int64(1000)),
+		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
 		DigitalWalletTokenID: increase.F("string"),
-		EventSubscriptionID:  increase.F("string"),
+		EventSubscriptionID:  increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
 		PhysicalCardID:       increase.F("string"),
 	})
 	if err != nil {
@@ -54,8 +54,8 @@ func TestSimulationCardSettlementWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.Cards.Settlement(context.TODO(), increase.SimulationCardSettlementParams{
-		CardID:               increase.F("string"),
-		PendingTransactionID: increase.F("string"),
+		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
+		PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"),
 		Amount:               increase.F(int64(1)),
 	})
 	if err != nil {

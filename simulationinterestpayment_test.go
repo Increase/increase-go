@@ -27,8 +27,8 @@ func TestSimulationInterestPaymentNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.InterestPayments.New(context.TODO(), increase.SimulationInterestPaymentNewParams{
-		AccountID:   increase.F("string"),
-		Amount:      increase.F(int64(1)),
+		AccountID:   increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:      increase.F(int64(1000)),
 		PeriodEnd:   increase.F(time.Now()),
 		PeriodStart: increase.F(time.Now()),
 	})

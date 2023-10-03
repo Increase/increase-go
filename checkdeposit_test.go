@@ -27,11 +27,11 @@ func TestCheckDepositNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CheckDeposits.New(context.TODO(), increase.CheckDepositNewParams{
-		AccountID:        increase.F("string"),
-		Amount:           increase.F(int64(0)),
-		BackImageFileID:  increase.F("string"),
-		Currency:         increase.F("x"),
-		FrontImageFileID: increase.F("string"),
+		AccountID:        increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:           increase.F(int64(1000)),
+		BackImageFileID:  increase.F("file_26khfk98mzfz90a11oqx"),
+		Currency:         increase.F("USD"),
+		FrontImageFileID: increase.F("file_hkv175ovmc2tb2v2zbrm"),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -29,32 +29,32 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 	_, err := client.Entities.New(context.TODO(), increase.EntityNewParams{
 		Structure: increase.F(increase.EntityNewParamsStructureCorporation),
 		Corporation: increase.F(increase.EntityNewParamsCorporation{
-			Name:               increase.F("x"),
-			Website:            increase.F("string"),
-			TaxIdentifier:      increase.F("x"),
-			IncorporationState: increase.F("x"),
+			Name:               increase.F("National Phonograph Company"),
+			Website:            increase.F("https://example.com"),
+			TaxIdentifier:      increase.F("602214076"),
+			IncorporationState: increase.F("NY"),
 			Address: increase.F(increase.EntityNewParamsCorporationAddress{
-				Line1: increase.F("x"),
+				Line1: increase.F("33 Liberty Street"),
 				Line2: increase.F("x"),
-				City:  increase.F("x"),
-				State: increase.F("x"),
-				Zip:   increase.F("x"),
+				City:  increase.F("New York"),
+				State: increase.F("NY"),
+				Zip:   increase.F("10045"),
 			}),
 			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwner{{
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
-					Name:        increase.F("x"),
+					Name:        increase.F("Ian Crease"),
 					DateOfBirth: increase.F(time.Now()),
 					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
-						Line1: increase.F("x"),
+						Line1: increase.F("33 Liberty Street"),
 						Line2: increase.F("x"),
-						City:  increase.F("x"),
-						State: increase.F("x"),
-						Zip:   increase.F("x"),
+						City:  increase.F("New York"),
+						State: increase.F("NY"),
+						Zip:   increase.F("10045"),
 					}),
 					ConfirmedNoUsTaxID: increase.F(true),
 					Identification: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentification{
 						Method: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber),
-						Number: increase.F("xxxx"),
+						Number: increase.F("078051120"),
 						Passport: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport{
 							FileID:         increase.F("string"),
 							ExpirationDate: increase.F(time.Now()),
@@ -75,82 +75,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
-			}, {
-				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
-					Name:        increase.F("x"),
-					DateOfBirth: increase.F(time.Now()),
-					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
-						Line1: increase.F("x"),
-						Line2: increase.F("x"),
-						City:  increase.F("x"),
-						State: increase.F("x"),
-						Zip:   increase.F("x"),
-					}),
-					ConfirmedNoUsTaxID: increase.F(true),
-					Identification: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentification{
-						Method: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber),
-						Number: increase.F("xxxx"),
-						Passport: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport{
-							FileID:         increase.F("string"),
-							ExpirationDate: increase.F(time.Now()),
-							Country:        increase.F("x"),
-						}),
-						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
-							FileID:         increase.F("string"),
-							BackFileID:     increase.F("string"),
-							ExpirationDate: increase.F(time.Now()),
-							State:          increase.F("x"),
-						}),
-						Other: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther{
-							Country:        increase.F("x"),
-							Description:    increase.F("x"),
-							ExpirationDate: increase.F(time.Now()),
-							FileID:         increase.F("string"),
-							BackFileID:     increase.F("string"),
-						}),
-					}),
-				}),
-				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
-			}, {
-				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
-					Name:        increase.F("x"),
-					DateOfBirth: increase.F(time.Now()),
-					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
-						Line1: increase.F("x"),
-						Line2: increase.F("x"),
-						City:  increase.F("x"),
-						State: increase.F("x"),
-						Zip:   increase.F("x"),
-					}),
-					ConfirmedNoUsTaxID: increase.F(true),
-					Identification: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentification{
-						Method: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber),
-						Number: increase.F("xxxx"),
-						Passport: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport{
-							FileID:         increase.F("string"),
-							ExpirationDate: increase.F(time.Now()),
-							Country:        increase.F("x"),
-						}),
-						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
-							FileID:         increase.F("string"),
-							BackFileID:     increase.F("string"),
-							ExpirationDate: increase.F(time.Now()),
-							State:          increase.F("x"),
-						}),
-						Other: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther{
-							Country:        increase.F("x"),
-							Description:    increase.F("x"),
-							ExpirationDate: increase.F(time.Now()),
-							FileID:         increase.F("string"),
-							BackFileID:     increase.F("string"),
-						}),
-					}),
-				}),
-				CompanyTitle: increase.F("x"),
-				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngOwnership, increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
+				CompanyTitle: increase.F("CEO"),
+				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
 			}}),
 		}),
 		Description: increase.F("x"),
@@ -293,11 +219,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		}),
 		Relationship: increase.F(increase.EntityNewParamsRelationshipAffiliated),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
-			FileID: increase.F("string"),
-		}, {
-			FileID: increase.F("string"),
-		}, {
-			FileID: increase.F("string"),
+			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		}}),
 		Trust: increase.F(increase.EntityNewParamsTrust{
 			Name:           increase.F("x"),
@@ -561,11 +483,11 @@ func TestEntityUpdateAddressWithOptionalParams(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityUpdateAddressParams{
 			Address: increase.F(increase.EntityUpdateAddressParamsAddress{
-				Line1: increase.F("x"),
-				Line2: increase.F("x"),
-				City:  increase.F("x"),
-				State: increase.F("x"),
-				Zip:   increase.F("x"),
+				Line1: increase.F("33 Liberty Street"),
+				Line2: increase.F("Unit 2"),
+				City:  increase.F("New York"),
+				State: increase.F("NY"),
+				Zip:   increase.F("10045"),
 			}),
 		},
 	)

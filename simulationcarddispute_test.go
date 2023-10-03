@@ -29,8 +29,8 @@ func TestSimulationCardDisputeActionWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"card_dispute_h9sc95nbl1cgltpp7men",
 		increase.SimulationCardDisputeActionParams{
-			Status:      increase.F(increase.SimulationCardDisputeActionParamsStatusAccepted),
-			Explanation: increase.F("x"),
+			Status:      increase.F(increase.SimulationCardDisputeActionParamsStatusRejected),
+			Explanation: increase.F("This was a valid recurring transaction"),
 		},
 	)
 	if err != nil {

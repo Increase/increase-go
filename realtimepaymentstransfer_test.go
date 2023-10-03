@@ -27,12 +27,12 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.RealTimePaymentsTransfers.New(context.TODO(), increase.RealTimePaymentsTransferNewParams{
-		Amount:                   increase.F(int64(1)),
-		CreditorName:             increase.F("x"),
-		RemittanceInformation:    increase.F("x"),
-		SourceAccountNumberID:    increase.F("string"),
-		DestinationAccountNumber: increase.F("x"),
-		DestinationRoutingNumber: increase.F("xxxxxxxxx"),
+		Amount:                   increase.F(int64(100)),
+		CreditorName:             increase.F("Ian Crease"),
+		RemittanceInformation:    increase.F("Invoice 29582"),
+		SourceAccountNumberID:    increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		DestinationAccountNumber: increase.F("987654321"),
+		DestinationRoutingNumber: increase.F("101050001"),
 		ExternalAccountID:        increase.F("string"),
 		RequireApproval:          increase.F(true),
 		UniqueIdentifier:         increase.F("x"),

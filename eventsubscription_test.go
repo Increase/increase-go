@@ -26,7 +26,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
-		URL:                   increase.F("string"),
+		URL:                   increase.F("https://website.com/webhooks"),
 		SelectedEventCategory: increase.F(increase.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          increase.F("x"),
 	})
