@@ -27,10 +27,10 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-		Name:                  increase.F("x"),
-		EntityID:              increase.F("string"),
+		Name:                  increase.F("New Account!"),
+		EntityID:              increase.F("entity_n8y8tnk2p9339ti393yi"),
 		InformationalEntityID: increase.F("string"),
-		ProgramID:             increase.F("string"),
+		ProgramID:             increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -79,7 +79,7 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
 		increase.AccountUpdateParams{
-			Name: increase.F("x"),
+			Name: increase.F("My renamed account"),
 		},
 	)
 	if err != nil {

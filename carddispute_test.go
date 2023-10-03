@@ -27,8 +27,8 @@ func TestCardDisputeNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{
-		DisputedTransactionID: increase.F("string"),
-		Explanation:           increase.F("x"),
+		DisputedTransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),
+		Explanation:           increase.F("Unauthorized recurring transaction."),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -107,8 +107,8 @@ func TestInboundACHTransferNotificationOfChangeWithOptionalParams(t *testing.T) 
 		context.TODO(),
 		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
 		increase.InboundACHTransferNotificationOfChangeParams{
-			UpdatedAccountNumber: increase.F("x"),
-			UpdatedRoutingNumber: increase.F("x"),
+			UpdatedAccountNumber: increase.F("987654321"),
+			UpdatedRoutingNumber: increase.F("101050001"),
 		},
 	)
 	if err != nil {
@@ -136,7 +136,7 @@ func TestInboundACHTransferTransferReturn(t *testing.T) {
 		context.TODO(),
 		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
 		increase.InboundACHTransferTransferReturnParams{
-			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer),
+			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonPaymentStopped),
 		},
 	)
 	if err != nil {

@@ -27,7 +27,7 @@ func TestBalanceLookupLookupWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.BalanceLookups.Lookup(context.TODO(), increase.BalanceLookupLookupParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 		AtTime:    increase.F(time.Now()),
 	})
 	if err != nil {

@@ -27,14 +27,14 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
-		AccountNumberID:        increase.F("string"),
-		Amount:                 increase.F(int64(1)),
-		MessageToRecipient:     increase.F("x"),
-		RecipientAccountNumber: increase.F("x"),
-		RecipientName:          increase.F("x"),
-		RecipientRoutingNumber: increase.F("x"),
-		RecipientAddressLine1:  increase.F("x"),
-		RecipientAddressLine2:  increase.F("x"),
+		AccountNumberID:        increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                 increase.F(int64(10000)),
+		MessageToRecipient:     increase.F("Invoice 29582"),
+		RecipientAccountNumber: increase.F("987654321"),
+		RecipientName:          increase.F("Ian Crease"),
+		RecipientRoutingNumber: increase.F("101050001"),
+		RecipientAddressLine1:  increase.F("33 Liberty Street"),
+		RecipientAddressLine2:  increase.F("New York, NY, 10045"),
 		RecipientAddressLine3:  increase.F("x"),
 	})
 	if err != nil {

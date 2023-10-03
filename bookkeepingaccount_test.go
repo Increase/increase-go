@@ -26,7 +26,7 @@ func TestBookkeepingAccountNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.BookkeepingAccounts.New(context.TODO(), increase.BookkeepingAccountNewParams{
-		Name:               increase.F("x"),
+		Name:               increase.F("New Account!"),
 		AccountID:          increase.F("string"),
 		ComplianceCategory: increase.F(increase.BookkeepingAccountNewParamsComplianceCategoryCommingledCash),
 		EntityID:           increase.F("string"),

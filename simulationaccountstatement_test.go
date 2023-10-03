@@ -26,7 +26,7 @@ func TestSimulationAccountStatementNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.AccountStatements.New(context.TODO(), increase.SimulationAccountStatementNewParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 	})
 	if err != nil {
 		var apierr *increase.Error

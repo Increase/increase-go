@@ -27,7 +27,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Exports.New(context.TODO(), increase.ExportNewParams{
-		Category: increase.F(increase.ExportNewParamsCategoryAccountStatementOfx),
+		Category: increase.F(increase.ExportNewParamsCategoryTransactionCsv),
 		AccountStatementOfx: increase.F(increase.ExportNewParamsAccountStatementOfx{
 			AccountID: increase.F("string"),
 			CreatedAt: increase.F(increase.ExportNewParamsAccountStatementOfxCreatedAt{
@@ -47,7 +47,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		TransactionCsv: increase.F(increase.ExportNewParamsTransactionCsv{
-			AccountID: increase.F("string"),
+			AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 			CreatedAt: increase.F(increase.ExportNewParamsTransactionCsvCreatedAt{
 				After:      increase.F(time.Now()),
 				Before:     increase.F(time.Now()),

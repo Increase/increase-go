@@ -27,10 +27,10 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{
-		AccountID:            increase.F("string"),
-		Amount:               increase.F(int64(1)),
-		Description:          increase.F("x"),
-		DestinationAccountID: increase.F("string"),
+		AccountID:            increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:               increase.F(int64(100)),
+		Description:          increase.F("Creating liquidity"),
+		DestinationAccountID: increase.F("account_uf16sut2ct5bevmq3eh"),
 		RequireApproval:      increase.F(true),
 		UniqueIdentifier:     increase.F("x"),
 	})

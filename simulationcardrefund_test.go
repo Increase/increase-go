@@ -26,7 +26,7 @@ func TestSimulationCardRefundNew(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{
-		TransactionID: increase.F("string"),
+		TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),
 	})
 	if err != nil {
 		var apierr *increase.Error

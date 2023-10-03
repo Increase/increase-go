@@ -27,8 +27,8 @@ func TestAccountNumberNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.AccountNumbers.New(context.TODO(), increase.AccountNumberNewParams{
-		AccountID: increase.F("string"),
-		Name:      increase.F("x"),
+		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
+		Name:      increase.F("Rent payments"),
 		InboundACH: increase.F(increase.AccountNumberNewParamsInboundACH{
 			DebitStatus: increase.F(increase.AccountNumberNewParamsInboundACHDebitStatusAllowed),
 		}),
@@ -84,10 +84,10 @@ func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 		"account_number_v18nkfqm6afpsrvy82b2",
 		increase.AccountNumberUpdateParams{
 			InboundACH: increase.F(increase.AccountNumberUpdateParamsInboundACH{
-				DebitStatus: increase.F(increase.AccountNumberUpdateParamsInboundACHDebitStatusAllowed),
+				DebitStatus: increase.F(increase.AccountNumberUpdateParamsInboundACHDebitStatusBlocked),
 			}),
 			Name:   increase.F("x"),
-			Status: increase.F(increase.AccountNumberUpdateParamsStatusActive),
+			Status: increase.F(increase.AccountNumberUpdateParamsStatusDisabled),
 		},
 	)
 	if err != nil {

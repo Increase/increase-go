@@ -26,8 +26,8 @@ func TestSimulationWireTransferNewInboundWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("APIKey"),
 	)
 	_, err := client.Simulations.WireTransfers.NewInbound(context.TODO(), increase.SimulationWireTransferNewInboundParams{
-		AccountNumberID:                         increase.F("string"),
-		Amount:                                  increase.F(int64(1)),
+		AccountNumberID:                         increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                                  increase.F(int64(1000)),
 		BeneficiaryAddressLine1:                 increase.F("x"),
 		BeneficiaryAddressLine2:                 increase.F("x"),
 		BeneficiaryAddressLine3:                 increase.F("x"),
