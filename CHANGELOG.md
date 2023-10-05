@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.5 (2023-10-05)
+
+Full Changelog: [v0.8.4...v0.8.5](https://github.com/increase/increase-go/compare/v0.8.4...v0.8.5)
+
+### Features
+
+* **api:** add direction property to CardAuthorization ([#115](https://github.com/increase/increase-go/issues/115)) ([f4e2edf](https://github.com/increase/increase-go/commit/f4e2edf1b196827c110e9c25107e6e89effd7b35))
+
 ## 0.8.4 (2023-10-03)
 
 Full Changelog: [v0.8.3...v0.8.4](https://github.com/increase/increase-go/compare/v0.8.3...v0.8.4)
