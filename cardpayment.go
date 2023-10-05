@@ -176,6 +176,9 @@ type CardPaymentElementsCardAuthorization struct {
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The direction descibes the direction the funds will move, either from the
+	// cardholder to the merchant or from the merchant to the cardholder.
+	Direction CardPaymentElementsCardAuthorizationDirection `json:"direction,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
 	// will expire and the pending transaction will be released.
 	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
@@ -215,6 +218,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
+	Direction            apijson.Field
 	ExpiresAt            apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
@@ -251,6 +255,18 @@ const (
 	CardPaymentElementsCardAuthorizationCurrencyJpy CardPaymentElementsCardAuthorizationCurrency = "JPY"
 	// US Dollar (USD)
 	CardPaymentElementsCardAuthorizationCurrencyUsd CardPaymentElementsCardAuthorizationCurrency = "USD"
+)
+
+// The direction descibes the direction the funds will move, either from the
+// cardholder to the merchant or from the merchant to the cardholder.
+type CardPaymentElementsCardAuthorizationDirection string
+
+const (
+	// A regular card authorization where funds are debited from the cardholder.
+	CardPaymentElementsCardAuthorizationDirectionSettlement CardPaymentElementsCardAuthorizationDirection = "settlement"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	CardPaymentElementsCardAuthorizationDirectionRefund CardPaymentElementsCardAuthorizationDirection = "refund"
 )
 
 // Fields specific to the `network`.
