@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.6 (2023-10-11)
+
+Full Changelog: [v0.8.5...v0.8.6](https://github.com/increase/increase-go/compare/v0.8.5...v0.8.6)
+
 ## 0.8.5 (2023-10-05)
 
 Full Changelog: [v0.8.4...v0.8.5](https://github.com/increase/increase-go/compare/v0.8.4...v0.8.5)
