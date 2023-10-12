@@ -23,7 +23,7 @@ func TestGroupGetDetails(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Groups.GetDetails(context.TODO())
 	if err != nil {

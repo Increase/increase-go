@@ -23,7 +23,7 @@ func TestSimulationInboundFundsHoldRelease(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundFundsHolds.Release(context.TODO(), "inbound_funds_hold_9vuasmywdo7xb3zt4071")
 	if err != nil {

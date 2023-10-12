@@ -26,7 +26,7 @@ func TestFileNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Files.New(context.TODO(), increase.FileNewParams{
 		File:        increase.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
@@ -52,7 +52,7 @@ func TestFileGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Files.Get(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
 	if err != nil {
@@ -74,7 +74,7 @@ func TestFileListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Files.List(context.TODO(), increase.FileListParams{
 		CreatedAt: increase.F(increase.FileListParamsCreatedAt{

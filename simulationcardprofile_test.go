@@ -23,7 +23,7 @@ func TestSimulationCardProfileApprove(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardProfiles.Approve(context.TODO(), "card_profile_cox5y73lob2eqly18piy")
 	if err != nil {

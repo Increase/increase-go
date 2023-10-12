@@ -24,7 +24,7 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:                  increase.F("New Account!"),
@@ -51,7 +51,7 @@ func TestAccountGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Accounts.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
@@ -73,7 +73,7 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Accounts.Update(
 		context.TODO(),
@@ -101,7 +101,7 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Accounts.List(context.TODO(), increase.AccountListParams{
 		CreatedAt: increase.F(increase.AccountListParamsCreatedAt{
@@ -136,7 +136,7 @@ func TestAccountClose(t *testing.T) {
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Accounts.Close(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {

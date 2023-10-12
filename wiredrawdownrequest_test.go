@@ -24,7 +24,7 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
 		AccountNumberID:        increase.F("account_number_v18nkfqm6afpsrvy82b2"),
@@ -56,7 +56,7 @@ func TestWireDrawdownRequestGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.Get(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
 	if err != nil {
@@ -78,7 +78,7 @@ func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{
 		Cursor: increase.F("string"),

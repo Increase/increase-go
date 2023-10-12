@@ -23,7 +23,7 @@ func TestSimulationCardRefundNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{
 		TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),

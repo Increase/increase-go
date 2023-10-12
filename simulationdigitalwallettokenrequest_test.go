@@ -23,7 +23,7 @@ func TestSimulationDigitalWalletTokenRequestNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.DigitalWalletTokenRequests.New(context.TODO(), increase.SimulationDigitalWalletTokenRequestNewParams{
 		CardID: increase.F("card_oubs0hwk5rn6knuecxg2"),

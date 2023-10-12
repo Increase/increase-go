@@ -24,7 +24,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
 		AccountID:                increase.F("account_in71c4amph0vgo2qllky"),
@@ -65,7 +65,7 @@ func TestACHTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.Get(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
@@ -87,7 +87,7 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.List(context.TODO(), increase.ACHTransferListParams{
 		AccountID: increase.F("string"),
@@ -121,7 +121,7 @@ func TestACHTransferApprove(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.Approve(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
@@ -143,7 +143,7 @@ func TestACHTransferCancel(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.Cancel(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {

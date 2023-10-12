@@ -22,7 +22,7 @@ func TestAutoPagination(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	iter := client.Accounts.ListAutoPaging(context.TODO(), increase.AccountListParams{})
 	// Prism mock isn't going to give us real pagination

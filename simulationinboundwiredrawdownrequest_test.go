@@ -23,7 +23,7 @@ func TestSimulationInboundWireDrawdownRequestNewWithOptionalParams(t *testing.T)
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundWireDrawdownRequests.New(context.TODO(), increase.SimulationInboundWireDrawdownRequestNewParams{
 		Amount:                                  increase.F(int64(10000)),

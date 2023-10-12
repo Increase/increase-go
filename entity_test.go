@@ -24,7 +24,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.New(context.TODO(), increase.EntityNewParams{
 		Structure: increase.F(increase.EntityNewParamsStructureCorporation),
@@ -398,7 +398,7 @@ func TestEntityGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.Get(context.TODO(), "entity_n8y8tnk2p9339ti393yi")
 	if err != nil {
@@ -420,7 +420,7 @@ func TestEntityListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.List(context.TODO(), increase.EntityListParams{
 		CreatedAt: increase.F(increase.EntityListParamsCreatedAt{
@@ -454,7 +454,7 @@ func TestEntityArchive(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.Archive(context.TODO(), "entity_n8y8tnk2p9339ti393yi")
 	if err != nil {
@@ -476,7 +476,7 @@ func TestEntityUpdateAddressWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.UpdateAddress(
 		context.TODO(),

@@ -24,7 +24,7 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.New(context.TODO(), increase.RealTimePaymentsTransferNewParams{
 		Amount:                   increase.F(int64(100)),
@@ -56,7 +56,7 @@ func TestRealTimePaymentsTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.Get(context.TODO(), "real_time_payments_transfer_iyuhl5kdn7ssmup83mvq")
 	if err != nil {
@@ -78,7 +78,7 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.List(context.TODO(), increase.RealTimePaymentsTransferListParams{
 		AccountID: increase.F("string"),
