@@ -23,7 +23,7 @@ func TestCardProfileNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardProfiles.New(context.TODO(), increase.CardProfileNewParams{
 		Description: increase.F("My Card Profile"),
@@ -66,7 +66,7 @@ func TestCardProfileGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardProfiles.Get(context.TODO(), "card_profile_cox5y73lob2eqly18piy")
 	if err != nil {
@@ -88,7 +88,7 @@ func TestCardProfileListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardProfiles.List(context.TODO(), increase.CardProfileListParams{
 		Cursor: increase.F("string"),
@@ -119,7 +119,7 @@ func TestCardProfileArchive(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardProfiles.Archive(context.TODO(), "card_profile_cox5y73lob2eqly18piy")
 	if err != nil {

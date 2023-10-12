@@ -25,7 +25,7 @@ func TestContextCancel(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
@@ -55,7 +55,7 @@ func TestContextCancelDelay(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{Transport: &neverTransport{}}),
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
@@ -90,7 +90,7 @@ func TestContextDeadline(t *testing.T) {
 	go func() {
 		client := increase.NewClient(
 			option.WithBaseURL(baseURL),
-			option.WithAPIKey("APIKey"),
+			option.WithAPIKey("My API Key"),
 			option.WithHTTPClient(&http.Client{Transport: &neverTransport{}}),
 		)
 		res, err := client.Accounts.New(deadlineCtx, increase.AccountNewParams{

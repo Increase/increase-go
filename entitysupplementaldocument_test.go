@@ -23,7 +23,7 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.SupplementalDocuments.New(
 		context.TODO(),
@@ -51,7 +51,7 @@ func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
 		EntityID: increase.F("string"),

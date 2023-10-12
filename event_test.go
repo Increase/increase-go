@@ -24,7 +24,7 @@ func TestEventGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Events.Get(context.TODO(), "event_001dzz0r20rzr4zrhrr1364hy80")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Events.List(context.TODO(), increase.EventListParams{
 		AssociatedObjectID: increase.F("string"),

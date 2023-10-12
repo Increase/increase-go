@@ -24,7 +24,7 @@ func TestPendingTransactionGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PendingTransactions.Get(context.TODO(), "pending_transaction_k1sfetcau2qbvjbzgju4")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PendingTransactions.List(context.TODO(), increase.PendingTransactionListParams{
 		AccountID: increase.F("string"),

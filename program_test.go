@@ -23,7 +23,7 @@ func TestProgramGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Programs.Get(context.TODO(), "program_i2v2os4mwza1oetokh9i")
 	if err != nil {
@@ -45,7 +45,7 @@ func TestProgramListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Programs.List(context.TODO(), increase.ProgramListParams{
 		Cursor: increase.F("string"),

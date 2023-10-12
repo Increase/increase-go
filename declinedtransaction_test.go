@@ -24,7 +24,7 @@ func TestDeclinedTransactionGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeclinedTransactions.Get(context.TODO(), "declined_transaction_17jbn0yyhvkt4v4ooym8")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeclinedTransactions.List(context.TODO(), increase.DeclinedTransactionListParams{
 		AccountID: increase.F("string"),

@@ -24,7 +24,7 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.New(context.TODO(), increase.AccountTransferNewParams{
 		AccountID:            increase.F("account_in71c4amph0vgo2qllky"),
@@ -53,7 +53,7 @@ func TestAccountTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.Get(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {
@@ -75,7 +75,7 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{
 		AccountID: increase.F("string"),
@@ -108,7 +108,7 @@ func TestAccountTransferApprove(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.Approve(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {
@@ -130,7 +130,7 @@ func TestAccountTransferCancel(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.Cancel(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
 	if err != nil {

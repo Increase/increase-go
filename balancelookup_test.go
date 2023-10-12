@@ -24,7 +24,7 @@ func TestBalanceLookupLookupWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BalanceLookups.Lookup(context.TODO(), increase.BalanceLookupLookupParams{
 		AccountID: increase.F("account_in71c4amph0vgo2qllky"),

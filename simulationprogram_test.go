@@ -23,7 +23,7 @@ func TestSimulationProgramNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.Programs.New(context.TODO(), increase.SimulationProgramNewParams{
 		Name: increase.F("For Benefit Of"),

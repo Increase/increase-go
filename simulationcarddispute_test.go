@@ -23,7 +23,7 @@ func TestSimulationCardDisputeActionWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardDisputes.Action(
 		context.TODO(),

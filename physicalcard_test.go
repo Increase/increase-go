@@ -24,7 +24,7 @@ func TestPhysicalCardNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.New(context.TODO(), increase.PhysicalCardNewParams{
 		CardID:        increase.F("card_oubs0hwk5rn6knuecxg2"),
@@ -66,7 +66,7 @@ func TestPhysicalCardGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.Get(context.TODO(), "physical_card_ode8duyq5v2ynhjoharl")
 	if err != nil {
@@ -88,7 +88,7 @@ func TestPhysicalCardUpdate(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.Update(
 		context.TODO(),
@@ -116,7 +116,7 @@ func TestPhysicalCardListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.List(context.TODO(), increase.PhysicalCardListParams{
 		CardID: increase.F("string"),

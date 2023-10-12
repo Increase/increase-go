@@ -23,7 +23,7 @@ func TestRoutingNumberListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RoutingNumbers.List(context.TODO(), increase.RoutingNumberListParams{
 		RoutingNumber: increase.F("xxxxxxxxx"),

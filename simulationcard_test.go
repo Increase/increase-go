@@ -23,7 +23,7 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{
 		Amount:               increase.F(int64(1000)),
@@ -51,7 +51,7 @@ func TestSimulationCardSettlementWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.Cards.Settlement(context.TODO(), increase.SimulationCardSettlementParams{
 		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),

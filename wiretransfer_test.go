@@ -24,7 +24,7 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
 		AccountID:               increase.F("account_in71c4amph0vgo2qllky"),
@@ -59,7 +59,7 @@ func TestWireTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.Get(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
@@ -81,7 +81,7 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
 		AccountID: increase.F("string"),
@@ -115,7 +115,7 @@ func TestWireTransferApprove(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.Approve(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
@@ -137,7 +137,7 @@ func TestWireTransferCancel(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.Cancel(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
@@ -160,7 +160,7 @@ func TestWireTransferReverse(t *testing.T) {
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.Reverse(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {
@@ -183,7 +183,7 @@ func TestWireTransferSubmit(t *testing.T) {
 	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.Submit(context.TODO(), "wire_transfer_5akynk7dqsq25qwk9q2u")
 	if err != nil {

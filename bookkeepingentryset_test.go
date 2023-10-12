@@ -24,7 +24,7 @@ func TestBookkeepingEntrySetNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingEntrySets.New(context.TODO(), increase.BookkeepingEntrySetNewParams{
 		Entries: increase.F([]increase.BookkeepingEntrySetNewParamsEntry{{

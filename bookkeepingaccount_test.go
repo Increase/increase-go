@@ -23,7 +23,7 @@ func TestBookkeepingAccountNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingAccounts.New(context.TODO(), increase.BookkeepingAccountNewParams{
 		Name:               increase.F("New Account!"),
@@ -50,7 +50,7 @@ func TestBookkeepingAccountListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingAccounts.List(context.TODO(), increase.BookkeepingAccountListParams{
 		Cursor: increase.F("string"),

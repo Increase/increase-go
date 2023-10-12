@@ -23,7 +23,7 @@ func TestSimulationAccountStatementNew(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.AccountStatements.New(context.TODO(), increase.SimulationAccountStatementNewParams{
 		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
