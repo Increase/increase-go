@@ -24,7 +24,7 @@ func TestCardPaymentGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPayments.Get(context.TODO(), "card_payment_nd3k2kacrqjli8482ave")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestCardPaymentListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPayments.List(context.TODO(), increase.CardPaymentListParams{
 		AccountID: increase.F("string"),

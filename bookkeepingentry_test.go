@@ -23,7 +23,7 @@ func TestBookkeepingEntryListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingEntries.List(context.TODO(), increase.BookkeepingEntryListParams{
 		Cursor: increase.F("string"),

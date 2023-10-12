@@ -24,7 +24,7 @@ func TestDigitalWalletTokenGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DigitalWalletTokens.Get(context.TODO(), "digital_wallet_token_izi62go3h51p369jrie0")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DigitalWalletTokens.List(context.TODO(), increase.DigitalWalletTokenListParams{
 		CardID: increase.F("string"),

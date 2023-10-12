@@ -24,7 +24,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
 		AccountID:         increase.F("account_in71c4amph0vgo2qllky"),
@@ -74,7 +74,7 @@ func TestCheckTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.Get(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -96,7 +96,7 @@ func TestCheckTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.List(context.TODO(), increase.CheckTransferListParams{
 		AccountID: increase.F("string"),
@@ -129,7 +129,7 @@ func TestCheckTransferApprove(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.Approve(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -151,7 +151,7 @@ func TestCheckTransferCancel(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.Cancel(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -174,7 +174,7 @@ func TestCheckTransferStopPaymentWithOptionalParams(t *testing.T) {
 	t.Skip("Prism doesn't accept no request body being sent but returns 415 if it is sent")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.StopPayment(
 		context.TODO(),

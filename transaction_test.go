@@ -24,7 +24,7 @@ func TestTransactionGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Transactions.Get(context.TODO(), "transaction_uyrp7fld2ium70oa7oi")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Transactions.List(context.TODO(), increase.TransactionListParams{
 		AccountID: increase.F("string"),

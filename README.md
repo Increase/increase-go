@@ -47,7 +47,7 @@ import (
 
 func main() {
 	client := increase.NewClient(
-		option.WithAPIKey("my api key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
+		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
 		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{

@@ -23,7 +23,7 @@ func TestSimulationRealTimePaymentsTransferCompleteWithOptionalParams(t *testing
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.RealTimePaymentsTransfers.Complete(
 		context.TODO(),
@@ -53,7 +53,7 @@ func TestSimulationRealTimePaymentsTransferNewInboundWithOptionalParams(t *testi
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.RealTimePaymentsTransfers.NewInbound(context.TODO(), increase.SimulationRealTimePaymentsTransferNewInboundParams{
 		AccountNumberID:       increase.F("account_number_v18nkfqm6afpsrvy82b2"),

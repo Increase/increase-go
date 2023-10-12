@@ -181,15 +181,6 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 	}
 }
 
-// WithAPIKey returns a RequestOption that specifies a API Key
-// to be used as the basis for authentication.
-func WithAPIKey(key string) RequestOption {
-	return func(r *requestconfig.RequestConfig) error {
-		r.APIKey = key
-		return r.Apply(WithHeader("Authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
-	}
-}
-
 // WithEnvironmentProduction returns a RequestOption that sets the current
 // environment to be the "production" environment. An environment specifies which base URL
 // to use by default.
@@ -202,4 +193,12 @@ func WithEnvironmentProduction() RequestOption {
 // to use by default.
 func WithEnvironmentSandbox() RequestOption {
 	return WithBaseURL("https://sandbox.increase.com/")
+}
+
+// WithAPIKey returns a RequestOption that sets the client setting "api_key".
+func WithAPIKey(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.APIKey = value
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
+	}
 }

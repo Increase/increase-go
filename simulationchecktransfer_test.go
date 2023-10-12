@@ -23,7 +23,7 @@ func TestSimulationCheckTransferDeposit(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CheckTransfers.Deposit(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestSimulationCheckTransferMail(t *testing.T) {
 	t.Skip("Prism incorrectly returns an invalid JSON error")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CheckTransfers.Mail(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
 	if err != nil {

@@ -24,7 +24,7 @@ func TestEntityBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.BeneficialOwners.New(context.TODO(), increase.EntityBeneficialOwnerNewParams{
 		BeneficialOwner: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwner{
@@ -86,7 +86,7 @@ func TestEntityBeneficialOwnerArchive(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.BeneficialOwners.Archive(context.TODO(), increase.EntityBeneficialOwnerArchiveParams{
 		BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
@@ -111,7 +111,7 @@ func TestEntityBeneficialOwnerUpdateAddressWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.BeneficialOwners.UpdateAddress(context.TODO(), increase.EntityBeneficialOwnerUpdateAddressParams{
 		Address: increase.F(increase.EntityBeneficialOwnerUpdateAddressParamsAddress{

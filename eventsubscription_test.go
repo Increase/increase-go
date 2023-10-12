@@ -23,7 +23,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
 		URL:                   increase.F("https://website.com/webhooks"),
@@ -49,7 +49,7 @@ func TestEventSubscriptionGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.Get(context.TODO(), "event_subscription_001dzz0r20rcdxgb013zqb8m04g")
 	if err != nil {
@@ -71,7 +71,7 @@ func TestEventSubscriptionUpdateWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.Update(
 		context.TODO(),
@@ -99,7 +99,7 @@ func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.List(context.TODO(), increase.EventSubscriptionListParams{
 		Cursor: increase.F("string"),

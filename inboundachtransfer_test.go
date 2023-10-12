@@ -24,7 +24,7 @@ func TestInboundACHTransferGet(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.Get(context.TODO(), "inbound_ach_transfer_tdrwqr3fq9gnnq49odev")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestInboundACHTransferListWithOptionalParams(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.List(context.TODO(), increase.InboundACHTransferListParams{
 		AccountID: increase.F("string"),
@@ -79,7 +79,7 @@ func TestInboundACHTransferDecline(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.Decline(context.TODO(), "inbound_ach_transfer_tdrwqr3fq9gnnq49odev")
 	if err != nil {
@@ -101,7 +101,7 @@ func TestInboundACHTransferNotificationOfChangeWithOptionalParams(t *testing.T) 
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.NotificationOfChange(
 		context.TODO(),
@@ -130,7 +130,7 @@ func TestInboundACHTransferTransferReturn(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.TransferReturn(
 		context.TODO(),

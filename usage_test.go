@@ -22,7 +22,7 @@ func TestUsage(t *testing.T) {
 	}
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("APIKey"),
+		option.WithAPIKey("My API Key"),
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name: increase.F("My First Increase Account"),
