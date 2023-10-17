@@ -274,6 +274,8 @@ type CheckTransferDeposit struct {
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// The identifier of the Transaction object created when the check was deposited.
 	TransactionID string `json:"transaction_id,required,nullable"`
+	// The identifier of the Check Transfer object that was deposited.
+	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type CheckTransferDepositType `json:"type,required"`
@@ -288,6 +290,7 @@ type checkTransferDepositJSON struct {
 	DepositedAt                     apijson.Field
 	FrontImageFileID                apijson.Field
 	TransactionID                   apijson.Field
+	TransferID                      apijson.Field
 	Type                            apijson.Field
 	raw                             string
 	ExtraFields                     map[string]apijson.Field

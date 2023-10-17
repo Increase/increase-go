@@ -73,7 +73,8 @@ type EntityBeneficialOwnerNewParamsBeneficialOwner struct {
 	// Personal details for the beneficial owner.
 	Individual param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual] `json:"individual,required"`
 	// Why this person is considered a beneficial owner of the entity. At least one
-	// option is required.
+	// option is required, if a person is both a control person and owner, submit an
+	// array containing both.
 	Prongs param.Field[[]EntityBeneficialOwnerNewParamsBeneficialOwnerProng] `json:"prongs,required"`
 	// This person's role or title within the entity.
 	CompanyTitle param.Field[string] `json:"company_title"`
