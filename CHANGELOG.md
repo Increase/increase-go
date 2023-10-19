@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.9.0 (2023-10-19)
+
+Full Changelog: [v0.8.6...v0.9.0](https://github.com/increase/increase-go/compare/v0.8.6...v0.9.0)
+
+### Features
+
+* **api:** add addenda details for ACH transfers ([#124](https://github.com/increase/increase-go/issues/124)) ([62d8fb5](https://github.com/increase/increase-go/commit/62d8fb5b44c8cd43972044782621bc3337e77b8b))
+* **api:** updates ([#125](https://github.com/increase/increase-go/issues/125)) ([06f453f](https://github.com/increase/increase-go/commit/06f453fee8f8979903fb7400486dc734ae93baf9))
+
+
+### Chores
+
+* **internal:** rearrange client arguments ([#121](https://github.com/increase/increase-go/issues/121)) ([6a1fad3](https://github.com/increase/increase-go/commit/6a1fad31bee4f628c95aa1bdea87b7db7f304a50))
+* update README ([#119](https://github.com/increase/increase-go/issues/119)) ([3c7b2c8](https://github.com/increase/increase-go/commit/3c7b2c8b89aa36d8938338baf653f6d934130492))
+
+
+### Documentation
+
+* organisation -&gt; organization (UK to US English) ([#123](https://github.com/increase/increase-go/issues/123)) ([957d4a9](https://github.com/increase/increase-go/commit/957d4a96f3f8ac7344548656f1f59225647e97e0))
+
 ## 0.8.6 (2023-10-11)
 
 Full Changelog: [v0.8.5...v0.8.6](https://github.com/increase/increase-go/compare/v0.8.5...v0.8.6)
