@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/url"
 
@@ -38,6 +39,14 @@ func (r *BookkeepingAccountService) New(ctx context.Context, body BookkeepingAcc
 	opts = append(r.Options[:], opts...)
 	path := "bookkeeping_accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+// Update a Bookkeeping Account
+func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccountID string, body BookkeepingAccountUpdateParams, opts ...option.RequestOption) (res *BookkeepingAccount, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("bookkeeping_accounts/%s", bookkeepingAccountID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
 }
 
@@ -141,6 +150,15 @@ const (
 	// A customer balance.
 	BookkeepingAccountNewParamsComplianceCategoryCustomerBalance BookkeepingAccountNewParamsComplianceCategory = "customer_balance"
 )
+
+type BookkeepingAccountUpdateParams struct {
+	// The name you choose for the account.
+	Name param.Field[string] `json:"name,required"`
+}
+
+func (r BookkeepingAccountUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
 
 type BookkeepingAccountListParams struct {
 	// Return the page of entries after this one.
