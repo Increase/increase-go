@@ -350,7 +350,7 @@ type PhysicalCardNewParamsShipmentAddress struct {
 	Line2 param.Field[string] `json:"line2"`
 	// The third line of the shipping address.
 	Line3 param.Field[string] `json:"line3"`
-	// The phone number of the receipient.
+	// The phone number of the recipient.
 	PhoneNumber param.Field[string] `json:"phone_number"`
 }
 

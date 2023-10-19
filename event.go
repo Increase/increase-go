@@ -132,6 +132,8 @@ const (
 	EventCategoryACHTransferUpdated EventCategory = "ach_transfer.updated"
 	// Occurs whenever a Bookkeeping Account is created.
 	EventCategoryBookkeepingAccountCreated EventCategory = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Account is updated.
+	EventCategoryBookkeepingAccountUpdated EventCategory = "bookkeeping_account.updated"
 	// Occurs whenever a Bookkeeping Entry Set is created.
 	EventCategoryBookkeepingEntrySetUpdated EventCategory = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
@@ -319,6 +321,8 @@ const (
 	EventListParamsCategoryInACHTransferUpdated EventListParamsCategoryIn = "ach_transfer.updated"
 	// Occurs whenever a Bookkeeping Account is created.
 	EventListParamsCategoryInBookkeepingAccountCreated EventListParamsCategoryIn = "bookkeeping_account.created"
+	// Occurs whenever a Bookkeeping Account is updated.
+	EventListParamsCategoryInBookkeepingAccountUpdated EventListParamsCategoryIn = "bookkeeping_account.updated"
 	// Occurs whenever a Bookkeeping Entry Set is created.
 	EventListParamsCategoryInBookkeepingEntrySetUpdated EventListParamsCategoryIn = "bookkeeping_entry_set.updated"
 	// Occurs whenever a Card is created.
