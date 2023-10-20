@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2023-10-20)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/increase/increase-go/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** add returned_per_odfi_request enum ([#130](https://github.com/increase/increase-go/issues/130)) ([ca5c55a](https://github.com/increase/increase-go/commit/ca5c55a7fa03cee6f94c9182ec97c0bf3e160a90))
+
 ## 0.11.0 (2023-10-20)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/increase/increase-go/compare/v0.10.0...v0.11.0)
