@@ -309,6 +309,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress DeclinedTransactionSourceCardDeclineCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -348,6 +351,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
+	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -367,6 +371,57 @@ type declinedTransactionSourceCardDeclineJSON struct {
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type DeclinedTransactionSourceCardDeclineCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	VerificationResult DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult `json:"verification_result,required"`
+	JSON               declinedTransactionSourceCardDeclineCardholderAddressJSON
+}
+
+// declinedTransactionSourceCardDeclineCardholderAddressJSON contains the JSON
+// metadata for the struct [DeclinedTransactionSourceCardDeclineCardholderAddress]
+type declinedTransactionSourceCardDeclineCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	VerificationResult apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult string
+
+const (
+	// No adress was provided in the authorization request.
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNotChecked DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "not_checked"
+	// Postal code matches, but the street address was not verified
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_no_match_address_match"
+	// Postal code and street address match
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "match"
+	// Postal code and street address do not match
+	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNoMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "no_match"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
