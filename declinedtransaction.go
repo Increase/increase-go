@@ -309,9 +309,6 @@ type DeclinedTransactionSourceCardDecline struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
-	// Cardholder address provided in the authorization request and the address on file
-	// we verified it against.
-	CardholderAddress DeclinedTransactionSourceCardDeclineCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -342,7 +339,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
 	// Why the transaction was declined.
 	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	JSON   declinedTransactionSourceCardDeclineJSON
+	// Fields related to verification of cardholder-provided values.
+	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
+	JSON         declinedTransactionSourceCardDeclineJSON
 }
 
 // declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
@@ -351,7 +350,6 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
-	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -364,6 +362,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
+	Verification         apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -371,57 +370,6 @@ type declinedTransactionSourceCardDeclineJSON struct {
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// Cardholder address provided in the authorization request and the address on file
-// we verified it against.
-type DeclinedTransactionSourceCardDeclineCardholderAddress struct {
-	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
-	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
-	// The cardholder address line 1 provided for verification in the authorization
-	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
-	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
-	// The address verification result returned to the card network.
-	VerificationResult DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult `json:"verification_result,required"`
-	JSON               declinedTransactionSourceCardDeclineCardholderAddressJSON
-}
-
-// declinedTransactionSourceCardDeclineCardholderAddressJSON contains the JSON
-// metadata for the struct [DeclinedTransactionSourceCardDeclineCardholderAddress]
-type declinedTransactionSourceCardDeclineCardholderAddressJSON struct {
-	ActualLine1        apijson.Field
-	ActualPostalCode   apijson.Field
-	ProvidedLine1      apijson.Field
-	ProvidedPostalCode apijson.Field
-	VerificationResult apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *DeclinedTransactionSourceCardDeclineCardholderAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The address verification result returned to the card network.
-type DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult string
-
-const (
-	// No adress was provided in the authorization request.
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNotChecked DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "not_checked"
-	// Postal code matches, but the street address was not verified
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_no_match_address_match"
-	// Postal code and street address match
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "match"
-	// Postal code and street address do not match
-	DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNoMatch DeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "no_match"
-)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -600,6 +548,115 @@ const (
 	// The transaction was suspected to be fraudulent. Please reach out to
 	// support@increase.com for more information.
 	DeclinedTransactionSourceCardDeclineReasonSuspectedFraud DeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
+)
+
+// Fields related to verification of cardholder-provided values.
+type DeclinedTransactionSourceCardDeclineVerification struct {
+	// Fields related to verification of the Card Verification Code, a 3-digit code on
+	// the back of the card.
+	CardVerificationCode DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode `json:"card_verification_code,required"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress DeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
+	JSON              declinedTransactionSourceCardDeclineVerificationJSON
+}
+
+// declinedTransactionSourceCardDeclineVerificationJSON contains the JSON metadata
+// for the struct [DeclinedTransactionSourceCardDeclineVerification]
+type declinedTransactionSourceCardDeclineVerificationJSON struct {
+	CardVerificationCode apijson.Field
+	CardholderAddress    apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields related to verification of the Card Verification Code, a 3-digit code on
+// the back of the card.
+type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
+	// The result of verifying the Card Verification Code.
+	Result DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
+	JSON   declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+}
+
+// declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+// contains the JSON metadata for the struct
+// [DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode]
+type declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON struct {
+	Result      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The result of verifying the Card Verification Code.
+type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult string
+
+const (
+	// No card verification code was provided in the authorization request.
+	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNotChecked DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "not_checked"
+	// The card verification code matched the one on file.
+	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "match"
+	// The card verification code did not match the one on file.
+	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
+)
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type DeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	Result DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
+	JSON   declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+}
+
+// declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON contains
+// the JSON metadata for the struct
+// [DeclinedTransactionSourceCardDeclineVerificationCardholderAddress]
+type declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult string
+
+const (
+	// No adress was provided in the authorization request.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "not_checked"
+	// Postal code matches, but the street address was not verified.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	// Postal code and street address match.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "match"
+	// Postal code and street address do not match.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
 // The type of the resource. We may add additional possible values for this enum
