@@ -400,6 +400,9 @@ func (r *InboundACHTransferTransferReturn) UnmarshalJSON(data []byte) (err error
 type InboundACHTransferTransferReturnReason string
 
 const (
+	// The originating financial institution asked for this transfer to be returned.
+	// The receiving bank is complying with the request. The Nacha return code is R06.
+	InboundACHTransferTransferReturnReasonReturnedPerOdfiRequest InboundACHTransferTransferReturnReason = "returned_per_odfi_request"
 	// The customer no longer authorizes this transaction. The Nacha return code is
 	// R07.
 	InboundACHTransferTransferReturnReasonAuthorizationRevokedByCustomer InboundACHTransferTransferReturnReason = "authorization_revoked_by_customer"
@@ -519,6 +522,9 @@ func (r InboundACHTransferTransferReturnParams) MarshalJSON() (data []byte, err 
 type InboundACHTransferTransferReturnParamsReason string
 
 const (
+	// The originating financial institution asked for this transfer to be returned.
+	// The receiving bank is complying with the request. The Nacha return code is R06.
+	InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest InboundACHTransferTransferReturnParamsReason = "returned_per_odfi_request"
 	// The customer no longer authorizes this transaction. The Nacha return code is
 	// R07.
 	InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer InboundACHTransferTransferReturnParamsReason = "authorization_revoked_by_customer"

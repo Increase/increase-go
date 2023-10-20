@@ -4859,6 +4859,9 @@ func (r *ACHTransferSimulationTransferTransferReturn) UnmarshalJSON(data []byte)
 type ACHTransferSimulationTransferTransferReturnReason string
 
 const (
+	// The originating financial institution asked for this transfer to be returned.
+	// The receiving bank is complying with the request. The Nacha return code is R06.
+	ACHTransferSimulationTransferTransferReturnReasonReturnedPerOdfiRequest ACHTransferSimulationTransferTransferReturnReason = "returned_per_odfi_request"
 	// The customer no longer authorizes this transaction. The Nacha return code is
 	// R07.
 	ACHTransferSimulationTransferTransferReturnReasonAuthorizationRevokedByCustomer ACHTransferSimulationTransferTransferReturnReason = "authorization_revoked_by_customer"
