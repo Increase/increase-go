@@ -170,6 +170,9 @@ type CardPaymentElementsCardAuthorization struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress CardPaymentElementsCardAuthorizationCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardPaymentElementsCardAuthorizationCurrency `json:"currency,required"`
@@ -216,6 +219,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
+	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	Direction            apijson.Field
@@ -237,6 +241,57 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 func (r *CardPaymentElementsCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type CardPaymentElementsCardAuthorizationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	VerificationResult CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult `json:"verification_result,required"`
+	JSON               cardPaymentElementsCardAuthorizationCardholderAddressJSON
+}
+
+// cardPaymentElementsCardAuthorizationCardholderAddressJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardAuthorizationCardholderAddress]
+type cardPaymentElementsCardAuthorizationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	VerificationResult apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult string
+
+const (
+	// No adress was provided in the authorization request.
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultNotChecked CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "not_checked"
+	// Postal code matches, but the street address was not verified
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "postal_code_no_match_address_match"
+	// Postal code and street address match
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultMatch CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "match"
+	// Postal code and street address do not match
+	CardPaymentElementsCardAuthorizationCardholderAddressVerificationResultNoMatch CardPaymentElementsCardAuthorizationCardholderAddressVerificationResult = "no_match"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
@@ -484,6 +539,9 @@ type CardPaymentElementsCardDecline struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress CardPaymentElementsCardDeclineCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency CardPaymentElementsCardDeclineCurrency `json:"currency,required"`
@@ -523,6 +581,7 @@ type cardPaymentElementsCardDeclineJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
+	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -542,6 +601,57 @@ type cardPaymentElementsCardDeclineJSON struct {
 func (r *CardPaymentElementsCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type CardPaymentElementsCardDeclineCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	VerificationResult CardPaymentElementsCardDeclineCardholderAddressVerificationResult `json:"verification_result,required"`
+	JSON               cardPaymentElementsCardDeclineCardholderAddressJSON
+}
+
+// cardPaymentElementsCardDeclineCardholderAddressJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardDeclineCardholderAddress]
+type cardPaymentElementsCardDeclineCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	VerificationResult apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardDeclineCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type CardPaymentElementsCardDeclineCardholderAddressVerificationResult string
+
+const (
+	// No adress was provided in the authorization request.
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultNotChecked CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "not_checked"
+	// Postal code matches, but the street address was not verified
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "postal_code_no_match_address_match"
+	// Postal code and street address match
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultMatch CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "match"
+	// Postal code and street address do not match
+	CardPaymentElementsCardDeclineCardholderAddressVerificationResultNoMatch CardPaymentElementsCardDeclineCardholderAddressVerificationResult = "no_match"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -2139,6 +2249,9 @@ type CardPaymentElementsCardValidation struct {
 	ID string `json:"id,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress CardPaymentElementsCardValidationCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardPaymentElementsCardValidationCurrency `json:"currency,required"`
@@ -2176,6 +2289,7 @@ type CardPaymentElementsCardValidation struct {
 type cardPaymentElementsCardValidationJSON struct {
 	ID                   apijson.Field
 	CardPaymentID        apijson.Field
+	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -2194,6 +2308,57 @@ type cardPaymentElementsCardValidationJSON struct {
 func (r *CardPaymentElementsCardValidation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type CardPaymentElementsCardValidationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	VerificationResult CardPaymentElementsCardValidationCardholderAddressVerificationResult `json:"verification_result,required"`
+	JSON               cardPaymentElementsCardValidationCardholderAddressJSON
+}
+
+// cardPaymentElementsCardValidationCardholderAddressJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardValidationCardholderAddress]
+type cardPaymentElementsCardValidationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	VerificationResult apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardValidationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type CardPaymentElementsCardValidationCardholderAddressVerificationResult string
+
+const (
+	// No adress was provided in the authorization request.
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultNotChecked CardPaymentElementsCardValidationCardholderAddressVerificationResult = "not_checked"
+	// Postal code matches, but the street address was not verified
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardValidationCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardValidationCardholderAddressVerificationResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardValidationCardholderAddressVerificationResult = "postal_code_no_match_address_match"
+	// Postal code and street address match
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultMatch CardPaymentElementsCardValidationCardholderAddressVerificationResult = "match"
+	// Postal code and street address do not match
+	CardPaymentElementsCardValidationCardholderAddressVerificationResultNoMatch CardPaymentElementsCardValidationCardholderAddressVerificationResult = "no_match"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
