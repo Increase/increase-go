@@ -330,9 +330,6 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
-	// Cardholder address provided in the authorization request and the address on file
-	// we verified it against.
-	CardholderAddress InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -363,7 +360,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
 	// Why the transaction was declined.
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
+	// Fields related to verification of cardholder-provided values.
+	Verification InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
+	JSON         inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
@@ -373,7 +372,6 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
-	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -386,6 +384,7 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
+	Verification         apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -393,58 +392,6 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// Cardholder address provided in the authorization request and the address on file
-// we verified it against.
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddress struct {
-	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
-	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
-	// The cardholder address line 1 provided for verification in the authorization
-	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
-	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
-	// The address verification result returned to the card network.
-	VerificationResult InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult `json:"verification_result,required"`
-	JSON               inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressJSON
-}
-
-// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddress]
-type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressJSON struct {
-	ActualLine1        apijson.Field
-	ActualPostalCode   apijson.Field
-	ProvidedLine1      apijson.Field
-	ProvidedPostalCode apijson.Field
-	VerificationResult apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The address verification result returned to the card network.
-type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult string
-
-const (
-	// No adress was provided in the authorization request.
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNotChecked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "not_checked"
-	// Postal code matches, but the street address was not verified
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_no_match_address_match"
-	// Postal code and street address match
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "match"
-	// Postal code and street address do not match
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNoMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "no_match"
-)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -625,6 +572,116 @@ const (
 	// The transaction was suspected to be fraudulent. Please reach out to
 	// support@increase.com for more information.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonSuspectedFraud InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
+)
+
+// Fields related to verification of cardholder-provided values.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerification struct {
+	// Fields related to verification of the Card Verification Code, a 3-digit code on
+	// the back of the card.
+	CardVerificationCode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode `json:"card_verification_code,required"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
+	JSON              inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON
+}
+
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerification]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON struct {
+	CardVerificationCode apijson.Field
+	CardholderAddress    apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields related to verification of the Card Verification Code, a 3-digit code on
+// the back of the card.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
+	// The result of verifying the Card Verification Code.
+	Result InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+}
+
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON struct {
+	Result      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The result of verifying the Card Verification Code.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult string
+
+const (
+	// No card verification code was provided in the authorization request.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNotChecked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "not_checked"
+	// The card verification code matched the one on file.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "match"
+	// The card verification code did not match the one on file.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
+)
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	Result InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+}
+
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult string
+
+const (
+	// No adress was provided in the authorization request.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "not_checked"
+	// Postal code matches, but the street address was not verified.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	// Postal code and street address match.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "match"
+	// Postal code and street address do not match.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
 // The type of the resource. We may add additional possible values for this enum
