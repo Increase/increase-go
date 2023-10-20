@@ -103,9 +103,6 @@ type RealTimeDecisionCardAuthorization struct {
 	AccountID string `json:"account_id,required"`
 	// The identifier of the Card that is being authorized.
 	CardID string `json:"card_id,required"`
-	// Cardholder address provided in the authorization request and the address on file
-	// we verified it against.
-	CardholderAddress RealTimeDecisionCardAuthorizationCardholderAddress `json:"cardholder_address,required"`
 	// Whether or not the authorization was approved.
 	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
@@ -143,7 +140,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
 	SettlementCurrency string `json:"settlement_currency,required"`
-	JSON               realTimeDecisionCardAuthorizationJSON
+	// Fields related to verification of cardholder-provided values.
+	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification,required"`
+	JSON         realTimeDecisionCardAuthorizationJSON
 }
 
 // realTimeDecisionCardAuthorizationJSON contains the JSON metadata for the struct
@@ -151,7 +150,6 @@ type RealTimeDecisionCardAuthorization struct {
 type realTimeDecisionCardAuthorizationJSON struct {
 	AccountID            apijson.Field
 	CardID               apijson.Field
-	CardholderAddress    apijson.Field
 	Decision             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -166,6 +164,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	RequestDetails       apijson.Field
 	SettlementAmount     apijson.Field
 	SettlementCurrency   apijson.Field
+	Verification         apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -173,57 +172,6 @@ type realTimeDecisionCardAuthorizationJSON struct {
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// Cardholder address provided in the authorization request and the address on file
-// we verified it against.
-type RealTimeDecisionCardAuthorizationCardholderAddress struct {
-	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
-	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
-	// The cardholder address line 1 provided for verification in the authorization
-	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
-	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
-	// The address verification result returned to the card network.
-	VerificationResult RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult `json:"verification_result,required"`
-	JSON               realTimeDecisionCardAuthorizationCardholderAddressJSON
-}
-
-// realTimeDecisionCardAuthorizationCardholderAddressJSON contains the JSON
-// metadata for the struct [RealTimeDecisionCardAuthorizationCardholderAddress]
-type realTimeDecisionCardAuthorizationCardholderAddressJSON struct {
-	ActualLine1        apijson.Field
-	ActualPostalCode   apijson.Field
-	ProvidedLine1      apijson.Field
-	ProvidedPostalCode apijson.Field
-	VerificationResult apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *RealTimeDecisionCardAuthorizationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The address verification result returned to the card network.
-type RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult string
-
-const (
-	// No adress was provided in the authorization request.
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultNotChecked RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "not_checked"
-	// Postal code matches, but the street address was not verified
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "postal_code_no_match_address_match"
-	// Postal code and street address match
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultMatch RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "match"
-	// Postal code and street address do not match
-	RealTimeDecisionCardAuthorizationCardholderAddressVerificationResultNoMatch RealTimeDecisionCardAuthorizationCardholderAddressVerificationResult = "no_match"
-)
 
 // Whether or not the authorization was approved.
 type RealTimeDecisionCardAuthorizationDecision string
@@ -419,6 +367,115 @@ type realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON
 func (r *RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Fields related to verification of cardholder-provided values.
+type RealTimeDecisionCardAuthorizationVerification struct {
+	// Fields related to verification of the Card Verification Code, a 3-digit code on
+	// the back of the card.
+	CardVerificationCode RealTimeDecisionCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code,required"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress RealTimeDecisionCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
+	JSON              realTimeDecisionCardAuthorizationVerificationJSON
+}
+
+// realTimeDecisionCardAuthorizationVerificationJSON contains the JSON metadata for
+// the struct [RealTimeDecisionCardAuthorizationVerification]
+type realTimeDecisionCardAuthorizationVerificationJSON struct {
+	CardVerificationCode apijson.Field
+	CardholderAddress    apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields related to verification of the Card Verification Code, a 3-digit code on
+// the back of the card.
+type RealTimeDecisionCardAuthorizationVerificationCardVerificationCode struct {
+	// The result of verifying the Card Verification Code.
+	Result RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
+	JSON   realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON
+}
+
+// realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON contains
+// the JSON metadata for the struct
+// [RealTimeDecisionCardAuthorizationVerificationCardVerificationCode]
+type realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON struct {
+	Result      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The result of verifying the Card Verification Code.
+type RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult string
+
+const (
+	// No card verification code was provided in the authorization request.
+	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNotChecked RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "not_checked"
+	// The card verification code matched the one on file.
+	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultMatch RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "match"
+	// The card verification code did not match the one on file.
+	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
+)
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type RealTimeDecisionCardAuthorizationVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	Result RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
+	JSON   realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON
+}
+
+// realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON contains the
+// JSON metadata for the struct
+// [RealTimeDecisionCardAuthorizationVerificationCardholderAddress]
+type realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult string
+
+const (
+	// No adress was provided in the authorization request.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "not_checked"
+	// Postal code matches, but the street address was not verified.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	// Postal code and street address match.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "match"
+	// Postal code and street address do not match.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "no_match"
+)
 
 // The category of the Real-Time Decision.
 type RealTimeDecisionCategory string

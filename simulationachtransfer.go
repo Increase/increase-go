@@ -349,9 +349,6 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
-	// Cardholder address provided in the authorization request and the address on file
-	// we verified it against.
-	CardholderAddress ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddress `json:"cardholder_address,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency ACHTransferSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
@@ -382,7 +379,9 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
 	// Why the transaction was declined.
 	Reason ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineJSON
+	// Fields related to verification of cardholder-provided values.
+	Verification ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
+	JSON         achTransferSimulationDeclinedTransactionSourceCardDeclineJSON
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineJSON contains the JSON
@@ -392,7 +391,6 @@ type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
-	CardholderAddress    apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -405,6 +403,7 @@ type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
+	Verification         apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -412,58 +411,6 @@ type achTransferSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 func (r *ACHTransferSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// Cardholder address provided in the authorization request and the address on file
-// we verified it against.
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddress struct {
-	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
-	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
-	// The cardholder address line 1 provided for verification in the authorization
-	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
-	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
-	// The address verification result returned to the card network.
-	VerificationResult ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult `json:"verification_result,required"`
-	JSON               achTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressJSON
-}
-
-// achTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressJSON
-// contains the JSON metadata for the struct
-// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddress]
-type achTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressJSON struct {
-	ActualLine1        apijson.Field
-	ActualPostalCode   apijson.Field
-	ProvidedLine1      apijson.Field
-	ProvidedPostalCode apijson.Field
-	VerificationResult apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
-}
-
-func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The address verification result returned to the card network.
-type ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult string
-
-const (
-	// No adress was provided in the authorization request.
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNotChecked ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "not_checked"
-	// Postal code matches, but the street address was not verified
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNotChecked ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeMatchAddressNoMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultPostalCodeNoMatchAddressMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "postal_code_no_match_address_match"
-	// Postal code and street address match
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "match"
-	// Postal code and street address do not match
-	ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResultNoMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineCardholderAddressVerificationResult = "no_match"
-)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -644,6 +591,116 @@ const (
 	// The transaction was suspected to be fraudulent. Please reach out to
 	// support@increase.com for more information.
 	ACHTransferSimulationDeclinedTransactionSourceCardDeclineReasonSuspectedFraud ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
+)
+
+// Fields related to verification of cardholder-provided values.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification struct {
+	// Fields related to verification of the Card Verification Code, a 3-digit code on
+	// the back of the card.
+	CardVerificationCode ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode `json:"card_verification_code,required"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
+	JSON              achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON struct {
+	CardVerificationCode apijson.Field
+	CardholderAddress    apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Fields related to verification of the Card Verification Code, a 3-digit code on
+// the back of the card.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
+	// The result of verifying the Card Verification Code.
+	Result ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
+	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON struct {
+	Result      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The result of verifying the Card Verification Code.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult string
+
+const (
+	// No card verification code was provided in the authorization request.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNotChecked ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "not_checked"
+	// The card verification code matched the one on file.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "match"
+	// The card verification code did not match the one on file.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
+)
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	Result ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
+	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+}
+
+// achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+// contains the JSON metadata for the struct
+// [ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress]
+type achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The address verification result returned to the card network.
+type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult string
+
+const (
+	// No adress was provided in the authorization request.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "not_checked"
+	// Postal code matches, but the street address was not verified.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+	// Postal code matches, but the street address does not match.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	// Postal code does not match, but the street address matches.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	// Postal code and street address match.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "match"
+	// Postal code and street address do not match.
+	ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
 // The type of the resource. We may add additional possible values for this enum
