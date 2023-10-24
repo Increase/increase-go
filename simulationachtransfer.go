@@ -783,6 +783,8 @@ const (
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonAmountMismatch ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
 	// The check attempting to be deposited does not belong to Increase.
 	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	// The account number on the check does not exist at Increase.
+	ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason = "no_account_number_found"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be

@@ -765,6 +765,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonAmountMismatch CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
 	// The check attempting to be deposited does not belong to Increase.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
+	// The account number on the check does not exist at Increase.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "no_account_number_found"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be
