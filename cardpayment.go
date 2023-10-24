@@ -115,6 +115,9 @@ type CardPaymentElement struct {
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline CardPaymentElementsCardDecline `json:"card_decline,required,nullable"`
+	// A Card Fuel Confirmation object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_fuel_confirmation`.
+	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation,required,nullable"`
 	// A Card Increment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_increment`.
 	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,required,nullable"`
@@ -145,6 +148,7 @@ type cardPaymentElementJSON struct {
 	CardAuthorization           apijson.Field
 	CardAuthorizationExpiration apijson.Field
 	CardDecline                 apijson.Field
+	CardFuelConfirmation        apijson.Field
 	CardIncrement               apijson.Field
 	CardRefund                  apijson.Field
 	CardReversal                apijson.Field
@@ -946,6 +950,79 @@ const (
 	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
+// A Card Fuel Confirmation object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_fuel_confirmation`.
+type CardPaymentElementsCardFuelConfirmation struct {
+	// The Card Fuel Confirmation identifier.
+	ID string `json:"id,required"`
+	// The identifier for the Card Authorization this updates.
+	CardAuthorizationID string `json:"card_authorization_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
+	// currency.
+	Currency CardPaymentElementsCardFuelConfirmationCurrency `json:"currency,required"`
+	// The card network used to process this card authorization.
+	Network CardPaymentElementsCardFuelConfirmationNetwork `json:"network,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `card_fuel_confirmation`.
+	Type CardPaymentElementsCardFuelConfirmationType `json:"type,required"`
+	// The updated authorization amount after this fuel confirmation, in the minor unit
+	// of the transaction's currency. For dollars, for example, this is cents.
+	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
+	JSON                       cardPaymentElementsCardFuelConfirmationJSON
+}
+
+// cardPaymentElementsCardFuelConfirmationJSON contains the JSON metadata for the
+// struct [CardPaymentElementsCardFuelConfirmation]
+type cardPaymentElementsCardFuelConfirmationJSON struct {
+	ID                         apijson.Field
+	CardAuthorizationID        apijson.Field
+	Currency                   apijson.Field
+	Network                    apijson.Field
+	Type                       apijson.Field
+	UpdatedAuthorizationAmount apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFuelConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
+// currency.
+type CardPaymentElementsCardFuelConfirmationCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CardPaymentElementsCardFuelConfirmationCurrencyCad CardPaymentElementsCardFuelConfirmationCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CardPaymentElementsCardFuelConfirmationCurrencyChf CardPaymentElementsCardFuelConfirmationCurrency = "CHF"
+	// Euro (EUR)
+	CardPaymentElementsCardFuelConfirmationCurrencyEur CardPaymentElementsCardFuelConfirmationCurrency = "EUR"
+	// British Pound (GBP)
+	CardPaymentElementsCardFuelConfirmationCurrencyGbp CardPaymentElementsCardFuelConfirmationCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CardPaymentElementsCardFuelConfirmationCurrencyJpy CardPaymentElementsCardFuelConfirmationCurrency = "JPY"
+	// US Dollar (USD)
+	CardPaymentElementsCardFuelConfirmationCurrencyUsd CardPaymentElementsCardFuelConfirmationCurrency = "USD"
+)
+
+// The card network used to process this card authorization.
+type CardPaymentElementsCardFuelConfirmationNetwork string
+
+const (
+	// Visa
+	CardPaymentElementsCardFuelConfirmationNetworkVisa CardPaymentElementsCardFuelConfirmationNetwork = "visa"
+)
+
+// A constant representing the object's type. For this resource it will always be
+// `card_fuel_confirmation`.
+type CardPaymentElementsCardFuelConfirmationType string
+
+const (
+	CardPaymentElementsCardFuelConfirmationTypeCardFuelConfirmation CardPaymentElementsCardFuelConfirmationType = "card_fuel_confirmation"
+)
+
 // A Card Increment object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_increment`.
 type CardPaymentElementsCardIncrement struct {
@@ -954,7 +1031,7 @@ type CardPaymentElementsCardIncrement struct {
 	// The amount of this increment in the minor unit of the transaction's currency.
 	// For dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
-	// The identifier for the Card Authorization this reverses.
+	// The identifier for the Card Authorization this increments.
 	CardAuthorizationID string `json:"card_authorization_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 	// currency.
@@ -2704,6 +2781,9 @@ const (
 	CardPaymentElementsCategoryCardSettlement CardPaymentElementsCategory = "card_settlement"
 	// Card Refund: details will be under the `card_refund` object.
 	CardPaymentElementsCategoryCardRefund CardPaymentElementsCategory = "card_refund"
+	// Card Fuel Confirmation: details will be under the `card_fuel_confirmation`
+	// object.
+	CardPaymentElementsCategoryCardFuelConfirmation CardPaymentElementsCategory = "card_fuel_confirmation"
 	// Unknown card payment element.
 	CardPaymentElementsCategoryOther CardPaymentElementsCategory = "other"
 )
@@ -2713,6 +2793,9 @@ type CardPaymentState struct {
 	// The total authorized amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	AuthorizedAmount int64 `json:"authorized_amount,required"`
+	// The total amount from fuel confirmations in the minor unit of the transaction's
+	// currency. For dollars, for example, this is cents.
+	FuelConfirmedAmount int64 `json:"fuel_confirmed_amount,required"`
 	// The total incrementally updated authorized amount in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
 	IncrementedAmount int64 `json:"incremented_amount,required"`
@@ -2728,12 +2811,13 @@ type CardPaymentState struct {
 // cardPaymentStateJSON contains the JSON metadata for the struct
 // [CardPaymentState]
 type cardPaymentStateJSON struct {
-	AuthorizedAmount  apijson.Field
-	IncrementedAmount apijson.Field
-	ReversedAmount    apijson.Field
-	SettledAmount     apijson.Field
-	raw               string
-	ExtraFields       map[string]apijson.Field
+	AuthorizedAmount    apijson.Field
+	FuelConfirmedAmount apijson.Field
+	IncrementedAmount   apijson.Field
+	ReversedAmount      apijson.Field
+	SettledAmount       apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *CardPaymentState) UnmarshalJSON(data []byte) (err error) {
