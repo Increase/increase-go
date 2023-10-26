@@ -323,6 +323,8 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// Fields specific to the `network`.
 	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers PendingTransactionSourceCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -355,6 +357,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
@@ -524,6 +527,36 @@ const (
 	// Contact chip card, without card verification value
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+// Network-specific identifiers for a specific request or transaction.
+type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON
+}
+
+// pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON contains the
+// JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationNetworkIdentifiers]
+type pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON struct {
+	RetrievalReferenceNumber apijson.Field
+	TraceNumber              apijson.Field
+	TransactionID            apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
