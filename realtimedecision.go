@@ -122,6 +122,8 @@ type RealTimeDecisionCardAuthorization struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// Fields specific to the `network`.
 	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers RealTimeDecisionCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
@@ -158,6 +160,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PhysicalCardID       apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
@@ -306,6 +309,35 @@ const (
 	// Contact chip card, without card verification value
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+// Network-specific identifiers for a specific request or transaction.
+type RealTimeDecisionCardAuthorizationNetworkIdentifiers struct {
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          realTimeDecisionCardAuthorizationNetworkIdentifiersJSON
+}
+
+// realTimeDecisionCardAuthorizationNetworkIdentifiersJSON contains the JSON
+// metadata for the struct [RealTimeDecisionCardAuthorizationNetworkIdentifiers]
+type realTimeDecisionCardAuthorizationNetworkIdentifiersJSON struct {
+	RetrievalReferenceNumber apijson.Field
+	TraceNumber              apijson.Field
+	TransactionID            apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Fields specific to the type of request, such as an incremental authorization.
 type RealTimeDecisionCardAuthorizationRequestDetails struct {
