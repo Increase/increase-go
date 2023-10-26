@@ -94,6 +94,8 @@ func (r *AccountService) Close(ctx context.Context, accountID string, opts ...op
 type Account struct {
 	// The Account identifier.
 	ID string `json:"id,required"`
+	// The bank the Account is with.
+	Bank AccountBank `json:"bank,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -128,6 +130,7 @@ type Account struct {
 // accountJSON contains the JSON metadata for the struct [Account]
 type accountJSON struct {
 	ID                    apijson.Field
+	Bank                  apijson.Field
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	EntityID              apijson.Field
@@ -145,6 +148,16 @@ type accountJSON struct {
 func (r *Account) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The bank the Account is with.
+type AccountBank string
+
+const (
+	// Blue Ridge Bank, N.A.
+	AccountBankBlueRidgeBank AccountBank = "blue_ridge_bank"
+	// First Internet Bank of Indiana
+	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 // currency.

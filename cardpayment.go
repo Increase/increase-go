@@ -200,6 +200,8 @@ type CardPaymentElementsCardAuthorization struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// Fields specific to the `network`.
 	NetworkDetails CardPaymentElementsCardAuthorizationNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers CardPaymentElementsCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -232,6 +234,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
@@ -399,6 +402,35 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+// Network-specific identifiers for a specific request or transaction.
+type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON
+}
+
+// cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardAuthorizationNetworkIdentifiers]
+type cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON struct {
+	RetrievalReferenceNumber apijson.Field
+	TraceNumber              apijson.Field
+	TransactionID            apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
@@ -622,6 +654,8 @@ type CardPaymentElementsCardDecline struct {
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Fields specific to the `network`.
 	NetworkDetails CardPaymentElementsCardDeclineNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers CardPaymentElementsCardDeclineNetworkIdentifiers `json:"network_identifiers,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
@@ -650,6 +684,7 @@ type cardPaymentElementsCardDeclineJSON struct {
 	MerchantDescriptor   apijson.Field
 	MerchantState        apijson.Field
 	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
@@ -804,6 +839,35 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+// Network-specific identifiers for a specific request or transaction.
+type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardDeclineNetworkIdentifiersJSON
+}
+
+// cardPaymentElementsCardDeclineNetworkIdentifiersJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardDeclineNetworkIdentifiers]
+type cardPaymentElementsCardDeclineNetworkIdentifiersJSON struct {
+	RetrievalReferenceNumber apijson.Field
+	TraceNumber              apijson.Field
+	TransactionID            apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardDeclineNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Why the transaction was declined.
 type CardPaymentElementsCardDeclineReason string
@@ -962,6 +1026,9 @@ type CardPaymentElementsCardFuelConfirmation struct {
 	Currency CardPaymentElementsCardFuelConfirmationCurrency `json:"currency,required"`
 	// The card network used to process this card authorization.
 	Network CardPaymentElementsCardFuelConfirmationNetwork `json:"network,required"`
+	// The identifier of the Pending Transaction associated with this Card Fuel
+	// Confirmation.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_fuel_confirmation`.
 	Type CardPaymentElementsCardFuelConfirmationType `json:"type,required"`
@@ -978,6 +1045,7 @@ type cardPaymentElementsCardFuelConfirmationJSON struct {
 	CardAuthorizationID        apijson.Field
 	Currency                   apijson.Field
 	Network                    apijson.Field
+	PendingTransactionID       apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
 	raw                        string
@@ -1038,6 +1106,8 @@ type CardPaymentElementsCardIncrement struct {
 	Currency CardPaymentElementsCardIncrementCurrency `json:"currency,required"`
 	// The card network used to process this card authorization.
 	Network CardPaymentElementsCardIncrementNetwork `json:"network,required"`
+	// The identifier of the Pending Transaction associated with this Card Increment.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// incremental authorization.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -1058,6 +1128,7 @@ type cardPaymentElementsCardIncrementJSON struct {
 	CardAuthorizationID        apijson.Field
 	Currency                   apijson.Field
 	Network                    apijson.Field
+	PendingTransactionID       apijson.Field
 	RealTimeDecisionID         apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
@@ -1734,6 +1805,8 @@ type CardPaymentElementsCardReversal struct {
 	Currency CardPaymentElementsCardReversalCurrency `json:"currency,required"`
 	// The card network used to process this card authorization.
 	Network CardPaymentElementsCardReversalNetwork `json:"network,required"`
+	// The identifier of the Pending Transaction associated with this Card Reversal.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The amount of this reversal in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	ReversalAmount int64 `json:"reversal_amount,required"`
@@ -1753,6 +1826,7 @@ type cardPaymentElementsCardReversalJSON struct {
 	CardAuthorizationID        apijson.Field
 	Currency                   apijson.Field
 	Network                    apijson.Field
+	PendingTransactionID       apijson.Field
 	ReversalAmount             apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
@@ -2460,6 +2534,8 @@ type CardPaymentElementsCardValidation struct {
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// Fields specific to the `network`.
 	NetworkDetails CardPaymentElementsCardValidationNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers CardPaymentElementsCardValidationNetworkIdentifiers `json:"network_identifiers,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
@@ -2487,6 +2563,7 @@ type cardPaymentElementsCardValidationJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
 	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
@@ -2641,6 +2718,35 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+// Network-specific identifiers for a specific request or transaction.
+type CardPaymentElementsCardValidationNetworkIdentifiers struct {
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardValidationNetworkIdentifiersJSON
+}
+
+// cardPaymentElementsCardValidationNetworkIdentifiersJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardValidationNetworkIdentifiers]
+type cardPaymentElementsCardValidationNetworkIdentifiersJSON struct {
+	RetrievalReferenceNumber apijson.Field
+	TraceNumber              apijson.Field
+	TransactionID            apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardValidationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // A constant representing the object's type. For this resource it will always be
 // `card_validation`.
