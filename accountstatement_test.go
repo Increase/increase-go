@@ -51,7 +51,7 @@ func TestAccountStatementListWithOptionalParams(t *testing.T) {
 	_, err := client.AccountStatements.List(context.TODO(), increase.AccountStatementListParams{
 		AccountID: increase.F("string"),
 		Cursor:    increase.F("string"),
-		Limit:     increase.F(int64(0)),
+		Limit:     increase.F(int64(1)),
 		StatementPeriodStart: increase.F(increase.AccountStatementListParamsStatementPeriodStart{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),

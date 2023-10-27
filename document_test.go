@@ -60,7 +60,7 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:   increase.F("string"),
 		EntityID: increase.F("string"),
-		Limit:    increase.F(int64(0)),
+		Limit:    increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

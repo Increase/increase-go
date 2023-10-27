@@ -688,6 +688,8 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Network-specific identifiers for this refund.
+	NetworkIdentifiers WireTransferSimulationTransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails WireTransferSimulationTransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
@@ -712,6 +714,7 @@ type wireTransferSimulationTransactionSourceCardRefundJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
@@ -741,6 +744,34 @@ const (
 	// US Dollar (USD)
 	WireTransferSimulationTransactionSourceCardRefundCurrencyUsd WireTransferSimulationTransactionSourceCardRefundCurrency = "USD"
 )
+
+// Network-specific identifiers for this refund.
+type WireTransferSimulationTransactionSourceCardRefundNetworkIdentifiers struct {
+	// A network assigned business ID that identifies the acquirer that processed this
+	// transaction.
+	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	// A globally unique identifier for this settlement.
+	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON
+}
+
+// wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCardRefundNetworkIdentifiers]
+type wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON struct {
+	AcquirerBusinessID      apijson.Field
+	AcquirerReferenceNumber apijson.Field
+	TransactionID           apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceCardRefundNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Additional details about the card purchase, such as tax and industry-specific
 // fields.
@@ -1367,6 +1398,8 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Network-specific identifiers for this refund.
+	NetworkIdentifiers WireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
@@ -1399,6 +1432,7 @@ type wireTransferSimulationTransactionSourceCardSettlementJSON struct {
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
@@ -1431,6 +1465,34 @@ const (
 	// US Dollar (USD)
 	WireTransferSimulationTransactionSourceCardSettlementCurrencyUsd WireTransferSimulationTransactionSourceCardSettlementCurrency = "USD"
 )
+
+// Network-specific identifiers for this refund.
+type WireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers struct {
+	// A network assigned business ID that identifies the acquirer that processed this
+	// transaction.
+	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	// A globally unique identifier for this settlement.
+	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
+}
+
+// wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers]
+type wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON struct {
+	AcquirerBusinessID      apijson.Field
+	AcquirerReferenceNumber apijson.Field
+	TransactionID           apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Additional details about the card purchase, such as tax and industry-specific
 // fields.
