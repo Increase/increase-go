@@ -56,7 +56,7 @@ func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
 	_, err := client.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
 		EntityID: increase.F("string"),
 		Cursor:   increase.F("string"),
-		Limit:    increase.F(int64(0)),
+		Limit:    increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

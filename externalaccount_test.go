@@ -105,7 +105,7 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{
 		Cursor:        increase.F("string"),
-		Limit:         increase.F(int64(0)),
+		Limit:         increase.F(int64(1)),
 		RoutingNumber: increase.F("xxxxxxxxx"),
 		Status: increase.F(increase.ExternalAccountListParamsStatus{
 			In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInArchived}),

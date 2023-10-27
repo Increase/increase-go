@@ -1870,6 +1870,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Network-specific identifiers for this refund.
+	NetworkIdentifiers InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
@@ -1895,6 +1897,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJ
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
@@ -1924,6 +1927,34 @@ const (
 	// US Dollar (USD)
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency = "USD"
 )
+
+// Network-specific identifiers for this refund.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers struct {
+	// A network assigned business ID that identifies the acquirer that processed this
+	// transaction.
+	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	// A globally unique identifier for this settlement.
+	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON
+}
+
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON struct {
+	AcquirerBusinessID      apijson.Field
+	AcquirerReferenceNumber apijson.Field
+	TransactionID           apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Additional details about the card purchase, such as tax and industry-specific
 // fields.
@@ -2550,6 +2581,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	MerchantName string `json:"merchant_name,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// Network-specific identifiers for this refund.
+	NetworkIdentifiers InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
@@ -2583,6 +2616,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
+	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
@@ -2615,6 +2649,34 @@ const (
 	// US Dollar (USD)
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency = "USD"
 )
+
+// Network-specific identifiers for this refund.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiers struct {
+	// A network assigned business ID that identifies the acquirer that processed this
+	// transaction.
+	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	// A globally unique identifier for this settlement.
+	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string `json:"transaction_id,required,nullable"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON
+}
+
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiers]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON struct {
+	AcquirerBusinessID      apijson.Field
+	AcquirerReferenceNumber apijson.Field
+	TransactionID           apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // Additional details about the card purchase, such as tax and industry-specific
 // fields.

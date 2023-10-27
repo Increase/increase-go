@@ -91,7 +91,7 @@ func TestACHPrenotificationListWithOptionalParams(t *testing.T) {
 			OnOrBefore: increase.F(time.Now()),
 		}),
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -60,7 +60,7 @@ func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 			OnOrBefore: increase.F(time.Now()),
 		}),
 		Cursor:  increase.F("string"),
-		Limit:   increase.F(int64(0)),
+		Limit:   increase.F(int64(1)),
 		RouteID: increase.F("string"),
 	})
 	if err != nil {
