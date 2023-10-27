@@ -46,6 +46,15 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 				OnOrBefore: increase.F(time.Now()),
 			}),
 		}),
+		BookkeepingAccountBalanceCsv: increase.F(increase.ExportNewParamsBookkeepingAccountBalanceCsv{
+			BookkeepingAccountID: increase.F("string"),
+			CreatedAt: increase.F(increase.ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt{
+				After:      increase.F(time.Now()),
+				Before:     increase.F(time.Now()),
+				OnOrAfter:  increase.F(time.Now()),
+				OnOrBefore: increase.F(time.Now()),
+			}),
+		}),
 		TransactionCsv: increase.F(increase.ExportNewParamsTransactionCsv{
 			AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 			CreatedAt: increase.F(increase.ExportNewParamsTransactionCsvCreatedAt{
@@ -101,7 +110,7 @@ func TestExportListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Exports.List(context.TODO(), increase.ExportListParams{
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

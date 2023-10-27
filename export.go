@@ -129,6 +129,8 @@ const (
 	ExportCategoryTransactionCsv ExportCategory = "transaction_csv"
 	// Export a CSV of account balances for the dates in a given range.
 	ExportCategoryBalanceCsv ExportCategory = "balance_csv"
+	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
 )
 
 // The status of the Export.
@@ -159,6 +161,9 @@ type ExportNewParams struct {
 	// `balance_csv`.
 	BalanceCsv param.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
 	// Options for the created export. Required if `category` is equal to
+	// `bookkeeping_account_balance_csv`.
+	BookkeepingAccountBalanceCsv param.Field[ExportNewParamsBookkeepingAccountBalanceCsv] `json:"bookkeeping_account_balance_csv"`
+	// Options for the created export. Required if `category` is equal to
 	// `transaction_csv`.
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
 }
@@ -178,6 +183,8 @@ const (
 	ExportNewParamsCategoryTransactionCsv ExportNewParamsCategory = "transaction_csv"
 	// Export a CSV of account balances for the dates in a given range.
 	ExportNewParamsCategoryBalanceCsv ExportNewParamsCategory = "balance_csv"
+	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
 )
 
 // Options for the created export. Required if `category` is equal to
@@ -243,6 +250,39 @@ type ExportNewParamsBalanceCsvCreatedAt struct {
 }
 
 func (r ExportNewParamsBalanceCsvCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Options for the created export. Required if `category` is equal to
+// `bookkeeping_account_balance_csv`.
+type ExportNewParamsBookkeepingAccountBalanceCsv struct {
+	// Filter exported Transactions to the specified BookkeepingAccount.
+	BookkeepingAccountID param.Field[string] `json:"bookkeeping_account_id"`
+	// Filter results by time range on the `created_at` attribute.
+	CreatedAt param.Field[ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt] `json:"created_at"`
+}
+
+func (r ExportNewParamsBookkeepingAccountBalanceCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Filter results by time range on the `created_at` attribute.
+type ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `json:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+}
+
+func (r ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

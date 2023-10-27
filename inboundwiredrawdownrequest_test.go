@@ -49,7 +49,7 @@ func TestInboundWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.InboundWireDrawdownRequests.List(context.TODO(), increase.InboundWireDrawdownRequestListParams{
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

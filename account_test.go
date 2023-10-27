@@ -113,7 +113,7 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 		Cursor:                increase.F("string"),
 		EntityID:              increase.F("string"),
 		InformationalEntityID: increase.F("string"),
-		Limit:                 increase.F(int64(0)),
+		Limit:                 increase.F(int64(1)),
 		Status:                increase.F(increase.AccountListParamsStatusOpen),
 	})
 	if err != nil {

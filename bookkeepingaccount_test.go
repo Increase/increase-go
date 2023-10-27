@@ -82,7 +82,7 @@ func TestBookkeepingAccountListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.BookkeepingAccounts.List(context.TODO(), increase.BookkeepingAccountListParams{
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

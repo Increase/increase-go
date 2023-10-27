@@ -49,7 +49,7 @@ func TestProgramListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Programs.List(context.TODO(), increase.ProgramListParams{
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

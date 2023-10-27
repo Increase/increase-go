@@ -90,7 +90,7 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
-		Limit:             increase.F(int64(0)),
+		Limit:             increase.F(int64(1)),
 		UniqueIdentifier:  increase.F("x"),
 	})
 	if err != nil {

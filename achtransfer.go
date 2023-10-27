@@ -665,6 +665,11 @@ const (
 // weekdays according to their
 // [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 type ACHTransferSubmission struct {
+	// The ACH's effective date sent to the receiving bank. If `effective_date` is
+	// configured in the ACH transfer, this will match the value there. Otherwise, it
+	// will the date that the ACH transfer was processed, which is usually the current
+	// or subsequent business day.
+	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
 	// When the funds transfer is expected to settle in the recipient's account.
 	// Credits may be available sooner, at the receiving banks discretion. The FedACH
 	// schedule is published
@@ -684,6 +689,7 @@ type ACHTransferSubmission struct {
 // achTransferSubmissionJSON contains the JSON metadata for the struct
 // [ACHTransferSubmission]
 type achTransferSubmissionJSON struct {
+	EffectiveDate             apijson.Field
 	ExpectedFundsSettlementAt apijson.Field
 	SubmittedAt               apijson.Field
 	TraceNumber               apijson.Field

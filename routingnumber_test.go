@@ -28,7 +28,7 @@ func TestRoutingNumberListWithOptionalParams(t *testing.T) {
 	_, err := client.RoutingNumbers.List(context.TODO(), increase.RoutingNumberListParams{
 		RoutingNumber: increase.F("xxxxxxxxx"),
 		Cursor:        increase.F("string"),
-		Limit:         increase.F(int64(0)),
+		Limit:         increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

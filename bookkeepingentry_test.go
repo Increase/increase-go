@@ -27,7 +27,7 @@ func TestBookkeepingEntryListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.BookkeepingEntries.List(context.TODO(), increase.BookkeepingEntryListParams{
 		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(0)),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error
