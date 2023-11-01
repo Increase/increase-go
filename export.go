@@ -141,6 +141,9 @@ const (
 	ExportStatusPending ExportStatus = "pending"
 	// The export has been successfully generated.
 	ExportStatusComplete ExportStatus = "complete"
+	// The export failed to generate. Increase will reach out to you to resolve the
+	// issue.
+	ExportStatusFailed ExportStatus = "failed"
 )
 
 // A constant representing the object's type. For this resource it will always be
