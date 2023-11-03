@@ -14,6 +14,7 @@ import (
 )
 
 func TestSimulationAccountTransferComplete(t *testing.T) {
+	t.Skip("Prism tests are broken")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -21,7 +22,6 @@ func TestSimulationAccountTransferComplete(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	t.Skip("Prism tests are broken")
 	client := increase.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
