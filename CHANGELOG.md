@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.13.0 (2023-11-08)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/Increase/increase-go/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** add failed to export status enum ([#139](https://github.com/Increase/increase-go/issues/139)) ([b7c4de4](https://github.com/Increase/increase-go/commit/b7c4de40eb97590f54eb1eba7fb21a2ace11dc27))
+* **api:** add fuel confirmation functionality ([#132](https://github.com/Increase/increase-go/issues/132)) ([0dd1aa5](https://github.com/Increase/increase-go/commit/0dd1aa595e40f3202b9b4c2223a4fd324ec2b050))
+* **api:** add network identifiers and effective date ([#136](https://github.com/Increase/increase-go/issues/136)) ([da2a8aa](https://github.com/Increase/increase-go/commit/da2a8aa620a6ce780fcac55fbd55c26bf13661aa))
+* **api:** restructure balance lookups ([#142](https://github.com/Increase/increase-go/issues/142)) ([beb9f98](https://github.com/Increase/increase-go/commit/beb9f988ab398ecde14a413fb3ca654e55e32964))
+* **api:** updates ([#135](https://github.com/Increase/increase-go/issues/135)) ([0df7444](https://github.com/Increase/increase-go/commit/0df7444ffc43b9f34622c1ffa52f443e234ef5f8))
+* **client:** adjust retry behavior ([#133](https://github.com/Increase/increase-go/issues/133)) ([cf684e9](https://github.com/Increase/increase-go/commit/cf684e9de7fc7907c7eeaa39dc8a0e827cfd6be5))
+* **client:** allow binary returns ([#140](https://github.com/Increase/increase-go/issues/140)) ([f1935de](https://github.com/Increase/increase-go/commit/f1935de01ec39cfb9589400d7fd9106db38193f5))
+* **github:** include a devcontainer setup ([#138](https://github.com/Increase/increase-go/issues/138)) ([eb7829a](https://github.com/Increase/increase-go/commit/eb7829a0fdd2a1acb41cd30add79706954f69634))
+
+
+### Bug Fixes
+
+* make options.WithHeader utils case-insensitive ([#143](https://github.com/Increase/increase-go/issues/143)) ([2fcf014](https://github.com/Increase/increase-go/commit/2fcf01492775bc91196059b3b299aed15e00fbc0))
+
+
+### Chores
+
+* **internal:** update gitignore ([#137](https://github.com/Increase/increase-go/issues/137)) ([29068e7](https://github.com/Increase/increase-go/commit/29068e72abd23c4455fb48f5c91ccb7b7696c0be))
+
+
+### Documentation
+
+* **readme:** improve example snippets ([#141](https://github.com/Increase/increase-go/issues/141)) ([b34ca1b](https://github.com/Increase/increase-go/commit/b34ca1b0c72aa1d534e7cf5d45bcd2817a1beeb3))
+
 ## 0.12.0 (2023-10-20)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/increase/increase-go/compare/v0.11.0...v0.12.0)
