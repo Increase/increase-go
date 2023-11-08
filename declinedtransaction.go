@@ -336,6 +336,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	// The processing category describes the intent behind the authorization, such as
+	// whether it was used for bill payments or an automatic fuel dispenser.
+	ProcessingCategory DeclinedTransactionSourceCardDeclineProcessingCategory `json:"processing_category,required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -363,6 +366,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	NetworkDetails       apijson.Field
 	NetworkIdentifiers   apijson.Field
 	PhysicalCardID       apijson.Field
+	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Reason               apijson.Field
 	Verification         apijson.Field
@@ -546,6 +550,30 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkIdentifiers) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The processing category describes the intent behind the authorization, such as
+// whether it was used for bill payments or an automatic fuel dispenser.
+type DeclinedTransactionSourceCardDeclineProcessingCategory string
+
+const (
+	// Account funding transactions are transactions used to e.g., fund an account or
+	// transfer funds between accounts.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding DeclinedTransactionSourceCardDeclineProcessingCategory = "account_funding"
+	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
+	// prior to the actual transaction amount being known. They are followed by an
+	// advice message that updates the amount of the pending transaction.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser DeclinedTransactionSourceCardDeclineProcessingCategory = "automatic_fuel_dispenser"
+	// A transaction used to pay a bill.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment DeclinedTransactionSourceCardDeclineProcessingCategory = "bill_payment"
+	// A regular purchase.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase DeclinedTransactionSourceCardDeclineProcessingCategory = "purchase"
+	// Quasi-cash transactions represent purchases of items which may be convertible to
+	// cash.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash DeclinedTransactionSourceCardDeclineProcessingCategory = "quasi_cash"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryRefund DeclinedTransactionSourceCardDeclineProcessingCategory = "refund"
+)
+
 // Why the transaction was declined.
 type DeclinedTransactionSourceCardDeclineReason string
 
@@ -724,6 +752,12 @@ type DeclinedTransactionSourceCheckDecline struct {
 	// the check number. This is useful for positive pay checks, but can be unreliably
 	// transmitted by the bank of first deposit.
 	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	// The identifier of the API File object containing an image of the back of the
+	// declined check.
+	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The identifier of the API File object containing an image of the front of the
+	// declined check.
+	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// Why the check was declined.
 	Reason DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
 	JSON   declinedTransactionSourceCheckDeclineJSON
@@ -732,11 +766,13 @@ type DeclinedTransactionSourceCheckDecline struct {
 // declinedTransactionSourceCheckDeclineJSON contains the JSON metadata for the
 // struct [DeclinedTransactionSourceCheckDecline]
 type declinedTransactionSourceCheckDeclineJSON struct {
-	Amount        apijson.Field
-	AuxiliaryOnUs apijson.Field
-	Reason        apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	Amount           apijson.Field
+	AuxiliaryOnUs    apijson.Field
+	BackImageFileID  apijson.Field
+	FrontImageFileID apijson.Field
+	Reason           apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {

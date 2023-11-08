@@ -330,6 +330,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	// The processing category describes the intent behind the authorization, such as
+	// whether it was used for bill payments or an automatic fuel dispenser.
+	ProcessingCategory PendingTransactionSourceCardAuthorizationProcessingCategory `json:"processing_category,required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -360,6 +363,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PhysicalCardID       apijson.Field
+	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
 	Verification         apijson.Field
@@ -557,6 +561,30 @@ type pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON struct {
 func (r *PendingTransactionSourceCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The processing category describes the intent behind the authorization, such as
+// whether it was used for bill payments or an automatic fuel dispenser.
+type PendingTransactionSourceCardAuthorizationProcessingCategory string
+
+const (
+	// Account funding transactions are transactions used to e.g., fund an account or
+	// transfer funds between accounts.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryAccountFunding PendingTransactionSourceCardAuthorizationProcessingCategory = "account_funding"
+	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
+	// prior to the actual transaction amount being known. They are followed by an
+	// advice message that updates the amount of the pending transaction.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryAutomaticFuelDispenser PendingTransactionSourceCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
+	// A transaction used to pay a bill.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryBillPayment PendingTransactionSourceCardAuthorizationProcessingCategory = "bill_payment"
+	// A regular purchase.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryPurchase PendingTransactionSourceCardAuthorizationProcessingCategory = "purchase"
+	// Quasi-cash transactions represent purchases of items which may be convertible to
+	// cash.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryQuasiCash PendingTransactionSourceCardAuthorizationProcessingCategory = "quasi_cash"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryRefund PendingTransactionSourceCardAuthorizationProcessingCategory = "refund"
+)
 
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.

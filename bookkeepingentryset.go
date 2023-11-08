@@ -4,12 +4,16 @@ package increase
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
+	"github.com/increase/increase-go/internal/apiquery"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
+	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -39,10 +43,46 @@ func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEn
 	return
 }
 
-// Entry Sets are accounting entries that are transactionally applied.
+// Retrieve a Bookkeeping Entry Set
+func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySetID string, opts ...option.RequestOption) (res *BookkeepingEntrySet, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("bookkeeping_entry_sets/%s", bookkeepingEntrySetID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return
+}
+
+// List Bookkeeping Entry Sets
+func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *shared.Page[BookkeepingEntrySet], err error) {
+	var raw *http.Response
+	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	path := "bookkeeping_entry_sets"
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Bookkeeping Entry Sets
+func (r *BookkeepingEntrySetService) ListAutoPaging(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) *shared.PageAutoPager[BookkeepingEntrySet] {
+	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+}
+
+// Entry Sets are accounting entries that are transactionally applied. Your
+// compliance setup might require annotating money movements using this API. Learn
+// more in our
+// [guide to Bookkeeping](https://increase.com/documentation/bookkeeping#bookkeeping).
 type BookkeepingEntrySet struct {
 	// The entry set identifier.
 	ID string `json:"id,required"`
+	// When the entry set was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The timestamp of the entry set.
 	Date time.Time `json:"date,required" format:"date-time"`
 	// The entries.
@@ -59,6 +99,7 @@ type BookkeepingEntrySet struct {
 // [BookkeepingEntrySet]
 type bookkeepingEntrySetJSON struct {
 	ID            apijson.Field
+	CreatedAt     apijson.Field
 	Date          apijson.Field
 	Entries       apijson.Field
 	TransactionID apijson.Field
@@ -128,4 +169,23 @@ type BookkeepingEntrySetNewParamsEntry struct {
 
 func (r BookkeepingEntrySetNewParamsEntry) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+type BookkeepingEntrySetListParams struct {
+	// Return the page of entries after this one.
+	Cursor param.Field[string] `query:"cursor"`
+	// Limit the size of the list that is returned. The default (and maximum) is 100
+	// objects.
+	Limit param.Field[int64] `query:"limit"`
+	// Filter to the Bookkeeping Entry Set that maps to this Transaction.
+	TransactionID param.Field[string] `query:"transaction_id"`
+}
+
+// URLQuery serializes [BookkeepingEntrySetListParams]'s query parameters as
+// `url.Values`.
+func (r BookkeepingEntrySetListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }

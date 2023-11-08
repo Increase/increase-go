@@ -81,6 +81,14 @@ func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListPa
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Retrieve an Account Balance
+func (r *AccountService) Balance(ctx context.Context, accountID string, query AccountBalanceParams, opts ...option.RequestOption) (res *BalanceLookup, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("accounts/%s/balance", accountID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
+}
+
 // Close an Account
 func (r *AccountService) Close(ctx context.Context, accountID string, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
@@ -196,6 +204,45 @@ const (
 	AccountTypeAccount AccountType = "account"
 )
 
+// Represents a request to lookup the balance of an Account at a given point in
+// time.
+type BalanceLookup struct {
+	// The identifier for the account for which the balance was queried.
+	AccountID string `json:"account_id,required"`
+	// The Account's available balance, representing the current balance less any open
+	// Pending Transactions on the Account.
+	AvailableBalance int64 `json:"available_balance,required"`
+	// The Account's current balance, representing the sum of all posted Transactions
+	// on the Account.
+	CurrentBalance int64 `json:"current_balance,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `balance_lookup`.
+	Type BalanceLookupType `json:"type,required"`
+	JSON balanceLookupJSON
+}
+
+// balanceLookupJSON contains the JSON metadata for the struct [BalanceLookup]
+type balanceLookupJSON struct {
+	AccountID        apijson.Field
+	AvailableBalance apijson.Field
+	CurrentBalance   apijson.Field
+	Type             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *BalanceLookup) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `balance_lookup`.
+type BalanceLookupType string
+
+const (
+	BalanceLookupTypeBalanceLookup BalanceLookupType = "balance_lookup"
+)
+
 type AccountNewParams struct {
 	// The name you choose for the Account.
 	Name param.Field[string] `json:"name,required"`
@@ -278,3 +325,16 @@ const (
 	// Closed Accounts on which no new activity can occur.
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
 )
+
+type AccountBalanceParams struct {
+	// The moment to query the balance at. If not set, returns the current balances.
+	AtTime param.Field[time.Time] `query:"at_time" format:"date-time"`
+}
+
+// URLQuery serializes [AccountBalanceParams]'s query parameters as `url.Values`.
+func (r AccountBalanceParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
