@@ -134,6 +134,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// user sees at the time of purchase.
 	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The processing category describes the intent behind the authorization, such as
+	// whether it was used for bill payments or an automatic fuel dispenser.
+	ProcessingCategory RealTimeDecisionCardAuthorizationProcessingCategory `json:"processing_category,required"`
 	// Fields specific to the type of request, such as an incremental authorization.
 	RequestDetails RealTimeDecisionCardAuthorizationRequestDetails `json:"request_details,required"`
 	// The amount of the attempted authorization in the currency it will be settled in.
@@ -164,6 +167,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	PhysicalCardID       apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
+	ProcessingCategory   apijson.Field
 	RequestDetails       apijson.Field
 	SettlementAmount     apijson.Field
 	SettlementCurrency   apijson.Field
@@ -338,6 +342,30 @@ type realTimeDecisionCardAuthorizationNetworkIdentifiersJSON struct {
 func (r *RealTimeDecisionCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The processing category describes the intent behind the authorization, such as
+// whether it was used for bill payments or an automatic fuel dispenser.
+type RealTimeDecisionCardAuthorizationProcessingCategory string
+
+const (
+	// Account funding transactions are transactions used to e.g., fund an account or
+	// transfer funds between accounts.
+	RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding RealTimeDecisionCardAuthorizationProcessingCategory = "account_funding"
+	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
+	// prior to the actual transaction amount being known. They are followed by an
+	// advice message that updates the amount of the pending transaction.
+	RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser RealTimeDecisionCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
+	// A transaction used to pay a bill.
+	RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment RealTimeDecisionCardAuthorizationProcessingCategory = "bill_payment"
+	// A regular purchase.
+	RealTimeDecisionCardAuthorizationProcessingCategoryPurchase RealTimeDecisionCardAuthorizationProcessingCategory = "purchase"
+	// Quasi-cash transactions represent purchases of items which may be convertible to
+	// cash.
+	RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash RealTimeDecisionCardAuthorizationProcessingCategory = "quasi_cash"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	RealTimeDecisionCardAuthorizationProcessingCategoryRefund RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
+)
 
 // Fields specific to the type of request, such as an incremental authorization.
 type RealTimeDecisionCardAuthorizationRequestDetails struct {

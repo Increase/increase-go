@@ -131,6 +131,8 @@ const (
 	ExportCategoryBalanceCsv ExportCategory = "balance_csv"
 	// Export a CSV of bookkeeping account balances for the dates in a given range.
 	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
+	// Export a CSV of entities with a given status.
+	ExportCategoryEntityCsv ExportCategory = "entity_csv"
 )
 
 // The status of the Export.
@@ -166,6 +168,8 @@ type ExportNewParams struct {
 	// Options for the created export. Required if `category` is equal to
 	// `bookkeeping_account_balance_csv`.
 	BookkeepingAccountBalanceCsv param.Field[ExportNewParamsBookkeepingAccountBalanceCsv] `json:"bookkeeping_account_balance_csv"`
+	// Options for the created export. Required if `category` is equal to `entity_csv`.
+	EntityCsv param.Field[ExportNewParamsEntityCsv] `json:"entity_csv"`
 	// Options for the created export. Required if `category` is equal to
 	// `transaction_csv`.
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
@@ -188,6 +192,8 @@ const (
 	ExportNewParamsCategoryBalanceCsv ExportNewParamsCategory = "balance_csv"
 	// Export a CSV of bookkeeping account balances for the dates in a given range.
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
+	// Export a CSV of entities with a given status.
+	ExportNewParamsCategoryEntityCsv ExportNewParamsCategory = "entity_csv"
 )
 
 // Options for the created export. Required if `category` is equal to
@@ -288,6 +294,38 @@ type ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt struct {
 func (r ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// Options for the created export. Required if `category` is equal to `entity_csv`.
+type ExportNewParamsEntityCsv struct {
+	// Entity statuses to filter by.
+	Status param.Field[ExportNewParamsEntityCsvStatus] `json:"status"`
+}
+
+func (r ExportNewParamsEntityCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Entity statuses to filter by.
+type ExportNewParamsEntityCsvStatus struct {
+	// Entity statuses to filter by. For GET requests, this should be encoded as a
+	// comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]ExportNewParamsEntityCsvStatusIn] `json:"in,required"`
+}
+
+func (r ExportNewParamsEntityCsvStatus) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ExportNewParamsEntityCsvStatusIn string
+
+const (
+	// The entity is active.
+	ExportNewParamsEntityCsvStatusInActive ExportNewParamsEntityCsvStatusIn = "active"
+	// The entity is archived, and can no longer be used to create accounts.
+	ExportNewParamsEntityCsvStatusInArchived ExportNewParamsEntityCsvStatusIn = "archived"
+	// The entity is temporarily disabled and cannot be used for financial activity.
+	ExportNewParamsEntityCsvStatusInDisabled ExportNewParamsEntityCsvStatusIn = "disabled"
+)
 
 // Options for the created export. Required if `category` is equal to
 // `transaction_csv`.
