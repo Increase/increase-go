@@ -20,7 +20,6 @@ type Client struct {
 	BookkeepingEntries          *BookkeepingEntryService
 	RealTimeDecisions           *RealTimeDecisionService
 	RealTimePaymentsTransfers   *RealTimePaymentsTransferService
-	BalanceLookups              *BalanceLookupService
 	Cards                       *CardService
 	CardDisputes                *CardDisputeService
 	CardProfiles                *CardProfileService
@@ -75,7 +74,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.BookkeepingEntries = NewBookkeepingEntryService(opts...)
 	r.RealTimeDecisions = NewRealTimeDecisionService(opts...)
 	r.RealTimePaymentsTransfers = NewRealTimePaymentsTransferService(opts...)
-	r.BalanceLookups = NewBalanceLookupService(opts...)
 	r.Cards = NewCardService(opts...)
 	r.CardDisputes = NewCardDisputeService(opts...)
 	r.CardProfiles = NewCardProfileService(opts...)

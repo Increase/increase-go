@@ -4,8 +4,10 @@ package increase
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
@@ -33,6 +35,14 @@ func NewBookkeepingEntryService(opts ...option.RequestOption) (r *BookkeepingEnt
 	return
 }
 
+// Retrieve a Bookkeeping Entry
+func (r *BookkeepingEntryService) Get(ctx context.Context, bookkeepingEntryID string, opts ...option.RequestOption) (res *BookkeepingEntry, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("bookkeeping_entries/%s", bookkeepingEntryID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return
+}
+
 // List Bookkeeping Entries
 func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) (res *shared.Page[BookkeepingEntry], err error) {
 	var raw *http.Response
@@ -56,7 +66,9 @@ func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query Book
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Entries are T-account entries recording debits and credits.
+// Entries are T-account entries recording debits and credits. Your compliance
+// setup might require annotating money movements using this API. Learn more in our
+// [guide to Bookkeeping](https://increase.com/documentation/bookkeeping#bookkeeping).
 type BookkeepingEntry struct {
 	// The entry identifier.
 	ID string `json:"id,required"`
@@ -65,6 +77,8 @@ type BookkeepingEntry struct {
 	// The Entry amount in the minor unit of its currency. For dollars, for example,
 	// this is cents.
 	Amount int64 `json:"amount,required"`
+	// When the entry set was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The identifier for the Account the Entry belongs to.
 	EntrySetID string `json:"entry_set_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -79,6 +93,7 @@ type bookkeepingEntryJSON struct {
 	ID          apijson.Field
 	AccountID   apijson.Field
 	Amount      apijson.Field
+	CreatedAt   apijson.Field
 	EntrySetID  apijson.Field
 	Type        apijson.Field
 	raw         string
