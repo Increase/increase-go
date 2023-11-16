@@ -97,7 +97,7 @@ type CardDispute struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
 	Type CardDisputeType `json:"type,required"`
-	JSON cardDisputeJSON
+	JSON cardDisputeJSON `json:"-"`
 }
 
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
@@ -128,8 +128,8 @@ type CardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          cardDisputeAcceptanceJSON
+	TransactionID string                    `json:"transaction_id,required"`
+	JSON          cardDisputeAcceptanceJSON `json:"-"`
 }
 
 // cardDisputeAcceptanceJSON contains the JSON metadata for the struct
@@ -155,8 +155,8 @@ type CardDisputeRejection struct {
 	Explanation string `json:"explanation,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was rejected.
-	RejectedAt time.Time `json:"rejected_at,required" format:"date-time"`
-	JSON       cardDisputeRejectionJSON
+	RejectedAt time.Time                `json:"rejected_at,required" format:"date-time"`
+	JSON       cardDisputeRejectionJSON `json:"-"`
 }
 
 // cardDisputeRejectionJSON contains the JSON metadata for the struct

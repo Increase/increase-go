@@ -127,8 +127,8 @@ type RealTimePaymentsTransfer struct {
 	// `real_time_payments_transfer`.
 	Type RealTimePaymentsTransferType `json:"type,required"`
 	// The unique identifier you chose for this transfer.
-	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
-	JSON             realTimePaymentsTransferJSON
+	UniqueIdentifier string                       `json:"unique_identifier,required,nullable"`
+	JSON             realTimePaymentsTransferJSON `json:"-"`
 }
 
 // realTimePaymentsTransferJSON contains the JSON metadata for the struct
@@ -170,8 +170,8 @@ type RealTimePaymentsTransferApproval struct {
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       realTimePaymentsTransferApprovalJSON
+	ApprovedBy string                               `json:"approved_by,required,nullable"`
+	JSON       realTimePaymentsTransferApprovalJSON `json:"-"`
 }
 
 // realTimePaymentsTransferApprovalJSON contains the JSON metadata for the struct
@@ -195,8 +195,8 @@ type RealTimePaymentsTransferCancellation struct {
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       realTimePaymentsTransferCancellationJSON
+	CanceledBy string                                   `json:"canceled_by,required,nullable"`
+	JSON       realTimePaymentsTransferCancellationJSON `json:"-"`
 }
 
 // realTimePaymentsTransferCancellationJSON contains the JSON metadata for the
@@ -242,8 +242,8 @@ type RealTimePaymentsTransferRejection struct {
 	RejectReasonCode RealTimePaymentsTransferRejectionRejectReasonCode `json:"reject_reason_code,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was rejected.
-	RejectedAt time.Time `json:"rejected_at,required,nullable" format:"date-time"`
-	JSON       realTimePaymentsTransferRejectionJSON
+	RejectedAt time.Time                             `json:"rejected_at,required,nullable" format:"date-time"`
+	JSON       realTimePaymentsTransferRejectionJSON `json:"-"`
 }
 
 // realTimePaymentsTransferRejectionJSON contains the JSON metadata for the struct
@@ -357,8 +357,8 @@ type RealTimePaymentsTransferSubmission struct {
 	// the transfer was submitted to The Clearing House.
 	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      realTimePaymentsTransferSubmissionJSON
+	TransactionIdentification string                                 `json:"transaction_identification,required"`
+	JSON                      realTimePaymentsTransferSubmissionJSON `json:"-"`
 }
 
 // realTimePaymentsTransferSubmissionJSON contains the JSON metadata for the struct

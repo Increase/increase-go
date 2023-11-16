@@ -108,7 +108,7 @@ type CheckDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
 	Type CheckDepositType `json:"type,required"`
-	JSON checkDepositJSON
+	JSON checkDepositJSON `json:"-"`
 }
 
 // checkDepositJSON contains the JSON metadata for the struct [CheckDeposit]
@@ -172,8 +172,8 @@ type CheckDepositDepositAcceptance struct {
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string `json:"serial_number,required,nullable"`
-	JSON         checkDepositDepositAcceptanceJSON
+	SerialNumber string                            `json:"serial_number,required,nullable"`
+	JSON         checkDepositDepositAcceptanceJSON `json:"-"`
 }
 
 // checkDepositDepositAcceptanceJSON contains the JSON metadata for the struct
@@ -226,8 +226,8 @@ type CheckDepositDepositRejection struct {
 	Reason CheckDepositDepositRejectionReason `json:"reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt time.Time `json:"rejected_at,required" format:"date-time"`
-	JSON       checkDepositDepositRejectionJSON
+	RejectedAt time.Time                        `json:"rejected_at,required" format:"date-time"`
+	JSON       checkDepositDepositRejectionJSON `json:"-"`
 }
 
 // checkDepositDepositRejectionJSON contains the JSON metadata for the struct
@@ -305,8 +305,8 @@ type CheckDepositDepositReturn struct {
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          checkDepositDepositReturnJSON
+	TransactionID string                        `json:"transaction_id,required"`
+	JSON          checkDepositDepositReturnJSON `json:"-"`
 }
 
 // checkDepositDepositReturnJSON contains the JSON metadata for the struct

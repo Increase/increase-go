@@ -14,8 +14,8 @@ import (
 type Page[T any] struct {
 	Data []T `json:"data,required"`
 	// A pointer to a place in the list.
-	NextCursor string `json:"next_cursor,required,nullable"`
-	JSON       pageJSON
+	NextCursor string   `json:"next_cursor,required,nullable"`
+	JSON       pageJSON `json:"-"`
 	cfg        *requestconfig.RequestConfig
 	res        *http.Response
 }

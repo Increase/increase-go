@@ -121,7 +121,7 @@ type Entity struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
 	Type EntityType `json:"type,required"`
-	JSON entityJSON
+	JSON entityJSON `json:"-"`
 }
 
 // entityJSON contains the JSON metadata for the struct [Entity]
@@ -160,8 +160,8 @@ type EntityCorporation struct {
 	// The Employer Identification Number (EIN) for the corporation.
 	TaxIdentifier string `json:"tax_identifier,required,nullable"`
 	// The website of the corporation.
-	Website string `json:"website,required,nullable"`
-	JSON    entityCorporationJSON
+	Website string                `json:"website,required,nullable"`
+	JSON    entityCorporationJSON `json:"-"`
 }
 
 // entityCorporationJSON contains the JSON metadata for the struct
@@ -193,8 +193,8 @@ type EntityCorporationAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityCorporationAddressJSON
+	Zip  string                       `json:"zip,required"`
+	JSON entityCorporationAddressJSON `json:"-"`
 }
 
 // entityCorporationAddressJSON contains the JSON metadata for the struct
@@ -222,7 +222,7 @@ type EntityCorporationBeneficialOwner struct {
 	Individual EntityCorporationBeneficialOwnersIndividual `json:"individual,required"`
 	// Why this person is considered a beneficial owner of the entity.
 	Prong EntityCorporationBeneficialOwnersProng `json:"prong,required"`
-	JSON  entityCorporationBeneficialOwnerJSON
+	JSON  entityCorporationBeneficialOwnerJSON   `json:"-"`
 }
 
 // entityCorporationBeneficialOwnerJSON contains the JSON metadata for the struct
@@ -249,8 +249,8 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 	// A means of verifying the person's identity.
 	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification,required"`
 	// The person's legal name.
-	Name string `json:"name,required"`
-	JSON entityCorporationBeneficialOwnersIndividualJSON
+	Name string                                          `json:"name,required"`
+	JSON entityCorporationBeneficialOwnersIndividualJSON `json:"-"`
 }
 
 // entityCorporationBeneficialOwnersIndividualJSON contains the JSON metadata for
@@ -280,8 +280,8 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityCorporationBeneficialOwnersIndividualAddressJSON
+	Zip  string                                                 `json:"zip,required"`
+	JSON entityCorporationBeneficialOwnersIndividualAddressJSON `json:"-"`
 }
 
 // entityCorporationBeneficialOwnersIndividualAddressJSON contains the JSON
@@ -306,8 +306,8 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string `json:"number_last4,required"`
-	JSON        entityCorporationBeneficialOwnersIndividualIdentificationJSON
+	NumberLast4 string                                                        `json:"number_last4,required"`
+	JSON        entityCorporationBeneficialOwnersIndividualIdentificationJSON `json:"-"`
 }
 
 // entityCorporationBeneficialOwnersIndividualIdentificationJSON contains the JSON
@@ -355,8 +355,8 @@ type EntityJoint struct {
 	// The two individuals that share control of the entity.
 	Individuals []EntityJointIndividual `json:"individuals,required"`
 	// The entity's name.
-	Name string `json:"name,required"`
-	JSON entityJointJSON
+	Name string          `json:"name,required"`
+	JSON entityJointJSON `json:"-"`
 }
 
 // entityJointJSON contains the JSON metadata for the struct [EntityJoint]
@@ -379,8 +379,8 @@ type EntityJointIndividual struct {
 	// A means of verifying the person's identity.
 	Identification EntityJointIndividualsIdentification `json:"identification,required"`
 	// The person's legal name.
-	Name string `json:"name,required"`
-	JSON entityJointIndividualJSON
+	Name string                    `json:"name,required"`
+	JSON entityJointIndividualJSON `json:"-"`
 }
 
 // entityJointIndividualJSON contains the JSON metadata for the struct
@@ -410,8 +410,8 @@ type EntityJointIndividualsAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityJointIndividualsAddressJSON
+	Zip  string                            `json:"zip,required"`
+	JSON entityJointIndividualsAddressJSON `json:"-"`
 }
 
 // entityJointIndividualsAddressJSON contains the JSON metadata for the struct
@@ -436,8 +436,8 @@ type EntityJointIndividualsIdentification struct {
 	Method EntityJointIndividualsIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string `json:"number_last4,required"`
-	JSON        entityJointIndividualsIdentificationJSON
+	NumberLast4 string                                   `json:"number_last4,required"`
+	JSON        entityJointIndividualsIdentificationJSON `json:"-"`
 }
 
 // entityJointIndividualsIdentificationJSON contains the JSON metadata for the
@@ -479,8 +479,8 @@ type EntityNaturalPerson struct {
 	// A means of verifying the person's identity.
 	Identification EntityNaturalPersonIdentification `json:"identification,required"`
 	// The person's legal name.
-	Name string `json:"name,required"`
-	JSON entityNaturalPersonJSON
+	Name string                  `json:"name,required"`
+	JSON entityNaturalPersonJSON `json:"-"`
 }
 
 // entityNaturalPersonJSON contains the JSON metadata for the struct
@@ -510,8 +510,8 @@ type EntityNaturalPersonAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityNaturalPersonAddressJSON
+	Zip  string                         `json:"zip,required"`
+	JSON entityNaturalPersonAddressJSON `json:"-"`
 }
 
 // entityNaturalPersonAddressJSON contains the JSON metadata for the struct
@@ -536,8 +536,8 @@ type EntityNaturalPersonIdentification struct {
 	Method EntityNaturalPersonIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string `json:"number_last4,required"`
-	JSON        entityNaturalPersonIdentificationJSON
+	NumberLast4 string                                `json:"number_last4,required"`
+	JSON        entityNaturalPersonIdentificationJSON `json:"-"`
 }
 
 // entityNaturalPersonIdentificationJSON contains the JSON metadata for the struct
@@ -606,7 +606,7 @@ type EntitySupplementalDocument struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type EntitySupplementalDocumentsType `json:"type,required"`
-	JSON entitySupplementalDocumentJSON
+	JSON entitySupplementalDocumentJSON  `json:"-"`
 }
 
 // entitySupplementalDocumentJSON contains the JSON metadata for the struct
@@ -650,7 +650,7 @@ type EntityTrust struct {
 	TaxIdentifier string `json:"tax_identifier,required,nullable"`
 	// The trustees of the trust.
 	Trustees []EntityTrustTrustee `json:"trustees,required"`
-	JSON     entityTrustJSON
+	JSON     entityTrustJSON      `json:"-"`
 }
 
 // entityTrustJSON contains the JSON metadata for the struct [EntityTrust]
@@ -683,8 +683,8 @@ type EntityTrustAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityTrustAddressJSON
+	Zip  string                 `json:"zip,required"`
+	JSON entityTrustAddressJSON `json:"-"`
 }
 
 // entityTrustAddressJSON contains the JSON metadata for the struct
@@ -722,8 +722,8 @@ type EntityTrustGrantor struct {
 	// A means of verifying the person's identity.
 	Identification EntityTrustGrantorIdentification `json:"identification,required"`
 	// The person's legal name.
-	Name string `json:"name,required"`
-	JSON entityTrustGrantorJSON
+	Name string                 `json:"name,required"`
+	JSON entityTrustGrantorJSON `json:"-"`
 }
 
 // entityTrustGrantorJSON contains the JSON metadata for the struct
@@ -753,8 +753,8 @@ type EntityTrustGrantorAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityTrustGrantorAddressJSON
+	Zip  string                        `json:"zip,required"`
+	JSON entityTrustGrantorAddressJSON `json:"-"`
 }
 
 // entityTrustGrantorAddressJSON contains the JSON metadata for the struct
@@ -779,8 +779,8 @@ type EntityTrustGrantorIdentification struct {
 	Method EntityTrustGrantorIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string `json:"number_last4,required"`
-	JSON        entityTrustGrantorIdentificationJSON
+	NumberLast4 string                               `json:"number_last4,required"`
+	JSON        entityTrustGrantorIdentificationJSON `json:"-"`
 }
 
 // entityTrustGrantorIdentificationJSON contains the JSON metadata for the struct
@@ -818,7 +818,7 @@ type EntityTrustTrustee struct {
 	Individual EntityTrustTrusteesIndividual `json:"individual,required,nullable"`
 	// The structure of the trustee. Will always be equal to `individual`.
 	Structure EntityTrustTrusteesStructure `json:"structure,required"`
-	JSON      entityTrustTrusteeJSON
+	JSON      entityTrustTrusteeJSON       `json:"-"`
 }
 
 // entityTrustTrusteeJSON contains the JSON metadata for the struct
@@ -844,8 +844,8 @@ type EntityTrustTrusteesIndividual struct {
 	// A means of verifying the person's identity.
 	Identification EntityTrustTrusteesIndividualIdentification `json:"identification,required"`
 	// The person's legal name.
-	Name string `json:"name,required"`
-	JSON entityTrustTrusteesIndividualJSON
+	Name string                            `json:"name,required"`
+	JSON entityTrustTrusteesIndividualJSON `json:"-"`
 }
 
 // entityTrustTrusteesIndividualJSON contains the JSON metadata for the struct
@@ -875,8 +875,8 @@ type EntityTrustTrusteesIndividualAddress struct {
 	// the address.
 	State string `json:"state,required"`
 	// The ZIP code of the address.
-	Zip  string `json:"zip,required"`
-	JSON entityTrustTrusteesIndividualAddressJSON
+	Zip  string                                   `json:"zip,required"`
+	JSON entityTrustTrusteesIndividualAddressJSON `json:"-"`
 }
 
 // entityTrustTrusteesIndividualAddressJSON contains the JSON metadata for the
@@ -901,8 +901,8 @@ type EntityTrustTrusteesIndividualIdentification struct {
 	Method EntityTrustTrusteesIndividualIdentificationMethod `json:"method,required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string `json:"number_last4,required"`
-	JSON        entityTrustTrusteesIndividualIdentificationJSON
+	NumberLast4 string                                          `json:"number_last4,required"`
+	JSON        entityTrustTrusteesIndividualIdentificationJSON `json:"-"`
 }
 
 // entityTrustTrusteesIndividualIdentificationJSON contains the JSON metadata for

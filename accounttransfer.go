@@ -132,8 +132,8 @@ type AccountTransfer struct {
 	// `account_transfer`.
 	Type AccountTransferType `json:"type,required"`
 	// The unique identifier you chose for this transfer.
-	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
-	JSON             accountTransferJSON
+	UniqueIdentifier string              `json:"unique_identifier,required,nullable"`
+	JSON             accountTransferJSON `json:"-"`
 }
 
 // accountTransferJSON contains the JSON metadata for the struct [AccountTransfer]
@@ -170,8 +170,8 @@ type AccountTransferApproval struct {
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       accountTransferApprovalJSON
+	ApprovedBy string                      `json:"approved_by,required,nullable"`
+	JSON       accountTransferApprovalJSON `json:"-"`
 }
 
 // accountTransferApprovalJSON contains the JSON metadata for the struct
@@ -195,8 +195,8 @@ type AccountTransferCancellation struct {
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       accountTransferCancellationJSON
+	CanceledBy string                          `json:"canceled_by,required,nullable"`
+	JSON       accountTransferCancellationJSON `json:"-"`
 }
 
 // accountTransferCancellationJSON contains the JSON metadata for the struct

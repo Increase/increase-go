@@ -81,7 +81,7 @@ type OauthConnection struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_connection`.
 	Type OauthConnectionType `json:"type,required"`
-	JSON oauthConnectionJSON
+	JSON oauthConnectionJSON `json:"-"`
 }
 
 // oauthConnectionJSON contains the JSON metadata for the struct [OauthConnection]

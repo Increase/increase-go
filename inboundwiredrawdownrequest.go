@@ -120,7 +120,7 @@ type InboundWireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_drawdown_request`.
 	Type InboundWireDrawdownRequestType `json:"type,required"`
-	JSON inboundWireDrawdownRequestJSON
+	JSON inboundWireDrawdownRequestJSON `json:"-"`
 }
 
 // inboundWireDrawdownRequestJSON contains the JSON metadata for the struct

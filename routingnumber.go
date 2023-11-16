@@ -77,7 +77,7 @@ type RoutingNumber struct {
 	Type RoutingNumberType `json:"type,required"`
 	// This routing number's support for Wire Transfers.
 	WireTransfers RoutingNumberWireTransfers `json:"wire_transfers,required"`
-	JSON          routingNumberJSON
+	JSON          routingNumberJSON          `json:"-"`
 }
 
 // routingNumberJSON contains the JSON metadata for the struct [RoutingNumber]

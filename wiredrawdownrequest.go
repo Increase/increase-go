@@ -112,7 +112,7 @@ type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
 	Type WireDrawdownRequestType `json:"type,required"`
-	JSON wireDrawdownRequestJSON
+	JSON wireDrawdownRequestJSON `json:"-"`
 }
 
 // wireDrawdownRequestJSON contains the JSON metadata for the struct
@@ -160,8 +160,8 @@ const (
 type WireDrawdownRequestSubmission struct {
 	// The input message accountability data (IMAD) uniquely identifying the submission
 	// with Fedwire.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	JSON                           wireDrawdownRequestSubmissionJSON
+	InputMessageAccountabilityData string                            `json:"input_message_accountability_data,required"`
+	JSON                           wireDrawdownRequestSubmissionJSON `json:"-"`
 }
 
 // wireDrawdownRequestSubmissionJSON contains the JSON metadata for the struct
