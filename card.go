@@ -122,7 +122,7 @@ type Card struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card`.
 	Type CardType `json:"type,required"`
-	JSON cardJSON
+	JSON cardJSON `json:"-"`
 }
 
 // cardJSON contains the JSON metadata for the struct [Card]
@@ -158,8 +158,8 @@ type CardBillingAddress struct {
 	// The postal code of the billing address.
 	PostalCode string `json:"postal_code,required,nullable"`
 	// The US state of the billing address.
-	State string `json:"state,required,nullable"`
-	JSON  cardBillingAddressJSON
+	State string                 `json:"state,required,nullable"`
+	JSON  cardBillingAddressJSON `json:"-"`
 }
 
 // cardBillingAddressJSON contains the JSON metadata for the struct
@@ -190,8 +190,8 @@ type CardDigitalWallet struct {
 	Email string `json:"email,required,nullable"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone string `json:"phone,required,nullable"`
-	JSON  cardDigitalWalletJSON
+	Phone string                `json:"phone,required,nullable"`
+	JSON  cardDigitalWalletJSON `json:"-"`
 }
 
 // cardDigitalWalletJSON contains the JSON metadata for the struct
@@ -244,8 +244,8 @@ type CardDetails struct {
 	// The three-digit verification code for the card. It's also known as the Card
 	// Verification Code (CVC), the Card Verification Value (CVV), or the Card
 	// Identification (CID).
-	VerificationCode string `json:"verification_code,required"`
-	JSON             cardDetailsJSON
+	VerificationCode string          `json:"verification_code,required"`
+	JSON             cardDetailsJSON `json:"-"`
 }
 
 // cardDetailsJSON contains the JSON metadata for the struct [CardDetails]

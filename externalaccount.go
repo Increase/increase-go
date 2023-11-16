@@ -105,7 +105,7 @@ type ExternalAccount struct {
 	Type ExternalAccountType `json:"type,required"`
 	// If you have verified ownership of the External Account.
 	VerificationStatus ExternalAccountVerificationStatus `json:"verification_status,required"`
-	JSON               externalAccountJSON
+	JSON               externalAccountJSON               `json:"-"`
 }
 
 // externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]

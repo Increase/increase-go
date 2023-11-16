@@ -48,7 +48,7 @@ type WireTransferSimulation struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer_simulation_result`.
 	Type WireTransferSimulationType `json:"type,required"`
-	JSON wireTransferSimulationJSON
+	JSON wireTransferSimulationJSON `json:"-"`
 }
 
 // wireTransferSimulationJSON contains the JSON metadata for the struct
@@ -99,7 +99,7 @@ type WireTransferSimulationTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
 	Type WireTransferSimulationTransactionType `json:"type,required"`
-	JSON wireTransferSimulationTransactionJSON
+	JSON wireTransferSimulationTransactionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionJSON contains the JSON metadata for the struct
@@ -250,7 +250,7 @@ type WireTransferSimulationTransactionSource struct {
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
 	WireTransferRejection WireTransferSimulationTransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
-	JSON                  wireTransferSimulationTransactionSourceJSON
+	JSON                  wireTransferSimulationTransactionSourceJSON                  `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceJSON contains the JSON metadata for the
@@ -309,8 +309,8 @@ type WireTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The identifier of the Account from where the Account Transfer was sent.
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceAccountTransferIntentionJSON
+	TransferID string                                                              `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceAccountTransferIntentionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceAccountTransferIntentionJSON contains the
@@ -364,8 +364,8 @@ type WireTransferSimulationTransactionSourceACHTransferIntention struct {
 	// A description set when the ACH Transfer was created.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceACHTransferIntentionJSON
+	TransferID string                                                          `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceACHTransferIntentionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceACHTransferIntentionJSON contains the
@@ -389,8 +389,8 @@ func (r *WireTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJ
 // response if and only if `category` is equal to `ach_transfer_rejection`.
 type WireTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceACHTransferRejectionJSON
+	TransferID string                                                          `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceACHTransferRejectionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceACHTransferRejectionJSON contains the
@@ -420,8 +420,8 @@ type WireTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceACHTransferReturnJSON
+	TransferID string                                                       `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceACHTransferReturnJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceACHTransferReturnJSON contains the JSON
@@ -643,8 +643,8 @@ type WireTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
+	TransactionID string                                                           `json:"transaction_id,required"`
+	JSON          wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardDisputeAcceptanceJSON contains the
@@ -698,7 +698,7 @@ type WireTransferSimulationTransactionSourceCardRefund struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type WireTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
-	JSON wireTransferSimulationTransactionSourceCardRefundJSON
+	JSON wireTransferSimulationTransactionSourceCardRefundJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundJSON contains the JSON metadata
@@ -754,8 +754,8 @@ type WireTransferSimulationTransactionSourceCardRefundNetworkIdentifiers struct 
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON
+	TransactionID string                                                                  `json:"transaction_id,required,nullable"`
+	JSON          wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON contains
@@ -798,7 +798,7 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetails struct {
 	PurchaseIdentifierFormat WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON
+	JSON   wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON contains
@@ -864,8 +864,8 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental s
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                        `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
@@ -965,8 +965,8 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging str
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                      `json:"total_tax_currency,required,nullable"`
+	JSON             wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
@@ -1070,7 +1070,7 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel stru
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
+	JSON     wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
@@ -1110,8 +1110,8 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncil
 	// Additional travel charges, such as baggage fees.
 	Services []WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                              `json:"ticket_document_number,required,nullable"`
+	JSON                 wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
@@ -1149,8 +1149,8 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncil
 	// Category of the ancillary service.
 	Category WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                     `json:"sub_category,required,nullable"`
+	JSON        wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
@@ -1274,7 +1274,7 @@ type WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripL
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode WireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+	JSON         wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
@@ -1329,8 +1329,8 @@ type WireTransferSimulationTransactionSourceCardRevenuePayment struct {
 	// The start of the period for which this transaction paid interest.
 	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  wireTransferSimulationTransactionSourceCardRevenuePaymentJSON
+	TransactedOnAccountID string                                                        `json:"transacted_on_account_id,required,nullable"`
+	JSON                  wireTransferSimulationTransactionSourceCardRevenuePaymentJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardRevenuePaymentJSON contains the JSON
@@ -1415,7 +1415,7 @@ type WireTransferSimulationTransactionSourceCardSettlement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type WireTransferSimulationTransactionSourceCardSettlementType `json:"type,required"`
-	JSON wireTransferSimulationTransactionSourceCardSettlementJSON
+	JSON wireTransferSimulationTransactionSourceCardSettlementJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementJSON contains the JSON
@@ -1475,8 +1475,8 @@ type WireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers str
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
+	TransactionID string                                                                      `json:"transaction_id,required,nullable"`
+	JSON          wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
@@ -1519,7 +1519,7 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetails struct
 	PurchaseIdentifierFormat WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON
+	JSON   wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON
@@ -1585,8 +1585,8 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRent
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                            `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
@@ -1686,8 +1686,8 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                          `json:"total_tax_currency,required,nullable"`
+	JSON             wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
@@ -1791,7 +1791,7 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel 
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+	JSON     wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
@@ -1831,8 +1831,8 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelA
 	// Additional travel charges, such as baggage fees.
 	Services []WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                                  `json:"ticket_document_number,required,nullable"`
+	JSON                 wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
@@ -1870,8 +1870,8 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelA
 	// Category of the ancillary service.
 	Category WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                         `json:"sub_category,required,nullable"`
+	JSON        wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
@@ -1995,7 +1995,7 @@ type WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelT
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode WireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+	JSON         wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
@@ -2140,8 +2140,8 @@ type WireTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string `json:"serial_number,required,nullable"`
-	JSON         wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
+	SerialNumber string                                                            `json:"serial_number,required,nullable"`
+	JSON         wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCheckDepositAcceptanceJSON contains the
@@ -2201,8 +2201,8 @@ type WireTransferSimulationTransactionSourceCheckDepositReturn struct {
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          wireTransferSimulationTransactionSourceCheckDepositReturnJSON
+	TransactionID string                                                        `json:"transaction_id,required"`
+	JSON          wireTransferSimulationTransactionSourceCheckDepositReturnJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCheckDepositReturnJSON contains the JSON
@@ -2295,7 +2295,7 @@ type WireTransferSimulationTransactionSourceCheckTransferDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type WireTransferSimulationTransactionSourceCheckTransferDepositType `json:"type,required"`
-	JSON wireTransferSimulationTransactionSourceCheckTransferDepositJSON
+	JSON wireTransferSimulationTransactionSourceCheckTransferDepositJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCheckTransferDepositJSON contains the
@@ -2346,8 +2346,8 @@ type WireTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required,nullable"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceCheckTransferIntentionJSON
+	TransferID string                                                            `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceCheckTransferIntentionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCheckTransferIntentionJSON contains the
@@ -2403,7 +2403,7 @@ type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequest stru
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
+	JSON wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
@@ -2453,8 +2453,8 @@ type WireTransferSimulationTransactionSourceFeePayment struct {
 	// currency.
 	Currency WireTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
 	// The start of this payment's fee period, usually the first day of a month.
-	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
-	JSON           wireTransferSimulationTransactionSourceFeePaymentJSON
+	FeePeriodStart time.Time                                             `json:"fee_period_start,required" format:"date"`
+	JSON           wireTransferSimulationTransactionSourceFeePaymentJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceFeePaymentJSON contains the JSON metadata
@@ -2519,8 +2519,8 @@ type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
 	TraceNumber string `json:"trace_number,required"`
 	// The inbound ach transfer's identifier.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceInboundACHTransferJSON
+	TransferID string                                                        `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceInboundACHTransferJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundACHTransferJSON contains the JSON
@@ -2565,7 +2565,7 @@ type WireTransferSimulationTransactionSourceInboundCheck struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency WireTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	JSON     wireTransferSimulationTransactionSourceInboundCheckJSON
+	JSON     wireTransferSimulationTransactionSourceInboundCheckJSON     `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundCheckJSON contains the JSON
@@ -2704,8 +2704,8 @@ type WireTransferSimulationTransactionSourceInboundInternationalACHTransfer stru
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
+	TraceNumber string                                                                     `json:"trace_number,required"`
+	JSON        wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
@@ -2880,8 +2880,8 @@ type WireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfi
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	TransactionIdentification string                                                                                 `json:"transaction_identification,required"`
+	JSON                      wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
@@ -2965,8 +2965,8 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                                `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
@@ -3025,8 +3025,8 @@ type WireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal s
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
-	JSON                       wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
+	PreviousMessageInputSource string                                                                        `json:"previous_message_input_source,required"`
+	JSON                       wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
@@ -3091,8 +3091,8 @@ type WireTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           wireTransferSimulationTransactionSourceInboundWireReversalJSON
+	WireTransferID string                                                         `json:"wire_transfer_id,required"`
+	JSON           wireTransferSimulationTransactionSourceInboundWireReversalJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundWireReversalJSON contains the JSON
@@ -3164,8 +3164,8 @@ type WireTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    wireTransferSimulationTransactionSourceInboundWireTransferJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                         `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    wireTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInboundWireTransferJSON contains the JSON
@@ -3212,8 +3212,8 @@ type WireTransferSimulationTransactionSourceInterestPayment struct {
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	JSON        wireTransferSimulationTransactionSourceInterestPaymentJSON
+	PeriodStart time.Time                                                  `json:"period_start,required" format:"date-time"`
+	JSON        wireTransferSimulationTransactionSourceInterestPaymentJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInterestPaymentJSON contains the JSON
@@ -3263,7 +3263,7 @@ type WireTransferSimulationTransactionSourceInternalSource struct {
 	// An Internal Source is a transaction between you and Increase. This describes the
 	// reason for the transaction.
 	Reason WireTransferSimulationTransactionSourceInternalSourceReason `json:"reason,required"`
-	JSON   wireTransferSimulationTransactionSourceInternalSourceJSON
+	JSON   wireTransferSimulationTransactionSourceInternalSourceJSON   `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceInternalSourceJSON contains the JSON
@@ -3345,8 +3345,8 @@ type WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgem
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+	TransferID string                                                                             `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
@@ -3370,8 +3370,8 @@ func (r *WireTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowle
 // only if `category` is equal to `sample_funds`.
 type WireTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator string `json:"originator,required"`
-	JSON       wireTransferSimulationTransactionSourceSampleFundsJSON
+	Originator string                                                 `json:"originator,required"`
+	JSON       wireTransferSimulationTransactionSourceSampleFundsJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceSampleFundsJSON contains the JSON
@@ -3398,8 +3398,8 @@ type WireTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceWireTransferIntentionJSON
+	TransferID string                                                           `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceWireTransferIntentionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceWireTransferIntentionJSON contains the
@@ -3423,8 +3423,8 @@ func (r *WireTransferSimulationTransactionSourceWireTransferIntention) Unmarshal
 // response if and only if `category` is equal to `wire_transfer_rejection`.
 type WireTransferSimulationTransactionSourceWireTransferRejection struct {
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       wireTransferSimulationTransactionSourceWireTransferRejectionJSON
+	TransferID string                                                           `json:"transfer_id,required"`
+	JSON       wireTransferSimulationTransactionSourceWireTransferRejectionJSON `json:"-"`
 }
 
 // wireTransferSimulationTransactionSourceWireTransferRejectionJSON contains the

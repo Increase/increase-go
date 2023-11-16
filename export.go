@@ -97,7 +97,7 @@ type Export struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `export`.
 	Type ExportType `json:"type,required"`
-	JSON exportJSON
+	JSON exportJSON `json:"-"`
 }
 
 // exportJSON contains the JSON metadata for the struct [Export]

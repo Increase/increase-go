@@ -154,8 +154,8 @@ type CheckTransfer struct {
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
 	// The unique identifier you chose for this transfer.
-	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
-	JSON             checkTransferJSON
+	UniqueIdentifier string            `json:"unique_identifier,required,nullable"`
+	JSON             checkTransferJSON `json:"-"`
 }
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
@@ -197,8 +197,8 @@ type CheckTransferApproval struct {
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       checkTransferApprovalJSON
+	ApprovedBy string                    `json:"approved_by,required,nullable"`
+	JSON       checkTransferApprovalJSON `json:"-"`
 }
 
 // checkTransferApprovalJSON contains the JSON metadata for the struct
@@ -222,8 +222,8 @@ type CheckTransferCancellation struct {
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       checkTransferCancellationJSON
+	CanceledBy string                        `json:"canceled_by,required,nullable"`
+	JSON       checkTransferCancellationJSON `json:"-"`
 }
 
 // checkTransferCancellationJSON contains the JSON metadata for the struct
@@ -279,7 +279,7 @@ type CheckTransferDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type CheckTransferDepositType `json:"type,required"`
-	JSON checkTransferDepositJSON
+	JSON checkTransferDepositJSON `json:"-"`
 }
 
 // checkTransferDepositJSON contains the JSON metadata for the struct
@@ -328,8 +328,8 @@ type CheckTransferMailing struct {
 	ImageID string `json:"image_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt time.Time `json:"mailed_at,required" format:"date-time"`
-	JSON     checkTransferMailingJSON
+	MailedAt time.Time                `json:"mailed_at,required" format:"date-time"`
+	JSON     checkTransferMailingJSON `json:"-"`
 }
 
 // checkTransferMailingJSON contains the JSON metadata for the struct
@@ -358,7 +358,7 @@ type CheckTransferPhysicalCheck struct {
 	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
-	JSON          checkTransferPhysicalCheckJSON
+	JSON          checkTransferPhysicalCheckJSON          `json:"-"`
 }
 
 // checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
@@ -390,8 +390,8 @@ type CheckTransferPhysicalCheckMailingAddress struct {
 	// The postal code of the check's destination.
 	PostalCode string `json:"postal_code,required,nullable"`
 	// The state of the check's destination.
-	State string `json:"state,required,nullable"`
-	JSON  checkTransferPhysicalCheckMailingAddressJSON
+	State string                                       `json:"state,required,nullable"`
+	JSON  checkTransferPhysicalCheckMailingAddressJSON `json:"-"`
 }
 
 // checkTransferPhysicalCheckMailingAddressJSON contains the JSON metadata for the
@@ -424,8 +424,8 @@ type CheckTransferPhysicalCheckReturnAddress struct {
 	// The postal code of the check's destination.
 	PostalCode string `json:"postal_code,required,nullable"`
 	// The state of the check's destination.
-	State string `json:"state,required,nullable"`
-	JSON  checkTransferPhysicalCheckReturnAddressJSON
+	State string                                      `json:"state,required,nullable"`
+	JSON  checkTransferPhysicalCheckReturnAddressJSON `json:"-"`
 }
 
 // checkTransferPhysicalCheckReturnAddressJSON contains the JSON metadata for the
@@ -483,7 +483,7 @@ type CheckTransferStopPaymentRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type CheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON checkTransferStopPaymentRequestJSON
+	JSON checkTransferStopPaymentRequestJSON `json:"-"`
 }
 
 // checkTransferStopPaymentRequestJSON contains the JSON metadata for the struct
@@ -525,8 +525,8 @@ const (
 // After the transfer is submitted, this will contain supplemental details.
 type CheckTransferSubmission struct {
 	// When this check transfer was submitted to our check printer.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	JSON        checkTransferSubmissionJSON
+	SubmittedAt time.Time                   `json:"submitted_at,required" format:"date-time"`
+	JSON        checkTransferSubmissionJSON `json:"-"`
 }
 
 // checkTransferSubmissionJSON contains the JSON metadata for the struct

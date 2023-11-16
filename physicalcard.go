@@ -106,7 +106,7 @@ type PhysicalCard struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card`.
 	Type PhysicalCardType `json:"type,required"`
-	JSON physicalCardJSON
+	JSON physicalCardJSON `json:"-"`
 }
 
 // physicalCardJSON contains the JSON metadata for the struct [PhysicalCard]
@@ -132,8 +132,8 @@ type PhysicalCardCardholder struct {
 	// The cardholder's first name.
 	FirstName string `json:"first_name,required"`
 	// The cardholder's last name.
-	LastName string `json:"last_name,required"`
-	JSON     physicalCardCardholderJSON
+	LastName string                     `json:"last_name,required"`
+	JSON     physicalCardCardholderJSON `json:"-"`
 }
 
 // physicalCardCardholderJSON contains the JSON metadata for the struct
@@ -159,7 +159,7 @@ type PhysicalCardShipment struct {
 	Status PhysicalCardShipmentStatus `json:"status,required"`
 	// Tracking details for the shipment.
 	Tracking PhysicalCardShipmentTracking `json:"tracking,required,nullable"`
-	JSON     physicalCardShipmentJSON
+	JSON     physicalCardShipmentJSON     `json:"-"`
 }
 
 // physicalCardShipmentJSON contains the JSON metadata for the struct
@@ -192,8 +192,8 @@ type PhysicalCardShipmentAddress struct {
 	// The postal code of the shipping address.
 	PostalCode string `json:"postal_code,required"`
 	// The US state of the shipping address.
-	State string `json:"state,required"`
-	JSON  physicalCardShipmentAddressJSON
+	State string                          `json:"state,required"`
+	JSON  physicalCardShipmentAddressJSON `json:"-"`
 }
 
 // physicalCardShipmentAddressJSON contains the JSON metadata for the struct
@@ -257,8 +257,8 @@ type PhysicalCardShipmentTracking struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the fulfillment provider marked the card as ready for pick-up by the shipment
 	// carrier.
-	ShippedAt time.Time `json:"shipped_at,required" format:"date-time"`
-	JSON      physicalCardShipmentTrackingJSON
+	ShippedAt time.Time                        `json:"shipped_at,required" format:"date-time"`
+	JSON      physicalCardShipmentTrackingJSON `json:"-"`
 }
 
 // physicalCardShipmentTrackingJSON contains the JSON metadata for the struct

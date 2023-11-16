@@ -84,7 +84,7 @@ type Event struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
 	Type EventType `json:"type,required"`
-	JSON eventJSON
+	JSON eventJSON `json:"-"`
 }
 
 // eventJSON contains the JSON metadata for the struct [Event]

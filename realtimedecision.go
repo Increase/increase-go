@@ -74,7 +74,7 @@ type RealTimeDecision struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_decision`.
 	Type RealTimeDecisionType `json:"type,required"`
-	JSON realTimeDecisionJSON
+	JSON realTimeDecisionJSON `json:"-"`
 }
 
 // realTimeDecisionJSON contains the JSON metadata for the struct
@@ -147,7 +147,7 @@ type RealTimeDecisionCardAuthorization struct {
 	SettlementCurrency string `json:"settlement_currency,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification,required"`
-	JSON         realTimeDecisionCardAuthorizationJSON
+	JSON         realTimeDecisionCardAuthorizationJSON         `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationJSON contains the JSON metadata for the struct
@@ -196,7 +196,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON
+	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationNetworkDetailsJSON contains the JSON metadata
@@ -229,7 +229,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON
+	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON contains the JSON
@@ -325,8 +325,8 @@ type RealTimeDecisionCardAuthorizationNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          realTimeDecisionCardAuthorizationNetworkIdentifiersJSON
+	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	JSON          realTimeDecisionCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationNetworkIdentifiersJSON contains the JSON
@@ -375,8 +375,8 @@ type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// Fields specific to the category `incremental_authorization`.
 	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
 	// Fields specific to the category `initial_authorization`.
-	InitialAuthorization interface{} `json:"initial_authorization,required,nullable"`
-	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON
+	InitialAuthorization interface{}                                         `json:"initial_authorization,required,nullable"`
+	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationRequestDetailsJSON contains the JSON metadata
@@ -410,8 +410,8 @@ type RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization str
 	CardPaymentID string `json:"card_payment_id,required"`
 	// The identifier of the card authorization this request is attempting to
 	// increment.
-	OriginalCardAuthorizationID string `json:"original_card_authorization_id,required"`
-	JSON                        realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON
+	OriginalCardAuthorizationID string                                                                      `json:"original_card_authorization_id,required"`
+	JSON                        realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON
@@ -436,7 +436,7 @@ type RealTimeDecisionCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress RealTimeDecisionCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              realTimeDecisionCardAuthorizationVerificationJSON
+	JSON              realTimeDecisionCardAuthorizationVerificationJSON              `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationVerificationJSON contains the JSON metadata for
@@ -457,7 +457,7 @@ func (r *RealTimeDecisionCardAuthorizationVerification) UnmarshalJSON(data []byt
 type RealTimeDecisionCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON
+	JSON   realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON contains
@@ -499,7 +499,7 @@ type RealTimeDecisionCardAuthorizationVerificationCardholderAddress struct {
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
-	JSON   realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON
+	JSON   realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON contains the
@@ -567,7 +567,7 @@ type RealTimeDecisionDigitalWalletAuthentication struct {
 	Phone string `json:"phone,required,nullable"`
 	// Whether your application successfully delivered the one-time passcode.
 	Result RealTimeDecisionDigitalWalletAuthenticationResult `json:"result,required,nullable"`
-	JSON   realTimeDecisionDigitalWalletAuthenticationJSON
+	JSON   realTimeDecisionDigitalWalletAuthenticationJSON   `json:"-"`
 }
 
 // realTimeDecisionDigitalWalletAuthenticationJSON contains the JSON metadata for
@@ -633,7 +633,7 @@ type RealTimeDecisionDigitalWalletToken struct {
 	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision,required,nullable"`
 	// The digital wallet app being used.
 	DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet,required"`
-	JSON          realTimeDecisionDigitalWalletTokenJSON
+	JSON          realTimeDecisionDigitalWalletTokenJSON          `json:"-"`
 }
 
 // realTimeDecisionDigitalWalletTokenJSON contains the JSON metadata for the struct

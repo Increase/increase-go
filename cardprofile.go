@@ -105,7 +105,7 @@ type CardProfile struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_profile`.
 	Type CardProfileType `json:"type,required"`
-	JSON cardProfileJSON
+	JSON cardProfileJSON `json:"-"`
 }
 
 // cardProfileJSON contains the JSON metadata for the struct [CardProfile]
@@ -145,7 +145,7 @@ type CardProfileDigitalWallets struct {
 	IssuerName string `json:"issuer_name,required"`
 	// The Card's text color, specified as an RGB triple.
 	TextColor CardProfileDigitalWalletsTextColor `json:"text_color,required"`
-	JSON      cardProfileDigitalWalletsJSON
+	JSON      cardProfileDigitalWalletsJSON      `json:"-"`
 }
 
 // cardProfileDigitalWalletsJSON contains the JSON metadata for the struct
@@ -174,8 +174,8 @@ type CardProfileDigitalWalletsTextColor struct {
 	// The value of the green channel in the RGB color.
 	Green int64 `json:"green,required"`
 	// The value of the red channel in the RGB color.
-	Red  int64 `json:"red,required"`
-	JSON cardProfileDigitalWalletsTextColorJSON
+	Red  int64                                  `json:"red,required"`
+	JSON cardProfileDigitalWalletsTextColorJSON `json:"-"`
 }
 
 // cardProfileDigitalWalletsTextColorJSON contains the JSON metadata for the struct
@@ -204,7 +204,7 @@ type CardProfilePhysicalCards struct {
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// The status of the Physical Card Profile.
 	Status CardProfilePhysicalCardsStatus `json:"status,required"`
-	JSON   cardProfilePhysicalCardsJSON
+	JSON   cardProfilePhysicalCardsJSON   `json:"-"`
 }
 
 // cardProfilePhysicalCardsJSON contains the JSON metadata for the struct

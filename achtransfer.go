@@ -173,8 +173,8 @@ type ACHTransfer struct {
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
 	// The unique identifier you chose for this transfer.
-	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
-	JSON             achTransferJSON
+	UniqueIdentifier string          `json:"unique_identifier,required,nullable"`
+	JSON             achTransferJSON `json:"-"`
 }
 
 // achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
@@ -224,8 +224,8 @@ func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 type ACHTransferAcknowledgement struct {
 	// When the Federal Reserve acknowledged the submitted file containing this
 	// transfer.
-	AcknowledgedAt string `json:"acknowledged_at,required"`
-	JSON           achTransferAcknowledgementJSON
+	AcknowledgedAt string                         `json:"acknowledged_at,required"`
+	JSON           achTransferAcknowledgementJSON `json:"-"`
 }
 
 // achTransferAcknowledgementJSON contains the JSON metadata for the struct
@@ -248,8 +248,8 @@ type ACHTransferApproval struct {
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       achTransferApprovalJSON
+	ApprovedBy string                  `json:"approved_by,required,nullable"`
+	JSON       achTransferApprovalJSON `json:"-"`
 }
 
 // achTransferApprovalJSON contains the JSON metadata for the struct
@@ -273,8 +273,8 @@ type ACHTransferCancellation struct {
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       achTransferCancellationJSON
+	CanceledBy string                      `json:"canceled_by,required,nullable"`
+	JSON       achTransferCancellationJSON `json:"-"`
 }
 
 // achTransferCancellationJSON contains the JSON metadata for the struct
@@ -334,8 +334,8 @@ type ACHTransferNotificationsOfChange struct {
 	CorrectedData string `json:"corrected_data,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	JSON      achTransferNotificationsOfChangeJSON
+	CreatedAt time.Time                            `json:"created_at,required" format:"date-time"`
+	JSON      achTransferNotificationsOfChangeJSON `json:"-"`
 }
 
 // achTransferNotificationsOfChangeJSON contains the JSON metadata for the struct
@@ -413,8 +413,8 @@ type ACHTransferReturn struct {
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferReturnJSON
+	TransferID string                `json:"transfer_id,required"`
+	JSON       achTransferReturnJSON `json:"-"`
 }
 
 // achTransferReturnJSON contains the JSON metadata for the struct
@@ -682,8 +682,8 @@ type ACHTransferSubmission struct {
 	// used to identify the ACH transfer at the receiving bank. ACH trace numbers are
 	// not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        achTransferSubmissionJSON
+	TraceNumber string                    `json:"trace_number,required"`
+	JSON        achTransferSubmissionJSON `json:"-"`
 }
 
 // achTransferSubmissionJSON contains the JSON metadata for the struct

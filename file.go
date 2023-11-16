@@ -105,7 +105,7 @@ type File struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `file`.
 	Type FileType `json:"type,required"`
-	JSON fileJSON
+	JSON fileJSON `json:"-"`
 }
 
 // fileJSON contains the JSON metadata for the struct [File]

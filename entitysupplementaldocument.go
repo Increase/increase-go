@@ -77,7 +77,7 @@ type SupplementalDocument struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type SupplementalDocumentType `json:"type,required"`
-	JSON supplementalDocumentJSON
+	JSON supplementalDocumentJSON `json:"-"`
 }
 
 // supplementalDocumentJSON contains the JSON metadata for the struct

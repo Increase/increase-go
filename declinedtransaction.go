@@ -100,7 +100,7 @@ type DeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type DeclinedTransactionType `json:"type,required"`
-	JSON declinedTransactionJSON
+	JSON declinedTransactionJSON `json:"-"`
 }
 
 // declinedTransactionJSON contains the JSON metadata for the struct
@@ -182,7 +182,7 @@ type DeclinedTransactionSource struct {
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        declinedTransactionSourceJSON
+	JSON        declinedTransactionSourceJSON        `json:"-"`
 }
 
 // declinedTransactionSourceJSON contains the JSON metadata for the struct
@@ -230,7 +230,7 @@ type DeclinedTransactionSourceACHDecline struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
 	Type DeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	JSON declinedTransactionSourceACHDeclineJSON
+	JSON declinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceACHDeclineJSON contains the JSON metadata for the
@@ -346,7 +346,7 @@ type DeclinedTransactionSourceCardDecline struct {
 	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
-	JSON         declinedTransactionSourceCardDeclineJSON
+	JSON         declinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
@@ -403,7 +403,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineNetworkDetailsJSON contains the JSON
@@ -436,7 +436,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON contains the JSON
@@ -532,8 +532,8 @@ type DeclinedTransactionSourceCardDeclineNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          declinedTransactionSourceCardDeclineNetworkIdentifiersJSON
+	TransactionID string                                                     `json:"transaction_id,required,nullable"`
+	JSON          declinedTransactionSourceCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineNetworkIdentifiersJSON contains the JSON
@@ -618,7 +618,7 @@ type DeclinedTransactionSourceCardDeclineVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress DeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              declinedTransactionSourceCardDeclineVerificationJSON
+	JSON              declinedTransactionSourceCardDeclineVerificationJSON              `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineVerificationJSON contains the JSON metadata
@@ -639,7 +639,7 @@ func (r *DeclinedTransactionSourceCardDeclineVerification) UnmarshalJSON(data []
 type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+	JSON   declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
@@ -681,7 +681,7 @@ type DeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
-	JSON   declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+	JSON   declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON contains
@@ -760,7 +760,7 @@ type DeclinedTransactionSourceCheckDecline struct {
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// Why the check was declined.
 	Reason DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   declinedTransactionSourceCheckDeclineJSON
+	JSON   declinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
 // declinedTransactionSourceCheckDeclineJSON contains the JSON metadata for the
@@ -834,8 +834,8 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	TransactionIdentification string                                                              `json:"transaction_identification,required"`
+	JSON                      declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the
@@ -996,8 +996,8 @@ type DeclinedTransactionSourceInternationalACHDecline struct {
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        declinedTransactionSourceInternationalACHDeclineJSON
+	TraceNumber string                                               `json:"trace_number,required"`
+	JSON        declinedTransactionSourceInternationalACHDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceInternationalACHDeclineJSON contains the JSON metadata
@@ -1193,7 +1193,7 @@ type DeclinedTransactionSourceWireDecline struct {
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
 	Reason DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	JSON   declinedTransactionSourceWireDeclineJSON
+	JSON   declinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 
 // declinedTransactionSourceWireDeclineJSON contains the JSON metadata for the

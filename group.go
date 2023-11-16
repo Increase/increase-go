@@ -53,7 +53,7 @@ type Group struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
 	Type GroupType `json:"type,required"`
-	JSON groupJSON
+	JSON groupJSON `json:"-"`
 }
 
 // groupJSON contains the JSON metadata for the struct [Group]

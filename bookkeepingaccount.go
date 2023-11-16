@@ -99,7 +99,7 @@ type BookkeepingAccount struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_account`.
 	Type BookkeepingAccountType `json:"type,required"`
-	JSON bookkeepingAccountJSON
+	JSON bookkeepingAccountJSON `json:"-"`
 }
 
 // bookkeepingAccountJSON contains the JSON metadata for the struct
@@ -148,7 +148,7 @@ type BookkeepingBalanceLookup struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_balance_lookup`.
 	Type BookkeepingBalanceLookupType `json:"type,required"`
-	JSON bookkeepingBalanceLookupJSON
+	JSON bookkeepingBalanceLookupJSON `json:"-"`
 }
 
 // bookkeepingBalanceLookupJSON contains the JSON metadata for the struct
