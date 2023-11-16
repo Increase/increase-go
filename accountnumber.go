@@ -111,7 +111,7 @@ type AccountNumber struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
 	Type AccountNumberType `json:"type,required"`
-	JSON accountNumberJSON
+	JSON accountNumberJSON `json:"-"`
 }
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
@@ -139,7 +139,7 @@ type AccountNumberInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that they will
 	// still be declined if this is `allowed` if the Account Number is not active.
 	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status,required"`
-	JSON        accountNumberInboundACHJSON
+	JSON        accountNumberInboundACHJSON        `json:"-"`
 }
 
 // accountNumberInboundACHJSON contains the JSON metadata for the struct
@@ -170,7 +170,7 @@ const (
 type AccountNumberInboundChecks struct {
 	// How Increase should process checks with this account number printed on them.
 	Status AccountNumberInboundChecksStatus `json:"status,required"`
-	JSON   accountNumberInboundChecksJSON
+	JSON   accountNumberInboundChecksJSON   `json:"-"`
 }
 
 // accountNumberInboundChecksJSON contains the JSON metadata for the struct

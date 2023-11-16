@@ -82,7 +82,7 @@ type CardPurchaseSupplement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_purchase_supplement`.
 	Type CardPurchaseSupplementType `json:"type,required"`
-	JSON cardPurchaseSupplementJSON
+	JSON cardPurchaseSupplementJSON `json:"-"`
 }
 
 // cardPurchaseSupplementJSON contains the JSON metadata for the struct
@@ -137,8 +137,8 @@ type CardPurchaseSupplementInvoice struct {
 	// Indicates how the merchant applied taxes.
 	TaxTreatments CardPurchaseSupplementInvoiceTaxTreatments `json:"tax_treatments,required,nullable"`
 	// Value added tax invoice reference number.
-	UniqueValueAddedTaxInvoiceReference string `json:"unique_value_added_tax_invoice_reference,required,nullable"`
-	JSON                                cardPurchaseSupplementInvoiceJSON
+	UniqueValueAddedTaxInvoiceReference string                            `json:"unique_value_added_tax_invoice_reference,required,nullable"`
+	JSON                                cardPurchaseSupplementInvoiceJSON `json:"-"`
 }
 
 // cardPurchaseSupplementInvoiceJSON contains the JSON metadata for the struct
@@ -230,8 +230,8 @@ type CardPurchaseSupplementLineItem struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the unit cost.
 	UnitCostCurrency string `json:"unit_cost_currency,required,nullable"`
 	// Code indicating unit of measure (gallons, etc.).
-	UnitOfMeasureCode string `json:"unit_of_measure_code,required,nullable"`
-	JSON              cardPurchaseSupplementLineItemJSON
+	UnitOfMeasureCode string                             `json:"unit_of_measure_code,required,nullable"`
+	JSON              cardPurchaseSupplementLineItemJSON `json:"-"`
 }
 
 // cardPurchaseSupplementLineItemJSON contains the JSON metadata for the struct

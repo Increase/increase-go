@@ -87,7 +87,7 @@ type ACHTransferSimulation struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer_simulation_result`.
 	Type ACHTransferSimulationType `json:"type,required"`
-	JSON achTransferSimulationJSON
+	JSON achTransferSimulationJSON `json:"-"`
 }
 
 // achTransferSimulationJSON contains the JSON metadata for the struct
@@ -139,7 +139,7 @@ type ACHTransferSimulationDeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type ACHTransferSimulationDeclinedTransactionType `json:"type,required"`
-	JSON achTransferSimulationDeclinedTransactionJSON
+	JSON achTransferSimulationDeclinedTransactionJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionJSON contains the JSON metadata for the
@@ -221,7 +221,7 @@ type ACHTransferSimulationDeclinedTransactionSource struct {
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline ACHTransferSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        achTransferSimulationDeclinedTransactionSourceJSON
+	JSON        achTransferSimulationDeclinedTransactionSourceJSON        `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceJSON contains the JSON metadata
@@ -269,7 +269,7 @@ type ACHTransferSimulationDeclinedTransactionSourceACHDecline struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
 	Type ACHTransferSimulationDeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	JSON achTransferSimulationDeclinedTransactionSourceACHDeclineJSON
+	JSON achTransferSimulationDeclinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceACHDeclineJSON contains the JSON
@@ -386,7 +386,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDecline struct {
 	Reason ACHTransferSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
-	JSON         achTransferSimulationDeclinedTransactionSourceCardDeclineJSON
+	JSON         achTransferSimulationDeclinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineJSON contains the JSON
@@ -444,7 +444,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetails str
 	Category ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
@@ -478,7 +478,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
@@ -575,8 +575,8 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiers
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
+	TransactionID string                                                                          `json:"transaction_id,required,nullable"`
+	JSON          achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
@@ -662,7 +662,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification struc
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
+	JSON              achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON              `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
@@ -684,7 +684,7 @@ func (r *ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerification) 
 type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
@@ -726,7 +726,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardho
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result ACHTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+	JSON   achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
@@ -805,7 +805,7 @@ type ACHTransferSimulationDeclinedTransactionSourceCheckDecline struct {
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// Why the check was declined.
 	Reason ACHTransferSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON
+	JSON   achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceCheckDeclineJSON contains the JSON
@@ -880,8 +880,8 @@ type ACHTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransf
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	TransactionIdentification string                                                                                   `json:"transaction_identification,required"`
+	JSON                      achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
@@ -1042,8 +1042,8 @@ type ACHTransferSimulationDeclinedTransactionSourceInternationalACHDecline struc
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+	TraceNumber string                                                                    `json:"trace_number,required"`
+	JSON        achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
@@ -1240,7 +1240,7 @@ type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
 	Reason ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	JSON   achTransferSimulationDeclinedTransactionSourceWireDeclineJSON
+	JSON   achTransferSimulationDeclinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 
 // achTransferSimulationDeclinedTransactionSourceWireDeclineJSON contains the JSON
@@ -1334,7 +1334,7 @@ type ACHTransferSimulationTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
 	Type ACHTransferSimulationTransactionType `json:"type,required"`
-	JSON achTransferSimulationTransactionJSON
+	JSON achTransferSimulationTransactionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionJSON contains the JSON metadata for the struct
@@ -1485,7 +1485,7 @@ type ACHTransferSimulationTransactionSource struct {
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
 	WireTransferRejection ACHTransferSimulationTransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
-	JSON                  achTransferSimulationTransactionSourceJSON
+	JSON                  achTransferSimulationTransactionSourceJSON                  `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceJSON contains the JSON metadata for the
@@ -1544,8 +1544,8 @@ type ACHTransferSimulationTransactionSourceAccountTransferIntention struct {
 	// The identifier of the Account from where the Account Transfer was sent.
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceAccountTransferIntentionJSON
+	TransferID string                                                             `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceAccountTransferIntentionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceAccountTransferIntentionJSON contains the
@@ -1599,8 +1599,8 @@ type ACHTransferSimulationTransactionSourceACHTransferIntention struct {
 	// A description set when the ACH Transfer was created.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceACHTransferIntentionJSON
+	TransferID string                                                         `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceACHTransferIntentionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceACHTransferIntentionJSON contains the JSON
@@ -1624,8 +1624,8 @@ func (r *ACHTransferSimulationTransactionSourceACHTransferIntention) UnmarshalJS
 // response if and only if `category` is equal to `ach_transfer_rejection`.
 type ACHTransferSimulationTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceACHTransferRejectionJSON
+	TransferID string                                                         `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceACHTransferRejectionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceACHTransferRejectionJSON contains the JSON
@@ -1655,8 +1655,8 @@ type ACHTransferSimulationTransactionSourceACHTransferReturn struct {
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceACHTransferReturnJSON
+	TransferID string                                                      `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceACHTransferReturnJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceACHTransferReturnJSON contains the JSON
@@ -1878,8 +1878,8 @@ type ACHTransferSimulationTransactionSourceCardDisputeAcceptance struct {
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferSimulationTransactionSourceCardDisputeAcceptanceJSON
+	TransactionID string                                                          `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransactionSourceCardDisputeAcceptanceJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardDisputeAcceptanceJSON contains the
@@ -1933,7 +1933,7 @@ type ACHTransferSimulationTransactionSourceCardRefund struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type ACHTransferSimulationTransactionSourceCardRefundType `json:"type,required"`
-	JSON achTransferSimulationTransactionSourceCardRefundJSON
+	JSON achTransferSimulationTransactionSourceCardRefundJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundJSON contains the JSON metadata
@@ -1989,8 +1989,8 @@ type ACHTransferSimulationTransactionSourceCardRefundNetworkIdentifiers struct {
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          achTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON
+	TransactionID string                                                                 `json:"transaction_id,required,nullable"`
+	JSON          achTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundNetworkIdentifiersJSON contains
@@ -2033,7 +2033,7 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetails struct {
 	PurchaseIdentifierFormat ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON
+	JSON   achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsJSON contains the
@@ -2099,8 +2099,8 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRental st
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                       `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
@@ -2200,8 +2200,8 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodging stru
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                     `json:"total_tax_currency,required,nullable"`
+	JSON             achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsLodgingJSON
@@ -2305,7 +2305,7 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravel struc
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
+	JSON     achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelJSON
@@ -2345,8 +2345,8 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncill
 	// Additional travel charges, such as baggage fees.
 	Services []ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                             `json:"ticket_document_number,required,nullable"`
+	JSON                 achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
@@ -2384,8 +2384,8 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncill
 	// Category of the ancillary service.
 	Category ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                    `json:"sub_category,required,nullable"`
+	JSON        achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
@@ -2509,7 +2509,7 @@ type ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLe
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode ACHTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+	JSON         achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
@@ -2564,8 +2564,8 @@ type ACHTransferSimulationTransactionSourceCardRevenuePayment struct {
 	// The start of the period for which this transaction paid interest.
 	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  achTransferSimulationTransactionSourceCardRevenuePaymentJSON
+	TransactedOnAccountID string                                                       `json:"transacted_on_account_id,required,nullable"`
+	JSON                  achTransferSimulationTransactionSourceCardRevenuePaymentJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardRevenuePaymentJSON contains the JSON
@@ -2650,7 +2650,7 @@ type ACHTransferSimulationTransactionSourceCardSettlement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type ACHTransferSimulationTransactionSourceCardSettlementType `json:"type,required"`
-	JSON achTransferSimulationTransactionSourceCardSettlementJSON
+	JSON achTransferSimulationTransactionSourceCardSettlementJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementJSON contains the JSON
@@ -2710,8 +2710,8 @@ type ACHTransferSimulationTransactionSourceCardSettlementNetworkIdentifiers stru
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          achTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
+	TransactionID string                                                                     `json:"transaction_id,required,nullable"`
+	JSON          achTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementNetworkIdentifiersJSON
@@ -2754,7 +2754,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetails struct 
 	PurchaseIdentifierFormat ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON
+	JSON   achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsJSON contains
@@ -2820,8 +2820,8 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRenta
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                           `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
@@ -2921,8 +2921,8 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodging 
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                         `json:"total_tax_currency,required,nullable"`
+	JSON             achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
@@ -3026,7 +3026,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravel s
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+	JSON     achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelJSON
@@ -3066,8 +3066,8 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAn
 	// Additional travel charges, such as baggage fees.
 	Services []ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                                 `json:"ticket_document_number,required,nullable"`
+	JSON                 achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
@@ -3105,8 +3105,8 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAn
 	// Category of the ancillary service.
 	Category ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                        `json:"sub_category,required,nullable"`
+	JSON        achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
@@ -3230,7 +3230,7 @@ type ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTr
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode ACHTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+	JSON         achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
@@ -3375,8 +3375,8 @@ type ACHTransferSimulationTransactionSourceCheckDepositAcceptance struct {
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string `json:"serial_number,required,nullable"`
-	JSON         achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON
+	SerialNumber string                                                           `json:"serial_number,required,nullable"`
+	JSON         achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCheckDepositAcceptanceJSON contains the
@@ -3436,8 +3436,8 @@ type ACHTransferSimulationTransactionSourceCheckDepositReturn struct {
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferSimulationTransactionSourceCheckDepositReturnJSON
+	TransactionID string                                                       `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransactionSourceCheckDepositReturnJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCheckDepositReturnJSON contains the JSON
@@ -3530,7 +3530,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferDeposit struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type ACHTransferSimulationTransactionSourceCheckTransferDepositType `json:"type,required"`
-	JSON achTransferSimulationTransactionSourceCheckTransferDepositJSON
+	JSON achTransferSimulationTransactionSourceCheckTransferDepositJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCheckTransferDepositJSON contains the JSON
@@ -3581,8 +3581,8 @@ type ACHTransferSimulationTransactionSourceCheckTransferIntention struct {
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required,nullable"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceCheckTransferIntentionJSON
+	TransferID string                                                           `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceCheckTransferIntentionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCheckTransferIntentionJSON contains the
@@ -3638,7 +3638,7 @@ type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequest struc
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON achTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
+	JSON achTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceCheckTransferStopPaymentRequestJSON
@@ -3688,8 +3688,8 @@ type ACHTransferSimulationTransactionSourceFeePayment struct {
 	// currency.
 	Currency ACHTransferSimulationTransactionSourceFeePaymentCurrency `json:"currency,required"`
 	// The start of this payment's fee period, usually the first day of a month.
-	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
-	JSON           achTransferSimulationTransactionSourceFeePaymentJSON
+	FeePeriodStart time.Time                                            `json:"fee_period_start,required" format:"date"`
+	JSON           achTransferSimulationTransactionSourceFeePaymentJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceFeePaymentJSON contains the JSON metadata
@@ -3754,8 +3754,8 @@ type ACHTransferSimulationTransactionSourceInboundACHTransfer struct {
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
 	TraceNumber string `json:"trace_number,required"`
 	// The inbound ach transfer's identifier.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceInboundACHTransferJSON
+	TransferID string                                                       `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceInboundACHTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundACHTransferJSON contains the JSON
@@ -3800,7 +3800,7 @@ type ACHTransferSimulationTransactionSourceInboundCheck struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency ACHTransferSimulationTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	JSON     achTransferSimulationTransactionSourceInboundCheckJSON
+	JSON     achTransferSimulationTransactionSourceInboundCheckJSON     `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundCheckJSON contains the JSON
@@ -3939,8 +3939,8 @@ type ACHTransferSimulationTransactionSourceInboundInternationalACHTransfer struc
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
+	TraceNumber string                                                                    `json:"trace_number,required"`
+	JSON        achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundInternationalACHTransferJSON
@@ -4115,8 +4115,8 @@ type ACHTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfir
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	TransactionIdentification string                                                                                `json:"transaction_identification,required"`
+	JSON                      achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
@@ -4200,8 +4200,8 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPayment struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    achTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                               `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    achTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireDrawdownPaymentJSON contains
@@ -4260,8 +4260,8 @@ type ACHTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversal st
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
-	JSON                       achTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
+	PreviousMessageInputSource string                                                                       `json:"previous_message_input_source,required"`
+	JSON                       achTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireDrawdownPaymentReversalJSON
@@ -4326,8 +4326,8 @@ type ACHTransferSimulationTransactionSourceInboundWireReversal struct {
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           achTransferSimulationTransactionSourceInboundWireReversalJSON
+	WireTransferID string                                                        `json:"wire_transfer_id,required"`
+	JSON           achTransferSimulationTransactionSourceInboundWireReversalJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireReversalJSON contains the JSON
@@ -4399,8 +4399,8 @@ type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    achTransferSimulationTransactionSourceInboundWireTransferJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                        `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    achTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireTransferJSON contains the JSON
@@ -4447,8 +4447,8 @@ type ACHTransferSimulationTransactionSourceInterestPayment struct {
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	JSON        achTransferSimulationTransactionSourceInterestPaymentJSON
+	PeriodStart time.Time                                                 `json:"period_start,required" format:"date-time"`
+	JSON        achTransferSimulationTransactionSourceInterestPaymentJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInterestPaymentJSON contains the JSON
@@ -4498,7 +4498,7 @@ type ACHTransferSimulationTransactionSourceInternalSource struct {
 	// An Internal Source is a transaction between you and Increase. This describes the
 	// reason for the transaction.
 	Reason ACHTransferSimulationTransactionSourceInternalSourceReason `json:"reason,required"`
-	JSON   achTransferSimulationTransactionSourceInternalSourceJSON
+	JSON   achTransferSimulationTransactionSourceInternalSourceJSON   `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInternalSourceJSON contains the JSON
@@ -4580,8 +4580,8 @@ type ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgeme
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+	TransferID string                                                                            `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
@@ -4605,8 +4605,8 @@ func (r *ACHTransferSimulationTransactionSourceRealTimePaymentsTransferAcknowled
 // only if `category` is equal to `sample_funds`.
 type ACHTransferSimulationTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator string `json:"originator,required"`
-	JSON       achTransferSimulationTransactionSourceSampleFundsJSON
+	Originator string                                                `json:"originator,required"`
+	JSON       achTransferSimulationTransactionSourceSampleFundsJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceSampleFundsJSON contains the JSON metadata
@@ -4633,8 +4633,8 @@ type ACHTransferSimulationTransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceWireTransferIntentionJSON
+	TransferID string                                                          `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceWireTransferIntentionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceWireTransferIntentionJSON contains the
@@ -4658,8 +4658,8 @@ func (r *ACHTransferSimulationTransactionSourceWireTransferIntention) UnmarshalJ
 // response if and only if `category` is equal to `wire_transfer_rejection`.
 type ACHTransferSimulationTransactionSourceWireTransferRejection struct {
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       achTransferSimulationTransactionSourceWireTransferRejectionJSON
+	TransferID string                                                          `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceWireTransferRejectionJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceWireTransferRejectionJSON contains the
@@ -4730,7 +4730,7 @@ type ACHTransferSimulationTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer`.
 	Type ACHTransferSimulationTransferType `json:"type,required"`
-	JSON achTransferSimulationTransferJSON
+	JSON achTransferSimulationTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransferJSON contains the JSON metadata for the struct
@@ -4770,8 +4770,8 @@ type ACHTransferSimulationTransferAcceptance struct {
 	// The time at which the transfer was accepted.
 	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
 	// The id of the transaction for the accepted transfer.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferSimulationTransferAcceptanceJSON
+	TransactionID string                                      `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransferAcceptanceJSON `json:"-"`
 }
 
 // achTransferSimulationTransferAcceptanceJSON contains the JSON metadata for the
@@ -4793,7 +4793,7 @@ type ACHTransferSimulationTransferAddenda struct {
 	Category ACHTransferSimulationTransferAddendaCategory `json:"category,required"`
 	// Unstructured `payment_related_information` passed through by the originator.
 	Freeform ACHTransferSimulationTransferAddendaFreeform `json:"freeform,required,nullable"`
-	JSON     achTransferSimulationTransferAddendaJSON
+	JSON     achTransferSimulationTransferAddendaJSON     `json:"-"`
 }
 
 // achTransferSimulationTransferAddendaJSON contains the JSON metadata for the
@@ -4821,7 +4821,7 @@ const (
 type ACHTransferSimulationTransferAddendaFreeform struct {
 	// Each entry represents an addendum received from the originator.
 	Entries []ACHTransferSimulationTransferAddendaFreeformEntry `json:"entries,required"`
-	JSON    achTransferSimulationTransferAddendaFreeformJSON
+	JSON    achTransferSimulationTransferAddendaFreeformJSON    `json:"-"`
 }
 
 // achTransferSimulationTransferAddendaFreeformJSON contains the JSON metadata for
@@ -4838,8 +4838,8 @@ func (r *ACHTransferSimulationTransferAddendaFreeform) UnmarshalJSON(data []byte
 
 type ACHTransferSimulationTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation string `json:"payment_related_information,required"`
-	JSON                      achTransferSimulationTransferAddendaFreeformEntryJSON
+	PaymentRelatedInformation string                                                `json:"payment_related_information,required"`
+	JSON                      achTransferSimulationTransferAddendaFreeformEntryJSON `json:"-"`
 }
 
 // achTransferSimulationTransferAddendaFreeformEntryJSON contains the JSON metadata
@@ -4862,7 +4862,7 @@ type ACHTransferSimulationTransferDecline struct {
 	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// The reason for the transfer decline.
 	Reason ACHTransferSimulationTransferDeclineReason `json:"reason,required"`
-	JSON   achTransferSimulationTransferDeclineJSON
+	JSON   achTransferSimulationTransferDeclineJSON   `json:"-"`
 }
 
 // achTransferSimulationTransferDeclineJSON contains the JSON metadata for the
@@ -4931,8 +4931,8 @@ type ACHTransferSimulationTransferNotificationOfChange struct {
 	// The new account number provided in the notification of change.
 	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
 	// The new account number provided in the notification of change.
-	UpdatedRoutingNumber string `json:"updated_routing_number,required,nullable"`
-	JSON                 achTransferSimulationTransferNotificationOfChangeJSON
+	UpdatedRoutingNumber string                                                `json:"updated_routing_number,required,nullable"`
+	JSON                 achTransferSimulationTransferNotificationOfChangeJSON `json:"-"`
 }
 
 // achTransferSimulationTransferNotificationOfChangeJSON contains the JSON metadata
@@ -4970,8 +4970,8 @@ type ACHTransferSimulationTransferTransferReturn struct {
 	// The time at which the transfer was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The id of the transaction for the returned transfer.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          achTransferSimulationTransferTransferReturnJSON
+	TransactionID string                                          `json:"transaction_id,required"`
+	JSON          achTransferSimulationTransferTransferReturnJSON `json:"-"`
 }
 
 // achTransferSimulationTransferTransferReturnJSON contains the JSON metadata for

@@ -51,7 +51,7 @@ type SimulationDigitalWalletTokenRequestNewResponse struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
 	Type SimulationDigitalWalletTokenRequestNewResponseType `json:"type,required"`
-	JSON simulationDigitalWalletTokenRequestNewResponseJSON
+	JSON simulationDigitalWalletTokenRequestNewResponseJSON `json:"-"`
 }
 
 // simulationDigitalWalletTokenRequestNewResponseJSON contains the JSON metadata

@@ -84,7 +84,7 @@ type DigitalWalletToken struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type,required"`
-	JSON digitalWalletTokenJSON
+	JSON digitalWalletTokenJSON `json:"-"`
 }
 
 // digitalWalletTokenJSON contains the JSON metadata for the struct

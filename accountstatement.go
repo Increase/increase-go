@@ -92,7 +92,7 @@ type AccountStatement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
 	Type AccountStatementType `json:"type,required"`
-	JSON accountStatementJSON
+	JSON accountStatementJSON `json:"-"`
 }
 
 // accountStatementJSON contains the JSON metadata for the struct

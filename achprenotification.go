@@ -110,7 +110,7 @@ type ACHPrenotification struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_prenotification`.
 	Type ACHPrenotificationType `json:"type,required"`
-	JSON achPrenotificationJSON
+	JSON achPrenotificationJSON `json:"-"`
 }
 
 // achPrenotificationJSON contains the JSON metadata for the struct
@@ -157,8 +157,8 @@ type ACHPrenotificationNotificationsOfChange struct {
 	CorrectedData string `json:"corrected_data,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	JSON      achPrenotificationNotificationsOfChangeJSON
+	CreatedAt time.Time                                   `json:"created_at,required" format:"date-time"`
+	JSON      achPrenotificationNotificationsOfChangeJSON `json:"-"`
 }
 
 // achPrenotificationNotificationsOfChangeJSON contains the JSON metadata for the
@@ -230,7 +230,7 @@ type ACHPrenotificationPrenotificationReturn struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Why the Prenotification was returned.
 	ReturnReasonCode ACHPrenotificationPrenotificationReturnReturnReasonCode `json:"return_reason_code,required"`
-	JSON             achPrenotificationPrenotificationReturnJSON
+	JSON             achPrenotificationPrenotificationReturnJSON             `json:"-"`
 }
 
 // achPrenotificationPrenotificationReturnJSON contains the JSON metadata for the

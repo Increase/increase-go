@@ -92,7 +92,7 @@ type BookkeepingEntrySet struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry_set`.
 	Type BookkeepingEntrySetType `json:"type,required"`
-	JSON bookkeepingEntrySetJSON
+	JSON bookkeepingEntrySetJSON `json:"-"`
 }
 
 // bookkeepingEntrySetJSON contains the JSON metadata for the struct
@@ -118,8 +118,8 @@ type BookkeepingEntrySetEntry struct {
 	// The bookkeeping account impacted by the entry.
 	AccountID string `json:"account_id,required"`
 	// The amount of the entry in minor units.
-	Amount int64 `json:"amount,required"`
-	JSON   bookkeepingEntrySetEntryJSON
+	Amount int64                        `json:"amount,required"`
+	JSON   bookkeepingEntrySetEntryJSON `json:"-"`
 }
 
 // bookkeepingEntrySetEntryJSON contains the JSON metadata for the struct

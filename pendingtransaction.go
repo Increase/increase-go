@@ -105,7 +105,7 @@ type PendingTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
 	Type PendingTransactionType `json:"type,required"`
-	JSON pendingTransactionJSON
+	JSON pendingTransactionJSON `json:"-"`
 }
 
 // pendingTransactionJSON contains the JSON metadata for the struct
@@ -193,7 +193,7 @@ type PendingTransactionSource struct {
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
 	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
-	JSON                    pendingTransactionSourceJSON
+	JSON                    pendingTransactionSourceJSON                    `json:"-"`
 }
 
 // pendingTransactionSourceJSON contains the JSON metadata for the struct
@@ -226,8 +226,8 @@ type PendingTransactionSourceAccountTransferInstruction struct {
 	// account currency.
 	Currency PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceAccountTransferInstructionJSON
+	TransferID string                                                 `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceAccountTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceAccountTransferInstructionJSON contains the JSON
@@ -270,8 +270,8 @@ type PendingTransactionSourceACHTransferInstruction struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceACHTransferInstructionJSON
+	TransferID string                                             `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceACHTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceACHTransferInstructionJSON contains the JSON metadata
@@ -341,7 +341,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification PendingTransactionSourceCardAuthorizationVerification `json:"verification,required"`
-	JSON         pendingTransactionSourceCardAuthorizationJSON
+	JSON         pendingTransactionSourceCardAuthorizationJSON         `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationJSON contains the JSON metadata for the
@@ -412,7 +412,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON
+	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationNetworkDetailsJSON contains the JSON
@@ -446,7 +446,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
+	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON contains the
@@ -543,8 +543,8 @@ type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON
+	TransactionID string                                                          `json:"transaction_id,required,nullable"`
+	JSON          pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON contains the
@@ -602,7 +602,7 @@ type PendingTransactionSourceCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress PendingTransactionSourceCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              pendingTransactionSourceCardAuthorizationVerificationJSON
+	JSON              pendingTransactionSourceCardAuthorizationVerificationJSON              `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationVerificationJSON contains the JSON
@@ -623,7 +623,7 @@ func (r *PendingTransactionSourceCardAuthorizationVerification) UnmarshalJSON(da
 type PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON
+	JSON   pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON
@@ -665,7 +665,7 @@ type PendingTransactionSourceCardAuthorizationVerificationCardholderAddress stru
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
-	JSON   pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON
+	JSON   pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON
@@ -750,8 +750,8 @@ type PendingTransactionSourceCheckDepositInstruction struct {
 	Currency PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency,required"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileID string `json:"front_image_file_id,required"`
-	JSON             pendingTransactionSourceCheckDepositInstructionJSON
+	FrontImageFileID string                                              `json:"front_image_file_id,required"`
+	JSON             pendingTransactionSourceCheckDepositInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceCheckDepositInstructionJSON contains the JSON metadata
@@ -799,8 +799,8 @@ type PendingTransactionSourceCheckTransferInstruction struct {
 	// currency.
 	Currency PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceCheckTransferInstructionJSON
+	TransferID string                                               `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceCheckTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceCheckTransferInstructionJSON contains the JSON metadata
@@ -864,7 +864,7 @@ type PendingTransactionSourceInboundFundsHold struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
 	Type PendingTransactionSourceInboundFundsHoldType `json:"type,required"`
-	JSON pendingTransactionSourceInboundFundsHoldJSON
+	JSON pendingTransactionSourceInboundFundsHoldJSON `json:"-"`
 }
 
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
@@ -934,8 +934,8 @@ type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceRealTimePaymentsTransferInstructionJSON
+	TransferID string                                                          `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceRealTimePaymentsTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceRealTimePaymentsTransferInstructionJSON contains the
@@ -966,8 +966,8 @@ type PendingTransactionSourceWireTransferInstruction struct {
 	// destination account.
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceWireTransferInstructionJSON
+	TransferID string                                              `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceWireTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceWireTransferInstructionJSON contains the JSON metadata

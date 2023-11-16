@@ -138,7 +138,7 @@ type InboundACHTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer`.
 	Type InboundACHTransferType `json:"type,required"`
-	JSON inboundACHTransferJSON
+	JSON inboundACHTransferJSON `json:"-"`
 }
 
 // inboundACHTransferJSON contains the JSON metadata for the struct
@@ -178,8 +178,8 @@ type InboundACHTransferAcceptance struct {
 	// The time at which the transfer was accepted.
 	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
 	// The id of the transaction for the accepted transfer.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          inboundACHTransferAcceptanceJSON
+	TransactionID string                           `json:"transaction_id,required"`
+	JSON          inboundACHTransferAcceptanceJSON `json:"-"`
 }
 
 // inboundACHTransferAcceptanceJSON contains the JSON metadata for the struct
@@ -201,7 +201,7 @@ type InboundACHTransferAddenda struct {
 	Category InboundACHTransferAddendaCategory `json:"category,required"`
 	// Unstructured `payment_related_information` passed through by the originator.
 	Freeform InboundACHTransferAddendaFreeform `json:"freeform,required,nullable"`
-	JSON     inboundACHTransferAddendaJSON
+	JSON     inboundACHTransferAddendaJSON     `json:"-"`
 }
 
 // inboundACHTransferAddendaJSON contains the JSON metadata for the struct
@@ -229,7 +229,7 @@ const (
 type InboundACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum received from the originator.
 	Entries []InboundACHTransferAddendaFreeformEntry `json:"entries,required"`
-	JSON    inboundACHTransferAddendaFreeformJSON
+	JSON    inboundACHTransferAddendaFreeformJSON    `json:"-"`
 }
 
 // inboundACHTransferAddendaFreeformJSON contains the JSON metadata for the struct
@@ -246,8 +246,8 @@ func (r *InboundACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err erro
 
 type InboundACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation string `json:"payment_related_information,required"`
-	JSON                      inboundACHTransferAddendaFreeformEntryJSON
+	PaymentRelatedInformation string                                     `json:"payment_related_information,required"`
+	JSON                      inboundACHTransferAddendaFreeformEntryJSON `json:"-"`
 }
 
 // inboundACHTransferAddendaFreeformEntryJSON contains the JSON metadata for the
@@ -270,7 +270,7 @@ type InboundACHTransferDecline struct {
 	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// The reason for the transfer decline.
 	Reason InboundACHTransferDeclineReason `json:"reason,required"`
-	JSON   inboundACHTransferDeclineJSON
+	JSON   inboundACHTransferDeclineJSON   `json:"-"`
 }
 
 // inboundACHTransferDeclineJSON contains the JSON metadata for the struct
@@ -339,8 +339,8 @@ type InboundACHTransferNotificationOfChange struct {
 	// The new account number provided in the notification of change.
 	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
 	// The new account number provided in the notification of change.
-	UpdatedRoutingNumber string `json:"updated_routing_number,required,nullable"`
-	JSON                 inboundACHTransferNotificationOfChangeJSON
+	UpdatedRoutingNumber string                                     `json:"updated_routing_number,required,nullable"`
+	JSON                 inboundACHTransferNotificationOfChangeJSON `json:"-"`
 }
 
 // inboundACHTransferNotificationOfChangeJSON contains the JSON metadata for the
@@ -378,8 +378,8 @@ type InboundACHTransferTransferReturn struct {
 	// The time at which the transfer was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The id of the transaction for the returned transfer.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          inboundACHTransferTransferReturnJSON
+	TransactionID string                               `json:"transaction_id,required"`
+	JSON          inboundACHTransferTransferReturnJSON `json:"-"`
 }
 
 // inboundACHTransferTransferReturnJSON contains the JSON metadata for the struct

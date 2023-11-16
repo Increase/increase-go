@@ -102,8 +102,8 @@ type EventSubscription struct {
 	// `event_subscription`.
 	Type EventSubscriptionType `json:"type,required"`
 	// The webhook url where we'll send notifications.
-	URL  string `json:"url,required"`
-	JSON eventSubscriptionJSON
+	URL  string                `json:"url,required"`
+	JSON eventSubscriptionJSON `json:"-"`
 }
 
 // eventSubscriptionJSON contains the JSON metadata for the struct

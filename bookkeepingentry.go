@@ -84,7 +84,7 @@ type BookkeepingEntry struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry`.
 	Type BookkeepingEntryType `json:"type,required"`
-	JSON bookkeepingEntryJSON
+	JSON bookkeepingEntryJSON `json:"-"`
 }
 
 // bookkeepingEntryJSON contains the JSON metadata for the struct

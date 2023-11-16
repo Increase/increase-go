@@ -83,7 +83,7 @@ type Document struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `document`.
 	Type DocumentType `json:"type,required"`
-	JSON documentJSON
+	JSON documentJSON `json:"-"`
 }
 
 // documentJSON contains the JSON metadata for the struct [Document]

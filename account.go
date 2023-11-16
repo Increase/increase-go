@@ -132,7 +132,7 @@ type Account struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account`.
 	Type AccountType `json:"type,required"`
-	JSON accountJSON
+	JSON accountJSON `json:"-"`
 }
 
 // accountJSON contains the JSON metadata for the struct [Account]
@@ -218,7 +218,7 @@ type BalanceLookup struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
 	Type BalanceLookupType `json:"type,required"`
-	JSON balanceLookupJSON
+	JSON balanceLookupJSON `json:"-"`
 }
 
 // balanceLookupJSON contains the JSON metadata for the struct [BalanceLookup]

@@ -168,8 +168,8 @@ type WireTransfer struct {
 	// `wire_transfer`.
 	Type WireTransferType `json:"type,required"`
 	// The unique identifier you chose for this transfer.
-	UniqueIdentifier string `json:"unique_identifier,required,nullable"`
-	JSON             wireTransferJSON
+	UniqueIdentifier string           `json:"unique_identifier,required,nullable"`
+	JSON             wireTransferJSON `json:"-"`
 }
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
@@ -213,8 +213,8 @@ type WireTransferApproval struct {
 	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string `json:"approved_by,required,nullable"`
-	JSON       wireTransferApprovalJSON
+	ApprovedBy string                   `json:"approved_by,required,nullable"`
+	JSON       wireTransferApprovalJSON `json:"-"`
 }
 
 // wireTransferApprovalJSON contains the JSON metadata for the struct
@@ -238,8 +238,8 @@ type WireTransferCancellation struct {
 	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string `json:"canceled_by,required,nullable"`
-	JSON       wireTransferCancellationJSON
+	CanceledBy string                       `json:"canceled_by,required,nullable"`
+	JSON       wireTransferCancellationJSON `json:"-"`
 }
 
 // wireTransferCancellationJSON contains the JSON metadata for the struct
@@ -319,8 +319,8 @@ type WireTransferReversal struct {
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           wireTransferReversalJSON
+	WireTransferID string                   `json:"wire_transfer_id,required"`
+	JSON           wireTransferReversalJSON `json:"-"`
 }
 
 // wireTransferReversalJSON contains the JSON metadata for the struct
@@ -376,8 +376,8 @@ type WireTransferSubmission struct {
 	// The accountability data for the submission.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
 	// When this wire transfer was submitted to Fedwire.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
-	JSON        wireTransferSubmissionJSON
+	SubmittedAt time.Time                  `json:"submitted_at,required" format:"date-time"`
+	JSON        wireTransferSubmissionJSON `json:"-"`
 }
 
 // wireTransferSubmissionJSON contains the JSON metadata for the struct

@@ -23,7 +23,7 @@ type Error struct {
 	Title      string        `json:"title,required"`
 	Type       ErrorType     `json:"type,required"`
 	RetryAfter int64         `json:"retry_after,nullable"`
-	JSON       errorJSON
+	JSON       errorJSON     `json:"-"`
 	StatusCode int
 	Request    *http.Request
 	Response   *http.Response

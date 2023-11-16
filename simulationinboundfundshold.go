@@ -68,7 +68,7 @@ type SimulationInboundFundsHoldReleaseResponse struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
 	Type SimulationInboundFundsHoldReleaseResponseType `json:"type,required"`
-	JSON simulationInboundFundsHoldReleaseResponseJSON
+	JSON simulationInboundFundsHoldReleaseResponseJSON `json:"-"`
 }
 
 // simulationInboundFundsHoldReleaseResponseJSON contains the JSON metadata for the

@@ -66,7 +66,7 @@ type InboundRealTimePaymentsTransferSimulationResult struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_real_time_payments_transfer_simulation_result`.
 	Type InboundRealTimePaymentsTransferSimulationResultType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultJSON contains the JSON metadata
@@ -118,7 +118,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON contains
@@ -201,7 +201,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON
+	JSON        inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON        `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON
@@ -250,7 +250,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
 	Type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON
@@ -367,7 +367,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
-	JSON         inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
+	JSON         inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON
@@ -425,7 +425,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	Category InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
@@ -459,7 +459,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
@@ -556,8 +556,8 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
+	TransactionID string                                                                                                    `json:"transaction_id,required,nullable"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
@@ -643,7 +643,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON
+	JSON              inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON              `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON
@@ -665,7 +665,7 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
@@ -707,7 +707,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
@@ -786,7 +786,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// Why the check was declined.
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON
@@ -861,8 +861,8 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	TransactionIdentification string                                                                                                             `json:"transaction_identification,required"`
+	JSON                      inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
@@ -1023,8 +1023,8 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON
+	TraceNumber string                                                                                              `json:"trace_number,required"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON
@@ -1221,7 +1221,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWir
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineJSON
@@ -1315,7 +1315,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultTransactionJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionJSON contains the JSON
@@ -1467,7 +1467,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Wire Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_rejection`.
 	WireTransferRejection InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
-	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON                  `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON contains
@@ -1527,8 +1527,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTran
 	// The identifier of the Account from where the Account Transfer was sent.
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON
+	TransferID string                                                                                       `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON
@@ -1582,8 +1582,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	// A description set when the ACH Transfer was created.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON
+	TransferID string                                                                                   `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON
@@ -1607,8 +1607,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 // response if and only if `category` is equal to `ach_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON
+	TransferID string                                                                                   `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON
@@ -1638,8 +1638,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON
+	TransferID string                                                                                `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON
@@ -1861,8 +1861,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDispute
 	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON
+	TransactionID string                                                                                    `json:"transaction_id,required"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON
@@ -1916,7 +1916,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON
@@ -1973,8 +1973,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundN
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON
+	TransactionID string                                                                                           `json:"transaction_id,required,nullable"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON
@@ -2017,7 +2017,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	PurchaseIdentifierFormat InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON
@@ -2083,8 +2083,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                                                 `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON
@@ -2184,8 +2184,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                                               `json:"total_tax_currency,required,nullable"`
+	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON
@@ -2289,7 +2289,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON
+	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON
@@ -2329,8 +2329,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	// Additional travel charges, such as baggage fees.
 	Services []InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                                                       `json:"ticket_document_number,required,nullable"`
+	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON
@@ -2368,8 +2368,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	// Category of the ancillary service.
 	Category InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                                              `json:"sub_category,required,nullable"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON
@@ -2493,7 +2493,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
+	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON
@@ -2548,8 +2548,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenue
 	// The start of the period for which this transaction paid interest.
 	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
-	TransactedOnAccountID string `json:"transacted_on_account_id,required,nullable"`
-	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON
+	TransactedOnAccountID string                                                                                 `json:"transacted_on_account_id,required,nullable"`
+	JSON                  inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON
@@ -2634,7 +2634,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON
@@ -2695,8 +2695,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON
+	TransactionID string                                                                                               `json:"transaction_id,required,nullable"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON
@@ -2739,7 +2739,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	PurchaseIdentifierFormat InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON
@@ -2805,8 +2805,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                                                                     `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON
@@ -2906,8 +2906,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                                                                   `json:"total_tax_currency,required,nullable"`
+	JSON             inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON
@@ -3011,7 +3011,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON
+	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON
@@ -3051,8 +3051,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// Additional travel charges, such as baggage fees.
 	Services []InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                                                                           `json:"ticket_document_number,required,nullable"`
+	JSON                 inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON
@@ -3090,8 +3090,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// Category of the ancillary service.
 	Category InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                                                                  `json:"sub_category,required,nullable"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
@@ -3215,7 +3215,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
+	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON
@@ -3360,8 +3360,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string `json:"serial_number,required,nullable"`
-	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON
+	SerialNumber string                                                                                     `json:"serial_number,required,nullable"`
+	JSON         inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON
@@ -3421,8 +3421,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string `json:"transaction_id,required"`
-	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON
+	TransactionID string                                                                                 `json:"transaction_id,required"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON
@@ -3515,7 +3515,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositJSON
@@ -3566,8 +3566,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required,nullable"`
 	// The identifier of the Check Transfer with which this is associated.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON
+	TransferID string                                                                                     `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON
@@ -3623,7 +3623,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
 	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON
@@ -3673,8 +3673,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment 
 	// currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentCurrency `json:"currency,required"`
 	// The start of this payment's fee period, usually the first day of a month.
-	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
-	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
+	FeePeriodStart time.Time                                                                      `json:"fee_period_start,required" format:"date"`
+	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON
@@ -3740,8 +3740,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
 	TraceNumber string `json:"trace_number,required"`
 	// The inbound ach transfer's identifier.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON
+	TransferID string                                                                                 `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON
@@ -3786,7 +3786,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundChec
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
+	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON     `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
@@ -3926,8 +3926,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
+	TraceNumber string                                                                                              `json:"trace_number,required"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
@@ -4102,8 +4102,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundReal
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
+	TransactionIdentification string                                                                                                          `json:"transaction_identification,required"`
+	JSON                      inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON
@@ -4187,8 +4187,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                                                         `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON
@@ -4247,8 +4247,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
-	JSON                       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
+	PreviousMessageInputSource string                                                                                                 `json:"previous_message_input_source,required"`
+	JSON                       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
@@ -4313,8 +4313,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string `json:"wire_transfer_id,required"`
-	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
+	WireTransferID string                                                                                  `json:"wire_transfer_id,required"`
+	JSON           inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON
@@ -4386,8 +4386,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON
+	OriginatorToBeneficiaryInformationLine4 string                                                                                  `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	JSON                                    inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON
@@ -4434,8 +4434,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPay
 	// The end of the period for which this transaction paid interest.
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON
+	PeriodStart time.Time                                                                           `json:"period_start,required" format:"date-time"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON
@@ -4486,7 +4486,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSou
 	// An Internal Source is a transaction between you and Increase. This describes the
 	// reason for the transaction.
 	Reason InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceReason `json:"reason,required"`
-	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON
+	JSON   inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON   `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON
@@ -4569,8 +4569,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePay
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
+	TransferID string                                                                                                      `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON
@@ -4594,8 +4594,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTim
 // only if `category` is equal to `sample_funds`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator string `json:"originator,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON
+	Originator string                                                                          `json:"originator,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON
@@ -4623,8 +4623,8 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON
+	TransferID string                                                                                    `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON
@@ -4648,8 +4648,8 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 // response if and only if `category` is equal to `wire_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON
+	TransferID string                                                                                    `json:"transfer_id,required"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON

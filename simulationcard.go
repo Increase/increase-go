@@ -70,7 +70,7 @@ type CardAuthorizationSimulation struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_card_authorization_simulation_result`.
 	Type CardAuthorizationSimulationType `json:"type,required"`
-	JSON cardAuthorizationSimulationJSON
+	JSON cardAuthorizationSimulationJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationJSON contains the JSON metadata for the struct
@@ -121,7 +121,7 @@ type CardAuthorizationSimulationDeclinedTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
 	Type CardAuthorizationSimulationDeclinedTransactionType `json:"type,required"`
-	JSON cardAuthorizationSimulationDeclinedTransactionJSON
+	JSON cardAuthorizationSimulationDeclinedTransactionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionJSON contains the JSON metadata
@@ -203,7 +203,7 @@ type CardAuthorizationSimulationDeclinedTransactionSource struct {
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline CardAuthorizationSimulationDeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
-	JSON        cardAuthorizationSimulationDeclinedTransactionSourceJSON
+	JSON        cardAuthorizationSimulationDeclinedTransactionSourceJSON        `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceJSON contains the JSON
@@ -251,7 +251,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
 	Type CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	JSON cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON
+	JSON cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON contains the
@@ -368,7 +368,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	Reason CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
-	JSON         cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON
+	JSON         cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON contains the
@@ -426,7 +426,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 	Category CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
+	JSON cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON
@@ -460,7 +460,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
+	JSON                    cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON
@@ -557,8 +557,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkIdent
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
+	TransactionID string                                                                                `json:"transaction_id,required,nullable"`
+	JSON          cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON
@@ -644,7 +644,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerification
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
+	JSON              cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationJSON              `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationJSON
@@ -666,7 +666,7 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerifica
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
@@ -708,7 +708,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerification
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
-	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON
@@ -787,7 +787,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// Why the check was declined.
 	Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON contains
@@ -862,8 +862,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
-	JSON                      cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
+	TransactionIdentification string                                                                                         `json:"transaction_identification,required"`
+	JSON                      cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON
@@ -1024,8 +1024,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDecline
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach#returns).
-	TraceNumber string `json:"trace_number,required"`
-	JSON        cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
+	TraceNumber string                                                                          `json:"trace_number,required"`
+	JSON        cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON
@@ -1222,7 +1222,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceWireDecline struct {
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// Why the wire transfer was declined.
 	Reason CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	JSON   cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON
+	JSON   cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON contains the
@@ -1321,7 +1321,7 @@ type CardAuthorizationSimulationPendingTransaction struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
 	Type CardAuthorizationSimulationPendingTransactionType `json:"type,required"`
-	JSON cardAuthorizationSimulationPendingTransactionJSON
+	JSON cardAuthorizationSimulationPendingTransactionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionJSON contains the JSON metadata for
@@ -1409,7 +1409,7 @@ type CardAuthorizationSimulationPendingTransactionSource struct {
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
 	WireTransferInstruction CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
-	JSON                    cardAuthorizationSimulationPendingTransactionSourceJSON
+	JSON                    cardAuthorizationSimulationPendingTransactionSourceJSON                    `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceJSON contains the JSON
@@ -1442,8 +1442,8 @@ type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 	// account currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionJSON
+	TransferID string                                                                            `json:"transfer_id,required"`
+	JSON       cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionJSON
@@ -1487,8 +1487,8 @@ type CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction s
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON
+	TransferID string                                                                        `json:"transfer_id,required"`
+	JSON       cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON
@@ -1559,7 +1559,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	Type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerification `json:"verification,required"`
-	JSON         cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON
+	JSON         cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON         `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON
@@ -1631,7 +1631,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 	Category CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON
+	JSON cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON
@@ -1665,7 +1665,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
+	JSON                    cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON
@@ -1762,8 +1762,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON
+	TransactionID string                                                                                     `json:"transaction_id,required,nullable"`
+	JSON          cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON
@@ -1821,7 +1821,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerific
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationJSON
+	JSON              cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationJSON              `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationJSON
@@ -1843,7 +1843,7 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVer
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON
+	JSON   cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON
@@ -1885,7 +1885,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerific
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
-	JSON   cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON
+	JSON   cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON
@@ -1970,8 +1970,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruction 
 	Currency CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency `json:"currency,required"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileID string `json:"front_image_file_id,required"`
-	JSON             cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON
+	FrontImageFileID string                                                                         `json:"front_image_file_id,required"`
+	JSON             cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON
@@ -2020,8 +2020,8 @@ type CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 	// currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionJSON
+	TransferID string                                                                          `json:"transfer_id,required"`
+	JSON       cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionJSON
@@ -2086,7 +2086,7 @@ type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold struct 
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
 	Type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldType `json:"type,required"`
-	JSON cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON
+	JSON cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON contains
@@ -2157,8 +2157,8 @@ type CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransfer
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON
+	TransferID string                                                                                     `json:"transfer_id,required"`
+	JSON       cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON
@@ -2189,8 +2189,8 @@ type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction 
 	// destination account.
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Pending Transaction.
-	TransferID string `json:"transfer_id,required"`
-	JSON       cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON
+	TransferID string                                                                         `json:"transfer_id,required"`
+	JSON       cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON `json:"-"`
 }
 
 // cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON

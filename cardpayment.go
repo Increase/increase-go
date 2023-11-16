@@ -85,7 +85,7 @@ type CardPayment struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_payment`.
 	Type CardPaymentType `json:"type,required"`
-	JSON cardPaymentJSON
+	JSON cardPaymentJSON `json:"-"`
 }
 
 // cardPaymentJSON contains the JSON metadata for the struct [CardPayment]
@@ -138,8 +138,8 @@ type CardPaymentElement struct {
 	Category CardPaymentElementsCategory `json:"category,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the card payment element was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	JSON      cardPaymentElementJSON
+	CreatedAt time.Time              `json:"created_at,required" format:"date-time"`
+	JSON      cardPaymentElementJSON `json:"-"`
 }
 
 // cardPaymentElementJSON contains the JSON metadata for the struct
@@ -218,7 +218,7 @@ type CardPaymentElementsCardAuthorization struct {
 	Type CardPaymentElementsCardAuthorizationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardAuthorizationVerification `json:"verification,required"`
-	JSON         cardPaymentElementsCardAuthorizationJSON
+	JSON         cardPaymentElementsCardAuthorizationJSON         `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationJSON contains the JSON metadata for the
@@ -289,7 +289,7 @@ type CardPaymentElementsCardAuthorizationNetworkDetails struct {
 	Category CardPaymentElementsCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON cardPaymentElementsCardAuthorizationNetworkDetailsJSON
+	JSON cardPaymentElementsCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationNetworkDetailsJSON contains the JSON
@@ -322,7 +322,7 @@ type CardPaymentElementsCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON
+	JSON                    cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON contains the JSON
@@ -418,8 +418,8 @@ type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON
+	TransactionID string                                                     `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON contains the JSON
@@ -476,7 +476,7 @@ type CardPaymentElementsCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardAuthorizationVerificationJSON
+	JSON              cardPaymentElementsCardAuthorizationVerificationJSON              `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationVerificationJSON contains the JSON metadata
@@ -497,7 +497,7 @@ func (r *CardPaymentElementsCardAuthorizationVerification) UnmarshalJSON(data []
 type CardPaymentElementsCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON
+	JSON   cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON
@@ -539,7 +539,7 @@ type CardPaymentElementsCardAuthorizationVerificationCardholderAddress struct {
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
-	JSON   cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON
+	JSON   cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON contains
@@ -595,7 +595,7 @@ type CardPaymentElementsCardAuthorizationExpiration struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization_expiration`.
 	Type CardPaymentElementsCardAuthorizationExpirationType `json:"type,required"`
-	JSON cardPaymentElementsCardAuthorizationExpirationJSON
+	JSON cardPaymentElementsCardAuthorizationExpirationJSON `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationExpirationJSON contains the JSON metadata
@@ -697,7 +697,7 @@ type CardPaymentElementsCardDecline struct {
 	Reason CardPaymentElementsCardDeclineReason `json:"reason,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardDeclineVerification `json:"verification,required"`
-	JSON         cardPaymentElementsCardDeclineJSON
+	JSON         cardPaymentElementsCardDeclineJSON         `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineJSON contains the JSON metadata for the struct
@@ -754,7 +754,7 @@ type CardPaymentElementsCardDeclineNetworkDetails struct {
 	Category CardPaymentElementsCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON cardPaymentElementsCardDeclineNetworkDetailsJSON
+	JSON cardPaymentElementsCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineNetworkDetailsJSON contains the JSON metadata for
@@ -787,7 +787,7 @@ type CardPaymentElementsCardDeclineNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardPaymentElementsCardDeclineNetworkDetailsVisaJSON
+	JSON                    cardPaymentElementsCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineNetworkDetailsVisaJSON contains the JSON metadata
@@ -883,8 +883,8 @@ type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardDeclineNetworkIdentifiersJSON
+	TransactionID string                                               `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineNetworkIdentifiersJSON contains the JSON metadata
@@ -969,7 +969,7 @@ type CardPaymentElementsCardDeclineVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardDeclineVerificationJSON
+	JSON              cardPaymentElementsCardDeclineVerificationJSON              `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineVerificationJSON contains the JSON metadata for
@@ -990,7 +990,7 @@ func (r *CardPaymentElementsCardDeclineVerification) UnmarshalJSON(data []byte) 
 type CardPaymentElementsCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON
+	JSON   cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON contains the
@@ -1032,7 +1032,7 @@ type CardPaymentElementsCardDeclineVerificationCardholderAddress struct {
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result CardPaymentElementsCardDeclineVerificationCardholderAddressResult `json:"result,required"`
-	JSON   cardPaymentElementsCardDeclineVerificationCardholderAddressJSON
+	JSON   cardPaymentElementsCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineVerificationCardholderAddressJSON contains the
@@ -1092,8 +1092,8 @@ type CardPaymentElementsCardFuelConfirmation struct {
 	Type CardPaymentElementsCardFuelConfirmationType `json:"type,required"`
 	// The updated authorization amount after this fuel confirmation, in the minor unit
 	// of the transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
-	JSON                       cardPaymentElementsCardFuelConfirmationJSON
+	UpdatedAuthorizationAmount int64                                       `json:"updated_authorization_amount,required"`
+	JSON                       cardPaymentElementsCardFuelConfirmationJSON `json:"-"`
 }
 
 // cardPaymentElementsCardFuelConfirmationJSON contains the JSON metadata for the
@@ -1153,8 +1153,8 @@ type CardPaymentElementsCardFuelConfirmationNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON
+	TransactionID string                                                        `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON contains the JSON
@@ -1207,8 +1207,8 @@ type CardPaymentElementsCardIncrement struct {
 	Type CardPaymentElementsCardIncrementType `json:"type,required"`
 	// The updated authorization amount after this increment, in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
-	JSON                       cardPaymentElementsCardIncrementJSON
+	UpdatedAuthorizationAmount int64                                `json:"updated_authorization_amount,required"`
+	JSON                       cardPaymentElementsCardIncrementJSON `json:"-"`
 }
 
 // cardPaymentElementsCardIncrementJSON contains the JSON metadata for the struct
@@ -1270,8 +1270,8 @@ type CardPaymentElementsCardIncrementNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardIncrementNetworkIdentifiersJSON
+	TransactionID string                                                 `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardIncrementNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardIncrementNetworkIdentifiersJSON contains the JSON
@@ -1332,7 +1332,7 @@ type CardPaymentElementsCardRefund struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
 	Type CardPaymentElementsCardRefundType `json:"type,required"`
-	JSON cardPaymentElementsCardRefundJSON
+	JSON cardPaymentElementsCardRefundJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundJSON contains the JSON metadata for the struct
@@ -1388,8 +1388,8 @@ type CardPaymentElementsCardRefundNetworkIdentifiers struct {
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardRefundNetworkIdentifiersJSON
+	TransactionID string                                              `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundNetworkIdentifiersJSON contains the JSON metadata
@@ -1431,7 +1431,7 @@ type CardPaymentElementsCardRefundPurchaseDetails struct {
 	PurchaseIdentifierFormat CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel CardPaymentElementsCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   cardPaymentElementsCardRefundPurchaseDetailsJSON
+	JSON   cardPaymentElementsCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsJSON contains the JSON metadata for
@@ -1496,8 +1496,8 @@ type CardPaymentElementsCardRefundPurchaseDetailsCarRental struct {
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                    `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON contains the JSON
@@ -1596,8 +1596,8 @@ type CardPaymentElementsCardRefundPurchaseDetailsLodging struct {
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                  `json:"total_tax_currency,required,nullable"`
+	JSON             cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON contains the JSON
@@ -1700,7 +1700,7 @@ type CardPaymentElementsCardRefundPurchaseDetailsTravel struct {
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     cardPaymentElementsCardRefundPurchaseDetailsTravelJSON
+	JSON     cardPaymentElementsCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsTravelJSON contains the JSON
@@ -1739,8 +1739,8 @@ type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary struct {
 	// Additional travel charges, such as baggage fees.
 	Services []CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                          `json:"ticket_document_number,required,nullable"`
+	JSON                 cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON contains the
@@ -1778,8 +1778,8 @@ type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
 	Category CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                 `json:"sub_category,required,nullable"`
+	JSON        cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON contains
@@ -1903,7 +1903,7 @@ type CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg struct {
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON
+	JSON         cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON contains the JSON
@@ -1968,8 +1968,8 @@ type CardPaymentElementsCardReversal struct {
 	Type CardPaymentElementsCardReversalType `json:"type,required"`
 	// The amount left pending on the Card Authorization in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
-	JSON                       cardPaymentElementsCardReversalJSON
+	UpdatedAuthorizationAmount int64                               `json:"updated_authorization_amount,required"`
+	JSON                       cardPaymentElementsCardReversalJSON `json:"-"`
 }
 
 // cardPaymentElementsCardReversalJSON contains the JSON metadata for the struct
@@ -2030,8 +2030,8 @@ type CardPaymentElementsCardReversalNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardReversalNetworkIdentifiersJSON
+	TransactionID string                                                `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardReversalNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardReversalNetworkIdentifiersJSON contains the JSON metadata
@@ -2102,7 +2102,7 @@ type CardPaymentElementsCardSettlement struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
 	Type CardPaymentElementsCardSettlementType `json:"type,required"`
-	JSON cardPaymentElementsCardSettlementJSON
+	JSON cardPaymentElementsCardSettlementJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementJSON contains the JSON metadata for the struct
@@ -2162,8 +2162,8 @@ type CardPaymentElementsCardSettlementNetworkIdentifiers struct {
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardSettlementNetworkIdentifiersJSON
+	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementNetworkIdentifiersJSON contains the JSON
@@ -2205,7 +2205,7 @@ type CardPaymentElementsCardSettlementPurchaseDetails struct {
 	PurchaseIdentifierFormat CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
 	// Fields specific to travel.
 	Travel CardPaymentElementsCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
-	JSON   cardPaymentElementsCardSettlementPurchaseDetailsJSON
+	JSON   cardPaymentElementsCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsJSON contains the JSON metadata
@@ -2270,8 +2270,8 @@ type CardPaymentElementsCardSettlementPurchaseDetailsCarRental struct {
 	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string `json:"weekly_rental_rate_currency,required,nullable"`
-	JSON                     cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON
+	WeeklyRentalRateCurrency string                                                        `json:"weekly_rental_rate_currency,required,nullable"`
+	JSON                     cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON contains the JSON
@@ -2371,8 +2371,8 @@ type CardPaymentElementsCardSettlementPurchaseDetailsLodging struct {
 	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string `json:"total_tax_currency,required,nullable"`
-	JSON             cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON
+	TotalTaxCurrency string                                                      `json:"total_tax_currency,required,nullable"`
+	JSON             cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON contains the JSON
@@ -2476,7 +2476,7 @@ type CardPaymentElementsCardSettlementPurchaseDetailsTravel struct {
 	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
 	// Fields specific to each leg of the journey.
 	TripLegs []CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
-	JSON     cardPaymentElementsCardSettlementPurchaseDetailsTravelJSON
+	JSON     cardPaymentElementsCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsTravelJSON contains the JSON
@@ -2515,8 +2515,8 @@ type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary struct {
 	// Additional travel charges, such as baggage fees.
 	Services []CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
 	// Ticket document number.
-	TicketDocumentNumber string `json:"ticket_document_number,required,nullable"`
-	JSON                 cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON
+	TicketDocumentNumber string                                                              `json:"ticket_document_number,required,nullable"`
+	JSON                 cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON contains the
@@ -2554,8 +2554,8 @@ type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService stru
 	// Category of the ancillary service.
 	Category CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string `json:"sub_category,required,nullable"`
-	JSON        cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
+	SubCategory string                                                                     `json:"sub_category,required,nullable"`
+	JSON        cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
@@ -2679,7 +2679,7 @@ type CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg struct {
 	ServiceClass string `json:"service_class,required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
 	StopOverCode CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
-	JSON         cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON
+	JSON         cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON contains the
@@ -2760,7 +2760,7 @@ type CardPaymentElementsCardValidation struct {
 	Type CardPaymentElementsCardValidationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardValidationVerification `json:"verification,required"`
-	JSON         cardPaymentElementsCardValidationJSON
+	JSON         cardPaymentElementsCardValidationJSON         `json:"-"`
 }
 
 // cardPaymentElementsCardValidationJSON contains the JSON metadata for the struct
@@ -2814,7 +2814,7 @@ type CardPaymentElementsCardValidationNetworkDetails struct {
 	Category CardPaymentElementsCardValidationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardValidationNetworkDetailsVisa `json:"visa,required,nullable"`
-	JSON cardPaymentElementsCardValidationNetworkDetailsJSON
+	JSON cardPaymentElementsCardValidationNetworkDetailsJSON `json:"-"`
 }
 
 // cardPaymentElementsCardValidationNetworkDetailsJSON contains the JSON metadata
@@ -2847,7 +2847,7 @@ type CardPaymentElementsCardValidationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
-	JSON                    cardPaymentElementsCardValidationNetworkDetailsVisaJSON
+	JSON                    cardPaymentElementsCardValidationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
 // cardPaymentElementsCardValidationNetworkDetailsVisaJSON contains the JSON
@@ -2943,8 +2943,8 @@ type CardPaymentElementsCardValidationNetworkIdentifiers struct {
 	TraceNumber string `json:"trace_number,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	JSON          cardPaymentElementsCardValidationNetworkIdentifiersJSON
+	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardValidationNetworkIdentifiersJSON `json:"-"`
 }
 
 // cardPaymentElementsCardValidationNetworkIdentifiersJSON contains the JSON
@@ -2977,7 +2977,7 @@ type CardPaymentElementsCardValidationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardValidationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardValidationVerificationJSON
+	JSON              cardPaymentElementsCardValidationVerificationJSON              `json:"-"`
 }
 
 // cardPaymentElementsCardValidationVerificationJSON contains the JSON metadata for
@@ -2998,7 +2998,7 @@ func (r *CardPaymentElementsCardValidationVerification) UnmarshalJSON(data []byt
 type CardPaymentElementsCardValidationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
 	Result CardPaymentElementsCardValidationVerificationCardVerificationCodeResult `json:"result,required"`
-	JSON   cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON
+	JSON   cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON contains
@@ -3040,7 +3040,7 @@ type CardPaymentElementsCardValidationVerificationCardholderAddress struct {
 	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
 	// The address verification result returned to the card network.
 	Result CardPaymentElementsCardValidationVerificationCardholderAddressResult `json:"result,required"`
-	JSON   cardPaymentElementsCardValidationVerificationCardholderAddressJSON
+	JSON   cardPaymentElementsCardValidationVerificationCardholderAddressJSON   `json:"-"`
 }
 
 // cardPaymentElementsCardValidationVerificationCardholderAddressJSON contains the
@@ -3123,8 +3123,8 @@ type CardPaymentState struct {
 	ReversedAmount int64 `json:"reversed_amount,required"`
 	// The total settled or refunded amount in the minor unit of the transaction's
 	// currency. For dollars, for example, this is cents.
-	SettledAmount int64 `json:"settled_amount,required"`
-	JSON          cardPaymentStateJSON
+	SettledAmount int64                `json:"settled_amount,required"`
+	JSON          cardPaymentStateJSON `json:"-"`
 }
 
 // cardPaymentStateJSON contains the JSON metadata for the struct
