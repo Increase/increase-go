@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.1 (2023-11-17)
+
+Full Changelog: [v0.13.0...v0.13.1](https://github.com/increase/increase-go/compare/v0.13.0...v0.13.1)
+
+### Bug Fixes
+
+* stop sending default idempotency headers with GET requests ([#147](https://github.com/increase/increase-go/issues/147)) ([3d3dc4b](https://github.com/increase/increase-go/commit/3d3dc4b9dfc9fa9f60924106ec196d1ee6c6e3c7))
+
+
+### Refactors
+
+* do not include `JSON` fields when serialising back to json ([#145](https://github.com/increase/increase-go/issues/145)) ([70fd3ef](https://github.com/increase/increase-go/commit/70fd3ef6b320074dc9b4117efa33a205d8328aa6))
+
 ## 0.13.0 (2023-11-08)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/Increase/increase-go/compare/v0.12.0...v0.13.0)
