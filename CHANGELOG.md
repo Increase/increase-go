@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.2 (2023-12-04)
+
+Full Changelog: [v0.13.1...v0.13.2](https://github.com/increase/increase-go/compare/v0.13.1...v0.13.2)
+
 ## 0.13.1 (2023-11-17)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/increase/increase-go/compare/v0.13.0...v0.13.1)
