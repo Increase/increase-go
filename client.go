@@ -12,46 +12,48 @@ import (
 // interacting with the increase API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options                     []option.RequestOption
-	Accounts                    *AccountService
-	AccountNumbers              *AccountNumberService
-	BookkeepingAccounts         *BookkeepingAccountService
-	BookkeepingEntrySets        *BookkeepingEntrySetService
-	BookkeepingEntries          *BookkeepingEntryService
-	RealTimeDecisions           *RealTimeDecisionService
-	RealTimePaymentsTransfers   *RealTimePaymentsTransferService
-	Cards                       *CardService
-	CardDisputes                *CardDisputeService
-	CardProfiles                *CardProfileService
-	CardPurchaseSupplements     *CardPurchaseSupplementService
-	ExternalAccounts            *ExternalAccountService
-	Exports                     *ExportService
-	DigitalWalletTokens         *DigitalWalletTokenService
-	Transactions                *TransactionService
-	PendingTransactions         *PendingTransactionService
-	Programs                    *ProgramService
-	DeclinedTransactions        *DeclinedTransactionService
-	AccountTransfers            *AccountTransferService
-	ACHTransfers                *ACHTransferService
-	ACHPrenotifications         *ACHPrenotificationService
-	Documents                   *DocumentService
-	WireTransfers               *WireTransferService
-	CheckTransfers              *CheckTransferService
-	Entities                    *EntityService
-	InboundACHTransfers         *InboundACHTransferService
-	InboundWireDrawdownRequests *InboundWireDrawdownRequestService
-	WireDrawdownRequests        *WireDrawdownRequestService
-	Events                      *EventService
-	EventSubscriptions          *EventSubscriptionService
-	Files                       *FileService
-	Groups                      *GroupService
-	OauthConnections            *OauthConnectionService
-	CheckDeposits               *CheckDepositService
-	RoutingNumbers              *RoutingNumberService
-	AccountStatements           *AccountStatementService
-	Simulations                 *SimulationService
-	PhysicalCards               *PhysicalCardService
-	CardPayments                *CardPaymentService
+	Options                                []option.RequestOption
+	Accounts                               *AccountService
+	AccountNumbers                         *AccountNumberService
+	BookkeepingAccounts                    *BookkeepingAccountService
+	BookkeepingEntrySets                   *BookkeepingEntrySetService
+	BookkeepingEntries                     *BookkeepingEntryService
+	RealTimeDecisions                      *RealTimeDecisionService
+	RealTimePaymentsTransfers              *RealTimePaymentsTransferService
+	Cards                                  *CardService
+	CardDisputes                           *CardDisputeService
+	CardProfiles                           *CardProfileService
+	CardPurchaseSupplements                *CardPurchaseSupplementService
+	ExternalAccounts                       *ExternalAccountService
+	Exports                                *ExportService
+	DigitalWalletTokens                    *DigitalWalletTokenService
+	Transactions                           *TransactionService
+	PendingTransactions                    *PendingTransactionService
+	Programs                               *ProgramService
+	DeclinedTransactions                   *DeclinedTransactionService
+	AccountTransfers                       *AccountTransferService
+	ACHTransfers                           *ACHTransferService
+	ACHPrenotifications                    *ACHPrenotificationService
+	Documents                              *DocumentService
+	WireTransfers                          *WireTransferService
+	CheckTransfers                         *CheckTransferService
+	Entities                               *EntityService
+	InboundACHTransfers                    *InboundACHTransferService
+	InboundWireDrawdownRequests            *InboundWireDrawdownRequestService
+	WireDrawdownRequests                   *WireDrawdownRequestService
+	Events                                 *EventService
+	EventSubscriptions                     *EventSubscriptionService
+	Files                                  *FileService
+	Groups                                 *GroupService
+	OauthConnections                       *OauthConnectionService
+	CheckDeposits                          *CheckDepositService
+	RoutingNumbers                         *RoutingNumberService
+	AccountStatements                      *AccountStatementService
+	Simulations                            *SimulationService
+	PhysicalCards                          *PhysicalCardService
+	CardPayments                           *CardPaymentService
+	ProofOfAuthorizationRequests           *ProofOfAuthorizationRequestService
+	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -106,6 +108,8 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Simulations = NewSimulationService(opts...)
 	r.PhysicalCards = NewPhysicalCardService(opts...)
 	r.CardPayments = NewCardPaymentService(opts...)
+	r.ProofOfAuthorizationRequests = NewProofOfAuthorizationRequestService(opts...)
+	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
 
 	return
 }

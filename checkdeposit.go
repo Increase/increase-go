@@ -374,6 +374,34 @@ const (
 	CheckDepositDepositReturnReturnReasonUnreadableImage CheckDepositDepositReturnReturnReason = "unreadable_image"
 	// The check endorsement was irregular.
 	CheckDepositDepositReturnReturnReasonEndorsementIrregular CheckDepositDepositReturnReturnReason = "endorsement_irregular"
+	// The check present was either altered or fake.
+	CheckDepositDepositReturnReturnReasonAlteredOrFictitiousItem CheckDepositDepositReturnReturnReason = "altered_or_fictitious_item"
+	// The account this check is drawn on is frozen.
+	CheckDepositDepositReturnReturnReasonFrozenOrBlockedAccount CheckDepositDepositReturnReturnReason = "frozen_or_blocked_account"
+	// The check is post dated.
+	CheckDepositDepositReturnReturnReasonPostDated CheckDepositDepositReturnReturnReason = "post_dated"
+	// The endorsement was missing.
+	CheckDepositDepositReturnReturnReasonEndorsementMissing CheckDepositDepositReturnReturnReason = "endorsement_missing"
+	// The check signature was missing.
+	CheckDepositDepositReturnReturnReasonSignatureMissing CheckDepositDepositReturnReturnReason = "signature_missing"
+	// The bank suspects a stop payment will be placed.
+	CheckDepositDepositReturnReturnReasonStopPaymentSuspect CheckDepositDepositReturnReturnReason = "stop_payment_suspect"
+	// The bank cannot read the image.
+	CheckDepositDepositReturnReturnReasonUnusableImage CheckDepositDepositReturnReturnReason = "unusable_image"
+	// The check image fails the bank's security check.
+	CheckDepositDepositReturnReturnReasonImageFailsSecurityCheck CheckDepositDepositReturnReturnReason = "image_fails_security_check"
+	// The bank cannot determine the amount.
+	CheckDepositDepositReturnReturnReasonCannotDetermineAmount CheckDepositDepositReturnReturnReason = "cannot_determine_amount"
+	// The signature is inconsistent with prior signatures.
+	CheckDepositDepositReturnReturnReasonSignatureIrregular CheckDepositDepositReturnReturnReason = "signature_irregular"
+	// The check is a non-cash item and cannot be drawn against the account.
+	CheckDepositDepositReturnReturnReasonNonCashItem CheckDepositDepositReturnReturnReason = "non_cash_item"
+	// The bank is unable to process this check.
+	CheckDepositDepositReturnReturnReasonUnableToProcess CheckDepositDepositReturnReturnReason = "unable_to_process"
+	// The check exceeds the bank or customer's limit.
+	CheckDepositDepositReturnReturnReasonItemExceedsDollarLimit CheckDepositDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	// The bank sold this account and no longer services this customer.
+	CheckDepositDepositReturnReturnReasonBranchOrAccountSold CheckDepositDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 // The status of the Check Deposit.
