@@ -241,6 +241,14 @@ const (
 	EventSubscriptionSelectedEventCategoryPhysicalCardCreated EventSubscriptionSelectedEventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventSubscriptionSelectedEventCategoryPhysicalCardUpdated EventSubscriptionSelectedEventCategory = "physical_card.updated"
+	// Occurs whenever a Proof of Authorization Request is created.
+	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestCreated EventSubscriptionSelectedEventCategory = "proof_of_authorization_request.created"
+	// Occurs whenever a Proof of Authorization Request is updated.
+	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestUpdated EventSubscriptionSelectedEventCategory = "proof_of_authorization_request.updated"
+	// Occurs whenever a Proof of Authorization Request Submission is created.
+	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestSubmissionCreated EventSubscriptionSelectedEventCategory = "proof_of_authorization_request_submission.created"
+	// Occurs whenever a Proof of Authorization Request Submission is updated.
+	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestSubmissionUpdated EventSubscriptionSelectedEventCategory = "proof_of_authorization_request_submission.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested EventSubscriptionSelectedEventCategory = "real_time_decision.card_authorization_requested"
@@ -426,6 +434,14 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardCreated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardUpdated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.updated"
+	// Occurs whenever a Proof of Authorization Request is created.
+	EventSubscriptionNewParamsSelectedEventCategoryProofOfAuthorizationRequestCreated EventSubscriptionNewParamsSelectedEventCategory = "proof_of_authorization_request.created"
+	// Occurs whenever a Proof of Authorization Request is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryProofOfAuthorizationRequestUpdated EventSubscriptionNewParamsSelectedEventCategory = "proof_of_authorization_request.updated"
+	// Occurs whenever a Proof of Authorization Request Submission is created.
+	EventSubscriptionNewParamsSelectedEventCategoryProofOfAuthorizationRequestSubmissionCreated EventSubscriptionNewParamsSelectedEventCategory = "proof_of_authorization_request_submission.created"
+	// Occurs whenever a Proof of Authorization Request Submission is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryProofOfAuthorizationRequestSubmissionUpdated EventSubscriptionNewParamsSelectedEventCategory = "proof_of_authorization_request_submission.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventSubscriptionNewParamsSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested EventSubscriptionNewParamsSelectedEventCategory = "real_time_decision.card_authorization_requested"

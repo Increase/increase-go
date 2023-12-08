@@ -221,6 +221,14 @@ const (
 	EventCategoryPhysicalCardCreated EventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventCategoryPhysicalCardUpdated EventCategory = "physical_card.updated"
+	// Occurs whenever a Proof of Authorization Request is created.
+	EventCategoryProofOfAuthorizationRequestCreated EventCategory = "proof_of_authorization_request.created"
+	// Occurs whenever a Proof of Authorization Request is updated.
+	EventCategoryProofOfAuthorizationRequestUpdated EventCategory = "proof_of_authorization_request.updated"
+	// Occurs whenever a Proof of Authorization Request Submission is created.
+	EventCategoryProofOfAuthorizationRequestSubmissionCreated EventCategory = "proof_of_authorization_request_submission.created"
+	// Occurs whenever a Proof of Authorization Request Submission is updated.
+	EventCategoryProofOfAuthorizationRequestSubmissionUpdated EventCategory = "proof_of_authorization_request_submission.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventCategoryRealTimeDecisionCardAuthorizationRequested EventCategory = "real_time_decision.card_authorization_requested"
@@ -410,6 +418,14 @@ const (
 	EventListParamsCategoryInPhysicalCardCreated EventListParamsCategoryIn = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventListParamsCategoryInPhysicalCardUpdated EventListParamsCategoryIn = "physical_card.updated"
+	// Occurs whenever a Proof of Authorization Request is created.
+	EventListParamsCategoryInProofOfAuthorizationRequestCreated EventListParamsCategoryIn = "proof_of_authorization_request.created"
+	// Occurs whenever a Proof of Authorization Request is updated.
+	EventListParamsCategoryInProofOfAuthorizationRequestUpdated EventListParamsCategoryIn = "proof_of_authorization_request.updated"
+	// Occurs whenever a Proof of Authorization Request Submission is created.
+	EventListParamsCategoryInProofOfAuthorizationRequestSubmissionCreated EventListParamsCategoryIn = "proof_of_authorization_request_submission.created"
+	// Occurs whenever a Proof of Authorization Request Submission is updated.
+	EventListParamsCategoryInProofOfAuthorizationRequestSubmissionUpdated EventListParamsCategoryIn = "proof_of_authorization_request_submission.updated"
 	// Occurs whenever a Real-Time Decision is created in response to a card
 	// authorization.
 	EventListParamsCategoryInRealTimeDecisionCardAuthorizationRequested EventListParamsCategoryIn = "real_time_decision.card_authorization_requested"
