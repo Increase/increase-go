@@ -3506,6 +3506,34 @@ const (
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 	// The check endorsement was irregular.
 	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The check present was either altered or fake.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "altered_or_fictitious_item"
+	// The account this check is drawn on is frozen.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "frozen_or_blocked_account"
+	// The check is post dated.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonPostDated ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "post_dated"
+	// The endorsement was missing.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementMissing ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_missing"
+	// The check signature was missing.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonSignatureMissing ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "signature_missing"
+	// The bank suspects a stop payment will be placed.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stop_payment_suspect"
+	// The bank cannot read the image.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnusableImage ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unusable_image"
+	// The check image fails the bank's security check.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "image_fails_security_check"
+	// The bank cannot determine the amount.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "cannot_determine_amount"
+	// The signature is inconsistent with prior signatures.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonSignatureIrregular ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "signature_irregular"
+	// The check is a non-cash item and cannot be drawn against the account.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNonCashItem ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "non_cash_item"
+	// The bank is unable to process this check.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnableToProcess ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unable_to_process"
+	// The check exceeds the bank or customer's limit.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	// The bank sold this account and no longer services this customer.
+	ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold ACHTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response

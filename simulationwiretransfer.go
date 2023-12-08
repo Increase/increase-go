@@ -2271,6 +2271,34 @@ const (
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnreadableImage WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 	// The check endorsement was irregular.
 	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The check present was either altered or fake.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "altered_or_fictitious_item"
+	// The account this check is drawn on is frozen.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "frozen_or_blocked_account"
+	// The check is post dated.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonPostDated WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "post_dated"
+	// The endorsement was missing.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonEndorsementMissing WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "endorsement_missing"
+	// The check signature was missing.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonSignatureMissing WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "signature_missing"
+	// The bank suspects a stop payment will be placed.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "stop_payment_suspect"
+	// The bank cannot read the image.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnusableImage WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unusable_image"
+	// The check image fails the bank's security check.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "image_fails_security_check"
+	// The bank cannot determine the amount.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "cannot_determine_amount"
+	// The signature is inconsistent with prior signatures.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonSignatureIrregular WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "signature_irregular"
+	// The check is a non-cash item and cannot be drawn against the account.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonNonCashItem WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "non_cash_item"
+	// The bank is unable to process this check.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonUnableToProcess WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "unable_to_process"
+	// The check exceeds the bank or customer's limit.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	// The bank sold this account and no longer services this customer.
+	WireTransferSimulationTransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold WireTransferSimulationTransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response

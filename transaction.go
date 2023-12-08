@@ -2254,6 +2254,34 @@ const (
 	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
 	// The check endorsement was irregular.
 	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	// The check present was either altered or fake.
+	TransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem TransactionSourceCheckDepositReturnReturnReason = "altered_or_fictitious_item"
+	// The account this check is drawn on is frozen.
+	TransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount TransactionSourceCheckDepositReturnReturnReason = "frozen_or_blocked_account"
+	// The check is post dated.
+	TransactionSourceCheckDepositReturnReturnReasonPostDated TransactionSourceCheckDepositReturnReturnReason = "post_dated"
+	// The endorsement was missing.
+	TransactionSourceCheckDepositReturnReturnReasonEndorsementMissing TransactionSourceCheckDepositReturnReturnReason = "endorsement_missing"
+	// The check signature was missing.
+	TransactionSourceCheckDepositReturnReturnReasonSignatureMissing TransactionSourceCheckDepositReturnReturnReason = "signature_missing"
+	// The bank suspects a stop payment will be placed.
+	TransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect TransactionSourceCheckDepositReturnReturnReason = "stop_payment_suspect"
+	// The bank cannot read the image.
+	TransactionSourceCheckDepositReturnReturnReasonUnusableImage TransactionSourceCheckDepositReturnReturnReason = "unusable_image"
+	// The check image fails the bank's security check.
+	TransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck TransactionSourceCheckDepositReturnReturnReason = "image_fails_security_check"
+	// The bank cannot determine the amount.
+	TransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount TransactionSourceCheckDepositReturnReturnReason = "cannot_determine_amount"
+	// The signature is inconsistent with prior signatures.
+	TransactionSourceCheckDepositReturnReturnReasonSignatureIrregular TransactionSourceCheckDepositReturnReturnReason = "signature_irregular"
+	// The check is a non-cash item and cannot be drawn against the account.
+	TransactionSourceCheckDepositReturnReturnReasonNonCashItem TransactionSourceCheckDepositReturnReturnReason = "non_cash_item"
+	// The bank is unable to process this check.
+	TransactionSourceCheckDepositReturnReturnReasonUnableToProcess TransactionSourceCheckDepositReturnReturnReason = "unable_to_process"
+	// The check exceeds the bank or customer's limit.
+	TransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit TransactionSourceCheckDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	// The bank sold this account and no longer services this customer.
+	TransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold TransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 // A Check Transfer Deposit object. This field will be present in the JSON response
