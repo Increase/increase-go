@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.15.0 (2023-12-14)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/increase/increase-go/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** add `suspected_fraud` rejection reason ([#155](https://github.com/increase/increase-go/issues/155)) ([eded3c3](https://github.com/increase/increase-go/commit/eded3c3570d95996d7182c956de38f4239cd2002))
+* **internal:** fallback to json serialization if no serialization methods are defined ([#153](https://github.com/increase/increase-go/issues/153)) ([3dfa03a](https://github.com/increase/increase-go/commit/3dfa03ababd7f102d5a1eeac0b0d4cecb74d7d60))
+
 ## 0.14.0 (2023-12-08)
 
 Full Changelog: [v0.13.2...v0.14.0](https://github.com/increase/increase-go/compare/v0.13.2...v0.14.0)
