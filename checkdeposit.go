@@ -282,6 +282,8 @@ const (
 	CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit CheckDepositDepositRejectionReason = "not_eligible_for_mobile_deposit"
 	// This check is missing at least one required field
 	CheckDepositDepositRejectionReasonMissingRequiredDataElements CheckDepositDepositRejectionReason = "missing_required_data_elements"
+	// This check is suspected to be fraudulent.
+	CheckDepositDepositRejectionReasonSuspectedFraud CheckDepositDepositRejectionReason = "suspected_fraud"
 	// The check was rejected for an unknown reason.
 	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
 )
