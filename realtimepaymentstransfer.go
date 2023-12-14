@@ -97,6 +97,9 @@ type RealTimePaymentsTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For real-time payments transfers this is always equal to `USD`.
 	Currency RealTimePaymentsTransferCurrency `json:"currency,required"`
+	// The name of the transfer's sender. If not provided, the account's entity name
+	// will be used.
+	DebtorName string `json:"debtor_name,required,nullable"`
 	// The destination account number.
 	DestinationAccountNumber string `json:"destination_account_number,required"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
@@ -126,6 +129,10 @@ type RealTimePaymentsTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_payments_transfer`.
 	Type RealTimePaymentsTransferType `json:"type,required"`
+	// The name of the party on whose behalf the creditor is receiving the payment.
+	UltimateCreditorName string `json:"ultimate_creditor_name,required,nullable"`
+	// The name of the the party on whose behalf the debtor is instructing the payment.
+	UltimateDebtorName string `json:"ultimate_debtor_name,required,nullable"`
 	// The unique identifier you chose for this transfer.
 	UniqueIdentifier string                       `json:"unique_identifier,required,nullable"`
 	JSON             realTimePaymentsTransferJSON `json:"-"`
@@ -142,6 +149,7 @@ type realTimePaymentsTransferJSON struct {
 	CreatedAt                apijson.Field
 	CreditorName             apijson.Field
 	Currency                 apijson.Field
+	DebtorName               apijson.Field
 	DestinationAccountNumber apijson.Field
 	DestinationRoutingNumber apijson.Field
 	ExternalAccountID        apijson.Field
@@ -153,6 +161,8 @@ type realTimePaymentsTransferJSON struct {
 	Submission               apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
+	UltimateCreditorName     apijson.Field
+	UltimateDebtorName       apijson.Field
 	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
@@ -392,6 +402,9 @@ type RealTimePaymentsTransferNewParams struct {
 	RemittanceInformation param.Field[string] `json:"remittance_information,required"`
 	// The identifier of the Account Number from which to send the transfer.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	// The name of the transfer's sender. If not provided, the account's entity name
+	// will be used.
+	DebtorName param.Field[string] `json:"debtor_name"`
 	// The destination account number.
 	DestinationAccountNumber param.Field[string] `json:"destination_account_number"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
@@ -403,6 +416,10 @@ type RealTimePaymentsTransferNewParams struct {
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// The name of the party on whose behalf the creditor is receiving the payment.
+	UltimateCreditorName param.Field[string] `json:"ultimate_creditor_name"`
+	// The name of the the party on whose behalf the debtor is instructing the payment.
+	UltimateDebtorName param.Field[string] `json:"ultimate_debtor_name"`
 	// A unique identifier you choose for the transfer. Reusing this identifier for
 	// another transfer will result in an error. You can query for the transfer
 	// associated with this identifier using the List endpoint.
