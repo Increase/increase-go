@@ -99,6 +99,9 @@ type CheckDeposit struct {
 	// If your deposit is returned, this will contain details as to why it was
 	// returned.
 	DepositReturn CheckDepositDepositReturn `json:"deposit_return,required,nullable"`
+	// After the check is parsed, it is submitted to the Check21 network for
+	// processing. This will contain details of the submission.
+	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission,required,nullable"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required"`
 	// The status of the Check Deposit.
@@ -122,6 +125,7 @@ type checkDepositJSON struct {
 	DepositAcceptance apijson.Field
 	DepositRejection  apijson.Field
 	DepositReturn     apijson.Field
+	DepositSubmission apijson.Field
 	FrontImageFileID  apijson.Field
 	Status            apijson.Field
 	TransactionID     apijson.Field
@@ -405,6 +409,28 @@ const (
 	// The bank sold this account and no longer services this customer.
 	CheckDepositDepositReturnReturnReasonBranchOrAccountSold CheckDepositDepositReturnReturnReason = "branch_or_account_sold"
 )
+
+// After the check is parsed, it is submitted to the Check21 network for
+// processing. This will contain details of the submission.
+type CheckDepositDepositSubmission struct {
+	// When the check deposit was submitted to the Check21 network for processing.
+	// During business days, this happens within a few hours of the check being
+	// accepted by Increase.
+	SubmittedAt time.Time                         `json:"submitted_at,required" format:"date-time"`
+	JSON        checkDepositDepositSubmissionJSON `json:"-"`
+}
+
+// checkDepositDepositSubmissionJSON contains the JSON metadata for the struct
+// [CheckDepositDepositSubmission]
+type checkDepositDepositSubmissionJSON struct {
+	SubmittedAt apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckDepositDepositSubmission) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 // The status of the Check Deposit.
 type CheckDepositStatus string
