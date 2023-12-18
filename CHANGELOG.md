@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0 (2023-12-18)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/increase/increase-go/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** add deposit_submission property to check deposit ([#158](https://github.com/increase/increase-go/issues/158)) ([4f32cd0](https://github.com/increase/increase-go/commit/4f32cd0dcd8fc04775edad840237434e6a0aad03))
+
+
+### Chores
+
+* **ci:** run release workflow once per day ([#156](https://github.com/increase/increase-go/issues/156)) ([4b116be](https://github.com/increase/increase-go/commit/4b116bedc96bdb3cf0868962dd696de16ea5fc0b))
+
 ## 0.15.0 (2023-12-14)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/increase/increase-go/compare/v0.14.0...v0.15.0)
