@@ -2460,6 +2460,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonUnknown InterestPaymentSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )

@@ -3679,6 +3679,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReasonUnknown InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )
