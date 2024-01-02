@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.17.0 (2024-01-02)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/increase/increase-go/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** add real-time payments request for payment endpoints ([#162](https://github.com/increase/increase-go/issues/162)) ([d5bc6af](https://github.com/increase/increase-go/commit/d5bc6affe973805882432c8f22b689ab099a68c2))
+
+
+### Chores
+
+* **internal:** bump license ([#161](https://github.com/increase/increase-go/issues/161)) ([6b77d51](https://github.com/increase/increase-go/commit/6b77d5162dd7bcaeffafe7b649ca3309908cfaa7))
+
+
+### Documentation
+
+* **options:** fix link to readme ([#159](https://github.com/increase/increase-go/issues/159)) ([a487dc4](https://github.com/increase/increase-go/commit/a487dc403bc6707218696c8d5d35d91c2395c5e8))
+
 ## 0.16.0 (2023-12-18)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/increase/increase-go/compare/v0.15.0...v0.16.0)
