@@ -252,6 +252,8 @@ const (
 type PhysicalCardShipmentTracking struct {
 	// The tracking number.
 	Number string `json:"number,required"`
+	// For returned shipments, the tracking number of the return shipment.
+	ReturnNumber string `json:"return_number,required,nullable"`
 	// For returned shipments, this describes why the package was returned.
 	ReturnReason string `json:"return_reason,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -265,6 +267,7 @@ type PhysicalCardShipmentTracking struct {
 // [PhysicalCardShipmentTracking]
 type physicalCardShipmentTrackingJSON struct {
 	Number       apijson.Field
+	ReturnNumber apijson.Field
 	ReturnReason apijson.Field
 	ShippedAt    apijson.Field
 	raw          string

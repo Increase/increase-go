@@ -469,6 +469,8 @@ const (
 	CheckTransferStatusRejected CheckTransferStatus = "rejected"
 	// The transfer requires attention from an Increase operator.
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
+	// The transfer has been returned.
+	CheckTransferStatusReturned CheckTransferStatus = "returned"
 )
 
 // After a stop-payment is requested on the check, this will contain supplemental
@@ -510,6 +512,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	CheckTransferStopPaymentRequestReasonRejectedByIncrease CheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	CheckTransferStopPaymentRequestReasonNotAuthorized CheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	CheckTransferStopPaymentRequestReasonUnknown CheckTransferStopPaymentRequestReason = "unknown"
 )
@@ -711,6 +715,8 @@ type CheckTransferStopPaymentParamsReason string
 const (
 	// The check could not be delivered.
 	CheckTransferStopPaymentParamsReasonMailDeliveryFailed CheckTransferStopPaymentParamsReason = "mail_delivery_failed"
+	// The check was not authorized.
+	CheckTransferStopPaymentParamsReasonNotAuthorized CheckTransferStopPaymentParamsReason = "not_authorized"
 	// The check was stopped for another reason.
 	CheckTransferStopPaymentParamsReasonUnknown CheckTransferStopPaymentParamsReason = "unknown"
 )
