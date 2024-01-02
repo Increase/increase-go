@@ -3694,6 +3694,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonUnknown ACHTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )

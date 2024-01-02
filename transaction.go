@@ -2439,6 +2439,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	TransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease TransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	TransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized TransactionSourceCheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	TransactionSourceCheckTransferStopPaymentRequestReasonUnknown TransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )

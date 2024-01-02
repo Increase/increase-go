@@ -2459,6 +2459,8 @@ const (
 	// The check was canceled by an Increase operator who will provide details
 	// out-of-band.
 	WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	// The check was not authorized.
+	WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "not_authorized"
 	// The check was stopped for another reason.
 	WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReasonUnknown WireTransferSimulationTransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )

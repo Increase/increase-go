@@ -55,6 +55,7 @@ type Client struct {
 	ProofOfAuthorizationRequests           *ProofOfAuthorizationRequestService
 	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
 	Intrafi                                *IntrafiService
+	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -112,6 +113,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.ProofOfAuthorizationRequests = NewProofOfAuthorizationRequestService(opts...)
 	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
 	r.Intrafi = NewIntrafiService(opts...)
+	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
 
 	return
 }
