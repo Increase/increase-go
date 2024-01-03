@@ -10,11 +10,10 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-// A list of Account objects.
 type Page[T any] struct {
-	Data []T `json:"data,required"`
+	Data []T `json:"data"`
 	// A pointer to a place in the list.
-	NextCursor string   `json:"next_cursor,required,nullable"`
+	NextCursor string   `json:"next_cursor,nullable"`
 	JSON       pageJSON `json:"-"`
 	cfg        *requestconfig.RequestConfig
 	res        *http.Response
