@@ -2523,6 +2523,8 @@ const (
 // An Inbound ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_ach_transfer`.
 type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
+	// Additional information sent from the originator.
+	Addenda WireTransferSimulationTransactionSourceInboundACHTransferAddenda `json:"addenda,required,nullable"`
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -2557,6 +2559,7 @@ type WireTransferSimulationTransactionSourceInboundACHTransfer struct {
 // metadata for the struct
 // [WireTransferSimulationTransactionSourceInboundACHTransfer]
 type wireTransferSimulationTransactionSourceInboundACHTransferJSON struct {
+	Addenda                            apijson.Field
 	Amount                             apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
@@ -2572,6 +2575,76 @@ type wireTransferSimulationTransactionSourceInboundACHTransferJSON struct {
 }
 
 func (r *WireTransferSimulationTransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional information sent from the originator.
+type WireTransferSimulationTransactionSourceInboundACHTransferAddenda struct {
+	// The type of addendum.
+	Category WireTransferSimulationTransactionSourceInboundACHTransferAddendaCategory `json:"category,required"`
+	// Unstructured `payment_related_information` passed through by the originator.
+	Freeform WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	JSON     wireTransferSimulationTransactionSourceInboundACHTransferAddendaJSON     `json:"-"`
+}
+
+// wireTransferSimulationTransactionSourceInboundACHTransferAddendaJSON contains
+// the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundACHTransferAddenda]
+type wireTransferSimulationTransactionSourceInboundACHTransferAddendaJSON struct {
+	Category    apijson.Field
+	Freeform    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceInboundACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The type of addendum.
+type WireTransferSimulationTransactionSourceInboundACHTransferAddendaCategory string
+
+const (
+	// Unstructured addendum.
+	WireTransferSimulationTransactionSourceInboundACHTransferAddendaCategoryFreeform WireTransferSimulationTransactionSourceInboundACHTransferAddendaCategory = "freeform"
+)
+
+// Unstructured `payment_related_information` passed through by the originator.
+type WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeform struct {
+	// Each entry represents an addendum received from the originator.
+	Entries []WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntry `json:"entries,required"`
+	JSON    wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformJSON    `json:"-"`
+}
+
+// wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeform]
+type wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformJSON struct {
+	Entries     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntry struct {
+	// The payment related information passed in the addendum.
+	PaymentRelatedInformation string                                                                            `json:"payment_related_information,required"`
+	JSON                      wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntryJSON `json:"-"`
+}
+
+// wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntryJSON
+// contains the JSON metadata for the struct
+// [WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntry]
+type wireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntryJSON struct {
+	PaymentRelatedInformation apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *WireTransferSimulationTransactionSourceInboundACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
