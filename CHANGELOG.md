@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.18.0 (2024-01-08)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/increase/increase-go/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** add `ach_debit_status` ([#165](https://github.com/increase/increase-go/issues/165)) ([954a0b1](https://github.com/increase/increase-go/commit/954a0b1a9fd6405e83a7182e8f137889985425f9))
+
+
+### Chores
+
+* **internal:** minor updates to pagination ([#163](https://github.com/increase/increase-go/issues/163)) ([fe89702](https://github.com/increase/increase-go/commit/fe8970229e509e76cf901c534ff71bef80915e8f))
+
 ## 0.17.0 (2024-01-02)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/increase/increase-go/compare/v0.16.0...v0.17.0)
