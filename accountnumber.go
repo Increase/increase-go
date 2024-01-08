@@ -327,8 +327,10 @@ const (
 
 type AccountNumberListParams struct {
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID param.Field[string]                           `query:"account_id"`
-	CreatedAt param.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string] `query:"account_id"`
+	// The ACH Debit status to retrieve Account Numbers for.
+	ACHDebitStatus param.Field[AccountNumberListParamsACHDebitStatus] `query:"ach_debit_status"`
+	CreatedAt      param.Field[AccountNumberListParamsCreatedAt]      `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -346,6 +348,16 @@ func (r AccountNumberListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
 }
+
+// The ACH Debit status to retrieve Account Numbers for.
+type AccountNumberListParamsACHDebitStatus string
+
+const (
+	// ACH Debits are allowed.
+	AccountNumberListParamsACHDebitStatusAllowed AccountNumberListParamsACHDebitStatus = "allowed"
+	// ACH Debits are blocked.
+	AccountNumberListParamsACHDebitStatusBlocked AccountNumberListParamsACHDebitStatus = "blocked"
+)
 
 type AccountNumberListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

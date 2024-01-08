@@ -2503,6 +2503,8 @@ const (
 // An Inbound ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_ach_transfer`.
 type TransactionSourceInboundACHTransfer struct {
+	// Additional information sent from the originator.
+	Addenda TransactionSourceInboundACHTransferAddenda `json:"addenda,required,nullable"`
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -2536,6 +2538,7 @@ type TransactionSourceInboundACHTransfer struct {
 // transactionSourceInboundACHTransferJSON contains the JSON metadata for the
 // struct [TransactionSourceInboundACHTransfer]
 type transactionSourceInboundACHTransferJSON struct {
+	Addenda                            apijson.Field
 	Amount                             apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
@@ -2551,6 +2554,74 @@ type transactionSourceInboundACHTransferJSON struct {
 }
 
 func (r *TransactionSourceInboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional information sent from the originator.
+type TransactionSourceInboundACHTransferAddenda struct {
+	// The type of addendum.
+	Category TransactionSourceInboundACHTransferAddendaCategory `json:"category,required"`
+	// Unstructured `payment_related_information` passed through by the originator.
+	Freeform TransactionSourceInboundACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	JSON     transactionSourceInboundACHTransferAddendaJSON     `json:"-"`
+}
+
+// transactionSourceInboundACHTransferAddendaJSON contains the JSON metadata for
+// the struct [TransactionSourceInboundACHTransferAddenda]
+type transactionSourceInboundACHTransferAddendaJSON struct {
+	Category    apijson.Field
+	Freeform    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The type of addendum.
+type TransactionSourceInboundACHTransferAddendaCategory string
+
+const (
+	// Unstructured addendum.
+	TransactionSourceInboundACHTransferAddendaCategoryFreeform TransactionSourceInboundACHTransferAddendaCategory = "freeform"
+)
+
+// Unstructured `payment_related_information` passed through by the originator.
+type TransactionSourceInboundACHTransferAddendaFreeform struct {
+	// Each entry represents an addendum received from the originator.
+	Entries []TransactionSourceInboundACHTransferAddendaFreeformEntry `json:"entries,required"`
+	JSON    transactionSourceInboundACHTransferAddendaFreeformJSON    `json:"-"`
+}
+
+// transactionSourceInboundACHTransferAddendaFreeformJSON contains the JSON
+// metadata for the struct [TransactionSourceInboundACHTransferAddendaFreeform]
+type transactionSourceInboundACHTransferAddendaFreeformJSON struct {
+	Entries     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type TransactionSourceInboundACHTransferAddendaFreeformEntry struct {
+	// The payment related information passed in the addendum.
+	PaymentRelatedInformation string                                                      `json:"payment_related_information,required"`
+	JSON                      transactionSourceInboundACHTransferAddendaFreeformEntryJSON `json:"-"`
+}
+
+// transactionSourceInboundACHTransferAddendaFreeformEntryJSON contains the JSON
+// metadata for the struct
+// [TransactionSourceInboundACHTransferAddendaFreeformEntry]
+type transactionSourceInboundACHTransferAddendaFreeformEntryJSON struct {
+	PaymentRelatedInformation apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
