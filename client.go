@@ -56,16 +56,20 @@ type Client struct {
 	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
 	Intrafi                                *IntrafiService
 	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
+	Webhooks                               *WebhookService
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (INCREASE_API_KEY). The option passed in as arguments are applied
-// after these default arguments, and all option will be passed down to the
-// services and requests that this client makes.
+// environment (INCREASE_API_KEY, INCREASE_WEBHOOK_SECRET). The option passed in as
+// arguments are applied after these default arguments, and all option will be
+// passed down to the services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("INCREASE_API_KEY"); ok {
 		defaults = append(defaults, option.WithAPIKey(o))
+	}
+	if o, ok := os.LookupEnv("INCREASE_WEBHOOK_SECRET"); ok {
+		defaults = append(defaults, option.WithWebhookSecret(o))
 	}
 	opts = append(defaults, opts...)
 
@@ -114,6 +118,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
 	r.Intrafi = NewIntrafiService(opts...)
 	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
+	r.Webhooks = NewWebhookService(opts...)
 
 	return
 }
