@@ -996,7 +996,8 @@ const (
 // Details of the corporation entity to create. Required if `structure` is equal to
 // `corporation`.
 type EntityNewParamsCorporation struct {
-	// The corporation's physical address. Post Office Boxes are disallowed.
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
 	Address param.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
@@ -1016,7 +1017,8 @@ func (r EntityNewParamsCorporation) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The corporation's physical address. Post Office Boxes are disallowed.
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
 type EntityNewParamsCorporationAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1052,7 +1054,8 @@ func (r EntityNewParamsCorporationBeneficialOwner) MarshalJSON() (data []byte, e
 
 // Personal details for the beneficial owner.
 type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -1071,7 +1074,8 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (dat
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1204,7 +1208,8 @@ func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
 }
 
 type EntityNewParamsJointIndividual struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityNewParamsJointIndividualsAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -1223,7 +1228,8 @@ func (r EntityNewParamsJointIndividual) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityNewParamsJointIndividualsAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1338,7 +1344,8 @@ func (r EntityNewParamsJointIndividualsIdentificationPassport) MarshalJSON() (da
 // `social_security_number` or `individual_taxpayer_identification_number`
 // identification methods.
 type EntityNewParamsNaturalPerson struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -1357,7 +1364,8 @@ func (r EntityNewParamsNaturalPerson) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityNewParamsNaturalPersonAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1492,7 +1500,8 @@ func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err err
 // Details of the trust entity to create. Required if `structure` is equal to
 // `trust`.
 type EntityNewParamsTrust struct {
-	// The trust's physical address. Post Office Boxes are disallowed.
+	// The trust's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
 	Address param.Field[EntityNewParamsTrustAddress] `json:"address,required"`
 	// Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
 	// their own Employer Identification Number. Revocable trusts require information
@@ -1518,7 +1527,8 @@ func (r EntityNewParamsTrust) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The trust's physical address. Post Office Boxes are disallowed.
+// The trust's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
 type EntityNewParamsTrustAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1572,7 +1582,8 @@ const (
 // Details of the individual trustee. Required when the trustee `structure` is
 // equal to `individual`.
 type EntityNewParamsTrustTrusteesIndividual struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityNewParamsTrustTrusteesIndividualAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -1591,7 +1602,8 @@ func (r EntityNewParamsTrustTrusteesIndividual) MarshalJSON() (data []byte, err 
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1703,7 +1715,8 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationPassport) MarshalJSO
 
 // The grantor of the trust. Required if `category` is equal to `revocable`.
 type EntityNewParamsTrustGrantor struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityNewParamsTrustGrantorAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -1722,7 +1735,8 @@ func (r EntityNewParamsTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -1901,7 +1915,8 @@ const (
 )
 
 type EntityUpdateAddressParams struct {
-	// The entity's physical address. Post Office Boxes are disallowed.
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
 	Address param.Field[EntityUpdateAddressParamsAddress] `json:"address,required"`
 }
 
@@ -1909,7 +1924,8 @@ func (r EntityUpdateAddressParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The entity's physical address. Post Office Boxes are disallowed.
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
 type EntityUpdateAddressParamsAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
