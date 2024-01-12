@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.19.0 (2024-01-12)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/increase/increase-go/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** add merchant data to simulation api ([#170](https://github.com/increase/increase-go/issues/170)) ([32a6c2f](https://github.com/increase/increase-go/commit/32a6c2f034008d8a6902c5dbbbd59450c78164a4))
+
+
+### Chores
+
+* add .keep files for examples and custom code directories ([#166](https://github.com/increase/increase-go/issues/166)) ([d8a4de6](https://github.com/increase/increase-go/commit/d8a4de6e1150883ba5653ebd4e9eec446cffe802))
+* **api:** update for other platforms ([#168](https://github.com/increase/increase-go/issues/168)) ([887edd7](https://github.com/increase/increase-go/commit/887edd70df65adae9837924744436d8f05928c33))
+
+
+### Documentation
+
+* **readme:** improve api reference ([#169](https://github.com/increase/increase-go/issues/169)) ([285cddf](https://github.com/increase/increase-go/commit/285cddf009a81975af78998cd5cf16ff8548a57e))
+
 ## 0.18.0 (2024-01-08)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/increase/increase-go/compare/v0.17.0...v0.18.0)
