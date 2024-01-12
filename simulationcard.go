@@ -2251,6 +2251,18 @@ type SimulationCardAuthorizeParams struct {
 	// decision event subscription, you can use this field to route events to any
 	// specified event subscription for testing purposes.
 	EventSubscriptionID param.Field[string] `json:"event_subscription_id"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID param.Field[string] `json:"merchant_acceptor_id"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode param.Field[string] `json:"merchant_category_code"`
+	// The city the merchant resides in.
+	MerchantCity param.Field[string] `json:"merchant_city"`
+	// The country the merchant resides in.
+	MerchantCountry param.Field[string] `json:"merchant_country"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor param.Field[string] `json:"merchant_descriptor"`
 	// The identifier of the Physical Card to be authorized.
 	PhysicalCardID param.Field[string] `json:"physical_card_id"`
 }
