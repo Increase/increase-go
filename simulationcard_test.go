@@ -30,6 +30,11 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
 		DigitalWalletTokenID: increase.F("string"),
 		EventSubscriptionID:  increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
+		MerchantAcceptorID:   increase.F("5665270011000168"),
+		MerchantCategoryCode: increase.F("5734"),
+		MerchantCity:         increase.F("New York"),
+		MerchantCountry:      increase.F("US"),
+		MerchantDescriptor:   increase.F("AMAZON.COM"),
 		PhysicalCardID:       increase.F("string"),
 	})
 	if err != nil {

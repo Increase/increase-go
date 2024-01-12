@@ -86,7 +86,8 @@ func (r EntityBeneficialOwnerNewParamsBeneficialOwner) MarshalJSON() (data []byt
 
 // Personal details for the beneficial owner.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress] `json:"address,required"`
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
@@ -105,7 +106,8 @@ func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual) MarshalJSON() (
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
@@ -237,7 +239,8 @@ func (r EntityBeneficialOwnerArchiveParams) MarshalJSON() (data []byte, err erro
 }
 
 type EntityBeneficialOwnerUpdateAddressParams struct {
-	// The individual's physical address. Post Office Boxes are disallowed.
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
 	Address param.Field[EntityBeneficialOwnerUpdateAddressParamsAddress] `json:"address,required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
@@ -250,7 +253,8 @@ func (r EntityBeneficialOwnerUpdateAddressParams) MarshalJSON() (data []byte, er
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Post Office Boxes are disallowed.
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
 type EntityBeneficialOwnerUpdateAddressParamsAddress struct {
 	// The city of the address.
 	City param.Field[string] `json:"city,required"`
