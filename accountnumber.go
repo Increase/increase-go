@@ -100,7 +100,7 @@ type AccountNumber struct {
 	// Properties related to how this Account Number handles inbound ACH transfers.
 	InboundACH AccountNumberInboundACH `json:"inbound_ach,required"`
 	// Properties related to how this Account Number should handle inbound check
-	// withdrawls.
+	// withdrawals.
 	InboundChecks AccountNumberInboundChecks `json:"inbound_checks,required"`
 	// The name you choose for the Account Number.
 	Name string `json:"name,required"`
@@ -166,7 +166,7 @@ const (
 )
 
 // Properties related to how this Account Number should handle inbound check
-// withdrawls.
+// withdrawals.
 type AccountNumberInboundChecks struct {
 	// How Increase should process checks with this account number printed on them.
 	Status AccountNumberInboundChecksStatus `json:"status,required"`
@@ -225,7 +225,7 @@ type AccountNumberNewParams struct {
 	// Options related to how this Account Number should handle inbound ACH transfers.
 	InboundACH param.Field[AccountNumberNewParamsInboundACH] `json:"inbound_ach"`
 	// Options related to how this Account Number should handle inbound check
-	// withdrawls.
+	// withdrawals.
 	InboundChecks param.Field[AccountNumberNewParamsInboundChecks] `json:"inbound_checks"`
 }
 
@@ -256,7 +256,7 @@ const (
 )
 
 // Options related to how this Account Number should handle inbound check
-// withdrawls.
+// withdrawals.
 type AccountNumberNewParamsInboundChecks struct {
 	// How Increase should process checks with this account number printed on them.
 	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status,required"`
