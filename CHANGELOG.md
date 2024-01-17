@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.19.1 (2024-01-17)
+
+Full Changelog: [v0.19.0...v0.19.1](https://github.com/increase/increase-go/compare/v0.19.0...v0.19.1)
+
+### Bug Fixes
+
+* **test:** avoid test failures when SKIP_MOCK_TESTS is not set ([#175](https://github.com/increase/increase-go/issues/175)) ([2635e32](https://github.com/increase/increase-go/commit/2635e32ca2899d270f1647585b43e408a342e912))
+
+
+### Chores
+
+* **internal:** speculative retry-after-ms support ([#174](https://github.com/increase/increase-go/issues/174)) ([13db633](https://github.com/increase/increase-go/commit/13db633a99b4f7869c959deb02f5328cae084cb6))
+* remove Alex Rattray from reviewers ([#173](https://github.com/increase/increase-go/issues/173)) ([f708587](https://github.com/increase/increase-go/commit/f708587242a992b8461a0f3756c1f55e3230bf7f))
+
+
+### Documentation
+
+* **api:** fix typo ([#171](https://github.com/increase/increase-go/issues/171)) ([c9628cf](https://github.com/increase/increase-go/commit/c9628cf92d32b84e599c73dcc6bf9de0ec72df16))
+
 ## 0.19.0 (2024-01-12)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/increase/increase-go/compare/v0.18.0...v0.19.0)
