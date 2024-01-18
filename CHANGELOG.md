@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.2 (2024-01-18)
+
+Full Changelog: [v0.19.1...v0.19.2](https://github.com/increase/increase-go/compare/v0.19.1...v0.19.2)
+
+### Bug Fixes
+
+* **ci:** ignore stainless-app edits to release PR title ([#176](https://github.com/increase/increase-go/issues/176)) ([d03a9b9](https://github.com/increase/increase-go/commit/d03a9b990c7de97b8c2c93af9ffe8ebd0402ac5a))
+
 ## 0.19.1 (2024-01-17)
 
 Full Changelog: [v0.19.0...v0.19.1](https://github.com/increase/increase-go/compare/v0.19.0...v0.19.1)
