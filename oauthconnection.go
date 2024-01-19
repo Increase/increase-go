@@ -17,26 +17,26 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-// OauthConnectionService contains methods and other services that help with
+// OAuthConnectionService contains methods and other services that help with
 // interacting with the increase API. Note, unlike clients, this service does not
 // read variables from the environment automatically. You should not instantiate
-// this service directly, and instead use the [NewOauthConnectionService] method
+// this service directly, and instead use the [NewOAuthConnectionService] method
 // instead.
-type OauthConnectionService struct {
+type OAuthConnectionService struct {
 	Options []option.RequestOption
 }
 
-// NewOauthConnectionService generates a new service that applies the given options
+// NewOAuthConnectionService generates a new service that applies the given options
 // to each request. These options are applied after the parent client's options (if
 // there is one), and before any request-specific options.
-func NewOauthConnectionService(opts ...option.RequestOption) (r *OauthConnectionService) {
-	r = &OauthConnectionService{}
+func NewOAuthConnectionService(opts ...option.RequestOption) (r *OAuthConnectionService) {
+	r = &OAuthConnectionService{}
 	r.Options = opts
 	return
 }
 
 // Retrieve an OAuth Connection
-func (r *OauthConnectionService) Get(ctx context.Context, oauthConnectionID string, opts ...option.RequestOption) (res *OauthConnection, err error) {
+func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID string, opts ...option.RequestOption) (res *OAuthConnection, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("oauth_connections/%s", oauthConnectionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -44,7 +44,7 @@ func (r *OauthConnectionService) Get(ctx context.Context, oauthConnectionID stri
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) List(ctx context.Context, query OauthConnectionListParams, opts ...option.RequestOption) (res *shared.Page[OauthConnection], err error) {
+func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *shared.Page[OAuthConnection], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,13 +62,13 @@ func (r *OauthConnectionService) List(ctx context.Context, query OauthConnection
 }
 
 // List OAuth Connections
-func (r *OauthConnectionService) ListAutoPaging(ctx context.Context, query OauthConnectionListParams, opts ...option.RequestOption) *shared.PageAutoPager[OauthConnection] {
+func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) *shared.PageAutoPager[OAuthConnection] {
 	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // When a user authorizes your OAuth application, an OAuth Connection object is
 // created.
-type OauthConnection struct {
+type OAuthConnection struct {
 	// The OAuth Connection's identifier.
 	ID string `json:"id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
@@ -77,14 +77,14 @@ type OauthConnection struct {
 	// The identifier of the Group that has authorized your OAuth application.
 	GroupID string `json:"group_id,required"`
 	// Whether the connection is active.
-	Status OauthConnectionStatus `json:"status,required"`
+	Status OAuthConnectionStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_connection`.
-	Type OauthConnectionType `json:"type,required"`
+	Type OAuthConnectionType `json:"type,required"`
 	JSON oauthConnectionJSON `json:"-"`
 }
 
-// oauthConnectionJSON contains the JSON metadata for the struct [OauthConnection]
+// oauthConnectionJSON contains the JSON metadata for the struct [OAuthConnection]
 type oauthConnectionJSON struct {
 	ID          apijson.Field
 	CreatedAt   apijson.Field
@@ -95,29 +95,29 @@ type oauthConnectionJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *OauthConnection) UnmarshalJSON(data []byte) (err error) {
+func (r *OAuthConnection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // Whether the connection is active.
-type OauthConnectionStatus string
+type OAuthConnectionStatus string
 
 const (
 	// The OAuth connection is active.
-	OauthConnectionStatusActive OauthConnectionStatus = "active"
+	OAuthConnectionStatusActive OAuthConnectionStatus = "active"
 	// The OAuth connection is permanently deactivated.
-	OauthConnectionStatusInactive OauthConnectionStatus = "inactive"
+	OAuthConnectionStatusInactive OAuthConnectionStatus = "inactive"
 )
 
 // A constant representing the object's type. For this resource it will always be
 // `oauth_connection`.
-type OauthConnectionType string
+type OAuthConnectionType string
 
 const (
-	OauthConnectionTypeOauthConnection OauthConnectionType = "oauth_connection"
+	OAuthConnectionTypeOAuthConnection OAuthConnectionType = "oauth_connection"
 )
 
-type OauthConnectionListParams struct {
+type OAuthConnectionListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
@@ -125,9 +125,9 @@ type OauthConnectionListParams struct {
 	Limit param.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes [OauthConnectionListParams]'s query parameters as
+// URLQuery serializes [OAuthConnectionListParams]'s query parameters as
 // `url.Values`.
-func (r OauthConnectionListParams) URLQuery() (v url.Values) {
+func (r OAuthConnectionListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,

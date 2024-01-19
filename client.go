@@ -45,7 +45,7 @@ type Client struct {
 	EventSubscriptions                     *EventSubscriptionService
 	Files                                  *FileService
 	Groups                                 *GroupService
-	OauthConnections                       *OauthConnectionService
+	OAuthConnections                       *OAuthConnectionService
 	CheckDeposits                          *CheckDepositService
 	RoutingNumbers                         *RoutingNumberService
 	AccountStatements                      *AccountStatementService
@@ -107,7 +107,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.EventSubscriptions = NewEventSubscriptionService(opts...)
 	r.Files = NewFileService(opts...)
 	r.Groups = NewGroupService(opts...)
-	r.OauthConnections = NewOauthConnectionService(opts...)
+	r.OAuthConnections = NewOAuthConnectionService(opts...)
 	r.CheckDeposits = NewCheckDepositService(opts...)
 	r.RoutingNumbers = NewRoutingNumberService(opts...)
 	r.AccountStatements = NewAccountStatementService(opts...)
