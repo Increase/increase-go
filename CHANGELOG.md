@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.20.0 (2024-01-19)
+
+Full Changelog: [v0.19.2...v0.20.0](https://github.com/increase/increase-go/compare/v0.19.2...v0.20.0)
+
+### ⚠ BREAKING CHANGES
+
+* fix oauth casing ([#178](https://github.com/increase/increase-go/issues/178))
+
+### Features
+
+* **api:** add oauth token and inbound wire transfer methods ([#180](https://github.com/increase/increase-go/issues/180)) ([cf89aec](https://github.com/increase/increase-go/commit/cf89aec6e0873885cee2411b9acd27d1d8457295))
+
+
+### Refactors
+
+* fix oauth casing ([#178](https://github.com/increase/increase-go/issues/178)) ([7ba4b27](https://github.com/increase/increase-go/commit/7ba4b2765179e1edf52a53752b0c67fe5a66e02a))
+
 ## 0.19.2 (2024-01-18)
 
 Full Changelog: [v0.19.1...v0.19.2](https://github.com/increase/increase-go/compare/v0.19.1...v0.19.2)
