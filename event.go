@@ -210,9 +210,9 @@ const (
 	// Occurs whenever an IntraFi Exclusion is updated.
 	EventCategoryIntrafiExclusionUpdated EventCategory = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
-	EventCategoryOauthConnectionCreated EventCategory = "oauth_connection.created"
+	EventCategoryOAuthConnectionCreated EventCategory = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
-	EventCategoryOauthConnectionDeactivated EventCategory = "oauth_connection.deactivated"
+	EventCategoryOAuthConnectionDeactivated EventCategory = "oauth_connection.deactivated"
 	// Occurs whenever a Pending Transaction is created.
 	EventCategoryPendingTransactionCreated EventCategory = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.
@@ -407,9 +407,9 @@ const (
 	// Occurs whenever an IntraFi Exclusion is updated.
 	EventListParamsCategoryInIntrafiExclusionUpdated EventListParamsCategoryIn = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
-	EventListParamsCategoryInOauthConnectionCreated EventListParamsCategoryIn = "oauth_connection.created"
+	EventListParamsCategoryInOAuthConnectionCreated EventListParamsCategoryIn = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
-	EventListParamsCategoryInOauthConnectionDeactivated EventListParamsCategoryIn = "oauth_connection.deactivated"
+	EventListParamsCategoryInOAuthConnectionDeactivated EventListParamsCategoryIn = "oauth_connection.deactivated"
 	// Occurs whenever a Pending Transaction is created.
 	EventListParamsCategoryInPendingTransactionCreated EventListParamsCategoryIn = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.

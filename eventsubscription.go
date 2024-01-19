@@ -230,9 +230,9 @@ const (
 	// Occurs whenever an IntraFi Exclusion is updated.
 	EventSubscriptionSelectedEventCategoryIntrafiExclusionUpdated EventSubscriptionSelectedEventCategory = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
-	EventSubscriptionSelectedEventCategoryOauthConnectionCreated EventSubscriptionSelectedEventCategory = "oauth_connection.created"
+	EventSubscriptionSelectedEventCategoryOAuthConnectionCreated EventSubscriptionSelectedEventCategory = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
-	EventSubscriptionSelectedEventCategoryOauthConnectionDeactivated EventSubscriptionSelectedEventCategory = "oauth_connection.deactivated"
+	EventSubscriptionSelectedEventCategoryOAuthConnectionDeactivated EventSubscriptionSelectedEventCategory = "oauth_connection.deactivated"
 	// Occurs whenever a Pending Transaction is created.
 	EventSubscriptionSelectedEventCategoryPendingTransactionCreated EventSubscriptionSelectedEventCategory = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.
@@ -423,9 +423,9 @@ const (
 	// Occurs whenever an IntraFi Exclusion is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryIntrafiExclusionUpdated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_exclusion.updated"
 	// Occurs whenever an OAuth Connection is created.
-	EventSubscriptionNewParamsSelectedEventCategoryOauthConnectionCreated EventSubscriptionNewParamsSelectedEventCategory = "oauth_connection.created"
+	EventSubscriptionNewParamsSelectedEventCategoryOAuthConnectionCreated EventSubscriptionNewParamsSelectedEventCategory = "oauth_connection.created"
 	// Occurs whenever an OAuth Connection is deactivated.
-	EventSubscriptionNewParamsSelectedEventCategoryOauthConnectionDeactivated EventSubscriptionNewParamsSelectedEventCategory = "oauth_connection.deactivated"
+	EventSubscriptionNewParamsSelectedEventCategoryOAuthConnectionDeactivated EventSubscriptionNewParamsSelectedEventCategory = "oauth_connection.deactivated"
 	// Occurs whenever a Pending Transaction is created.
 	EventSubscriptionNewParamsSelectedEventCategoryPendingTransactionCreated EventSubscriptionNewParamsSelectedEventCategory = "pending_transaction.created"
 	// Occurs whenever a Pending Transaction is updated.
