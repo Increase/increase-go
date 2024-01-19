@@ -307,6 +307,8 @@ type PhysicalCardNewParams struct {
 	Cardholder param.Field[PhysicalCardNewParamsCardholder] `json:"cardholder,required"`
 	// The details used to ship this physical card.
 	Shipment param.Field[PhysicalCardNewParamsShipment] `json:"shipment,required"`
+	// The physical card profile to use for this physical card.
+	PhysicalCardProfileID param.Field[string] `json:"physical_card_profile_id"`
 }
 
 func (r PhysicalCardNewParams) MarshalJSON() (data []byte, err error) {

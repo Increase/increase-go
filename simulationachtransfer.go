@@ -4464,6 +4464,8 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSO
 // An Inbound Wire Transfer object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_transfer`.
 type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
+	// The inbound wire transfer's identifier.
+	ID string `json:"id,required"`
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// A free-form address field set by the sender.
@@ -4502,14 +4504,20 @@ type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string                                                        `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    achTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
+	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
+	TransferID string `json:"transfer_id,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_wire_transfer`.
+	Type ACHTransferSimulationTransactionSourceInboundWireTransferType `json:"type,required"`
+	JSON achTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireTransferJSON contains the JSON
 // metadata for the struct
 // [ACHTransferSimulationTransactionSourceInboundWireTransfer]
 type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
+	ID                                      apijson.Field
 	Amount                                  apijson.Field
 	BeneficiaryAddressLine1                 apijson.Field
 	BeneficiaryAddressLine2                 apijson.Field
@@ -4528,6 +4536,8 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	TransferID                              apijson.Field
+	Type                                    apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -4535,6 +4545,14 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_wire_transfer`.
+type ACHTransferSimulationTransactionSourceInboundWireTransferType string
+
+const (
+	ACHTransferSimulationTransactionSourceInboundWireTransferTypeInboundWireTransfer ACHTransferSimulationTransactionSourceInboundWireTransferType = "inbound_wire_transfer"
+)
 
 // An Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
@@ -4788,7 +4806,7 @@ const (
 
 // The Inbound ACH Transfer.
 type ACHTransferSimulationTransfer struct {
-	// The inbound ach transfer's identifier.
+	// The inbound ACH transfer's identifier.
 	ID string `json:"id,required"`
 	// If your transfer is accepted, this will contain details of the acceptance.
 	Acceptance ACHTransferSimulationTransferAcceptance `json:"acceptance,required,nullable"`

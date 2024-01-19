@@ -182,6 +182,10 @@ const (
 	EventSubscriptionSelectedEventCategoryCheckTransferUpdated EventSubscriptionSelectedEventCategory = "check_transfer.updated"
 	// Occurs whenever a Declined Transaction is created.
 	EventSubscriptionSelectedEventCategoryDeclinedTransactionCreated EventSubscriptionSelectedEventCategory = "declined_transaction.created"
+	// Occurs whenever a Digital Card Profile is created.
+	EventSubscriptionSelectedEventCategoryDigitalCardProfileCreated EventSubscriptionSelectedEventCategory = "digital_card_profile.created"
+	// Occurs whenever a Digital Card Profile is updated.
+	EventSubscriptionSelectedEventCategoryDigitalCardProfileUpdated EventSubscriptionSelectedEventCategory = "digital_card_profile.updated"
 	// Occurs whenever a Digital Wallet Token is created.
 	EventSubscriptionSelectedEventCategoryDigitalWalletTokenCreated EventSubscriptionSelectedEventCategory = "digital_wallet_token.created"
 	// Occurs whenever a Digital Wallet Token is updated.
@@ -241,6 +245,10 @@ const (
 	EventSubscriptionSelectedEventCategoryPhysicalCardCreated EventSubscriptionSelectedEventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventSubscriptionSelectedEventCategoryPhysicalCardUpdated EventSubscriptionSelectedEventCategory = "physical_card.updated"
+	// Occurs whenever a Physical Card Profile is created.
+	EventSubscriptionSelectedEventCategoryPhysicalCardProfileCreated EventSubscriptionSelectedEventCategory = "physical_card_profile.created"
+	// Occurs whenever a Physical Card Profile is updated.
+	EventSubscriptionSelectedEventCategoryPhysicalCardProfileUpdated EventSubscriptionSelectedEventCategory = "physical_card_profile.updated"
 	// Occurs whenever a Proof of Authorization Request is created.
 	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestCreated EventSubscriptionSelectedEventCategory = "proof_of_authorization_request.created"
 	// Occurs whenever a Proof of Authorization Request is updated.
@@ -375,6 +383,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryCheckTransferUpdated EventSubscriptionNewParamsSelectedEventCategory = "check_transfer.updated"
 	// Occurs whenever a Declined Transaction is created.
 	EventSubscriptionNewParamsSelectedEventCategoryDeclinedTransactionCreated EventSubscriptionNewParamsSelectedEventCategory = "declined_transaction.created"
+	// Occurs whenever a Digital Card Profile is created.
+	EventSubscriptionNewParamsSelectedEventCategoryDigitalCardProfileCreated EventSubscriptionNewParamsSelectedEventCategory = "digital_card_profile.created"
+	// Occurs whenever a Digital Card Profile is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryDigitalCardProfileUpdated EventSubscriptionNewParamsSelectedEventCategory = "digital_card_profile.updated"
 	// Occurs whenever a Digital Wallet Token is created.
 	EventSubscriptionNewParamsSelectedEventCategoryDigitalWalletTokenCreated EventSubscriptionNewParamsSelectedEventCategory = "digital_wallet_token.created"
 	// Occurs whenever a Digital Wallet Token is updated.
@@ -434,6 +446,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardCreated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardUpdated EventSubscriptionNewParamsSelectedEventCategory = "physical_card.updated"
+	// Occurs whenever a Physical Card Profile is created.
+	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardProfileCreated EventSubscriptionNewParamsSelectedEventCategory = "physical_card_profile.created"
+	// Occurs whenever a Physical Card Profile is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryPhysicalCardProfileUpdated EventSubscriptionNewParamsSelectedEventCategory = "physical_card_profile.updated"
 	// Occurs whenever a Proof of Authorization Request is created.
 	EventSubscriptionNewParamsSelectedEventCategoryProofOfAuthorizationRequestCreated EventSubscriptionNewParamsSelectedEventCategory = "proof_of_authorization_request.created"
 	// Occurs whenever a Proof of Authorization Request is updated.
