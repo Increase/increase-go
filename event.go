@@ -162,6 +162,10 @@ const (
 	EventCategoryCheckTransferUpdated EventCategory = "check_transfer.updated"
 	// Occurs whenever a Declined Transaction is created.
 	EventCategoryDeclinedTransactionCreated EventCategory = "declined_transaction.created"
+	// Occurs whenever a Digital Card Profile is created.
+	EventCategoryDigitalCardProfileCreated EventCategory = "digital_card_profile.created"
+	// Occurs whenever a Digital Card Profile is updated.
+	EventCategoryDigitalCardProfileUpdated EventCategory = "digital_card_profile.updated"
 	// Occurs whenever a Digital Wallet Token is created.
 	EventCategoryDigitalWalletTokenCreated EventCategory = "digital_wallet_token.created"
 	// Occurs whenever a Digital Wallet Token is updated.
@@ -221,6 +225,10 @@ const (
 	EventCategoryPhysicalCardCreated EventCategory = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventCategoryPhysicalCardUpdated EventCategory = "physical_card.updated"
+	// Occurs whenever a Physical Card Profile is created.
+	EventCategoryPhysicalCardProfileCreated EventCategory = "physical_card_profile.created"
+	// Occurs whenever a Physical Card Profile is updated.
+	EventCategoryPhysicalCardProfileUpdated EventCategory = "physical_card_profile.updated"
 	// Occurs whenever a Proof of Authorization Request is created.
 	EventCategoryProofOfAuthorizationRequestCreated EventCategory = "proof_of_authorization_request.created"
 	// Occurs whenever a Proof of Authorization Request is updated.
@@ -359,6 +367,10 @@ const (
 	EventListParamsCategoryInCheckTransferUpdated EventListParamsCategoryIn = "check_transfer.updated"
 	// Occurs whenever a Declined Transaction is created.
 	EventListParamsCategoryInDeclinedTransactionCreated EventListParamsCategoryIn = "declined_transaction.created"
+	// Occurs whenever a Digital Card Profile is created.
+	EventListParamsCategoryInDigitalCardProfileCreated EventListParamsCategoryIn = "digital_card_profile.created"
+	// Occurs whenever a Digital Card Profile is updated.
+	EventListParamsCategoryInDigitalCardProfileUpdated EventListParamsCategoryIn = "digital_card_profile.updated"
 	// Occurs whenever a Digital Wallet Token is created.
 	EventListParamsCategoryInDigitalWalletTokenCreated EventListParamsCategoryIn = "digital_wallet_token.created"
 	// Occurs whenever a Digital Wallet Token is updated.
@@ -418,6 +430,10 @@ const (
 	EventListParamsCategoryInPhysicalCardCreated EventListParamsCategoryIn = "physical_card.created"
 	// Occurs whenever a Physical Card is updated.
 	EventListParamsCategoryInPhysicalCardUpdated EventListParamsCategoryIn = "physical_card.updated"
+	// Occurs whenever a Physical Card Profile is created.
+	EventListParamsCategoryInPhysicalCardProfileCreated EventListParamsCategoryIn = "physical_card_profile.created"
+	// Occurs whenever a Physical Card Profile is updated.
+	EventListParamsCategoryInPhysicalCardProfileUpdated EventListParamsCategoryIn = "physical_card_profile.updated"
 	// Occurs whenever a Proof of Authorization Request is created.
 	EventListParamsCategoryInProofOfAuthorizationRequestCreated EventListParamsCategoryIn = "proof_of_authorization_request.created"
 	// Occurs whenever a Proof of Authorization Request is updated.

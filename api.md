@@ -703,3 +703,23 @@ Methods:
 - <code title="get /real_time_payments_request_for_payments">client.RealTimePaymentsRequestForPayments.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPaymentService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPaymentListParams">RealTimePaymentsRequestForPaymentListParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#Page">Page</a>[<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPayment">RealTimePaymentsRequestForPayment</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Webhooks
+
+# OAuthTokens
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthToken">OAuthToken</a>
+
+Methods:
+
+- <code title="post /oauth/tokens">client.OAuthTokens.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthTokenService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthTokenNewParams">OAuthTokenNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthToken">OAuthToken</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# InboundWireTransfers
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransfer">InboundWireTransfer</a>
+
+Methods:
+
+- <code title="get /inbound_wire_transfers/{inbound_wire_transfer_id}">client.InboundWireTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransferService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, inboundWireTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransfer">InboundWireTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

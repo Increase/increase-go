@@ -330,7 +330,11 @@ type ACHTransferNotificationsOfChange struct {
 	// The required type of change that is being signaled by the receiving financial
 	// institution.
 	ChangeCode ACHTransferNotificationsOfChangeChangeCode `json:"change_code,required"`
-	// The corrected data that should be used in future ACHs to this account.
+	// The corrected data that should be used in future ACHs to this account. This may
+	// contain the suggested new account number or routing number. When the
+	// `change_code` is `incorrect_transaction_code`, this field contains an integer.
+	// Numbers starting with a 2 encourage changing the `funding` parameter to
+	// checking; numbers starting with a 3 encourage changing to savings.
 	CorrectedData string `json:"corrected_data,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
@@ -363,7 +367,8 @@ const (
 	ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_routing_number"
 	// Both the routing number and the account number were incorrect.
 	ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumberAndAccountNumber ACHTransferNotificationsOfChangeChangeCode = "incorrect_routing_number_and_account_number"
-	// The transaction code was incorrect.
+	// The transaction code was incorrect. Try changing the `funding` parameter from
+	// checking to savings or vice-versa.
 	ACHTransferNotificationsOfChangeChangeCodeIncorrectTransactionCode ACHTransferNotificationsOfChangeChangeCode = "incorrect_transaction_code"
 	// The account number and the transaction code were incorrect.
 	ACHTransferNotificationsOfChangeChangeCodeIncorrectAccountNumberAndTransactionCode ACHTransferNotificationsOfChangeChangeCode = "incorrect_account_number_and_transaction_code"

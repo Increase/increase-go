@@ -14,7 +14,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestPhysicalCardNew(t *testing.T) {
+func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -46,6 +46,7 @@ func TestPhysicalCardNew(t *testing.T) {
 				PostalCode:  increase.F("10045"),
 			}),
 		}),
+		PhysicalCardProfileID: increase.F("string"),
 	})
 	if err != nil {
 		var apierr *increase.Error

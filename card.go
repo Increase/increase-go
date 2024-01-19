@@ -318,9 +318,10 @@ func (r CardNewParamsBillingAddress) MarshalJSON() (data []byte, err error) {
 // Decision with the category `digital_wallet_token_requested` or
 // `digital_wallet_authentication_requested`.
 type CardNewParamsDigitalWallet struct {
-	// The card profile assigned to this digital card. Card profiles may also be
-	// assigned at the program level.
+	// The card profile assigned to this digital card.
 	CardProfileID param.Field[string] `json:"card_profile_id"`
+	// The digital card profile assigned to this digital card.
+	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
 	Email param.Field[string] `json:"email"`
