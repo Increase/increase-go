@@ -57,6 +57,8 @@ type Client struct {
 	Intrafi                                *IntrafiService
 	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
 	Webhooks                               *WebhookService
+	OAuthTokens                            *OAuthTokenService
+	InboundWireTransfers                   *InboundWireTransferService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -119,6 +121,8 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Intrafi = NewIntrafiService(opts...)
 	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
 	r.Webhooks = NewWebhookService(opts...)
+	r.OAuthTokens = NewOAuthTokenService(opts...)
+	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
 
 	return
 }

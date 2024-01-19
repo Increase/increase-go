@@ -92,6 +92,14 @@ type WireDrawdownRequest struct {
 	FulfillmentTransactionID string `json:"fulfillment_transaction_id,required,nullable"`
 	// The message the recipient will see as part of the drawdown request.
 	MessageToRecipient string `json:"message_to_recipient,required"`
+	// The originator's address line 1.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// The originator's address line 2.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// The originator's address line 3.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The originator's name.
+	OriginatorName string `json:"originator_name,required,nullable"`
 	// The drawdown request's recipient's account number.
 	RecipientAccountNumber string `json:"recipient_account_number,required"`
 	// Line 1 of the drawdown request's recipient's address.
@@ -124,6 +132,10 @@ type wireDrawdownRequestJSON struct {
 	Currency                 apijson.Field
 	FulfillmentTransactionID apijson.Field
 	MessageToRecipient       apijson.Field
+	OriginatorAddressLine1   apijson.Field
+	OriginatorAddressLine2   apijson.Field
+	OriginatorAddressLine3   apijson.Field
+	OriginatorName           apijson.Field
 	RecipientAccountNumber   apijson.Field
 	RecipientAddressLine1    apijson.Field
 	RecipientAddressLine2    apijson.Field
@@ -197,6 +209,22 @@ type WireDrawdownRequestNewParams struct {
 	RecipientName param.Field[string] `json:"recipient_name,required"`
 	// The drawdown request's recipient's routing number.
 	RecipientRoutingNumber param.Field[string] `json:"recipient_routing_number,required"`
+	// The drawdown request originator's address line 1. This is only necessary if
+	// you're requesting a payment to a commingled account. Otherwise, we'll use the
+	// associated entity's details.
+	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
+	// The drawdown request originator's address line 2. This is only necessary if
+	// you're requesting a payment to a commingled account. Otherwise, we'll use the
+	// associated entity's details.
+	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
+	// The drawdown request originator's address line 3. This is only necessary if
+	// you're requesting a payment to a commingled account. Otherwise, we'll use the
+	// associated entity's details.
+	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
+	// The drawdown request originator's name. This is only necessary if you're
+	// requesting a payment to a commingled account. Otherwise, we'll use the
+	// associated entity's details.
+	OriginatorName param.Field[string] `json:"originator_name"`
 	// Line 1 of the drawdown request's recipient's address.
 	RecipientAddressLine1 param.Field[string] `json:"recipient_address_line1"`
 	// Line 2 of the drawdown request's recipient's address.

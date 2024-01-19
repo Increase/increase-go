@@ -67,7 +67,8 @@ func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuth
 }
 
 // When a user authorizes your OAuth application, an OAuth Connection object is
-// created.
+// created. Learn more about OAuth
+// [here](https://increase.com/documentation/oauth).
 type OAuthConnection struct {
 	// The OAuth Connection's identifier.
 	ID string `json:"id,required"`

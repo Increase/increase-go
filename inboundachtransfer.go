@@ -93,7 +93,7 @@ func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundA
 // An Inbound ACH Transfer is an ACH transfer initiated outside of Increase to your
 // account.
 type InboundACHTransfer struct {
-	// The inbound ach transfer's identifier.
+	// The inbound ACH transfer's identifier.
 	ID string `json:"id,required"`
 	// If your transfer is accepted, this will contain details of the acceptance.
 	Acceptance InboundACHTransferAcceptance `json:"acceptance,required,nullable"`

@@ -148,6 +148,14 @@ type WireTransfer struct {
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The transfer's network.
 	Network WireTransferNetwork `json:"network,required"`
+	// The originator's address line 1.
+	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
+	// The originator's address line 2.
+	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
+	// The originator's address line 3.
+	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
+	// The originator's name.
+	OriginatorName string `json:"originator_name,required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
@@ -189,6 +197,10 @@ type wireTransferJSON struct {
 	ExternalAccountID       apijson.Field
 	MessageToRecipient      apijson.Field
 	Network                 apijson.Field
+	OriginatorAddressLine1  apijson.Field
+	OriginatorAddressLine2  apijson.Field
+	OriginatorAddressLine3  apijson.Field
+	OriginatorName          apijson.Field
 	PendingTransactionID    apijson.Field
 	Reversal                apijson.Field
 	RoutingNumber           apijson.Field
@@ -421,6 +433,18 @@ type WireTransferNewParams struct {
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
+	// The originator's address line 1. This is only necessary if you're transferring
+	// from a commingled account. Otherwise, we'll use the associated entity's details.
+	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
+	// The originator's address line 2. This is only necessary if you're transferring
+	// from a commingled account. Otherwise, we'll use the associated entity's details.
+	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
+	// The originator's address line 3. This is only necessary if you're transferring
+	// from a commingled account. Otherwise, we'll use the associated entity's details.
+	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
+	// The originator's name. This is only necessary if you're transferring from a
+	// commingled account. Otherwise, we'll use the associated entity's details.
+	OriginatorName param.Field[string] `json:"originator_name"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
