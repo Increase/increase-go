@@ -1200,44 +1200,8 @@ const (
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.
 type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	// A name set by the sender.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
-	// A free-form reference string set by the sender, to help identify the transfer.
-	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
-	// An Increase-constructed description of the declined transaction.
-	Description string `json:"description,required"`
-	// A unique identifier available to the originating and receiving banks, commonly
-	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
-	// service and is helpful when debugging wires with the originating bank.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The originator of the wire, set by the sending bank.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// The American Banking Association (ABA) routing number of the bank originating
-	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// The identifier of the Inbound Wire Transfer that was declined.
+	InboundWireTransferID string `json:"inbound_wire_transfer_id,required"`
 	// Why the wire transfer was declined.
 	Reason ACHTransferSimulationDeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
 	JSON   achTransferSimulationDeclinedTransactionSourceWireDeclineJSON   `json:"-"`
@@ -1247,26 +1211,10 @@ type ACHTransferSimulationDeclinedTransactionSourceWireDecline struct {
 // metadata for the struct
 // [ACHTransferSimulationDeclinedTransactionSourceWireDecline]
 type achTransferSimulationDeclinedTransactionSourceWireDeclineJSON struct {
-	Amount                                  apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryReference                    apijson.Field
-	Description                             apijson.Field
-	InputMessageAccountabilityData          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorRoutingNumber                 apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	Reason                                  apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
+	InboundWireTransferID apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *ACHTransferSimulationDeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1463,8 +1411,8 @@ type ACHTransferSimulationTransactionSource struct {
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal ACHTransferSimulationTransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
-	// An Inbound Wire Transfer object. This field will be present in the JSON response
-	// if and only if `category` is equal to `inbound_wire_transfer`.
+	// An Inbound Wire Transfer Intention object. This field will be present in the
+	// JSON response if and only if `category` is equal to `inbound_wire_transfer`.
 	InboundWireTransfer ACHTransferSimulationTransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,required,nullable"`
 	// An Interest Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `interest_payment`.
@@ -3334,7 +3282,8 @@ const (
 	ACHTransferSimulationTransactionSourceCategoryInboundWireDrawdownPayment ACHTransferSimulationTransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundWireReversal ACHTransferSimulationTransactionSourceCategory = "inbound_wire_reversal"
-	// Inbound Wire Transfer: details will be under the `inbound_wire_transfer` object.
+	// Inbound Wire Transfer Intention: details will be under the
+	// `inbound_wire_transfer` object.
 	ACHTransferSimulationTransactionSourceCategoryInboundWireTransfer ACHTransferSimulationTransactionSourceCategory = "inbound_wire_transfer"
 	// Interest Payment: details will be under the `interest_payment` object.
 	ACHTransferSimulationTransactionSourceCategoryInterestPayment ACHTransferSimulationTransactionSourceCategory = "interest_payment"
@@ -4461,11 +4410,9 @@ func (r *ACHTransferSimulationTransactionSourceInboundWireReversal) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// An Inbound Wire Transfer object. This field will be present in the JSON response
-// if and only if `category` is equal to `inbound_wire_transfer`.
+// An Inbound Wire Transfer Intention object. This field will be present in the
+// JSON response if and only if `category` is equal to `inbound_wire_transfer`.
 type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
-	// The inbound wire transfer's identifier.
-	ID string `json:"id,required"`
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// A free-form address field set by the sender.
@@ -4506,18 +4453,14 @@ type ACHTransferSimulationTransactionSourceInboundWireTransfer struct {
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
 	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
-	TransferID string `json:"transfer_id,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `inbound_wire_transfer`.
-	Type ACHTransferSimulationTransactionSourceInboundWireTransferType `json:"type,required"`
-	JSON achTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
+	TransferID string                                                        `json:"transfer_id,required"`
+	JSON       achTransferSimulationTransactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // achTransferSimulationTransactionSourceInboundWireTransferJSON contains the JSON
 // metadata for the struct
 // [ACHTransferSimulationTransactionSourceInboundWireTransfer]
 type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
-	ID                                      apijson.Field
 	Amount                                  apijson.Field
 	BeneficiaryAddressLine1                 apijson.Field
 	BeneficiaryAddressLine2                 apijson.Field
@@ -4537,7 +4480,6 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
 	TransferID                              apijson.Field
-	Type                                    apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -4545,14 +4487,6 @@ type achTransferSimulationTransactionSourceInboundWireTransferJSON struct {
 func (r *ACHTransferSimulationTransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// A constant representing the object's type. For this resource it will always be
-// `inbound_wire_transfer`.
-type ACHTransferSimulationTransactionSourceInboundWireTransferType string
-
-const (
-	ACHTransferSimulationTransactionSourceInboundWireTransferTypeInboundWireTransfer ACHTransferSimulationTransactionSourceInboundWireTransferType = "inbound_wire_transfer"
-)
 
 // An Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.

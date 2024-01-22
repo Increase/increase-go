@@ -82,8 +82,6 @@ type InboundWireTransfer struct {
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
-	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer`.
 	Type InboundWireTransferType `json:"type,required"`
@@ -112,7 +110,6 @@ type inboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	TransferID                              apijson.Field
 	Type                                    apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
