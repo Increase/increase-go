@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0 (2024-01-22)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/increase/increase-go/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** simplify WireDecline and InboundWireTransfer ([#181](https://github.com/increase/increase-go/issues/181)) ([fb83ec9](https://github.com/increase/increase-go/commit/fb83ec90bef468edc969649028b0676255737f7a))
+
 ## 0.20.0 (2024-01-19)
 
 Full Changelog: [v0.19.2...v0.20.0](https://github.com/increase/increase-go/compare/v0.19.2...v0.20.0)
