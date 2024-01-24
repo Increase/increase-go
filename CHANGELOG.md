@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.0 (2024-01-24)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/increase/increase-go/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** list Inbound Wire Transfers, change transfer simulation return types ([#183](https://github.com/increase/increase-go/issues/183)) ([165bb36](https://github.com/increase/increase-go/commit/165bb36e975043986fec63588fe7b796f176ab72))
+
 ## 0.21.0 (2024-01-22)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/increase/increase-go/compare/v0.20.0...v0.21.0)
