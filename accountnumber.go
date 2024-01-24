@@ -111,23 +111,26 @@ type AccountNumber struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
 	Type AccountNumberType `json:"type,required"`
-	JSON accountNumberJSON `json:"-"`
+	// The unique identifier you chose for this object.
+	UniqueIdentifier string            `json:"unique_identifier,required,nullable"`
+	JSON             accountNumberJSON `json:"-"`
 }
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
 type accountNumberJSON struct {
-	ID            apijson.Field
-	AccountID     apijson.Field
-	AccountNumber apijson.Field
-	CreatedAt     apijson.Field
-	InboundACH    apijson.Field
-	InboundChecks apijson.Field
-	Name          apijson.Field
-	RoutingNumber apijson.Field
-	Status        apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID               apijson.Field
+	AccountID        apijson.Field
+	AccountNumber    apijson.Field
+	CreatedAt        apijson.Field
+	InboundACH       apijson.Field
+	InboundChecks    apijson.Field
+	Name             apijson.Field
+	RoutingNumber    apijson.Field
+	Status           apijson.Field
+	Type             apijson.Field
+	UniqueIdentifier apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
@@ -227,6 +230,10 @@ type AccountNumberNewParams struct {
 	// Options related to how this Account Number should handle inbound check
 	// withdrawals.
 	InboundChecks param.Field[AccountNumberNewParamsInboundChecks] `json:"inbound_checks"`
+	// A unique identifier you choose for the object. Reusing this identifier for
+	// another object will result in an error. You can query for the object associated
+	// with this identifier using the List endpoint.
+	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
@@ -338,6 +345,8 @@ type AccountNumberListParams struct {
 	Limit param.Field[int64] `query:"limit"`
 	// The status to retrieve Account Numbers for.
 	Status param.Field[AccountNumberListParamsStatus] `query:"status"`
+	// Filter records to the one with the specified `unique_identifier`.
+	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [AccountNumberListParams]'s query parameters as

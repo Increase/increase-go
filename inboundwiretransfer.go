@@ -6,9 +6,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
+	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
+	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -38,11 +43,38 @@ func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransfe
 	return
 }
 
+// List Inbound Wire Transfers
+func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *shared.Page[InboundWireTransfer], err error) {
+	var raw *http.Response
+	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	path := "inbound_wire_transfers"
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Inbound Wire Transfers
+func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[InboundWireTransfer] {
+	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+}
+
 // An Inbound Wire Transfer is a wire transfer initiated outside of Increase to
 // your account.
 type InboundWireTransfer struct {
 	// The inbound wire transfer's identifier.
 	ID string `json:"id,required"`
+	// The Account to which the transfer belongs.
+	AccountID string `json:"account_id,required"`
+	// The identifier of the Account Number to which this transfer was sent.
+	AccountNumberID string `json:"account_number_id,required"`
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// A free-form address field set by the sender.
@@ -82,6 +114,8 @@ type InboundWireTransfer struct {
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// The status of the transfer.
+	Status InboundWireTransferStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer`.
 	Type InboundWireTransferType `json:"type,required"`
@@ -92,6 +126,8 @@ type InboundWireTransfer struct {
 // [InboundWireTransfer]
 type inboundWireTransferJSON struct {
 	ID                                      apijson.Field
+	AccountID                               apijson.Field
+	AccountNumberID                         apijson.Field
 	Amount                                  apijson.Field
 	BeneficiaryAddressLine1                 apijson.Field
 	BeneficiaryAddressLine2                 apijson.Field
@@ -110,6 +146,7 @@ type inboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	Status                                  apijson.Field
 	Type                                    apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
@@ -119,10 +156,86 @@ func (r *InboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The status of the transfer.
+type InboundWireTransferStatus string
+
+const (
+	// The Inbound Wire Transfer is awaiting action, will transition automatically if
+	// no action is taken.
+	InboundWireTransferStatusPending InboundWireTransferStatus = "pending"
+	// The Inbound Wire Transfer is accepted.
+	InboundWireTransferStatusAccepted InboundWireTransferStatus = "accepted"
+	// The Inbound Wire Transfer was declined.
+	InboundWireTransferStatusDeclined InboundWireTransferStatus = "declined"
+	// The Inbound Wire Transfer was reversed.
+	InboundWireTransferStatusReversed InboundWireTransferStatus = "reversed"
+)
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_wire_transfer`.
 type InboundWireTransferType string
 
 const (
 	InboundWireTransferTypeInboundWireTransfer InboundWireTransferType = "inbound_wire_transfer"
+)
+
+type InboundWireTransferListParams struct {
+	// Filter Inbound Wire Tranfers to ones belonging to the specified Account.
+	AccountID param.Field[string]                                 `query:"account_id"`
+	CreatedAt param.Field[InboundWireTransferListParamsCreatedAt] `query:"created_at"`
+	// Return the page of entries after this one.
+	Cursor param.Field[string] `query:"cursor"`
+	// Limit the size of the list that is returned. The default (and maximum) is 100
+	// objects.
+	Limit param.Field[int64] `query:"limit"`
+	// Filter Inbound Wire Transfers to those with the specified status.
+	Status param.Field[InboundWireTransferListParamsStatus] `query:"status"`
+}
+
+// URLQuery serializes [InboundWireTransferListParams]'s query parameters as
+// `url.Values`.
+func (r InboundWireTransferListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type InboundWireTransferListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [InboundWireTransferListParamsCreatedAt]'s query parameters
+// as `url.Values`.
+func (r InboundWireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// Filter Inbound Wire Transfers to those with the specified status.
+type InboundWireTransferListParamsStatus string
+
+const (
+	// The Inbound Wire Transfer is awaiting action, will transition automatically if
+	// no action is taken.
+	InboundWireTransferListParamsStatusPending InboundWireTransferListParamsStatus = "pending"
+	// The Inbound Wire Transfer is accepted.
+	InboundWireTransferListParamsStatusAccepted InboundWireTransferListParamsStatus = "accepted"
+	// The Inbound Wire Transfer was declined.
+	InboundWireTransferListParamsStatusDeclined InboundWireTransferListParamsStatus = "declined"
+	// The Inbound Wire Transfer was reversed.
+	InboundWireTransferListParamsStatusReversed InboundWireTransferListParamsStatus = "reversed"
 )

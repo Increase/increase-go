@@ -476,13 +476,9 @@ Methods:
 
 ## ACHTransfers
 
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransferSimulation">ACHTransferSimulation</a>
-
 Methods:
 
-- <code title="post /simulations/inbound_ach_transfers">client.Simulations.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferService.NewInbound">NewInbound</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferNewInboundParams">SimulationACHTransferNewInboundParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransferSimulation">ACHTransferSimulation</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /simulations/inbound_ach_transfers">client.Simulations.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferService.NewInbound">NewInbound</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferNewInboundParams">SimulationACHTransferNewInboundParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundACHTransfer">InboundACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /simulations/ach_transfers/{ach_transfer_id}/return">client.Simulations.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferService.Return">Return</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, achTransferID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferReturnParams">SimulationACHTransferReturnParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransfer">ACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /simulations/ach_transfers/{ach_transfer_id}/submit">client.Simulations.ACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationACHTransferService.Submit">Submit</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, achTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#ACHTransfer">ACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
@@ -569,13 +565,9 @@ Methods:
 
 ## WireTransfers
 
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#WireTransferSimulation">WireTransferSimulation</a>
-
 Methods:
 
-- <code title="post /simulations/inbound_wire_transfers">client.Simulations.WireTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationWireTransferService.NewInbound">NewInbound</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationWireTransferNewInboundParams">SimulationWireTransferNewInboundParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#WireTransferSimulation">WireTransferSimulation</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /simulations/inbound_wire_transfers">client.Simulations.WireTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationWireTransferService.NewInbound">NewInbound</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationWireTransferNewInboundParams">SimulationWireTransferNewInboundParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransfer">InboundWireTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Cards
 
@@ -723,3 +715,4 @@ Response Types:
 Methods:
 
 - <code title="get /inbound_wire_transfers/{inbound_wire_transfer_id}">client.InboundWireTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransferService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, inboundWireTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransfer">InboundWireTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /inbound_wire_transfers">client.InboundWireTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransferService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransferListParams">InboundWireTransferListParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#Page">Page</a>[<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundWireTransfer">InboundWireTransfer</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

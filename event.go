@@ -205,6 +205,10 @@ const (
 	EventCategoryInboundACHTransferReturnUpdated EventCategory = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventCategoryInboundWireDrawdownRequestCreated EventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an Inbound Wire Transfer is created.
+	EventCategoryInboundWireTransferCreated EventCategory = "inbound_wire_transfer.created"
+	// Occurs whenever an Inbound Wire Transfer is updated.
+	EventCategoryInboundWireTransferUpdated EventCategory = "inbound_wire_transfer.updated"
 	// Occurs whenever an IntraFi Account Enrollment is created.
 	EventCategoryIntrafiAccountEnrollmentCreated EventCategory = "intrafi_account_enrollment.created"
 	// Occurs whenever an IntraFi Account Enrollment is updated.
@@ -410,6 +414,10 @@ const (
 	EventListParamsCategoryInInboundACHTransferReturnUpdated EventListParamsCategoryIn = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventListParamsCategoryInInboundWireDrawdownRequestCreated EventListParamsCategoryIn = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an Inbound Wire Transfer is created.
+	EventListParamsCategoryInInboundWireTransferCreated EventListParamsCategoryIn = "inbound_wire_transfer.created"
+	// Occurs whenever an Inbound Wire Transfer is updated.
+	EventListParamsCategoryInInboundWireTransferUpdated EventListParamsCategoryIn = "inbound_wire_transfer.updated"
 	// Occurs whenever an IntraFi Account Enrollment is created.
 	EventListParamsCategoryInIntrafiAccountEnrollmentCreated EventListParamsCategoryIn = "intrafi_account_enrollment.created"
 	// Occurs whenever an IntraFi Account Enrollment is updated.
