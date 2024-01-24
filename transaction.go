@@ -2087,6 +2087,9 @@ const (
 	// Inbound Wire Transfer Intention: details will be under the
 	// `inbound_wire_transfer` object.
 	TransactionSourceCategoryInboundWireTransfer TransactionSourceCategory = "inbound_wire_transfer"
+	// Inbound Wire Transfer Reversal Intention: details will be under the
+	// `inbound_wire_transfer_reversal` object.
+	TransactionSourceCategoryInboundWireTransferReversal TransactionSourceCategory = "inbound_wire_transfer_reversal"
 	// Interest Payment: details will be under the `interest_payment` object.
 	TransactionSourceCategoryInterestPayment TransactionSourceCategory = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.
@@ -3627,6 +3630,9 @@ const (
 	// Inbound Wire Transfer Intention: details will be under the
 	// `inbound_wire_transfer` object.
 	TransactionListParamsCategoryInInboundWireTransfer TransactionListParamsCategoryIn = "inbound_wire_transfer"
+	// Inbound Wire Transfer Reversal Intention: details will be under the
+	// `inbound_wire_transfer_reversal` object.
+	TransactionListParamsCategoryInInboundWireTransferReversal TransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
 	// Interest Payment: details will be under the `interest_payment` object.
 	TransactionListParamsCategoryInInterestPayment TransactionListParamsCategoryIn = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.

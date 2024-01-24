@@ -97,6 +97,8 @@ type InboundACHTransfer struct {
 	ID string `json:"id,required"`
 	// If your transfer is accepted, this will contain details of the acceptance.
 	Acceptance InboundACHTransferAcceptance `json:"acceptance,required,nullable"`
+	// The Account to which the transfer belongs.
+	AccountID string `json:"account_id,required"`
 	// The identifier of the Account Number to which this transfer was sent.
 	AccountNumberID string `json:"account_number_id,required"`
 	// Additional information sent from the originator.
@@ -146,6 +148,7 @@ type InboundACHTransfer struct {
 type inboundACHTransferJSON struct {
 	ID                                 apijson.Field
 	Acceptance                         apijson.Field
+	AccountID                          apijson.Field
 	AccountNumberID                    apijson.Field
 	Addenda                            apijson.Field
 	Amount                             apijson.Field

@@ -81,7 +81,8 @@ const (
 )
 
 type OAuthTokenNewParams struct {
-	// The credential you request in exchange for the code.
+	// The credential you request in exchange for the code. In Production, this is
+	// always `authorization_code`. In Sandbox, you can pass either enum value.
 	GrantType param.Field[OAuthTokenNewParamsGrantType] `json:"grant_type,required"`
 	// The public identifier for your application.
 	ClientID param.Field[string] `json:"client_id"`
@@ -102,7 +103,8 @@ func (r OAuthTokenNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The credential you request in exchange for the code.
+// The credential you request in exchange for the code. In Production, this is
+// always `authorization_code`. In Sandbox, you can pass either enum value.
 type OAuthTokenNewParamsGrantType string
 
 const (
