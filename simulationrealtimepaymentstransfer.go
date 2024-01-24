@@ -3270,6 +3270,9 @@ const (
 	// Inbound Wire Transfer Intention: details will be under the
 	// `inbound_wire_transfer` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_transfer"
+	// Inbound Wire Transfer Reversal Intention: details will be under the
+	// `inbound_wire_transfer_reversal` object.
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_transfer_reversal"
 	// Interest Payment: details will be under the `interest_payment` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "interest_payment"
 	// Internal Source: details will be under the `internal_source` object.

@@ -225,6 +225,10 @@ const (
 	EventSubscriptionSelectedEventCategoryInboundACHTransferReturnUpdated EventSubscriptionSelectedEventCategory = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventSubscriptionSelectedEventCategoryInboundWireDrawdownRequestCreated EventSubscriptionSelectedEventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an Inbound Wire Transfer is created.
+	EventSubscriptionSelectedEventCategoryInboundWireTransferCreated EventSubscriptionSelectedEventCategory = "inbound_wire_transfer.created"
+	// Occurs whenever an Inbound Wire Transfer is updated.
+	EventSubscriptionSelectedEventCategoryInboundWireTransferUpdated EventSubscriptionSelectedEventCategory = "inbound_wire_transfer.updated"
 	// Occurs whenever an IntraFi Account Enrollment is created.
 	EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentCreated EventSubscriptionSelectedEventCategory = "intrafi_account_enrollment.created"
 	// Occurs whenever an IntraFi Account Enrollment is updated.
@@ -426,6 +430,10 @@ const (
 	EventSubscriptionNewParamsSelectedEventCategoryInboundACHTransferReturnUpdated EventSubscriptionNewParamsSelectedEventCategory = "inbound_ach_transfer_return.updated"
 	// Occurs whenever an Inbound Wire Drawdown Request is created.
 	EventSubscriptionNewParamsSelectedEventCategoryInboundWireDrawdownRequestCreated EventSubscriptionNewParamsSelectedEventCategory = "inbound_wire_drawdown_request.created"
+	// Occurs whenever an Inbound Wire Transfer is created.
+	EventSubscriptionNewParamsSelectedEventCategoryInboundWireTransferCreated EventSubscriptionNewParamsSelectedEventCategory = "inbound_wire_transfer.created"
+	// Occurs whenever an Inbound Wire Transfer is updated.
+	EventSubscriptionNewParamsSelectedEventCategoryInboundWireTransferUpdated EventSubscriptionNewParamsSelectedEventCategory = "inbound_wire_transfer.updated"
 	// Occurs whenever an IntraFi Account Enrollment is created.
 	EventSubscriptionNewParamsSelectedEventCategoryIntrafiAccountEnrollmentCreated EventSubscriptionNewParamsSelectedEventCategory = "intrafi_account_enrollment.created"
 	// Occurs whenever an IntraFi Account Enrollment is updated.

@@ -49,7 +49,9 @@ func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID
 }
 
 // Real Time Decisions are created when your application needs to take action in
-// real-time to some event such as a card authorization.
+// real-time to some event such as a card authorization. For more information, see
+// our
+// [Real-Time Decisions guide](https://increase.com/documentation/real-time-decisions).
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
 	ID string `json:"id,required"`
