@@ -133,7 +133,7 @@ type RealTimePaymentsTransfer struct {
 	UltimateCreditorName string `json:"ultimate_creditor_name,required,nullable"`
 	// The name of the the party on whose behalf the debtor is instructing the payment.
 	UltimateDebtorName string `json:"ultimate_debtor_name,required,nullable"`
-	// The unique identifier you chose for this transfer.
+	// The unique identifier you chose for this object.
 	UniqueIdentifier string                       `json:"unique_identifier,required,nullable"`
 	JSON             realTimePaymentsTransferJSON `json:"-"`
 }
@@ -442,7 +442,7 @@ type RealTimePaymentsTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter ACH Transfers to the one with the specified unique identifier.
+	// Filter records to the one with the specified `unique_identifier`.
 	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 

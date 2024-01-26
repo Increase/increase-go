@@ -172,7 +172,7 @@ type ACHTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
-	// The unique identifier you chose for this transfer.
+	// The unique identifier you chose for this object.
 	UniqueIdentifier string          `json:"unique_identifier,required,nullable"`
 	JSON             achTransferJSON `json:"-"`
 }
@@ -765,9 +765,9 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
-	// A unique identifier you choose for the transfer. Reusing this identifier for
-	// another transfer will result in an error. You can query for the transfer
-	// associated with this identifier using the List endpoint.
+	// A unique identifier you choose for the object. Reusing this identifier for
+	// another object will result in an error. You can query for the object associated
+	// with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
@@ -808,7 +808,7 @@ type ACHTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter ACH Transfers to the one with the specified unique identifier.
+	// Filter records to the one with the specified `unique_identifier`.
 	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
