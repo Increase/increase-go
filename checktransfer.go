@@ -153,7 +153,7 @@ type CheckTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
-	// The unique identifier you chose for this transfer.
+	// The unique identifier you chose for this object.
 	UniqueIdentifier string            `json:"unique_identifier,required,nullable"`
 	JSON             checkTransferJSON `json:"-"`
 }
@@ -663,7 +663,7 @@ type CheckTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Check Transfers to the one with the specified unique identifier.
+	// Filter records to the one with the specified `unique_identifier`.
 	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
