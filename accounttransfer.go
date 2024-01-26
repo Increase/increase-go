@@ -131,7 +131,7 @@ type AccountTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
 	Type AccountTransferType `json:"type,required"`
-	// The unique identifier you chose for this transfer.
+	// The unique identifier you chose for this object.
 	UniqueIdentifier string              `json:"unique_identifier,required,nullable"`
 	JSON             accountTransferJSON `json:"-"`
 }
@@ -270,9 +270,9 @@ type AccountTransferNewParams struct {
 	DestinationAccountID param.Field[string] `json:"destination_account_id,required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// A unique identifier you choose for the transfer. Reusing this identifier for
-	// another transfer will result in an error. You can query for the transfer
-	// associated with this identifier using the List endpoint.
+	// A unique identifier you choose for the object. Reusing this identifier for
+	// another object will result in an error. You can query for the object associated
+	// with this identifier using the List endpoint.
 	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
@@ -289,7 +289,7 @@ type AccountTransferListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Account Transfers to the one with the specified unique identifier.
+	// Filter records to the one with the specified `unique_identifier`.
 	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
