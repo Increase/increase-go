@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.0 (2024-01-26)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/increase/increase-go/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **api:** update descriptions ([#185](https://github.com/increase/increase-go/issues/185)) ([da37c8a](https://github.com/increase/increase-go/commit/da37c8a431b8c0f10e2b28ede26ec1246b339e23))
+
 ## 0.22.0 (2024-01-24)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/increase/increase-go/compare/v0.21.0...v0.22.0)
