@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.23.1 (2024-02-02)
+
+Full Changelog: [v0.23.0...v0.23.1](https://github.com/increase/increase-go/compare/v0.23.0...v0.23.1)
+
+### Bug Fixes
+
+* **docs:** correct pagination api.md link ([#191](https://github.com/increase/increase-go/issues/191)) ([67ba0cf](https://github.com/increase/increase-go/commit/67ba0cf1d71e065a54c32beba3745d897e169d78))
+
+
+### Chores
+
+* **interal:** make link to api.md relative ([#190](https://github.com/increase/increase-go/issues/190)) ([06c06c2](https://github.com/increase/increase-go/commit/06c06c2f58ac15d480ae99c8871381dd7b5b2e90))
+* **internal:** parse date-time strings more leniently ([#187](https://github.com/increase/increase-go/issues/187)) ([cb474d3](https://github.com/increase/increase-go/commit/cb474d341430b52b43ca5eafba68ce6076dd3b34))
+* **internal:** support pre-release versioning ([#189](https://github.com/increase/increase-go/issues/189)) ([012e7ec](https://github.com/increase/increase-go/commit/012e7eca837ded225aa466400482e00aab220c2e))
+
 ## 0.23.0 (2024-01-26)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/increase/increase-go/compare/v0.22.0...v0.23.0)
