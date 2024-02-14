@@ -83,8 +83,9 @@ func TestFileListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(1)),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
 		Purpose: increase.F(increase.FileListParamsPurpose{
 			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageBack, increase.FileListParamsPurposeInMailedCheckImage}),
 		}),

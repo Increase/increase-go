@@ -103,6 +103,10 @@ type Entity struct {
 	Corporation EntityCorporation `json:"corporation,required,nullable"`
 	// The entity's description for display purposes.
 	Description string `json:"description,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// Details of the joint entity. Will be present if `structure` is equal to `joint`.
 	Joint EntityJoint `json:"joint,required,nullable"`
 	// Details of the natural person entity. Will be present if `structure` is equal to
@@ -129,6 +133,7 @@ type entityJSON struct {
 	ID                    apijson.Field
 	Corporation           apijson.Field
 	Description           apijson.Field
+	IdempotencyKey        apijson.Field
 	Joint                 apijson.Field
 	NaturalPerson         apijson.Field
 	Status                apijson.Field
@@ -603,6 +608,10 @@ type EntitySupplementalDocument struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The File containing the document.
 	FileID string `json:"file_id,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type EntitySupplementalDocumentsType `json:"type,required"`
@@ -612,11 +621,12 @@ type EntitySupplementalDocument struct {
 // entitySupplementalDocumentJSON contains the JSON metadata for the struct
 // [EntitySupplementalDocument]
 type entitySupplementalDocumentJSON struct {
-	CreatedAt   apijson.Field
-	FileID      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CreatedAt      apijson.Field
+	FileID         apijson.Field
+	IdempotencyKey apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *EntitySupplementalDocument) UnmarshalJSON(data []byte) (err error) {
@@ -1850,6 +1860,11 @@ type EntityListParams struct {
 	CreatedAt param.Field[EntityListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit  param.Field[int64]                  `query:"limit"`

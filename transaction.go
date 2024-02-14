@@ -3394,6 +3394,8 @@ const (
 	TransactionSourceInternalSourceReasonCashback TransactionSourceInternalSourceReason = "cashback"
 	// Check adjustment
 	TransactionSourceInternalSourceReasonCheckAdjustment TransactionSourceInternalSourceReason = "check_adjustment"
+	// Collection payment
+	TransactionSourceInternalSourceReasonCollectionPayment TransactionSourceInternalSourceReason = "collection_payment"
 	// Collection receivable
 	TransactionSourceInternalSourceReasonCollectionReceivable TransactionSourceInternalSourceReason = "collection_receivable"
 	// Empyreal adjustment

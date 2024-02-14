@@ -35,7 +35,6 @@ func TestAccountNumberNewWithOptionalParams(t *testing.T) {
 		InboundChecks: increase.F(increase.AccountNumberNewParamsInboundChecks{
 			Status: increase.F(increase.AccountNumberNewParamsInboundChecksStatusAllowed),
 		}),
-		UniqueIdentifier: increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -121,10 +120,10 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:           increase.F("string"),
-		Limit:            increase.F(int64(1)),
-		Status:           increase.F(increase.AccountNumberListParamsStatusActive),
-		UniqueIdentifier: increase.F("x"),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
+		Status:         increase.F(increase.AccountNumberListParamsStatusActive),
 	})
 	if err != nil {
 		var apierr *increase.Error

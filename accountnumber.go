@@ -97,6 +97,10 @@ type AccountNumber struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// Properties related to how this Account Number handles inbound ACH transfers.
 	InboundACH AccountNumberInboundACH `json:"inbound_ach,required"`
 	// Properties related to how this Account Number should handle inbound check
@@ -111,26 +115,24 @@ type AccountNumber struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
 	Type AccountNumberType `json:"type,required"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string            `json:"unique_identifier,required,nullable"`
-	JSON             accountNumberJSON `json:"-"`
+	JSON accountNumberJSON `json:"-"`
 }
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
 type accountNumberJSON struct {
-	ID               apijson.Field
-	AccountID        apijson.Field
-	AccountNumber    apijson.Field
-	CreatedAt        apijson.Field
-	InboundACH       apijson.Field
-	InboundChecks    apijson.Field
-	Name             apijson.Field
-	RoutingNumber    apijson.Field
-	Status           apijson.Field
-	Type             apijson.Field
-	UniqueIdentifier apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID             apijson.Field
+	AccountID      apijson.Field
+	AccountNumber  apijson.Field
+	CreatedAt      apijson.Field
+	IdempotencyKey apijson.Field
+	InboundACH     apijson.Field
+	InboundChecks  apijson.Field
+	Name           apijson.Field
+	RoutingNumber  apijson.Field
+	Status         apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
@@ -230,10 +232,6 @@ type AccountNumberNewParams struct {
 	// Options related to how this Account Number should handle inbound check
 	// withdrawals.
 	InboundChecks param.Field[AccountNumberNewParamsInboundChecks] `json:"inbound_checks"`
-	// A unique identifier you choose for the object. Reusing this identifier for
-	// another object will result in an error. You can query for the object associated
-	// with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
@@ -340,13 +338,16 @@ type AccountNumberListParams struct {
 	CreatedAt      param.Field[AccountNumberListParamsCreatedAt]      `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
 	// The status to retrieve Account Numbers for.
 	Status param.Field[AccountNumberListParamsStatus] `query:"status"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [AccountNumberListParams]'s query parameters as

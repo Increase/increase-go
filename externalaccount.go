@@ -87,6 +87,8 @@ func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query Exter
 type ExternalAccount struct {
 	// The External Account's identifier.
 	ID string `json:"id,required"`
+	// The type of entity that owns the External Account.
+	AccountHolder ExternalAccountAccountHolder `json:"account_holder,required"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -96,6 +98,10 @@ type ExternalAccount struct {
 	Description string `json:"description,required"`
 	// The type of the account to which the transfer will be sent.
 	Funding ExternalAccountFunding `json:"funding,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
 	// The External Account's status.
@@ -111,10 +117,12 @@ type ExternalAccount struct {
 // externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]
 type externalAccountJSON struct {
 	ID                 apijson.Field
+	AccountHolder      apijson.Field
 	AccountNumber      apijson.Field
 	CreatedAt          apijson.Field
 	Description        apijson.Field
 	Funding            apijson.Field
+	IdempotencyKey     apijson.Field
 	RoutingNumber      apijson.Field
 	Status             apijson.Field
 	Type               apijson.Field
@@ -126,6 +134,18 @@ type externalAccountJSON struct {
 func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The type of entity that owns the External Account.
+type ExternalAccountAccountHolder string
+
+const (
+	// The External Account is owned by a business.
+	ExternalAccountAccountHolderBusiness ExternalAccountAccountHolder = "business"
+	// The External Account is owned by an individual.
+	ExternalAccountAccountHolderIndividual ExternalAccountAccountHolder = "individual"
+	// It's unknown what kind of entity owns the External Account.
+	ExternalAccountAccountHolderUnknown ExternalAccountAccountHolder = "unknown"
+)
 
 // The type of the account to which the transfer will be sent.
 type ExternalAccountFunding string
@@ -177,6 +197,8 @@ type ExternalAccountNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number,required"`
+	// The type of entity that owns the External Account.
+	AccountHolder param.Field[ExternalAccountNewParamsAccountHolder] `json:"account_holder"`
 	// The type of the destination account. Defaults to `checking`.
 	Funding param.Field[ExternalAccountNewParamsFunding] `json:"funding"`
 }
@@ -184,6 +206,18 @@ type ExternalAccountNewParams struct {
 func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// The type of entity that owns the External Account.
+type ExternalAccountNewParamsAccountHolder string
+
+const (
+	// The External Account is owned by a business.
+	ExternalAccountNewParamsAccountHolderBusiness ExternalAccountNewParamsAccountHolder = "business"
+	// The External Account is owned by an individual.
+	ExternalAccountNewParamsAccountHolderIndividual ExternalAccountNewParamsAccountHolder = "individual"
+	// It's unknown what kind of entity owns the External Account.
+	ExternalAccountNewParamsAccountHolderUnknown ExternalAccountNewParamsAccountHolder = "unknown"
+)
 
 // The type of the destination account. Defaults to `checking`.
 type ExternalAccountNewParamsFunding string
@@ -198,6 +232,8 @@ const (
 )
 
 type ExternalAccountUpdateParams struct {
+	// The type of entity that owns the External Account.
+	AccountHolder param.Field[ExternalAccountUpdateParamsAccountHolder] `json:"account_holder"`
 	// The description you choose to give the external account.
 	Description param.Field[string] `json:"description"`
 	// The status of the External Account.
@@ -207,6 +243,16 @@ type ExternalAccountUpdateParams struct {
 func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// The type of entity that owns the External Account.
+type ExternalAccountUpdateParamsAccountHolder string
+
+const (
+	// The External Account is owned by a business.
+	ExternalAccountUpdateParamsAccountHolderBusiness ExternalAccountUpdateParamsAccountHolder = "business"
+	// The External Account is owned by an individual.
+	ExternalAccountUpdateParamsAccountHolderIndividual ExternalAccountUpdateParamsAccountHolder = "individual"
+)
 
 // The status of the External Account.
 type ExternalAccountUpdateParamsStatus string
@@ -221,6 +267,11 @@ const (
 type ExternalAccountListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

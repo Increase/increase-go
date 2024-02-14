@@ -22,7 +22,6 @@ type Client struct {
 	RealTimePaymentsTransfers              *RealTimePaymentsTransferService
 	Cards                                  *CardService
 	CardDisputes                           *CardDisputeService
-	CardProfiles                           *CardProfileService
 	CardPurchaseSupplements                *CardPurchaseSupplementService
 	ExternalAccounts                       *ExternalAccountService
 	Exports                                *ExportService
@@ -59,6 +58,8 @@ type Client struct {
 	Webhooks                               *WebhookService
 	OAuthTokens                            *OAuthTokenService
 	InboundWireTransfers                   *InboundWireTransferService
+	DigitalCardProfiles                    *DigitalCardProfileService
+	PhysicalCardProfiles                   *PhysicalCardProfileService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -86,7 +87,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.RealTimePaymentsTransfers = NewRealTimePaymentsTransferService(opts...)
 	r.Cards = NewCardService(opts...)
 	r.CardDisputes = NewCardDisputeService(opts...)
-	r.CardProfiles = NewCardProfileService(opts...)
 	r.CardPurchaseSupplements = NewCardPurchaseSupplementService(opts...)
 	r.ExternalAccounts = NewExternalAccountService(opts...)
 	r.Exports = NewExportService(opts...)
@@ -123,6 +123,8 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Webhooks = NewWebhookService(opts...)
 	r.OAuthTokens = NewOAuthTokenService(opts...)
 	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
+	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
+	r.PhysicalCardProfiles = NewPhysicalCardProfileService(opts...)
 
 	return
 }

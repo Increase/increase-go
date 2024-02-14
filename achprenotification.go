@@ -98,6 +98,10 @@ type ACHPrenotification struct {
 	CreditDebitIndicator ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator,required,nullable"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date-time"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// If the receiving bank notifies that future transfers should use different
 	// details, this will contain those details.
 	NotificationsOfChange []ACHPrenotificationNotificationsOfChange `json:"notifications_of_change,required"`
@@ -126,6 +130,7 @@ type achPrenotificationJSON struct {
 	CreatedAt                apijson.Field
 	CreditDebitIndicator     apijson.Field
 	EffectiveDate            apijson.Field
+	IdempotencyKey           apijson.Field
 	NotificationsOfChange    apijson.Field
 	PrenotificationReturn    apijson.Field
 	RoutingNumber            apijson.Field
@@ -524,6 +529,11 @@ type ACHPrenotificationListParams struct {
 	CreatedAt param.Field[ACHPrenotificationListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

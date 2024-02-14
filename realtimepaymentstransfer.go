@@ -107,6 +107,10 @@ type RealTimePaymentsTransfer struct {
 	DestinationRoutingNumber string `json:"destination_routing_number,required"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
@@ -132,10 +136,8 @@ type RealTimePaymentsTransfer struct {
 	// The name of the party on whose behalf the creditor is receiving the payment.
 	UltimateCreditorName string `json:"ultimate_creditor_name,required,nullable"`
 	// The name of the the party on whose behalf the debtor is instructing the payment.
-	UltimateDebtorName string `json:"ultimate_debtor_name,required,nullable"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string                       `json:"unique_identifier,required,nullable"`
-	JSON             realTimePaymentsTransferJSON `json:"-"`
+	UltimateDebtorName string                       `json:"ultimate_debtor_name,required,nullable"`
+	JSON               realTimePaymentsTransferJSON `json:"-"`
 }
 
 // realTimePaymentsTransferJSON contains the JSON metadata for the struct
@@ -153,6 +155,7 @@ type realTimePaymentsTransferJSON struct {
 	DestinationAccountNumber apijson.Field
 	DestinationRoutingNumber apijson.Field
 	ExternalAccountID        apijson.Field
+	IdempotencyKey           apijson.Field
 	PendingTransactionID     apijson.Field
 	Rejection                apijson.Field
 	RemittanceInformation    apijson.Field
@@ -163,7 +166,6 @@ type realTimePaymentsTransferJSON struct {
 	Type                     apijson.Field
 	UltimateCreditorName     apijson.Field
 	UltimateDebtorName       apijson.Field
-	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -420,10 +422,6 @@ type RealTimePaymentsTransferNewParams struct {
 	UltimateCreditorName param.Field[string] `json:"ultimate_creditor_name"`
 	// The name of the the party on whose behalf the debtor is instructing the payment.
 	UltimateDebtorName param.Field[string] `json:"ultimate_debtor_name"`
-	// A unique identifier you choose for the transfer. Reusing this identifier for
-	// another transfer will result in an error. You can query for the transfer
-	// associated with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r RealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -439,11 +437,14 @@ type RealTimePaymentsTransferListParams struct {
 	// Filter Real-Time Payments Transfers to those made to the specified External
 	// Account.
 	ExternalAccountID param.Field[string] `query:"external_account_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [RealTimePaymentsTransferListParams]'s query parameters as

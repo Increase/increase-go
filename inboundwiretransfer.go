@@ -181,8 +181,10 @@ const (
 
 type InboundWireTransferListParams struct {
 	// Filter Inbound Wire Tranfers to ones belonging to the specified Account.
-	AccountID param.Field[string]                                 `query:"account_id"`
-	CreatedAt param.Field[InboundWireTransferListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string] `query:"account_id"`
+	// Filter Inbound Wire Tranfers to ones belonging to the specified Account Number.
+	AccountNumberID param.Field[string]                                 `query:"account_number_id"`
+	CreatedAt       param.Field[InboundWireTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100

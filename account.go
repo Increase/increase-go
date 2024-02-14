@@ -112,6 +112,10 @@ type Account struct {
 	Currency AccountCurrency `json:"currency,required"`
 	// The identifier for the Entity the Account belongs to.
 	EntityID string `json:"entity_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
 	InformationalEntityID string `json:"informational_entity_id,required,nullable"`
@@ -142,6 +146,7 @@ type accountJSON struct {
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	EntityID              apijson.Field
+	IdempotencyKey        apijson.Field
 	InformationalEntityID apijson.Field
 	InterestAccrued       apijson.Field
 	InterestAccruedAt     apijson.Field
@@ -275,6 +280,11 @@ type AccountListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter Accounts for those belonging to the specified Entity.
 	EntityID param.Field[string] `query:"entity_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Filter Accounts for those belonging to the specified Entity as informational.
 	InformationalEntityID param.Field[string] `query:"informational_entity_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100

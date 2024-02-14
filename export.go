@@ -92,6 +92,10 @@ type Export struct {
 	// The File containing the contents of the Export. This will be present when the
 	// Export's status transitions to `complete`.
 	FileID string `json:"file_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The status of the Export.
 	Status ExportStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -107,6 +111,7 @@ type exportJSON struct {
 	CreatedAt       apijson.Field
 	FileDownloadURL apijson.Field
 	FileID          apijson.Field
+	IdempotencyKey  apijson.Field
 	Status          apijson.Field
 	Type            apijson.Field
 	raw             string

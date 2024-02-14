@@ -32,7 +32,6 @@ func TestAccountTransferNewWithOptionalParams(t *testing.T) {
 		Description:          increase.F("Creating liquidity"),
 		DestinationAccountID: increase.F("account_uf16sut2ct5bevmq3eh"),
 		RequireApproval:      increase.F(true),
-		UniqueIdentifier:     increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -85,9 +84,9 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:           increase.F("string"),
-		Limit:            increase.F(int64(1)),
-		UniqueIdentifier: increase.F("x"),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

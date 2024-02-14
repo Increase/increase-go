@@ -117,6 +117,10 @@ type AccountTransfer struct {
 	DestinationAccountID string `json:"destination_account_id,required"`
 	// The ID for the transaction receiving the transfer.
 	DestinationTransactionID string `json:"destination_transaction_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The transfer's network.
 	Network AccountTransferNetwork `json:"network,required"`
 	// The ID for the pending transaction representing the transfer. A pending
@@ -131,9 +135,7 @@ type AccountTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
 	Type AccountTransferType `json:"type,required"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string              `json:"unique_identifier,required,nullable"`
-	JSON             accountTransferJSON `json:"-"`
+	JSON accountTransferJSON `json:"-"`
 }
 
 // accountTransferJSON contains the JSON metadata for the struct [AccountTransfer]
@@ -148,12 +150,12 @@ type accountTransferJSON struct {
 	Description              apijson.Field
 	DestinationAccountID     apijson.Field
 	DestinationTransactionID apijson.Field
+	IdempotencyKey           apijson.Field
 	Network                  apijson.Field
 	PendingTransactionID     apijson.Field
 	Status                   apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
-	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -270,10 +272,6 @@ type AccountTransferNewParams struct {
 	DestinationAccountID param.Field[string] `json:"destination_account_id,required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// A unique identifier you choose for the object. Reusing this identifier for
-	// another object will result in an error. You can query for the object associated
-	// with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r AccountTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -286,11 +284,14 @@ type AccountTransferListParams struct {
 	CreatedAt param.Field[AccountTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [AccountTransferListParams]'s query parameters as

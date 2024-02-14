@@ -112,6 +112,7 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:                increase.F("string"),
 		EntityID:              increase.F("string"),
+		IdempotencyKey:        increase.F("x"),
 		InformationalEntityID: increase.F("string"),
 		Limit:                 increase.F(int64(1)),
 		Status:                increase.F(increase.AccountListParamsStatusOpen),

@@ -54,9 +54,10 @@ func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
-		EntityID: increase.F("string"),
-		Cursor:   increase.F("string"),
-		Limit:    increase.F(int64(1)),
+		EntityID:       increase.F("string"),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error
