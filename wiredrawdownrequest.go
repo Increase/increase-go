@@ -90,6 +90,10 @@ type WireDrawdownRequest struct {
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
 	FulfillmentTransactionID string `json:"fulfillment_transaction_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The message the recipient will see as part of the drawdown request.
 	MessageToRecipient string `json:"message_to_recipient,required"`
 	// The originator's address line 1.
@@ -131,6 +135,7 @@ type wireDrawdownRequestJSON struct {
 	Amount                   apijson.Field
 	Currency                 apijson.Field
 	FulfillmentTransactionID apijson.Field
+	IdempotencyKey           apijson.Field
 	MessageToRecipient       apijson.Field
 	OriginatorAddressLine1   apijson.Field
 	OriginatorAddressLine2   apijson.Field

@@ -836,6 +836,10 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNotOurItem CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "not_our_item"
 	// The account number on the check does not exist at Increase.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "no_account_number_found"
+	// The check is not readable. Please refer to the image.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonReferToImage CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	// The check cannot be processed. This is rare: please contact support.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReasonUnableToProcess CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
 )
 
 // An Inbound Real-Time Payments Transfer Decline object. This field will be

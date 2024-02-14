@@ -104,7 +104,7 @@ type ACHTransfer struct {
 	// Increase submits.
 	Acknowledgement ACHTransferAcknowledgement `json:"acknowledgement,required,nullable"`
 	// Additional information that will be sent to the recipient.
-	Addendum string `json:"addendum,required,nullable"`
+	Addenda ACHTransferAddenda `json:"addenda,required,nullable"`
 	// The transfer amount in USD cents. A positive amount indicates a credit transfer
 	// pushing funds to the receiving account. A negative amount indicates a debit
 	// transfer pulling funds from the receiving account.
@@ -129,6 +129,9 @@ type ACHTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For ACH transfers this is always equal to `usd`.
 	Currency ACHTransferCurrency `json:"currency,required"`
+	// The type of entity that owns the account to which the ACH Transfer is being
+	// sent.
+	DestinationAccountHolder ACHTransferDestinationAccountHolder `json:"destination_account_holder,required"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
@@ -136,6 +139,10 @@ type ACHTransfer struct {
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
 	// The type of the account to which the transfer will be sent.
 	Funding ACHTransferFunding `json:"funding,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// Your identifier for the transfer recipient.
 	IndividualID string `json:"individual_id,required,nullable"`
 	// The name of the transfer recipient. This value is information and not verified
@@ -172,9 +179,7 @@ type ACHTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
 	Type ACHTransferType `json:"type,required"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string          `json:"unique_identifier,required,nullable"`
-	JSON             achTransferJSON `json:"-"`
+	JSON achTransferJSON `json:"-"`
 }
 
 // achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
@@ -183,7 +188,7 @@ type achTransferJSON struct {
 	AccountID                apijson.Field
 	AccountNumber            apijson.Field
 	Acknowledgement          apijson.Field
-	Addendum                 apijson.Field
+	Addenda                  apijson.Field
 	Amount                   apijson.Field
 	Approval                 apijson.Field
 	Cancellation             apijson.Field
@@ -193,9 +198,11 @@ type achTransferJSON struct {
 	CompanyName              apijson.Field
 	CreatedAt                apijson.Field
 	Currency                 apijson.Field
+	DestinationAccountHolder apijson.Field
 	EffectiveDate            apijson.Field
 	ExternalAccountID        apijson.Field
 	Funding                  apijson.Field
+	IdempotencyKey           apijson.Field
 	IndividualID             apijson.Field
 	IndividualName           apijson.Field
 	Network                  apijson.Field
@@ -209,7 +216,6 @@ type achTransferJSON struct {
 	Submission               apijson.Field
 	TransactionID            apijson.Field
 	Type                     apijson.Field
-	UniqueIdentifier         apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -237,6 +243,130 @@ type achTransferAcknowledgementJSON struct {
 }
 
 func (r *ACHTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Additional information that will be sent to the recipient.
+type ACHTransferAddenda struct {
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
+	Category ACHTransferAddendaCategory `json:"category,required"`
+	// An ACH Transfer Freeform Addenda object. This field will be present in the JSON
+	// response if and only if `category` is equal to `freeform`.
+	Freeform ACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	// An ACH Transfer Payment Order Remittance Advice Addenda object. This field will
+	// be present in the JSON response if and only if `category` is equal to
+	// `payment_order_remittance_advice`.
+	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice,required,nullable"`
+	JSON                         achTransferAddendaJSON                         `json:"-"`
+}
+
+// achTransferAddendaJSON contains the JSON metadata for the struct
+// [ACHTransferAddenda]
+type achTransferAddendaJSON struct {
+	Category                     apijson.Field
+	Freeform                     apijson.Field
+	PaymentOrderRemittanceAdvice apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *ACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type ACHTransferAddendaCategory string
+
+const (
+	// ACH Transfer Freeform Addenda: details will be under the `freeform` object.
+	ACHTransferAddendaCategoryFreeform ACHTransferAddendaCategory = "freeform"
+	// ACH Transfer Payment Order Remittance Advice Addenda: details will be under the
+	// `payment_order_remittance_advice` object.
+	ACHTransferAddendaCategoryPaymentOrderRemittanceAdvice ACHTransferAddendaCategory = "payment_order_remittance_advice"
+	// Unknown addenda type.
+	ACHTransferAddendaCategoryOther ACHTransferAddendaCategory = "other"
+)
+
+// An ACH Transfer Freeform Addenda object. This field will be present in the JSON
+// response if and only if `category` is equal to `freeform`.
+type ACHTransferAddendaFreeform struct {
+	// Each entry represents an addendum sent with the transfer.
+	Entries []ACHTransferAddendaFreeformEntry `json:"entries,required"`
+	JSON    achTransferAddendaFreeformJSON    `json:"-"`
+}
+
+// achTransferAddendaFreeformJSON contains the JSON metadata for the struct
+// [ACHTransferAddendaFreeform]
+type achTransferAddendaFreeformJSON struct {
+	Entries     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ACHTransferAddendaFreeformEntry struct {
+	// The payment related information passed in the addendum.
+	PaymentRelatedInformation string                              `json:"payment_related_information,required"`
+	JSON                      achTransferAddendaFreeformEntryJSON `json:"-"`
+}
+
+// achTransferAddendaFreeformEntryJSON contains the JSON metadata for the struct
+// [ACHTransferAddendaFreeformEntry]
+type achTransferAddendaFreeformEntryJSON struct {
+	PaymentRelatedInformation apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *ACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// An ACH Transfer Payment Order Remittance Advice Addenda object. This field will
+// be present in the JSON response if and only if `category` is equal to
+// `payment_order_remittance_advice`.
+type ACHTransferAddendaPaymentOrderRemittanceAdvice struct {
+	// ASC X12 RMR records for this specific transfer.
+	Invoices []ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice `json:"invoices,required"`
+	JSON     achTransferAddendaPaymentOrderRemittanceAdviceJSON      `json:"-"`
+}
+
+// achTransferAddendaPaymentOrderRemittanceAdviceJSON contains the JSON metadata
+// for the struct [ACHTransferAddendaPaymentOrderRemittanceAdvice]
+type achTransferAddendaPaymentOrderRemittanceAdviceJSON struct {
+	Invoices    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferAddendaPaymentOrderRemittanceAdvice) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice struct {
+	// The invoice number for this reference, determined in advance with the receiver.
+	InvoiceNumber string `json:"invoice_number,required"`
+	// The amount that was paid for this invoice in the minor unit of its currency. For
+	// dollars, for example, this is cents.
+	PaidAmount int64                                                     `json:"paid_amount,required"`
+	JSON       achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON `json:"-"`
+}
+
+// achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON contains the JSON
+// metadata for the struct [ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice]
+type achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON struct {
+	InvoiceNumber apijson.Field
+	PaidAmount    apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -307,6 +437,19 @@ const (
 	ACHTransferCurrencyJpy ACHTransferCurrency = "JPY"
 	// US Dollar (USD)
 	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
+)
+
+// The type of entity that owns the account to which the ACH Transfer is being
+// sent.
+type ACHTransferDestinationAccountHolder string
+
+const (
+	// The External Account is owned by a business.
+	ACHTransferDestinationAccountHolderBusiness ACHTransferDestinationAccountHolder = "business"
+	// The External Account is owned by an individual.
+	ACHTransferDestinationAccountHolderIndividual ACHTransferDestinationAccountHolder = "individual"
+	// It's unknown what kind of entity owns the External Account.
+	ACHTransferDestinationAccountHolderUnknown ACHTransferDestinationAccountHolder = "unknown"
 )
 
 // The type of the account to which the transfer will be sent.
@@ -732,7 +875,7 @@ type ACHTransferNewParams struct {
 	AccountNumber param.Field[string] `json:"account_number"`
 	// Additional information that will be sent to the recipient. This is included in
 	// the transfer data sent to the receiving bank.
-	Addendum param.Field[string] `json:"addendum"`
+	Addenda param.Field[ACHTransferNewParamsAddenda] `json:"addenda"`
 	// The description of the date of the transfer, usually in the format `YYMMDD`.
 	// This is included in the transfer data sent to the receiving bank.
 	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
@@ -745,6 +888,9 @@ type ACHTransferNewParams struct {
 	// The name by which the recipient knows you. This is included in the transfer data
 	// sent to the receiving bank.
 	CompanyName param.Field[string] `json:"company_name"`
+	// The type of entity that owns the account to which the ACH Transfer is being
+	// sent.
+	DestinationAccountHolder param.Field[ACHTransferNewParamsDestinationAccountHolder] `json:"destination_account_holder"`
 	// The transfer effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
@@ -765,15 +911,95 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
-	// A unique identifier you choose for the object. Reusing this identifier for
-	// another object will result in an error. You can query for the object associated
-	// with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+// Additional information that will be sent to the recipient. This is included in
+// the transfer data sent to the receiving bank.
+type ACHTransferNewParamsAddenda struct {
+	// The type of addenda to pass with the transfer.
+	Category param.Field[ACHTransferNewParamsAddendaCategory] `json:"category,required"`
+	// Unstructured `payment_related_information` passed through with the transfer.
+	Freeform param.Field[ACHTransferNewParamsAddendaFreeform] `json:"freeform"`
+	// Structured ASC X12 820 remittance advice records. Please reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
+	PaymentOrderRemittanceAdvice param.Field[ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice] `json:"payment_order_remittance_advice"`
+}
+
+func (r ACHTransferNewParamsAddenda) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of addenda to pass with the transfer.
+type ACHTransferNewParamsAddendaCategory string
+
+const (
+	// Unstructured `payment_related_information` passed through with the transfer.
+	ACHTransferNewParamsAddendaCategoryFreeform ACHTransferNewParamsAddendaCategory = "freeform"
+	// Structured ASC X12 820 remittance advice records. Please reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
+	ACHTransferNewParamsAddendaCategoryPaymentOrderRemittanceAdvice ACHTransferNewParamsAddendaCategory = "payment_order_remittance_advice"
+)
+
+// Unstructured `payment_related_information` passed through with the transfer.
+type ACHTransferNewParamsAddendaFreeform struct {
+	// Each entry represents an addendum sent with the transfer. Please reach out to
+	// [support@increase.com](mailto:support@increase.com) to send more than one
+	// addendum.
+	Entries param.Field[[]ACHTransferNewParamsAddendaFreeformEntry] `json:"entries,required"`
+}
+
+func (r ACHTransferNewParamsAddendaFreeform) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ACHTransferNewParamsAddendaFreeformEntry struct {
+	// The payment related information passed in the addendum.
+	PaymentRelatedInformation param.Field[string] `json:"payment_related_information,required"`
+}
+
+func (r ACHTransferNewParamsAddendaFreeformEntry) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Structured ASC X12 820 remittance advice records. Please reach out to
+// [support@increase.com](mailto:support@increase.com) for more information.
+type ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice struct {
+	// ASC X12 RMR records for this specific transfer.
+	Invoices param.Field[[]ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice] `json:"invoices,required"`
+}
+
+func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice struct {
+	// The invoice number for this reference, determined in advance with the receiver.
+	InvoiceNumber param.Field[string] `json:"invoice_number,required"`
+	// The amount that was paid for this invoice in the minor unit of its currency. For
+	// dollars, for example, this is cents.
+	PaidAmount param.Field[int64] `json:"paid_amount,required"`
+}
+
+func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of entity that owns the account to which the ACH Transfer is being
+// sent.
+type ACHTransferNewParamsDestinationAccountHolder string
+
+const (
+	// The External Account is owned by a business.
+	ACHTransferNewParamsDestinationAccountHolderBusiness ACHTransferNewParamsDestinationAccountHolder = "business"
+	// The External Account is owned by an individual.
+	ACHTransferNewParamsDestinationAccountHolderIndividual ACHTransferNewParamsDestinationAccountHolder = "individual"
+	// It's unknown what kind of entity owns the External Account.
+	ACHTransferNewParamsDestinationAccountHolderUnknown ACHTransferNewParamsDestinationAccountHolder = "unknown"
+)
 
 // The type of the account to which the transfer will be sent.
 type ACHTransferNewParamsFunding string
@@ -805,11 +1031,14 @@ type ACHTransferListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter ACH Transfers to those made to the specified External Account.
 	ExternalAccountID param.Field[string] `query:"external_account_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.

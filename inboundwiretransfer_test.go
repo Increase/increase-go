@@ -49,7 +49,8 @@ func TestInboundWireTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundWireTransfers.List(context.TODO(), increase.InboundWireTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID:       increase.F("string"),
+		AccountNumberID: increase.F("string"),
 		CreatedAt: increase.F(increase.InboundWireTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),

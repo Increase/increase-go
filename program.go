@@ -72,6 +72,8 @@ func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListPa
 type Program struct {
 	// The Program identifier.
 	ID string `json:"id,required"`
+	// The Program billing account.
+	BillingAccountID string `json:"billing_account_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -88,13 +90,14 @@ type Program struct {
 
 // programJSON contains the JSON metadata for the struct [Program]
 type programJSON struct {
-	ID          apijson.Field
-	CreatedAt   apijson.Field
-	Name        apijson.Field
-	Type        apijson.Field
-	UpdatedAt   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID               apijson.Field
+	BillingAccountID apijson.Field
+	CreatedAt        apijson.Field
+	Name             apijson.Field
+	Type             apijson.Field
+	UpdatedAt        apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *Program) UnmarshalJSON(data []byte) (err error) {

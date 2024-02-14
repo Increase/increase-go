@@ -29,6 +29,7 @@ func TestExternalAccountNewWithOptionalParams(t *testing.T) {
 		AccountNumber: increase.F("987654321"),
 		Description:   increase.F("Landlord"),
 		RoutingNumber: increase.F("101050001"),
+		AccountHolder: increase.F(increase.ExternalAccountNewParamsAccountHolderBusiness),
 		Funding:       increase.F(increase.ExternalAccountNewParamsFundingChecking),
 	})
 	if err != nil {
@@ -78,8 +79,9 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"external_account_ukk55lr923a3ac0pp7iv",
 		increase.ExternalAccountUpdateParams{
-			Description: increase.F("New description"),
-			Status:      increase.F(increase.ExternalAccountUpdateParamsStatusActive),
+			AccountHolder: increase.F(increase.ExternalAccountUpdateParamsAccountHolderBusiness),
+			Description:   increase.F("New description"),
+			Status:        increase.F(increase.ExternalAccountUpdateParamsStatusActive),
 		},
 	)
 	if err != nil {
@@ -104,9 +106,10 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ExternalAccounts.List(context.TODO(), increase.ExternalAccountListParams{
-		Cursor:        increase.F("string"),
-		Limit:         increase.F(int64(1)),
-		RoutingNumber: increase.F("xxxxxxxxx"),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
+		RoutingNumber:  increase.F("xxxxxxxxx"),
 		Status: increase.F(increase.ExternalAccountListParamsStatus{
 			In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInArchived}),
 		}),

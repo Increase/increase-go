@@ -67,11 +67,11 @@ func (r *Error) DumpResponse(body bool) []byte {
 type ErrorStatus int64
 
 const (
-	ErrorStatus409 ErrorStatus = 409
+	ErrorStatus429 ErrorStatus = 429
 )
 
 type ErrorType string
 
 const (
-	ErrorTypeUniqueIdentifierAlreadyExistsError ErrorType = "unique_identifier_already_exists_error"
+	ErrorTypeRateLimitedError ErrorType = "rate_limited_error"
 )

@@ -42,7 +42,6 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		OriginatorName:          increase.F("x"),
 		RequireApproval:         increase.F(true),
 		RoutingNumber:           increase.F("101050001"),
-		UniqueIdentifier:        increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -97,8 +96,8 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
+		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
-		UniqueIdentifier:  increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
-func TestCardNewWithOptionalParams(t *testing.T) {
+func TestDigitalCardProfileNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,22 +25,20 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
-		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
-		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
-			Line1:      increase.F("x"),
-			Line2:      increase.F("x"),
-			City:       increase.F("x"),
-			State:      increase.F("x"),
-			PostalCode: increase.F("x"),
+	_, err := client.DigitalCardProfiles.New(context.TODO(), increase.DigitalCardProfileNewParams{
+		AppIconFileID:         increase.F("file_8zxqkwlh43wo144u8yec"),
+		BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
+		CardDescription:       increase.F("MyBank Signature Card"),
+		Description:           increase.F("My Card Profile"),
+		IssuerName:            increase.F("MyBank"),
+		ContactEmail:          increase.F("user@example.com"),
+		ContactPhone:          increase.F("+18885551212"),
+		ContactWebsite:        increase.F("https://example.com"),
+		TextColor: increase.F(increase.DigitalCardProfileNewParamsTextColor{
+			Red:   increase.F(int64(26)),
+			Green: increase.F(int64(43)),
+			Blue:  increase.F(int64(59)),
 		}),
-		Description: increase.F("Card for Ian Crease"),
-		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
-			Email:                increase.F("x"),
-			Phone:                increase.F("x"),
-			DigitalCardProfileID: increase.F("string"),
-		}),
-		EntityID: increase.F("string"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -52,7 +49,7 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestCardGet(t *testing.T) {
+func TestDigitalCardProfileGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -64,7 +61,7 @@ func TestCardGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cards.Get(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
+	_, err := client.DigitalCardProfiles.Get(context.TODO(), "digital_card_profile_s3puplu90f04xhcwkiga")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -74,7 +71,7 @@ func TestCardGet(t *testing.T) {
 	}
 }
 
-func TestCardUpdateWithOptionalParams(t *testing.T) {
+func TestDigitalCardProfileListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -86,60 +83,13 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cards.Update(
-		context.TODO(),
-		"card_oubs0hwk5rn6knuecxg2",
-		increase.CardUpdateParams{
-			BillingAddress: increase.F(increase.CardUpdateParamsBillingAddress{
-				Line1:      increase.F("x"),
-				Line2:      increase.F("x"),
-				City:       increase.F("x"),
-				State:      increase.F("x"),
-				PostalCode: increase.F("x"),
-			}),
-			Description: increase.F("New description"),
-			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{
-				Email:                increase.F("x"),
-				Phone:                increase.F("x"),
-				CardProfileID:        increase.F("string"),
-				DigitalCardProfileID: increase.F("string"),
-			}),
-			EntityID: increase.F("string"),
-			Status:   increase.F(increase.CardUpdateParamsStatusActive),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestCardListWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Cards.List(context.TODO(), increase.CardListParams{
-		AccountID: increase.F("string"),
-		CreatedAt: increase.F(increase.CardListParamsCreatedAt{
-			After:      increase.F(time.Now()),
-			Before:     increase.F(time.Now()),
-			OnOrAfter:  increase.F(time.Now()),
-			OnOrBefore: increase.F(time.Now()),
-		}),
+	_, err := client.DigitalCardProfiles.List(context.TODO(), increase.DigitalCardProfileListParams{
 		Cursor:         increase.F("string"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
+		Status: increase.F(increase.DigitalCardProfileListParamsStatus{
+			In: increase.F([]increase.DigitalCardProfileListParamsStatusIn{increase.DigitalCardProfileListParamsStatusInPending, increase.DigitalCardProfileListParamsStatusInRejected, increase.DigitalCardProfileListParamsStatusInActive}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -150,7 +100,7 @@ func TestCardListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestCardGetSensitiveDetails(t *testing.T) {
+func TestDigitalCardProfileArchive(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -162,7 +112,47 @@ func TestCardGetSensitiveDetails(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cards.GetSensitiveDetails(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
+	_, err := client.DigitalCardProfiles.Archive(context.TODO(), "digital_card_profile_s3puplu90f04xhcwkiga")
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.DigitalCardProfiles.Clone(
+		context.TODO(),
+		"digital_card_profile_s3puplu90f04xhcwkiga",
+		increase.DigitalCardProfileCloneParams{
+			AppIconFileID:         increase.F("string"),
+			BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
+			CardDescription:       increase.F("x"),
+			ContactEmail:          increase.F("x"),
+			ContactPhone:          increase.F("x"),
+			ContactWebsite:        increase.F("string"),
+			Description:           increase.F("x"),
+			IssuerName:            increase.F("x"),
+			TextColor: increase.F(increase.DigitalCardProfileCloneParamsTextColor{
+				Red:   increase.F(int64(0)),
+				Green: increase.F(int64(0)),
+				Blue:  increase.F(int64(0)),
+			}),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

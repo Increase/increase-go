@@ -80,6 +80,7 @@ func TestProofOfAuthorizationRequestSubmissionListWithOptionalParams(t *testing.
 	)
 	_, err := client.ProofOfAuthorizationRequestSubmissions.List(context.TODO(), increase.ProofOfAuthorizationRequestSubmissionListParams{
 		Cursor:                        increase.F("string"),
+		IdempotencyKey:                increase.F("x"),
 		Limit:                         increase.F(int64(1)),
 		ProofOfAuthorizationRequestID: increase.F("string"),
 	})

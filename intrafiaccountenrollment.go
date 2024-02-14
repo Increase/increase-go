@@ -92,6 +92,10 @@ type IntrafiAccountEnrollment struct {
 	ID string `json:"id,required"`
 	// The identifier of the Increase Account being swept into the network.
 	AccountID string `json:"account_id,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The identifier of the account in IntraFi's system. This identifier will be
 	// printed on any IntraFi statements or documents.
 	IntrafiID string `json:"intrafi_id,required"`
@@ -107,13 +111,14 @@ type IntrafiAccountEnrollment struct {
 // intrafiAccountEnrollmentJSON contains the JSON metadata for the struct
 // [IntrafiAccountEnrollment]
 type intrafiAccountEnrollmentJSON struct {
-	ID          apijson.Field
-	AccountID   apijson.Field
-	IntrafiID   apijson.Field
-	Status      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID             apijson.Field
+	AccountID      apijson.Field
+	IdempotencyKey apijson.Field
+	IntrafiID      apijson.Field
+	Status         apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *IntrafiAccountEnrollment) UnmarshalJSON(data []byte) (err error) {
@@ -161,6 +166,11 @@ type IntrafiAccountEnrollmentListParams struct {
 	AccountID param.Field[string] `query:"account_id"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit  param.Field[int64]                                    `query:"limit"`

@@ -97,6 +97,10 @@ type ProofOfAuthorizationRequestSubmission struct {
 	AuthorizerName string `json:"authorizer_name,required,nullable"`
 	// The time the Proof of Authorization Request Submission was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// ID of the proof of authorization request.
 	ProofOfAuthorizationRequestID string `json:"proof_of_authorization_request_id,required"`
 	// Status of the proof of authorization request submission.
@@ -120,6 +124,7 @@ type proofOfAuthorizationRequestSubmissionJSON struct {
 	AuthorizerIPAddress           apijson.Field
 	AuthorizerName                apijson.Field
 	CreatedAt                     apijson.Field
+	IdempotencyKey                apijson.Field
 	ProofOfAuthorizationRequestID apijson.Field
 	Status                        apijson.Field
 	Type                          apijson.Field
@@ -178,6 +183,11 @@ func (r ProofOfAuthorizationRequestSubmissionNewParams) MarshalJSON() (data []by
 type ProofOfAuthorizationRequestSubmissionListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

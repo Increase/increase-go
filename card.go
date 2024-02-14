@@ -115,6 +115,10 @@ type Card struct {
 	ExpirationMonth int64 `json:"expiration_month,required"`
 	// The year the card expires in YYYY format (e.g., 2025).
 	ExpirationYear int64 `json:"expiration_year,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The last 4 digits of the Card's Primary Account Number.
 	Last4 string `json:"last4,required"`
 	// This indicates if payments can be made with the card.
@@ -136,6 +140,7 @@ type cardJSON struct {
 	EntityID        apijson.Field
 	ExpirationMonth apijson.Field
 	ExpirationYear  apijson.Field
+	IdempotencyKey  apijson.Field
 	Last4           apijson.Field
 	Status          apijson.Field
 	Type            apijson.Field
@@ -318,8 +323,6 @@ func (r CardNewParamsBillingAddress) MarshalJSON() (data []byte, err error) {
 // Decision with the category `digital_wallet_token_requested` or
 // `digital_wallet_authentication_requested`.
 type CardNewParamsDigitalWallet struct {
-	// The card profile assigned to this digital card.
-	CardProfileID param.Field[string] `json:"card_profile_id"`
 	// The digital card profile assigned to this digital card.
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
@@ -379,6 +382,8 @@ type CardUpdateParamsDigitalWallet struct {
 	// The card profile assigned to this card. Card profiles may also be assigned at
 	// the program level.
 	CardProfileID param.Field[string] `json:"card_profile_id"`
+	// The digital card profile assigned to this digital card.
+	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
 	Email param.Field[string] `json:"email"`
@@ -409,6 +414,11 @@ type CardListParams struct {
 	CreatedAt param.Field[CardListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

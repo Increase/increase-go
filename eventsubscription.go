@@ -93,6 +93,10 @@ type EventSubscription struct {
 	ID string `json:"id,required"`
 	// The time the event subscription was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category,required,nullable"`
@@ -111,6 +115,7 @@ type EventSubscription struct {
 type eventSubscriptionJSON struct {
 	ID                    apijson.Field
 	CreatedAt             apijson.Field
+	IdempotencyKey        apijson.Field
 	SelectedEventCategory apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
@@ -519,6 +524,11 @@ const (
 type EventSubscriptionListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

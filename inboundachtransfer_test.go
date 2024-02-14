@@ -49,7 +49,8 @@ func TestInboundACHTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundACHTransfers.List(context.TODO(), increase.InboundACHTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID:       increase.F("string"),
+		AccountNumberID: increase.F("string"),
 		CreatedAt: increase.F(increase.InboundACHTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
