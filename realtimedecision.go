@@ -771,7 +771,10 @@ func (r RealTimeDecisionActionParamsDigitalWalletToken) MarshalJSON() (data []by
 // about the digital wallet token that will be generated.
 type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	// The identifier of the Card Profile to assign to the Digital Wallet token.
-	CardProfileID param.Field[string] `json:"card_profile_id,required"`
+	CardProfileID param.Field[string] `json:"card_profile_id"`
+	// The identifier of the Digital Card Profile to assign to the Digital Wallet
+	// token.
+	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time
 	// passcode.
 	Email param.Field[string] `json:"email"`

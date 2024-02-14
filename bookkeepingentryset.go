@@ -87,6 +87,10 @@ type BookkeepingEntrySet struct {
 	Date time.Time `json:"date,required" format:"date-time"`
 	// The entries.
 	Entries []BookkeepingEntrySetEntry `json:"entries,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The transaction identifier, if any.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -98,14 +102,15 @@ type BookkeepingEntrySet struct {
 // bookkeepingEntrySetJSON contains the JSON metadata for the struct
 // [BookkeepingEntrySet]
 type bookkeepingEntrySetJSON struct {
-	ID            apijson.Field
-	CreatedAt     apijson.Field
-	Date          apijson.Field
-	Entries       apijson.Field
-	TransactionID apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Date           apijson.Field
+	Entries        apijson.Field
+	IdempotencyKey apijson.Field
+	TransactionID  apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *BookkeepingEntrySet) UnmarshalJSON(data []byte) (err error) {
@@ -174,6 +179,11 @@ func (r BookkeepingEntrySetNewParamsEntry) MarshalJSON() (data []byte, err error
 type BookkeepingEntrySetListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

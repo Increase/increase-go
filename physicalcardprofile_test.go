@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestIntrafiAccountEnrollmentNew(t *testing.T) {
+func TestPhysicalCardProfileNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,9 +25,11 @@ func TestIntrafiAccountEnrollmentNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.New(context.TODO(), increase.IntrafiAccountEnrollmentNewParams{
-		AccountID:    increase.F("account_in71c4amph0vgo2qllky"),
-		EmailAddress: increase.F("user@example.com"),
+	_, err := client.PhysicalCardProfiles.New(context.TODO(), increase.PhysicalCardProfileNewParams{
+		CarrierImageFileID: increase.F("file_h6v7mtipe119os47ehlu"),
+		ContactPhone:       increase.F("+16505046304"),
+		Description:        increase.F("My Card Profile"),
+		FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -38,7 +40,7 @@ func TestIntrafiAccountEnrollmentNew(t *testing.T) {
 	}
 }
 
-func TestIntrafiAccountEnrollmentGet(t *testing.T) {
+func TestPhysicalCardProfileGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -50,7 +52,7 @@ func TestIntrafiAccountEnrollmentGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.Get(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
+	_, err := client.PhysicalCardProfiles.Get(context.TODO(), "physical_card_profile_m534d5rn9qyy9ufqxoec")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -60,7 +62,7 @@ func TestIntrafiAccountEnrollmentGet(t *testing.T) {
 	}
 }
 
-func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
+func TestPhysicalCardProfileListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -72,13 +74,12 @@ func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.List(context.TODO(), increase.IntrafiAccountEnrollmentListParams{
-		AccountID:      increase.F("string"),
+	_, err := client.PhysicalCardProfiles.List(context.TODO(), increase.PhysicalCardProfileListParams{
 		Cursor:         increase.F("string"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
-		Status: increase.F(increase.IntrafiAccountEnrollmentListParamsStatus{
-			In: increase.F([]increase.IntrafiAccountEnrollmentListParamsStatusIn{increase.IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling, increase.IntrafiAccountEnrollmentListParamsStatusInEnrolled, increase.IntrafiAccountEnrollmentListParamsStatusInPendingUnenrolling}),
+		Status: increase.F(increase.PhysicalCardProfileListParamsStatus{
+			In: increase.F([]increase.PhysicalCardProfileListParamsStatusIn{increase.PhysicalCardProfileListParamsStatusInPendingCreating, increase.PhysicalCardProfileListParamsStatusInPendingReviewing, increase.PhysicalCardProfileListParamsStatusInRejected}),
 		}),
 	})
 	if err != nil {
@@ -90,7 +91,7 @@ func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestIntrafiAccountEnrollmentUnenroll(t *testing.T) {
+func TestPhysicalCardProfileArchive(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -102,7 +103,38 @@ func TestIntrafiAccountEnrollmentUnenroll(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.Unenroll(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
+	_, err := client.PhysicalCardProfiles.Archive(context.TODO(), "physical_card_profile_m534d5rn9qyy9ufqxoec")
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestPhysicalCardProfileCloneWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.PhysicalCardProfiles.Clone(
+		context.TODO(),
+		"physical_card_profile_m534d5rn9qyy9ufqxoec",
+		increase.PhysicalCardProfileCloneParams{
+			CarrierImageFileID: increase.F("string"),
+			ContactPhone:       increase.F("x"),
+			Description:        increase.F("x"),
+			FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

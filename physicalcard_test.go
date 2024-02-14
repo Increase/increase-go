@@ -27,8 +27,7 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.New(context.TODO(), increase.PhysicalCardNewParams{
-		CardID:        increase.F("card_oubs0hwk5rn6knuecxg2"),
-		CardProfileID: increase.F("card_profile_cox5y73lob2eqly18piy"),
+		CardID: increase.F("card_oubs0hwk5rn6knuecxg2"),
 		Cardholder: increase.F(increase.PhysicalCardNewParamsCardholder{
 			FirstName: increase.F("Ian"),
 			LastName:  increase.F("Crease"),
@@ -127,8 +126,9 @@ func TestPhysicalCardListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(1)),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

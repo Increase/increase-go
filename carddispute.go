@@ -89,6 +89,10 @@ type CardDispute struct {
 	DisputedTransactionID string `json:"disputed_transaction_id,required"`
 	// Why you disputed the Transaction in question.
 	Explanation string `json:"explanation,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// If the Card Dispute's status is `rejected`, this will contain details of the
 	// unsuccessful dispute.
 	Rejection CardDisputeRejection `json:"rejection,required,nullable"`
@@ -107,6 +111,7 @@ type cardDisputeJSON struct {
 	CreatedAt             apijson.Field
 	DisputedTransactionID apijson.Field
 	Explanation           apijson.Field
+	IdempotencyKey        apijson.Field
 	Rejection             apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
@@ -209,6 +214,11 @@ type CardDisputeListParams struct {
 	CreatedAt param.Field[CardDisputeListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit  param.Field[int64]                       `query:"limit"`

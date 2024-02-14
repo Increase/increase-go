@@ -27,15 +27,39 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
-		AccountID:                increase.F("account_in71c4amph0vgo2qllky"),
-		Amount:                   increase.F(int64(100)),
-		StatementDescriptor:      increase.F("New ACH transfer"),
-		AccountNumber:            increase.F("987654321"),
-		Addendum:                 increase.F("x"),
+		AccountID:           increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:              increase.F(int64(100)),
+		StatementDescriptor: increase.F("New ACH transfer"),
+		AccountNumber:       increase.F("987654321"),
+		Addenda: increase.F(increase.ACHTransferNewParamsAddenda{
+			Category: increase.F(increase.ACHTransferNewParamsAddendaCategoryFreeform),
+			Freeform: increase.F(increase.ACHTransferNewParamsAddendaFreeform{
+				Entries: increase.F([]increase.ACHTransferNewParamsAddendaFreeformEntry{{
+					PaymentRelatedInformation: increase.F("x"),
+				}, {
+					PaymentRelatedInformation: increase.F("x"),
+				}, {
+					PaymentRelatedInformation: increase.F("x"),
+				}}),
+			}),
+			PaymentOrderRemittanceAdvice: increase.F(increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice{
+				Invoices: increase.F([]increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice{{
+					InvoiceNumber: increase.F("x"),
+					PaidAmount:    increase.F(int64(0)),
+				}, {
+					InvoiceNumber: increase.F("x"),
+					PaidAmount:    increase.F(int64(0)),
+				}, {
+					InvoiceNumber: increase.F("x"),
+					PaidAmount:    increase.F(int64(0)),
+				}}),
+			}),
+		}),
 		CompanyDescriptiveDate:   increase.F("x"),
 		CompanyDiscretionaryData: increase.F("x"),
 		CompanyEntryDescription:  increase.F("x"),
 		CompanyName:              increase.F("x"),
+		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		EffectiveDate:            increase.F(time.Now()),
 		ExternalAccountID:        increase.F("string"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
@@ -44,7 +68,6 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		RequireApproval:          increase.F(true),
 		RoutingNumber:            increase.F("101050001"),
 		StandardEntryClassCode:   increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
-		UniqueIdentifier:         increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -99,8 +122,8 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
+		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
-		UniqueIdentifier:  increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error

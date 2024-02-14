@@ -98,6 +98,10 @@ type IntrafiExclusion struct {
 	// The Federal Deposit Insurance Corporation's certificate number for the
 	// institution.
 	FdicCertificateNumber string `json:"fdic_certificate_number,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The status of the exclusion request.
 	Status IntrafiExclusionStatus `json:"status,required"`
 	// When this was exclusion was submitted to IntraFi by Increase.
@@ -116,6 +120,7 @@ type intrafiExclusionJSON struct {
 	EntityID              apijson.Field
 	ExcludedAt            apijson.Field
 	FdicCertificateNumber apijson.Field
+	IdempotencyKey        apijson.Field
 	Status                apijson.Field
 	SubmittedAt           apijson.Field
 	Type                  apijson.Field
@@ -163,6 +168,11 @@ type IntrafiExclusionListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter IntraFi Exclusions for those belonging to the specified Entity.
 	EntityID param.Field[string] `query:"entity_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

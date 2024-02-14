@@ -38,7 +38,6 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		RequireApproval:          increase.F(true),
 		UltimateCreditorName:     increase.F("x"),
 		UltimateDebtorName:       increase.F("x"),
-		UniqueIdentifier:         increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -93,8 +92,8 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor:            increase.F("string"),
 		ExternalAccountID: increase.F("string"),
+		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
-		UniqueIdentifier:  increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error

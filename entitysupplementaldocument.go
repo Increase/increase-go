@@ -74,6 +74,10 @@ type SupplementalDocument struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The File containing the document.
 	FileID string `json:"file_id,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
 	Type SupplementalDocumentType `json:"type,required"`
@@ -83,11 +87,12 @@ type SupplementalDocument struct {
 // supplementalDocumentJSON contains the JSON metadata for the struct
 // [SupplementalDocument]
 type supplementalDocumentJSON struct {
-	CreatedAt   apijson.Field
-	FileID      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CreatedAt      apijson.Field
+	FileID         apijson.Field
+	IdempotencyKey apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *SupplementalDocument) UnmarshalJSON(data []byte) (err error) {
@@ -116,6 +121,11 @@ type EntitySupplementalDocumentListParams struct {
 	EntityID param.Field[string] `query:"entity_id,required"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

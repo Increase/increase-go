@@ -99,6 +99,12 @@ type PhysicalCard struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Physical Card was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// The Physical Card Profile used for this Physical Card.
+	PhysicalCardProfileID string `json:"physical_card_profile_id,required,nullable"`
 	// The details used to ship this physical card.
 	Shipment PhysicalCardShipment `json:"shipment,required"`
 	// The status of the Physical Card.
@@ -111,16 +117,18 @@ type PhysicalCard struct {
 
 // physicalCardJSON contains the JSON metadata for the struct [PhysicalCard]
 type physicalCardJSON struct {
-	ID            apijson.Field
-	CardID        apijson.Field
-	CardProfileID apijson.Field
-	Cardholder    apijson.Field
-	CreatedAt     apijson.Field
-	Shipment      apijson.Field
-	Status        apijson.Field
-	Type          apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID                    apijson.Field
+	CardID                apijson.Field
+	CardProfileID         apijson.Field
+	Cardholder            apijson.Field
+	CreatedAt             apijson.Field
+	IdempotencyKey        apijson.Field
+	PhysicalCardProfileID apijson.Field
+	Shipment              apijson.Field
+	Status                apijson.Field
+	Type                  apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *PhysicalCard) UnmarshalJSON(data []byte) (err error) {
@@ -301,8 +309,6 @@ const (
 type PhysicalCardNewParams struct {
 	// The underlying card representing this physical card.
 	CardID param.Field[string] `json:"card_id,required"`
-	// The card profile to use for this physical card.
-	CardProfileID param.Field[string] `json:"card_profile_id,required"`
 	// Details about the cardholder, as it will appear on the physical card.
 	Cardholder param.Field[PhysicalCardNewParamsCardholder] `json:"cardholder,required"`
 	// The details used to ship this physical card.
@@ -402,6 +408,11 @@ type PhysicalCardListParams struct {
 	CreatedAt param.Field[PhysicalCardListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

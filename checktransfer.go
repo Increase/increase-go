@@ -127,6 +127,10 @@ type CheckTransfer struct {
 	Deposit CheckTransferDeposit `json:"deposit,required,nullable"`
 	// Whether Increase will print and mail the check or if you will do it yourself.
 	FulfillmentMethod CheckTransferFulfillmentMethod `json:"fulfillment_method,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// If the check has been mailed by Increase, this will contain details of the
 	// shipment.
 	Mailing CheckTransferMailing `json:"mailing,required,nullable"`
@@ -153,9 +157,7 @@ type CheckTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string            `json:"unique_identifier,required,nullable"`
-	JSON             checkTransferJSON `json:"-"`
+	JSON checkTransferJSON `json:"-"`
 }
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
@@ -171,6 +173,7 @@ type checkTransferJSON struct {
 	Currency              apijson.Field
 	Deposit               apijson.Field
 	FulfillmentMethod     apijson.Field
+	IdempotencyKey        apijson.Field
 	Mailing               apijson.Field
 	PendingTransactionID  apijson.Field
 	PhysicalCheck         apijson.Field
@@ -180,7 +183,6 @@ type checkTransferJSON struct {
 	StopPaymentRequest    apijson.Field
 	Submission            apijson.Field
 	Type                  apijson.Field
-	UniqueIdentifier      apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -569,10 +571,6 @@ type CheckTransferNewParams struct {
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
-	// A unique identifier you choose for the transfer. Reusing this identifier for
-	// another transfer will result in an error. You can query for the transfer
-	// associated with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -660,11 +658,14 @@ type CheckTransferListParams struct {
 	CreatedAt param.Field[CheckTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [CheckTransferListParams]'s query parameters as

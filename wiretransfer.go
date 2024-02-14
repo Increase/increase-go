@@ -144,6 +144,10 @@ type WireTransfer struct {
 	Currency WireTransferCurrency `json:"currency,required"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The transfer's network.
@@ -175,9 +179,7 @@ type WireTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
 	Type WireTransferType `json:"type,required"`
-	// The unique identifier you chose for this object.
-	UniqueIdentifier string           `json:"unique_identifier,required,nullable"`
-	JSON             wireTransferJSON `json:"-"`
+	JSON wireTransferJSON `json:"-"`
 }
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
@@ -195,6 +197,7 @@ type wireTransferJSON struct {
 	CreatedAt               apijson.Field
 	Currency                apijson.Field
 	ExternalAccountID       apijson.Field
+	IdempotencyKey          apijson.Field
 	MessageToRecipient      apijson.Field
 	Network                 apijson.Field
 	OriginatorAddressLine1  apijson.Field
@@ -208,7 +211,6 @@ type wireTransferJSON struct {
 	Submission              apijson.Field
 	TransactionID           apijson.Field
 	Type                    apijson.Field
-	UniqueIdentifier        apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -450,10 +452,6 @@ type WireTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
-	// A unique identifier you choose for the transfer. Reusing this identifier for
-	// another transfer will result in an error. You can query for the transfer
-	// associated with this identifier using the List endpoint.
-	UniqueIdentifier param.Field[string] `json:"unique_identifier"`
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -468,11 +466,14 @@ type WireTransferListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter Wire Transfers to those made to the specified External Account.
 	ExternalAccountID param.Field[string] `query:"external_account_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter records to the one with the specified `unique_identifier`.
-	UniqueIdentifier param.Field[string] `query:"unique_identifier"`
 }
 
 // URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.

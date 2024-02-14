@@ -104,6 +104,10 @@ type CheckDeposit struct {
 	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission,required,nullable"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The status of the Check Deposit.
 	Status CheckDepositStatus `json:"status,required"`
 	// The ID for the Transaction created by the deposit.
@@ -127,6 +131,7 @@ type checkDepositJSON struct {
 	DepositReturn     apijson.Field
 	DepositSubmission apijson.Field
 	FrontImageFileID  apijson.Field
+	IdempotencyKey    apijson.Field
 	Status            apijson.Field
 	TransactionID     apijson.Field
 	Type              apijson.Field
@@ -284,10 +289,12 @@ const (
 	CheckDepositDepositRejectionReasonIncorrectRecipient CheckDepositDepositRejectionReason = "incorrect_recipient"
 	// This check was not eligible for mobile deposit.
 	CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit CheckDepositDepositRejectionReason = "not_eligible_for_mobile_deposit"
-	// This check is missing at least one required field
+	// This check is missing at least one required field.
 	CheckDepositDepositRejectionReasonMissingRequiredDataElements CheckDepositDepositRejectionReason = "missing_required_data_elements"
 	// This check is suspected to be fraudulent.
 	CheckDepositDepositRejectionReasonSuspectedFraud CheckDepositDepositRejectionReason = "suspected_fraud"
+	// This check's deposit window has expired.
+	CheckDepositDepositRejectionReasonDepositWindowExpired CheckDepositDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
 )
@@ -478,6 +485,11 @@ type CheckDepositListParams struct {
 	CreatedAt param.Field[CheckDepositListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

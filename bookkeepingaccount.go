@@ -94,6 +94,10 @@ type BookkeepingAccount struct {
 	ComplianceCategory BookkeepingAccountComplianceCategory `json:"compliance_category,required,nullable"`
 	// The Entity associated with this bookkeeping account.
 	EntityID string `json:"entity_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The name you choose for the account.
 	Name string `json:"name,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -109,6 +113,7 @@ type bookkeepingAccountJSON struct {
 	AccountID          apijson.Field
 	ComplianceCategory apijson.Field
 	EntityID           apijson.Field
+	IdempotencyKey     apijson.Field
 	Name               apijson.Field
 	Type               apijson.Field
 	raw                string
@@ -210,6 +215,11 @@ func (r BookkeepingAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 type BookkeepingAccountListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`

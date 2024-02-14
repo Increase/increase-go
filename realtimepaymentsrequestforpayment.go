@@ -102,6 +102,10 @@ type RealTimePaymentsRequestForPayment struct {
 	ExpiresAt time.Time `json:"expires_at,required" format:"date"`
 	// The transaction that fulfilled this request.
 	FulfillmentTransactionID string `json:"fulfillment_transaction_id,required,nullable"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// If the request for payment is refused by the destination financial institution
 	// or the receiving customer, this will contain supplemental details.
 	Refusal RealTimePaymentsRequestForPaymentRefusal `json:"refusal,required,nullable"`
@@ -136,6 +140,7 @@ type realTimePaymentsRequestForPaymentJSON struct {
 	DestinationAccountNumberID apijson.Field
 	ExpiresAt                  apijson.Field
 	FulfillmentTransactionID   apijson.Field
+	IdempotencyKey             apijson.Field
 	Refusal                    apijson.Field
 	Rejection                  apijson.Field
 	RemittanceInformation      apijson.Field
@@ -432,6 +437,11 @@ type RealTimePaymentsRequestForPaymentListParams struct {
 	CreatedAt param.Field[RealTimePaymentsRequestForPaymentListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
