@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.24.0 (2024-02-15)
+
+Full Changelog: [v0.23.1...v0.24.0](https://github.com/Increase/increase-go/compare/v0.23.1...v0.24.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** split card profile resource into digital and physical card profile resources ([#196](https://github.com/Increase/increase-go/issues/196))
+
+### Features
+
+* **api:** split card profile resource into digital and physical card profile resources ([#196](https://github.com/Increase/increase-go/issues/196)) ([debcde2](https://github.com/Increase/increase-go/commit/debcde24411b678af2074826010f9eec2eb9ffc3))
+
+
+### Chores
+
+* **ci:** uses Stainless GitHub App for releases ([#195](https://github.com/Increase/increase-go/issues/195)) ([8a3dc3d](https://github.com/Increase/increase-go/commit/8a3dc3db7ed0ec3170972248dc25b2056ce0cd54))
+* **internal:** adjust formatting ([#192](https://github.com/Increase/increase-go/issues/192)) ([15bdab6](https://github.com/Increase/increase-go/commit/15bdab6ab62d9f6a6a3d2683991f34ab516d0201))
+* **internal:** bump timeout threshold in tests ([#194](https://github.com/Increase/increase-go/issues/194)) ([0283780](https://github.com/Increase/increase-go/commit/0283780d9005f4e36187ebf25c78f436eb60b72c))
+
 ## 0.23.1 (2024-02-02)
 
 Full Changelog: [v0.23.0...v0.23.1](https://github.com/increase/increase-go/compare/v0.23.0...v0.23.1)
