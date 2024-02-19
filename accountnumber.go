@@ -286,6 +286,9 @@ const (
 type AccountNumberUpdateParams struct {
 	// Options related to how this Account Number handles inbound ACH transfers.
 	InboundACH param.Field[AccountNumberUpdateParamsInboundACH] `json:"inbound_ach"`
+	// Options related to how this Account Number should handle inbound check
+	// withdrawals.
+	InboundChecks param.Field[AccountNumberUpdateParamsInboundChecks] `json:"inbound_checks"`
 	// The name you choose for the Account Number.
 	Name param.Field[string] `json:"name"`
 	// This indicates if transfers can be made to the Account Number.
@@ -316,6 +319,29 @@ const (
 	AccountNumberUpdateParamsInboundACHDebitStatusAllowed AccountNumberUpdateParamsInboundACHDebitStatus = "allowed"
 	// ACH Debits are blocked.
 	AccountNumberUpdateParamsInboundACHDebitStatusBlocked AccountNumberUpdateParamsInboundACHDebitStatus = "blocked"
+)
+
+// Options related to how this Account Number should handle inbound check
+// withdrawals.
+type AccountNumberUpdateParamsInboundChecks struct {
+	// How Increase should process checks with this account number printed on them.
+	Status param.Field[AccountNumberUpdateParamsInboundChecksStatus] `json:"status,required"`
+}
+
+func (r AccountNumberUpdateParamsInboundChecks) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// How Increase should process checks with this account number printed on them.
+type AccountNumberUpdateParamsInboundChecksStatus string
+
+const (
+	// Checks with this Account Number will be processed even if they are not
+	// associated with a Check Transfer.
+	AccountNumberUpdateParamsInboundChecksStatusAllowed AccountNumberUpdateParamsInboundChecksStatus = "allowed"
+	// Checks with this Account Number will be processed only if they can be matched to
+	// an existing Check Transfer.
+	AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly AccountNumberUpdateParamsInboundChecksStatus = "check_transfers_only"
 )
 
 // This indicates if transfers can be made to the Account Number.

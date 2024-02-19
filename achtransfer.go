@@ -251,12 +251,10 @@ type ACHTransferAddenda struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category ACHTransferAddendaCategory `json:"category,required"`
-	// An ACH Transfer Freeform Addenda object. This field will be present in the JSON
-	// response if and only if `category` is equal to `freeform`.
+	// Unstructured `payment_related_information` passed through with the transfer.
 	Freeform ACHTransferAddendaFreeform `json:"freeform,required,nullable"`
-	// An ACH Transfer Payment Order Remittance Advice Addenda object. This field will
-	// be present in the JSON response if and only if `category` is equal to
-	// `payment_order_remittance_advice`.
+	// Structured ASC X12 820 remittance advice records. Please reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
 	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice,required,nullable"`
 	JSON                         achTransferAddendaJSON                         `json:"-"`
 }
@@ -280,17 +278,16 @@ func (r *ACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
 type ACHTransferAddendaCategory string
 
 const (
-	// ACH Transfer Freeform Addenda: details will be under the `freeform` object.
+	// Unstructured `payment_related_information` passed through with the transfer.
 	ACHTransferAddendaCategoryFreeform ACHTransferAddendaCategory = "freeform"
-	// ACH Transfer Payment Order Remittance Advice Addenda: details will be under the
-	// `payment_order_remittance_advice` object.
+	// Structured ASC X12 820 remittance advice records. Please reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
 	ACHTransferAddendaCategoryPaymentOrderRemittanceAdvice ACHTransferAddendaCategory = "payment_order_remittance_advice"
 	// Unknown addenda type.
 	ACHTransferAddendaCategoryOther ACHTransferAddendaCategory = "other"
 )
 
-// An ACH Transfer Freeform Addenda object. This field will be present in the JSON
-// response if and only if `category` is equal to `freeform`.
+// Unstructured `payment_related_information` passed through with the transfer.
 type ACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer.
 	Entries []ACHTransferAddendaFreeformEntry `json:"entries,required"`
@@ -327,9 +324,8 @@ func (r *ACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// An ACH Transfer Payment Order Remittance Advice Addenda object. This field will
-// be present in the JSON response if and only if `category` is equal to
-// `payment_order_remittance_advice`.
+// Structured ASC X12 820 remittance advice records. Please reach out to
+// [support@increase.com](mailto:support@increase.com) for more information.
 type ACHTransferAddendaPaymentOrderRemittanceAdvice struct {
 	// ASC X12 RMR records for this specific transfer.
 	Invoices []ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice `json:"invoices,required"`

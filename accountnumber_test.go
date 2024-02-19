@@ -86,6 +86,9 @@ func TestAccountNumberUpdateWithOptionalParams(t *testing.T) {
 			InboundACH: increase.F(increase.AccountNumberUpdateParamsInboundACH{
 				DebitStatus: increase.F(increase.AccountNumberUpdateParamsInboundACHDebitStatusBlocked),
 			}),
+			InboundChecks: increase.F(increase.AccountNumberUpdateParamsInboundChecks{
+				Status: increase.F(increase.AccountNumberUpdateParamsInboundChecksStatusAllowed),
+			}),
 			Name:   increase.F("x"),
 			Status: increase.F(increase.AccountNumberUpdateParamsStatusDisabled),
 		},
