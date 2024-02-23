@@ -519,6 +519,8 @@ type ACHPrenotificationNewParamsStandardEntryClassCode string
 const (
 	// Corporate Credit and Debit (CCD).
 	ACHPrenotificationNewParamsStandardEntryClassCodeCorporateCreditOrDebit ACHPrenotificationNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
+	// Corporate Trade Exchange (CTX).
+	ACHPrenotificationNewParamsStandardEntryClassCodeCorporateTradeExchange ACHPrenotificationNewParamsStandardEntryClassCode = "corporate_trade_exchange"
 	// Prearranged Payments and Deposits (PPD).
 	ACHPrenotificationNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHPrenotificationNewParamsStandardEntryClassCode = "prearranged_payments_and_deposit"
 	// Internet Initiated (WEB).

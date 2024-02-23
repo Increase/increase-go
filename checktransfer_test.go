@@ -27,9 +27,10 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
-		AccountID:         increase.F("account_in71c4amph0vgo2qllky"),
-		Amount:            increase.F(int64(1000)),
-		FulfillmentMethod: increase.F(increase.CheckTransferNewParamsFulfillmentMethodPhysicalCheck),
+		AccountID:             increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:                increase.F(int64(1000)),
+		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		FulfillmentMethod:     increase.F(increase.CheckTransferNewParamsFulfillmentMethodPhysicalCheck),
 		PhysicalCheck: increase.F(increase.CheckTransferNewParamsPhysicalCheck{
 			Memo:          increase.F("Check payment"),
 			Note:          increase.F("x"),
@@ -51,8 +52,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				PostalCode: increase.F("10045"),
 			}),
 		}),
-		RequireApproval:       increase.F(true),
-		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		RequireApproval: increase.F(true),
 	})
 	if err != nil {
 		var apierr *increase.Error
