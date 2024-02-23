@@ -267,8 +267,26 @@ type PhysicalCardProfileCloneParams struct {
 	Description param.Field[string] `json:"description"`
 	// The identifier of the File containing the physical card's front image.
 	FrontImageFileID param.Field[string] `json:"front_image_file_id"`
+	// Text printed on the front of the card. Reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
+	FrontText param.Field[PhysicalCardProfileCloneParamsFrontText] `json:"front_text"`
 }
 
 func (r PhysicalCardProfileCloneParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Text printed on the front of the card. Reach out to
+// [support@increase.com](mailto:support@increase.com) for more information.
+type PhysicalCardProfileCloneParamsFrontText struct {
+	// The first line of text on the front of the card.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The second line of text on the front of the card. Providing a second line moves
+	// the first line slightly higher and prints the second line in the spot where the
+	// first line would have otherwise been printed.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r PhysicalCardProfileCloneParamsFrontText) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

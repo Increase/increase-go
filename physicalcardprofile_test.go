@@ -133,6 +133,10 @@ func TestPhysicalCardProfileCloneWithOptionalParams(t *testing.T) {
 			ContactPhone:       increase.F("x"),
 			Description:        increase.F("x"),
 			FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
+			FrontText: increase.F(increase.PhysicalCardProfileCloneParamsFrontText{
+				Line1: increase.F("x"),
+				Line2: increase.F("x"),
+			}),
 		},
 	)
 	if err != nil {

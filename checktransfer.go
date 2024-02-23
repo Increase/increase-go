@@ -560,6 +560,9 @@ type CheckTransferNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The transfer amount in cents.
 	Amount param.Field[int64] `json:"amount,required"`
+	// The identifier of the Account Number from which to send the transfer and print
+	// on the check.
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
 	// Whether Increase will print and mail the check or if you will do it yourself.
 	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method"`
 	// Details relating to the physical check that Increase will print and mail. This
@@ -568,9 +571,6 @@ type CheckTransferNewParams struct {
 	PhysicalCheck param.Field[CheckTransferNewParamsPhysicalCheck] `json:"physical_check"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// The identifier of the Account Number from which to send the transfer and print
-	// on the check.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {

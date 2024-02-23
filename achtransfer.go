@@ -775,6 +775,8 @@ type ACHTransferStandardEntryClassCode string
 const (
 	// Corporate Credit and Debit (CCD).
 	ACHTransferStandardEntryClassCodeCorporateCreditOrDebit ACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
+	// Corporate Trade Exchange (CTX).
+	ACHTransferStandardEntryClassCodeCorporateTradeExchange ACHTransferStandardEntryClassCode = "corporate_trade_exchange"
 	// Prearranged Payments and Deposits (PPD).
 	ACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHTransferStandardEntryClassCode = "prearranged_payments_and_deposit"
 	// Internet Initiated (WEB).
@@ -1013,6 +1015,8 @@ type ACHTransferNewParamsStandardEntryClassCode string
 const (
 	// Corporate Credit and Debit (CCD).
 	ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit ACHTransferNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
+	// Corporate Trade Exchange (CTX).
+	ACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange ACHTransferNewParamsStandardEntryClassCode = "corporate_trade_exchange"
 	// Prearranged Payments and Deposits (PPD).
 	ACHTransferNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHTransferNewParamsStandardEntryClassCode = "prearranged_payments_and_deposit"
 	// Internet Initiated (WEB).
