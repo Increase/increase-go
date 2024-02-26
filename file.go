@@ -186,6 +186,8 @@ const (
 	FilePurposeEntitySupplementalDocument FilePurpose = "entity_supplemental_document"
 	// The results of an Export you requested via the dashboard or API.
 	FilePurposeExport FilePurpose = "export"
+	// An attachment to an Unusual Activity Report.
+	FilePurposeUnusualActivityReportAttachment FilePurpose = "unusual_activity_report_attachment"
 )
 
 // A constant representing the object's type. For this resource it will always be
@@ -256,6 +258,8 @@ const (
 	FileNewParamsPurposeDocumentRequest FileNewParamsPurpose = "document_request"
 	// A supplemental document associated an an Entity.
 	FileNewParamsPurposeEntitySupplementalDocument FileNewParamsPurpose = "entity_supplemental_document"
+	// An attachment to an Unusual Activity Report.
+	FileNewParamsPurposeUnusualActivityReportAttachment FileNewParamsPurpose = "unusual_activity_report_attachment"
 )
 
 type FileListParams struct {
@@ -360,4 +364,6 @@ const (
 	FileListParamsPurposeInEntitySupplementalDocument FileListParamsPurposeIn = "entity_supplemental_document"
 	// The results of an Export you requested via the dashboard or API.
 	FileListParamsPurposeInExport FileListParamsPurposeIn = "export"
+	// An attachment to an Unusual Activity Report.
+	FileListParamsPurposeInUnusualActivityReportAttachment FileListParamsPurposeIn = "unusual_activity_report_attachment"
 )
