@@ -160,6 +160,9 @@ type EntityCorporation struct {
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState string `json:"incorporation_state,required,nullable"`
+	// The numeric North American Industry Classification System (NAICS) code submitted
+	// for the corporation.
+	IndustryCode string `json:"industry_code,required,nullable"`
 	// The legal name of the corporation.
 	Name string `json:"name,required"`
 	// The Employer Identification Number (EIN) for the corporation.
@@ -175,6 +178,7 @@ type entityCorporationJSON struct {
 	Address            apijson.Field
 	BeneficialOwners   apijson.Field
 	IncorporationState apijson.Field
+	IndustryCode       apijson.Field
 	Name               apijson.Field
 	TaxIdentifier      apijson.Field
 	Website            apijson.Field
@@ -1019,6 +1023,11 @@ type EntityNewParamsCorporation struct {
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState param.Field[string] `json:"incorporation_state"`
+	// The North American Industry Classification System (NAICS) code for the
+	// corporation's primary line of business. This is a number, like `5132` for
+	// `Software Publishers`. A full list of classification codes is available at
+	// https://www.naics.com.
+	IndustryCode param.Field[string] `json:"industry_code"`
 	// The website of the corporation.
 	Website param.Field[string] `json:"website"`
 }
