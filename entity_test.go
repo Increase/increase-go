@@ -33,6 +33,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Website:            increase.F("https://example.com"),
 			TaxIdentifier:      increase.F("602214076"),
 			IncorporationState: increase.F("NY"),
+			IndustryCode:       increase.F("x"),
 			Address: increase.F(increase.EntityNewParamsCorporationAddress{
 				Line1: increase.F("33 Liberty Street"),
 				Line2: increase.F("x"),
