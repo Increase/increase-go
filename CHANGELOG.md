@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.25.0 (2024-02-29)
+
+Full Changelog: [v0.24.0...v0.25.0](https://github.com/Increase/increase-go/compare/v0.24.0...v0.25.0)
+
+### Features
+
+* **api:** add `industry_code` property to methods ([#204](https://github.com/Increase/increase-go/issues/204)) ([d4bcfb1](https://github.com/Increase/increase-go/commit/d4bcfb1c605a051ce184a5d611ff2b8135cb587e))
+* **api:** add unusual_activity_report_attachment enum member ([#203](https://github.com/Increase/increase-go/issues/203)) ([d2ccd9e](https://github.com/Increase/increase-go/commit/d2ccd9eca506ac4c694090c3c9ff35565a5e2733))
+* **api:** inbound checks ([#200](https://github.com/Increase/increase-go/issues/200)) ([407455b](https://github.com/Increase/increase-go/commit/407455b47858f8455ae42d4d2c8b1156a0418d9c))
+* **api:** physical card clone update ([#202](https://github.com/Increase/increase-go/issues/202)) ([ac5df4c](https://github.com/Increase/increase-go/commit/ac5df4cdb24995f9baa825eae9e0d8db08ffe81d))
+
+
+### Chores
+
+* **internal:** refactor release environment script ([#197](https://github.com/Increase/increase-go/issues/197)) ([ad111a6](https://github.com/Increase/increase-go/commit/ad111a67ac1d00496e80cffa6cd39c4e3e039b91))
+* **internal:** update deps ([#201](https://github.com/Increase/increase-go/issues/201)) ([514020f](https://github.com/Increase/increase-go/commit/514020f4f54b367d3adecad5d5a3f59ee31f0846))
+
+
+### Documentation
+
+* **readme:** improve wording ([#205](https://github.com/Increase/increase-go/issues/205)) ([abc866b](https://github.com/Increase/increase-go/commit/abc866b451a3dfd4fce9b4a4776266ec3228a571))
+
 ## 0.24.0 (2024-02-15)
 
 Full Changelog: [v0.23.1...v0.24.0](https://github.com/Increase/increase-go/compare/v0.23.1...v0.24.0)
