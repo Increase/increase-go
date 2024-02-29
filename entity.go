@@ -25,6 +25,7 @@ type EntityService struct {
 	Options               []option.RequestOption
 	BeneficialOwners      *EntityBeneficialOwnerService
 	SupplementalDocuments *EntitySupplementalDocumentService
+	IndustryCode          *EntityIndustryCodeService
 }
 
 // NewEntityService generates a new service that applies the given options to each
@@ -35,6 +36,7 @@ func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 	r.Options = opts
 	r.BeneficialOwners = NewEntityBeneficialOwnerService(opts...)
 	r.SupplementalDocuments = NewEntitySupplementalDocumentService(opts...)
+	r.IndustryCode = NewEntityIndustryCodeService(opts...)
 	return
 }
 
