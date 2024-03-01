@@ -31,7 +31,7 @@ func NewEntityIndustryCodeService(opts ...option.RequestOption) (r *EntityIndust
 	return
 }
 
-// Update a Corporation Entity's industry code
+// Update the industry code for a corporate Entity
 func (r *EntityIndustryCodeService) New(ctx context.Context, entityID string, body EntityIndustryCodeNewParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("entities/%s/industry_code", entityID)
