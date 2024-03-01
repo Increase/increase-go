@@ -325,6 +325,9 @@ const (
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline struct {
 	// The Card Decline identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner `json:"actioner,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -375,6 +378,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 // [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline]
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -399,6 +403,19 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActionerUser InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActionerIncrease InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActionerNetwork InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
