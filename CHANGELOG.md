@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.26.0 (2024-03-01)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/Increase/increase-go/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** add post /entities/{entity_id}/industry_code endpoint ([#206](https://github.com/Increase/increase-go/issues/206)) ([edf8050](https://github.com/Increase/increase-go/commit/edf805086fcb3cb210f205addf3ec1215ab9461c))
+
+
+### Documentation
+
+* change industry code docstring ([#208](https://github.com/Increase/increase-go/issues/208)) ([1c50681](https://github.com/Increase/increase-go/commit/1c50681e55e7eb03dc17e91865071c77e35892d6))
+
 ## 0.25.0 (2024-02-29)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/Increase/increase-go/compare/v0.24.0...v0.25.0)
