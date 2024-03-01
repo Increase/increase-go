@@ -169,6 +169,9 @@ func (r *CardPaymentElement) UnmarshalJSON(data []byte) (err error) {
 type CardPaymentElementsCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardPaymentElementsCardAuthorizationActioner `json:"actioner,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -225,6 +228,7 @@ type CardPaymentElementsCardAuthorization struct {
 // struct [CardPaymentElementsCardAuthorization]
 type cardPaymentElementsCardAuthorizationJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -251,6 +255,19 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 func (r *CardPaymentElementsCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardPaymentElementsCardAuthorizationActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardPaymentElementsCardAuthorizationActionerUser CardPaymentElementsCardAuthorizationActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardAuthorizationActionerIncrease CardPaymentElementsCardAuthorizationActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardPaymentElementsCardAuthorizationActionerNetwork CardPaymentElementsCardAuthorizationActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
@@ -655,6 +672,9 @@ const (
 type CardPaymentElementsCardDecline struct {
 	// The Card Decline identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardPaymentElementsCardDeclineActioner `json:"actioner,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -704,6 +724,7 @@ type CardPaymentElementsCardDecline struct {
 // [CardPaymentElementsCardDecline]
 type cardPaymentElementsCardDeclineJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -728,6 +749,19 @@ type cardPaymentElementsCardDeclineJSON struct {
 func (r *CardPaymentElementsCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardPaymentElementsCardDeclineActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardPaymentElementsCardDeclineActionerUser CardPaymentElementsCardDeclineActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardDeclineActionerIncrease CardPaymentElementsCardDeclineActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardPaymentElementsCardDeclineActionerNetwork CardPaymentElementsCardDeclineActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -1185,6 +1219,9 @@ const (
 type CardPaymentElementsCardIncrement struct {
 	// The Card Increment identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardPaymentElementsCardIncrementActioner `json:"actioner,required"`
 	// The amount of this increment in the minor unit of the transaction's currency.
 	// For dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -1215,6 +1252,7 @@ type CardPaymentElementsCardIncrement struct {
 // [CardPaymentElementsCardIncrement]
 type cardPaymentElementsCardIncrementJSON struct {
 	ID                         apijson.Field
+	Actioner                   apijson.Field
 	Amount                     apijson.Field
 	CardAuthorizationID        apijson.Field
 	Currency                   apijson.Field
@@ -1231,6 +1269,19 @@ type cardPaymentElementsCardIncrementJSON struct {
 func (r *CardPaymentElementsCardIncrement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardPaymentElementsCardIncrementActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardPaymentElementsCardIncrementActionerUser CardPaymentElementsCardIncrementActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardIncrementActionerIncrease CardPaymentElementsCardIncrementActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardPaymentElementsCardIncrementActionerNetwork CardPaymentElementsCardIncrementActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 // currency.
@@ -2725,6 +2776,9 @@ const (
 type CardPaymentElementsCardValidation struct {
 	// The Card Validation identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardPaymentElementsCardValidationActioner `json:"actioner,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -2767,6 +2821,7 @@ type CardPaymentElementsCardValidation struct {
 // [CardPaymentElementsCardValidation]
 type cardPaymentElementsCardValidationJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
 	DigitalWalletTokenID apijson.Field
@@ -2788,6 +2843,19 @@ type cardPaymentElementsCardValidationJSON struct {
 func (r *CardPaymentElementsCardValidation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardPaymentElementsCardValidationActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardPaymentElementsCardValidationActionerUser CardPaymentElementsCardValidationActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardValidationActionerIncrease CardPaymentElementsCardValidationActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardPaymentElementsCardValidationActionerNetwork CardPaymentElementsCardValidationActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
