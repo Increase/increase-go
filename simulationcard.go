@@ -326,6 +326,9 @@ const (
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	// The Card Decline identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner `json:"actioner,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -376,6 +379,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 // [CardAuthorizationSimulationDeclinedTransactionSourceCardDecline]
 type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -400,6 +404,19 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActionerUser CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActionerIncrease CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActionerNetwork CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
@@ -1462,6 +1479,9 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstructi
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner `json:"actioner,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -1519,6 +1539,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 // [CardAuthorizationSimulationPendingTransactionSourceCardAuthorization]
 type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -1545,6 +1566,19 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON st
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActionerUser CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActionerIncrease CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActionerNetwork CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.

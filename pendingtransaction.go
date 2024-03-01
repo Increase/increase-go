@@ -292,6 +292,9 @@ func (r *PendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []by
 type PendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner PendingTransactionSourceCardAuthorizationActioner `json:"actioner,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -348,6 +351,7 @@ type PendingTransactionSourceCardAuthorization struct {
 // struct [PendingTransactionSourceCardAuthorization]
 type pendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -374,6 +378,19 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type PendingTransactionSourceCardAuthorizationActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	PendingTransactionSourceCardAuthorizationActionerUser PendingTransactionSourceCardAuthorizationActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	PendingTransactionSourceCardAuthorizationActionerIncrease PendingTransactionSourceCardAuthorizationActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	PendingTransactionSourceCardAuthorizationActionerNetwork PendingTransactionSourceCardAuthorizationActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.

@@ -304,6 +304,9 @@ const (
 type DeclinedTransactionSourceCardDecline struct {
 	// The Card Decline identifier.
 	ID string `json:"id,required"`
+	// Whether this authorization was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner DeclinedTransactionSourceCardDeclineActioner `json:"actioner,required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -353,6 +356,7 @@ type DeclinedTransactionSourceCardDecline struct {
 // struct [DeclinedTransactionSourceCardDecline]
 type declinedTransactionSourceCardDeclineJSON struct {
 	ID                   apijson.Field
+	Actioner             apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -377,6 +381,19 @@ type declinedTransactionSourceCardDeclineJSON struct {
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether this authorization was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type DeclinedTransactionSourceCardDeclineActioner string
+
+const (
+	// This object was actioned by the user through a real-time decision.
+	DeclinedTransactionSourceCardDeclineActionerUser DeclinedTransactionSourceCardDeclineActioner = "user"
+	// This object was actioned by Increase without user intervention.
+	DeclinedTransactionSourceCardDeclineActionerIncrease DeclinedTransactionSourceCardDeclineActioner = "increase"
+	// This object was actioned by the network, through stand-in processing.
+	DeclinedTransactionSourceCardDeclineActionerNetwork DeclinedTransactionSourceCardDeclineActioner = "network"
+)
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
