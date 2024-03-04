@@ -154,6 +154,8 @@ const (
 	FilePurposeCheckImageBack FilePurpose = "check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FilePurposeMailedCheckImage FilePurpose = "mailed_check_image"
+	// A scanned mail item sent to Increase containing a check to deposit.
+	FilePurposeCheckDepositMailItem FilePurpose = "check_deposit_mail_item"
 	// IRS Form 1099-INT.
 	FilePurposeForm1099Int FilePurpose = "form_1099_int"
 	// IRS Form SS-4.
@@ -332,6 +334,8 @@ const (
 	FileListParamsPurposeInCheckImageBack FileListParamsPurposeIn = "check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FileListParamsPurposeInMailedCheckImage FileListParamsPurposeIn = "mailed_check_image"
+	// A scanned mail item sent to Increase containing a check to deposit.
+	FileListParamsPurposeInCheckDepositMailItem FileListParamsPurposeIn = "check_deposit_mail_item"
 	// IRS Form 1099-INT.
 	FileListParamsPurposeInForm1099Int FileListParamsPurposeIn = "form_1099_int"
 	// IRS Form SS-4.

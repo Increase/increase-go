@@ -187,9 +187,9 @@ func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
 // creation. At least one field must be present to complete the digital wallet
 // steps.
 type CardDigitalWallet struct {
-	// The card profile assigned to this digital card. Card profiles may also be
-	// assigned at the program level.
-	CardProfileID string `json:"card_profile_id,required,nullable"`
+	// The digital card profile assigned to this digital card. Card profiles may also
+	// be assigned at the program level.
+	DigitalCardProfileID string `json:"digital_card_profile_id,required,nullable"`
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
 	Email string `json:"email,required,nullable"`
@@ -202,11 +202,11 @@ type CardDigitalWallet struct {
 // cardDigitalWalletJSON contains the JSON metadata for the struct
 // [CardDigitalWallet]
 type cardDigitalWalletJSON struct {
-	CardProfileID apijson.Field
-	Email         apijson.Field
-	Phone         apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	DigitalCardProfileID apijson.Field
+	Email                apijson.Field
+	Phone                apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
