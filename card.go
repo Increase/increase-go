@@ -325,11 +325,11 @@ func (r CardNewParamsBillingAddress) MarshalJSON() (data []byte, err error) {
 type CardNewParamsDigitalWallet struct {
 	// The digital card profile assigned to this digital card.
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
-	// An email address that can be used to verify the cardholder via one-time passcode
-	// over email.
+	// An email address that can be used to contact and verify the cardholder via
+	// one-time passcode over email.
 	Email param.Field[string] `json:"email"`
-	// A phone number that can be used to verify the cardholder via one-time passcode
-	// over SMS.
+	// A phone number that can be used to contact and verify the cardholder via
+	// one-time passcode over SMS.
 	Phone param.Field[string] `json:"phone"`
 }
 
