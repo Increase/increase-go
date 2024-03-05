@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.27.0 (2024-03-05)
+
+Full Changelog: [v0.26.0...v0.27.0](https://github.com/Increase/increase-go/compare/v0.26.0...v0.27.0)
+
+### ⚠ BREAKING CHANGES
+
+* rename card_profile_id -> digital_card_profile_id ([#211](https://github.com/Increase/increase-go/issues/211))
+
+### Features
+
+* **api:** add actioner properties ([#209](https://github.com/Increase/increase-go/issues/209)) ([0a14d6d](https://github.com/Increase/increase-go/commit/0a14d6d8a2e648081ccdf90f03f962124f891ec6))
+
+
+### Bug Fixes
+
+* rename card_profile_id -&gt; digital_card_profile_id ([#211](https://github.com/Increase/increase-go/issues/211)) ([e0e36d1](https://github.com/Increase/increase-go/commit/e0e36d191fbcf3ad9c4954b91189287af69e1faf))
+
+
+### Documentation
+
+* update docs for digital wallet phone/email ([#212](https://github.com/Increase/increase-go/issues/212)) ([48a8e9d](https://github.com/Increase/increase-go/commit/48a8e9dea06c8171c4c5f16d26ba77b77e3f56a4))
+
 ## 0.26.0 (2024-03-01)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/Increase/increase-go/compare/v0.25.0...v0.26.0)
