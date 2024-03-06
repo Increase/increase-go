@@ -164,6 +164,10 @@ func (r *AccountTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r accountTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
 type AccountTransferApproval struct {
@@ -189,6 +193,10 @@ func (r *AccountTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r accountTransferApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
 type AccountTransferCancellation struct {
@@ -212,6 +220,10 @@ type accountTransferCancellationJSON struct {
 
 func (r *AccountTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountTransferCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination

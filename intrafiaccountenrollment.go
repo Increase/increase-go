@@ -125,6 +125,10 @@ func (r *IntrafiAccountEnrollment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r intrafiAccountEnrollmentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the account in the network. An account takes about one business
 // day to go from `pending_enrolling` to `enrolled`.
 type IntrafiAccountEnrollmentStatus string

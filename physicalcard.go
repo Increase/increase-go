@@ -135,6 +135,10 @@ func (r *PhysicalCard) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r physicalCardJSON) RawJSON() string {
+	return r.raw
+}
+
 // Details about the cardholder, as it appears on the printed card.
 type PhysicalCardCardholder struct {
 	// The cardholder's first name.
@@ -155,6 +159,10 @@ type physicalCardCardholderJSON struct {
 
 func (r *PhysicalCardCardholder) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardCardholderJSON) RawJSON() string {
+	return r.raw
 }
 
 // The details used to ship this physical card.
@@ -183,6 +191,10 @@ type physicalCardShipmentJSON struct {
 
 func (r *PhysicalCardShipment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardShipmentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The location to where the card's packing label is addressed.
@@ -220,6 +232,10 @@ type physicalCardShipmentAddressJSON struct {
 
 func (r *PhysicalCardShipmentAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardShipmentAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The shipping method.
@@ -284,6 +300,10 @@ type physicalCardShipmentTrackingJSON struct {
 
 func (r *PhysicalCardShipmentTracking) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardShipmentTrackingJSON) RawJSON() string {
+	return r.raw
 }
 
 // The status of the Physical Card.

@@ -137,6 +137,10 @@ func (r *ProofOfAuthorizationRequestSubmission) UnmarshalJSON(data []byte) (err 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r proofOfAuthorizationRequestSubmissionJSON) RawJSON() string {
+	return r.raw
+}
+
 // Status of the proof of authorization request submission.
 type ProofOfAuthorizationRequestSubmissionStatus string
 

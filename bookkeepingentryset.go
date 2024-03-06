@@ -117,6 +117,10 @@ func (r *BookkeepingEntrySet) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r bookkeepingEntrySetJSON) RawJSON() string {
+	return r.raw
+}
+
 type BookkeepingEntrySetEntry struct {
 	// The entry identifier.
 	ID string `json:"id,required"`
@@ -139,6 +143,10 @@ type bookkeepingEntrySetEntryJSON struct {
 
 func (r *BookkeepingEntrySetEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r bookkeepingEntrySetEntryJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

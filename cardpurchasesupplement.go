@@ -102,6 +102,10 @@ func (r *CardPurchaseSupplement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPurchaseSupplementJSON) RawJSON() string {
+	return r.raw
+}
+
 // Invoice-level information about the payment.
 type CardPurchaseSupplementInvoice struct {
 	// Discount given to cardholder.
@@ -166,6 +170,10 @@ type cardPurchaseSupplementInvoiceJSON struct {
 
 func (r *CardPurchaseSupplementInvoice) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPurchaseSupplementInvoiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates how the merchant applied the discount.
@@ -259,6 +267,10 @@ type cardPurchaseSupplementLineItemJSON struct {
 
 func (r *CardPurchaseSupplementLineItem) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPurchaseSupplementLineItemJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates the type of line item.

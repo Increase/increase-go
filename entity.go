@@ -151,6 +151,10 @@ func (r *Entity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityJSON) RawJSON() string {
+	return r.raw
+}
+
 // Details of the corporation entity. Will be present if `structure` is equal to
 // `corporation`.
 type EntityCorporation struct {
@@ -192,6 +196,10 @@ func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityCorporationJSON) RawJSON() string {
+	return r.raw
+}
+
 // The corporation's address.
 type EntityCorporationAddress struct {
 	// The city of the address.
@@ -224,6 +232,10 @@ func (r *EntityCorporationAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityCorporationAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 type EntityCorporationBeneficialOwner struct {
 	// The identifier of this beneficial owner.
 	BeneficialOwnerID string `json:"beneficial_owner_id,required"`
@@ -249,6 +261,10 @@ type entityCorporationBeneficialOwnerJSON struct {
 
 func (r *EntityCorporationBeneficialOwner) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityCorporationBeneficialOwnerJSON) RawJSON() string {
+	return r.raw
 }
 
 // Personal details for the beneficial owner.
@@ -277,6 +293,10 @@ type entityCorporationBeneficialOwnersIndividualJSON struct {
 
 func (r *EntityCorporationBeneficialOwnersIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityCorporationBeneficialOwnersIndividualJSON) RawJSON() string {
+	return r.raw
 }
 
 // The person's address.
@@ -311,6 +331,10 @@ func (r *EntityCorporationBeneficialOwnersIndividualAddress) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityCorporationBeneficialOwnersIndividualAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // A means of verifying the person's identity.
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
@@ -333,6 +357,10 @@ type entityCorporationBeneficialOwnersIndividualIdentificationJSON struct {
 
 func (r *EntityCorporationBeneficialOwnersIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityCorporationBeneficialOwnersIndividualIdentificationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A method that can be used to verify the individual's identity.
@@ -382,6 +410,10 @@ func (r *EntityJoint) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityJointJSON) RawJSON() string {
+	return r.raw
+}
+
 type EntityJointIndividual struct {
 	// The person's address.
 	Address EntityJointIndividualsAddress `json:"address,required"`
@@ -407,6 +439,10 @@ type entityJointIndividualJSON struct {
 
 func (r *EntityJointIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityJointIndividualJSON) RawJSON() string {
+	return r.raw
 }
 
 // The person's address.
@@ -441,6 +477,10 @@ func (r *EntityJointIndividualsAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityJointIndividualsAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // A means of verifying the person's identity.
 type EntityJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
@@ -462,6 +502,10 @@ type entityJointIndividualsIdentificationJSON struct {
 
 func (r *EntityJointIndividualsIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityJointIndividualsIdentificationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A method that can be used to verify the individual's identity.
@@ -509,6 +553,10 @@ func (r *EntityNaturalPerson) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityNaturalPersonJSON) RawJSON() string {
+	return r.raw
+}
+
 // The person's address.
 type EntityNaturalPersonAddress struct {
 	// The city of the address.
@@ -541,6 +589,10 @@ func (r *EntityNaturalPersonAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityNaturalPersonAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // A means of verifying the person's identity.
 type EntityNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
@@ -562,6 +614,10 @@ type entityNaturalPersonIdentificationJSON struct {
 
 func (r *EntityNaturalPersonIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityNaturalPersonIdentificationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A method that can be used to verify the individual's identity.
@@ -639,6 +695,10 @@ func (r *EntitySupplementalDocument) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entitySupplementalDocumentJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `entity_supplemental_document`.
 type EntitySupplementalDocumentsType string
@@ -687,6 +747,10 @@ func (r *EntityTrust) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityTrustJSON) RawJSON() string {
+	return r.raw
+}
+
 // The trust's address.
 type EntityTrustAddress struct {
 	// The city of the address.
@@ -717,6 +781,10 @@ type entityTrustAddressJSON struct {
 
 func (r *EntityTrustAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityTrustAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether the trust is `revocable` or `irrevocable`.
@@ -757,6 +825,10 @@ func (r *EntityTrustGrantor) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityTrustGrantorJSON) RawJSON() string {
+	return r.raw
+}
+
 // The person's address.
 type EntityTrustGrantorAddress struct {
 	// The city of the address.
@@ -789,6 +861,10 @@ func (r *EntityTrustGrantorAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityTrustGrantorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // A means of verifying the person's identity.
 type EntityTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
@@ -810,6 +886,10 @@ type entityTrustGrantorIdentificationJSON struct {
 
 func (r *EntityTrustGrantorIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityTrustGrantorIdentificationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A method that can be used to verify the individual's identity.
@@ -850,6 +930,10 @@ func (r *EntityTrustTrustee) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityTrustTrusteeJSON) RawJSON() string {
+	return r.raw
+}
+
 // The individual trustee of the trust. Will be present if the trustee's
 // `structure` is equal to `individual`.
 type EntityTrustTrusteesIndividual struct {
@@ -877,6 +961,10 @@ type entityTrustTrusteesIndividualJSON struct {
 
 func (r *EntityTrustTrusteesIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityTrustTrusteesIndividualJSON) RawJSON() string {
+	return r.raw
 }
 
 // The person's address.
@@ -911,6 +999,10 @@ func (r *EntityTrustTrusteesIndividualAddress) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r entityTrustTrusteesIndividualAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // A means of verifying the person's identity.
 type EntityTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
@@ -932,6 +1024,10 @@ type entityTrustTrusteesIndividualIdentificationJSON struct {
 
 func (r *EntityTrustTrusteesIndividualIdentification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityTrustTrusteesIndividualIdentificationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A method that can be used to verify the individual's identity.

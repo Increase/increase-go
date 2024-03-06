@@ -105,6 +105,10 @@ func (r *CardPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
 type CardPaymentElement struct {
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
@@ -162,6 +166,10 @@ type cardPaymentElementJSON struct {
 
 func (r *CardPaymentElement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Authorization object. This field will be present in the JSON response if
@@ -256,6 +264,10 @@ func (r *CardPaymentElementsCardAuthorization) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type CardPaymentElementsCardAuthorizationActioner string
@@ -322,6 +334,10 @@ func (r *CardPaymentElementsCardAuthorizationNetworkDetails) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardAuthorizationNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type CardPaymentElementsCardAuthorizationNetworkDetailsCategory string
 
@@ -353,6 +369,10 @@ type cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON struct {
 
 func (r *CardPaymentElementsCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -453,6 +473,10 @@ func (r *CardPaymentElementsCardAuthorizationNetworkIdentifiers) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type CardPaymentElementsCardAuthorizationProcessingCategory string
@@ -509,6 +533,10 @@ func (r *CardPaymentElementsCardAuthorizationVerification) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardAuthorizationVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type CardPaymentElementsCardAuthorizationVerificationCardVerificationCode struct {
@@ -528,6 +556,10 @@ type cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON st
 
 func (r *CardPaymentElementsCardAuthorizationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -574,6 +606,10 @@ type cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON struc
 
 func (r *CardPaymentElementsCardAuthorizationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -630,6 +666,10 @@ type cardPaymentElementsCardAuthorizationExpirationJSON struct {
 
 func (r *CardPaymentElementsCardAuthorizationExpiration) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationExpirationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
@@ -750,6 +790,10 @@ func (r *CardPaymentElementsCardDecline) UnmarshalJSON(data []byte) (err error) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type CardPaymentElementsCardDeclineActioner string
@@ -804,6 +848,10 @@ func (r *CardPaymentElementsCardDeclineNetworkDetails) UnmarshalJSON(data []byte
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardDeclineNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type CardPaymentElementsCardDeclineNetworkDetailsCategory string
 
@@ -835,6 +883,10 @@ type cardPaymentElementsCardDeclineNetworkDetailsVisaJSON struct {
 
 func (r *CardPaymentElementsCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -935,6 +987,10 @@ func (r *CardPaymentElementsCardDeclineNetworkIdentifiers) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardDeclineNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type CardPaymentElementsCardDeclineProcessingCategory string
@@ -1019,6 +1075,10 @@ func (r *CardPaymentElementsCardDeclineVerification) UnmarshalJSON(data []byte) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardDeclineVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type CardPaymentElementsCardDeclineVerificationCardVerificationCode struct {
@@ -1038,6 +1098,10 @@ type cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON struct {
 
 func (r *CardPaymentElementsCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -1084,6 +1148,10 @@ type cardPaymentElementsCardDeclineVerificationCardholderAddressJSON struct {
 
 func (r *CardPaymentElementsCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -1149,6 +1217,10 @@ func (r *CardPaymentElementsCardFuelConfirmation) UnmarshalJSON(data []byte) (er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardFuelConfirmationJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 // currency.
 type CardPaymentElementsCardFuelConfirmationCurrency string
@@ -1204,6 +1276,10 @@ type cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON struct {
 
 func (r *CardPaymentElementsCardFuelConfirmationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -1268,6 +1344,10 @@ type cardPaymentElementsCardIncrementJSON struct {
 
 func (r *CardPaymentElementsCardIncrement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardIncrementJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether this authorization was approved by Increase, the card network through
@@ -1337,6 +1417,10 @@ type cardPaymentElementsCardIncrementNetworkIdentifiersJSON struct {
 
 func (r *CardPaymentElementsCardIncrementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardIncrementNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -1411,6 +1495,10 @@ func (r *CardPaymentElementsCardRefund) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardRefundJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type CardPaymentElementsCardRefundCurrency string
@@ -1455,6 +1543,10 @@ type cardPaymentElementsCardRefundNetworkIdentifiersJSON struct {
 
 func (r *CardPaymentElementsCardRefundNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional details about the card purchase, such as tax and industry-specific
@@ -1504,6 +1596,10 @@ type cardPaymentElementsCardRefundPurchaseDetailsJSON struct {
 
 func (r *CardPaymentElementsCardRefundPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundPurchaseDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to car rentals.
@@ -1576,6 +1672,10 @@ type cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON struct {
 
 func (r *CardPaymentElementsCardRefundPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional charges (gas, late fee, etc.) being billed.
@@ -1678,6 +1778,10 @@ func (r *CardPaymentElementsCardRefundPurchaseDetailsLodging) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional charges (phone, late check-out, etc.) being billed.
 type CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges string
 
@@ -1777,6 +1881,10 @@ func (r *CardPaymentElementsCardRefundPurchaseDetailsTravel) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardRefundPurchaseDetailsTravelJSON) RawJSON() string {
+	return r.raw
+}
+
 // Ancillary purchases in addition to the airfare.
 type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
@@ -1809,6 +1917,10 @@ type cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON struct {
 
 func (r *CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates the reason for a credit to the cardholder.
@@ -1845,6 +1957,10 @@ type cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON stru
 
 func (r *CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // Category of the ancillary service.
@@ -1975,6 +2091,10 @@ func (r *CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg) UnmarshalJSO
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON) RawJSON() string {
+	return r.raw
+}
+
 // Indicates whether a stopover is allowed on this ticket.
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
 
@@ -2043,6 +2163,10 @@ func (r *CardPaymentElementsCardReversal) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardReversalJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
 // currency.
 type CardPaymentElementsCardReversalCurrency string
@@ -2097,6 +2221,10 @@ type cardPaymentElementsCardReversalNetworkIdentifiersJSON struct {
 
 func (r *CardPaymentElementsCardReversalNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardReversalNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -2185,6 +2313,10 @@ func (r *CardPaymentElementsCardSettlement) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardSettlementJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's settlement currency.
 type CardPaymentElementsCardSettlementCurrency string
@@ -2229,6 +2361,10 @@ type cardPaymentElementsCardSettlementNetworkIdentifiersJSON struct {
 
 func (r *CardPaymentElementsCardSettlementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional details about the card purchase, such as tax and industry-specific
@@ -2278,6 +2414,10 @@ type cardPaymentElementsCardSettlementPurchaseDetailsJSON struct {
 
 func (r *CardPaymentElementsCardSettlementPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementPurchaseDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to car rentals.
@@ -2351,6 +2491,10 @@ type cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON struct {
 
 func (r *CardPaymentElementsCardSettlementPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional charges (gas, late fee, etc.) being billed.
@@ -2454,6 +2598,10 @@ func (r *CardPaymentElementsCardSettlementPurchaseDetailsLodging) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional charges (phone, late check-out, etc.) being billed.
 type CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges string
 
@@ -2553,6 +2701,10 @@ func (r *CardPaymentElementsCardSettlementPurchaseDetailsTravel) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelJSON) RawJSON() string {
+	return r.raw
+}
+
 // Ancillary purchases in addition to the airfare.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
@@ -2585,6 +2737,10 @@ type cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON struct 
 
 func (r *CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates the reason for a credit to the cardholder.
@@ -2621,6 +2777,10 @@ type cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON 
 
 func (r *CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // Category of the ancillary service.
@@ -2751,6 +2911,10 @@ func (r *CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg) Unmarsha
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON) RawJSON() string {
+	return r.raw
+}
+
 // Indicates whether a stopover is allowed on this ticket.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode string
 
@@ -2844,6 +3008,10 @@ func (r *CardPaymentElementsCardValidation) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardValidationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type CardPaymentElementsCardValidationActioner string
@@ -2898,6 +3066,10 @@ func (r *CardPaymentElementsCardValidationNetworkDetails) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardValidationNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type CardPaymentElementsCardValidationNetworkDetailsCategory string
 
@@ -2929,6 +3101,10 @@ type cardPaymentElementsCardValidationNetworkDetailsVisaJSON struct {
 
 func (r *CardPaymentElementsCardValidationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -3029,6 +3205,10 @@ func (r *CardPaymentElementsCardValidationNetworkIdentifiers) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardValidationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_validation`.
 type CardPaymentElementsCardValidationType string
@@ -3061,6 +3241,10 @@ func (r *CardPaymentElementsCardValidationVerification) UnmarshalJSON(data []byt
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardPaymentElementsCardValidationVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type CardPaymentElementsCardValidationVerificationCardVerificationCode struct {
@@ -3080,6 +3264,10 @@ type cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON struc
 
 func (r *CardPaymentElementsCardValidationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -3126,6 +3314,10 @@ type cardPaymentElementsCardValidationVerificationCardholderAddressJSON struct {
 
 func (r *CardPaymentElementsCardValidationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -3209,6 +3401,10 @@ type cardPaymentStateJSON struct {
 
 func (r *CardPaymentState) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentStateJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

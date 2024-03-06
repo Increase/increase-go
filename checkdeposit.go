@@ -143,6 +143,10 @@ func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkDepositJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
 type CheckDepositCurrency string
 
@@ -203,6 +207,10 @@ func (r *CheckDepositDepositAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkDepositDepositAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type CheckDepositDepositAcceptanceCurrency string
@@ -252,6 +260,10 @@ type checkDepositDepositRejectionJSON struct {
 
 func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositDepositRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
@@ -337,6 +349,10 @@ type checkDepositDepositReturnJSON struct {
 
 func (r *CheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositDepositReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -437,6 +453,10 @@ type checkDepositDepositSubmissionJSON struct {
 
 func (r *CheckDepositDepositSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositDepositSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The status of the Check Deposit.

@@ -132,6 +132,10 @@ func (r *IntrafiExclusion) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r intrafiExclusionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the exclusion request.
 type IntrafiExclusionStatus string
 

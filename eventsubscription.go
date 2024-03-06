@@ -128,6 +128,10 @@ func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r eventSubscriptionJSON) RawJSON() string {
+	return r.raw
+}
+
 // If specified, this subscription will only receive webhooks for Events with the
 // specified `category`.
 type EventSubscriptionSelectedEventCategory string
