@@ -139,6 +139,10 @@ func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r accountNumberJSON) RawJSON() string {
+	return r.raw
+}
+
 // Properties related to how this Account Number handles inbound ACH transfers.
 type AccountNumberInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that they will
@@ -157,6 +161,10 @@ type accountNumberInboundACHJSON struct {
 
 func (r *AccountNumberInboundACH) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountNumberInboundACHJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether ACH debits are allowed against this Account Number. Note that they will
@@ -188,6 +196,10 @@ type accountNumberInboundChecksJSON struct {
 
 func (r *AccountNumberInboundChecks) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountNumberInboundChecksJSON) RawJSON() string {
+	return r.raw
 }
 
 // How Increase should process checks with this account number printed on them.

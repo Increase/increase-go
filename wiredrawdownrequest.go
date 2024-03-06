@@ -158,6 +158,10 @@ func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r wireDrawdownRequestJSON) RawJSON() string {
+	return r.raw
+}
+
 // The lifecycle status of the drawdown request.
 type WireDrawdownRequestStatus string
 
@@ -191,6 +195,10 @@ type wireDrawdownRequestSubmissionJSON struct {
 
 func (r *WireDrawdownRequestSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireDrawdownRequestSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

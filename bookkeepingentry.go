@@ -104,6 +104,10 @@ func (r *BookkeepingEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r bookkeepingEntryJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `bookkeeping_entry`.
 type BookkeepingEntryType string

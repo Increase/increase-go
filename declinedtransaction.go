@@ -124,6 +124,10 @@ func (r *DeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 // Transaction's currency. This will match the currency on the Declined
 // Transaction's Account.
@@ -203,6 +207,10 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type DeclinedTransactionSourceACHDecline struct {
@@ -253,6 +261,10 @@ type declinedTransactionSourceACHDeclineJSON struct {
 
 func (r *DeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceACHDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the ACH transfer was declined.
@@ -382,6 +394,10 @@ func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceCardDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type DeclinedTransactionSourceCardDeclineActioner string
@@ -436,6 +452,10 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkDetails) UnmarshalJSON(data 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceCardDeclineNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type DeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
@@ -467,6 +487,10 @@ type declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON struct {
 
 func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -567,6 +591,10 @@ func (r *DeclinedTransactionSourceCardDeclineNetworkIdentifiers) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceCardDeclineNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type DeclinedTransactionSourceCardDeclineProcessingCategory string
@@ -651,6 +679,10 @@ func (r *DeclinedTransactionSourceCardDeclineVerification) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceCardDeclineVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
@@ -670,6 +702,10 @@ type declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON st
 
 func (r *DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -716,6 +752,10 @@ type declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON struc
 
 func (r *DeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -794,6 +834,10 @@ type declinedTransactionSourceCheckDeclineJSON struct {
 
 func (r *DeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCheckDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the check was declined.
@@ -878,6 +922,10 @@ type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct 
 
 func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
@@ -1068,6 +1116,10 @@ func (r *DeclinedTransactionSourceInternationalACHDecline) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r declinedTransactionSourceInternationalACHDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // A description of how the foreign exchange rate was calculated.
 type DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator string
 
@@ -1192,6 +1244,10 @@ type declinedTransactionSourceWireDeclineJSON struct {
 
 func (r *DeclinedTransactionSourceWireDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceWireDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the wire transfer was declined.

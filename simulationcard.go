@@ -87,6 +87,10 @@ func (r *CardAuthorizationSimulation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the authorization attempt fails, this will contain the resulting
 // [Declined Transaction](#declined-transactions) object. The Declined
 // Transaction's `source` will be of `category: card_decline`.
@@ -143,6 +147,10 @@ type cardAuthorizationSimulationDeclinedTransactionJSON struct {
 
 func (r *CardAuthorizationSimulationDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
@@ -224,6 +232,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSource) UnmarshalJSON(dat
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
@@ -275,6 +287,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the ACH transfer was declined.
@@ -405,6 +421,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineActioner string
@@ -460,6 +480,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkD
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
@@ -492,6 +516,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetai
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -593,6 +621,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkI
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineProcessingCategory string
@@ -678,6 +710,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerifica
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
@@ -697,6 +733,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerification
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -743,6 +783,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerification
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -822,6 +866,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the check was declined.
@@ -906,6 +954,10 @@ type cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePayments
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
@@ -1097,6 +1149,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDec
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // A description of how the foreign exchange rate was calculated.
 type CardAuthorizationSimulationDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator string
 
@@ -1224,6 +1280,10 @@ func (r *CardAuthorizationSimulationDeclinedTransactionSourceWireDecline) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationDeclinedTransactionSourceWireDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Why the wire transfer was declined.
 type CardAuthorizationSimulationDeclinedTransactionSourceWireDeclineReason string
 
@@ -1316,6 +1376,10 @@ func (r *CardAuthorizationSimulationPendingTransaction) UnmarshalJSON(data []byt
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
 // Transaction's Account.
@@ -1401,6 +1465,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSource) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction struct {
@@ -1428,6 +1496,10 @@ type cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructi
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceAccountTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
@@ -1472,6 +1544,10 @@ type cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJS
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceACHTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Authorization object. This field will be present in the JSON response if
@@ -1567,6 +1643,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorization) U
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationActioner string
@@ -1634,6 +1714,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
 
@@ -1666,6 +1750,10 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetwork
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -1767,6 +1855,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationProcessingCategory string
@@ -1824,6 +1916,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVer
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCode struct {
@@ -1843,6 +1939,10 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerific
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -1889,6 +1989,10 @@ type cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerific
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -1977,6 +2081,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstruct
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type CardAuthorizationSimulationPendingTransactionSourceCheckDepositInstructionCurrency string
@@ -2023,6 +2131,10 @@ type cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceCheckTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
@@ -2097,6 +2209,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceInboundFundsHold) Un
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 // currency.
 type CardAuthorizationSimulationPendingTransactionSourceInboundFundsHoldCurrency string
@@ -2161,6 +2277,10 @@ func (r *CardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTran
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardAuthorizationSimulationPendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction struct {
@@ -2194,6 +2314,10 @@ type cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJ
 
 func (r *CardAuthorizationSimulationPendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationSimulationPendingTransactionSourceWireTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether the Pending Transaction has been confirmed and has an associated

@@ -149,6 +149,10 @@ func (r *PhysicalCardProfile) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r physicalCardProfileJSON) RawJSON() string {
+	return r.raw
+}
+
 // The creator of this Physical Card Profile.
 type PhysicalCardProfileCreator string
 

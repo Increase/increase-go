@@ -96,6 +96,10 @@ func (r *RoutingNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r routingNumberJSON) RawJSON() string {
+	return r.raw
+}
+
 // This routing number's support for ACH Transfers.
 type RoutingNumberACHTransfers string
 

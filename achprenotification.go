@@ -144,6 +144,10 @@ func (r *ACHPrenotification) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r achPrenotificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the notification is for a future credit or debit.
 type ACHPrenotificationCreditDebitIndicator string
 
@@ -182,6 +186,10 @@ type achPrenotificationNotificationsOfChangeJSON struct {
 
 func (r *ACHPrenotificationNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achPrenotificationNotificationsOfChangeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The required type of change that is being signaled by the receiving financial
@@ -254,6 +262,10 @@ type achPrenotificationPrenotificationReturnJSON struct {
 
 func (r *ACHPrenotificationPrenotificationReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achPrenotificationPrenotificationReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the Prenotification was returned.

@@ -152,6 +152,10 @@ func (r *Card) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardJSON) RawJSON() string {
+	return r.raw
+}
+
 // The Card's billing address.
 type CardBillingAddress struct {
 	// The city of the billing address.
@@ -183,6 +187,10 @@ func (r *CardBillingAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardBillingAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // The contact information used in the two-factor steps for digital wallet card
 // creation. At least one field must be present to complete the digital wallet
 // steps.
@@ -211,6 +219,10 @@ type cardDigitalWalletJSON struct {
 
 func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDigitalWalletJSON) RawJSON() string {
+	return r.raw
 }
 
 // This indicates if payments can be made with the card.
@@ -267,6 +279,10 @@ type cardDetailsJSON struct {
 
 func (r *CardDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

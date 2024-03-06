@@ -83,6 +83,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResult) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the Real-Time Payments Transfer attempt fails, this will contain the
 // resulting [Declined Transaction](#declined-transactions) object. The Declined
 // Transaction's `source` will be of
@@ -141,6 +145,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON stru
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
@@ -223,6 +231,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An ACH Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `ach_decline`.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline struct {
@@ -274,6 +286,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the ACH transfer was declined.
@@ -404,6 +420,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineActioner string
@@ -459,6 +479,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
@@ -491,6 +515,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -592,6 +620,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineProcessingCategory string
@@ -677,6 +709,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
@@ -696,6 +732,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -742,6 +782,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -821,6 +865,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the check was declined.
@@ -905,6 +953,10 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInb
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
@@ -1096,6 +1148,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // A description of how the foreign exchange rate was calculated.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator string
 
@@ -1223,6 +1279,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourc
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
 // Why the wire transfer was declined.
 type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceWireDeclineReason string
 
@@ -1307,6 +1367,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionJSON struct {
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -1480,6 +1544,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSource) Unmar
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Account Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_intention`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention struct {
@@ -1516,6 +1584,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTran
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntention) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceAccountTransferIntentionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
@@ -1572,6 +1644,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTran
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferIntentionJSON) RawJSON() string {
+	return r.raw
+}
+
 // An ACH Transfer Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection struct {
@@ -1591,6 +1667,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // An ACH Transfer Return object. This field will be present in the JSON response
@@ -1626,6 +1706,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransfer
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceACHTransferReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the ACH Transfer was returned. This reason code is sent by the receiving
@@ -1849,6 +1933,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDis
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund struct {
@@ -1914,6 +2002,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency string
@@ -1959,6 +2051,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundN
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional details about the card purchase, such as tax and industry-specific
@@ -2009,6 +2105,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to car rentals.
@@ -2082,6 +2182,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsCarRentalJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional charges (gas, late fee, etc.) being billed.
@@ -2185,6 +2289,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional charges (phone, late check-out, etc.) being billed.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges string
 
@@ -2285,6 +2393,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelJSON) RawJSON() string {
+	return r.raw
+}
+
 // Ancillary purchases in addition to the airfare.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
@@ -2317,6 +2429,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates the reason for a credit to the cardholder.
@@ -2353,6 +2469,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundP
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // Category of the ancillary service.
@@ -2483,6 +2603,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRef
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegJSON) RawJSON() string {
+	return r.raw
+}
+
 // Indicates whether a stopover is allowed on this ticket.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
 
@@ -2536,6 +2660,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenue
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRevenuePaymentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
@@ -2636,6 +2764,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's settlement currency.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency string
@@ -2681,6 +2813,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional details about the card purchase, such as tax and industry-specific
@@ -2731,6 +2867,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to car rentals.
@@ -2804,6 +2944,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRental) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsCarRentalJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional charges (gas, late fee, etc.) being billed.
@@ -2907,6 +3051,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional charges (phone, late check-out, etc.) being billed.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges string
 
@@ -3007,6 +3155,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSet
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelJSON) RawJSON() string {
+	return r.raw
+}
+
 // Ancillary purchases in addition to the airfare.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
@@ -3039,6 +3191,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillary) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates the reason for a credit to the cardholder.
@@ -3075,6 +3231,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // Category of the ancillary service.
@@ -3203,6 +3363,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLeg) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON) RawJSON() string {
+	return r.raw
 }
 
 // Indicates whether a stopover is allowed on this ticket.
@@ -3356,6 +3520,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDe
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositAcceptanceCurrency string
@@ -3414,6 +3582,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDeposi
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckDepositReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -3538,6 +3710,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_deposit`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferDepositType string
@@ -3592,6 +3768,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTr
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 // currency.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferIntentionCurrency string
@@ -3641,6 +3821,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransferStopPaymentRequestJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason why this transfer was stopped.
@@ -3693,6 +3877,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJ
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceFeePaymentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
@@ -3772,6 +3960,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional information sent from the originator.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddenda struct {
 	// The type of addendum.
@@ -3793,6 +3985,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of addendum.
@@ -3823,6 +4019,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaFreeformJSON) RawJSON() string {
+	return r.raw
+}
+
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
 	PaymentRelatedInformation string                                                                                                     `json:"payment_related_information,required"`
@@ -3840,6 +4040,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() string {
+	return r.raw
 }
 
 // An Inbound Check object. This field will be present in the JSON response if and
@@ -3881,6 +4085,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundChec
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -4054,6 +4262,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // A description of how the foreign exchange rate was calculated.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferForeignExchangeIndicator string
 
@@ -4202,6 +4414,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 // currency. This will always be "USD" for a Real-Time Payments transfer.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
@@ -4297,6 +4513,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Inbound Wire Drawdown Payment Reversal object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `inbound_wire_drawdown_payment_reversal`.
@@ -4348,6 +4568,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON) RawJSON() string {
+	return r.raw
 }
 
 // An Inbound Wire Reversal object. This field will be present in the JSON response
@@ -4419,6 +4643,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWire
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversalJSON) RawJSON() string {
+	return r.raw
 }
 
 // An Inbound Wire Transfer Intention object. This field will be present in the
@@ -4499,6 +4727,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Interest Payment object. This field will be present in the JSON response if
 // and only if `category` is equal to `interest_payment`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment struct {
@@ -4532,6 +4764,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPay
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPayment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInterestPaymentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
@@ -4581,6 +4817,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSou
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInternalSourceJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
@@ -4671,6 +4911,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTim
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceRealTimePaymentsTransferAcknowledgementJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Sample Funds object. This field will be present in the JSON response if and
 // only if `category` is equal to `sample_funds`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds struct {
@@ -4690,6 +4934,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFunds) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceSampleFundsJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Wire Transfer Intention object. This field will be present in the JSON
@@ -4725,6 +4973,10 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTra
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferIntentionJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Wire Transfer Rejection object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_rejection`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection struct {
@@ -4744,6 +4996,10 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransfe
 
 func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceWireTransferRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

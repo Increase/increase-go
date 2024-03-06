@@ -135,6 +135,10 @@ func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r externalAccountJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of entity that owns the External Account.
 type ExternalAccountAccountHolder string
 

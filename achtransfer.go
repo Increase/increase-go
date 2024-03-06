@@ -224,6 +224,10 @@ func (r *ACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r achTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // After the transfer is acknowledged by FedACH, this will contain supplemental
 // details. The Federal Reserve sends an acknowledgement message for each file that
 // Increase submits.
@@ -244,6 +248,10 @@ type achTransferAcknowledgementJSON struct {
 
 func (r *ACHTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferAcknowledgementJSON) RawJSON() string {
+	return r.raw
 }
 
 // Additional information that will be sent to the recipient.
@@ -271,6 +279,10 @@ type achTransferAddendaJSON struct {
 
 func (r *ACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferAddendaJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of the resource. We may add additional possible values for this enum
@@ -306,6 +318,10 @@ func (r *ACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r achTransferAddendaFreeformJSON) RawJSON() string {
+	return r.raw
+}
+
 type ACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
 	PaymentRelatedInformation string                              `json:"payment_related_information,required"`
@@ -322,6 +338,10 @@ type achTransferAddendaFreeformEntryJSON struct {
 
 func (r *ACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferAddendaFreeformEntryJSON) RawJSON() string {
+	return r.raw
 }
 
 // Structured ASC X12 820 remittance advice records. Please reach out to
@@ -344,6 +364,10 @@ func (r *ACHTransferAddendaPaymentOrderRemittanceAdvice) UnmarshalJSON(data []by
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r achTransferAddendaPaymentOrderRemittanceAdviceJSON) RawJSON() string {
+	return r.raw
+}
+
 type ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice struct {
 	// The invoice number for this reference, determined in advance with the receiver.
 	InvoiceNumber string `json:"invoice_number,required"`
@@ -364,6 +388,10 @@ type achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON struct {
 
 func (r *ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON) RawJSON() string {
+	return r.raw
 }
 
 // If your account requires approvals for transfers and the transfer was approved,
@@ -391,6 +419,10 @@ func (r *ACHTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r achTransferApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
 type ACHTransferCancellation struct {
@@ -414,6 +446,10 @@ type achTransferCancellationJSON struct {
 
 func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
@@ -493,6 +529,10 @@ type achTransferNotificationsOfChangeJSON struct {
 
 func (r *ACHTransferNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferNotificationsOfChangeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The required type of change that is being signaled by the receiving financial
@@ -575,6 +615,10 @@ type achTransferReturnJSON struct {
 
 func (r *ACHTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // Why the ACH Transfer was returned. This reason code is sent by the receiving
@@ -845,6 +889,10 @@ type achTransferSubmissionJSON struct {
 
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

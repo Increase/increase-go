@@ -100,6 +100,10 @@ func (r *OAuthConnection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r oauthConnectionJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether the connection is active.
 type OAuthConnectionStatus string
 

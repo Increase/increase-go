@@ -176,6 +176,10 @@ func (r *InboundACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundACHTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your transfer is accepted, this will contain details of the acceptance.
 type InboundACHTransferAcceptance struct {
 	// The time at which the transfer was accepted.
@@ -198,6 +202,10 @@ func (r *InboundACHTransferAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundACHTransferAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // Additional information sent from the originator.
 type InboundACHTransferAddenda struct {
 	// The type of addendum.
@@ -218,6 +226,10 @@ type inboundACHTransferAddendaJSON struct {
 
 func (r *InboundACHTransferAddenda) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundACHTransferAddendaJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of addendum.
@@ -247,6 +259,10 @@ func (r *InboundACHTransferAddendaFreeform) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundACHTransferAddendaFreeformJSON) RawJSON() string {
+	return r.raw
+}
+
 type InboundACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
 	PaymentRelatedInformation string                                     `json:"payment_related_information,required"`
@@ -263,6 +279,10 @@ type inboundACHTransferAddendaFreeformEntryJSON struct {
 
 func (r *InboundACHTransferAddendaFreeformEntry) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundACHTransferAddendaFreeformEntryJSON) RawJSON() string {
+	return r.raw
 }
 
 // If your transfer is declined, this will contain details of the decline.
@@ -288,6 +308,10 @@ type inboundACHTransferDeclineJSON struct {
 
 func (r *InboundACHTransferDecline) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundACHTransferDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason for the transfer decline.
@@ -359,6 +383,10 @@ func (r *InboundACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the transfer.
 type InboundACHTransferStatus string
 
@@ -397,6 +425,10 @@ type inboundACHTransferTransferReturnJSON struct {
 
 func (r *InboundACHTransferTransferReturn) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundACHTransferTransferReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason for the transfer return.

@@ -174,6 +174,10 @@ func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimePaymentsTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
 type RealTimePaymentsTransferApproval struct {
@@ -199,6 +203,10 @@ func (r *RealTimePaymentsTransferApproval) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimePaymentsTransferApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
 type RealTimePaymentsTransferCancellation struct {
@@ -222,6 +230,10 @@ type realTimePaymentsTransferCancellationJSON struct {
 
 func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
@@ -270,6 +282,10 @@ type realTimePaymentsTransferRejectionJSON struct {
 
 func (r *RealTimePaymentsTransferRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason the transfer was rejected as provided by the recipient bank or the
@@ -384,6 +400,10 @@ type realTimePaymentsTransferSubmissionJSON struct {
 
 func (r *RealTimePaymentsTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

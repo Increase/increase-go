@@ -122,6 +122,10 @@ func (r *Export) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r exportJSON) RawJSON() string {
+	return r.raw
+}
+
 // The category of the Export. We may add additional possible values for this enum
 // over time; your application should be able to handle that gracefully.
 type ExportCategory string

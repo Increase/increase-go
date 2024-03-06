@@ -191,6 +191,10 @@ func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
 type CheckTransferApproval struct {
@@ -216,6 +220,10 @@ func (r *CheckTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
 type CheckTransferCancellation struct {
@@ -239,6 +247,10 @@ type checkTransferCancellationJSON struct {
 
 func (r *CheckTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
@@ -302,6 +314,10 @@ func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferDepositJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_deposit`.
 type CheckTransferDepositType string
@@ -347,6 +363,10 @@ func (r *CheckTransferMailing) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferMailingJSON) RawJSON() string {
+	return r.raw
+}
+
 // Details relating to the physical check that Increase will print and mail. Will
 // be present if and only if `fulfillment_method` is equal to `physical_check`.
 type CheckTransferPhysicalCheck struct {
@@ -377,6 +397,10 @@ type checkTransferPhysicalCheckJSON struct {
 
 func (r *CheckTransferPhysicalCheck) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckJSON) RawJSON() string {
+	return r.raw
 }
 
 // Details for where Increase will mail the check.
@@ -413,6 +437,10 @@ func (r *CheckTransferPhysicalCheckMailingAddress) UnmarshalJSON(data []byte) (e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferPhysicalCheckMailingAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // The return address to be printed on the check.
 type CheckTransferPhysicalCheckReturnAddress struct {
 	// The city of the check's destination.
@@ -445,6 +473,10 @@ type checkTransferPhysicalCheckReturnAddressJSON struct {
 
 func (r *CheckTransferPhysicalCheckReturnAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckReturnAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The lifecycle status of the transfer.
@@ -505,6 +537,10 @@ func (r *CheckTransferStopPaymentRequest) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r checkTransferStopPaymentRequestJSON) RawJSON() string {
+	return r.raw
+}
+
 // The reason why this transfer was stopped.
 type CheckTransferStopPaymentRequestReason string
 
@@ -545,6 +581,10 @@ type checkTransferSubmissionJSON struct {
 
 func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

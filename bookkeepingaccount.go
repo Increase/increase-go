@@ -124,6 +124,10 @@ func (r *BookkeepingAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r bookkeepingAccountJSON) RawJSON() string {
+	return r.raw
+}
+
 // The compliance category of the account.
 type BookkeepingAccountComplianceCategory string
 
@@ -168,6 +172,10 @@ type bookkeepingBalanceLookupJSON struct {
 
 func (r *BookkeepingBalanceLookup) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r bookkeepingBalanceLookupJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

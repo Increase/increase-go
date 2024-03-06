@@ -131,6 +131,10 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 // Transaction's currency. This will match the currency on the Pending
 // Transaction's Account.
@@ -216,6 +220,10 @@ func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Account Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `account_transfer_instruction`.
 type PendingTransactionSourceAccountTransferInstruction struct {
@@ -242,6 +250,10 @@ type pendingTransactionSourceAccountTransferInstructionJSON struct {
 
 func (r *PendingTransactionSourceAccountTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceAccountTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
@@ -285,6 +297,10 @@ type pendingTransactionSourceACHTransferInstructionJSON struct {
 
 func (r *PendingTransactionSourceACHTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceACHTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Authorization object. This field will be present in the JSON response if
@@ -379,6 +395,10 @@ func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceCardAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether this authorization was approved by Increase, the card network through
 // stand-in processing, or the user through a real-time decision.
 type PendingTransactionSourceCardAuthorizationActioner string
@@ -446,6 +466,10 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkDetails) UnmarshalJSON(
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceCardAuthorizationNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The payment network used to process this card authorization.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
 
@@ -478,6 +502,10 @@ type pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 
 func (r *PendingTransactionSourceCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -579,6 +607,10 @@ func (r *PendingTransactionSourceCardAuthorizationNetworkIdentifiers) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type PendingTransactionSourceCardAuthorizationProcessingCategory string
@@ -635,6 +667,10 @@ func (r *PendingTransactionSourceCardAuthorizationVerification) UnmarshalJSON(da
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceCardAuthorizationVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode struct {
@@ -654,6 +690,10 @@ type pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJS
 
 func (r *PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -700,6 +740,10 @@ type pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON 
 
 func (r *PendingTransactionSourceCardAuthorizationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -787,6 +831,10 @@ func (r *PendingTransactionSourceCheckDepositInstruction) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceCheckDepositInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type PendingTransactionSourceCheckDepositInstructionCurrency string
@@ -832,6 +880,10 @@ type pendingTransactionSourceCheckTransferInstructionJSON struct {
 
 func (r *PendingTransactionSourceCheckTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCheckTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
@@ -905,6 +957,10 @@ func (r *PendingTransactionSourceInboundFundsHold) UnmarshalJSON(data []byte) (e
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceInboundFundsHoldJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 // currency.
 type PendingTransactionSourceInboundFundsHoldCurrency string
@@ -969,6 +1025,10 @@ func (r *PendingTransactionSourceRealTimePaymentsTransferInstruction) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r pendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type PendingTransactionSourceWireTransferInstruction struct {
@@ -1001,6 +1061,10 @@ type pendingTransactionSourceWireTransferInstructionJSON struct {
 
 func (r *PendingTransactionSourceWireTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceWireTransferInstructionJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether the Pending Transaction has been confirmed and has an associated

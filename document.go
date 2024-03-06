@@ -102,6 +102,10 @@ func (r *Document) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r documentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of document.
 type DocumentCategory string
 
