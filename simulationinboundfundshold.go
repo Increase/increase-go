@@ -92,6 +92,10 @@ func (r *SimulationInboundFundsHoldReleaseResponse) UnmarshalJSON(data []byte) (
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r simulationInboundFundsHoldReleaseResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 // currency.
 type SimulationInboundFundsHoldReleaseResponseCurrency string

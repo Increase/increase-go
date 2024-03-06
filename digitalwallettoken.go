@@ -104,6 +104,10 @@ func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r digitalWalletTokenJSON) RawJSON() string {
+	return r.raw
+}
+
 // This indicates if payments can be made with the Digital Wallet Token.
 type DigitalWalletTokenStatus string
 

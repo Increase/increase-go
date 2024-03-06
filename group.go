@@ -71,6 +71,10 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r groupJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the Group is allowed to create ACH debits.
 type GroupACHDebitStatus string
 

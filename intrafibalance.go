@@ -75,6 +75,10 @@ func (r *IntrafiBalance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r intrafiBalanceJSON) RawJSON() string {
+	return r.raw
+}
+
 type IntrafiBalanceBalance struct {
 	// The balance, in minor units of `currency`, held with this bank.
 	Balance int64 `json:"balance,required"`
@@ -104,6 +108,10 @@ func (r *IntrafiBalanceBalance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r intrafiBalanceBalanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // The primary location of the bank.
 type IntrafiBalanceBalancesBankLocation struct {
 	// The bank's city.
@@ -124,6 +132,10 @@ type intrafiBalanceBalancesBankLocationJSON struct {
 
 func (r *IntrafiBalanceBalancesBankLocation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r intrafiBalanceBalancesBankLocationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the account

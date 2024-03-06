@@ -158,6 +158,10 @@ func (r *DigitalCardProfile) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r digitalCardProfileJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the Card Profile.
 type DigitalCardProfileStatus string
 
@@ -196,6 +200,10 @@ type digitalCardProfileTextColorJSON struct {
 
 func (r *DigitalCardProfileTextColor) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalCardProfileTextColorJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

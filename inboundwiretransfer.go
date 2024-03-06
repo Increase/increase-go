@@ -156,6 +156,10 @@ func (r *InboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r inboundWireTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the transfer.
 type InboundWireTransferStatus string
 

@@ -98,6 +98,10 @@ func (r *ProofOfAuthorizationRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r proofOfAuthorizationRequestJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProofOfAuthorizationRequestACHTransfer struct {
 	// The ACH Transfer identifier.
 	ID   string                                     `json:"id,required"`
@@ -114,6 +118,10 @@ type proofOfAuthorizationRequestACHTransferJSON struct {
 
 func (r *ProofOfAuthorizationRequestACHTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r proofOfAuthorizationRequestACHTransferJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

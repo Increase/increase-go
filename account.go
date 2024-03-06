@@ -162,6 +162,10 @@ func (r *Account) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r accountJSON) RawJSON() string {
+	return r.raw
+}
+
 // The bank the Account is with.
 type AccountBank string
 
@@ -238,6 +242,10 @@ type balanceLookupJSON struct {
 
 func (r *BalanceLookup) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r balanceLookupJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

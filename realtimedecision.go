@@ -97,6 +97,10 @@ func (r *RealTimeDecision) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to a card authorization.
 type RealTimeDecisionCardAuthorization struct {
 	// The identifier of the Account the authorization will debit.
@@ -180,6 +184,10 @@ func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionCardAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether or not the authorization was approved.
 type RealTimeDecisionCardAuthorizationDecision string
 
@@ -210,6 +218,10 @@ type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
 
 func (r *RealTimeDecisionCardAuthorizationNetworkDetails) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationNetworkDetailsJSON) RawJSON() string {
+	return r.raw
 }
 
 // The payment network used to process this card authorization.
@@ -243,6 +255,10 @@ type realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 
 func (r *RealTimeDecisionCardAuthorizationNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
 }
 
 // For electronic commerce transactions, this identifies the level of security used
@@ -343,6 +359,10 @@ func (r *RealTimeDecisionCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionCardAuthorizationNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
 // The processing category describes the intent behind the authorization, such as
 // whether it was used for bill payments or an automatic fuel dispenser.
 type RealTimeDecisionCardAuthorizationProcessingCategory string
@@ -393,6 +413,10 @@ func (r *RealTimeDecisionCardAuthorizationRequestDetails) UnmarshalJSON(data []b
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionCardAuthorizationRequestDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of this request (e.g., an initial authorization or an incremental
 // authorization).
 type RealTimeDecisionCardAuthorizationRequestDetailsCategory string
@@ -428,6 +452,10 @@ func (r *RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of cardholder-provided values.
 type RealTimeDecisionCardAuthorizationVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
@@ -452,6 +480,10 @@ func (r *RealTimeDecisionCardAuthorizationVerification) UnmarshalJSON(data []byt
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionCardAuthorizationVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
 // Fields related to verification of the Card Verification Code, a 3-digit code on
 // the back of the card.
 type RealTimeDecisionCardAuthorizationVerificationCardVerificationCode struct {
@@ -471,6 +503,10 @@ type realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON struc
 
 func (r *RealTimeDecisionCardAuthorizationVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
 }
 
 // The result of verifying the Card Verification Code.
@@ -517,6 +553,10 @@ type realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON struct {
 
 func (r *RealTimeDecisionCardAuthorizationVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // The address verification result returned to the card network.
@@ -588,6 +628,10 @@ func (r *RealTimeDecisionDigitalWalletAuthentication) UnmarshalJSON(data []byte)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimeDecisionDigitalWalletAuthenticationJSON) RawJSON() string {
+	return r.raw
+}
+
 // The channel to send the card user their one-time passcode.
 type RealTimeDecisionDigitalWalletAuthenticationChannel string
 
@@ -649,6 +693,10 @@ type realTimeDecisionDigitalWalletTokenJSON struct {
 
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenJSON) RawJSON() string {
+	return r.raw
 }
 
 // Whether or not the provisioning request was approved. This will be null until

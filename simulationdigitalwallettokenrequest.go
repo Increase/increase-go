@@ -68,6 +68,10 @@ func (r *SimulationDigitalWalletTokenRequestNewResponse) UnmarshalJSON(data []by
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r simulationDigitalWalletTokenRequestNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the simulated tokenization attempt was declined, this field contains details
 // as to why.
 type SimulationDigitalWalletTokenRequestNewResponseDeclineReason string

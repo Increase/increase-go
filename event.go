@@ -103,6 +103,10 @@ func (r *Event) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r eventJSON) RawJSON() string {
+	return r.raw
+}
+
 // The category of the Event. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type EventCategory string

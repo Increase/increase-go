@@ -157,6 +157,10 @@ func (r *RealTimePaymentsRequestForPayment) UnmarshalJSON(data []byte) (err erro
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r realTimePaymentsRequestForPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 // currency. For real-time payments transfers this is always equal to `USD`.
 type RealTimePaymentsRequestForPaymentCurrency string
@@ -195,6 +199,10 @@ type realTimePaymentsRequestForPaymentRefusalJSON struct {
 
 func (r *RealTimePaymentsRequestForPaymentRefusal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsRequestForPaymentRefusalJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason the request for payment was refused as provided by the recipient bank
@@ -261,6 +269,10 @@ type realTimePaymentsRequestForPaymentRejectionJSON struct {
 
 func (r *RealTimePaymentsRequestForPaymentRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsRequestForPaymentRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The reason the request for payment was rejected as provided by the recipient
@@ -369,6 +381,10 @@ type realTimePaymentsRequestForPaymentSubmissionJSON struct {
 
 func (r *RealTimePaymentsRequestForPaymentSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsRequestForPaymentSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

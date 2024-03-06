@@ -219,6 +219,10 @@ func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r wireTransferJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was approved,
 // this will contain details of the approval.
 type WireTransferApproval struct {
@@ -244,6 +248,10 @@ func (r *WireTransferApproval) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r wireTransferApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your account requires approvals for transfers and the transfer was not
 // approved, this will contain details of the cancellation.
 type WireTransferCancellation struct {
@@ -267,6 +275,10 @@ type wireTransferCancellationJSON struct {
 
 func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
@@ -364,6 +376,10 @@ func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r wireTransferReversalJSON) RawJSON() string {
+	return r.raw
+}
+
 // The lifecycle status of the transfer.
 type WireTransferStatus string
 
@@ -405,6 +421,10 @@ type wireTransferSubmissionJSON struct {
 
 func (r *WireTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferSubmissionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

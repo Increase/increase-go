@@ -65,6 +65,10 @@ func (r *OAuthToken) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r oauthTokenJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of OAuth token.
 type OAuthTokenTokenType string
 

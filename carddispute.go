@@ -123,6 +123,10 @@ func (r *CardDispute) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardDisputeJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the Card Dispute's status is `accepted`, this will contain details of the
 // successful dispute.
 type CardDisputeAcceptance struct {
@@ -151,6 +155,10 @@ func (r *CardDisputeAcceptance) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r cardDisputeAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the Card Dispute's status is `rejected`, this will contain details of the
 // unsuccessful dispute.
 type CardDisputeRejection struct {
@@ -176,6 +184,10 @@ type cardDisputeRejectionJSON struct {
 
 func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeRejectionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The results of the Dispute investigation.
