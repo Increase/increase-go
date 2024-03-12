@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.28.0 (2024-03-12)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/Increase/increase-go/compare/v0.27.0...v0.28.0)
+
+### Features
+
+* implement public RawJSON of response structs ([#213](https://github.com/Increase/increase-go/issues/213)) ([098706e](https://github.com/Increase/increase-go/commit/098706e2dca0e9000b6f02684c72373325c80dd3))
+
+
+### Bug Fixes
+
+* fix String() behavior of param.Field ([#217](https://github.com/Increase/increase-go/issues/217)) ([b01ff25](https://github.com/Increase/increase-go/commit/b01ff255cf1a98aec9f4599636a80437c93b714d))
+
+
+### Chores
+
+* **internal:** improve union deserialization logic ([#215](https://github.com/Increase/increase-go/issues/215)) ([c345eb6](https://github.com/Increase/increase-go/commit/c345eb6e23a04e348bd6e4046fbefdcd5e9c099a))
+
+
+### Documentation
+
+* **contributing:** add a CONTRIBUTING.md ([#216](https://github.com/Increase/increase-go/issues/216)) ([253567b](https://github.com/Increase/increase-go/commit/253567beff555cbce99bc4feabffc7837a140660))
+
 ## 0.27.0 (2024-03-05)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/Increase/increase-go/compare/v0.26.0...v0.27.0)
