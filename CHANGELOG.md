@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.28.1 (2024-03-12)
+
+Full Changelog: [v0.28.0...v0.28.1](https://github.com/Increase/increase-go/compare/v0.28.0...v0.28.1)
+
+### Bug Fixes
+
+* **client:** don't include ? in path unless necessary ([#218](https://github.com/Increase/increase-go/issues/218)) ([4028846](https://github.com/Increase/increase-go/commit/40288461e318704c31e0b74ddd74eabd0eb3093b))
+
 ## 0.28.0 (2024-03-12)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/Increase/increase-go/compare/v0.27.0...v0.28.0)
