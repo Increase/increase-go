@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.29.0 (2024-03-13)
+
+Full Changelog: [v0.28.1...v0.29.0](https://github.com/Increase/increase-go/compare/v0.28.1...v0.29.0)
+
+### Features
+
+* **api:** confirm entities ([#222](https://github.com/Increase/increase-go/issues/222)) ([94f8ab1](https://github.com/Increase/increase-go/commit/94f8ab1a3c8a93fb595fd8e370f7a11d5e4308d4))
+* set user-agent header by default when making requests ([#220](https://github.com/Increase/increase-go/issues/220)) ([36a642a](https://github.com/Increase/increase-go/commit/36a642adc62183132efe2b3fceed9264e31e6cf3))
+
 ## 0.28.1 (2024-03-12)
 
 Full Changelog: [v0.28.0...v0.28.1](https://github.com/Increase/increase-go/compare/v0.28.0...v0.28.1)
