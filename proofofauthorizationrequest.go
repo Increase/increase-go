@@ -74,6 +74,8 @@ type ProofOfAuthorizationRequest struct {
 	ACHTransfers []ProofOfAuthorizationRequestACHTransfer `json:"ach_transfers,required"`
 	// The time the Proof of Authorization Request was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The time the Proof of Authorization Request is due.
+	DueOn time.Time `json:"due_on,required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `proof_of_authorization_request`.
 	Type ProofOfAuthorizationRequestType `json:"type,required"`
@@ -88,6 +90,7 @@ type proofOfAuthorizationRequestJSON struct {
 	ID           apijson.Field
 	ACHTransfers apijson.Field
 	CreatedAt    apijson.Field
+	DueOn        apijson.Field
 	Type         apijson.Field
 	UpdatedAt    apijson.Field
 	raw          string

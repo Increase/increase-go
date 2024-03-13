@@ -97,6 +97,8 @@ type ProofOfAuthorizationRequestSubmission struct {
 	AuthorizerName string `json:"authorizer_name,required,nullable"`
 	// The time the Proof of Authorization Request Submission was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the customer has been offboarded.
+	CustomerHasBeenOffboarded bool `json:"customer_has_been_offboarded,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -109,28 +111,38 @@ type ProofOfAuthorizationRequestSubmission struct {
 	// `proof_of_authorization_request_submission`.
 	Type ProofOfAuthorizationRequestSubmissionType `json:"type,required"`
 	// The time the Proof of Authorization Request Submission was last updated.
-	UpdatedAt time.Time                                 `json:"updated_at,required" format:"date-time"`
-	JSON      proofOfAuthorizationRequestSubmissionJSON `json:"-"`
+	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	// Whether account ownership was validated via credential (for instance, Plaid).
+	ValidatedAccountOwnershipViaCredential bool `json:"validated_account_ownership_via_credential,required,nullable"`
+	// Whether account ownership was validated with an account statement.
+	ValidatedAccountOwnershipWithAccountStatement bool `json:"validated_account_ownership_with_account_statement,required,nullable"`
+	// Whether account ownership was validated with microdeposit.
+	ValidatedAccountOwnershipWithMicrodeposit bool                                      `json:"validated_account_ownership_with_microdeposit,required,nullable"`
+	JSON                                      proofOfAuthorizationRequestSubmissionJSON `json:"-"`
 }
 
 // proofOfAuthorizationRequestSubmissionJSON contains the JSON metadata for the
 // struct [ProofOfAuthorizationRequestSubmission]
 type proofOfAuthorizationRequestSubmissionJSON struct {
-	ID                            apijson.Field
-	AuthorizationTerms            apijson.Field
-	AuthorizedAt                  apijson.Field
-	AuthorizerCompany             apijson.Field
-	AuthorizerEmail               apijson.Field
-	AuthorizerIPAddress           apijson.Field
-	AuthorizerName                apijson.Field
-	CreatedAt                     apijson.Field
-	IdempotencyKey                apijson.Field
-	ProofOfAuthorizationRequestID apijson.Field
-	Status                        apijson.Field
-	Type                          apijson.Field
-	UpdatedAt                     apijson.Field
-	raw                           string
-	ExtraFields                   map[string]apijson.Field
+	ID                                            apijson.Field
+	AuthorizationTerms                            apijson.Field
+	AuthorizedAt                                  apijson.Field
+	AuthorizerCompany                             apijson.Field
+	AuthorizerEmail                               apijson.Field
+	AuthorizerIPAddress                           apijson.Field
+	AuthorizerName                                apijson.Field
+	CreatedAt                                     apijson.Field
+	CustomerHasBeenOffboarded                     apijson.Field
+	IdempotencyKey                                apijson.Field
+	ProofOfAuthorizationRequestID                 apijson.Field
+	Status                                        apijson.Field
+	Type                                          apijson.Field
+	UpdatedAt                                     apijson.Field
+	ValidatedAccountOwnershipViaCredential        apijson.Field
+	ValidatedAccountOwnershipWithAccountStatement apijson.Field
+	ValidatedAccountOwnershipWithMicrodeposit     apijson.Field
+	raw                                           string
+	ExtraFields                                   map[string]apijson.Field
 }
 
 func (r *ProofOfAuthorizationRequestSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -172,8 +184,16 @@ type ProofOfAuthorizationRequestSubmissionNewParams struct {
 	AuthorizerEmail param.Field[string] `json:"authorizer_email,required"`
 	// Name of the authorizer.
 	AuthorizerName param.Field[string] `json:"authorizer_name,required"`
+	// Whether the customer has been offboarded or suspended.
+	CustomerHasBeenOffboarded param.Field[bool] `json:"customer_has_been_offboarded,required"`
 	// ID of the proof of authorization request.
 	ProofOfAuthorizationRequestID param.Field[string] `json:"proof_of_authorization_request_id,required"`
+	// Whether the account ownership was validated via credential (e.g. Plaid).
+	ValidatedAccountOwnershipViaCredential param.Field[bool] `json:"validated_account_ownership_via_credential,required"`
+	// Whether the account ownership was validated with an account statement.
+	ValidatedAccountOwnershipWithAccountStatement param.Field[bool] `json:"validated_account_ownership_with_account_statement,required"`
+	// Whether the account ownership was validated with a microdeposit.
+	ValidatedAccountOwnershipWithMicrodeposit param.Field[bool] `json:"validated_account_ownership_with_microdeposit,required"`
 	// Company of the authorizer.
 	AuthorizerCompany param.Field[string] `json:"authorizer_company"`
 	// IP address of the authorizer.
